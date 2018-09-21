@@ -29,7 +29,6 @@ class Application(Frame):
         self.master: Tk = master
 
         self.init_ui()
-        self.init_value()
         self.center_window()
 
     def init_ui(self):
@@ -122,6 +121,7 @@ class Application(Frame):
         self.copyRightButton.grid(row=3, column=2, padx=self.padding)
 
         self.spritePanel.grid(row=1, column=1, sticky='nsew')
+        self.init_value()
 
     def init_value(self):
         default_spritesheet_path = os.path.join(os.getcwd(), 'images', 'spritesheet.png')

@@ -55,16 +55,16 @@ def have_right_border(image, border_color):
 
 def get_sprite_bbox(coord, spritesheet, border_color):
     x, y = coord
-
-    left = x - 1
-    top = y - 1
-    right = x + 2
-    bottom = y + 2
-
     selected_pixel = spritesheet.getpixel((x, y))
 
     if selected_pixel == border_color:
         return None
+
+    # get boundary box surrounding selected pixel
+    left = x - 1
+    top = y - 1
+    right = x + 2
+    bottom = y + 2
 
     sprite = spritesheet.crop((left, top, right, bottom))
 
@@ -97,7 +97,7 @@ def get_sprite_bbox(coord, spritesheet, border_color):
 
 
 def main():
-    spritesheet_path = os.path.join(os.getcwd(), 'spritesheet.png')
+    spritesheet_path = os.path.join(os.getcwd(), 'images', 'spritesheet.png')
     spritesheet = Image.open(spritesheet_path).convert('RGB')
     border_color = spritesheet.getpixel((0, 0))
 

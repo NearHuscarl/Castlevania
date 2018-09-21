@@ -11,12 +11,11 @@ from spritesheet import (
     have_border
 )
 
-_image_path = os.path.join(os.getcwd(), 'images')
-
 
 @pytest.fixture(scope='module')
 def images():
     """ a dict of images with different border types """
+    _image_path = os.path.join(os.getcwd(), 'images')
     return dict(no_border=Image.open(os.path.join(_image_path, 'image_no_border.png')),
                 border_all=Image.open(os.path.join(_image_path, 'image_border_all.png')),
                 border_top=Image.open(os.path.join(_image_path, 'image_border_top.png')),
