@@ -2,19 +2,19 @@ import pytest
 import os
 from PIL import Image
 
-from spritesheet import (
+from imageutil import (
     have_all_border,
     have_top_border,
     have_bottom_border,
     have_left_border,
     have_right_border,
-    have_border
+    have_border,
 )
 
 
 @pytest.fixture(scope='module')
 def images():
-    """ a dict of images with different border types """
+    """ a dictionary where keys are border types and values are corresponding images of that type """
     _image_path = os.path.join(os.getcwd(), 'images')
     return dict(no_border=Image.open(os.path.join(_image_path, 'image_no_border.png')),
                 border_all=Image.open(os.path.join(_image_path, 'image_border_all.png')),

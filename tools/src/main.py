@@ -22,6 +22,7 @@ from color import rgb_to_hex, hex_to_rgb
 
 
 class Application(Frame):
+    """ Spritesheet tool GUI """
 
     def __init__(self, master):
         Frame.__init__(self, master)
@@ -32,6 +33,7 @@ class Application(Frame):
         self.center_window()
 
     def init_ui(self):
+        """ Initialize GUI layout and widgets """
         self.master.title("Spritesheet Tool")
         self.padding = '1m'
         self.copyImage = PhotoImage(file='images/copy.png')  # 16x16 pixels
@@ -124,6 +126,7 @@ class Application(Frame):
         self.init_value()
 
     def init_value(self):
+        """ Initialize default values on startup """
         default_spritesheet_path = os.path.join(os.getcwd(), 'images', 'spritesheet.png')
         self.set_spritesheet_panel(default_spritesheet_path)
         self.set_transparent_color(self.spritesheet_image.getpixel((0, 0)))
