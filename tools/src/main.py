@@ -17,8 +17,8 @@ from tkinter.ttk import (
 from PIL import ImageTk, Image
 import os
 
-from src import spritesheet
-from src.color import rgb_to_hex, hex_to_rgb
+import spritesheet
+from color import rgb_to_hex, hex_to_rgb
 
 
 class Application(Frame):
