@@ -29,6 +29,9 @@ def get_sprite_bbox(coord, spritesheet, border_color):
 
     while not have_all_border(sprite, border_color):
 
+        if left < 0 or top < 0 or right > spritesheet.width or bottom > spritesheet.height:
+            return None
+
         while not have_top_border(sprite, border_color):
             top -= 1
             sprite = spritesheet.crop((left, top, right, bottom))

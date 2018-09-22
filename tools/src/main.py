@@ -74,6 +74,7 @@ class Application(Frame):
         self.spritesheetPanel.bind('<Button 1>', self.on_click_image)
 
         self.openButton = Button(self.actionFrame, text='Open Spritesheet', command=self.on_open_image)
+        self.pickColorButton = Button(self.actionFrame, text='Pick Background Color', command=self.on_pick_bgcolor)
 
         self.transColorLabel = Label(self.settingFrame, text='Transparent Color')
         self.transColorEntry = Entry(self.settingFrame, width=10)
@@ -99,9 +100,10 @@ class Application(Frame):
                                       command=lambda: self.on_click_copy_button(self.rightEntry))
 
         self.spritePanel = Label(self.spriteFrame, border=2)
-
         self.spritesheetPanel.grid(row=0, column=0)
+
         self.openButton.grid(row=1, column=1, padx=self.padding, pady=self.padding)
+        self.pickColorButton.grid(row=2, column=1, padx=self.padding, pady=self.padding)
 
         self.transColorLabel.grid(row=1, column=0, padx=self.padding)
         self.transColorEntry.grid(row=1, column=1, sticky='ew')
@@ -127,6 +129,7 @@ class Application(Frame):
 
     def init_value(self):
         """ Initialize default values on startup """
+        self.picking_color = False
         default_spritesheet_path = os.path.join(os.getcwd(), 'images', 'spritesheet.png')
         self.set_spritesheet_panel(default_spritesheet_path)
         self.set_transparent_color(self.spritesheet_image.getpixel((0, 0)))
@@ -172,12 +175,28 @@ class Application(Frame):
             self.resize()
             self.center_window()
 
+    def on_pick_bgcolor(self):
+        self.picking_color = True
+        self.master.config(cursor='tcross')
+
     @classmethod
     def set_text(cls, entry, text):
         entry.delete(0, END)
         entry.insert(0, text)
 
     def on_click_image(self, e):
+        if self.picking_color:
+            self.pick_bgcolor(e)
+        else:
+            self.update_sprite_bbox(e)
+
+    def pick_bgcolor(self, e):
+        selected_color = self.spritesheet_image.getpixel((e.x, e.y))
+        self.set_transparent_color(selected_color)
+        self.picking_color = False
+        self.master.config(cursor='arrow')
+
+    def update_sprite_bbox(self, e):
         bbox = spritesheet.get_sprite_bbox(
             (e.x, e.y),
             self.spritesheet_image,
