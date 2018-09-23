@@ -37,6 +37,7 @@ class Application(Frame):
         self.master.title("Spritesheet Tool")
         self.padding = '1m'
         self.copyImage = PhotoImage(file='images/copy.png')  # 16x16 pixels
+        self.colorPickerImage = PhotoImage(file='images/colorpicker.png')  # 16x16 pixels
 
         self.master.grid_rowconfigure(0, weight=1)
         self.master.grid_columnconfigure(0, weight=1)
@@ -74,11 +75,11 @@ class Application(Frame):
         self.spritesheetPanel.bind('<Button 1>', self.on_click_image)
 
         self.openButton = Button(self.actionFrame, text='Open Spritesheet', command=self.on_open_image)
-        self.pickColorButton = Button(self.actionFrame, text='Pick Background Color', command=self.on_pick_bgcolor)
 
         self.transColorLabel = Label(self.settingFrame, text='Transparent Color')
         self.transColorEntry = Entry(self.settingFrame, width=10)
         self.transColorPanel = Label(self.settingFrame)
+        self.pickColorButton = Button(self.settingFrame, image=self.colorPickerImage, command=self.on_pick_bgcolor)
 
         self.topLabel = Label(self.bboxFrame, text='top')
         self.bottomLabel = Label(self.bboxFrame, text='bottom')
@@ -103,11 +104,11 @@ class Application(Frame):
         self.spritesheetPanel.grid(row=0, column=0)
 
         self.openButton.grid(row=1, column=1, padx=self.padding, pady=self.padding)
-        self.pickColorButton.grid(row=2, column=1, padx=self.padding, pady=self.padding)
 
         self.transColorLabel.grid(row=1, column=0, padx=self.padding)
         self.transColorEntry.grid(row=1, column=1, sticky='ew')
         self.transColorPanel.grid(row=1, column=2, sticky='ew')
+        self.pickColorButton.grid(row=1, column=3, padx=self.padding, pady=self.padding)
 
         self.topLabel.grid(row=0, column=0, sticky='e', padx=self.padding, pady=self.padding)
         self.bottomLabel.grid(row=1, column=0, sticky='e', padx=self.padding, pady=self.padding)
