@@ -29,22 +29,22 @@ def get_sprite_bbox(coord, spritesheet, border_color):
 
     while not have_all_border(sprite, border_color):
 
-        if left < 0 or top < 0 or right > spritesheet.width or bottom > spritesheet.height:
+        if left <= 0 or top <= 0 or right >= spritesheet.width or bottom >= spritesheet.height:
             return None
 
-        while not have_top_border(sprite, border_color):
+        while not have_top_border(sprite, border_color) and top > 0:
             top -= 1
             sprite = spritesheet.crop((left, top, right, bottom))
 
-        while not have_bottom_border(sprite, border_color):
+        while not have_bottom_border(sprite, border_color) and bottom < spritesheet.height:
             bottom += 1
             sprite = spritesheet.crop((left, top, right, bottom))
 
-        while not have_left_border(sprite, border_color):
+        while not have_left_border(sprite, border_color) and left > 0:
             left -= 1
             sprite = spritesheet.crop((left, top, right, bottom))
 
-        while not have_right_border(sprite, border_color):
+        while not have_right_border(sprite, border_color) and right < spritesheet.width:
             right += 1
             sprite = spritesheet.crop((left, top, right, bottom))
 
