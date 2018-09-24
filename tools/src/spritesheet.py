@@ -11,7 +11,7 @@ from imageutil import (
 debugging: bool = False
 
 
-def get_sprite_bbox(coord, spritesheet, border_color):
+def get_sprite_bbox(coord, spritesheet, border_color, border_thickness=1):
     """ Return boundary box of the sprite at <coord> in <spritesheet> with <border_color> is transparent color """
     x, y = coord
     selected_pixel = spritesheet.getpixel((x, y))
@@ -27,24 +27,24 @@ def get_sprite_bbox(coord, spritesheet, border_color):
 
     sprite = spritesheet.crop((left, top, right, bottom))
 
-    while not have_all_border(sprite, border_color):
+    while not have_all_border(sprite, border_color, border_thickness):
 
         if left <= 0 or top <= 0 or right >= spritesheet.width or bottom >= spritesheet.height:
             return None
 
-        while not have_top_border(sprite, border_color) and top > 0:
+        while not have_top_border(sprite, border_color, border_thickness) and top > 0:
             top -= 1
             sprite = spritesheet.crop((left, top, right, bottom))
 
-        while not have_bottom_border(sprite, border_color) and bottom < spritesheet.height:
+        while not have_bottom_border(sprite, border_color, border_thickness) and bottom < spritesheet.height:
             bottom += 1
             sprite = spritesheet.crop((left, top, right, bottom))
 
-        while not have_left_border(sprite, border_color) and left > 0:
+        while not have_left_border(sprite, border_color, border_thickness) and left > 0:
             left -= 1
             sprite = spritesheet.crop((left, top, right, bottom))
 
-        while not have_right_border(sprite, border_color) and right < spritesheet.width:
+        while not have_right_border(sprite, border_color, border_thickness) and right < spritesheet.width:
             right += 1
             sprite = spritesheet.crop((left, top, right, bottom))
 

@@ -81,6 +81,10 @@ class Application(Frame):
         self.transColorPanel = Label(self.settingFrame)
         self.pickColorButton = Button(self.settingFrame, image=self.colorPickerImage, command=self.on_pick_bgcolor)
 
+        validate_cmd = (self.master.register(self.validate_thickness_entry), '%S')  # %S - char inserted
+        self.borderThicknessLabel = Label(self.settingFrame, text='Border Thickness')
+        self.borderThicknessEntry = Entry(self.settingFrame, validate='key', validatecommand=validate_cmd)
+
         self.topLabel = Label(self.bboxFrame, text='top')
         self.bottomLabel = Label(self.bboxFrame, text='bottom')
         self.leftLabel = Label(self.bboxFrame, text='left')
@@ -105,10 +109,13 @@ class Application(Frame):
 
         self.openButton.grid(row=1, column=1, padx=self.padding, pady=self.padding)
 
-        self.transColorLabel.grid(row=1, column=0, padx=self.padding)
-        self.transColorEntry.grid(row=1, column=1, sticky='ew')
-        self.transColorPanel.grid(row=1, column=2, sticky='ew')
-        self.pickColorButton.grid(row=1, column=3, padx=self.padding, pady=self.padding)
+        self.transColorLabel.grid(row=0, column=0, sticky='e')
+        self.transColorEntry.grid(row=0, column=1, sticky='ew', padx=(self.padding, 0))
+        self.transColorPanel.grid(row=0, column=2, sticky='ew')
+        self.pickColorButton.grid(row=0, column=3, padx=self.padding, pady=(0, self.padding))
+
+        self.borderThicknessLabel.grid(row=1, column=0, sticky='e')
+        self.borderThicknessEntry.grid(row=1, column=1, columnspan=3, padx=self.padding, pady=(0, self.padding))
 
         self.topLabel.grid(row=0, column=0, sticky='e', padx=self.padding, pady=self.padding)
         self.bottomLabel.grid(row=1, column=0, sticky='e', padx=self.padding, pady=self.padding)
@@ -134,6 +141,13 @@ class Application(Frame):
         default_spritesheet_path = os.path.join(os.getcwd(), 'images', 'spritesheet.png')
         self.set_spritesheet_panel(default_spritesheet_path)
         self.set_transparent_color(self.spritesheet_image.getpixel((0, 0)))
+        self.set_text(self.borderThicknessEntry, 1)
+
+    def validate_thickness_entry(self, current_char):
+        """ border thickness only accept number value """
+        if current_char in '0123456789':
+            return True
+        return False
 
     def set_spritesheet_panel(self, image_path):
         self.spritesheet_image = Image.open(image_path).convert('RGB')
@@ -201,7 +215,8 @@ class Application(Frame):
         bbox = spritesheet.get_sprite_bbox(
             (e.x, e.y),
             self.spritesheet_image,
-            hex_to_rgb(self.transColorEntry.get()))
+            hex_to_rgb(self.transColorEntry.get()),
+            int(self.borderThicknessEntry.get()))
 
         if bbox is None:
             return
