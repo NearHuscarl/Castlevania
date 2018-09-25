@@ -1,9 +1,6 @@
 from tkinter import (
     Frame,
     Tk,
-    DISABLED,
-    NORMAL,
-    END,
     PhotoImage,
     filedialog,
 )
@@ -11,23 +8,23 @@ from tkinter.ttk import (
     Button,
     Entry,
     Label,
-    Labelframe
+    Labelframe,
+    Combobox,
 )
 
 from PIL import ImageTk, Image
 import os
 
+from tkinterapp import Application
 import spritesheet
 from color import rgb_to_hex, hex_to_rgb
 
 
-class Application(Frame):
+class App(Application):
     """ Spritesheet tool GUI """
 
     def __init__(self, master):
-        Frame.__init__(self, master)
-
-        self.master: Tk = master
+        super().__init__(master)
 
         self.init_ui()
         self.center_window()
@@ -36,8 +33,10 @@ class Application(Frame):
         """ Initialize GUI layout and widgets """
         self.master.title("Spritesheet Tool")
         self.padding = '1m'
-        self.copyImage = PhotoImage(file='images/copy.png')  # 16x16 pixels
-        self.colorPickerImage = PhotoImage(file='images/colorpicker.png')  # 16x16 pixels
+        self.assetpath = os.path.join(os.getcwd(), 'assets')
+        self.copyImage = PhotoImage(file=os.path.join(self.assetpath, 'copy.png'))  # 16x16 pixels
+        self.colorPickerImage = PhotoImage(file=os.path.join(self.assetpath, 'colorpicker.png'))
+        self.openImage = PhotoImage(file=os.path.join(self.assetpath, 'open.png'))
 
         self.master.grid_rowconfigure(0, weight=1)
         self.master.grid_columnconfigure(0, weight=1)
@@ -45,7 +44,7 @@ class Application(Frame):
         self.previewFrame = Frame(self.master)
         self.infoFrame = Frame(self.master)
 
-        self.actionFrame = Labelframe(self.infoFrame, text='Menu')
+        self.actionFrame = Labelframe(self.infoFrame, text='')
         self.settingFrame = Labelframe(self.infoFrame, text='Settings')
         self.bboxFrame = Labelframe(self.infoFrame, text='Boundary Box')
         self.spriteFrame = Labelframe(self.infoFrame, text='Sprite Preview')
@@ -53,19 +52,13 @@ class Application(Frame):
         self.previewFrame.grid(column=0, row=0, sticky='nsew')
         self.infoFrame.grid(column=1, row=0, sticky='n')
 
-        self.actionFrame.grid(column=0, row=1, padx=self.padding, pady=self.padding, sticky='ew')
-        self.actionFrame.grid_columnconfigure(0, weight=1)
-        self.actionFrame.grid_columnconfigure(2, weight=1)
-        self.actionFrame.grid_rowconfigure(0, weight=1)
-        self.actionFrame.grid_rowconfigure(2, weight=1)
-
-        self.settingFrame.grid(column=0, row=2, padx=self.padding, pady=self.padding, sticky='ew')
+        self.settingFrame.grid(column=0, columnspan=2, row=1, padx=self.padding, pady=self.padding, sticky='ew')
         self.settingFrame.grid_columnconfigure(1, weight=1)
 
-        self.bboxFrame.grid(column=0, row=3, padx=self.padding, pady=self.padding, sticky='ew')
+        self.bboxFrame.grid(column=0, row=2, padx=self.padding, pady=self.padding, sticky='ew')
         self.bboxFrame.grid_columnconfigure(1, weight=1)
 
-        self.spriteFrame.grid(column=0, row=4, padx=self.padding, pady=self.padding, sticky='w')
+        self.spriteFrame.grid(column=1, row=2, padx=self.padding, pady=self.padding, sticky='nsw')
         self.spriteFrame.grid_columnconfigure(0, weight=1)
         self.spriteFrame.grid_columnconfigure(2, weight=1)
         self.spriteFrame.grid_rowconfigure(0, weight=1)
@@ -74,14 +67,21 @@ class Application(Frame):
         self.spritesheetPanel = Label(self.previewFrame)
         self.spritesheetPanel.bind('<Button 1>', self.on_click_image)
 
-        self.openButton = Button(self.actionFrame, text='Open Spritesheet', command=self.on_open_image)
+        self.spritesheetPathLabel = Label(self.settingFrame, text='Spritesheet Folder')
+        self.spritesheetPathButton = Button(self.settingFrame, image=self.openImage,
+                                            command=self.on_change_spritesheet_path)
+        self.spritesheetPathEntry = Entry(self.settingFrame, state='readonly')
+
+        self.spritesheetLabel = Label(self.settingFrame, text='Spritesheet')
+        self.spritesheetCombobox = Combobox(self.settingFrame, state='readonly')
+        self.spritesheetCombobox.bind('<<ComboboxSelected>>', self.on_select_spritesheet)
 
         self.transColorLabel = Label(self.settingFrame, text='Transparent Color')
-        self.transColorEntry = Entry(self.settingFrame, width=10)
+        self.transColorEntry = Entry(self.settingFrame, width=10, state='readonly')
         self.transColorPanel = Label(self.settingFrame)
         self.pickColorButton = Button(self.settingFrame, image=self.colorPickerImage, command=self.on_pick_bgcolor)
 
-        validate_cmd = (self.master.register(self.validate_thickness_entry), '%S')  # %S - char inserted
+        validate_cmd = (self.master.register(self.validate_number_value), '%S')  # %S - char inserted
         self.borderThicknessLabel = Label(self.settingFrame, text='Border Thickness')
         self.borderThicknessEntry = Entry(self.settingFrame, validate='key', validatecommand=validate_cmd)
 
@@ -90,10 +90,10 @@ class Application(Frame):
         self.leftLabel = Label(self.bboxFrame, text='left')
         self.rightLabel = Label(self.bboxFrame, text='right')
 
-        self.topEntry = Entry(self.bboxFrame)
-        self.bottomEntry = Entry(self.bboxFrame)
-        self.leftEntry = Entry(self.bboxFrame)
-        self.rightEntry = Entry(self.bboxFrame)
+        self.topEntry = Entry(self.bboxFrame, state='readonly')
+        self.bottomEntry = Entry(self.bboxFrame, state='readonly')
+        self.leftEntry = Entry(self.bboxFrame, state='readonly')
+        self.rightEntry = Entry(self.bboxFrame, state='readonly')
 
         self.copyTopButton = Button(self.bboxFrame, image=self.copyImage,
                                     command=lambda: self.on_click_copy_button(self.topEntry))
@@ -105,17 +105,25 @@ class Application(Frame):
                                       command=lambda: self.on_click_copy_button(self.rightEntry))
 
         self.spritePanel = Label(self.spriteFrame, border=2)
+
         self.spritesheetPanel.grid(row=0, column=0)
 
-        self.openButton.grid(row=1, column=1, padx=self.padding, pady=self.padding)
+        self.spritesheetPathLabel.grid(row=0, column=0, sticky='e')
+        self.spritesheetPathEntry.grid(row=0, column=1, columnspan=2, padx=(self.padding, 0), sticky='ew')
+        self.spritesheetPathButton.grid(row=0, column=3, padx=self.padding, pady=(0, self.padding))
 
-        self.transColorLabel.grid(row=0, column=0, sticky='e')
-        self.transColorEntry.grid(row=0, column=1, sticky='ew', padx=(self.padding, 0))
-        self.transColorPanel.grid(row=0, column=2, sticky='ew')
-        self.pickColorButton.grid(row=0, column=3, padx=self.padding, pady=(0, self.padding))
+        self.spritesheetLabel.grid(row=1, column=0, sticky='e')
+        self.spritesheetCombobox.grid(row=1, column=1, columnspan=3, padx=self.padding, pady=(0, self.padding),
+                                      sticky='ew')
 
-        self.borderThicknessLabel.grid(row=1, column=0, sticky='e')
-        self.borderThicknessEntry.grid(row=1, column=1, columnspan=3, padx=self.padding, pady=(0, self.padding))
+        self.transColorLabel.grid(row=2, column=0, sticky='e')
+        self.transColorEntry.grid(row=2, column=1, sticky='ew', padx=(self.padding, 0))
+        self.transColorPanel.grid(row=2, column=2)
+        self.pickColorButton.grid(row=2, column=3, padx=self.padding, pady=(0, self.padding))
+
+        self.borderThicknessLabel.grid(row=3, column=0, sticky='e')
+        self.borderThicknessEntry.grid(row=3, column=1, columnspan=3, sticky='ew',
+                                       padx=self.padding, pady=(0, self.padding))
 
         self.topLabel.grid(row=0, column=0, sticky='e', padx=self.padding, pady=self.padding)
         self.bottomLabel.grid(row=1, column=0, sticky='e', padx=self.padding, pady=self.padding)
@@ -138,66 +146,68 @@ class Application(Frame):
     def init_value(self):
         """ Initialize default values on startup """
         self.picking_color = False
-        default_spritesheet_path = os.path.join(os.getcwd(), 'images', 'spritesheet.png')
-        self.set_spritesheet_panel(default_spritesheet_path)
+
+        spritesheet_path = os.path.join(os.getcwd(), 'spritesheets')
+        self.set_readonly_text(self.spritesheetPathEntry, spritesheet_path)
+        self.update_spritesheet_list()
+
+        self.set_spritesheet_panel()
         self.set_transparent_color(self.spritesheet_image.getpixel((0, 0)))
         self.set_text(self.borderThicknessEntry, 1)
 
-    def validate_thickness_entry(self, current_char):
-        """ border thickness only accept number value """
-        if current_char in '0123456789':
-            return True
-        return False
+        self.center_window()
 
-    def set_spritesheet_panel(self, image_path):
-        self.spritesheet_image = Image.open(image_path).convert('RGB')
-        self.spritesheet_photo = ImageTk.PhotoImage(self.spritesheet_image)
-        self.spritesheetPanel.configure(image=self.spritesheet_photo)
+    def update_spritesheet_list(self):
+        spritesheet_path = self.spritesheetPathEntry.get()
+        spritesheets = []
+
+        for filename in os.listdir(spritesheet_path):
+            if filename.endswith('.png'):
+                name = os.path.splitext(filename)[0]
+                spritesheets.append(name)
+
+        self.spritesheetCombobox.configure(value=spritesheets)
+        if len(spritesheets) > 0:
+            self.spritesheetCombobox.current(0)
+        else:
+            self.spritesheetCombobox.set('')
+
+    def set_spritesheet_panel(self):
+        selected_spritesheet = self.spritesheetCombobox.get()
+
+        if selected_spritesheet != '':
+            image_path = os.path.join(self.spritesheetPathEntry.get(), selected_spritesheet + '.png')
+            self.spritesheet_image = Image.open(image_path).convert('RGB')
+            self.spritesheet_photo = ImageTk.PhotoImage(self.spritesheet_image)
+            self.spritesheetPanel.configure(image=self.spritesheet_photo)
 
     def set_transparent_color(self, rgb_color):
-        self.transColorEntry.configure(state=NORMAL)
-        self.set_text(self.transColorEntry, rgb_to_hex(rgb_color))
-        self.transColorEntry.configure(state=DISABLED)
-
+        self.set_readonly_text(self.transColorEntry, rgb_to_hex(rgb_color))
         self.trans_color_photo = ImageTk.PhotoImage(Image.new(self.spritesheet_image.mode, (19, 19), rgb_color))
         self.transColorPanel.configure(image=self.trans_color_photo)
-
-    def center_window(self):
-        self.master.update_idletasks()
-
-        width = self.master.winfo_width()
-        height = self.master.winfo_height()
-
-        x = (self.master.winfo_screenwidth() // 2) - (width // 2)
-        y = (self.master.winfo_screenheight() // 2) - (height // 2)
-
-        self.master.geometry('{}x{}+{}+{}'.format(width, height, x, y))
 
     def resize(self):
         width = self.spritesheet_photo.width() + self.infoFrame.winfo_width()
         height = max(self.spritesheet_photo.height(), self.infoFrame.winfo_height())
+
         self.master.geometry('{}x{}'.format(width, height))
 
-    def on_open_image(self):
-        filetypes = [('Images', '*.png'), ('All files', '*')]
-        dialog = filedialog.Open(self, filetypes=filetypes)
-        path = dialog.show()
+    def on_change_spritesheet_path(self):
+        spritesheet_path = filedialog.askdirectory()
 
-        if path != '':
-            self.set_spritesheet_panel(path)
-            self.set_transparent_color(self.spritesheet_image.getpixel((0, 0)))
+        if spritesheet_path != '':
+            self.set_readonly_text(self.spritesheetPathEntry, spritesheet_path)
+            self.update_spritesheet_list()
 
-            self.resize()
-            self.center_window()
+    def on_select_spritesheet(self, e):
+        self.set_spritesheet_panel()
+        self.set_transparent_color(self.spritesheet_image.getpixel((0, 0)))
+        self.resize()
+        self.center_window()
 
     def on_pick_bgcolor(self):
         self.picking_color = True
         self.master.config(cursor='tcross')
-
-    @classmethod
-    def set_text(cls, entry, text):
-        entry.delete(0, END)
-        entry.insert(0, text)
 
     def on_click_image(self, e):
         if self.picking_color:
@@ -223,10 +233,10 @@ class Application(Frame):
 
         left, top, right, bottom = bbox
 
-        self.set_text(self.leftEntry, left)
-        self.set_text(self.topEntry, top)
-        self.set_text(self.rightEntry, right)
-        self.set_text(self.bottomEntry, bottom)
+        self.set_readonly_text(self.leftEntry, left)
+        self.set_readonly_text(self.topEntry, top)
+        self.set_readonly_text(self.rightEntry, right)
+        self.set_readonly_text(self.bottomEntry, bottom)
 
         self.sprite_image = self.spritesheet_image.crop((left, top, right, bottom))
         self.sprite_photo = ImageTk.PhotoImage(self.sprite_image)
@@ -241,7 +251,7 @@ class Application(Frame):
 def main():
     root = Tk()
 
-    app = Application(root)
+    app = App(root)
     app.mainloop()
 
 
