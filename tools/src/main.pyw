@@ -44,21 +44,20 @@ class App(Application):
         self.previewFrame = Frame(self.master)
         self.infoFrame = Frame(self.master)
 
-        self.actionFrame = Labelframe(self.infoFrame, text='')
         self.settingFrame = Labelframe(self.infoFrame, text='Settings')
-        self.bboxFrame = Labelframe(self.infoFrame, text='Boundary Box')
+        self.bboxFrame = Labelframe(self.infoFrame, text='Bounding Box')
         self.spriteFrame = Labelframe(self.infoFrame, text='Sprite Preview')
 
         self.previewFrame.grid(column=0, row=0, sticky='nsew')
         self.infoFrame.grid(column=1, row=0, sticky='n')
 
-        self.settingFrame.grid(column=0, columnspan=2, row=1, padx=self.padding, pady=self.padding, sticky='ew')
+        self.settingFrame.grid(column=0, columnspan=2, row=0, padx=self.padding, pady=self.padding, sticky='ew')
         self.settingFrame.grid_columnconfigure(1, weight=1)
 
-        self.bboxFrame.grid(column=0, row=2, padx=self.padding, pady=self.padding, sticky='ew')
+        self.bboxFrame.grid(column=0, row=1, padx=self.padding, pady=self.padding, sticky='ew')
         self.bboxFrame.grid_columnconfigure(1, weight=1)
 
-        self.spriteFrame.grid(column=1, row=2, padx=self.padding, pady=self.padding, sticky='nsw')
+        self.spriteFrame.grid(column=1, row=1, padx=self.padding, pady=self.padding, sticky='nsw')
         self.spriteFrame.grid_columnconfigure(0, weight=1)
         self.spriteFrame.grid_columnconfigure(2, weight=1)
         self.spriteFrame.grid_rowconfigure(0, weight=1)
