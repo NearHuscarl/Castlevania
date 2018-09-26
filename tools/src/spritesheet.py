@@ -1,5 +1,7 @@
 import os
 from PIL import Image
+
+from common import DEFAULT_SPRITESHEET_PATH
 from imageutil import (
     have_all_border,
     have_top_border,
@@ -12,14 +14,15 @@ debugging: bool = False
 
 
 def get_sprite_bbox(coord, spritesheet, border_color, border_thickness=1):
-    """ Return boundary box of the sprite at <coord> in <spritesheet> with <border_color> is transparent color """
+    """ Return the bounding box of the sprite at <coord> in <spritesheet> with <border_color>
+    is spritesheet background color. <border_thickness> is the size of the border surrounding the sprite """
     x, y = coord
     selected_pixel = spritesheet.getpixel((x, y))
 
     if selected_pixel == border_color:
         return None
 
-    # get boundary box surrounding selected pixel
+    # get bounding box surrounding selected pixel
     left = x - 1
     top = y - 1
     right = x + 2
@@ -59,7 +62,7 @@ def get_sprite_bbox(coord, spritesheet, border_color, border_thickness=1):
 
 
 def main():
-    spritesheet_path = os.path.join(os.getcwd(), 'images', 'spritesheet.png')
+    spritesheet_path = os.path.join(DEFAULT_SPRITESHEET_PATH, 'simon.png')
     spritesheet = Image.open(spritesheet_path).convert('RGB')
     border_color = spritesheet.getpixel((0, 0))
 

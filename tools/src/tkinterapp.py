@@ -1,14 +1,12 @@
 from tkinter import (
     Frame,
     Tk,
-    DISABLED,
-    NORMAL,
     END,
 )
 
 
 class Application(Frame):
-    """ Spritesheet tool GUI """
+    """ TKinter Application base class with some helper methods """
 
     def __init__(self, master):
         Frame.__init__(self, master)

@@ -1,3 +1,4 @@
+import os
 from tkinter import (
     Frame,
     Tk,
@@ -13,8 +14,8 @@ from tkinter.ttk import (
 )
 
 from PIL import ImageTk, Image
-import os
 
+from common import DEFAULT_SPRITESHEET_PATH
 from tkinterapp import Application
 import spritesheet
 from color import rgb_to_hex, hex_to_rgb
@@ -146,8 +147,7 @@ class App(Application):
         """ Initialize default values on startup """
         self.picking_color = False
 
-        spritesheet_path = os.path.join(os.getcwd(), 'spritesheets')
-        self.set_readonly_text(self.spritesheetPathEntry, spritesheet_path)
+        self.set_readonly_text(self.spritesheetPathEntry, DEFAULT_SPRITESHEET_PATH)
         self.update_spritesheet_list()
 
         self.set_spritesheet_panel()
