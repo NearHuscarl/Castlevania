@@ -13,7 +13,7 @@ def _get_bbox(image):
 
 
 def _get_main_image_bbox(image, bg):
-    """ get bounding box of image  https://stackoverflow.com/a/10986041 """
+    """ get bounding box of image without border https://stackoverflow.com/a/10986041 """
     background = Image.new(image.mode, image.size, bg)
     diff = ImageChops.difference(image, background)
     diff = ImageChops.add(diff, diff, 2.0, -100)
@@ -21,7 +21,7 @@ def _get_main_image_bbox(image, bg):
 
 
 def have_border(image, border_color):
-    """ return True if any side has border """
+    """ return True if any sides has border """
     bbox = _get_main_image_bbox(image, border_color)
     return bbox != (0, 0, image.size[0], image.size[1])
 

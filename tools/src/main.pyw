@@ -154,8 +154,6 @@ class App(Application):
         self.set_transparent_color(self.spritesheet_image.getpixel((0, 0)))
         self.set_text(self.borderThicknessEntry, 1)
 
-        self.center_window()
-
     def update_spritesheet_list(self):
         spritesheet_path = self.spritesheetPathEntry.get()
         spritesheets = []
