@@ -2,15 +2,13 @@
 #include "Graphics.h"
 
 // TODO: refactor
-#define WINDOW_CLASS_NAME L"SampleWindow"
-#define MAIN_WINDOW_TITLE L"02 - Sprite animation"
+constexpr LPCWSTR WINDOW_CLASS_NAME = L"SampleWindow";
+constexpr LPCWSTR MAIN_WINDOW_TITLE = L"02 - Sprite animation";
 
-/*
-	Initialize DirectX, create a Direct3D device for rendering within the window, initial Sprite library for
-	rendering 2D images
-	- hInst: Application instance handle
-	- hWnd: Application window handle
-*/
+// Initialize DirectX, create a Direct3D device for rendering within the window, initial Sprite library for
+// rendering 2D images
+// - hInst: Application instance handle
+// - hWnd: Application window handle
 Graphics::Graphics(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight)
 {
 	this->hInstance = hInstance;
@@ -18,6 +16,14 @@ Graphics::Graphics(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Scree
 
 	this->ScreenWidth = ScreenWidth;
 	this->ScreenHeight = ScreenHeight;
+
+	transparentColor = D3DCOLOR_RGBA(255, 255, 255, 0); // Default is transparent white
+}
+
+void Graphics::Initialize()
+{
+	InitWindow();
+	InitializeDevices();
 }
 
 void Graphics::InitializeDevices()
@@ -74,12 +80,12 @@ void Graphics::InitWindow()
 	wc.lpfnWndProc = (WNDPROC)WinProc;
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
-	wc.hIcon = NULL;
-	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wc.hIcon = nullptr;
+	wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
-	wc.lpszMenuName = NULL;
+	wc.lpszMenuName = nullptr;
 	wc.lpszClassName = WINDOW_CLASS_NAME;
-	wc.hIconSm = NULL;
+	wc.hIconSm = nullptr;
 
 	RegisterClassEx(&wc);
 
@@ -91,10 +97,10 @@ void Graphics::InitWindow()
 		CW_USEDEFAULT,
 		ScreenWidth,
 		ScreenHeight,
-		NULL,
-		NULL,
+		nullptr,
+		nullptr,
 		hInstance,
-		NULL);
+		nullptr);
 
 	if (!hWnd)
 	{
@@ -116,7 +122,8 @@ HWND Graphics::GetWindowHandler()
 
 LRESULT CALLBACK Graphics::WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	switch (message) {
+	switch (message)
+	{
 		case WM_DESTROY:
 			PostQuitMessage(0);
 			break;

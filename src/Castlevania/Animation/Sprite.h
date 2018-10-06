@@ -1,21 +1,20 @@
 #pragma once
 
-#include "../Utilities/DirectX.h"
+#include <string>
+#include "../Base/BoundingBox.h"
+#include "../Base/Graphics.h"
 
 class Sprite
 {
 public:
-	Sprite(int id, int left, int top, int right, int bottom, GTexturePtr texture);
-
+	static void Initialize(Graphics *graphics);
+	
+	Sprite(std::string id, BoundingBox boundingBox, GTexturePtr texture);
 	void Draw(float x, float y);
 
 private:
-	int id;				// Sprite ID in the sprite database
-
-	int left;
-	int top;
-	int right;
-	int bottom;
-
+	std::string id;				// Sprite ID in the sprite database
+	BoundingBox boundingBox;
 	GTexturePtr texture;
+	static Graphics *graphics;
 };

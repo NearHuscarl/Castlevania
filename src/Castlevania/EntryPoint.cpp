@@ -3,9 +3,9 @@
 DemoGame *EntryPoint::game = NULL;
 
 
-void EntryPoint::Init(DemoGame *game)
+void EntryPoint::Init(HINSTANCE hInstance, int nCmdShow)
 {
-	EntryPoint::game = game;
+	EntryPoint::game = new DemoGame(hInstance, nCmdShow);
 }
 
 DemoGame *EntryPoint::Game()

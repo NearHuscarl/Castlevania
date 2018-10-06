@@ -5,9 +5,9 @@
 #include "InputHandler.h"
 #include <conio.h>
 
-#define KB_UP 72
-#define KB_LEFT 75
-#define KB_RIGHT 77
+constexpr int KB_UP = 72;
+constexpr int KB_LEFT = 75;
+constexpr int KB_RIGHT = 77;
 
 InputHandler::InputHandler()
 {

@@ -1,48 +1,41 @@
 #include "Mario.h"
-#include "../Input/InputManager.h"
 #include "../Utilities/Debug.h"
 
+constexpr float MARIO_WALKING_SPEED = 0.05f;
+constexpr float MARIO_JUMP_SPEED_X = 1.0f;
+constexpr float MARIO_JUMP_SPEED_Y = 0.7f;
+constexpr float MARIO_GRAVITY = 0.05f;
 
-Mario::Mario()
+void Mario::LoadContent()
 {
-	HookEvents();
+	InitAnimation({ MARIO_IDLE_LEFT, MARIO_IDLE_RIGHT, MARIO_WALK_LEFT, MARIO_WALK_RIGHT });
+	SetPosition(0.0f, 100.0f);
 }
 
-void Mario::HookEvents()
+void Mario::Update(unsigned long deltaTime)
 {
-	HOOK_EVENT(&InputManager::KeyDown, InputManager::GetInstance(), &Mario::OnKeyDown);
-	HOOK_EVENT(&InputManager::KeyStateChanged, InputManager::GetInstance(), &Mario::OnKeyStateChanged);
-}
+	GameObject::Update(deltaTime);
 
-void Mario::Update(DWORD dt)
-{
-	GameObject::Update(dt);
-
-	// simple JUMP
+	// simple fall down
 	vy += MARIO_GRAVITY;
 	if (y > 100) 
 	{
-		vy = 0; y = 100.0f;
+		vy = 0;
+		y = 100.0f;
 	}
 
 	// simple screen edge collision!!!
-	if (vx > 0 && x > 280) x = 280;
-	if (vx < 0 && x < 0) x = 0;
+	if (vx > 0 && x > 290)
+		x = 290;
+	if (vx < 0 && x < 0)
+		x = 0;
+
+	animations[GetAnimationState()]->Update();
 }
 
 void Mario::Render()
 {
-	int ani;
-	if (vx == 0)
-	{
-		if (nx>0) ani = MARIO_ANI_IDLE_RIGHT;
-		else ani = MARIO_ANI_IDLE_LEFT;
-	}
-	else if (vx > 0) 
-		ani = MARIO_ANI_WALKING_RIGHT; 
-	else ani = MARIO_ANI_WALKING_LEFT;
-
-	animations[ani]->Render(x, y);
+	animations[GetAnimationState()]->Render(x, y);
 }
 
 void Mario::SetState(int state)
@@ -50,22 +43,40 @@ void Mario::SetState(int state)
 	GameObject::SetState(state);
 	switch (state)
 	{
-		case MARIO_STATE_WALKING_RIGHT:
+		case MARIO_STATE_WALK_RIGHT:
 			vx = MARIO_WALKING_SPEED;
 			nx = 1;
 			break;
-		case MARIO_STATE_WALKING_LEFT:
+		case MARIO_STATE_WALK_LEFT:
 			vx = -MARIO_WALKING_SPEED;
 			nx = -1;
 			break;
 		case MARIO_STATE_JUMP:
-			vy = -MARIO_JUMP_SPEED_Y;
-
+			if (y == 100)
+				vy = -MARIO_JUMP_SPEED_Y;
 		case MARIO_STATE_IDLE:
 			vx = 0;
 			break;
 	}
 }
+
+std::string Mario::GetAnimationState()
+{
+	if (vx == 0)
+	{
+		if (nx > 0)
+			return MARIO_IDLE_RIGHT;
+		else
+			return MARIO_IDLE_LEFT;
+	}
+	else if (vx > 0)
+	{
+		return MARIO_WALK_RIGHT;
+	}
+	return MARIO_WALK_LEFT;
+}
+
+#pragma region INPUT HANDLER
 
 void Mario::OnKeyDown(InputManager *inputManager, KeyEventArgs e)
 {
@@ -83,15 +94,15 @@ void Mario::OnKeyUp(InputManager *inputManager, KeyEventArgs e)
 	DebugOut(L"[INFO] KeyUp: %d\n", e.KeyCode);
 }
 
-void Mario::OnKeyStateChanged(InputManager *inputManager)
+void Mario::OnKeyState(InputManager *inputManager)
 {
 	if (inputManager->IsKeyDown(DIK_RIGHT))
 	{
-		SetState(MARIO_STATE_WALKING_RIGHT);
+		SetState(MARIO_STATE_WALK_RIGHT);
 	}
 	else if (inputManager->IsKeyDown(DIK_LEFT))
 	{
-		SetState(MARIO_STATE_WALKING_LEFT);
+		SetState(MARIO_STATE_WALK_LEFT);
 	}
 	else
 	{
@@ -99,13 +110,4 @@ void Mario::OnKeyStateChanged(InputManager *inputManager)
 	}
 }
 
-void Mario::UnhookEvents()
-{
-	UNHOOK_EVENT(&InputManager::KeyDown, InputManager::GetInstance(), &Mario::OnKeyDown);
-	UNHOOK_EVENT(&InputManager::KeyStateChanged, InputManager::GetInstance(), &Mario::OnKeyStateChanged);
-}
-
-Mario::~Mario()
-{
-	UnhookEvents();
-}
+#pragma endregion

@@ -1,13 +1,12 @@
-#include "../Utilities/Debug.h"
 #include "InputManager.h"
-#include "KeyEventArgs.h"
+#include "../Utilities/Debug.h"
 
-InputManager *InputManager::instance = NULL;
+InputManager *InputManager::instance = nullptr;
 
 
 InputManager *InputManager::GetInstance()
 {
-	if (instance == NULL)
+	if (instance == nullptr)
 	{
 		instance = new InputManager();
 	}
@@ -21,7 +20,7 @@ void InputManager::InitKeyboard(HWND hWnd)
 	HRESULT hr = DirectInput8Create(
 		(HINSTANCE)GetWindowLong(hWnd, GWL_HINSTANCE),
 		DIRECTINPUT_VERSION,
-		IID_IDirectInput8, (VOID**)&di, NULL
+		IID_IDirectInput8, (VOID**)&di, nullptr
 	);
 
 	if (hr != DI_OK)
@@ -30,7 +29,7 @@ void InputManager::InitKeyboard(HWND hWnd)
 		return;
 	}
 
-	hr = di->CreateDevice(GUID_SysKeyboard, &didv, NULL);
+	hr = di->CreateDevice(GUID_SysKeyboard, &didv, nullptr);
 
 	// TO-DO: put in exception handling
 	if (hr != DI_OK)

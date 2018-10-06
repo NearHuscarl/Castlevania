@@ -1,18 +1,24 @@
 #include "Sprite.h"
-#include "../Animation/TextureManager.h"
 
-Sprite::Sprite(int id, int left, int top, int right, int bottom, GTexturePtr texture)
+Graphics *Sprite::graphics;
+
+
+void Sprite::Initialize(Graphics *graphics)
+{
+	Sprite::graphics = graphics;
+}
+
+Sprite::Sprite(std::string id, BoundingBox boundingBox, GTexturePtr texture)
 {
 	this->id = id;
-	this->left = left;
-	this->top = top;
-	this->right = right;
-	this->bottom = bottom;
+	this->boundingBox = boundingBox;
 	this->texture = texture;
 }
 
 void Sprite::Draw(float x, float y)
 {
-	TextureManager *textureManager = TextureManager::GetInstance();
-	textureManager->Draw(x, y, texture, left, top, right, bottom);
+	D3DXVECTOR3 p(x, y, 0);
+	GSpritePtr spriteHandler = graphics->GetSpriteHandler();
+
+	spriteHandler->Draw(texture, &boundingBox, NULL, &p, D3DCOLOR_XRGB(255, 255, 255));
 }

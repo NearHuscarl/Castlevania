@@ -6,13 +6,17 @@
 
 
 EVENT_RECEIVER
-class IControllable
+class Controller
 {
-protected:
-	virtual void HookEvents() = 0;
-	virtual void UnhookEvents() = 0;
+public:
+	Controller();
+	virtual ~Controller();
 
-	virtual void OnKeyStateChanged(InputManager *inputManager) {};
+protected:
+	virtual void HookEvents();
+	virtual void UnhookEvents();
+
+	virtual void OnKeyState(InputManager *inputManager) {};
 	virtual void OnKeyDown(InputManager *inputManager, KeyEventArgs e) {};
 	virtual void OnKeyUp(InputManager *inputManager, KeyEventArgs e) {};
 };

@@ -2,10 +2,7 @@
 
 #include "GameObject.h"
 #include "../Utilities/Debug.h"
-#include "../Game.h"
 #include "../Animation/AnimationManager.h"
-
-vector<Animation*> GameObject::animations;
 
 GameObject::GameObject()
 {
@@ -14,20 +11,24 @@ GameObject::GameObject()
 	nx = 1;	
 }
 
-void GameObject::Update(DWORD dt)
+void GameObject::InitAnimation(std::vector<std::string> animationIDs)
 {
-	x += vx*dt;
-	y += vy*dt;
+	AnimationManager *animationMananger = AnimationManager::GetInstance();
+
+	for (auto animationID : animationIDs)
+	{
+		animations[animationID] = animationMananger->GetAnimation(animationID);
+	}
+}
+
+void GameObject::Update(unsigned long deltaTime)
+{
+	x += vx * deltaTime;
+	y += vy * deltaTime;
 }
 
 void GameObject::Render()
 {
-}
-
-void GameObject::AddAnimation(int aniId)
-{
-	Animation *ani = AnimationManager::GetInstance()->Get(aniId);
-	animations.push_back(ani);
 }
 
 GameObject::~GameObject()

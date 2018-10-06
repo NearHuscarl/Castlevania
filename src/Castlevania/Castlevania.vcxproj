@@ -23,6 +23,7 @@
     <ProjectGuid>{28B2F97D-9DAE-4B2D-B50C-20F78D14C071}</ProjectGuid>
     <RootNamespace>Castlevania</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <ProjectName>Castlevania</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -131,6 +132,9 @@
     <ClCompile Include="Animation\AnimationFrame.cpp" />
     <ClCompile Include="Animation\AnimationManager.cpp" />
     <ClCompile Include="Animation\SpriteManager.cpp" />
+    <ClCompile Include="Animation\TextureManager.cpp" />
+    <ClCompile Include="Content.cpp" />
+    <ClCompile Include="Input\Controller.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Utilities\Debug.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -140,16 +144,24 @@
     <ClCompile Include="Models\Mario.cpp" />
     <ClCompile Include="DemoGame.cpp" />
     <ClCompile Include="Animation\Sprite.cpp" />
-    <ClCompile Include="Animation\TextureManager.cpp" />
-    <ClCompile Include="Views\Graphics.cpp" />
+    <ClCompile Include="Animation\DxTextureManager.cpp" />
+    <ClCompile Include="Base\Graphics.cpp" />
+    <ClCompile Include="Utilities\Time.cpp" />
+    <ClCompile Include="Utilities\WindowUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation\Animation.h" />
-    <ClInclude Include="Animation\AnimationFrame.h" />
     <ClInclude Include="Animation\AnimationManager.h" />
+    <ClInclude Include="Animation\AnimationSettings.h" />
+    <ClInclude Include="Animation\AnimationFrame.h" />
     <ClInclude Include="Animation\SpriteManager.h" />
-    <ClInclude Include="Input\IControllable.h" />
+    <ClInclude Include="Animation\TextureManager.h" />
+    <ClInclude Include="Base\BoundingBox.h" />
+    <ClInclude Include="Content.h" />
+    <ClInclude Include="Models\States.h" />
+    <ClInclude Include="Base\Entity.h" />
     <ClInclude Include="EntryPoint.h" />
+    <ClInclude Include="Input\Controller.h" />
     <ClInclude Include="Input\KeyEventArgs.h" />
     <ClInclude Include="Utilities\Debug.h" />
     <ClInclude Include="Game.h" />
@@ -158,10 +170,12 @@
     <ClInclude Include="Models\Mario.h" />
     <ClInclude Include="DemoGame.h" />
     <ClInclude Include="Animation\Sprite.h" />
-    <ClInclude Include="Animation\TextureManager.h" />
+    <ClInclude Include="Animation\DxTextureManager.h" />
     <ClInclude Include="Utilities\DirectX.h" />
     <ClInclude Include="Utilities\Event.h" />
-    <ClInclude Include="Views\Graphics.h" />
+    <ClInclude Include="Base\Graphics.h" />
+    <ClInclude Include="Utilities\Time.h" />
+    <ClInclude Include="Utilities\WindowUtil.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

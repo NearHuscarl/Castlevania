@@ -9,19 +9,19 @@ Animation::Animation(int defaultTime)
 	this->currentFrame = -1;
 }
 
-void Animation::Add(int spriteId, DWORD time)
+void Animation::Add(std::string spriteId, DWORD time)
 {
-	int t = time;
-	if (time == 0) t = this->defaultTime;
+	if (time == 0)
+		time = this->defaultTime;
 
 	Sprite *sprite = SpriteManager::GetInstance()->Get(spriteId);
-	AnimationFrame *frame = new AnimationFrame(sprite, t);
+	AnimationFrame *frame = new AnimationFrame(sprite, time);
 	frames.push_back(frame);
 }
 
-void Animation::Render(float x, float y)
+void Animation::Update()
 {
-	DWORD now = GetTickCount();
+	float now = GetTickCount();
 	if (currentFrame == -1)
 	{
 		currentFrame = 0;
@@ -29,16 +29,18 @@ void Animation::Render(float x, float y)
 	}
 	else
 	{
-		DWORD frameTimeout = frames[currentFrame]->GetTime();
+		float frameTimeout = frames[currentFrame]->GetTime();
 		if (now - lastFrameTime > frameTimeout)
 		{
 			currentFrame++;
 			lastFrameTime = now;
 			if (currentFrame == frames.size()) currentFrame = 0;
-			//DebugOut(L"now: %d, lastFrameTime: %d, t: %d\n", now, lastFrameTime, t);
 		}
 
 	}
+}
 
+void Animation::Render(float x, float y)
+{
 	frames[currentFrame]->GetSprite()->Draw(x, y);
 }

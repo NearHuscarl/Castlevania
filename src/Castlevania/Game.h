@@ -1,20 +1,25 @@
 #pragma once
 
-#include "Views/Graphics.h"
+#include "Base/Graphics.h"
+#include "Content.h"
 
 class Game
 {
 public:
-	Game(HINSTANCE hInstance, int nCmdShow, int screenWidth, int screenHeight);
-
 	virtual void Initialize();
 	virtual void LoadResources();
-	virtual void Update(DWORD dt);
+	virtual void Update(unsigned long deltaTime);
 	virtual void Draw();
 
 	int Run();
 
+protected:
+	Game(HINSTANCE hInstance, int nCmdShow, int screenWidth, int screenHeight);
+
+	Content content;
+	Graphics graphics;
+
 private:
-	Graphics *graphics;
+	bool isRunning;
 	void Render();
 };

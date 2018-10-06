@@ -1,28 +1,14 @@
 #pragma once
 
-#include <unordered_map>
-#include "../Views/Graphics.h"
+#include "DxTextureManager.h"
 
-
-/*
-	Manage texture database
-*/
-class TextureManager
+class TextureManager : public DxTextureManager
 {
-public: 
+public:
 	static TextureManager *GetInstance();
 
-	void Initialize(Graphics *graphics);
-
-	void Add(int id, LPCWSTR filePath, D3DCOLOR transparentColor);
-	GTexturePtr Get(unsigned int i);
-	
-	void Draw(float x, float y, GTexturePtr texture);
-	void Draw(float x, float y, GTexturePtr texture, int left, int top, int right, int bottom);
+	void LoadResource() override;
 
 private:
 	static TextureManager *instance;
-
-	Graphics *graphics;
-	std::unordered_map<int, GTexturePtr> textures;
 };

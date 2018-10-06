@@ -1,18 +1,20 @@
 #pragma once
 
-#include <unordered_map>
+#include <map>
 #include "Animation.h"
+
+typedef std::map<std::string, Animation*> AnimationDict;
 
 class AnimationManager
 {
 public:
-	void Add(int id, Animation *ani);
-	Animation *Get(int id);
-
 	static AnimationManager *GetInstance();
+	
+	void LoadResource();
+	void AddAnimation(std::string animationID, int animateTime, std::vector<std::string> sprites);
+	Animation *GetAnimation(std::string animationID);
 
 private:
 	static AnimationManager *instance;
-
-	std::unordered_map<int, Animation*> animations;
+	AnimationDict animations;
 };

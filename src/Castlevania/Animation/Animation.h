@@ -1,14 +1,15 @@
 #pragma once
 
-#include <Windows.h>
 #include <vector>
 #include "AnimationFrame.h"
+
 
 class Animation
 {
 public:
 	Animation(int defaultTime);
-	void Add(int spriteId, DWORD time = 0);
+	void Add(std::string spriteId, DWORD time = 0);
+	void Update();
 	void Render(float x, float y);
 
 private:

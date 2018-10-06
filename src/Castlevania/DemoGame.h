@@ -12,6 +12,6 @@ public:
 
 	void Initialize() override;
 	void LoadResources() override;
-	void Update(DWORD dt) override;
+	void Update(unsigned long dt) override;
 	void Draw() override;
 };

@@ -1,21 +1,37 @@
 #include "AnimationManager.h"
+#include "AnimationSettings.h"
+#include "../Base/Entity.h"
+#include "../Models/Mario.h"
 
-AnimationManager * AnimationManager::instance = NULL;
+AnimationManager *AnimationManager::instance = nullptr;
 
-
-AnimationManager * AnimationManager::GetInstance()
+AnimationManager *AnimationManager::GetInstance()
 {
-	if (instance == NULL)
+	if (instance == nullptr)
 		instance = new AnimationManager();
 	return instance;
 }
 
-void AnimationManager::Add(int id, Animation *ani)
+void AnimationManager::LoadResource()
 {
-	animations[id] = ani;
+	AddAnimation(MARIO_IDLE_RIGHT, 100, { MARIO_WALK_RIGHT_01 });
+	AddAnimation(MARIO_WALK_RIGHT, 100, { MARIO_WALK_RIGHT_01, MARIO_WALK_RIGHT_02, MARIO_WALK_RIGHT_03 });
+	AddAnimation(MARIO_IDLE_LEFT,  100, { MARIO_WALK_LEFT_01 });
+	AddAnimation(MARIO_WALK_LEFT,  100, { MARIO_WALK_LEFT_01, MARIO_WALK_LEFT_02, MARIO_WALK_LEFT_03 });
 }
 
-Animation *AnimationManager::Get(int id)
+void AnimationManager::AddAnimation(std::string animationID, int animateTime, std::vector<std::string> sprites)
 {
-	return animations[id];
+	Animation *animation = new Animation(animateTime);
+	for (auto sprite : sprites)
+	{
+		animation->Add(sprite);
+	}
+
+	animations[animationID] = animation;
+}
+
+Animation * AnimationManager::GetAnimation(std::string animationID)
+{
+	return animations[animationID];
 }

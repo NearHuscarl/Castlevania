@@ -1,19 +1,21 @@
 #pragma once
 
-#include <unordered_map>
+#include <map>
 #include "Sprite.h"
 
+typedef std::map<std::string, Sprite*> SpriteDict;
 
 class SpriteManager
 {
 public:
-	void Add(int id, int left, int top, int right, int bottom, GTexturePtr tex);
-	Sprite *Get(int id);
-
 	static SpriteManager *GetInstance();
+
+	void LoadResource();
+	void Add(std::string id, BoundingBox boundingBox, GTexturePtr texture);
+	Sprite *Get(std::string id);
 
 private:
 	static SpriteManager *instance;
 
-	std::unordered_map<int, Sprite*> sprites;
+	SpriteDict sprites;
 };

@@ -1,44 +1,45 @@
 #pragma once
 
-#include <Windows.h>
-#include <d3dx9.h>
-#include <vector>
-
+#include <map>
+#include "States.h"
 #include "../Animation/Animation.h"
+#include "../Animation/AnimationSettings.h"
 
-
-using namespace std;
+typedef std::map<std::string, Animation*> AnimationDict;
 
 class GameObject
 {
+public:
+	GameObject();
+
+	void SetPosition(float x, float y) { this->x = x, this->y = y; }
+	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
+	
+	virtual void SetState(int state) { this->state = state; }
+	virtual int GetState() { return this->state; }
+
+	virtual std::string GetAnimationState() { return ""; }
+
+	virtual void LoadContent() {};
+
+	virtual void Update(unsigned long deltaTime);
+	virtual void Render();
+	
+	virtual ~GameObject();
+
 protected:
 
-	float x; 
+	float x;
 	float y;
 
 	float vx;
 	float vy;
 
-	int nx;	 
+	int nx;
 
-	int state;									
+	int state;
 
-	static vector<Animation*> animations;
+	AnimationDict animations;
 
-public: 
-	void SetPosition(float x, float y) { this->x = x, this->y = y; }
-	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
-
-	void SetState(int state) { this->state = state; }
-	int GetState() { return this->state; }
-
-
-	static void AddAnimation(int aniId);
-
-	GameObject();
-
-	void Update(DWORD dt);
-	void Render();
-	
-	virtual ~GameObject();
+	void InitAnimation(std::vector<std::string> animationIDs);
 };
