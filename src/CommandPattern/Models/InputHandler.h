@@ -15,7 +15,7 @@ public:
 private:
 	int KB_code = 0;
 
-	Command* upButton;
-	Command* leftButton;
-	Command* rightButton;
+	Command* upButton = nullptr;
+	Command* leftButton = nullptr;
+	Command* rightButton = nullptr;
 };
