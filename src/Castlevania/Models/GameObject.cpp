@@ -27,7 +27,7 @@ void GameObject::Update(unsigned long deltaTime)
 	y += vy * deltaTime;
 }
 
-void GameObject::Render()
+void GameObject::Draw(ID3DXSprite *spriteHandler)
 {
 }
 

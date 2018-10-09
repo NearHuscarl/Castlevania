@@ -81,6 +81,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>false</ConformanceMode>
       <AdditionalIncludeDirectories>SDK Path\Include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalDependencies>d3dx9.lib;d3d9.lib;dxguid.lib;dxerr.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -132,8 +133,10 @@
     <ClCompile Include="Animation\AnimationFrame.cpp" />
     <ClCompile Include="Animation\AnimationManager.cpp" />
     <ClCompile Include="Animation\SpriteManager.cpp" />
-    <ClCompile Include="Animation\TextureManager.cpp" />
-    <ClCompile Include="Content.cpp" />
+    <ClCompile Include="ContentManager.cpp" />
+    <ClCompile Include="ContentReader.cpp" />
+    <ClCompile Include="GameWindow.cpp" />
+    <ClCompile Include="GraphicsDevice.cpp" />
     <ClCompile Include="Input\Controller.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Utilities\Debug.cpp" />
@@ -144,9 +147,7 @@
     <ClCompile Include="Models\Mario.cpp" />
     <ClCompile Include="DemoGame.cpp" />
     <ClCompile Include="Animation\Sprite.cpp" />
-    <ClCompile Include="Animation\DxTextureManager.cpp" />
-    <ClCompile Include="Base\Graphics.cpp" />
-    <ClCompile Include="Utilities\Time.cpp" />
+    <ClCompile Include="GraphicsDeviceManager.cpp" />
     <ClCompile Include="Utilities\WindowUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -155,14 +156,17 @@
     <ClInclude Include="Animation\AnimationSettings.h" />
     <ClInclude Include="Animation\AnimationFrame.h" />
     <ClInclude Include="Animation\SpriteManager.h" />
-    <ClInclude Include="Animation\TextureManager.h" />
     <ClInclude Include="Base\BoundingBox.h" />
-    <ClInclude Include="Content.h" />
+    <ClInclude Include="ContentManager.h" />
+    <ClInclude Include="ContentReader.h" />
+    <ClInclude Include="GameWindow.h" />
+    <ClInclude Include="GraphicsDevice.h" />
     <ClInclude Include="Models\States.h" />
     <ClInclude Include="Base\Entity.h" />
     <ClInclude Include="EntryPoint.h" />
     <ClInclude Include="Input\Controller.h" />
     <ClInclude Include="Input\KeyEventArgs.h" />
+    <ClInclude Include="ServiceProvider.h" />
     <ClInclude Include="Utilities\Debug.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Models\GameObject.h" />
@@ -170,17 +174,24 @@
     <ClInclude Include="Models\Mario.h" />
     <ClInclude Include="DemoGame.h" />
     <ClInclude Include="Animation\Sprite.h" />
-    <ClInclude Include="Animation\DxTextureManager.h" />
     <ClInclude Include="Utilities\DirectX.h" />
     <ClInclude Include="Utilities\Event.h" />
-    <ClInclude Include="Base\Graphics.h" />
-    <ClInclude Include="Utilities\Time.h" />
+    <ClInclude Include="GraphicsDeviceManager.h" />
+    <ClInclude Include="Utilities\Log.h" />
     <ClInclude Include="Utilities\WindowUtil.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\tencent.rapidjson.1.1.1\build\tencent.rapidjson.targets" Condition="Exists('..\packages\tencent.rapidjson.1.1.1\build\tencent.rapidjson.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\tencent.rapidjson.1.1.1\build\tencent.rapidjson.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\tencent.rapidjson.1.1.1\build\tencent.rapidjson.targets'))" />
+  </Target>
 </Project>

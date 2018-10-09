@@ -4,6 +4,7 @@
 #include "States.h"
 #include "../Animation/Animation.h"
 #include "../Animation/AnimationSettings.h"
+#include "../ContentManager.h"
 
 typedef std::map<std::string, Animation*> AnimationDict;
 
@@ -20,10 +21,10 @@ public:
 
 	virtual std::string GetAnimationState() { return ""; }
 
-	virtual void LoadContent() {};
+	virtual void LoadContent(ContentManager &content) = 0;
 
 	virtual void Update(unsigned long deltaTime);
-	virtual void Render();
+	virtual void Draw(ID3DXSprite *spriteHandler);
 	
 	virtual ~GameObject();
 

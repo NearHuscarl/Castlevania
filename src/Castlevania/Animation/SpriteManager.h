@@ -2,16 +2,16 @@
 
 #include <map>
 #include "Sprite.h"
+#include "../ContentManager.h"
 
-typedef std::map<std::string, Sprite*> SpriteDict;
+using SpriteDict = std::map<std::string, Sprite*>;
 
 class SpriteManager
 {
 public:
 	static SpriteManager *GetInstance();
 
-	void LoadResource();
-	void Add(std::string id, BoundingBox boundingBox, GTexturePtr texture);
+	void Add(std::string spriteID, BoundingBox boundingBox, IDirect3DTexture9 *texture);
 	Sprite *Get(std::string id);
 
 private:

@@ -6,7 +6,7 @@ constexpr float MARIO_JUMP_SPEED_X = 1.0f;
 constexpr float MARIO_JUMP_SPEED_Y = 0.7f;
 constexpr float MARIO_GRAVITY = 0.05f;
 
-void Mario::LoadContent()
+void Mario::LoadContent(ContentManager &content)
 {
 	InitAnimation({ MARIO_IDLE_LEFT, MARIO_IDLE_RIGHT, MARIO_WALK_LEFT, MARIO_WALK_RIGHT });
 	SetPosition(0.0f, 100.0f);
@@ -33,9 +33,9 @@ void Mario::Update(unsigned long deltaTime)
 	animations[GetAnimationState()]->Update();
 }
 
-void Mario::Render()
+void Mario::Draw(ID3DXSprite *spriteHandler)
 {
-	animations[GetAnimationState()]->Render(x, y);
+	animations[GetAnimationState()]->Draw(spriteHandler, x, y);
 }
 
 void Mario::SetState(int state)

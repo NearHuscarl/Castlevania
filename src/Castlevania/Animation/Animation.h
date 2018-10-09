@@ -3,18 +3,17 @@
 #include <vector>
 #include "AnimationFrame.h"
 
-
 class Animation
 {
 public:
-	Animation(int defaultTime);
-	void Add(std::string spriteId, DWORD time = 0);
+	Animation(unsigned long defaultTime = 100);
+	void Add(Sprite *sprite, unsigned long time = 0);
 	void Update();
-	void Render(float x, float y);
+	void Draw(ID3DXSprite *spriteHandler, float x, float y);
 
 private:
-	DWORD lastFrameTime;
-	int defaultTime;
+	unsigned long lastFrameTime;
+	unsigned long defaultTime;
 	int currentFrame;
 	std::vector<AnimationFrame*> frames;
 };

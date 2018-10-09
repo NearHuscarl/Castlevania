@@ -7,11 +7,11 @@
 class DemoGame : public Game
 {
 public:
-	DemoGame(HINSTANCE hInstance, int nCmdShow);
+	DemoGame(HINSTANCE hInstance);
 	Mario *mario;
 
 	void Initialize() override;
 	void LoadResources() override;
-	void Update(unsigned long dt) override;
-	void Draw() override;
+	void Update(unsigned long deltaTime) override;
+	void Draw(ID3DXSprite *spriteHandler) override;
 };

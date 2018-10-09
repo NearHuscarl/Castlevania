@@ -20,22 +20,19 @@ public:
 	int IsKeyDown(int KeyCode);
 	void ProcessKeyboard();
 
-	// TODO: try pure virtual method
 	EVENT void KeyStateChanged(InputManager *inputManager);
 	EVENT void KeyDown(InputManager *inputManager, KeyEventArgs e);
 	EVENT void KeyUp(InputManager *inputManager, KeyEventArgs e);
 
 private:
-	static constexpr int KEYBOARD_BUFFER_SIZE = 1024;
-
+	InputManager();
 	static InputManager *instance;
 
-	HWND hWnd;				// Window handle
+	static constexpr int KEYBOARD_BUFFER_SIZE = 1024;
 
-	GInputPtr       di;		// The DirectInput object
-	GInputDevicePtr didv;	// The keyboard device
+	GInputPtr input; // The DirectInput object
+	GInputDevicePtr inputDevice; // The keyboard device
 	
-	BYTE  keyStates[256];	// DirectInput keyboard state buffer 
-
-	GDeviceInputData keyEvents[KEYBOARD_BUFFER_SIZE];		// Buffered keyboard data
+	BYTE keyStates[256]; // DirectInput keyboard state buffer 
+	GDeviceInputData keyEvents[KEYBOARD_BUFFER_SIZE]; // Buffered keyboard data
 };

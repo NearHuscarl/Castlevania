@@ -25,3 +25,6 @@ bld/
 
 # Visual Studio 2017 auto generated files
 Generated\ Files/
+
+# Information about project's NuGET packages
+packages/

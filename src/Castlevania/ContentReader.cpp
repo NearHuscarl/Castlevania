@@ -1,16 +1,17 @@
-#include "Content.h"
-#include "Utilities/WindowUtil.h"
+#include <d3dx9.h>
+#include "ContentReader.h"
 #include "Utilities/Debug.h"
+#include "Utilities/WindowUtil.h"
 
-Content::Content(Graphics *graphics)
+
+ContentReader::ContentReader()
 {
-	this->graphics = graphics;
 }
 
-GTexturePtr Content::LoadTexture(std::string filePathStr)
+template<>
+IDirect3DTexture9* ContentReader::ReadAsset<IDirect3DTexture9*>(std::wstring filePath, GraphicsDevice &graphicsDevice)
 {
 	D3DXIMAGE_INFO info;
-	std::wstring filePath = WindowUtil::String2WString(rootDirectory + "\\" + filePathStr);
 
 	HRESULT result = D3DXGetImageInfoFromFile(filePath.c_str(), &info);
 	if (result != D3D_OK)
@@ -19,9 +20,9 @@ GTexturePtr Content::LoadTexture(std::string filePathStr)
 		return nullptr;
 	}
 
-	GTexturePtr texture;
-	GDevicePtr device = graphics->GetDirect3DDevice();
-	D3DCOLOR transColor = graphics->GetTransparentColor();
+	IDirect3DTexture9 *texture = nullptr;
+	IDirect3DDevice9 *device = graphicsDevice.GetDevice();
+	D3DCOLOR transColor = graphicsDevice.GetTransparentColor();
 
 	result = D3DXCreateTextureFromFileEx(
 		device,		                        // Pointer to Direct3D device object
@@ -48,9 +49,4 @@ GTexturePtr Content::LoadTexture(std::string filePathStr)
 	DebugOut(L"[INFO] Texture loaded Ok: %s \n", filePath);
 
 	return texture;
-}
-
-void Content::SetRootDirectory(std::string path)
-{
-	rootDirectory = path;
 }

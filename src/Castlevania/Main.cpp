@@ -2,7 +2,7 @@
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	EntryPoint::Init(hInstance, nCmdShow);
+	EntryPoint::Init(hInstance);
 	EntryPoint::Game()->Initialize();
 	EntryPoint::Game()->Run();
 

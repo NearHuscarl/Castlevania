@@ -1,27 +1,24 @@
 #include "Animation.h"
-#include "SpriteManager.h"
 
-
-Animation::Animation(int defaultTime)
+Animation::Animation(unsigned long defaultTime)
 {
 	this->defaultTime = defaultTime;
 	this->lastFrameTime = -1;
 	this->currentFrame = -1;
 }
 
-void Animation::Add(std::string spriteId, DWORD time)
+void Animation::Add(Sprite *sprite, unsigned long time)
 {
 	if (time == 0)
 		time = this->defaultTime;
 
-	Sprite *sprite = SpriteManager::GetInstance()->Get(spriteId);
 	AnimationFrame *frame = new AnimationFrame(sprite, time);
 	frames.push_back(frame);
 }
 
 void Animation::Update()
 {
-	float now = GetTickCount();
+	unsigned long now = GetTickCount();
 	if (currentFrame == -1)
 	{
 		currentFrame = 0;
@@ -29,7 +26,7 @@ void Animation::Update()
 	}
 	else
 	{
-		float frameTimeout = frames[currentFrame]->GetTime();
+		unsigned long frameTimeout = frames[currentFrame]->GetTime();
 		if (now - lastFrameTime > frameTimeout)
 		{
 			currentFrame++;
@@ -40,7 +37,7 @@ void Animation::Update()
 	}
 }
 
-void Animation::Render(float x, float y)
+void Animation::Draw(ID3DXSprite *spriteHandler, float x, float y)
 {
-	frames[currentFrame]->GetSprite()->Draw(x, y);
+	frames[currentFrame]->GetSprite()->Draw(spriteHandler, x, y);
 }

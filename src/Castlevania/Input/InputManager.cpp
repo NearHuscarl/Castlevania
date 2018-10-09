@@ -3,6 +3,9 @@
 
 InputManager *InputManager::instance = nullptr;
 
+InputManager::InputManager()
+{
+}
 
 InputManager *InputManager::GetInstance()
 {
@@ -15,12 +18,10 @@ InputManager *InputManager::GetInstance()
 
 void InputManager::InitKeyboard(HWND hWnd)
 {
-	this->hWnd = hWnd;
-
 	HRESULT hr = DirectInput8Create(
 		(HINSTANCE)GetWindowLong(hWnd, GWL_HINSTANCE),
 		DIRECTINPUT_VERSION,
-		IID_IDirectInput8, (VOID**)&di, nullptr
+		IID_IDirectInput8, (VOID**)&input, nullptr
 	);
 
 	if (hr != DI_OK)
@@ -29,7 +30,7 @@ void InputManager::InitKeyboard(HWND hWnd)
 		return;
 	}
 
-	hr = di->CreateDevice(GUID_SysKeyboard, &didv, nullptr);
+	hr = input->CreateDevice(GUID_SysKeyboard, &inputDevice, nullptr);
 
 	// TO-DO: put in exception handling
 	if (hr != DI_OK)
@@ -46,9 +47,9 @@ void InputManager::InitKeyboard(HWND hWnd)
 	// This tells DirectInput that we will be passing an array
 	// of 256 bytes to IDirectInputDevice::GetDeviceState.
 
-	hr = didv->SetDataFormat(&c_dfDIKeyboard);
+	hr = inputDevice->SetDataFormat(&c_dfDIKeyboard);
 
-	hr = didv->SetCooperativeLevel(hWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
+	hr = inputDevice->SetCooperativeLevel(hWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 
 
 	// IMPORTANT STEP TO USE BUFFERED DEVICE DATA!
@@ -68,9 +69,9 @@ void InputManager::InitKeyboard(HWND hWnd)
 	dipdw.diph.dwHow = DIPH_DEVICE;
 	dipdw.dwData = KEYBOARD_BUFFER_SIZE; // Arbitary buffer size
 
-	hr = didv->SetProperty(DIPROP_BUFFERSIZE, &dipdw.diph);
+	hr = inputDevice->SetProperty(DIPROP_BUFFERSIZE, &dipdw.diph);
 
-	hr = didv->Acquire();
+	hr = inputDevice->Acquire();
 	if (hr != DI_OK)
 	{
 		DebugOut(L"[ERROR] DINPUT8::Acquire failed!\n");
@@ -90,13 +91,13 @@ void InputManager::ProcessKeyboard()
 	HRESULT hr;
 
 	// Collect all key states first
-	hr = didv->GetDeviceState(sizeof(keyStates), keyStates);
+	hr = inputDevice->GetDeviceState(sizeof(keyStates), keyStates);
 	if (FAILED(hr))
 	{
 		// If the keyboard lost focus or was not acquired then try to get control back.
 		if ((hr == DIERR_INPUTLOST) || (hr == DIERR_NOTACQUIRED))
 		{
-			HRESULT h = didv->Acquire();
+			HRESULT h = inputDevice->Acquire();
 			if (h == DI_OK)
 			{
 				DebugOut(L"[INFO] Keyboard re-acquired!\n");
@@ -115,7 +116,7 @@ void InputManager::ProcessKeyboard()
 
 	// Collect all buffered events
 	DWORD dwElements = KEYBOARD_BUFFER_SIZE;
-	hr = didv->GetDeviceData(sizeof(GDeviceInputData), keyEvents, &dwElements, 0);
+	hr = inputDevice->GetDeviceData(sizeof(GDeviceInputData), keyEvents, &dwElements, 0);
 	if (FAILED(hr))
 	{
 		//DebugOut(L"[ERROR] DINPUT::GetDeviceData failed. Error: %d\n", hr);

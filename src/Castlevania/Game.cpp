@@ -1,73 +1,64 @@
-//#include <d3d9.h>
-
 #include "Game.h"
-#include "Content.h"
-#include "Utilities/Time.h"
-#include "Animation/SpriteManager.h"
-#include "Animation/DxTextureManager.h"
-#include "Input/InputManager.h"
 
 // TODO: refactor
 constexpr int MAX_FRAME_RATE = 90;
 constexpr auto BACKGROUND_COLOR = D3DCOLOR_XRGB(200, 200, 255);
 
-Game::Game(HINSTANCE hInstance, int nCmdShow, int screenWidth, int screenHeight)
+Game::Game(HINSTANCE hInstance)
 {
-	graphics = Graphics(hInstance, nCmdShow, screenWidth, screenHeight);
-	content = Content(&graphics);
+	window = GameWindow(hInstance);
+	graphics = GraphicsDeviceManager(this);
+	input = InputManager::GetInstance();
+	content = ContentManager(this);
 }
 
 void Game::Initialize()
 {
-	graphics.Initialize();
-
-	InputManager::GetInstance()->InitKeyboard(graphics.GetWindowHandler());
-	DxTextureManager::Initialize(graphics.GetDirect3DDevice());
-	Sprite::Initialize(&graphics);
+	window.Create();
+	graphics.CreateDevice();
+	input->InitKeyboard(window.GetHandle());
 
 	LoadResources();
-
-	isRunning = true;
 }
 
 // Load all game resources
-// In this example: load textures, sprites, animations and mario object
+// For example: load textures, sprites, animations and mario object
 void Game::LoadResources()
 {
 }
 
 // Update world status for this frame
-// dt: time period between beginning of last frame and beginning of this frame
-void Game::Update(unsigned long dt)
+// deltaTime: time period between beginning of last frame and beginning of this frame
+void Game::Update(unsigned long deltaTime)
 {
 }
 
-void Game::Draw()
+void Game::Draw(ID3DXSprite *spriteHandler)
 {
 }
 
 // Render a frame
 void Game::Render()
 {
-	GDevicePtr d3ddv = graphics.GetDirect3DDevice();
-	GSurfacePtr bb = graphics.GetBackBuffer();
-	GSpritePtr spriteHandler = graphics.GetSpriteHandler();
+	IDirect3DDevice9 *device = GetGraphicsDevice().GetDevice();
+	IDirect3DSurface9 *surface = GetGraphicsDevice().GetBackBuffer();
+	ID3DXSprite *spriteHandler = GetGraphicsDevice().GetSpriteHandler();
 
-	if (d3ddv->BeginScene())
+	if (device->BeginScene())
 	{
 		// Clear back buffer with a color
-		d3ddv->ColorFill(bb, nullptr, BACKGROUND_COLOR);
+		device->ColorFill(surface, nullptr, BACKGROUND_COLOR);
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
-		Draw();
+		Draw(spriteHandler);
 
 		spriteHandler->End();
-		d3ddv->EndScene();
+		device->EndScene();
 	}
 
 	// Display back buffer content to the screen
-	d3ddv->Present(nullptr, nullptr, nullptr, nullptr);
+	device->Present(nullptr, nullptr, nullptr, nullptr);
 }
 
 int Game::Run()
@@ -77,6 +68,7 @@ int Game::Run()
 	unsigned long tickPerFrame = 1000 / MAX_FRAME_RATE;
 	InputManager *inputManager = InputManager::GetInstance();
 
+	isRunning = true;
 	while (isRunning)
 	{
 		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
@@ -105,4 +97,14 @@ int Game::Run()
 	}
 
 	return 1;
+}
+
+GameWindow &Game::GetWindow()
+{
+	return window;
+}
+
+GraphicsDevice &Game::GetGraphicsDevice()
+{
+	return graphics.GetGraphicsDevice();
 }

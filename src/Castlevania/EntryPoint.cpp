@@ -1,11 +1,11 @@
 #include "EntryPoint.h"
 
-DemoGame *EntryPoint::game = NULL;
+DemoGame *EntryPoint::game = nullptr;
 
 
-void EntryPoint::Init(HINSTANCE hInstance, int nCmdShow)
+void EntryPoint::Init(HINSTANCE hInstance)
 {
-	EntryPoint::game = new DemoGame(hInstance, nCmdShow);
+	EntryPoint::game = new DemoGame(hInstance);
 }
 
 DemoGame *EntryPoint::Game()

@@ -1,7 +1,9 @@
 #pragma once
 
-#include "Base/Graphics.h"
-#include "Content.h"
+#include "GameWindow.h"
+#include "GraphicsDeviceManager.h"
+#include "Input/InputManager.h"
+#include "ContentManager.h"
 
 class Game
 {
@@ -9,15 +11,20 @@ public:
 	virtual void Initialize();
 	virtual void LoadResources();
 	virtual void Update(unsigned long deltaTime);
-	virtual void Draw();
+	virtual void Draw(ID3DXSprite *spriteHandler);
 
 	int Run();
 
-protected:
-	Game(HINSTANCE hInstance, int nCmdShow, int screenWidth, int screenHeight);
+	GameWindow &GetWindow();
+	GraphicsDevice &GetGraphicsDevice();
 
-	Content content;
-	Graphics graphics;
+protected:
+	Game(HINSTANCE hInstance);
+
+	GameWindow window;
+	GraphicsDeviceManager graphics;
+	InputManager *input;
+	ContentManager content;
 
 private:
 	bool isRunning;
