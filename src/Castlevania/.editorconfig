@@ -1,0 +1,8 @@
+root = true
+trim_trailing_whitespace = true
+
+[*]
+indent_size = 3
+
+[*.xml]
+indent_size = 2
