@@ -4,5 +4,8 @@ trim_trailing_whitespace = true
 [*]
 indent_size = 3
 
+[*.py]
+indent_size = 4
+
 [*.xml]
 indent_size = 2
