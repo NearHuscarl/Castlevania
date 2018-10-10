@@ -1,5 +1,6 @@
 #include "GameWindow.h"
-#include "Utilities/WindowUtil.h"
+#include "Utilities/FileLogger.h"
+#include "Utilities/WinHelper.h"
 
 GameWindow::GameWindow()
 {
@@ -51,7 +52,7 @@ void GameWindow::Create()
 
 	if (!hWnd)
 	{
-		OutputDebugString(L"[ERROR] CreateWindow failed");
+		FileLogger::GetInstance()->Error("CreateWindow failed");
 		DWORD ErrCode = GetLastError();
 		hWnd = nullptr;
 	}

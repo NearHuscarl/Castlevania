@@ -1,5 +1,5 @@
 #include "InputManager.h"
-#include "../Utilities/Debug.h"
+#include "../Utilities/FileLogger.h"
 
 InputManager *InputManager::instance = nullptr;
 
@@ -26,7 +26,7 @@ void InputManager::InitKeyboard(HWND hWnd)
 
 	if (hr != DI_OK)
 	{
-		DebugOut(L"[ERROR] DirectInput8Create failed!\n");
+		FileLogger::GetInstance()->Error("DirectInput8Create failed!");
 		return;
 	}
 
@@ -35,7 +35,7 @@ void InputManager::InitKeyboard(HWND hWnd)
 	// TO-DO: put in exception handling
 	if (hr != DI_OK)
 	{
-		DebugOut(L"[ERROR] CreateDevice failed!\n");
+		FileLogger::GetInstance()->Error("CreateDevice failed!");
 		return;
 	}
 
@@ -74,11 +74,11 @@ void InputManager::InitKeyboard(HWND hWnd)
 	hr = inputDevice->Acquire();
 	if (hr != DI_OK)
 	{
-		DebugOut(L"[ERROR] DINPUT8::Acquire failed!\n");
+		FileLogger::GetInstance()->Error("DINPUT8::Acquire failed!");
 		return;
 	}
 
-	DebugOut(L"[INFO] Keyboard has been initialized successfully\n");
+	FileLogger::GetInstance()->Info("Keyboard has been initialized successfully");
 }
 
 int InputManager::IsKeyDown(int KeyCode)
@@ -100,13 +100,13 @@ void InputManager::ProcessKeyboard()
 			HRESULT h = inputDevice->Acquire();
 			if (h == DI_OK)
 			{
-				DebugOut(L"[INFO] Keyboard re-acquired!\n");
+				FileLogger::GetInstance()->Info("Keyboard re-acquired!");
 			}
 			else return;
 		}
 		else
 		{
-			//DebugOut(L"[ERROR] DINPUT::GetDeviceState failed. Error: %d\n", hr);
+			// FileLogger::GetInstance()->Error("DINPUT::GetDeviceState failed. Error: " + std::to_string(hr));
 			return;
 		}
 	}
@@ -119,7 +119,7 @@ void InputManager::ProcessKeyboard()
 	hr = inputDevice->GetDeviceData(sizeof(GDeviceInputData), keyEvents, &dwElements, 0);
 	if (FAILED(hr))
 	{
-		//DebugOut(L"[ERROR] DINPUT::GetDeviceData failed. Error: %d\n", hr);
+		// FileLogger::GetInstance()->Error("DINPUT::GetDeviceData failed. Error: " + std::to_string(hr));
 		return;
 	}
 

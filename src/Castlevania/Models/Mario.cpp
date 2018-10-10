@@ -1,5 +1,5 @@
 #include "Mario.h"
-#include "../Utilities/Debug.h"
+#include "../Utilities/FileLogger.h"
 
 constexpr float MARIO_WALKING_SPEED = 0.05f;
 constexpr float MARIO_JUMP_SPEED_X = 1.0f;
@@ -80,7 +80,7 @@ std::string Mario::GetAnimationState()
 
 void Mario::OnKeyDown(InputManager *inputManager, KeyEventArgs e)
 {
-	DebugOut(L"[INFO] KeyDown: %d\n", e.KeyCode);
+	FileLogger::GetInstance()->Info("KeyDown: " + std::to_string(e.KeyCode));
 	switch (e.KeyCode)
 	{
 		case DIK_SPACE:
@@ -91,7 +91,7 @@ void Mario::OnKeyDown(InputManager *inputManager, KeyEventArgs e)
 
 void Mario::OnKeyUp(InputManager *inputManager, KeyEventArgs e)
 {
-	DebugOut(L"[INFO] KeyUp: %d\n", e.KeyCode);
+	FileLogger::GetInstance()->Info("KeyUp: " + std::to_string(e.KeyCode));
 }
 
 void Mario::OnKeyState(InputManager *inputManager)

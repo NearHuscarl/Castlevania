@@ -1,7 +1,7 @@
 #include <d3dx9.h>
 #include "ContentReader.h"
-#include "Utilities/Debug.h"
-#include "Utilities/WindowUtil.h"
+#include "Utilities/FileLogger.h"
+#include "Utilities/WinHelper.h"
 
 
 ContentReader::ContentReader()
@@ -16,7 +16,7 @@ IDirect3DTexture9* ContentReader::ReadAsset<IDirect3DTexture9*>(std::wstring fil
 	HRESULT result = D3DXGetImageInfoFromFile(filePath.c_str(), &info);
 	if (result != D3D_OK)
 	{
-		DebugOut(L"[ERROR] GetImageInfoFromFile failed: %s\n", filePath);
+		FileLogger::GetInstance()->Error("GetImageInfoFromFile failed: " + WinHelper::ws2s(filePath));
 		return nullptr;
 	}
 
@@ -42,11 +42,11 @@ IDirect3DTexture9* ContentReader::ReadAsset<IDirect3DTexture9*>(std::wstring fil
 
 	if (result != D3D_OK)
 	{
-		OutputDebugString(L"[ERROR] CreateTextureFromFile failed\n");
+		FileLogger::GetInstance()->Error("CreateTextureFromFile failed");
 		return nullptr;
 	}
 
-	DebugOut(L"[INFO] Texture loaded Ok: %s \n", filePath);
+	FileLogger::GetInstance()->Info("Texture loaded Ok: " + WinHelper::ws2s(filePath));
 
 	return texture;
 }

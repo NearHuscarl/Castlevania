@@ -139,7 +139,6 @@
     <ClCompile Include="GraphicsDevice.cpp" />
     <ClCompile Include="Input\Controller.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Utilities\Debug.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Models\GameObject.cpp" />
     <ClCompile Include="Input\InputManager.cpp" />
@@ -148,7 +147,9 @@
     <ClCompile Include="DemoGame.cpp" />
     <ClCompile Include="Animation\Sprite.cpp" />
     <ClCompile Include="GraphicsDeviceManager.cpp" />
-    <ClCompile Include="Utilities\WindowUtil.cpp" />
+    <ClCompile Include="Utilities\FileLogger.cpp" />
+    <ClCompile Include="Utilities\TimeHelper.cpp" />
+    <ClCompile Include="Utilities\WinHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation\Animation.h" />
@@ -167,7 +168,6 @@
     <ClInclude Include="Input\Controller.h" />
     <ClInclude Include="Input\KeyEventArgs.h" />
     <ClInclude Include="ServiceProvider.h" />
-    <ClInclude Include="Utilities\Debug.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Models\GameObject.h" />
     <ClInclude Include="Input\InputManager.h" />
@@ -177,8 +177,9 @@
     <ClInclude Include="Utilities\DirectX.h" />
     <ClInclude Include="Utilities\Event.h" />
     <ClInclude Include="GraphicsDeviceManager.h" />
-    <ClInclude Include="Utilities\Log.h" />
-    <ClInclude Include="Utilities\WindowUtil.h" />
+    <ClInclude Include="Utilities\FileLogger.h" />
+    <ClInclude Include="Utilities\TimeHelper.h" />
+    <ClInclude Include="Utilities\WinHelper.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

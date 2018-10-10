@@ -4,16 +4,11 @@
 #include "Animation/Animation.h"
 #include "Animation/AnimationManager.h"
 
-// TODO: refactor
-constexpr int SCREEN_WIDTH = 320;
-constexpr int SCREEN_HEIGHT = 240;
-
-
 DemoGame::DemoGame(HINSTANCE hInstance) : Game(hInstance)
 {
 	content.SetRootDirectory("Content");
-	window.SetScreenWidth(900);
-	window.SetScreenHeight(600);
+	window.SetScreenWidth(640);
+	window.SetScreenHeight(480);
 }
 
 void DemoGame::Initialize()

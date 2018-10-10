@@ -1,7 +1,6 @@
 #include <d3dx9.h>
 
 #include "GameObject.h"
-#include "../Utilities/Debug.h"
 #include "../Animation/AnimationManager.h"
 
 GameObject::GameObject()

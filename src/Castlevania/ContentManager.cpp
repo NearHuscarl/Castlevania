@@ -1,7 +1,6 @@
 #include "ContentManager.h"
 #include "Game.h"
-#include "Utilities/WindowUtil.h"
-#include "Utilities/Debug.h"
+#include "Utilities/WinHelper.h"
 
 ContentManager::ContentManager()
 {
@@ -39,7 +38,7 @@ template<typename T>
 T ContentManager::ReadAsset(std::string assetName)
 {
 	std::string pathStr = rootDirectory + "\\" + assetName;
-	std::wstring path = WindowUtil::String2WString(pathStr);
+	std::wstring path = WinHelper::s2ws(pathStr);
 
 	return contentReader.ReadAsset<T>(path, game->GetGraphicsDevice());
 }

@@ -28,3 +28,6 @@ Generated\ Files/
 
 # Information about project's NuGET packages
 packages/
+
+# Logger
+Logs/

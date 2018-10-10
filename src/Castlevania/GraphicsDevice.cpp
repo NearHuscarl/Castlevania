@@ -1,4 +1,5 @@
 #include "GraphicsDevice.h"
+#include "Utilities/FileLogger.h"
 
 void GraphicsDevice::CreateDevice(HWND hWnd)
 {
@@ -28,7 +29,7 @@ void GraphicsDevice::CreateDevice(HWND hWnd)
 
 	if (d3ddv == nullptr)
 	{
-		OutputDebugString(L"[ERROR] CreateDevice failed\n");
+		FileLogger::GetInstance()->Error("CreateDevice failed");
 		return;
 	}
 
@@ -37,7 +38,7 @@ void GraphicsDevice::CreateDevice(HWND hWnd)
 	// Initialize sprite helper from Direct3DX helper library
 	D3DXCreateSprite(d3ddv, &spriteHandler);
 
-	OutputDebugString(L"[INFO] InitGame done;\n");
+	FileLogger::GetInstance()->Info("InitGame done");
 }
 
 IDirect3DDevice9 *GraphicsDevice::GetDevice()
