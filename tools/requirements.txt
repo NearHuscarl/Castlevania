@@ -1,2 +1,0 @@
-pytest
-Pillow==5.2.0

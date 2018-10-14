@@ -1,0 +1,3 @@
+[submodule "tools/SpriteExtractor"]
+	path = tools/SpriteExtractor
+	url = https://github.com/NearHuscarl/SpriteExtractor
