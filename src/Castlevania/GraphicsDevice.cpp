@@ -25,33 +25,33 @@ void GraphicsDevice::CreateDevice(HWND hWnd)
 		hWnd,
 		D3DCREATE_SOFTWARE_VERTEXPROCESSING,
 		&d3dpp,
-		&d3ddv);
+		&device);
 
-	if (d3ddv == nullptr)
+	if (device == nullptr)
 	{
 		FileLogger::GetInstance()->Error("CreateDevice failed");
 		return;
 	}
 
-	d3ddv->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &backBuffer);
+	device->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &backBuffer);
 
 	// Initialize sprite helper from Direct3DX helper library
-	D3DXCreateSprite(d3ddv, &spriteHandler);
+	D3DXCreateSprite(device, &spriteHandler);
 
 	FileLogger::GetInstance()->Info("InitGame done");
 }
 
-IDirect3DDevice9 *GraphicsDevice::GetDevice()
+DevicePtr GraphicsDevice::GetDevice()
 {
-	return d3ddv;
+	return device;
 }
 
-IDirect3DSurface9 *GraphicsDevice::GetBackBuffer()
+SurfacePtr GraphicsDevice::GetBackBuffer()
 {
 	return backBuffer;
 }
 
-ID3DXSprite *GraphicsDevice::GetSpriteHandler()
+SpritePtr GraphicsDevice::GetSpriteHandler()
 {
 	return spriteHandler;
 }
@@ -64,6 +64,6 @@ GraphicsDevice::~GraphicsDevice()
 	if (backBuffer != nullptr)
 		backBuffer->Release();
 
-	if (d3ddv != nullptr)
-		d3ddv->Release();
+	if (device != nullptr)
+		device->Release();
 }

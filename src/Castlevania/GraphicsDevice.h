@@ -1,7 +1,7 @@
 #pragma once
 
-#include <d3dx9.h>
 #include <Windows.h>
+#include "Content/Content.h"
 
 class GraphicsDevice
 {
@@ -11,16 +11,16 @@ public:
 
 	void CreateDevice(HWND hWnd);
 
-	IDirect3DDevice9 *GetDevice();
-	IDirect3DSurface9 *GetBackBuffer();
-	ID3DXSprite *GetSpriteHandler();
+	DevicePtr GetDevice();
+	SurfacePtr GetBackBuffer();
+	SpritePtr GetSpriteHandler();
 
 	virtual ~GraphicsDevice();
 
 private:
 	D3DCOLOR transparentColor = D3DCOLOR_XRGB(255, 255, 255);
 
-	IDirect3DDevice9 *d3ddv = nullptr;       // Direct3D device object
-	IDirect3DSurface9 *backBuffer = nullptr;
-	ID3DXSprite *spriteHandler = nullptr;    // Sprite helper library to help us draw 2D image on the screen
+	DevicePtr device = nullptr;       // Direct3D device object
+	SurfacePtr backBuffer = nullptr;
+	SpritePtr spriteHandler = nullptr;    // Sprite helper library to help us draw 2D image on the screen
 };

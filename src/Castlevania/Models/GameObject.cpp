@@ -1,32 +1,32 @@
-#include <d3dx9.h>
-
 #include "GameObject.h"
-#include "../Animation/AnimationManager.h"
 
 GameObject::GameObject()
 {
-	x = y = 0;
-	vx = vy = 0;
-	nx = 1;	
+	position = Vector(0, 0);
+	velocity = Vector(0, 0);
+
+	direction = 1;	
 }
 
-void GameObject::InitAnimation(std::vector<std::string> animationIDs)
+void GameObject::SetPosition(float x, float y)
 {
-	AnimationManager *animationMananger = AnimationManager::GetInstance();
+	position.x = x;
+	position.y = y;
+}
 
-	for (auto animationID : animationIDs)
-	{
-		animations[animationID] = animationMananger->GetAnimation(animationID);
-	}
+void GameObject::SetSpeed(float x, float y)
+{
+	velocity.x = x;
+	velocity.y = y;
 }
 
 void GameObject::Update(unsigned long deltaTime)
 {
-	x += vx * deltaTime;
-	y += vy * deltaTime;
+	position.x += velocity.x * deltaTime;
+	position.y += velocity.y * deltaTime;
 }
 
-void GameObject::Draw(ID3DXSprite *spriteHandler)
+void GameObject::Draw(SpritePtr spriteHandler)
 {
 }
 

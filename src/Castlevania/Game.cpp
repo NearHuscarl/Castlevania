@@ -4,12 +4,13 @@
 constexpr int MAX_FRAME_RATE = 90;
 constexpr auto BACKGROUND_COLOR = D3DCOLOR_XRGB(200, 200, 255);
 
-Game::Game(HINSTANCE hInstance)
+Game::Game(HINSTANCE hInstance) :
+	window(hInstance),
+	graphics(this),
+	input(InputManager::GetInstance()),
+	content(serviceProvider)
 {
-	window = GameWindow(hInstance);
-	graphics = GraphicsDeviceManager(this);
-	input = InputManager::GetInstance();
-	content = ContentManager(this);
+	serviceProvider.Add<GraphicsDevice>(&GetGraphicsDevice());
 }
 
 void Game::Initialize()
@@ -33,16 +34,16 @@ void Game::Update(unsigned long deltaTime)
 {
 }
 
-void Game::Draw(ID3DXSprite *spriteHandler)
+void Game::Draw(SpritePtr spriteHandler)
 {
 }
 
 // Render a frame
 void Game::Render()
 {
-	IDirect3DDevice9 *device = GetGraphicsDevice().GetDevice();
-	IDirect3DSurface9 *surface = GetGraphicsDevice().GetBackBuffer();
-	ID3DXSprite *spriteHandler = GetGraphicsDevice().GetSpriteHandler();
+	DevicePtr device = GetGraphicsDevice().GetDevice();
+	SurfacePtr surface = GetGraphicsDevice().GetBackBuffer();
+	SpritePtr spriteHandler = GetGraphicsDevice().GetSpriteHandler();
 
 	if (device->BeginScene())
 	{

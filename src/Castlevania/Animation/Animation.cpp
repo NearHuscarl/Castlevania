@@ -1,18 +1,24 @@
 #include "Animation.h"
 
-Animation::Animation(unsigned long defaultTime)
+Animation::Animation()
 {
+}
+
+Animation::Animation(std::shared_ptr<Texture> texture, unsigned long defaultTime)
+{
+	this->texture = texture;
 	this->defaultTime = defaultTime;
-	this->lastFrameTime = -1;
+
+	this->lastFrameTime = 0;
 	this->currentFrame = -1;
 }
 
-void Animation::Add(Sprite *sprite, unsigned long time)
+void Animation::Add(Sprite sprite, unsigned long time)
 {
 	if (time == 0)
 		time = this->defaultTime;
 
-	AnimationFrame *frame = new AnimationFrame(sprite, time);
+	AnimationFrame frame = AnimationFrame(sprite, time);
 	frames.push_back(frame);
 }
 
@@ -26,7 +32,7 @@ void Animation::Update()
 	}
 	else
 	{
-		unsigned long frameTimeout = frames[currentFrame]->GetTime();
+		unsigned long frameTimeout = frames[currentFrame].GetTime();
 		if (now - lastFrameTime > frameTimeout)
 		{
 			currentFrame++;
@@ -37,7 +43,7 @@ void Animation::Update()
 	}
 }
 
-void Animation::Draw(ID3DXSprite *spriteHandler, float x, float y)
+void Animation::Draw(SpritePtr spriteHandler, Vector position)
 {
-	frames[currentFrame]->GetSprite()->Draw(spriteHandler, x, y);
+	frames[currentFrame].GetSprite().Draw(spriteHandler, *texture, position);
 }

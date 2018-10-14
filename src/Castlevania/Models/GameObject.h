@@ -2,19 +2,18 @@
 
 #include <map>
 #include "States.h"
+#include "../Base/Vector.h"
 #include "../Animation/Animation.h"
 #include "../Animation/AnimationSettings.h"
-#include "../ContentManager.h"
-
-typedef std::map<std::string, Animation*> AnimationDict;
+#include "../Content/ContentManager.h"
 
 class GameObject
 {
 public:
 	GameObject();
 
-	void SetPosition(float x, float y) { this->x = x, this->y = y; }
-	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
+	void SetPosition(float x, float y);
+	void SetSpeed(float vx, float vy);
 	
 	virtual void SetState(int state) { this->state = state; }
 	virtual int GetState() { return this->state; }
@@ -24,23 +23,17 @@ public:
 	virtual void LoadContent(ContentManager &content) = 0;
 
 	virtual void Update(unsigned long deltaTime);
-	virtual void Draw(ID3DXSprite *spriteHandler);
+	virtual void Draw(SpritePtr spriteHandler);
 	
 	virtual ~GameObject();
 
 protected:
+	Vector position;
+	Vector velocity;
 
-	float x;
-	float y;
-
-	float vx;
-	float vy;
-
-	int nx;
+	int direction;
 
 	int state;
 
-	AnimationDict animations;
-
-	void InitAnimation(std::vector<std::string> animationIDs);
+	std::shared_ptr<AnimationDict> animations;
 };

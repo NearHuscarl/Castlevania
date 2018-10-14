@@ -5,11 +5,12 @@
 class AnimationFrame
 {
 public:
-	AnimationFrame(Sprite *sprite, unsigned long time);
-	unsigned long GetTime() { return time; }
-	Sprite *GetSprite() { return sprite; }
+	AnimationFrame();
+	AnimationFrame(Sprite sprite, unsigned long time);
+	unsigned long GetTime();
+	Sprite &GetSprite();
 
 private:
-	Sprite *sprite;
+	Sprite sprite;
 	unsigned long time;
 };

@@ -6,7 +6,6 @@
 class GameWindow
 {
 public:
-	GameWindow();
 	GameWindow(HINSTANCE hInstance);
 
 	void Create();

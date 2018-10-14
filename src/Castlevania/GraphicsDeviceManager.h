@@ -7,7 +7,6 @@ class Game;
 class GraphicsDeviceManager
 {
 public:
-	GraphicsDeviceManager();
 	GraphicsDeviceManager(Game *game);
 	
 	void CreateDevice();

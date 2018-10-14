@@ -15,13 +15,13 @@ from imageutil import (
 @pytest.fixture(scope='module')
 def images():
     """ a dictionary where keys are border types and values are corresponding images of that type """
-    _image_path = os.path.join(os.getcwd(), 'images')
-    return dict(no_border=Image.open(os.path.join(_image_path, 'image_no_border.png')),
-                border_all=Image.open(os.path.join(_image_path, 'image_border_all.png')),
-                border_top=Image.open(os.path.join(_image_path, 'image_border_top.png')),
-                border_bottom=Image.open(os.path.join(_image_path, 'image_border_bottom.png')),
-                border_left=Image.open(os.path.join(_image_path, 'image_border_left.png')),
-                border_right=Image.open(os.path.join(_image_path, 'image_border_right.png')))
+    image_path = os.path.join(os.getcwd(), 'images')
+    return dict(no_border=Image.open(os.path.join(image_path, 'image_no_border.png')),
+                border_all=Image.open(os.path.join(image_path, 'image_border_all.png')),
+                border_top=Image.open(os.path.join(image_path, 'image_border_top.png')),
+                border_bottom=Image.open(os.path.join(image_path, 'image_border_bottom.png')),
+                border_left=Image.open(os.path.join(image_path, 'image_border_left.png')),
+                border_right=Image.open(os.path.join(image_path, 'image_border_right.png')))
 
 
 @pytest.fixture(scope='module')

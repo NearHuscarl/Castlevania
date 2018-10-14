@@ -13,5 +13,5 @@ public:
 	void Initialize() override;
 	void LoadResources() override;
 	void Update(unsigned long deltaTime) override;
-	void Draw(ID3DXSprite *spriteHandler) override;
+	void Draw(SpritePtr spriteHandler) override;
 };

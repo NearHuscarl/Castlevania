@@ -2,10 +2,6 @@
 #include "Utilities/FileLogger.h"
 #include "Utilities/WinHelper.h"
 
-GameWindow::GameWindow()
-{
-}
-
 GameWindow::GameWindow(HINSTANCE hInstance)
 {
 	this->hInstance = hInstance;

@@ -1,12 +1,10 @@
 #include "DemoGame.h"
-#include "Animation/SpriteManager.h"
 #include "Animation/AnimationSettings.h"
 #include "Animation/Animation.h"
-#include "Animation/AnimationManager.h"
 
 DemoGame::DemoGame(HINSTANCE hInstance) : Game(hInstance)
 {
-	content.SetRootDirectory("Content");
+	content.SetRootDirectory("Asset");
 	window.SetScreenWidth(640);
 	window.SetScreenHeight(480);
 }
@@ -18,8 +16,6 @@ void DemoGame::Initialize()
 
 void DemoGame::LoadResources()
 {
-	AnimationManager::GetInstance()->LoadResource(&content); // Load all object animations from existed sprites
-
 	mario = new Mario();
 	mario->LoadContent(content);
 }
@@ -31,7 +27,7 @@ void DemoGame::Update(unsigned long deltaTime)
 	mario->Update(deltaTime);
 }
 
-void DemoGame::Draw(ID3DXSprite *spriteHandler)
+void DemoGame::Draw(SpritePtr spriteHandler)
 {
 	mario->Draw(spriteHandler);
 }

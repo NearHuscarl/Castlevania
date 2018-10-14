@@ -6,14 +6,18 @@
 class Animation
 {
 public:
-	Animation(unsigned long defaultTime = 100);
-	void Add(Sprite *sprite, unsigned long time = 0);
+	Animation();
+	Animation(std::shared_ptr<Texture> texture, unsigned long defaultTime = 100);
+
+	void Add(Sprite sprite, unsigned long time = 0);
 	void Update();
-	void Draw(ID3DXSprite *spriteHandler, float x, float y);
+	void Draw(SpritePtr spriteHandler, Vector position);
 
 private:
 	unsigned long lastFrameTime;
 	unsigned long defaultTime;
 	int currentFrame;
-	std::vector<AnimationFrame*> frames;
+
+	std::vector<AnimationFrame> frames;
+	std::shared_ptr<Texture> texture;
 };

@@ -8,7 +8,8 @@ constexpr float MARIO_GRAVITY = 0.05f;
 
 void Mario::LoadContent(ContentManager &content)
 {
-	InitAnimation({ MARIO_IDLE_LEFT, MARIO_IDLE_RIGHT, MARIO_WALK_LEFT, MARIO_WALK_RIGHT });
+	animations = content.Load<AnimationDict>("MarioAnimationDef.xml");
+
 	SetPosition(0.0f, 100.0f);
 }
 
@@ -17,25 +18,25 @@ void Mario::Update(unsigned long deltaTime)
 	GameObject::Update(deltaTime);
 
 	// simple fall down
-	vy += MARIO_GRAVITY;
-	if (y > 100) 
+	velocity.y += MARIO_GRAVITY;
+	if (position.y > 100) 
 	{
-		vy = 0;
-		y = 100.0f;
+		velocity.y = 0;
+		position.y = 100.0f;
 	}
 
 	// simple screen edge collision!!!
-	if (vx > 0 && x > 290)
-		x = 290;
-	if (vx < 0 && x < 0)
-		x = 0;
+	if (velocity.x > 0 && position.x > 290)
+		position.x = 290;
+	if (velocity.x < 0 && position.x < 0)
+		position.x = 0;
 
-	animations[GetAnimationState()]->Update();
+	(*animations)[GetAnimationState()].Update();
 }
 
-void Mario::Draw(ID3DXSprite *spriteHandler)
+void Mario::Draw(SpritePtr spriteHandler)
 {
-	animations[GetAnimationState()]->Draw(spriteHandler, x, y);
+	(*animations)[GetAnimationState()].Draw(spriteHandler, position);
 }
 
 void Mario::SetState(int state)
@@ -44,32 +45,32 @@ void Mario::SetState(int state)
 	switch (state)
 	{
 		case MARIO_STATE_WALK_RIGHT:
-			vx = MARIO_WALKING_SPEED;
-			nx = 1;
+			velocity.x = MARIO_WALKING_SPEED;
+			direction = 1;
 			break;
 		case MARIO_STATE_WALK_LEFT:
-			vx = -MARIO_WALKING_SPEED;
-			nx = -1;
+			velocity.x = -MARIO_WALKING_SPEED;
+			direction = -1;
 			break;
 		case MARIO_STATE_JUMP:
-			if (y == 100)
-				vy = -MARIO_JUMP_SPEED_Y;
+			if (position.y == 100)
+				velocity.y = -MARIO_JUMP_SPEED_Y;
 		case MARIO_STATE_IDLE:
-			vx = 0;
+			velocity.x = 0;
 			break;
 	}
 }
 
 std::string Mario::GetAnimationState()
 {
-	if (vx == 0)
+	if (velocity.x == 0)
 	{
-		if (nx > 0)
+		if (direction > 0)
 			return MARIO_IDLE_RIGHT;
 		else
 			return MARIO_IDLE_LEFT;
 	}
-	else if (vx > 0)
+	else if (velocity.x > 0)
 	{
 		return MARIO_WALK_RIGHT;
 	}

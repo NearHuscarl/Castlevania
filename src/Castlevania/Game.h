@@ -3,7 +3,8 @@
 #include "GameWindow.h"
 #include "GraphicsDeviceManager.h"
 #include "Input/InputManager.h"
-#include "ContentManager.h"
+#include "Content/ContentManager.h"
+#include "ServiceProvider.h"
 
 class Game
 {
@@ -11,7 +12,7 @@ public:
 	virtual void Initialize();
 	virtual void LoadResources();
 	virtual void Update(unsigned long deltaTime);
-	virtual void Draw(ID3DXSprite *spriteHandler);
+	virtual void Draw(SpritePtr spriteHandler);
 
 	int Run();
 
@@ -25,6 +26,7 @@ protected:
 	GraphicsDeviceManager graphics;
 	InputManager *input;
 	ContentManager content;
+	ServiceProvider serviceProvider;
 
 private:
 	bool isRunning;

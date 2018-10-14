@@ -131,13 +131,13 @@
   <ItemGroup>
     <ClCompile Include="Animation\Animation.cpp" />
     <ClCompile Include="Animation\AnimationFrame.cpp" />
-    <ClCompile Include="Animation\AnimationManager.cpp" />
-    <ClCompile Include="Animation\SpriteManager.cpp" />
-    <ClCompile Include="ContentManager.cpp" />
-    <ClCompile Include="ContentReader.cpp" />
+    <ClCompile Include="Content\AnimationReader.cpp" />
+    <ClCompile Include="Content\ContentManager.cpp" />
+    <ClCompile Include="Content\ContentReader.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="GraphicsDevice.cpp" />
     <ClCompile Include="Input\Controller.cpp" />
+    <ClCompile Include="Library\pugixml\pugixml.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Models\GameObject.cpp" />
@@ -147,21 +147,27 @@
     <ClCompile Include="DemoGame.cpp" />
     <ClCompile Include="Animation\Sprite.cpp" />
     <ClCompile Include="GraphicsDeviceManager.cpp" />
+    <ClCompile Include="Content\TextureReader.cpp" />
     <ClCompile Include="Utilities\FileLogger.cpp" />
     <ClCompile Include="Utilities\TimeHelper.cpp" />
     <ClCompile Include="Utilities\WinHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation\Animation.h" />
-    <ClInclude Include="Animation\AnimationManager.h" />
     <ClInclude Include="Animation\AnimationSettings.h" />
     <ClInclude Include="Animation\AnimationFrame.h" />
-    <ClInclude Include="Animation\SpriteManager.h" />
     <ClInclude Include="Base\BoundingBox.h" />
-    <ClInclude Include="ContentManager.h" />
-    <ClInclude Include="ContentReader.h" />
+    <ClInclude Include="Base\Vector.h" />
+    <ClInclude Include="Content\AbstractReader.h" />
+    <ClInclude Include="Content\AnimationReader.h" />
+    <ClInclude Include="Content\Content.h" />
+    <ClInclude Include="Content\ContentManager.h" />
+    <ClInclude Include="Content\ContentReader.h" />
+    <ClInclude Include="Content\LoadContentException.h" />
     <ClInclude Include="GameWindow.h" />
     <ClInclude Include="GraphicsDevice.h" />
+    <ClInclude Include="Library\pugixml\pugiconfig.hpp" />
+    <ClInclude Include="Library\pugixml\pugixml.hpp" />
     <ClInclude Include="Models\States.h" />
     <ClInclude Include="Base\Entity.h" />
     <ClInclude Include="EntryPoint.h" />
@@ -174,7 +180,7 @@
     <ClInclude Include="Models\Mario.h" />
     <ClInclude Include="DemoGame.h" />
     <ClInclude Include="Animation\Sprite.h" />
-    <ClInclude Include="Utilities\DirectX.h" />
+    <ClInclude Include="Content\TextureReader.h" />
     <ClInclude Include="Utilities\Event.h" />
     <ClInclude Include="GraphicsDeviceManager.h" />
     <ClInclude Include="Utilities\FileLogger.h" />
@@ -183,16 +189,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\tencent.rapidjson.1.1.1\build\tencent.rapidjson.targets" Condition="Exists('..\packages\tencent.rapidjson.1.1.1\build\tencent.rapidjson.targets')" />
-  </ImportGroup>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\tencent.rapidjson.1.1.1\build\tencent.rapidjson.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\tencent.rapidjson.1.1.1\build\tencent.rapidjson.targets'))" />
-  </Target>
+  <ImportGroup Label="ExtensionTargets" />
 </Project>
