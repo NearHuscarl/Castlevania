@@ -12,7 +12,7 @@ public:
 	virtual void Initialize();
 	virtual void LoadResources();
 	virtual void Update(unsigned long deltaTime);
-	virtual void Draw(SpritePtr spriteHandler);
+	virtual void Draw(ISpriteHandler spriteHandler);
 
 	int Run();
 

@@ -2,9 +2,9 @@
 
 DemoGame::DemoGame(HINSTANCE hInstance) : Game(hInstance)
 {
-	content.SetRootDirectory("MarioSample\\Content");
-	window.SetScreenWidth(640);
-	window.SetScreenHeight(480);
+	content.SetRootDirectory("MarioSample/Content");
+	window.SetScreenWidth(320);
+	window.SetScreenHeight(240);
 }
 
 void DemoGame::Initialize()
@@ -25,7 +25,7 @@ void DemoGame::Update(unsigned long deltaTime)
 	mario->Update(deltaTime);
 }
 
-void DemoGame::Draw(SpritePtr spriteHandler)
+void DemoGame::Draw(ISpriteHandler spriteHandler)
 {
 	mario->Draw(spriteHandler);
 }

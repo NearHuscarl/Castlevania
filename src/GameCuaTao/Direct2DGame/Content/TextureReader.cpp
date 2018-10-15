@@ -1,4 +1,5 @@
 #include "TextureReader.h"
+#include "../GraphicsDevice.h"
 #include "../Utilities/FileLogger.h"
 #include "../Utilities/WinHelper.h"
 #include "ContentManager.h"
@@ -6,23 +7,23 @@
 
 std::shared_ptr<Texture> TextureReader::Read(std::string filePathStr, ContentManager &contentManager)
 {
-	D3DXIMAGE_INFO info;
-	std::wstring filePath = WinHelper::s2ws(filePathStr);
+	auto info = ImageInfo{};
+	auto filePath = WinHelper::s2ws(filePathStr);
 
-	HRESULT result = D3DXGetImageInfoFromFile(filePath.c_str(), &info);
+	auto result = D3DXGetImageInfoFromFile(filePath.c_str(), &info);
 	if (result != D3D_OK)
 	{
 		throw LoadContentException("GetImageInfoFromFile failed: " + WinHelper::ws2s(filePath));
 	}
 
-	GraphicsDevice *graphicsDevice = contentManager.GetServiceProvider().Get<GraphicsDevice>();
+	auto graphicsDevice = contentManager.GetServiceProvider().Get<GraphicsDevice>();
 
-	Texture texture = nullptr;
-	DevicePtr device = graphicsDevice->GetDevice();
-	D3DCOLOR transColor = graphicsDevice->GetTransparentColor();
+	auto texture = Texture{ nullptr };
+	auto renderDevice = graphicsDevice->GetRenderDevice();
+	auto transparentColor = graphicsDevice->GetTransparentColor();
 
 	result = D3DXCreateTextureFromFileEx(
-		device,		                  // Pointer to Direct3D device object
+		renderDevice,		                  // Pointer to Direct3D device object
 		filePath.c_str(),					// Path to the image to load
 		info.Width,							// Texture width
 		info.Height,						// Texture height
@@ -32,7 +33,7 @@ std::shared_ptr<Texture> TextureReader::Read(std::string filePathStr, ContentMan
 		D3DPOOL_DEFAULT,
 		D3DX_DEFAULT,
 		D3DX_DEFAULT,
-		transColor,
+		transparentColor,
 		&info,
 		nullptr,
 		&texture);							// Created texture pointer

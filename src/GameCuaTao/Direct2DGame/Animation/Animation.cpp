@@ -19,13 +19,13 @@ void Animation::Add(Sprite sprite, unsigned long time)
 	if (time == 0)
 		time = this->defaultTime;
 
-	AnimationFrame frame = AnimationFrame(sprite, time);
+	auto frame = AnimationFrame{ sprite, time };
 	frames.push_back(frame);
 }
 
 void Animation::Update()
 {
-	unsigned long now = TimeHelper::GetTimeNow();
+	auto now = TimeHelper::GetTimeNow();
 	if (currentFrame == -1)
 	{
 		currentFrame = 0;
@@ -33,18 +33,20 @@ void Animation::Update()
 	}
 	else
 	{
-		unsigned long frameTimeout = frames[currentFrame].GetTime();
+		auto frameTimeout = frames[currentFrame].GetTime();
 		if (now - lastFrameTime > frameTimeout)
 		{
 			currentFrame++;
 			lastFrameTime = now;
-			if (currentFrame == frames.size()) currentFrame = 0;
+
+			if (currentFrame == frames.size())
+				currentFrame = 0;
 		}
 
 	}
 }
 
-void Animation::Draw(SpritePtr spriteHandler, Vector position)
+void Animation::Draw(ISpriteHandler spriteHandler, Vector position)
 {
 	frames[currentFrame].GetSprite().Draw(spriteHandler, *texture, position);
 }

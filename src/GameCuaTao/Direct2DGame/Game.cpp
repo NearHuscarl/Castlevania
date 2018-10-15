@@ -35,40 +35,40 @@ void Game::Update(unsigned long deltaTime)
 {
 }
 
-void Game::Draw(SpritePtr spriteHandler)
+void Game::Draw(ISpriteHandler spriteHandler)
 {
 }
 
 // Render a frame
 void Game::Render()
 {
-	DevicePtr device = GetGraphicsDevice().GetDevice();
-	SurfacePtr surface = GetGraphicsDevice().GetBackBuffer();
-	SpritePtr spriteHandler = GetGraphicsDevice().GetSpriteHandler();
+	auto renderDevice = GetGraphicsDevice().GetRenderDevice();
+	auto surface = GetGraphicsDevice().GetBackBuffer();
+	auto spriteHandler = GetGraphicsDevice().GetSpriteHandler();
 
-	if (device->BeginScene())
+	if (renderDevice->BeginScene())
 	{
 		// Clear back buffer with a color
-		device->ColorFill(surface, nullptr, BACKGROUND_COLOR);
+		renderDevice->ColorFill(surface, nullptr, BACKGROUND_COLOR);
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
 		Draw(spriteHandler);
 
 		spriteHandler->End();
-		device->EndScene();
+		renderDevice->EndScene();
 	}
 
 	// Display back buffer content to the screen
-	device->Present(nullptr, nullptr, nullptr, nullptr);
+	renderDevice->Present(nullptr, nullptr, nullptr, nullptr);
 }
 
 int Game::Run()
 {
-	MSG msg;
-	unsigned long lastTime = TimeHelper::GetTimeNow();
-	unsigned long tickPerFrame = 1000 / MAX_FRAME_RATE;
-	InputManager *inputManager = InputManager::GetInstance();
+	auto msg = MSG{};
+	auto lastTime = TimeHelper::GetTimeNow();
+	auto tickPerFrame = 1000 / MAX_FRAME_RATE;
+	auto inputManager = InputManager::GetInstance();
 
 	isRunning = true;
 	while (isRunning)
@@ -82,8 +82,8 @@ int Game::Run()
 			DispatchMessage(&msg);
 		}
 
-		unsigned long currentTime = TimeHelper::GetTimeNow();
-		unsigned long deltaTime = currentTime - lastTime;
+		auto currentTime = TimeHelper::GetTimeNow();
+		auto deltaTime = currentTime - lastTime;
 
 		if (deltaTime >= tickPerFrame)
 		{

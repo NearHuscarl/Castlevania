@@ -3,12 +3,12 @@
 ContentManager::ContentManager(ServiceProvider &serviceProvider) : serviceProvider(serviceProvider)
 {
 	this->serviceProvider = serviceProvider;
-	this->contentReader = ContentReader(this);
+	this->contentReader = ContentReader{ this };
 }
 
 void ContentManager::SetRootDirectory(std::string path)
 {
-	rootDirectory = path;
+	rootDirectory = Path{ path }.make_preferred().string();
 }
 
 ServiceProvider &ContentManager::GetServiceProvider()
@@ -19,8 +19,7 @@ ServiceProvider &ContentManager::GetServiceProvider()
 template<typename T>
 std::shared_ptr<T> ContentManager::Load(std::string assetName)
 {
-	// TODO: handle path seperator
-	// var key = assetName.Replace('/', '\\');
+	assetName = Path{ assetName }.make_preferred().string(); // Replace path seperator '/' with '\\'
 
 	auto it = loadedAssets.find(assetName);
 	if (it != loadedAssets.end()) // Asset already loaded before, just return it
@@ -36,7 +35,7 @@ std::shared_ptr<T> ContentManager::Load(std::string assetName)
 template<typename T>
 std::shared_ptr<T> ContentManager::ReadAsset(std::string assetName)
 {
-	std::string path = (rootDirectory / assetName).string();
+	auto path = (rootDirectory / assetName).string();
 
 	return contentReader.ReadAsset<T>(path);
 }

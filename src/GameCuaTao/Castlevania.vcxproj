@@ -169,13 +169,13 @@
   <ItemGroup>
     <ClInclude Include="Direct2DGame\Animation\Animation.h" />
     <ClInclude Include="Direct2DGame\Animation\AnimationFrame.h" />
+    <ClInclude Include="Direct2DGame\Device.h" />
     <ClInclude Include="MarioSample\Models\MarioSettings.h" />
     <ClInclude Include="Direct2DGame\Animation\Sprite.h" />
     <ClInclude Include="Direct2DGame\Base\BoundingBox.h" />
     <ClInclude Include="Direct2DGame\Base\Vector.h" />
     <ClInclude Include="Direct2DGame\Content\AbstractReader.h" />
     <ClInclude Include="Direct2DGame\Content\AnimationReader.h" />
-    <ClInclude Include="Direct2DGame\Content\Content.h" />
     <ClInclude Include="Direct2DGame\Content\ContentManager.h" />
     <ClInclude Include="Direct2DGame\Content\ContentReader.h" />
     <ClInclude Include="Direct2DGame\Content\LoadContentException.h" />
@@ -187,7 +187,6 @@
     <ClInclude Include="Direct2DGame\Input\Controller.h" />
     <ClInclude Include="Direct2DGame\Input\InputManager.h" />
     <ClInclude Include="Direct2DGame\Input\KeyEventArgs.h" />
-    <ClInclude Include="MarioSample\Models\States.h" />
     <ClInclude Include="MarioSample\EntryPoint.h" />
     <ClInclude Include="MarioSample\Models\GameObject.h" />
     <ClInclude Include="MarioSample\Models\Mario.h" />

@@ -8,7 +8,6 @@ typedef LPDIRECTINPUT8 GInputPtr;
 typedef LPDIRECTINPUTDEVICE8 GInputDevicePtr;
 typedef DIDEVICEOBJECTDATA GDeviceInputData;
 
-
 EVENT_SOURCE
 class InputManager
 {

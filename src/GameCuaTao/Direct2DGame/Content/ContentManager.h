@@ -7,6 +7,9 @@
 #include "../ServiceProvider.h"
 #include "ContentReader.h"
 
+using Path = std::filesystem::path;
+using AssetDict = std::map<std::string, std::any>;
+
 class ContentManager
 {
 public:
@@ -19,8 +22,8 @@ public:
 	ServiceProvider &GetServiceProvider();
 
 private:
-	std::filesystem::path rootDirectory;
-	std::map<std::string, std::any> loadedAssets;
+	Path rootDirectory;
+	AssetDict loadedAssets;
 
 	ServiceProvider &serviceProvider;
 	ContentReader contentReader;

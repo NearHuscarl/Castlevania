@@ -18,22 +18,22 @@ InputManager *InputManager::GetInstance()
 
 void InputManager::InitKeyboard(HWND hWnd)
 {
-	HRESULT hr = DirectInput8Create(
+	auto result = DirectInput8Create(
 		(HINSTANCE)GetWindowLong(hWnd, GWL_HINSTANCE),
 		DIRECTINPUT_VERSION,
 		IID_IDirectInput8, (VOID**)&input, nullptr
 	);
 
-	if (hr != DI_OK)
+	if (result != DI_OK)
 	{
 		FileLogger::GetInstance()->Error("DirectInput8Create failed!");
 		return;
 	}
 
-	hr = input->CreateDevice(GUID_SysKeyboard, &inputDevice, nullptr);
+	result = input->CreateDevice(GUID_SysKeyboard, &inputDevice, nullptr);
 
 	// TO-DO: put in exception handling
-	if (hr != DI_OK)
+	if (result != DI_OK)
 	{
 		FileLogger::GetInstance()->Error("CreateDevice failed!");
 		return;
@@ -47,9 +47,9 @@ void InputManager::InitKeyboard(HWND hWnd)
 	// This tells DirectInput that we will be passing an array
 	// of 256 bytes to IDirectInputDevice::GetDeviceState.
 
-	hr = inputDevice->SetDataFormat(&c_dfDIKeyboard);
+	result = inputDevice->SetDataFormat(&c_dfDIKeyboard);
 
-	hr = inputDevice->SetCooperativeLevel(hWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
+	result = inputDevice->SetCooperativeLevel(hWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 
 
 	// IMPORTANT STEP TO USE BUFFERED DEVICE DATA!
@@ -61,7 +61,7 @@ void InputManager::InitKeyboard(HWND hWnd)
 	// Set the buffer size to DINPUT_BUFFERSIZE (defined above) elements.
 	//
 	// The buffer size is a DWORD property associated with the device.
-	DIPROPDWORD dipdw;
+	auto dipdw = DIPROPDWORD{};
 
 	dipdw.diph.dwSize = sizeof(DIPROPDWORD);
 	dipdw.diph.dwHeaderSize = sizeof(DIPROPHEADER);
@@ -69,10 +69,10 @@ void InputManager::InitKeyboard(HWND hWnd)
 	dipdw.diph.dwHow = DIPH_DEVICE;
 	dipdw.dwData = KEYBOARD_BUFFER_SIZE; // Arbitary buffer size
 
-	hr = inputDevice->SetProperty(DIPROP_BUFFERSIZE, &dipdw.diph);
+	result = inputDevice->SetProperty(DIPROP_BUFFERSIZE, &dipdw.diph);
 
-	hr = inputDevice->Acquire();
-	if (hr != DI_OK)
+	result = inputDevice->Acquire();
+	if (result != DI_OK)
 	{
 		FileLogger::GetInstance()->Error("DINPUT8::Acquire failed!");
 		return;
@@ -88,21 +88,22 @@ int InputManager::IsKeyDown(int KeyCode)
 
 void InputManager::ProcessKeyboard()
 {
-	HRESULT hr;
+	auto result = HRESULT{};
 
 	// Collect all key states first
-	hr = inputDevice->GetDeviceState(sizeof(keyStates), keyStates);
-	if (FAILED(hr))
+	result = inputDevice->GetDeviceState(sizeof(keyStates), keyStates);
+	if (FAILED(result))
 	{
 		// If the keyboard lost focus or was not acquired then try to get control back.
-		if ((hr == DIERR_INPUTLOST) || (hr == DIERR_NOTACQUIRED))
+		if ((result == DIERR_INPUTLOST) || (result == DIERR_NOTACQUIRED))
 		{
-			HRESULT h = inputDevice->Acquire();
-			if (h == DI_OK)
-			{
+			// TODO: error here (potentiallY)
+			result = inputDevice->Acquire();
+
+			if (result == DI_OK)
 				FileLogger::GetInstance()->Info("Keyboard re-acquired!");
-			}
-			else return;
+			else
+				return;
 		}
 		else
 		{
@@ -115,19 +116,19 @@ void InputManager::ProcessKeyboard()
 
 
 	// Collect all buffered events
-	DWORD dwElements = KEYBOARD_BUFFER_SIZE;
-	hr = inputDevice->GetDeviceData(sizeof(GDeviceInputData), keyEvents, &dwElements, 0);
-	if (FAILED(hr))
+	auto dwElements = DWORD{ KEYBOARD_BUFFER_SIZE };
+	result = inputDevice->GetDeviceData(sizeof(GDeviceInputData), keyEvents, &dwElements, 0);
+	if (FAILED(result))
 	{
 		// FileLogger::GetInstance()->Error("DINPUT::GetDeviceData failed. Error: " + std::to_string(hr));
 		return;
 	}
 
 	// Scan through all buffered events, check if the key is pressed or released
-	for (DWORD i = 0; i < dwElements; i++)
+	for (auto i = 0; i < dwElements; i++)
 	{
-		int KeyCode = keyEvents[i].dwOfs;
-		int KeyState = keyEvents[i].dwData;
+		auto KeyCode = keyEvents[i].dwOfs;
+		auto KeyState = keyEvents[i].dwData;
 
 		if ((KeyState & 0x80) > 0)
 		{

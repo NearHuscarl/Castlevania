@@ -95,9 +95,6 @@
     <ClInclude Include="Direct2DGame\Content\AnimationReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Direct2DGame\Content\Content.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Direct2DGame\Content\ContentManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -176,13 +173,13 @@
     <ClInclude Include="MarioSample\Models\MarioSettings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MarioSample\Models\States.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MarioSample\DemoGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MarioSample\EntryPoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DGame\Device.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

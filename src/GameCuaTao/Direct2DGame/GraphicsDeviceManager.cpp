@@ -12,7 +12,7 @@ GraphicsDeviceManager::GraphicsDeviceManager(Game *game)
 
 void GraphicsDeviceManager::CreateDevice()
 {
-	HWND hWnd = game->GetWindow().GetHandle();
+	auto hWnd = game->GetWindow().GetHandle();
 	graphicsDevice.CreateDevice(hWnd);
 }
 

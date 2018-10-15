@@ -4,7 +4,7 @@
 
 FileLogger *FileLogger::instance = nullptr;
 
-FileLogger * FileLogger::GetInstance()
+FileLogger *FileLogger::GetInstance()
 {
 	if (instance == nullptr)
 	{

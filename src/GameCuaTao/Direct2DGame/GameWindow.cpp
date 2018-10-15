@@ -15,23 +15,23 @@ void GameWindow::Create()
 	auto WINDOW_CLASS_NAME = windowClassName;
 	auto MAIN_WINDOW_TITLE = windowTitle;
 
-	WNDCLASSEX wc;
-	wc.cbSize = sizeof(WNDCLASSEX);
+	auto windowClassEx = WNDCLASSEX{};
+	windowClassEx.cbSize = sizeof(WNDCLASSEX);
 
-	wc.style = CS_HREDRAW | CS_VREDRAW;
-	wc.hInstance = hInstance;
+	windowClassEx.style = CS_HREDRAW | CS_VREDRAW;
+	windowClassEx.hInstance = hInstance;
 
-	wc.lpfnWndProc = (WNDPROC)WinProc;
-	wc.cbClsExtra = 0;
-	wc.cbWndExtra = 0;
-	wc.hIcon = nullptr;
-	wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
-	wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
-	wc.lpszMenuName = nullptr;
-	wc.lpszClassName = WINDOW_CLASS_NAME;
-	wc.hIconSm = nullptr;
+	windowClassEx.lpfnWndProc = (WNDPROC)WinProc;
+	windowClassEx.cbClsExtra = 0;
+	windowClassEx.cbWndExtra = 0;
+	windowClassEx.hIcon = nullptr;
+	windowClassEx.hCursor = LoadCursor(nullptr, IDC_ARROW);
+	windowClassEx.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+	windowClassEx.lpszMenuName = nullptr;
+	windowClassEx.lpszClassName = WINDOW_CLASS_NAME;
+	windowClassEx.hIconSm = nullptr;
 
-	RegisterClassEx(&wc);
+	RegisterClassEx(&windowClassEx);
 
 	hWnd = CreateWindow(
 		WINDOW_CLASS_NAME,
@@ -48,8 +48,9 @@ void GameWindow::Create()
 
 	if (!hWnd)
 	{
+		// TODO: use string template to populate error code
+		auto ErrCode = GetLastError();
 		FileLogger::GetInstance()->Error("CreateWindow failed");
-		DWORD ErrCode = GetLastError();
 		hWnd = nullptr;
 	}
 	else

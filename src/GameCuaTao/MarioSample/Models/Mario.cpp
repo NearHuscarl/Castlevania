@@ -35,7 +35,7 @@ void Mario::Update(unsigned long deltaTime)
 	(*animations)[GetAnimationState()].Update();
 }
 
-void Mario::Draw(SpritePtr spriteHandler)
+void Mario::Draw(ISpriteHandler spriteHandler)
 {
 	(*animations)[GetAnimationState()].Draw(spriteHandler, position);
 }

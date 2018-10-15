@@ -22,14 +22,14 @@ private:
 template<typename T>
 inline void ServiceProvider::Add(T *service)
 {
-	std::string typeName = typeid(T).name();
+	auto typeName = typeid(T).name();
 	services[typeName] = static_cast<void*>(service);
 }
 
 template<typename T>
 inline T *ServiceProvider::Get()
 {
-	std::string typeName = typeid(T).name();
+	auto typeName = typeid(T).name();
 	auto it = services.find(typeName);
 
 	if (it == services.end())

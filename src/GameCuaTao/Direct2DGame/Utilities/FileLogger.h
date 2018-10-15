@@ -4,6 +4,8 @@
 #include <fstream>
 #include <filesystem>
 
+using Path = std::filesystem::path;
+
 class FileLogger
 {
 public:
@@ -23,7 +25,7 @@ private:
 	static FileLogger *instance;
 	FileLogger();
 
-	std::filesystem::path directory = "Logs";
+	Path directory = "Logs";
 	std::ofstream logFile;
 
 	std::string DEBUG_TAG = "[DEBUG] ";

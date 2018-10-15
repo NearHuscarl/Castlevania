@@ -8,6 +8,9 @@
 #define UNHOOK_EVENT __unhook
 #define RAISE_EVENT __raise
 
+// To enable this "feature":
+// Project -> Properties -> C/C++ -> Language -> Conformance mode -> Leave empty
+
 // Sample code for C++ native event
 // See more at https://msdn.microsoft.com/en-us/library/ee2k0a7d.aspx
 

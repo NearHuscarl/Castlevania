@@ -6,8 +6,8 @@
 
 std::string TimeHelper::GetTimeNow(const char *format)
 {
-	std::time_t timeNow = std::time(nullptr);
-	std::tm timeStruct = *std::localtime(&timeNow);
+	auto timeNow = std::time(nullptr);
+	auto timeStruct = *std::localtime(&timeNow);
 	char formattedTime[80];
 
 	strftime(formattedTime, sizeof(formattedTime), format, &timeStruct);

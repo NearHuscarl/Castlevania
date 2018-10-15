@@ -1,27 +1,26 @@
 #pragma once
 
 #include <Windows.h>
-// TODO: #include "Device.h"
-#include "Content/Content.h"
+#include "Device.h"
 
 class GraphicsDevice
 {
 public:
-	D3DCOLOR GetTransparentColor() { return transparentColor; }
-	void SetTransparentColor(D3DCOLOR color) { transparentColor = color; }
+	Color GetTransparentColor();
+	void SetTransparentColor(Color color);
 
 	void CreateDevice(HWND hWnd);
 
-	DevicePtr GetDevice();
-	SurfacePtr GetBackBuffer();
-	SpritePtr GetSpriteHandler();
+	IRenderDevice GetRenderDevice();
+	ISurface GetBackBuffer();
+	ISpriteHandler GetSpriteHandler();
 
 	virtual ~GraphicsDevice();
 
 private:
-	D3DCOLOR transparentColor = D3DCOLOR_XRGB(255, 255, 255);
+	Color transparentColor = D3DCOLOR_XRGB(255, 255, 255);
 
-	DevicePtr device = nullptr;       // Direct3D device object
-	SurfacePtr backBuffer = nullptr;
-	SpritePtr spriteHandler = nullptr;    // Sprite helper library to help us draw 2D image on the screen
+	IRenderDevice renderDevice = nullptr;       // Direct3D device object
+	ISurface backBuffer = nullptr;
+	ISpriteHandler spriteHandler = nullptr;    // Sprite helper library to help us draw 2D image on the screen
 };

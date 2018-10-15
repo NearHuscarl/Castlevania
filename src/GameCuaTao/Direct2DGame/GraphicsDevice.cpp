@@ -1,57 +1,67 @@
 #include "GraphicsDevice.h"
 #include "Utilities/FileLogger.h"
 
+Color GraphicsDevice::GetTransparentColor()
+{
+	return transparentColor;
+}
+
+void GraphicsDevice::SetTransparentColor(Color color)
+{
+	transparentColor = color;
+}
+
 void GraphicsDevice::CreateDevice(HWND hWnd)
 {
-	IDirect3D9 *d3d = Direct3DCreate9(D3D_SDK_VERSION);
-	D3DPRESENT_PARAMETERS d3dpp;
+	auto device = Direct3DCreate9(D3D_SDK_VERSION);
+	auto presentationParameters = PresentationParameters{};
 
-	ZeroMemory(&d3dpp, sizeof(d3dpp));
+	ZeroMemory(&presentationParameters, sizeof(presentationParameters));
 
-	d3dpp.Windowed = TRUE;
-	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
-	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
-	d3dpp.BackBufferCount = 1;
+	presentationParameters.Windowed = TRUE;
+	presentationParameters.SwapEffect = D3DSWAPEFFECT_DISCARD;
+	presentationParameters.BackBufferFormat = D3DFMT_X8R8G8B8;
+	presentationParameters.BackBufferCount = 1;
 
-	RECT rectangle;
+	auto rectangle = RECT{};
 	GetClientRect(hWnd, &rectangle);	// retrieve Window width & height 
 
-	d3dpp.BackBufferHeight = rectangle.bottom + 1;
-	d3dpp.BackBufferWidth = rectangle.right + 1;
+	presentationParameters.BackBufferHeight = rectangle.bottom + 1;
+	presentationParameters.BackBufferWidth = rectangle.right + 1;
 
-	d3d->CreateDevice(
+	device->CreateDevice(
 		D3DADAPTER_DEFAULT,
 		D3DDEVTYPE_HAL,
 		hWnd,
 		D3DCREATE_SOFTWARE_VERTEXPROCESSING,
-		&d3dpp,
-		&device);
+		&presentationParameters,
+		&renderDevice);
 
-	if (device == nullptr)
+	if (renderDevice == nullptr)
 	{
 		FileLogger::GetInstance()->Error("CreateDevice failed");
 		return;
 	}
 
-	device->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &backBuffer);
+	renderDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &backBuffer);
 
 	// Initialize sprite helper from Direct3DX helper library
-	D3DXCreateSprite(device, &spriteHandler);
+	D3DXCreateSprite(renderDevice, &spriteHandler);
 
 	FileLogger::GetInstance()->Info("InitGame done");
 }
 
-DevicePtr GraphicsDevice::GetDevice()
+IRenderDevice GraphicsDevice::GetRenderDevice()
 {
-	return device;
+	return renderDevice;
 }
 
-SurfacePtr GraphicsDevice::GetBackBuffer()
+ISurface GraphicsDevice::GetBackBuffer()
 {
 	return backBuffer;
 }
 
-SpritePtr GraphicsDevice::GetSpriteHandler()
+ISpriteHandler GraphicsDevice::GetSpriteHandler()
 {
 	return spriteHandler;
 }
@@ -64,6 +74,6 @@ GraphicsDevice::~GraphicsDevice()
 	if (backBuffer != nullptr)
 		backBuffer->Release();
 
-	if (device != nullptr)
-		device->Release();
+	if (renderDevice != nullptr)
+		renderDevice->Release();
 }

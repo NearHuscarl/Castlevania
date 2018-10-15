@@ -4,7 +4,6 @@
 #include "Direct2DGame/Base/Vector.h"
 #include "Direct2DGame/Animation/Animation.h"
 #include "Direct2DGame/Content/ContentManager.h"
-#include "States.h"
 
 class GameObject
 {
@@ -22,7 +21,7 @@ public:
 	virtual void LoadContent(ContentManager &content) = 0;
 
 	virtual void Update(unsigned long deltaTime);
-	virtual void Draw(SpritePtr spriteHandler);
+	virtual void Draw(ISpriteHandler spriteHandler);
 	
 	virtual ~GameObject();
 
