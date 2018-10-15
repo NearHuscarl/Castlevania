@@ -1,10 +1,8 @@
 #include "DemoGame.h"
-#include "Animation/AnimationSettings.h"
-#include "Animation/Animation.h"
 
 DemoGame::DemoGame(HINSTANCE hInstance) : Game(hInstance)
 {
-	content.SetRootDirectory("Asset");
+	content.SetRootDirectory("Castlevania\\Content");
 	window.SetScreenWidth(640);
 	window.SetScreenHeight(480);
 }

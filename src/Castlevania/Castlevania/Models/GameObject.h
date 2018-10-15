@@ -1,11 +1,10 @@
 #pragma once
 
 #include <map>
+#include "Direct2DGame/Base/Vector.h"
+#include "Direct2DGame/Animation/Animation.h"
+#include "Direct2DGame/Content/ContentManager.h"
 #include "States.h"
-#include "../Base/Vector.h"
-#include "../Animation/Animation.h"
-#include "../Animation/AnimationSettings.h"
-#include "../Content/ContentManager.h"
 
 class GameObject
 {

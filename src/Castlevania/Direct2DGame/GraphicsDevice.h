@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Windows.h>
+// TODO: #include "Device.h"
 #include "Content/Content.h"
 
 class GraphicsDevice

@@ -1,5 +1,6 @@
+#include "Direct2DGame/Utilities/FileLogger.h"
 #include "Mario.h"
-#include "../Utilities/FileLogger.h"
+#include "MarioSettings.h"
 
 constexpr float MARIO_WALKING_SPEED = 0.05f;
 constexpr float MARIO_JUMP_SPEED_X = 1.0f;

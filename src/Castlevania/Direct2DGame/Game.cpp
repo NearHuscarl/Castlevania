@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Utilities/TimeHelper.h"
 
 // TODO: refactor
 constexpr int MAX_FRAME_RATE = 90;
@@ -65,7 +66,7 @@ void Game::Render()
 int Game::Run()
 {
 	MSG msg;
-	unsigned long lastTime = GetTickCount();
+	unsigned long lastTime = TimeHelper::GetTimeNow();
 	unsigned long tickPerFrame = 1000 / MAX_FRAME_RATE;
 	InputManager *inputManager = InputManager::GetInstance();
 
@@ -81,7 +82,7 @@ int Game::Run()
 			DispatchMessage(&msg);
 		}
 
-		unsigned long currentTime = GetTickCount();
+		unsigned long currentTime = TimeHelper::GetTimeNow();
 		unsigned long deltaTime = currentTime - lastTime;
 
 		if (deltaTime >= tickPerFrame)

@@ -1,7 +1,6 @@
 #pragma once
 
-#include <windows.h>
-#include "Game.h"
+#include "Direct2DGame/Game.h"
 #include "Models/Mario.h"
 
 class DemoGame : public Game

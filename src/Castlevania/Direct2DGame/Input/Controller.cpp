@@ -1,6 +1,5 @@
 #include "Controller.h"
 
-
 Controller::Controller()
 {
 	HookEvents();

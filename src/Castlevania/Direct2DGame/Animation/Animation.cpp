@@ -1,4 +1,5 @@
 #include "Animation.h"
+#include "../Utilities/TimeHelper.h"
 
 Animation::Animation()
 {
@@ -24,7 +25,7 @@ void Animation::Add(Sprite sprite, unsigned long time)
 
 void Animation::Update()
 {
-	unsigned long now = GetTickCount();
+	unsigned long now = TimeHelper::GetTimeNow();
 	if (currentFrame == -1)
 	{
 		currentFrame = 0;

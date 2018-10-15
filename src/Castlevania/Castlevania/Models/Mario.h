@@ -1,7 +1,7 @@
 #pragma once
 
+#include "Direct2DGame/Input/Controller.h"
 #include "GameObject.h"
-#include "../Input/Controller.h"
 
 class Mario : public GameObject, public Controller
 {

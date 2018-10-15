@@ -80,7 +80,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>SDK Path\Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>SDK Path\Include;.</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -125,67 +125,62 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Image Include="brick.png" />
-    <Image Include="mario.png" />
+    <ClCompile Include="Direct2DGame\Animation\Animation.cpp" />
+    <ClCompile Include="Direct2DGame\Animation\AnimationFrame.cpp" />
+    <ClCompile Include="Direct2DGame\Animation\Sprite.cpp" />
+    <ClCompile Include="Direct2DGame\Content\AnimationReader.cpp" />
+    <ClCompile Include="Direct2DGame\Content\ContentManager.cpp" />
+    <ClCompile Include="Direct2DGame\Content\ContentReader.cpp" />
+    <ClCompile Include="Direct2DGame\Content\TextureReader.cpp" />
+    <ClCompile Include="Direct2DGame\Game.cpp" />
+    <ClCompile Include="Direct2DGame\GameWindow.cpp" />
+    <ClCompile Include="Direct2DGame\GraphicsDevice.cpp" />
+    <ClCompile Include="Direct2DGame\GraphicsDeviceManager.cpp" />
+    <ClCompile Include="Direct2DGame\Input\Controller.cpp" />
+    <ClCompile Include="Direct2DGame\Input\InputManager.cpp" />
+    <ClCompile Include="Castlevania\Main.cpp" />
+    <ClCompile Include="Castlevania\Models\GameObject.cpp" />
+    <ClCompile Include="Castlevania\EntryPoint.cpp" />
+    <ClCompile Include="Castlevania\Models\Mario.cpp" />
+    <ClCompile Include="Castlevania\DemoGame.cpp" />
+    <ClCompile Include="Library\pugixml.cpp" />
+    <ClCompile Include="Direct2DGame\Utilities\FileLogger.cpp" />
+    <ClCompile Include="Direct2DGame\Utilities\TimeHelper.cpp" />
+    <ClCompile Include="Direct2DGame\Utilities\WinHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Animation\Animation.cpp" />
-    <ClCompile Include="Animation\AnimationFrame.cpp" />
-    <ClCompile Include="Content\AnimationReader.cpp" />
-    <ClCompile Include="Content\ContentManager.cpp" />
-    <ClCompile Include="Content\ContentReader.cpp" />
-    <ClCompile Include="GameWindow.cpp" />
-    <ClCompile Include="GraphicsDevice.cpp" />
-    <ClCompile Include="Input\Controller.cpp" />
-    <ClCompile Include="Library\pugixml\pugixml.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Models\GameObject.cpp" />
-    <ClCompile Include="Input\InputManager.cpp" />
-    <ClCompile Include="EntryPoint.cpp" />
-    <ClCompile Include="Models\Mario.cpp" />
-    <ClCompile Include="DemoGame.cpp" />
-    <ClCompile Include="Animation\Sprite.cpp" />
-    <ClCompile Include="GraphicsDeviceManager.cpp" />
-    <ClCompile Include="Content\TextureReader.cpp" />
-    <ClCompile Include="Utilities\FileLogger.cpp" />
-    <ClCompile Include="Utilities\TimeHelper.cpp" />
-    <ClCompile Include="Utilities\WinHelper.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Animation\Animation.h" />
-    <ClInclude Include="Animation\AnimationSettings.h" />
-    <ClInclude Include="Animation\AnimationFrame.h" />
-    <ClInclude Include="Base\BoundingBox.h" />
-    <ClInclude Include="Base\Vector.h" />
-    <ClInclude Include="Content\AbstractReader.h" />
-    <ClInclude Include="Content\AnimationReader.h" />
-    <ClInclude Include="Content\Content.h" />
-    <ClInclude Include="Content\ContentManager.h" />
-    <ClInclude Include="Content\ContentReader.h" />
-    <ClInclude Include="Content\LoadContentException.h" />
-    <ClInclude Include="GameWindow.h" />
-    <ClInclude Include="GraphicsDevice.h" />
-    <ClInclude Include="Library\pugixml\pugiconfig.hpp" />
-    <ClInclude Include="Library\pugixml\pugixml.hpp" />
-    <ClInclude Include="Models\States.h" />
-    <ClInclude Include="Base\Entity.h" />
-    <ClInclude Include="EntryPoint.h" />
-    <ClInclude Include="Input\Controller.h" />
-    <ClInclude Include="Input\KeyEventArgs.h" />
-    <ClInclude Include="ServiceProvider.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="Models\GameObject.h" />
-    <ClInclude Include="Input\InputManager.h" />
-    <ClInclude Include="Models\Mario.h" />
-    <ClInclude Include="DemoGame.h" />
-    <ClInclude Include="Animation\Sprite.h" />
-    <ClInclude Include="Content\TextureReader.h" />
-    <ClInclude Include="Utilities\Event.h" />
-    <ClInclude Include="GraphicsDeviceManager.h" />
-    <ClInclude Include="Utilities\FileLogger.h" />
-    <ClInclude Include="Utilities\TimeHelper.h" />
-    <ClInclude Include="Utilities\WinHelper.h" />
+    <ClInclude Include="Direct2DGame\Animation\Animation.h" />
+    <ClInclude Include="Direct2DGame\Animation\AnimationFrame.h" />
+    <ClInclude Include="Castlevania\Models\MarioSettings.h" />
+    <ClInclude Include="Direct2DGame\Animation\Sprite.h" />
+    <ClInclude Include="Direct2DGame\Base\BoundingBox.h" />
+    <ClInclude Include="Direct2DGame\Base\Vector.h" />
+    <ClInclude Include="Direct2DGame\Content\AbstractReader.h" />
+    <ClInclude Include="Direct2DGame\Content\AnimationReader.h" />
+    <ClInclude Include="Direct2DGame\Content\Content.h" />
+    <ClInclude Include="Direct2DGame\Content\ContentManager.h" />
+    <ClInclude Include="Direct2DGame\Content\ContentReader.h" />
+    <ClInclude Include="Direct2DGame\Content\LoadContentException.h" />
+    <ClInclude Include="Direct2DGame\Content\TextureReader.h" />
+    <ClInclude Include="Direct2DGame\Game.h" />
+    <ClInclude Include="Direct2DGame\GameWindow.h" />
+    <ClInclude Include="Direct2DGame\GraphicsDevice.h" />
+    <ClInclude Include="Direct2DGame\GraphicsDeviceManager.h" />
+    <ClInclude Include="Direct2DGame\Input\Controller.h" />
+    <ClInclude Include="Direct2DGame\Input\InputManager.h" />
+    <ClInclude Include="Direct2DGame\Input\KeyEventArgs.h" />
+    <ClInclude Include="Castlevania\Models\States.h" />
+    <ClInclude Include="Castlevania\EntryPoint.h" />
+    <ClInclude Include="Castlevania\Models\GameObject.h" />
+    <ClInclude Include="Castlevania\Models\Mario.h" />
+    <ClInclude Include="Castlevania\DemoGame.h" />
+    <ClInclude Include="Library\pugiconfig.hpp" />
+    <ClInclude Include="Library\pugixml.hpp" />
+    <ClInclude Include="Direct2DGame\ServiceProvider.h" />
+    <ClInclude Include="Direct2DGame\Utilities\Event.h" />
+    <ClInclude Include="Direct2DGame\Utilities\FileLogger.h" />
+    <ClInclude Include="Direct2DGame\Utilities\TimeHelper.h" />
+    <ClInclude Include="Direct2DGame\Utilities\WinHelper.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

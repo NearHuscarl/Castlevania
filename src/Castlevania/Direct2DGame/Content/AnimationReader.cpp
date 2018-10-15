@@ -1,9 +1,9 @@
 #include <memory>
 #include <map>
+#include "Library/pugixml.hpp"
 #include "AnimationReader.h"
 #include "LoadContentException.h"
 #include "ContentManager.h"
-#include "../Library/pugixml/pugixml.hpp"
 
 std::shared_ptr<AnimationDict> AnimationReader::Read(std::string filePath, ContentManager &contentManager)
 {

@@ -4,7 +4,6 @@
 #include "InputManager.h"
 #include "KeyEventArgs.h"
 
-
 EVENT_RECEIVER
 class Controller
 {
