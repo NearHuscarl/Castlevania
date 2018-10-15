@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{28B2F97D-9DAE-4B2D-B50C-20F78D14C071}</ProjectGuid>
+    <RootNamespace>Castlevania</RootNamespace>
+    <ProjectName>GameCuaTao</ProjectName>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>Library\directx\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>Library\directx\Lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <ExecutablePath>$(VC_ExecutablePath_x86);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH);</ExecutablePath>
+    <ReferencePath>$(VC_ReferencesPath_x86);</ReferencePath>
+    <ExcludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(VC_ExecutablePath_x86);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(FxCopDir);$(MSBuild_ExecutablePath);$(VC_LibraryPath_x86);$(SystemRoot)</ExcludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>false</ConformanceMode>
+      <AdditionalIncludeDirectories>SDK Path\Include;.</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>d3dx9.lib;d3d9.lib;dxguid.lib;dxerr.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>SDK Path\Include</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>
+      </ConformanceMode>
+      <AdditionalIncludeDirectories>.</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <PreprocessorDefinitions>_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <OmitFramePointers>
+      </OmitFramePointers>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dinput8.lib;dxguid.lib;dsound.lib;dxerr.lib;winmm.lib;%(AdditionalDependencies);legacy_stdio_definitions.lib</AdditionalDependencies>
+      <SubSystem>
+      </SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Direct2DGame\Animation\Animation.cpp" />
+    <ClCompile Include="Direct2DGame\Animation\AnimationFrame.cpp" />
+    <ClCompile Include="Direct2DGame\Animation\Sprite.cpp" />
+    <ClCompile Include="Direct2DGame\Content\AnimationReader.cpp" />
+    <ClCompile Include="Direct2DGame\Content\ContentManager.cpp" />
+    <ClCompile Include="Direct2DGame\Content\ContentReader.cpp" />
+    <ClCompile Include="Direct2DGame\Content\TextureReader.cpp" />
+    <ClCompile Include="Direct2DGame\Game.cpp" />
+    <ClCompile Include="Direct2DGame\GameWindow.cpp" />
+    <ClCompile Include="Direct2DGame\GraphicsDevice.cpp" />
+    <ClCompile Include="Direct2DGame\GraphicsDeviceManager.cpp" />
+    <ClCompile Include="Direct2DGame\Input\Controller.cpp" />
+    <ClCompile Include="Direct2DGame\Input\InputManager.cpp" />
+    <ClCompile Include="MarioSample\Main.cpp" />
+    <ClCompile Include="MarioSample\Models\GameObject.cpp" />
+    <ClCompile Include="MarioSample\EntryPoint.cpp" />
+    <ClCompile Include="MarioSample\Models\Mario.cpp" />
+    <ClCompile Include="MarioSample\DemoGame.cpp" />
+    <ClCompile Include="Direct2DGame\Utilities\FileLogger.cpp" />
+    <ClCompile Include="Direct2DGame\Utilities\TimeHelper.cpp" />
+    <ClCompile Include="Direct2DGame\Utilities\WinHelper.cpp" />
+    <ClCompile Include="Library\pugixml\pugixml.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Direct2DGame\Animation\Animation.h" />
+    <ClInclude Include="Direct2DGame\Animation\AnimationFrame.h" />
+    <ClInclude Include="MarioSample\Models\MarioSettings.h" />
+    <ClInclude Include="Direct2DGame\Animation\Sprite.h" />
+    <ClInclude Include="Direct2DGame\Base\BoundingBox.h" />
+    <ClInclude Include="Direct2DGame\Base\Vector.h" />
+    <ClInclude Include="Direct2DGame\Content\AbstractReader.h" />
+    <ClInclude Include="Direct2DGame\Content\AnimationReader.h" />
+    <ClInclude Include="Direct2DGame\Content\Content.h" />
+    <ClInclude Include="Direct2DGame\Content\ContentManager.h" />
+    <ClInclude Include="Direct2DGame\Content\ContentReader.h" />
+    <ClInclude Include="Direct2DGame\Content\LoadContentException.h" />
+    <ClInclude Include="Direct2DGame\Content\TextureReader.h" />
+    <ClInclude Include="Direct2DGame\Game.h" />
+    <ClInclude Include="Direct2DGame\GameWindow.h" />
+    <ClInclude Include="Direct2DGame\GraphicsDevice.h" />
+    <ClInclude Include="Direct2DGame\GraphicsDeviceManager.h" />
+    <ClInclude Include="Direct2DGame\Input\Controller.h" />
+    <ClInclude Include="Direct2DGame\Input\InputManager.h" />
+    <ClInclude Include="Direct2DGame\Input\KeyEventArgs.h" />
+    <ClInclude Include="MarioSample\Models\States.h" />
+    <ClInclude Include="MarioSample\EntryPoint.h" />
+    <ClInclude Include="MarioSample\Models\GameObject.h" />
+    <ClInclude Include="MarioSample\Models\Mario.h" />
+    <ClInclude Include="MarioSample\DemoGame.h" />
+    <ClInclude Include="Library\pugiconfig.hpp" />
+    <ClInclude Include="Library\pugixml.hpp" />
+    <ClInclude Include="Direct2DGame\ServiceProvider.h" />
+    <ClInclude Include="Direct2DGame\Utilities\Event.h" />
+    <ClInclude Include="Direct2DGame\Utilities\FileLogger.h" />
+    <ClInclude Include="Direct2DGame\Utilities\TimeHelper.h" />
+    <ClInclude Include="Direct2DGame\Utilities\WinHelper.h" />
+    <ClInclude Include="Library\pugixml\pugiconfig.hpp" />
+    <ClInclude Include="Library\pugixml\pugixml.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>

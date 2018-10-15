@@ -1,0 +1,48 @@
+#include "ContentManager.h"
+
+ContentManager::ContentManager(ServiceProvider &serviceProvider) : serviceProvider(serviceProvider)
+{
+	this->serviceProvider = serviceProvider;
+	this->contentReader = ContentReader(this);
+}
+
+void ContentManager::SetRootDirectory(std::string path)
+{
+	rootDirectory = path;
+}
+
+ServiceProvider &ContentManager::GetServiceProvider()
+{
+	return serviceProvider;
+}
+
+template<typename T>
+std::shared_ptr<T> ContentManager::Load(std::string assetName)
+{
+	// TODO: handle path seperator
+	// var key = assetName.Replace('/', '\\');
+
+	auto it = loadedAssets.find(assetName);
+	if (it != loadedAssets.end()) // Asset already loaded before, just return it
+	{
+		return std::any_cast<std::shared_ptr<T>>(loadedAssets[assetName]);
+	}
+	
+	loadedAssets.emplace(assetName, ReadAsset<T>(assetName));
+
+	return std::any_cast<std::shared_ptr<T>>(loadedAssets[assetName]);
+}
+
+template<typename T>
+std::shared_ptr<T> ContentManager::ReadAsset(std::string assetName)
+{
+	std::string path = (rootDirectory / assetName).string();
+
+	return contentReader.ReadAsset<T>(path);
+}
+
+template std::shared_ptr<AnimationDict> ContentManager::Load<AnimationDict>(std::string assetName);
+template std::shared_ptr<AnimationDict> ContentManager::ReadAsset<AnimationDict>(std::string assetName);
+
+template std::shared_ptr<Texture> ContentManager::Load<Texture>(std::string assetName);
+template std::shared_ptr<Texture> ContentManager::ReadAsset<Texture>(std::string assetName);
