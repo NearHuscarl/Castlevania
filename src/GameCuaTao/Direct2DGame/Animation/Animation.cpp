@@ -46,7 +46,7 @@ void Animation::Update()
 	}
 }
 
-void Animation::Draw(ISpriteHandler spriteHandler, Vector position)
+void Animation::Draw(ISpriteHandler_ spriteHandler, Vector position)
 {
 	frames[currentFrame].GetSprite().Draw(spriteHandler, *texture, position);
 }

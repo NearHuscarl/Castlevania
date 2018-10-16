@@ -13,12 +13,12 @@ std::shared_ptr<Texture> TextureReader::Read(std::string filePathStr, ContentMan
 	auto result = D3DXGetImageInfoFromFile(filePath.c_str(), &info);
 	if (result != D3D_OK)
 	{
-		throw LoadContentException("GetImageInfoFromFile failed: " + WinHelper::ws2s(filePath));
+		throw LoadContentException("GetImageInfoFromFile failed: " + filePathStr);
 	}
 
 	auto graphicsDevice = contentManager.GetServiceProvider().Get<GraphicsDevice>();
 
-	auto texture = Texture{ nullptr };
+	auto texture = ITexture_{ nullptr };
 	auto renderDevice = graphicsDevice->GetRenderDevice();
 	auto transparentColor = graphicsDevice->GetTransparentColor();
 
@@ -40,10 +40,10 @@ std::shared_ptr<Texture> TextureReader::Read(std::string filePathStr, ContentMan
 
 	if (result != D3D_OK)
 	{
-		throw LoadContentException("CreateTextureFromFile failed: " + WinHelper::ws2s(filePath));
+		throw LoadContentException("CreateTextureFromFile failed: " + filePathStr);
 	}
 
-	FileLogger::GetInstance()->Info("Texture loaded Ok: " + WinHelper::ws2s(filePath));
+	FileLogger::GetInstance()->Info("Texture loaded Ok: " + filePathStr);
 
 	return std::make_shared<Texture>(texture);
 }

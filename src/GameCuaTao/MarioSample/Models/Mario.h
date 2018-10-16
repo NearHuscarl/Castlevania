@@ -8,7 +8,7 @@ class Mario : public GameObject, public Controller
 public: 
 	void LoadContent(ContentManager &content) override;
 	void Update(unsigned long deltaTime) override;
-	void Draw(ISpriteHandler spriteHandler) override;
+	void Draw(ISpriteHandler_ spriteHandler) override;
 	void SetState(int state) override;
 	std::string GetAnimationState() override;
 

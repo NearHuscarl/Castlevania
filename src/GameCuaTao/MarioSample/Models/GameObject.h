@@ -21,7 +21,7 @@ public:
 	virtual void LoadContent(ContentManager &content) = 0;
 
 	virtual void Update(unsigned long deltaTime);
-	virtual void Draw(ISpriteHandler spriteHandler);
+	virtual void Draw(ISpriteHandler_ spriteHandler);
 	
 	virtual ~GameObject();
 

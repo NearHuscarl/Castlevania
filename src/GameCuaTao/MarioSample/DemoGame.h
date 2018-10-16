@@ -12,5 +12,5 @@ public:
 	void Initialize() override;
 	void LoadResources() override;
 	void Update(unsigned long deltaTime) override;
-	void Draw(ISpriteHandler spriteHandler) override;
+	void Draw(ISpriteHandler_ spriteHandler) override;
 };

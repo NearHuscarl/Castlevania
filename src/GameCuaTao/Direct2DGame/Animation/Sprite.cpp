@@ -10,7 +10,7 @@ Sprite::Sprite(std::string spriteID, BoundingBox boundingBox)
 	this->boundingBox = boundingBox;
 }
 
-void Sprite::Draw(ISpriteHandler spriteHandler, Texture texture, Vector position)
+void Sprite::Draw(ISpriteHandler_ spriteHandler, Texture texture, Vector position)
 {
-	spriteHandler->Draw(texture, &boundingBox, nullptr, &position, D3DCOLOR_XRGB(255, 255, 255));
+	spriteHandler->Draw(texture.Get(), &boundingBox, nullptr, &position, D3DCOLOR_XRGB(255, 255, 255));
 }

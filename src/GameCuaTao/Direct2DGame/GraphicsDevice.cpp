@@ -51,17 +51,17 @@ void GraphicsDevice::CreateDevice(HWND hWnd)
 	FileLogger::GetInstance()->Info("InitGame done");
 }
 
-IRenderDevice GraphicsDevice::GetRenderDevice()
+IRenderDevice_ GraphicsDevice::GetRenderDevice()
 {
 	return renderDevice;
 }
 
-ISurface GraphicsDevice::GetBackBuffer()
+ISurface_ GraphicsDevice::GetBackBuffer()
 {
 	return backBuffer;
 }
 
-ISpriteHandler GraphicsDevice::GetSpriteHandler()
+ISpriteHandler_ GraphicsDevice::GetSpriteHandler()
 {
 	return spriteHandler;
 }

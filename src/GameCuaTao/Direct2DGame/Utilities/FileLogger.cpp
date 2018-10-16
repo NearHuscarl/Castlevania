@@ -24,7 +24,7 @@ FileLogger::FileLogger()
 
 	if (logFile.is_open())
 	{
-		logFile << "Castlevania Log file. Created at " << GetLogTime() << std::endl;
+		logFile << "Game Log file. Created at " << GetLogTime() << std::endl;
 		logFile << std::endl;
 	}
 }

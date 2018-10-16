@@ -146,6 +146,7 @@
     <ClCompile Include="Direct2DGame\Animation\Animation.cpp" />
     <ClCompile Include="Direct2DGame\Animation\AnimationFrame.cpp" />
     <ClCompile Include="Direct2DGame\Animation\Sprite.cpp" />
+    <ClCompile Include="Direct2DGame\Base\Texture.cpp" />
     <ClCompile Include="Direct2DGame\Content\AnimationReader.cpp" />
     <ClCompile Include="Direct2DGame\Content\ContentManager.cpp" />
     <ClCompile Include="Direct2DGame\Content\ContentReader.cpp" />
@@ -169,6 +170,7 @@
   <ItemGroup>
     <ClInclude Include="Direct2DGame\Animation\Animation.h" />
     <ClInclude Include="Direct2DGame\Animation\AnimationFrame.h" />
+    <ClInclude Include="Direct2DGame\Base\Texture.h" />
     <ClInclude Include="Direct2DGame\Device.h" />
     <ClInclude Include="MarioSample\Models\MarioSettings.h" />
     <ClInclude Include="Direct2DGame\Animation\Sprite.h" />

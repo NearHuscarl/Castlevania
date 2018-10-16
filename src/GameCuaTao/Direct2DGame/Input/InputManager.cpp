@@ -21,8 +21,7 @@ void InputManager::InitKeyboard(HWND hWnd)
 	auto result = DirectInput8Create(
 		(HINSTANCE)GetWindowLong(hWnd, GWL_HINSTANCE),
 		DIRECTINPUT_VERSION,
-		IID_IDirectInput8, (VOID**)&input, nullptr
-	);
+		IID_IDirectInput8, (VOID**)&input, nullptr);
 
 	if (result != DI_OK)
 	{
@@ -88,16 +87,15 @@ int InputManager::IsKeyDown(int KeyCode)
 
 void InputManager::ProcessKeyboard()
 {
-	auto result = HRESULT{};
-
 	// Collect all key states first
-	result = inputDevice->GetDeviceState(sizeof(keyStates), keyStates);
+	auto result = inputDevice->GetDeviceState(sizeof(keyStates), keyStates);
+
 	if (FAILED(result))
 	{
 		// If the keyboard lost focus or was not acquired then try to get control back.
 		if ((result == DIERR_INPUTLOST) || (result == DIERR_NOTACQUIRED))
 		{
-			// TODO: error here (potentiallY)
+			// TODO: error here (potentially)
 			result = inputDevice->Acquire();
 
 			if (result == DI_OK)

@@ -25,7 +25,7 @@ void DemoGame::Update(unsigned long deltaTime)
 	mario->Update(deltaTime);
 }
 
-void DemoGame::Draw(ISpriteHandler spriteHandler)
+void DemoGame::Draw(ISpriteHandler_ spriteHandler)
 {
 	mario->Draw(spriteHandler);
 }

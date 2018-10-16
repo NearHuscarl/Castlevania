@@ -26,7 +26,7 @@ void GameObject::Update(unsigned long deltaTime)
 	position.y += velocity.y * deltaTime;
 }
 
-void GameObject::Draw(ISpriteHandler spriteHandler)
+void GameObject::Draw(ISpriteHandler_ spriteHandler)
 {
 }
 

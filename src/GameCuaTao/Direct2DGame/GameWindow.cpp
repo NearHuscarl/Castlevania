@@ -1,6 +1,5 @@
 #include "GameWindow.h"
 #include "Utilities/FileLogger.h"
-#include "Utilities/WinHelper.h"
 
 GameWindow::GameWindow(HINSTANCE hInstance)
 {

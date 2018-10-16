@@ -11,7 +11,7 @@ public:
 
 	void Add(Sprite sprite, unsigned long time = 0);
 	void Update();
-	void Draw(ISpriteHandler spriteHandler, Vector position);
+	void Draw(ISpriteHandler_ spriteHandler, Vector position);
 
 private:
 	unsigned long lastFrameTime;

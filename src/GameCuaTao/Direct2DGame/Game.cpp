@@ -35,7 +35,7 @@ void Game::Update(unsigned long deltaTime)
 {
 }
 
-void Game::Draw(ISpriteHandler spriteHandler)
+void Game::Draw(ISpriteHandler_ spriteHandler)
 {
 }
 
