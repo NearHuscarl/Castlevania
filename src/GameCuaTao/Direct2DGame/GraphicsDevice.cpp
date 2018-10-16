@@ -39,7 +39,7 @@ void GraphicsDevice::CreateDevice(HWND hWnd)
 
 	if (renderDevice == nullptr)
 	{
-		FileLogger::GetInstance()->Error("CreateDevice failed");
+		FileLogger::GetInstance().Error("CreateDevice failed");
 		return;
 	}
 
@@ -48,7 +48,7 @@ void GraphicsDevice::CreateDevice(HWND hWnd)
 	// Initialize sprite helper from Direct3DX helper library
 	D3DXCreateSprite(renderDevice, &spriteHandler);
 
-	FileLogger::GetInstance()->Info("InitGame done");
+	FileLogger::GetInstance().Info("InitGame done");
 }
 
 IRenderDevice_ GraphicsDevice::GetRenderDevice()

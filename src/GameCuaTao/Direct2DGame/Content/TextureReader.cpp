@@ -43,7 +43,7 @@ std::shared_ptr<Texture> TextureReader::Read(std::string filePathStr, ContentMan
 		throw LoadContentException("CreateTextureFromFile failed: " + filePathStr);
 	}
 
-	FileLogger::GetInstance()->Info("Texture loaded Ok: " + filePathStr);
+	FileLogger::GetInstance().Info("Texture loaded Ok: " + filePathStr);
 
 	return std::make_shared<Texture>(texture);
 }

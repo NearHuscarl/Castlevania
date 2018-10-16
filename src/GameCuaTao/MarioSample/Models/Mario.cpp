@@ -82,7 +82,7 @@ std::string Mario::GetAnimationState()
 
 void Mario::OnKeyDown(InputManager *inputManager, KeyEventArgs e)
 {
-	FileLogger::GetInstance()->Info("KeyDown: " + std::to_string(e.KeyCode));
+	FileLogger::GetInstance().Info("KeyDown: " + std::to_string(e.KeyCode));
 	switch (e.KeyCode)
 	{
 		case DIK_SPACE:
@@ -93,7 +93,7 @@ void Mario::OnKeyDown(InputManager *inputManager, KeyEventArgs e)
 
 void Mario::OnKeyUp(InputManager *inputManager, KeyEventArgs e)
 {
-	FileLogger::GetInstance()->Info("KeyUp: " + std::to_string(e.KeyCode));
+	FileLogger::GetInstance().Info("KeyUp: " + std::to_string(e.KeyCode));
 }
 
 void Mario::OnKeyState(InputManager *inputManager)

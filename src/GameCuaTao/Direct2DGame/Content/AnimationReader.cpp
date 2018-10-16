@@ -13,7 +13,7 @@ std::shared_ptr<AnimationDict> AnimationReader::Read(std::string filePath, Conte
 
 	if (!result)
 	{
-		FileLogger::GetInstance()->Error(result.description());
+		FileLogger::GetInstance().Error(result.description());
 		throw LoadContentException(result.description());
 	}
 

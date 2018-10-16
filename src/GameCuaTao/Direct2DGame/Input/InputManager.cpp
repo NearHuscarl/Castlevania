@@ -1,18 +1,13 @@
 #include "InputManager.h"
 #include "../Utilities/FileLogger.h"
 
-InputManager *InputManager::instance = nullptr;
-
 InputManager::InputManager()
 {
 }
 
-InputManager *InputManager::GetInstance()
+InputManager &InputManager::GetInstance()
 {
-	if (instance == nullptr)
-	{
-		instance = new InputManager();
-	}
+	static auto instance = InputManager{};
 	return instance;
 }
 
@@ -25,7 +20,7 @@ void InputManager::InitKeyboard(HWND hWnd)
 
 	if (result != DI_OK)
 	{
-		FileLogger::GetInstance()->Error("DirectInput8Create failed!");
+		FileLogger::GetInstance().Error("DirectInput8Create failed!");
 		return;
 	}
 
@@ -34,7 +29,7 @@ void InputManager::InitKeyboard(HWND hWnd)
 	// TO-DO: put in exception handling
 	if (result != DI_OK)
 	{
-		FileLogger::GetInstance()->Error("CreateDevice failed!");
+		FileLogger::GetInstance().Error("CreateDevice failed!");
 		return;
 	}
 
@@ -73,11 +68,11 @@ void InputManager::InitKeyboard(HWND hWnd)
 	result = inputDevice->Acquire();
 	if (result != DI_OK)
 	{
-		FileLogger::GetInstance()->Error("DINPUT8::Acquire failed!");
+		FileLogger::GetInstance().Error("DINPUT8::Acquire failed!");
 		return;
 	}
 
-	FileLogger::GetInstance()->Info("Keyboard has been initialized successfully");
+	FileLogger::GetInstance().Info("Keyboard has been initialized successfully");
 }
 
 int InputManager::IsKeyDown(int KeyCode)
@@ -99,13 +94,13 @@ void InputManager::ProcessKeyboard()
 			result = inputDevice->Acquire();
 
 			if (result == DI_OK)
-				FileLogger::GetInstance()->Info("Keyboard re-acquired!");
+				FileLogger::GetInstance().Info("Keyboard re-acquired!");
 			else
 				return;
 		}
 		else
 		{
-			// FileLogger::GetInstance()->Error("DINPUT::GetDeviceState failed. Error: " + std::to_string(hr));
+			// FileLogger::GetInstance().Error("DINPUT::GetDeviceState failed. Error: " + std::to_string(hr));
 			return;
 		}
 	}
@@ -115,10 +110,10 @@ void InputManager::ProcessKeyboard()
 
 	// Collect all buffered events
 	auto dwElements = DWORD{ KEYBOARD_BUFFER_SIZE };
-	result = inputDevice->GetDeviceData(sizeof(GDeviceInputData), keyEvents, &dwElements, 0);
+	result = inputDevice->GetDeviceData(sizeof(DeviceInputData_), keyEvents, &dwElements, 0);
 	if (FAILED(result))
 	{
-		// FileLogger::GetInstance()->Error("DINPUT::GetDeviceData failed. Error: " + std::to_string(hr));
+		// FileLogger::GetInstance().Error("DINPUT::GetDeviceData failed. Error: " + std::to_string(hr));
 		return;
 	}
 

@@ -2,14 +2,9 @@
 #include "FileLogger.h"
 #include "TimeHelper.h"
 
-FileLogger *FileLogger::instance = nullptr;
-
-FileLogger *FileLogger::GetInstance()
+FileLogger &FileLogger::GetInstance()
 {
-	if (instance == nullptr)
-	{
-		instance = new FileLogger();
-	}
+	static auto instance = FileLogger{};
 	return instance;
 }
 

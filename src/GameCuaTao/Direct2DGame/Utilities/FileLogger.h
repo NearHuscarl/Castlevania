@@ -9,7 +9,7 @@ using Path = std::filesystem::path;
 class FileLogger
 {
 public:
-	static FileLogger *GetInstance();
+	static FileLogger &GetInstance();
 
 	std::string GetFilename();
 	std::string GetFullPath();
@@ -22,7 +22,6 @@ public:
 	virtual ~FileLogger();
 
 private:
-	static FileLogger *instance;
 	FileLogger();
 
 	Path directory = "Logs";

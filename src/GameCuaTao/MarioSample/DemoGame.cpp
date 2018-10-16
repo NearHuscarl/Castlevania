@@ -2,9 +2,9 @@
 
 DemoGame::DemoGame(HINSTANCE hInstance) : Game(hInstance)
 {
-	content.SetRootDirectory("MarioSample/Content");
-	window.SetScreenWidth(320);
-	window.SetScreenHeight(240);
+	content->SetRootDirectory("MarioSample/Content");
+	window->SetScreenWidth(320);
+	window->SetScreenHeight(240);
 }
 
 void DemoGame::Initialize()
@@ -15,7 +15,7 @@ void DemoGame::Initialize()
 void DemoGame::LoadResources()
 {
 	mario = new Mario();
-	mario->LoadContent(content);
+	mario->LoadContent(*content);
 }
 
 // Update world status for this frame

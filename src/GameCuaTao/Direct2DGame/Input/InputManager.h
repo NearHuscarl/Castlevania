@@ -4,15 +4,15 @@
 #include "KeyEventArgs.h"
 #include "../Utilities/Event.h"
 
-typedef LPDIRECTINPUT8 GInputPtr;
-typedef LPDIRECTINPUTDEVICE8 GInputDevicePtr;
-typedef DIDEVICEOBJECTDATA GDeviceInputData;
+typedef LPDIRECTINPUT8 Input_;
+typedef LPDIRECTINPUTDEVICE8 InputDevice_;
+typedef DIDEVICEOBJECTDATA DeviceInputData_;
 
 EVENT_SOURCE
 class InputManager
 {
 public:
-	static InputManager *GetInstance();
+	static InputManager &GetInstance();
 
 	void InitKeyboard(HWND hWnd);
 
@@ -25,13 +25,12 @@ public:
 
 private:
 	InputManager();
-	static InputManager *instance;
 
 	static constexpr int KEYBOARD_BUFFER_SIZE = 1024;
 
-	GInputPtr input; // The DirectInput object
-	GInputDevicePtr inputDevice; // The keyboard device
+	Input_ input; // The DirectInput object
+	InputDevice_ inputDevice; // The keyboard device
 	
 	BYTE keyStates[256]; // DirectInput keyboard state buffer 
-	GDeviceInputData keyEvents[KEYBOARD_BUFFER_SIZE]; // Buffered keyboard data
+	DeviceInputData_ keyEvents[KEYBOARD_BUFFER_SIZE]; // Buffered keyboard data
 };

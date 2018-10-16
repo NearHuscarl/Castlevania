@@ -5,20 +5,22 @@
 constexpr int MAX_FRAME_RATE = 90;
 constexpr auto BACKGROUND_COLOR = D3DCOLOR_XRGB(200, 200, 255);
 
-Game::Game(HINSTANCE hInstance) :
-	window(hInstance),
-	graphics(this),
-	input(InputManager::GetInstance()),
-	content(serviceProvider)
+Game::Game(HINSTANCE hInstance)
 {
-	serviceProvider.Add<GraphicsDevice>(&GetGraphicsDevice());
+	serviceProvider = std::make_shared<ServiceProvider>();
+	window = std::make_shared<GameWindow>(hInstance);
+	graphics = std::make_shared<GraphicsDeviceManager>(this);
+	input = std::shared_ptr<InputManager>{ &InputManager::GetInstance() };
+	content = std::make_shared<ContentManager>(*serviceProvider);
+
+	serviceProvider->Add<GraphicsDevice>(&GetGraphicsDevice());
 }
 
 void Game::Initialize()
 {
-	window.Create();
-	graphics.CreateDevice();
-	input->InitKeyboard(window.GetHandle());
+	window->Create();
+	graphics->CreateDevice();
+	input->InitKeyboard(window->GetHandle());
 
 	LoadResources();
 }
@@ -68,7 +70,6 @@ int Game::Run()
 	auto msg = MSG{};
 	auto lastTime = TimeHelper::GetTimeNow();
 	auto tickPerFrame = 1000 / MAX_FRAME_RATE;
-	auto inputManager = InputManager::GetInstance();
 
 	isRunning = true;
 	while (isRunning)
@@ -89,7 +90,7 @@ int Game::Run()
 		{
 			lastTime = currentTime;
 
-			inputManager->ProcessKeyboard();
+			input->ProcessKeyboard();
 
 			Update(deltaTime);
 			Render();
@@ -103,10 +104,10 @@ int Game::Run()
 
 GameWindow &Game::GetWindow()
 {
-	return window;
+	return *window;
 }
 
 GraphicsDevice &Game::GetGraphicsDevice()
 {
-	return graphics.GetGraphicsDevice();
+	return graphics->GetGraphicsDevice();
 }
