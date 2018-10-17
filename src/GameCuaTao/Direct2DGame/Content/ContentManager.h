@@ -13,7 +13,7 @@ using AssetDict = std::map<std::string, std::any>;
 class ContentManager
 {
 public:
-	ContentManager(ServiceProvider &serviceProvider);
+	ContentManager(std::shared_ptr<ServiceProvider> serviceProvider);
 	void SetRootDirectory(std::string path);
 
 	template<typename T>
@@ -25,7 +25,7 @@ private:
 	Path rootDirectory;
 	AssetDict loadedAssets;
 
-	ServiceProvider &serviceProvider;
+	std::shared_ptr<ServiceProvider> serviceProvider;
 	ContentReader contentReader;
 
 	template<typename T>

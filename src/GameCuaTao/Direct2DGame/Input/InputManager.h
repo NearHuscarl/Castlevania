@@ -19,9 +19,9 @@ public:
 	int IsKeyDown(int KeyCode);
 	void ProcessKeyboard();
 
-	EVENT void KeyStateChanged(InputManager *inputManager);
-	EVENT void KeyDown(InputManager *inputManager, KeyEventArgs e);
-	EVENT void KeyUp(InputManager *inputManager, KeyEventArgs e);
+	EVENT void KeyStateChanged(InputManager &inputManager);
+	EVENT void KeyDown(InputManager &inputManager, KeyEventArgs e);
+	EVENT void KeyUp(InputManager &inputManager, KeyEventArgs e);
 
 private:
 	InputManager();

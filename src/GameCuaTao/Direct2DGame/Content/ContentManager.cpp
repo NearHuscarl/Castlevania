@@ -1,9 +1,9 @@
 #include "ContentManager.h"
 
-ContentManager::ContentManager(ServiceProvider &serviceProvider) : serviceProvider(serviceProvider)
+ContentManager::ContentManager(std::shared_ptr<ServiceProvider> serviceProvider)
 {
 	this->serviceProvider = serviceProvider;
-	this->contentReader = ContentReader{ this };
+	this->contentReader = ContentReader{ std::shared_ptr<ContentManager>(this) };
 }
 
 void ContentManager::SetRootDirectory(std::string path)
@@ -13,7 +13,7 @@ void ContentManager::SetRootDirectory(std::string path)
 
 ServiceProvider &ContentManager::GetServiceProvider()
 {
-	return serviceProvider;
+	return *serviceProvider;
 }
 
 template<typename T>

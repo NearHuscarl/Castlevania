@@ -1,14 +1,13 @@
 #include "EntryPoint.h"
 
-DemoGame *EntryPoint::game = nullptr;
-
+std::unique_ptr<DemoGame> EntryPoint::game = nullptr;
 
 void EntryPoint::Init(HINSTANCE hInstance)
 {
-	EntryPoint::game = new DemoGame(hInstance);
+	EntryPoint::game = std::make_unique<DemoGame>(hInstance);
 }
 
-DemoGame *EntryPoint::Game()
+DemoGame &EntryPoint::Game()
 {
-	return EntryPoint::game;
+	return *EntryPoint::game;
 }

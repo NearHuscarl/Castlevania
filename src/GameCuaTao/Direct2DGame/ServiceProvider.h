@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <any>
 #include <map>
 #include <typeinfo>
 
@@ -9,25 +10,24 @@ class ServiceProvider
 {
 public:
 	template<typename T>
-	void Add(T *service);
+	void Add(T &service);
 
 	template<typename T>
-	T *Get();
+	std::shared_ptr<T> Get();
 
 private:
-	// Cannot store reference in map. So we have to use (TODO: smart) pointer
-	std::map<std::string, void*> services;
+	std::map<std::string, std::any> services;
 };
 
 template<typename T>
-inline void ServiceProvider::Add(T *service)
+inline void ServiceProvider::Add(T &service)
 {
 	auto typeName = typeid(T).name();
-	services[typeName] = static_cast<void*>(service);
+	services[typeName] = std::shared_ptr<T>(&service);
 }
 
 template<typename T>
-inline T *ServiceProvider::Get()
+inline std::shared_ptr<T> ServiceProvider::Get()
 {
 	auto typeName = typeid(T).name();
 	auto it = services.find(typeName);
@@ -35,5 +35,5 @@ inline T *ServiceProvider::Get()
 	if (it == services.end())
 		return nullptr;
 
-	return static_cast<T*>(services[typeName]);
+	return std::any_cast<std::shared_ptr<T>>(services[typeName]);
 }

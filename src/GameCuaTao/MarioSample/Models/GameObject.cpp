@@ -20,6 +20,16 @@ void GameObject::SetSpeed(float x, float y)
 	velocity.y = y;
 }
 
+void GameObject::SetState(int state)
+{
+	this->state = state;
+}
+
+int GameObject::GetState()
+{
+	return state;
+}
+
 void GameObject::Update(unsigned long deltaTime)
 {
 	position.x += velocity.x * deltaTime;

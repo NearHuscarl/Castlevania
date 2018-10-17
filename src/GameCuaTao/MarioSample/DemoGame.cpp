@@ -14,12 +14,10 @@ void DemoGame::Initialize()
 
 void DemoGame::LoadResources()
 {
-	mario = new Mario();
+	mario = std::make_shared<Mario>();
 	mario->LoadContent(*content);
 }
 
-// Update world status for this frame
-// deltaTime: time period between beginning of last frame and beginning of this frame
 void DemoGame::Update(unsigned long deltaTime)
 {
 	mario->Update(deltaTime);

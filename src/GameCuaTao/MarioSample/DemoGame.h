@@ -7,7 +7,7 @@ class DemoGame : public Game
 {
 public:
 	DemoGame(HINSTANCE hInstance);
-	Mario *mario;
+	std::shared_ptr<Mario> mario;
 
 	void Initialize() override;
 	void LoadResources() override;

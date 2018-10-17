@@ -5,7 +5,7 @@ ContentReader::ContentReader()
 {
 }
 
-ContentReader::ContentReader(ContentManager *contentManager)
+ContentReader::ContentReader(std::shared_ptr<ContentManager> contentManager)
 {
 	this->contentManager = contentManager;
 }

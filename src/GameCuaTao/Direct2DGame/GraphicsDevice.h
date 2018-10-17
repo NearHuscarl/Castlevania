@@ -20,7 +20,7 @@ public:
 private:
 	Color transparentColor = D3DCOLOR_XRGB(255, 255, 255);
 
-	IRenderDevice_ renderDevice = nullptr;       // Direct3D device object
+	IRenderDevice_ renderDevice = nullptr;      // Direct3D device object
 	ISurface_ backBuffer = nullptr;
 	ISpriteHandler_ spriteHandler = nullptr;    // Sprite helper library to help us draw 2D image on the screen
 };

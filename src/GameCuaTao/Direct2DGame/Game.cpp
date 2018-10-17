@@ -8,12 +8,12 @@ constexpr auto BACKGROUND_COLOR = D3DCOLOR_XRGB(200, 200, 255);
 Game::Game(HINSTANCE hInstance)
 {
 	serviceProvider = std::make_shared<ServiceProvider>();
-	window = std::make_shared<GameWindow>(hInstance);
-	graphics = std::make_shared<GraphicsDeviceManager>(this);
-	input = std::shared_ptr<InputManager>{ &InputManager::GetInstance() };
-	content = std::make_shared<ContentManager>(*serviceProvider);
+	window          = std::make_shared<GameWindow>(hInstance);
+	graphics        = std::make_shared<GraphicsDeviceManager>(std::shared_ptr<Game>{this});
+	input           = std::shared_ptr<InputManager>{ &InputManager::GetInstance() };
+	content         = std::make_shared<ContentManager>(serviceProvider);
 
-	serviceProvider->Add<GraphicsDevice>(&GetGraphicsDevice());
+	serviceProvider->Add<GraphicsDevice>(GetGraphicsDevice());
 }
 
 void Game::Initialize()

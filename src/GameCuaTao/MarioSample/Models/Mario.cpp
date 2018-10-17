@@ -80,7 +80,7 @@ std::string Mario::GetAnimationState()
 
 #pragma region INPUT HANDLER
 
-void Mario::OnKeyDown(InputManager *inputManager, KeyEventArgs e)
+void Mario::OnKeyDown(InputManager &inputManager, KeyEventArgs e)
 {
 	FileLogger::GetInstance().Info("KeyDown: " + std::to_string(e.KeyCode));
 	switch (e.KeyCode)
@@ -91,18 +91,18 @@ void Mario::OnKeyDown(InputManager *inputManager, KeyEventArgs e)
 	}
 }
 
-void Mario::OnKeyUp(InputManager *inputManager, KeyEventArgs e)
+void Mario::OnKeyUp(InputManager &inputManager, KeyEventArgs e)
 {
 	FileLogger::GetInstance().Info("KeyUp: " + std::to_string(e.KeyCode));
 }
 
-void Mario::OnKeyState(InputManager *inputManager)
+void Mario::OnKeyState(InputManager &inputManager)
 {
-	if (inputManager->IsKeyDown(DIK_RIGHT))
+	if (inputManager.IsKeyDown(DIK_RIGHT))
 	{
 		SetState(MARIO_STATE_WALK_RIGHT);
 	}
-	else if (inputManager->IsKeyDown(DIK_LEFT))
+	else if (inputManager.IsKeyDown(DIK_LEFT))
 	{
 		SetState(MARIO_STATE_WALK_LEFT);
 	}

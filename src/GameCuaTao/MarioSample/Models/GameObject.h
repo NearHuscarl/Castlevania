@@ -13,8 +13,8 @@ public:
 	void SetPosition(float x, float y);
 	void SetSpeed(float vx, float vy);
 	
-	virtual void SetState(int state) { this->state = state; }
-	virtual int GetState() { return this->state; }
+	virtual void SetState(int state);
+	virtual int GetState();
 
 	virtual std::string GetAnimationState() { return ""; }
 

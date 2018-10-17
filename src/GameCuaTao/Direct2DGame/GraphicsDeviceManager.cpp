@@ -5,18 +5,19 @@
 // rendering 2D images
 // - hInst: Application instance handle
 // - hWnd: Application window handle
-GraphicsDeviceManager::GraphicsDeviceManager(Game *game)
+GraphicsDeviceManager::GraphicsDeviceManager(std::shared_ptr<Game> game)
 {
 	this->game = game;
+	this->graphicsDevice = std::make_shared<GraphicsDevice>();
 }
 
 void GraphicsDeviceManager::CreateDevice()
 {
 	auto hWnd = game->GetWindow().GetHandle();
-	graphicsDevice.CreateDevice(hWnd);
+	graphicsDevice->CreateDevice(hWnd);
 }
 
 GraphicsDevice &GraphicsDeviceManager::GetGraphicsDevice()
 {
-	return graphicsDevice;
+	return *graphicsDevice;
 }

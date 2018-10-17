@@ -105,7 +105,7 @@ void InputManager::ProcessKeyboard()
 		}
 	}
 
-	KeyStateChanged(this);
+	KeyStateChanged(*this);
 
 
 	// Collect all buffered events
@@ -125,11 +125,11 @@ void InputManager::ProcessKeyboard()
 
 		if ((KeyState & 0x80) > 0)
 		{
-			KeyDown(this, KeyEventArgs(KeyCode, -1));
+			KeyDown(*this, KeyEventArgs(KeyCode, -1));
 		}
 		else
 		{
-			KeyUp(this, KeyEventArgs(KeyCode, -1));
+			KeyUp(*this, KeyEventArgs(KeyCode, -1));
 		}
 	}
 }

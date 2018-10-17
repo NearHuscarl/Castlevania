@@ -7,14 +7,14 @@ class Game;
 class GraphicsDeviceManager
 {
 public:
-	GraphicsDeviceManager(Game *game);
+	GraphicsDeviceManager(std::shared_ptr<Game> game);
 	
 	void CreateDevice();
 	GraphicsDevice &GetGraphicsDevice();
 
 private:
-	Game *game;
+	std::shared_ptr<Game> game;
+	std::shared_ptr<GraphicsDevice> graphicsDevice;
+	
 	int frameRate;
-
-	GraphicsDevice graphicsDevice;
 };
