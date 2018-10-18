@@ -1,6 +1,6 @@
 #include "Direct2DGame/Utilities/FileLogger.h"
 #include "Mario.h"
-#include "MarioSettings.h"
+#include "MarioStates.h"
 
 constexpr float MARIO_WALKING_SPEED = 0.05f;
 constexpr float MARIO_JUMP_SPEED_X = 1.0f;
@@ -10,17 +10,50 @@ constexpr float MARIO_GRAVITY = 0.05f;
 void Mario::LoadContent(ContentManager &content)
 {
 	animations = content.Load<AnimationDict>("MarioAnimationDef.xml");
-
 	SetPosition(0.0f, 100.0f);
 }
 
 void Mario::Update(unsigned long deltaTime)
 {
-	GameObject::Update(deltaTime);
+	switch (state)
+	{
+		case WALK_LEFT:
+			velocity.x = -MARIO_WALKING_SPEED;
+			direction = Left;
+			break;
 
+		case WALK_RIGHT:
+			velocity.x = MARIO_WALKING_SPEED;
+			direction = Right;
+			break;
+
+		case IDLE:
+			velocity.x = 0;
+			break;
+
+		case JUMP:
+			if (position.y == 100)
+				velocity.y = -MARIO_JUMP_SPEED_Y;
+			break;
+	}
+
+	GameObject::UpdateDistance(deltaTime);
+
+	ResolveCollision();
+
+	(*animations)[GetAnimation()].Update();
+}
+
+std::string Mario::GetAnimation()
+{
+	return STATE_TO_ANIMATION.at((State)state);
+}
+
+void Mario::ResolveCollision()
+{
 	// simple fall down
 	velocity.y += MARIO_GRAVITY;
-	if (position.y > 100) 
+	if (position.y > 100)
 	{
 		velocity.y = 0;
 		position.y = 100.0f;
@@ -31,51 +64,12 @@ void Mario::Update(unsigned long deltaTime)
 		position.x = 290;
 	if (velocity.x < 0 && position.x < 0)
 		position.x = 0;
-
-	(*animations)[GetAnimationState()].Update();
 }
 
-void Mario::Draw(ISpriteHandler_ spriteHandler)
+void Mario::Draw(ISpriteBatch_ spriteBatch)
 {
-	(*animations)[GetAnimationState()].Draw(spriteHandler, position);
-}
-
-void Mario::SetState(int state)
-{
-	GameObject::SetState(state);
-	switch (state)
-	{
-		case MARIO_STATE_WALK_RIGHT:
-			velocity.x = MARIO_WALKING_SPEED;
-			direction = 1;
-			break;
-		case MARIO_STATE_WALK_LEFT:
-			velocity.x = -MARIO_WALKING_SPEED;
-			direction = -1;
-			break;
-		case MARIO_STATE_JUMP:
-			if (position.y == 100)
-				velocity.y = -MARIO_JUMP_SPEED_Y;
-		case MARIO_STATE_IDLE:
-			velocity.x = 0;
-			break;
-	}
-}
-
-std::string Mario::GetAnimationState()
-{
-	if (velocity.x == 0)
-	{
-		if (direction > 0)
-			return MARIO_IDLE_RIGHT;
-		else
-			return MARIO_IDLE_LEFT;
-	}
-	else if (velocity.x > 0)
-	{
-		return MARIO_WALK_RIGHT;
-	}
-	return MARIO_WALK_LEFT;
+	auto effects = direction == Left ? SpriteEffects::FlipHorizontally : SpriteEffects::None;
+	(*animations)[GetAnimation()].Draw(spriteBatch, position, effects);
 }
 
 #pragma region INPUT HANDLER
@@ -86,7 +80,7 @@ void Mario::OnKeyDown(InputManager &inputManager, KeyEventArgs e)
 	switch (e.KeyCode)
 	{
 		case DIK_SPACE:
-			SetState(MARIO_STATE_JUMP);
+			SetState(JUMP);
 			break;
 	}
 }
@@ -100,15 +94,15 @@ void Mario::OnKeyState(InputManager &inputManager)
 {
 	if (inputManager.IsKeyDown(DIK_RIGHT))
 	{
-		SetState(MARIO_STATE_WALK_RIGHT);
+		SetState(WALK_RIGHT);
 	}
 	else if (inputManager.IsKeyDown(DIK_LEFT))
 	{
-		SetState(MARIO_STATE_WALK_LEFT);
+		SetState(WALK_LEFT);
 	}
 	else
 	{
-		SetState(MARIO_STATE_IDLE);
+		return SetState(IDLE);
 	}
 }
 

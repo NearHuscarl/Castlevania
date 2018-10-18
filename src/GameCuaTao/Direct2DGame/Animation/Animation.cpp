@@ -42,11 +42,10 @@ void Animation::Update()
 			if (currentFrame == frames.size())
 				currentFrame = 0;
 		}
-
 	}
 }
 
-void Animation::Draw(ISpriteHandler_ spriteHandler, Vector position)
+void Animation::Draw(ISpriteBatch_ spriteBatch, Vector position, SpriteEffects effects)
 {
-	frames[currentFrame].GetSprite().Draw(spriteHandler, *texture, position);
+	frames[currentFrame].GetSprite().Draw(spriteBatch, *texture, position, effects);
 }

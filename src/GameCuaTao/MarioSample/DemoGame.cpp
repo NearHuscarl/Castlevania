@@ -23,7 +23,11 @@ void DemoGame::Update(unsigned long deltaTime)
 	mario->Update(deltaTime);
 }
 
-void DemoGame::Draw(ISpriteHandler_ spriteHandler)
+void DemoGame::Draw(ISpriteBatch_ spriteBatch)
 {
-	mario->Draw(spriteHandler);
+	spriteBatch->Begin(D3DXSPRITE_ALPHABLEND);
+
+	mario->Draw(spriteBatch);
+	
+	spriteBatch->End();
 }

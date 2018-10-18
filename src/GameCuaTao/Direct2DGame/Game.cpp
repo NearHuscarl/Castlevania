@@ -5,6 +5,16 @@
 constexpr int MAX_FRAME_RATE = 90;
 constexpr auto BACKGROUND_COLOR = D3DCOLOR_XRGB(200, 200, 255);
 
+GameWindow &Game::GetWindow()
+{
+	return *window;
+}
+
+GraphicsDevice &Game::GetGraphicsDevice()
+{
+	return graphics->GetGraphicsDevice();
+}
+
 Game::Game(HINSTANCE hInstance)
 {
 	serviceProvider = std::make_shared<ServiceProvider>();
@@ -37,7 +47,7 @@ void Game::Update(unsigned long deltaTime)
 {
 }
 
-void Game::Draw(ISpriteHandler_ spriteHandler)
+void Game::Draw(ISpriteBatch_ spriteBatch)
 {
 }
 
@@ -46,18 +56,15 @@ void Game::Render()
 {
 	auto renderDevice = GetGraphicsDevice().GetRenderDevice();
 	auto surface = GetGraphicsDevice().GetBackBuffer();
-	auto spriteHandler = GetGraphicsDevice().GetSpriteHandler();
+	auto spriteBatch = GetGraphicsDevice().GetSpriteBatch();
 
 	if (renderDevice->BeginScene())
 	{
 		// Clear back buffer with a color
 		renderDevice->ColorFill(surface, nullptr, BACKGROUND_COLOR);
 
-		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+		Draw(spriteBatch);
 
-		Draw(spriteHandler);
-
-		spriteHandler->End();
 		renderDevice->EndScene();
 	}
 
@@ -65,24 +72,13 @@ void Game::Render()
 	renderDevice->Present(nullptr, nullptr, nullptr, nullptr);
 }
 
-int Game::Run()
+void Game::Run()
 {
-	auto msg = MSG{};
 	auto lastTime = TimeHelper::GetTimeNow();
 	auto tickPerFrame = 1000 / MAX_FRAME_RATE;
 
-	isRunning = true;
-	while (isRunning)
+	while (IsRunning())
 	{
-		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
-		{
-			if (msg.message == WM_QUIT)
-				isRunning = false;
-
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
-
 		auto currentTime = TimeHelper::GetTimeNow();
 		auto deltaTime = currentTime - lastTime;
 
@@ -98,16 +94,20 @@ int Game::Run()
 		else
 			Sleep(tickPerFrame - deltaTime);
 	}
-
-	return 1;
 }
 
-GameWindow &Game::GetWindow()
+bool Game::IsRunning()
 {
-	return *window;
-}
+	auto msg = MSG{};
 
-GraphicsDevice &Game::GetGraphicsDevice()
-{
-	return graphics->GetGraphicsDevice();
+	if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+	{
+		if (msg.message == WM_QUIT)
+			return false;
+
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+
+	return true;
 }

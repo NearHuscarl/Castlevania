@@ -5,6 +5,12 @@
 #include "Direct2DGame/Animation/Animation.h"
 #include "Direct2DGame/Content/ContentManager.h"
 
+enum Direction
+{
+	Left,
+	Right,
+};
+
 class GameObject
 {
 public:
@@ -13,15 +19,17 @@ public:
 	void SetPosition(float x, float y);
 	void SetSpeed(float vx, float vy);
 	
-	virtual void SetState(int state);
-	virtual int GetState();
-
-	virtual std::string GetAnimationState() { return ""; }
+	void SetState(int state);
+	int GetState();
 
 	virtual void LoadContent(ContentManager &content) = 0;
 
 	virtual void Update(unsigned long deltaTime);
-	virtual void Draw(ISpriteHandler_ spriteHandler);
+	
+	// update object position: distance = velocity x deltatime
+	void UpdateDistance(unsigned long deltaTime);
+	
+	virtual void Draw(ISpriteBatch_ spriteBatch);
 	
 	virtual ~GameObject();
 
@@ -29,8 +37,7 @@ protected:
 	Vector position;
 	Vector velocity;
 
-	int direction;
-
+	Direction direction;
 	int state;
 
 	std::shared_ptr<AnimationDict> animations;

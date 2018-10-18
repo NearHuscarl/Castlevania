@@ -5,13 +5,15 @@ GameObject::GameObject()
 	position = Vector(0, 0);
 	velocity = Vector(0, 0);
 
-	direction = 1;	
+	direction = Right;
 }
 
 void GameObject::SetPosition(float x, float y)
 {
 	position.x = x;
 	position.y = y;
+
+	direction = Right;
 }
 
 void GameObject::SetSpeed(float x, float y)
@@ -32,11 +34,15 @@ int GameObject::GetState()
 
 void GameObject::Update(unsigned long deltaTime)
 {
+}
+
+void GameObject::UpdateDistance(unsigned long deltaTime)
+{
 	position.x += velocity.x * deltaTime;
 	position.y += velocity.y * deltaTime;
 }
 
-void GameObject::Draw(ISpriteHandler_ spriteHandler)
+void GameObject::Draw(ISpriteBatch_ spriteBatch)
 {
 }
 

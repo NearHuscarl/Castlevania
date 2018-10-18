@@ -3,33 +3,24 @@
 <root>
 
   <Spritesheet TexturePath="mario.png">
-    <Sprite Left="246" Top="154" Right="260" Bottom="181" Name="mario_walk_right_01" />
-    <Sprite Left="275" Top="154" Right="290" Bottom="181" Name="mario_walk_right_02" />
-    <Sprite Left="304" Top="154" Right="321" Bottom="181" Name="mario_walk_right_03" />
-    <Sprite Left="186" Top="154" Right="200" Bottom="181" Name="mario_walk_left_01" />
-    <Sprite Left="155" Top="154" Right="170" Bottom="181" Name="mario_walk_left_02" />
-    <Sprite Left="125" Top="154" Right="140" Bottom="181" Name="mario_walk_left_03" />
+    <Sprite Left="246" Top="154" Right="260" Bottom="181" ID="mario_walk_01" />
+    <Sprite Left="275" Top="154" Right="290" Bottom="181" ID="mario_walk_02" />
+    <Sprite Left="304" Top="154" Right="321" Bottom="181" ID="mario_walk_03" />
   </Spritesheet>
 
   <Animations>
-    <Animation Name="mario_idle_right" DefaultTime="100">
-      <Frame Name="mario_walk_right_01" />
+    <Animation Name="mario_idle" DefaultTime="100">
+      <Frame SpriteID="mario_walk_01" />
     </Animation>
 
-    <Animation Name="mario_idle_left" DefaultTime="100">
-      <Frame Name="mario_walk_left_01" />
+    <Animation Name="mario_jump" DefaultTime="100">
+      <Frame SpriteID="mario_walk_01" />
     </Animation>
 
-    <Animation Name="mario_walk_right" DefaultTime="100">
-      <Frame Name="mario_walk_right_01" />
-      <Frame Name="mario_walk_right_02" />
-      <Frame Name="mario_walk_right_03" />
-    </Animation>
-
-    <Animation Name="mario_walk_left" DefaultTime="100">
-      <Frame Name="mario_walk_left_01" />
-      <Frame Name="mario_walk_left_02" />
-      <Frame Name="mario_walk_left_03" />
+    <Animation Name="mario_walk" DefaultTime="100">
+      <Frame SpriteID="mario_walk_01" />
+      <Frame SpriteID="mario_walk_02" />
+      <Frame SpriteID="mario_walk_03" />
     </Animation>
   </Animations>
 

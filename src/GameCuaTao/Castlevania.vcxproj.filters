@@ -173,9 +173,6 @@
     <ClInclude Include="MarioSample\Models\Mario.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MarioSample\Models\MarioSettings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MarioSample\DemoGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -186,6 +183,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Direct2DGame\Base\Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioSample\Models\MarioStates.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DGame\Graphics\SpriteEffects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

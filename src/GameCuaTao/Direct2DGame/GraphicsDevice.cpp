@@ -46,7 +46,7 @@ void GraphicsDevice::CreateDevice(HWND hWnd)
 	renderDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &backBuffer);
 
 	// Initialize sprite helper from Direct3DX helper library
-	D3DXCreateSprite(renderDevice, &spriteHandler);
+	D3DXCreateSprite(renderDevice, &spriteBatch);
 
 	FileLogger::GetInstance().Info("InitGame done");
 }
@@ -61,15 +61,15 @@ ISurface_ GraphicsDevice::GetBackBuffer()
 	return backBuffer;
 }
 
-ISpriteHandler_ GraphicsDevice::GetSpriteHandler()
+ISpriteBatch_ GraphicsDevice::GetSpriteBatch()
 {
-	return spriteHandler;
+	return spriteBatch;
 }
 
 GraphicsDevice::~GraphicsDevice()
 {
-	if (spriteHandler != nullptr)
-		spriteHandler->Release();
+	if (spriteBatch != nullptr)
+		spriteBatch->Release();
 
 	if (backBuffer != nullptr)
 		backBuffer->Release();

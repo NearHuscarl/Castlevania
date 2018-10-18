@@ -75,8 +75,8 @@
     <LibraryPath>Library\directx\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>Library\directx\Include;$(IncludePath)</LibraryPath>
+    <IncludePath>Library\directx\Lib;$(LibraryPath)</IncludePath>
     <ExecutablePath>$(VC_ExecutablePath_x86);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH);</ExecutablePath>
     <ReferencePath>$(VC_ReferencesPath_x86);</ReferencePath>
     <ExcludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(VC_ExecutablePath_x86);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(FxCopDir);$(MSBuild_ExecutablePath);$(VC_LibraryPath_x86);$(SystemRoot)</ExcludePath>
@@ -172,7 +172,8 @@
     <ClInclude Include="Direct2DGame\Animation\AnimationFrame.h" />
     <ClInclude Include="Direct2DGame\Base\Texture.h" />
     <ClInclude Include="Direct2DGame\Device.h" />
-    <ClInclude Include="MarioSample\Models\MarioSettings.h" />
+    <ClInclude Include="Direct2DGame\Graphics\SpriteEffects.h" />
+    <ClInclude Include="MarioSample\Models\MarioStates.h" />
     <ClInclude Include="Direct2DGame\Animation\Sprite.h" />
     <ClInclude Include="Direct2DGame\Base\BoundingBox.h" />
     <ClInclude Include="Direct2DGame\Base\Vector.h" />

@@ -4,6 +4,7 @@
 #include "../Base/BoundingBox.h"
 #include "../Base/Texture.h"
 #include "../Base/Vector.h"
+#include "../Graphics/SpriteEffects.h"
 #include "../Device.h"
 
 class Sprite
@@ -11,7 +12,7 @@ class Sprite
 public:
 	Sprite();
 	Sprite(std::string spriteID, BoundingBox boundingBox);
-	void Draw(ISpriteHandler_ spriteHandler, Texture texture, Vector position);
+	void Draw(ISpriteBatch_ spriteBatch, Texture texture, Vector position, SpriteEffects effects);
 
 private:
 	std::string id;				// Sprite ID in the sprite database

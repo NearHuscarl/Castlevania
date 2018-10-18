@@ -13,14 +13,14 @@ public:
 
 	IRenderDevice_ GetRenderDevice();
 	ISurface_ GetBackBuffer();
-	ISpriteHandler_ GetSpriteHandler();
+	ISpriteBatch_ GetSpriteBatch();
 
 	virtual ~GraphicsDevice();
 
 private:
 	Color transparentColor = D3DCOLOR_XRGB(255, 255, 255);
 
-	IRenderDevice_ renderDevice = nullptr;      // Direct3D device object
+	IRenderDevice_ renderDevice = nullptr;  // Direct3D device object
 	ISurface_ backBuffer = nullptr;
-	ISpriteHandler_ spriteHandler = nullptr;    // Sprite helper library to help us draw 2D image on the screen
+	ISpriteBatch_ spriteBatch = nullptr;    // Sprite helper library to help us draw 2D image on the screen
 };

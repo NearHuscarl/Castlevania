@@ -16,4 +16,14 @@ struct BoundingBox : RECT
 		this->right = right;
 		this->bottom = bottom;
 	}
+
+	int Width()
+	{
+		return right - left;
+	}
+
+	int Height()
+	{
+		return bottom - top;
+	}
 };

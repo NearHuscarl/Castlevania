@@ -9,15 +9,15 @@
 class Game
 {
 public:
+	GameWindow &GetWindow();
+	GraphicsDevice &GetGraphicsDevice();
+
 	virtual void Initialize();
 	virtual void LoadResources();
 	virtual void Update(unsigned long deltaTime);
-	virtual void Draw(ISpriteHandler_ spriteHandler);
+	virtual void Draw(ISpriteBatch_ spriteBatch);
 
-	int Run();
-
-	GameWindow &GetWindow();
-	GraphicsDevice &GetGraphicsDevice();
+	void Run();
 
 protected:
 	Game(HINSTANCE hInstance);
@@ -29,6 +29,6 @@ protected:
 	std::shared_ptr<ServiceProvider> serviceProvider;
 
 private:
-	bool isRunning;
+	bool IsRunning();
 	void Render();
 };

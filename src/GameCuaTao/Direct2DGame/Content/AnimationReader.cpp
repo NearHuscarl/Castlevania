@@ -22,7 +22,7 @@ std::shared_ptr<AnimationDict> AnimationReader::Read(std::string filePath, Conte
 	
 	for (auto spriteNode : rootDoc.child("Spritesheet").children("Sprite"))
 	{
-		auto name = spriteNode.attribute("Name").as_string();
+		auto name = spriteNode.attribute("ID").as_string();
 		auto left = spriteNode.attribute("Left").as_int();
 		auto top = spriteNode.attribute("Top").as_int();
 		auto right = spriteNode.attribute("Right").as_int();
@@ -44,7 +44,7 @@ std::shared_ptr<AnimationDict> AnimationReader::Read(std::string filePath, Conte
 
 		for (auto frameNode : animationNode.children("Frame"))
 		{
-			auto name = frameNode.attribute("Name").as_string();
+			auto name = frameNode.attribute("SpriteID").as_string();
 			animation.Add(sprites[name]);
 		}
 
