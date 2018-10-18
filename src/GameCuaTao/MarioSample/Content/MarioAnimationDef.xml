@@ -3,9 +3,9 @@
 <root>
 
   <Spritesheet TexturePath="mario.png">
-    <Sprite Left="246" Top="154" Right="260" Bottom="181" ID="mario_walk_01" />
-    <Sprite Left="275" Top="154" Right="290" Bottom="181" ID="mario_walk_02" />
-    <Sprite Left="304" Top="154" Right="321" Bottom="181" ID="mario_walk_03" />
+    <Sprite Left="0"  Top="0" Right="16" Bottom="29" ID="mario_walk_01" />
+    <Sprite Left="29" Top="0" Right="47" Bottom="29" ID="mario_walk_02" />
+    <Sprite Left="59" Top="1" Right="77" Bottom="29" ID="mario_walk_03" />
   </Spritesheet>
 
   <Animations>
