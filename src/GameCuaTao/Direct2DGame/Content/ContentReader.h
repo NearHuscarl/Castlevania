@@ -1,8 +1,9 @@
 #pragma once
 
 #include <string>
-#include "TextureReader.h"
 #include "AnimationReader.h"
+#include "SoundReader.h"
+#include "TextureReader.h"
 
 class ContentManager;
 
@@ -18,6 +19,7 @@ public:
 private:
 	std::shared_ptr<ContentManager> contentManager;
 
-	TextureReader textureReader;
 	AnimationReader animationReader;
+	SoundReader soundReader;
+	TextureReader textureReader;
 };

@@ -1,4 +1,5 @@
 #include "Direct2DGame/Utilities/FileLogger.h"
+#include "Direct2DGame/AudioManager.h"
 #include "Mario.h"
 #include "MarioStates.h"
 
@@ -61,9 +62,20 @@ void Mario::ResolveCollision()
 
 	// simple screen edge collision!!!
 	if (velocity.x > 0 && position.x > 290)
+	{
 		position.x = 290;
+	}
 	if (velocity.x < 0 && position.x < 0)
+	{
 		position.x = 0;
+	}
+}
+
+void Mario::Jump()
+{
+	SetState(JUMP);
+	if (position.y == 100)
+		AudioManager::Play("Jump");
 }
 
 void Mario::Draw(ISpriteBatch_ spriteBatch)
@@ -80,7 +92,7 @@ void Mario::OnKeyDown(InputManager &inputManager, KeyEventArgs e)
 	switch (e.KeyCode)
 	{
 		case DIK_SPACE:
-			SetState(JUMP);
+			Jump();
 			break;
 	}
 }
@@ -102,7 +114,7 @@ void Mario::OnKeyState(InputManager &inputManager)
 	}
 	else
 	{
-		return SetState(IDLE);
+		SetState(IDLE);
 	}
 }
 

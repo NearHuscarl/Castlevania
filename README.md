@@ -5,9 +5,15 @@
 Here are some configurations you may want to change to build the project successfully (using Visual Studio).
 Open the project settings by select current project, right click and choose `Properties`
 
--  Convert string in legacy code API `Configuration Properties` -> `Character Set` -> `Use Unicode Character Set`
--  Set C++ standard version to the minimum (C++17): `C/C++` -> `Language` -> `C++ Language Standard` -> `C++17 Standard`
--  Enable native event *'feature'*: `C/C++` -> `Language` -> `Conformance mode` -> Leave Empty
+- Add directx lib to linker's dependencies: `Linker` -> `Input` -> `Additional Dependencies` -> Add:
+```
+d3d9.lib;d3dx9.lib;dinput8.lib;dxguid.lib;dsound.lib;dxerr.lib;winmm.lib;%(AdditionalDependencies);legacy_stdio_definitions.lib
+```
+
+- Convert string in legacy code API: `General` -> `Character Set` -> `Use Unicode Character Set`
+- Set C++ standard version to the minimum (C++17): `C/C++` -> `Language` -> `C++ Language Standard` -> `C++17 Standard`
+- Enable native event *'feature'*: `C/C++` -> `Language` -> `Conformance mode` -> Leave Empty
+- To use DirectSound framework: `C/C++` -> `Preprocessor` -> `Preprocessor Definitions` -> Add `_CRT_SECURE_NO_WARNINGS`
 
 Also take a look at the following places and copy from the [sample project] if
 there are still errors

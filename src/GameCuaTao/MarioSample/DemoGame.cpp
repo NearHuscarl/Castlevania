@@ -1,4 +1,5 @@
 #include "DemoGame.h"
+#include "Direct2DGame/AudioManager.h"
 
 DemoGame::DemoGame(HINSTANCE hInstance) : Game(hInstance)
 {
@@ -14,6 +15,7 @@ void DemoGame::Initialize()
 
 void DemoGame::LoadResources()
 {
+	AudioManager::LoadResource(*content, { "Jump", "Hit_Wall" });
 	mario = std::make_shared<Mario>();
 	mario->LoadContent(*content);
 }

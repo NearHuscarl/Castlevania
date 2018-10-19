@@ -14,6 +14,8 @@ private:
 	void ResolveCollision();
 	std::string GetAnimation();
 
+	void Jump();
+
 	void OnKeyState(InputManager &inputManager) override;
 	void OnKeyDown(InputManager &inputManager, KeyEventArgs e) override;
 	void OnKeyUp(InputManager &inputManager, KeyEventArgs e) override;

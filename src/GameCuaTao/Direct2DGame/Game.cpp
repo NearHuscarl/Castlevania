@@ -24,6 +24,7 @@ Game::Game(HINSTANCE hInstance)
 	content         = std::make_shared<ContentManager>(serviceProvider);
 
 	serviceProvider->Add<GraphicsDevice>(GetGraphicsDevice());
+	serviceProvider->Add<GameWindow>(GetWindow());
 }
 
 void Game::Initialize()

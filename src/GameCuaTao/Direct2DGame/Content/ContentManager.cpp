@@ -1,4 +1,5 @@
 #include "ContentManager.h"
+#include "Library/directx/DSUtil.h"
 
 ContentManager::ContentManager(std::shared_ptr<ServiceProvider> serviceProvider)
 {
@@ -45,3 +46,6 @@ template std::shared_ptr<AnimationDict> ContentManager::ReadAsset<AnimationDict>
 
 template std::shared_ptr<Texture> ContentManager::Load<Texture>(std::string assetName);
 template std::shared_ptr<Texture> ContentManager::ReadAsset<Texture>(std::string assetName);
+
+template std::shared_ptr<Sound> ContentManager::Load<Sound>(std::string assetName);
+template std::shared_ptr<Sound> ContentManager::ReadAsset<Sound>(std::string assetName);
