@@ -2,8 +2,8 @@
 
 #include <string>
 #include "../Base/BoundingBox.h"
-#include "../Base/Texture.h"
 #include "../Base/Vector.h"
+#include "../Graphics/Texture.h"
 #include "../Graphics/SpriteEffects.h"
 #include "../Device.h"
 

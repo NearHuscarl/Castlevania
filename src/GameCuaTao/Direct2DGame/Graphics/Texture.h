@@ -5,7 +5,7 @@
 class Texture
 {
 public:
-	Texture(ITexture_);
+	Texture(ITexture_ texture);
 	ITexture_ Get();
 
 private:

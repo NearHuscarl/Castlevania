@@ -41,7 +41,7 @@ std::shared_ptr<Sound> SoundReader::Read(std::string filePathStr, ContentManager
 	
 	if (result != DS_OK)
 	{
-		throw LoadContentException("Cannot create sound");
+		throw LoadContentException("CSoundManager::Create() failed: " + filePathStr);
 	}
 
 	return std::shared_ptr<Sound>(wave);

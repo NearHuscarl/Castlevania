@@ -3,7 +3,7 @@
 std::map<std::string, std::shared_ptr<Sound>> AudioManager::soundDict;
 float AudioManager::volume;
 
-void AudioManager::Load(ContentManager &contentManager, std::vector<std::string> sounds)
+void AudioManager::LoadResource(ContentManager &contentManager, std::vector<std::string> sounds)
 {
 	for (auto sound : sounds)
 	{
@@ -12,21 +12,11 @@ void AudioManager::Load(ContentManager &contentManager, std::vector<std::string>
 
 	// Play sound the first time to 'load' it or the game will be lagged when the
 	// first sound effects is actually played. TODO: hacky, need a proper fix
-	auto dummySound = soundDict.begin()->second;
-	if (dummySound != nullptr)
-	{
-		dummySound->Play(0, 0, DSBVOLUME_MIN);
-	}
-}
-
-bool AudioManager::IsPlaying(std::string name)
-{
-	auto sound = soundDict[name];
-	if (sound != nullptr)
-	{
-		return sound->IsSoundPlaying();
-	}
-	return false;
+	//auto dummySound = soundDict.begin()->second;
+	//if (dummySound != nullptr)
+	//{
+	//	dummySound->Play(0, 0, DSBVOLUME_MIN);
+	//}
 }
 
 void AudioManager::Play(std::string name)
@@ -36,6 +26,11 @@ void AudioManager::Play(std::string name)
 	{
 		sound->Play();
 	}
+}
+
+void AudioManager::PlaySong(std::string name)
+{
+	PlayLoop(name);
 }
 
 void AudioManager::PlayLoop(std::string name)
@@ -53,4 +48,14 @@ void AudioManager::Stop(std::string name)
 	{
 		sound->Stop();
 	}
+}
+
+bool AudioManager::IsPlaying(std::string name)
+{
+	auto sound = soundDict[name];
+	if (sound != nullptr)
+	{
+		return sound->IsSoundPlaying();
+	}
+	return false;
 }

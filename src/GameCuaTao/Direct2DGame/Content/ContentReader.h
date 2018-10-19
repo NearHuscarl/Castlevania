@@ -3,6 +3,7 @@
 #include <string>
 #include "AnimationReader.h"
 #include "SoundReader.h"
+#include "SpriteFontReader.h"
 #include "TextureReader.h"
 
 class ContentManager;
@@ -21,5 +22,6 @@ private:
 
 	AnimationReader animationReader;
 	SoundReader soundReader;
+	SpriteFontReader spriteFontReader;
 	TextureReader textureReader;
 };

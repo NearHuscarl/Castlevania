@@ -1,7 +1,7 @@
 #pragma once
 
 #include "AbstractReader.h"
-#include "../Base/Texture.h"
+#include "../Graphics/Texture.h"
 
 class TextureReader : public AbstractReader<Texture>
 {

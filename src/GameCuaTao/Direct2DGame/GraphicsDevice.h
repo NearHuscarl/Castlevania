@@ -2,6 +2,7 @@
 
 #include <Windows.h>
 #include "Device.h"
+#include "Base/Color.h"
 
 class GraphicsDevice
 {
@@ -18,7 +19,7 @@ public:
 	virtual ~GraphicsDevice();
 
 private:
-	Color transparentColor = D3DCOLOR_XRGB(255, 255, 255);
+	Color transparentColor = Color(255, 255, 255);
 
 	IRenderDevice_ renderDevice = nullptr;  // Direct3D device object
 	ISurface_ backBuffer = nullptr;

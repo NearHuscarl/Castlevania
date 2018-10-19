@@ -156,12 +156,14 @@
     <ClCompile Include="Direct2DGame\Animation\Animation.cpp" />
     <ClCompile Include="Direct2DGame\Animation\AnimationFrame.cpp" />
     <ClCompile Include="Direct2DGame\Animation\Sprite.cpp" />
-    <ClCompile Include="Direct2DGame\AudioManager.cpp" />
-    <ClCompile Include="Direct2DGame\Base\Texture.cpp" />
+    <ClCompile Include="Direct2DGame\Utilities\AudioManager.cpp" />
+    <ClCompile Include="Direct2DGame\Graphics\SpriteFont.cpp" />
+    <ClCompile Include="Direct2DGame\Graphics\Texture.cpp" />
     <ClCompile Include="Direct2DGame\Content\AnimationReader.cpp" />
     <ClCompile Include="Direct2DGame\Content\ContentManager.cpp" />
     <ClCompile Include="Direct2DGame\Content\ContentReader.cpp" />
     <ClCompile Include="Direct2DGame\Content\SoundReader.cpp" />
+    <ClCompile Include="Direct2DGame\Content\SpriteFontReader.cpp" />
     <ClCompile Include="Direct2DGame\Content\TextureReader.cpp" />
     <ClCompile Include="Direct2DGame\Game.cpp" />
     <ClCompile Include="Direct2DGame\GameWindow.cpp" />
@@ -169,6 +171,7 @@
     <ClCompile Include="Direct2DGame\GraphicsDeviceManager.cpp" />
     <ClCompile Include="Direct2DGame\Input\Controller.cpp" />
     <ClCompile Include="Direct2DGame\Input\InputManager.cpp" />
+    <ClCompile Include="Direct2DGame\Utilities\FontHelper.cpp" />
     <ClCompile Include="Library\directx\DSUtil.cpp" />
     <ClCompile Include="Library\directx\DXUtil.cpp" />
     <ClCompile Include="MarioSample\Main.cpp" />
@@ -184,11 +187,15 @@
   <ItemGroup>
     <ClInclude Include="Direct2DGame\Animation\Animation.h" />
     <ClInclude Include="Direct2DGame\Animation\AnimationFrame.h" />
-    <ClInclude Include="Direct2DGame\AudioManager.h" />
-    <ClInclude Include="Direct2DGame\Base\Texture.h" />
+    <ClInclude Include="Direct2DGame\Base\Color.h" />
+    <ClInclude Include="Direct2DGame\Utilities\AudioManager.h" />
+    <ClInclude Include="Direct2DGame\Graphics\SpriteFont.h" />
+    <ClInclude Include="Direct2DGame\Graphics\Texture.h" />
     <ClInclude Include="Direct2DGame\Content\SoundReader.h" />
+    <ClInclude Include="Direct2DGame\Content\SpriteFontReader.h" />
     <ClInclude Include="Direct2DGame\Device.h" />
     <ClInclude Include="Direct2DGame\Graphics\SpriteEffects.h" />
+    <ClInclude Include="Direct2DGame\Utilities\FontHelper.h" />
     <ClInclude Include="Library\directx\DSUtil.h" />
     <ClInclude Include="Library\directx\DXUtil.h" />
     <ClInclude Include="MarioSample\Models\MarioStates.h" />

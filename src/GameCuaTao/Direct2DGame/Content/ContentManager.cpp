@@ -44,8 +44,11 @@ std::shared_ptr<T> ContentManager::ReadAsset(std::string assetName)
 template std::shared_ptr<AnimationDict> ContentManager::Load<AnimationDict>(std::string assetName);
 template std::shared_ptr<AnimationDict> ContentManager::ReadAsset<AnimationDict>(std::string assetName);
 
-template std::shared_ptr<Texture> ContentManager::Load<Texture>(std::string assetName);
-template std::shared_ptr<Texture> ContentManager::ReadAsset<Texture>(std::string assetName);
-
 template std::shared_ptr<Sound> ContentManager::Load<Sound>(std::string assetName);
 template std::shared_ptr<Sound> ContentManager::ReadAsset<Sound>(std::string assetName);
+
+template std::shared_ptr<SpriteFont> ContentManager::Load<SpriteFont>(std::string assetName);
+template std::shared_ptr<SpriteFont> ContentManager::ReadAsset<SpriteFont>(std::string assetName);
+
+template std::shared_ptr<Texture> ContentManager::Load<Texture>(std::string assetName);
+template std::shared_ptr<Texture> ContentManager::ReadAsset<Texture>(std::string assetName);
