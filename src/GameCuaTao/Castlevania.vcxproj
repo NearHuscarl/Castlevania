@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>Library\directx\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>Library\directx\Lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>Library\directx\Include;Library\freetype\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>Library\directx\Lib;Library\freetype\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LibraryPath>Library\directx\Include;$(IncludePath)</LibraryPath>
@@ -93,11 +93,17 @@
       <!-- <PreprocessorDefinitions>_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions> -->
     </ClCompile>
     <Link>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dinput8.lib;dxguid.lib;dsound.lib;dxerr.lib;winmm.lib;%(AdditionalDependencies);legacy_stdio_definitions.lib</AdditionalDependencies>
+      <AdditionalDependencies>freetype.lib;d3d9.lib;d3dx9.lib;dinput8.lib;dxguid.lib;dsound.lib;dxerr.lib;winmm.lib;%(AdditionalDependencies);legacy_stdio_definitions.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>SDK Path\Include</AdditionalLibraryDirectories>
       <SubSystem>
       </SubSystem>
     </Link>
+    <PostBuildEvent>
+      <Command>XCOPY "$(ProjectDir)\library\freetype\lib\freetype.dll" "$(TargetDir)" /D /K /Y</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copy DLLs to Target Directory</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
