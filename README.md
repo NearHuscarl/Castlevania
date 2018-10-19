@@ -23,15 +23,15 @@ there are still errors
 
 * Step 2: Go to DirectX SDK installation path
 
-![DirectX_SDK_Path](Images/DirectX_SDK_Path.png)
+![DirectX_SDK_Path](images/DirectX_SDK_Path.png)
 
 * Step 3: Copy into your game project. Something like this
 
-![SlnTree](Images/SlnTree.png)
+![SlnTree](images/SlnTree.png)
 
 * Step 4: Reconfigure Include and Library directory to the new relative path
 
-![Include_Header_And_Lib](Images/Include_Header_And_Lib.png)
+![Include_Header_And_Lib](images/Include_Header_And_Lib.png)
 
 * Step 5: Add those lib files in the Lib folder to Linker input
 
