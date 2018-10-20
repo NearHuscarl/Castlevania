@@ -12,6 +12,7 @@ void Mario::LoadContent(ContentManager &content)
 {
 	animations = content.Load<AnimationDict>("MarioAnimationDef.xml");
 	SetPosition(0.0f, 100.0f);
+	SetState(IDLE);
 }
 
 void Mario::Update(unsigned long deltaTime)
@@ -35,6 +36,8 @@ void Mario::Update(unsigned long deltaTime)
 		case JUMP:
 			if (position.y == 100)
 				velocity.y = -MARIO_JUMP_SPEED_Y;
+			else
+				SetState(IDLE);
 			break;
 	}
 
@@ -89,10 +92,16 @@ void Mario::Draw(ISpriteBatch_ spriteBatch)
 void Mario::OnKeyDown(InputManager &inputManager, KeyEventArgs e)
 {
 	FileLogger::GetInstance().Info("KeyDown: " + std::to_string(e.KeyCode));
-	switch (e.KeyCode)
+
+	switch (state)
 	{
-		case DIK_SPACE:
-			Jump();
+		case IDLE:
+		case WALK_LEFT:
+		case WALK_RIGHT:
+			if (e.KeyCode == DIK_SPACE)
+			{
+				Jump();
+			}
 			break;
 	}
 }
@@ -100,21 +109,38 @@ void Mario::OnKeyDown(InputManager &inputManager, KeyEventArgs e)
 void Mario::OnKeyUp(InputManager &inputManager, KeyEventArgs e)
 {
 	FileLogger::GetInstance().Info("KeyUp: " + std::to_string(e.KeyCode));
+
+	switch (state)
+	{
+		case WALK_LEFT:
+			if (e.KeyCode == DIK_LEFT)
+			{
+				SetState(IDLE);
+			}
+			break;
+		case WALK_RIGHT:
+			if (e.KeyCode == DIK_RIGHT)
+			{
+				SetState(IDLE);
+			}
+			break;
+	}
 }
 
 void Mario::OnKeyState(InputManager &inputManager)
 {
-	if (inputManager.IsKeyDown(DIK_RIGHT))
+	switch (state)
 	{
-		SetState(WALK_RIGHT);
-	}
-	else if (inputManager.IsKeyDown(DIK_LEFT))
-	{
-		SetState(WALK_LEFT);
-	}
-	else
-	{
-		SetState(IDLE);
+		case IDLE:
+			if (inputManager.IsKeyDown(DIK_RIGHT))
+			{
+				SetState(WALK_RIGHT);
+			}
+			else if (inputManager.IsKeyDown(DIK_LEFT))
+			{
+				SetState(WALK_LEFT);
+			}
+			break;
 	}
 }
 

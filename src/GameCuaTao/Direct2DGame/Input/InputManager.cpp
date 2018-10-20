@@ -75,9 +75,14 @@ void InputManager::InitKeyboard(HWND hWnd)
 	FileLogger::GetInstance().Info("Keyboard has been initialized successfully");
 }
 
-int InputManager::IsKeyDown(int KeyCode)
+bool InputManager::IsKeyDown(int KeyCode)
 {
 	return (keyStates[KeyCode] & 0x80) > 0;
+}
+
+bool InputManager::IsKeyUp(int KeyCode)
+{
+	return (keyStates[KeyCode] & 0x80) <= 0;
 }
 
 void InputManager::ProcessKeyboard()

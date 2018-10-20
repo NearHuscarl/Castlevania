@@ -16,7 +16,7 @@ void DemoGame::Initialize()
 void DemoGame::LoadResources()
 {
 	AudioManager::LoadResource(*content, { "Jump", "Overworld" });
-	helpText = content->Load<SpriteFont>("prstart.ttf");
+	helpText = content->Load<SpriteFont>("Roboto-Bold.ttf");
 	mario = std::make_shared<Mario>();
 	mario->LoadContent(*content);
 

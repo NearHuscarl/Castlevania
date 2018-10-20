@@ -15,7 +15,7 @@ std::shared_ptr<SpriteFont> SpriteFontReader::Read(std::string filePathStr, Cont
 
 	AddFontResourceEx(filePath.c_str(), FR_PRIVATE, NULL);
 	auto result = D3DXCreateFont(
-		renderDevice,
+		renderDevice,         // Direct3D device object
 		20,                   // Height
 		0,                    // Width
 		FW_NORMAL,            // Weight
@@ -27,8 +27,6 @@ std::shared_ptr<SpriteFont> SpriteFontReader::Read(std::string filePathStr, Cont
 		FF_DONTCARE,          // PitchAndFamily
 		familyName.c_str(),   // pFaceName
 		&font);               // ppFont
-
-	font->DrawTextA(nullptr, filePathStr.c_str(), -1, &BoundingBox(0,0,1000,1000), DT_LEFT, Color(255,255,255).Get());
 
 	if (result != D3D_OK)
 	{

@@ -10,12 +10,14 @@ void SoundReader::InitDirectSound(HWND hWnd)
 	soundManager = std::make_unique<SoundManager>();
 
 	auto result = soundManager->Initialize(hWnd, DSSCL_PRIORITY);
+
 	if (result != DS_OK)
 	{
 		throw LoadContentException("Cannot initialize CSoundManager");
 	}
 
 	result = soundManager->SetPrimaryBufferFormat(2, 22050, 16);
+
 	if (result != DS_OK)
 	{
 		throw LoadContentException("Cannot set primary buffer format for CSoundManager");
@@ -32,7 +34,7 @@ std::shared_ptr<Sound> SoundReader::Read(std::string filePathStr, ContentManager
 
 	CSound *wave = nullptr;
 
-	//attempt to load the wave file
+	// attempt to load the wave file
 	char s[255];
 	sprintf_s(s, "%s", filePathStr.c_str());
 

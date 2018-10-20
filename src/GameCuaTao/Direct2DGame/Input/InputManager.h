@@ -16,7 +16,8 @@ public:
 
 	void InitKeyboard(HWND hWnd);
 
-	int IsKeyDown(int KeyCode);
+	bool IsKeyDown(int KeyCode);
+	bool IsKeyUp(int KeyCode);
 	void ProcessKeyboard();
 
 	EVENT void KeyStateChanged(InputManager &inputManager);
