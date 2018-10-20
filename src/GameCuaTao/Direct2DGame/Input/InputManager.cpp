@@ -1,6 +1,8 @@
 #include "InputManager.h"
 #include "../Utilities/FileLogger.h"
 
+#define DIRECTINPUT_VERSION 0x0800
+
 InputManager::InputManager()
 {
 }

@@ -6,7 +6,7 @@
 class GameWindow
 {
 public:
-	GameWindow(HINSTANCE hInstance);
+	GameWindow();
 
 	void Create();
 	HWND GetHandle();

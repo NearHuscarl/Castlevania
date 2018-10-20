@@ -2,7 +2,7 @@
 #include "Utilities/TimeHelper.h"
 
 // TODO: refactor
-constexpr int MAX_FRAME_RATE = 90;
+constexpr auto MAX_FRAME_RATE = 90;
 constexpr auto BACKGROUND_COLOR = D3DCOLOR_XRGB(200, 200, 255);
 
 GameWindow &Game::GetWindow()
@@ -15,10 +15,10 @@ GraphicsDevice &Game::GetGraphicsDevice()
 	return graphics->GetGraphicsDevice();
 }
 
-Game::Game(HINSTANCE hInstance)
+Game::Game()
 {
 	serviceProvider = std::make_shared<ServiceProvider>();
-	window          = std::make_shared<GameWindow>(hInstance);
+	window          = std::make_shared<GameWindow>();
 	graphics        = std::make_shared<GraphicsDeviceManager>(std::shared_ptr<Game>{this});
 	input           = std::shared_ptr<InputManager>{ &InputManager::GetInstance() };
 	content         = std::make_shared<ContentManager>(serviceProvider);
@@ -75,6 +75,12 @@ void Game::Render()
 
 void Game::Run()
 {
+	if (!initialized)
+	{
+		Initialize();
+		initialized = false;
+	}
+
 	auto lastTime = TimeHelper::GetTimeNow();
 	auto tickPerFrame = 1000 / MAX_FRAME_RATE;
 

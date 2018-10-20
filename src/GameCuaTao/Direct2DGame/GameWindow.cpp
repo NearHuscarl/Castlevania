@@ -1,9 +1,9 @@
 #include "GameWindow.h"
 #include "Utilities/FileLogger.h"
 
-GameWindow::GameWindow(HINSTANCE hInstance)
+GameWindow::GameWindow()
 {
-	this->hInstance = hInstance;
+	this->hInstance = GetModuleHandle(nullptr);
 	// TODO: refactor
 	windowClassName = L"SampleWindow";
 	windowTitle = L"02 - Sprite animation";

@@ -153,6 +153,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Castlevania\CastlevaniaGame.cpp" />
+    <ClCompile Include="Castlevania\Models\GameObject.cpp" />
     <ClCompile Include="Direct2DGame\Animation\Animation.cpp" />
     <ClCompile Include="Direct2DGame\Animation\AnimationFrame.cpp" />
     <ClCompile Include="Direct2DGame\Animation\Sprite.cpp" />
@@ -174,17 +176,18 @@
     <ClCompile Include="Direct2DGame\Utilities\FontHelper.cpp" />
     <ClCompile Include="Library\directx\DSUtil.cpp" />
     <ClCompile Include="Library\directx\DXUtil.cpp" />
-    <ClCompile Include="MarioSample\Main.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="MarioSample\Models\GameObject.cpp" />
-    <ClCompile Include="MarioSample\EntryPoint.cpp" />
     <ClCompile Include="MarioSample\Models\Mario.cpp" />
-    <ClCompile Include="MarioSample\DemoGame.cpp" />
+    <ClCompile Include="MarioSample\MarioSampleGame.cpp" />
     <ClCompile Include="Direct2DGame\Utilities\FileLogger.cpp" />
     <ClCompile Include="Direct2DGame\Utilities\TimeHelper.cpp" />
     <ClCompile Include="Direct2DGame\Utilities\WinHelper.cpp" />
     <ClCompile Include="Library\pugixml\pugixml.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Castlevania\CastlevaniaGame.h" />
+    <ClInclude Include="Castlevania\Models\GameObject.h" />
     <ClInclude Include="Direct2DGame\Animation\Animation.h" />
     <ClInclude Include="Direct2DGame\Animation\AnimationFrame.h" />
     <ClInclude Include="Direct2DGame\Base\Color.h" />
@@ -215,10 +218,9 @@
     <ClInclude Include="Direct2DGame\Input\Controller.h" />
     <ClInclude Include="Direct2DGame\Input\InputManager.h" />
     <ClInclude Include="Direct2DGame\Input\KeyEventArgs.h" />
-    <ClInclude Include="MarioSample\EntryPoint.h" />
     <ClInclude Include="MarioSample\Models\GameObject.h" />
     <ClInclude Include="MarioSample\Models\Mario.h" />
-    <ClInclude Include="MarioSample\DemoGame.h" />
+    <ClInclude Include="MarioSample\MarioSampleGame.h" />
     <ClInclude Include="Library\pugiconfig.hpp" />
     <ClInclude Include="Library\pugixml.hpp" />
     <ClInclude Include="Direct2DGame\ServiceProvider.h" />

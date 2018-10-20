@@ -5,40 +5,43 @@
 #include "Direct2DGame/Animation/Animation.h"
 #include "Direct2DGame/Content/ContentManager.h"
 
-enum Direction
+namespace MarioSample
 {
-	Left,
-	Right,
-};
+	enum Direction
+	{
+		Left,
+		Right,
+	};
 
-class GameObject
-{
-public:
-	GameObject();
+	class GameObject
+	{
+	public:
+		GameObject();
 
-	void SetPosition(float x, float y);
-	void SetSpeed(float vx, float vy);
-	
-	void SetState(int state);
-	int GetState();
+		void SetPosition(float x, float y);
+		void SetSpeed(float vx, float vy);
 
-	virtual void LoadContent(ContentManager &content) = 0;
+		void SetState(int state);
+		int GetState();
 
-	virtual void Update(unsigned long deltaTime);
-	
-	// update object position: distance = velocity x deltatime
-	void UpdateDistance(unsigned long deltaTime);
-	
-	virtual void Draw(ISpriteBatch_ spriteBatch);
-	
-	virtual ~GameObject();
+		virtual void LoadContent(ContentManager &content) = 0;
 
-protected:
-	Vector position;
-	Vector velocity;
+		virtual void Update(unsigned long deltaTime);
 
-	Direction direction;
-	int state;
+		// update object position: distance = velocity x deltatime
+		void UpdateDistance(unsigned long deltaTime);
 
-	std::shared_ptr<AnimationDict> animations;
-};
+		virtual void Draw(ISpriteBatch_ spriteBatch);
+
+		virtual ~GameObject();
+
+	protected:
+		Vector position;
+		Vector velocity;
+
+		Direction direction;
+		int state;
+
+		std::shared_ptr<AnimationDict> animations;
+	};
+}

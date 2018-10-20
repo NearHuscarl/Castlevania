@@ -1,19 +1,21 @@
-#include "DemoGame.h"
+#include "MarioSampleGame.h"
 #include "Direct2DGame/Utilities/AudioManager.h"
 
-DemoGame::DemoGame(HINSTANCE hInstance) : Game(hInstance)
+using namespace MarioSample;
+
+MarioSampleGame::MarioSampleGame()
 {
 	content->SetRootDirectory("MarioSample/Content");
 	window->SetScreenWidth(320);
 	window->SetScreenHeight(240);
 }
 
-void DemoGame::Initialize()
+void MarioSampleGame::Initialize()
 {
 	Game::Initialize();
 }
 
-void DemoGame::LoadResources()
+void MarioSampleGame::LoadResources()
 {
 	AudioManager::LoadResource(*content, { "Jump", "Overworld" });
 	helpText = content->Load<SpriteFont>("Roboto-Bold.ttf");
@@ -23,12 +25,12 @@ void DemoGame::LoadResources()
 	AudioManager::PlaySong("Overworld");
 }
 
-void DemoGame::Update(unsigned long deltaTime)
+void MarioSampleGame::Update(unsigned long deltaTime)
 {
 	mario->Update(deltaTime);
 }
 
-void DemoGame::Draw(ISpriteBatch_ spriteBatch)
+void MarioSampleGame::Draw(ISpriteBatch_ spriteBatch)
 {
 	spriteBatch->Begin(D3DXSPRITE_ALPHABLEND);
 

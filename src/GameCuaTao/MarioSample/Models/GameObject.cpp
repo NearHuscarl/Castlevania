@@ -1,5 +1,7 @@
 #include "GameObject.h"
 
+using namespace MarioSample;
+
 GameObject::GameObject()
 {
 	position = Vector(0, 0);

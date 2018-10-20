@@ -3,6 +3,8 @@
 #include "Mario.h"
 #include "MarioStates.h"
 
+using namespace MarioSample;
+
 constexpr float MARIO_WALKING_SPEED = 0.05f;
 constexpr float MARIO_JUMP_SPEED_X = 1.0f;
 constexpr float MARIO_JUMP_SPEED_Y = 0.7f;

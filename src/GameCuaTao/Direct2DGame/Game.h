@@ -12,7 +12,6 @@ public:
 	GameWindow &GetWindow();
 	GraphicsDevice &GetGraphicsDevice();
 
-	virtual void Initialize();
 	virtual void LoadResources();
 	virtual void Update(unsigned long deltaTime);
 	virtual void Draw(ISpriteBatch_ spriteBatch);
@@ -20,7 +19,9 @@ public:
 	void Run();
 
 protected:
-	Game(HINSTANCE hInstance);
+	Game();
+
+	virtual void Initialize();
 
 	std::shared_ptr<GameWindow> window;
 	std::shared_ptr<GraphicsDeviceManager> graphics;
@@ -29,6 +30,8 @@ protected:
 	std::shared_ptr<ServiceProvider> serviceProvider;
 
 private:
+	bool initialized = false;
+
 	bool IsRunning();
 	void Render();
 };
