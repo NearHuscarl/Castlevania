@@ -27,7 +27,7 @@ void MarioSampleGame::LoadResources()
 
 void MarioSampleGame::Update(GameTime gameTime)
 {
-	auto deltaTime = gameTime.ElapsedGameTime.Milliseconds();
+	auto deltaTime = (float)gameTime.ElapsedGameTime.Seconds();
 
 	mario->Update(deltaTime);
 }

@@ -31,17 +31,17 @@ double TimeSpan::Milliseconds()
 
 double TimeSpan::Seconds()
 {
-	return duration_cast<seconds>(duration).count();
+	return duration.count();
 }
 
 double TimeSpan::Minutes()
 {
-	return duration_cast<minutes>(duration).count();
+	return duration.count() / 60.0;
 }
 
 double TimeSpan::Hours()
 {
-	return duration_cast<hours>(duration).count();
+	return duration.count() / 3600.0;
 }
 
 TimeSpan TimeSpan::FromNanoseconds(long long value)

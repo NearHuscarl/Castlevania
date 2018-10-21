@@ -18,8 +18,6 @@ void Mario::LoadContent(ContentManager &content)
 
 void Mario::Update(float deltaTime)
 {
-	// deltaTime = 30;
-	float dt = deltaTime / 1000; // TODO: remove and use totalSeconds instead
 	switch (state)
 	{
 		case WALK_LEFT:
@@ -44,7 +42,7 @@ void Mario::Update(float deltaTime)
 			break;
 	}
 
-	GameObject::UpdateDistance(dt);
+	GameObject::UpdateDistance(deltaTime);
 
 	ResolveCollision();
 

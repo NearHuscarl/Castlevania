@@ -2,8 +2,7 @@
 
 #include <chrono>
 
-//using Duration = std::chrono::system_clock::duration;
-using Duration = std::chrono::duration<long long, std::ratio_multiply<std::hecto, std::pico>>;
+using Duration = std::chrono::duration<double>; // in seconds
 
 class TimeSpan
 {
