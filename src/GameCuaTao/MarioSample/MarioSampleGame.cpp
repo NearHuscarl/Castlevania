@@ -25,8 +25,10 @@ void MarioSampleGame::LoadResources()
 	AudioManager::PlaySong("Overworld");
 }
 
-void MarioSampleGame::Update(unsigned long deltaTime)
+void MarioSampleGame::Update(GameTime gameTime)
 {
+	auto deltaTime = gameTime.ElapsedGameTime.Milliseconds();
+
 	mario->Update(deltaTime);
 }
 

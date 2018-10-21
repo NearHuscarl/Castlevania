@@ -10,11 +10,11 @@ class SpriteFont
 {
 public:
 	SpriteFont();
-	SpriteFont(Font_ font);
+	SpriteFont(IFont_ font);
 
-	Font_ Get();
+	IFont_ Get();
 	void Draw(ISpriteBatch_ spriteBatch, std::string text, Vector position, Color fgcolor);
 
 private:
-	Font_ font;
+	IFont_ font;
 };

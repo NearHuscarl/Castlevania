@@ -9,7 +9,7 @@ std::shared_ptr<SpriteFont> SpriteFontReader::Read(std::string filePathStr, Cont
 {
 	auto filePath = WinHelper::s2ws(filePathStr);
 	auto familyName = WinHelper::s2ws(FontHelper::GetFamilyName(filePathStr));
-	auto font = Font_{ nullptr };
+	auto font = IFont_{ nullptr };
 	auto graphicsDevice = contentManager.GetServiceProvider().Get<GraphicsDevice>();
 	auto renderDevice = graphicsDevice->GetRenderDevice();
 

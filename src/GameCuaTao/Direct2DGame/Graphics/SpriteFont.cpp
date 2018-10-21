@@ -5,12 +5,12 @@ SpriteFont::SpriteFont()
 	this->font = nullptr;
 }
 
-SpriteFont::SpriteFont(Font_ font)
+SpriteFont::SpriteFont(IFont_ font)
 {
 	this->font = font;
 }
 
-Font_ SpriteFont::Get()
+IFont_ SpriteFont::Get()
 {
 	return font;
 }

@@ -2,7 +2,6 @@
 #include "Utilities/TimeHelper.h"
 
 // TODO: refactor
-constexpr auto MAX_FRAME_RATE = 90;
 constexpr auto BACKGROUND_COLOR = D3DCOLOR_XRGB(200, 200, 255);
 
 GameWindow &Game::GetWindow()
@@ -44,7 +43,7 @@ void Game::LoadResources()
 
 // Update world status for this frame
 // deltaTime: time period between beginning of last frame and beginning of this frame
-void Game::Update(unsigned long deltaTime)
+void Game::Update(GameTime gameTime)
 {
 }
 
@@ -81,25 +80,20 @@ void Game::Run()
 		initialized = false;
 	}
 
-	auto lastTime = TimeHelper::GetTimeNow();
-	auto tickPerFrame = 1000 / MAX_FRAME_RATE;
-
 	while (IsRunning())
 	{
-		auto currentTime = TimeHelper::GetTimeNow();
-		auto deltaTime = currentTime - lastTime;
+		Tick();
+		auto deltaTime = gameTime.ElapsedGameTime.Milliseconds();
 
-		if (deltaTime >= tickPerFrame)
+		if (deltaTime >= GetTickPerFrame())
 		{
-			lastTime = currentTime;
-
 			input->ProcessKeyboard();
 
-			Update(deltaTime);
+			Update(gameTime);
 			Render();
 		}
 		else
-			Sleep(tickPerFrame - deltaTime);
+			Sleep(GetTickPerFrame() - deltaTime);
 	}
 }
 
@@ -117,4 +111,19 @@ bool Game::IsRunning()
 	}
 
 	return true;
+}
+
+double Game::GetTickPerFrame()
+{
+	return 1000 / graphics->GetFramePerSecond();
+}
+
+void Game::Tick()
+{
+	auto currentTick = TimeHelper::GetTickNow();
+	auto accumulatedTime = TimeSpan::FromMilliseconds(currentTick - gameTime.GetPreviousTicks());
+
+	gameTime.SetPreviousTicks(currentTick);
+	gameTime.ElapsedGameTime = accumulatedTime;
+	gameTime.TotalGameTime += accumulatedTime;
 }

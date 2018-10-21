@@ -158,6 +158,7 @@
     <ClCompile Include="Direct2DGame\Animation\Animation.cpp" />
     <ClCompile Include="Direct2DGame\Animation\AnimationFrame.cpp" />
     <ClCompile Include="Direct2DGame\Animation\Sprite.cpp" />
+    <ClCompile Include="Direct2DGame\TimeSpan.cpp" />
     <ClCompile Include="Direct2DGame\Utilities\AudioManager.cpp" />
     <ClCompile Include="Direct2DGame\Graphics\SpriteFont.cpp" />
     <ClCompile Include="Direct2DGame\Graphics\Texture.cpp" />
@@ -191,6 +192,8 @@
     <ClInclude Include="Direct2DGame\Animation\Animation.h" />
     <ClInclude Include="Direct2DGame\Animation\AnimationFrame.h" />
     <ClInclude Include="Direct2DGame\Base\Color.h" />
+    <ClInclude Include="Direct2DGame\GameTime.h" />
+    <ClInclude Include="Direct2DGame\TimeSpan.h" />
     <ClInclude Include="Direct2DGame\Utilities\AudioManager.h" />
     <ClInclude Include="Direct2DGame\Graphics\SpriteFont.h" />
     <ClInclude Include="Direct2DGame\Graphics\Texture.h" />

@@ -18,7 +18,7 @@ void InputManager::InitKeyboard(HWND hWnd)
 	auto result = DirectInput8Create(
 		(HINSTANCE)GetWindowLong(hWnd, GWL_HINSTANCE),
 		DIRECTINPUT_VERSION,
-		IID_IDirectInput8, (VOID**)&input, nullptr);
+		IID_IDirectInput8, (void**)&input, nullptr);
 
 	if (result != DI_OK)
 	{
@@ -77,16 +77,6 @@ void InputManager::InitKeyboard(HWND hWnd)
 	FileLogger::GetInstance().Info("Keyboard has been initialized successfully");
 }
 
-bool InputManager::IsKeyDown(int KeyCode)
-{
-	return (keyStates[KeyCode] & 0x80) > 0;
-}
-
-bool InputManager::IsKeyUp(int KeyCode)
-{
-	return (keyStates[KeyCode] & 0x80) <= 0;
-}
-
 void InputManager::ProcessKeyboard()
 {
 	// Collect all key states first
@@ -117,7 +107,7 @@ void InputManager::ProcessKeyboard()
 
 	// Collect all buffered events
 	auto dwElements = DWORD{ KEYBOARD_BUFFER_SIZE };
-	result = inputDevice->GetDeviceData(sizeof(DeviceInputData_), keyEvents, &dwElements, 0);
+	result = inputDevice->GetDeviceData(sizeof(DeviceInputData), keyEvents, &dwElements, 0);
 	if (FAILED(result))
 	{
 		// FileLogger::GetInstance().Error("DINPUT::GetDeviceData failed. Error: " + std::to_string(hr));
@@ -139,4 +129,14 @@ void InputManager::ProcessKeyboard()
 			KeyUp(*this, KeyEventArgs(KeyCode, -1));
 		}
 	}
+}
+
+bool InputManager::IsKeyDown(int KeyCode)
+{
+	return (keyStates[KeyCode] & 0x80) > 0;
+}
+
+bool InputManager::IsKeyUp(int KeyCode)
+{
+	return (keyStates[KeyCode] & 0x80) <= 0;
 }

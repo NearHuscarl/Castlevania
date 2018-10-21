@@ -34,14 +34,13 @@ int GameObject::GetState()
 	return state;
 }
 
-void GameObject::Update(unsigned long deltaTime)
+void GameObject::Update(float deltaTime)
 {
 }
 
-void GameObject::UpdateDistance(unsigned long deltaTime)
+void GameObject::UpdateDistance(float deltaTime)
 {
-	position.x += velocity.x * deltaTime;
-	position.y += velocity.y * deltaTime;
+	position += velocity * deltaTime;
 }
 
 void GameObject::Draw(ISpriteBatch_ spriteBatch)

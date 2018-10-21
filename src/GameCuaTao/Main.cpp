@@ -2,9 +2,5 @@
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	auto Game = MarioSample::MarioSampleGame{};
-
-	Game.Run();
-
-	return 0;
+	MarioSample::MarioSampleGame{}.Run();
 }

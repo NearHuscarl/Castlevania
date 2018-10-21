@@ -9,7 +9,7 @@ namespace Castlevania
 	public:
 		void Initialize() override;
 		void LoadResources() override;
-		void Update(unsigned long deltaTime) override;
+		void Update(GameTime gameTime) override;
 		void Draw(ISpriteBatch_ spriteBatch) override;
 	};
 }

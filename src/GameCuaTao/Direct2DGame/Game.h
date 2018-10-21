@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameWindow.h"
+#include "GameTime.h"
 #include "GraphicsDeviceManager.h"
 #include "Input/InputManager.h"
 #include "Content/ContentManager.h"
@@ -13,7 +14,7 @@ public:
 	GraphicsDevice &GetGraphicsDevice();
 
 	virtual void LoadResources();
-	virtual void Update(unsigned long deltaTime);
+	virtual void Update(GameTime gameTime);
 	virtual void Draw(ISpriteBatch_ spriteBatch);
 
 	void Run();
@@ -31,7 +32,11 @@ protected:
 
 private:
 	bool initialized = false;
+	GameTime gameTime;
 
 	bool IsRunning();
 	void Render();
+	
+	double GetTickPerFrame();
+	void Tick();
 };

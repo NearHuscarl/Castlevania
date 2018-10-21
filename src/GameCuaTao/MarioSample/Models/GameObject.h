@@ -26,10 +26,10 @@ namespace MarioSample
 
 		virtual void LoadContent(ContentManager &content) = 0;
 
-		virtual void Update(unsigned long deltaTime);
+		virtual void Update(float deltaTime);
 
 		// update object position: distance = velocity x deltatime
-		void UpdateDistance(unsigned long deltaTime);
+		void UpdateDistance(float deltaTime);
 
 		virtual void Draw(ISpriteBatch_ spriteBatch);
 

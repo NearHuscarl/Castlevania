@@ -25,7 +25,7 @@ void Animation::Add(Sprite sprite, unsigned long time)
 
 void Animation::Update()
 {
-	auto now = TimeHelper::GetTimeNow();
+	auto now = TimeHelper::GetTickNow();
 	if (currentFrame == -1)
 	{
 		currentFrame = 0;

@@ -21,3 +21,8 @@ GraphicsDevice &GraphicsDeviceManager::GetGraphicsDevice()
 {
 	return *graphicsDevice;
 }
+
+int GraphicsDeviceManager::GetFramePerSecond()
+{
+	return framePerSecond;
+}

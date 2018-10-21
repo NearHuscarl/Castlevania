@@ -15,4 +15,9 @@ struct Vector : D3DXVECTOR3
 		this->y = y;
 		this->z = z;
 	}
+
+	static Vector Zero()
+	{
+		return Vector(0, 0);
+	}
 };

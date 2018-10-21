@@ -15,7 +15,7 @@ std::string TimeHelper::GetTimeNow(const char *format)
 	return formattedTime;
 }
 
-unsigned long TimeHelper::GetTimeNow()
+long TimeHelper::GetTickNow()
 {
 	return GetTickCount();
 }
