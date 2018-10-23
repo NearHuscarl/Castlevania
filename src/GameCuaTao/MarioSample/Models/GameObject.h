@@ -31,7 +31,7 @@ namespace MarioSample
 		// update object position: distance = velocity x deltatime
 		void UpdateDistance(float deltaTime);
 
-		virtual void Draw(ISpriteBatch_ spriteBatch);
+		virtual void Draw(SpriteBatch &spriteBatch);
 
 		virtual ~GameObject();
 

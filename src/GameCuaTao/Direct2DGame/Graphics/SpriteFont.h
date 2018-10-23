@@ -9,11 +9,8 @@
 class SpriteFont
 {
 public:
-	SpriteFont();
 	SpriteFont(IFont_ font);
-
 	IFont_ Get();
-	void Draw(ISpriteBatch_ spriteBatch, std::string text, Vector position, Color fgcolor);
 
 private:
 	IFont_ font;

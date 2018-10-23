@@ -14,7 +14,7 @@ public:
 
 	IRenderDevice_ GetRenderDevice();
 	ISurface_ GetBackBuffer();
-	ISpriteBatch_ GetSpriteBatch();
+	ISpriteHandler_ GetSpriteHandler();
 
 	virtual ~GraphicsDevice();
 
@@ -23,5 +23,5 @@ private:
 
 	IRenderDevice_ renderDevice = nullptr;  // Direct3D device object
 	ISurface_ backBuffer = nullptr;
-	ISpriteBatch_ spriteBatch = nullptr;    // Sprite helper library to help us draw 2D image on the screen
+	ISpriteHandler_ spriteHandler = nullptr;    // Sprite helper library to help us draw 2D image on the screen
 };

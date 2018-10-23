@@ -6,7 +6,7 @@ using IDevice = IDirect3D9*;
 
 using IRenderDevice_ = IDirect3DDevice9*;
 using ISurface_ = IDirect3DSurface9*;
-using ISpriteBatch_ = ID3DXSprite*;
+using ISpriteHandler_ = ID3DXSprite*;
 
 using ITexture_ = IDirect3DTexture9*;
 using IFont_ = ID3DXFont*;

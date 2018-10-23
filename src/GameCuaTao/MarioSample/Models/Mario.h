@@ -10,7 +10,7 @@ namespace MarioSample
 	public:
 		void LoadContent(ContentManager &content) override;
 		void Update(float deltaTime) override;
-		void Draw(ISpriteBatch_ spriteBatch) override;
+		void Draw(SpriteBatch &spriteBatch) override;
 
 	private:
 		void ResolveCollision();

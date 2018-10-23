@@ -1,13 +1,15 @@
 ﻿#include "AudioManager.h"
 
-std::map<std::string, std::shared_ptr<Sound>> AudioManager::soundDict;
+using namespace Castlevania;
+
+AudioManager::SoundDict AudioManager::soundDict;
 float AudioManager::volume;
 
-void AudioManager::LoadResource(ContentManager &contentManager, std::vector<std::string> sounds)
+void AudioManager::LoadContent(ContentManager &contentManager, AudioPathDict audioPathDict)
 {
-	for (auto sound : sounds)
+	for (auto const [audioName, path] : audioPathDict)
 	{
-		soundDict[sound] = contentManager.Load<Sound>(sound + ".wav");
+		soundDict[audioName] = contentManager.Load<Sound>(path);
 	}
 
 	// Play sound the first time to 'load' it or the game will be lagged when the

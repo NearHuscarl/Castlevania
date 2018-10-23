@@ -51,6 +51,14 @@ By default, Visual Studio only copy *.dll files in the $(ProjectDir). If you put
 them in some subfolder, you have to specify the path manually to that subfolder
 (in this case lib\\) so Visual Studio know where to find and copy them
 
+### Fix linker error when having 2 files with the same name
+```
+LNK4042: object specified more than once; extras ignored
+```
+* Go to `Configuration Properties` -> `C/C++` -> `Output Files` -> `Object File Name` -> `$(IntDir)/%(RelativeDir)/`
+
+With the default configuration, Visual will toss all object files into one big folder, leading to name conflict if there are source files with the same name in different folders, replace to `$(IntDir)/%(RelativeDir)/` will put those object files in a mirror source tree, solving name conflicts
+
 ## Developement Environment
 
 - Visual Studio 2017
@@ -66,6 +74,7 @@ them in some subfolder, you have to specify the path manually to that subfolder
 
 ## References
 - [Back to the Basics! Essentials of Modern C++ Style]
+- [Smart pointers need careful programmers]
 - [UIT-SE102-Game-Project ]
 - [Game Programming Patterns]
 - [Monogame Framework]
@@ -73,6 +82,7 @@ them in some subfolder, you have to specify the path manually to that subfolder
 
 
 [Back to the Basics! Essentials of Modern C++ Style]: https://github.com/CppCon/CppCon2014/blob/master/Presentations/Back%20to%20the%20Basics!%20Essentials%20of%20Modern%20C%2B%2B%20Style/Back%20to%20the%20Basics!%20Essentials%20of%20Modern%20C%2B%2B%20Style%20-%20Herb%20Sutter%20-%20CppCon%202014.pdf
+[Smart pointers need careful programmers]: https://yatb.giacomodrago.com/en/post/11/cpp11-smart-pointers-need-careful-programmers.html
 [UIT-SE102-Game-Project ]: https://github.com/danhph/UIT-SE102-Game-Project 
 [Game Programming Patterns]: http://gameprogrammingpatterns.com/contents.html
 [Monogame Framework]: https://github.com/MonoGame/MonoGame

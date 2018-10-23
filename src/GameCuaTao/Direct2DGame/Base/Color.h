@@ -60,6 +60,12 @@ public:
 		return strStream.str();
 	}
 
+	static Color White()
+	{
+		static auto white = Color{ 255, 255, 255 };
+		return white;
+	}
+
 private:
 	unsigned long packedValue;
 };

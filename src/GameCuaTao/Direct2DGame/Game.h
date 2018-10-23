@@ -13,9 +13,9 @@ public:
 	GameWindow &GetWindow();
 	GraphicsDevice &GetGraphicsDevice();
 
-	virtual void LoadResources();
+	virtual void LoadContent();
 	virtual void Update(GameTime gameTime);
-	virtual void Draw(ISpriteBatch_ spriteBatch);
+	virtual void Draw(GameTime gameTime);
 
 	void Run();
 
@@ -35,7 +35,7 @@ private:
 	GameTime gameTime;
 
 	bool IsRunning();
-	void Render();
+	void Render(GameTime gameTime);
 	
 	double GetTickPerFrame();
 	void Tick();

@@ -43,7 +43,7 @@ void GameObject::UpdateDistance(float deltaTime)
 	position += velocity * deltaTime;
 }
 
-void GameObject::Draw(ISpriteBatch_ spriteBatch)
+void GameObject::Draw(SpriteBatch &spriteBatch)
 {
 }
 

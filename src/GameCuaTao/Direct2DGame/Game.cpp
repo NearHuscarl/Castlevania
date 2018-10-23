@@ -32,12 +32,12 @@ void Game::Initialize()
 	graphics->CreateDevice();
 	input->InitKeyboard(window->GetHandle());
 
-	LoadResources();
+	LoadContent();
 }
 
 // Load all game resources
 // For example: load textures, sprites, animations and mario object
-void Game::LoadResources()
+void Game::LoadContent()
 {
 }
 
@@ -47,23 +47,23 @@ void Game::Update(GameTime gameTime)
 {
 }
 
-void Game::Draw(ISpriteBatch_ spriteBatch)
+void Game::Draw(GameTime gameTime)
 {
 }
 
 // Render a frame
-void Game::Render()
+void Game::Render(GameTime gameTime)
 {
 	auto renderDevice = GetGraphicsDevice().GetRenderDevice();
 	auto surface = GetGraphicsDevice().GetBackBuffer();
-	auto spriteBatch = GetGraphicsDevice().GetSpriteBatch();
+	auto spriteBatch = GetGraphicsDevice().GetSpriteHandler();
 
 	if (renderDevice->BeginScene())
 	{
 		// Clear back buffer with a color
 		renderDevice->ColorFill(surface, nullptr, BACKGROUND_COLOR);
 
-		Draw(spriteBatch);
+		Draw(gameTime);
 
 		renderDevice->EndScene();
 	}
@@ -90,7 +90,7 @@ void Game::Run()
 			input->ProcessKeyboard();
 
 			Update(gameTime);
-			Render();
+			Render(gameTime);
 		}
 		else
 			Sleep(GetTickPerFrame() - deltaTime);

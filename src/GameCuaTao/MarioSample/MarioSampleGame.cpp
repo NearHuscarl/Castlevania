@@ -1,5 +1,5 @@
 #include "MarioSampleGame.h"
-#include "Direct2DGame/Utilities/AudioManager.h"
+#include "Utilities/AudioManager.h"
 
 using namespace MarioSample;
 
@@ -15,9 +15,11 @@ void MarioSampleGame::Initialize()
 	Game::Initialize();
 }
 
-void MarioSampleGame::LoadResources()
+void MarioSampleGame::LoadContent()
 {
-	AudioManager::LoadResource(*content, { "Jump", "Overworld" });
+	spriteBatch = std::make_unique<SpriteBatch>(GetGraphicsDevice());
+
+	AudioManager::LoadContent(*content, { "Jump", "Overworld" });
 	helpText = content->Load<SpriteFont>("Roboto-Bold.ttf");
 	mario = std::make_shared<Mario>();
 	mario->LoadContent(*content);
@@ -32,12 +34,12 @@ void MarioSampleGame::Update(GameTime gameTime)
 	mario->Update(deltaTime);
 }
 
-void MarioSampleGame::Draw(ISpriteBatch_ spriteBatch)
+void MarioSampleGame::Draw(GameTime gameTime)
 {
-	spriteBatch->Begin(D3DXSPRITE_ALPHABLEND);
+	spriteBatch->GetSpriteHandler()->Begin(D3DXSPRITE_ALPHABLEND);
 
-	mario->Draw(spriteBatch);
-	helpText->Draw(spriteBatch, "Press arrow keys to move", Vector(30, 30), Color(255, 0, 255));
+	mario->Draw(*spriteBatch);
+	spriteBatch->DrawString(*helpText, "Press arrow keys to move", Vector(30, 30), Color(255, 0, 255));
 
-	spriteBatch->End();
+	spriteBatch->GetSpriteHandler()->End();
 }

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Direct2DGame/Game.h"
-#include "Direct2DGame/Graphics/SpriteFont.h"
 #include "Models/Mario.h"
 
 namespace MarioSample
@@ -12,11 +11,13 @@ namespace MarioSample
 		MarioSampleGame();
 
 		void Initialize() override;
-		void LoadResources() override;
+		void LoadContent() override;
 		void Update(GameTime gameTime) override;
-		void Draw(ISpriteBatch_ spriteBatch) override;
+		void Draw(GameTime gameTime) override;
 
 	private:
+		std::unique_ptr<SpriteBatch> spriteBatch;
+
 		std::shared_ptr<Mario> mario;
 		std::shared_ptr<SpriteFont> helpText;
 	};

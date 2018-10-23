@@ -1,7 +1,7 @@
 #include "Direct2DGame/Utilities/FileLogger.h"
-#include "Direct2DGame/Utilities/AudioManager.h"
 #include "Mario.h"
 #include "MarioStates.h"
+#include "../Utilities/AudioManager.h"
 
 using namespace MarioSample;
 
@@ -82,10 +82,10 @@ void Mario::Jump()
 		AudioManager::Play("Jump");
 }
 
-void Mario::Draw(ISpriteBatch_ spriteBatch)
+void Mario::Draw(SpriteBatch &spriteBatch)
 {
 	auto effects = direction == Left ? SpriteEffects::FlipHorizontally : SpriteEffects::None;
-	(*animations)[GetAnimation()].Draw(spriteBatch, position, effects);
+	(*animations)[GetAnimation()].Draw(spriteBatch, position, Color::White(), effects);
 }
 
 #pragma region INPUT HANDLER
