@@ -1,13 +1,27 @@
 #include "GameplayScene.h"
+#include "SceneManager.h"
 
-void Castlevania::GameplayScene::LoadContent(ContentManager & content)
+using namespace Castlevania;
+
+GameplayScene::GameplayScene(SceneManager &sceneManager) : AbstractScene(sceneManager)
 {
 }
 
-void Castlevania::GameplayScene::Update(float deltaTime)
+void GameplayScene::LoadContent()
 {
 }
 
-void Castlevania::GameplayScene::Draw(SpriteBatch & spriteBatch)
+void GameplayScene::Update(float deltaTime)
 {
+}
+
+void GameplayScene::Draw(GameTime gameTime)
+{
+	auto spriteBatch = sceneManager.GetSpriteBatch();
+
+	spriteBatch.GetSpriteHandler()->Begin(D3DXSPRITE_ALPHABLEND);
+
+	// Draw stuff
+
+	spriteBatch.GetSpriteHandler()->End();
 }

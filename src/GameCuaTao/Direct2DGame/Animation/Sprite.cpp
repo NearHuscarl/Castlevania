@@ -12,5 +12,5 @@ Sprite::Sprite(std::string spriteID, BoundingBox boundingBox)
 
 void Sprite::Draw(SpriteBatch &spriteBatch, Texture &texture, Vector position, Color color, SpriteEffects effects)
 {
-	spriteBatch.Draw(texture, position, boundingBox, color, effects);
+	spriteBatch.Draw(texture, position, &boundingBox, color, effects);
 }

@@ -1,9 +1,6 @@
 #include "Game.h"
 #include "Utilities/TimeHelper.h"
 
-// TODO: refactor
-constexpr auto BACKGROUND_COLOR = D3DCOLOR_XRGB(200, 200, 255);
-
 GameWindow &Game::GetWindow()
 {
 	return *window;
@@ -12,6 +9,11 @@ GameWindow &Game::GetWindow()
 GraphicsDevice &Game::GetGraphicsDevice()
 {
 	return graphics->GetGraphicsDevice();
+}
+
+ContentManager &Game::GetContent()
+{
+	return *content;
 }
 
 Game::Game()
@@ -55,16 +57,12 @@ void Game::Draw(GameTime gameTime)
 void Game::Render(GameTime gameTime)
 {
 	auto renderDevice = GetGraphicsDevice().GetRenderDevice();
-	auto surface = GetGraphicsDevice().GetBackBuffer();
+	auto surface = GetGraphicsDevice().GetSurface();
 	auto spriteBatch = GetGraphicsDevice().GetSpriteHandler();
 
 	if (renderDevice->BeginScene())
 	{
-		// Clear back buffer with a color
-		renderDevice->ColorFill(surface, nullptr, BACKGROUND_COLOR);
-
 		Draw(gameTime);
-
 		renderDevice->EndScene();
 	}
 

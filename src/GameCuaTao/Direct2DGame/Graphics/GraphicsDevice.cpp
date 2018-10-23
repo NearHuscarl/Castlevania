@@ -1,5 +1,15 @@
 #include "GraphicsDevice.h"
-#include "Utilities/FileLogger.h"
+#include "../Utilities/FileLogger.h"
+
+Viewport GraphicsDevice::GetViewport()
+{
+	return viewport;
+}
+
+void GraphicsDevice::SetViewport(Viewport viewport)
+{
+	this->viewport = viewport;
+}
 
 Color GraphicsDevice::GetTransparentColor()
 {
@@ -43,7 +53,7 @@ void GraphicsDevice::CreateDevice(HWND hWnd)
 		return;
 	}
 
-	renderDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &backBuffer);
+	renderDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &surface);
 
 	// Initialize sprite helper from Direct3DX helper library
 	D3DXCreateSprite(renderDevice, &spriteHandler);
@@ -51,14 +61,19 @@ void GraphicsDevice::CreateDevice(HWND hWnd)
 	FileLogger::GetInstance().Info("InitGame done");
 }
 
+void GraphicsDevice::Clear(Color color)
+{
+	renderDevice->ColorFill(surface, nullptr, color.Get());
+}
+
 IRenderDevice_ GraphicsDevice::GetRenderDevice()
 {
 	return renderDevice;
 }
 
-ISurface_ GraphicsDevice::GetBackBuffer()
+ISurface_ GraphicsDevice::GetSurface()
 {
-	return backBuffer;
+	return surface;
 }
 
 ISpriteHandler_ GraphicsDevice::GetSpriteHandler()
@@ -71,8 +86,8 @@ GraphicsDevice::~GraphicsDevice()
 	if (spriteHandler != nullptr)
 		spriteHandler->Release();
 
-	if (backBuffer != nullptr)
-		backBuffer->Release();
+	if (surface != nullptr)
+		surface->Release();
 
 	if (renderDevice != nullptr)
 		renderDevice->Release();

@@ -5,11 +5,11 @@ using namespace MarioSample;
 std::map<std::string, std::shared_ptr<Sound>> AudioManager::soundDict;
 float AudioManager::volume;
 
-void AudioManager::LoadContent(ContentManager &contentManager, std::vector<std::string> sounds)
+void AudioManager::LoadContent(ContentManager &content, std::vector<std::string> sounds)
 {
 	for (auto sound : sounds)
 	{
-		soundDict[sound] = contentManager.Load<Sound>(sound + ".wav");
+		soundDict[sound] = content.Load<Sound>(sound + ".wav");
 	}
 
 	// Play sound the first time to 'load' it or the game will be lagged when the

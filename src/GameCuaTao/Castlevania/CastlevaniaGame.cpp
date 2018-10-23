@@ -1,30 +1,30 @@
 #include "CastlevaniaGame.h"
 #include "Scenes/MenuScene.h"
+#include "Settings/Fonts.h"
 #include "Utilities/AudioManager.h"
-#include "Utilities/Audio.h"
+#include "Settings/Audios.h"
 
 using namespace Castlevania;
 
-Castlevania::CastlevaniaGame::CastlevaniaGame()
+CastlevaniaGame::CastlevaniaGame()
 {
 	content->SetRootDirectory("Castlevania/Content");
 
-	window->SetScreenWidth(640);
-	window->SetScreenHeight(480);
+	window->Width(529);
+	window->Height(485);
 }
 
 void CastlevaniaGame::Initialize()
 {
 	Game::Initialize();
 
-	sceneManager = std::make_unique<SceneManager>(content);
+	sceneManager = std::make_unique<SceneManager>(*this);
 	sceneManager->NextScene(Scene::MENU);
 }
 
 void CastlevaniaGame::LoadContent()
 {
-	spriteBatch = std::make_unique<SpriteBatch>(GetGraphicsDevice());
-
+	Fonts::LoadContent(*content);
 	AudioManager::LoadContent(*content, GAME_AUDIO);
 }
 
@@ -37,9 +37,7 @@ void CastlevaniaGame::Update(GameTime gameTime)
 
 void CastlevaniaGame::Draw(GameTime gameTime)
 {
-	spriteBatch->GetSpriteHandler()->Begin(D3DXSPRITE_ALPHABLEND);
+	GetGraphicsDevice().Clear(Color::LavenderBlue());
 
-	sceneManager->Draw(*spriteBatch);
-
-	spriteBatch->GetSpriteHandler()->End();
+	sceneManager->Draw(gameTime);
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "TimeSpan.h"
+#include "Utilities/TimeSpan.h"
 
 struct GameTime
 {

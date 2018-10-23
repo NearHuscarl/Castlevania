@@ -1,7 +1,7 @@
 #include "SpriteFontReader.h"
 #include "ContentManager.h"
 #include "LoadContentException.h"
-#include "../GraphicsDevice.h"
+#include "../Graphics/GraphicsDevice.h"
 #include "../Utilities/FontHelper.h"
 #include "../Utilities/WinHelper.h"
 

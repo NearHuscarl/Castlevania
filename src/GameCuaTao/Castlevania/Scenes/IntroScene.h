@@ -7,8 +7,10 @@ namespace Castlevania
 	class IntroScene : public AbstractScene
 	{
 	public:
-		void LoadContent(ContentManager &content) override;
+		IntroScene(SceneManager &sceneManager);
+
+		void LoadContent() override;
 		void Update(float deltaTime) override;
-		void Draw(SpriteBatch &spriteBatch) override;
+		void Draw(GameTime gameTime) override;
 	};
 }

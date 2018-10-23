@@ -6,8 +6,8 @@ using namespace MarioSample;
 MarioSampleGame::MarioSampleGame()
 {
 	content->SetRootDirectory("MarioSample/Content");
-	window->SetScreenWidth(320);
-	window->SetScreenHeight(240);
+	window->Width(320);
+	window->Height(240);
 }
 
 void MarioSampleGame::Initialize()
@@ -36,6 +36,8 @@ void MarioSampleGame::Update(GameTime gameTime)
 
 void MarioSampleGame::Draw(GameTime gameTime)
 {
+	GetGraphicsDevice().Clear(Color::LavenderBlue());
+
 	spriteBatch->GetSpriteHandler()->Begin(D3DXSPRITE_ALPHABLEND);
 
 	mario->Draw(*spriteBatch);

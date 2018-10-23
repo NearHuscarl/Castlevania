@@ -10,8 +10,14 @@ ISpriteHandler_ SpriteBatch::GetSpriteHandler()
 	return spriteHandler;
 }
 
-void SpriteBatch::Draw(Texture &texture, Vector position, BoundingBox rectangle, Color color, SpriteEffects effects)
+void SpriteBatch::Draw(Texture &texture, Vector position, BoundingBox *rectanglePtr, Color color, SpriteEffects effects)
 {
+	auto rectangle = BoundingBox{};
+	if (rectanglePtr == nullptr) // if null, draws full texture
+		rectangle = BoundingBox(0, 0, texture.Width(), texture.Height());
+	else
+		rectangle = *rectanglePtr;
+
 	auto oldMatrix = D3DXMATRIX{};
 	spriteHandler->GetTransform(&oldMatrix);
 

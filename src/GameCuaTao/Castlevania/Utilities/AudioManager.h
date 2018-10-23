@@ -11,7 +11,7 @@ namespace Castlevania
 	class AudioManager
 	{
 	public:
-		static void LoadContent(ContentManager &contentManager, AudioPathDict audioPathDict);
+		static void LoadContent(ContentManager &content, AudioPathDict audioPathDict);
 		static void Play(std::string name);
 		static void PlaySong(std::string name);
 		static void PlayLoop(std::string name);

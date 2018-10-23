@@ -1,7 +1,7 @@
 #include "TextureReader.h"
 #include "ContentManager.h"
 #include "LoadContentException.h"
-#include "../GraphicsDevice.h"
+#include "../Graphics/GraphicsDevice.h"
 #include "../Utilities/FileLogger.h"
 #include "../Utilities/WinHelper.h"
 
@@ -44,5 +44,5 @@ std::shared_ptr<Texture> TextureReader::Read(std::string filePathStr, ContentMan
 
 	FileLogger::GetInstance().Info("Texture loaded Ok: " + filePathStr);
 
-	return std::make_shared<Texture>(texture);
+	return std::make_shared<Texture>(texture, info);
 }

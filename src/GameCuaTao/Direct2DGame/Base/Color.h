@@ -66,6 +66,12 @@ public:
 		return white;
 	}
 
+	static Color LavenderBlue()
+	{
+		static auto lavenderBlue = Color{ 200, 200, 255 };
+		return lavenderBlue;
+	}
+
 private:
 	unsigned long packedValue;
 };

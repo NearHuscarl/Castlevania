@@ -18,6 +18,7 @@ struct Vector : D3DXVECTOR3
 
 	static Vector Zero()
 	{
-		return Vector(0, 0);
+		static auto zeroVector = Vector{ 0, 0 };
+		return zeroVector;
 	}
 };

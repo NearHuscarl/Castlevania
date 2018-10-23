@@ -16,7 +16,6 @@ namespace Castlevania
 		void Draw(GameTime gameTime) override;
 
 	private:
-		std::unique_ptr<SpriteBatch> spriteBatch;
 		std::unique_ptr<SceneManager> sceneManager;
 	};
 }

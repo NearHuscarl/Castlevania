@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../GraphicsDevice.h"
+#include "../Graphics/GraphicsDevice.h"
 #include "../Base/BoundingBox.h"
 #include "../Base/Color.h"
 #include "../Base/Vector.h"
@@ -16,7 +16,7 @@ public:
 	SpriteBatch(GraphicsDevice &graphicsDevice);
 	ISpriteHandler_ GetSpriteHandler();
 	
-	void Draw(Texture &texture, Vector position, BoundingBox rectangle, Color color, SpriteEffects effects = SpriteEffects::None);
+	void Draw(Texture &texture, Vector position, BoundingBox *rectangle, Color color, SpriteEffects effects = SpriteEffects::None);
 	void DrawString(SpriteFont &spriteFont, std::string text, Vector position, Color color, SpriteEffects effects = SpriteEffects::None);
 
 private:

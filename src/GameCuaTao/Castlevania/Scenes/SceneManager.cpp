@@ -5,9 +5,24 @@
 
 using namespace Castlevania;
 
-SceneManager::SceneManager(std::shared_ptr<ContentManager> content)
+SceneManager::SceneManager(Game &game) : game(game)
 {
-	this->content = content;
+	this->spriteBatch = std::make_unique<SpriteBatch>(game.GetGraphicsDevice());
+}
+
+GraphicsDevice &SceneManager::GetGraphicsDevice()
+{
+	return game.GetGraphicsDevice();
+}
+
+ContentManager &SceneManager::GetContent()
+{
+	return game.GetContent();
+}
+
+SpriteBatch &SceneManager::GetSpriteBatch()
+{
+	return *spriteBatch;
 }
 
 void SceneManager::Update(float deltaTime)
@@ -15,16 +30,16 @@ void SceneManager::Update(float deltaTime)
 	currentScene->Update(deltaTime);
 }
 
-void SceneManager::Draw(SpriteBatch &spriteBatch)
+void SceneManager::Draw(GameTime gameTime)
 {
-	currentScene->Draw(spriteBatch);
+	currentScene->Draw(gameTime);
 }
 
 void SceneManager::NextScene(Scene scene)
 {
 	// reassign std::unique_ptr make the old object destroyed and its memory deallocated :)
 	currentScene = GetScene(scene);
-	currentScene->LoadContent(*content);
+	currentScene->LoadContent();
 }
 
 AbstractScene *SceneManager::GetCurrentScene()
@@ -32,18 +47,17 @@ AbstractScene *SceneManager::GetCurrentScene()
 	return currentScene.get();
 }
 
-
-std::unique_ptr<AbstractScene> Castlevania::SceneManager::GetScene(Scene scene)
+std::unique_ptr<AbstractScene> SceneManager::GetScene(Scene scene)
 {
 	switch (scene)
 	{
 		case Scene::MENU:
-			return std::make_unique<MenuScene>();
+			return std::make_unique<MenuScene>(*this);
 		
 		case Scene::INTRO:
-			return std::make_unique<IntroScene>();
+			return std::make_unique<IntroScene>(*this);
 		
 		case Scene::GAMEPLAY:
-			return std::make_unique<GameplayScene>();
+			return std::make_unique<GameplayScene>(*this);
 	}
 }

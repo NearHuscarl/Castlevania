@@ -1,12 +1,21 @@
 #pragma once
 
-#include "Direct2DGame/Graphics/SpriteBatch.h"
-#include "Direct2DGame/Content/ContentManager.h"
+#include "Direct2DGame/GameTime.h"
 
-class AbstractScene
+namespace Castlevania
 {
-public:
-	virtual void LoadContent(ContentManager &content) = 0;
-	virtual void Update(float deltaTime) = 0;
-	virtual void Draw(SpriteBatch &spriteBatch) = 0;
-};
+	class SceneManager;
+
+	class AbstractScene
+	{
+	public:
+		AbstractScene(SceneManager &sceneManager);
+
+		virtual void LoadContent() = 0;
+		virtual void Update(float deltaTime) = 0;
+		virtual void Draw(GameTime gameTime) = 0;
+
+	protected:
+		SceneManager &sceneManager;
+	};
+}

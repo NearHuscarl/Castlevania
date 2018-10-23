@@ -13,8 +13,12 @@ GraphicsDeviceManager::GraphicsDeviceManager(std::shared_ptr<Game> game)
 
 void GraphicsDeviceManager::CreateDevice()
 {
-	auto hWnd = game->GetWindow().GetHandle();
+	auto window = game->GetWindow();
+	auto hWnd = window.GetHandle();
+	auto viewport = Viewport{ 0, 0, window.Width(), window.Height() };
+	
 	graphicsDevice->CreateDevice(hWnd);
+	graphicsDevice->SetViewport(viewport);
 }
 
 GraphicsDevice &GraphicsDeviceManager::GetGraphicsDevice()

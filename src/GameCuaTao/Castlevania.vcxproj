@@ -156,16 +156,18 @@
   <ItemGroup>
     <ClCompile Include="Castlevania\CastlevaniaGame.cpp" />
     <ClCompile Include="Castlevania\Models\GameObject.cpp" />
+    <ClCompile Include="Castlevania\Scenes\AbstractScene.cpp" />
     <ClCompile Include="Castlevania\Scenes\GameplayScene.cpp" />
     <ClCompile Include="Castlevania\Scenes\IntroScene.cpp" />
     <ClCompile Include="Castlevania\Scenes\MenuScene.cpp" />
     <ClCompile Include="Castlevania\Scenes\SceneManager.cpp" />
+    <ClCompile Include="Castlevania\Settings\Fonts.cpp" />
     <ClCompile Include="Castlevania\Utilities\AudioManager.cpp" />
     <ClCompile Include="Direct2DGame\Animation\Animation.cpp" />
     <ClCompile Include="Direct2DGame\Animation\AnimationFrame.cpp" />
     <ClCompile Include="Direct2DGame\Animation\Sprite.cpp" />
     <ClCompile Include="Direct2DGame\Graphics\SpriteBatch.cpp" />
-    <ClCompile Include="Direct2DGame\TimeSpan.cpp" />
+    <ClCompile Include="Direct2DGame\Utilities\TimeSpan.cpp" />
     <ClCompile Include="MarioSample\Utilities\AudioManager.cpp" />
     <ClCompile Include="Direct2DGame\Graphics\SpriteFont.cpp" />
     <ClCompile Include="Direct2DGame\Graphics\Texture.cpp" />
@@ -177,7 +179,7 @@
     <ClCompile Include="Direct2DGame\Content\TextureReader.cpp" />
     <ClCompile Include="Direct2DGame\Game.cpp" />
     <ClCompile Include="Direct2DGame\GameWindow.cpp" />
-    <ClCompile Include="Direct2DGame\GraphicsDevice.cpp" />
+    <ClCompile Include="Direct2DGame\Graphics\GraphicsDevice.cpp" />
     <ClCompile Include="Direct2DGame\GraphicsDeviceManager.cpp" />
     <ClCompile Include="Direct2DGame\Input\Controller.cpp" />
     <ClCompile Include="Direct2DGame\Input\InputManager.cpp" />
@@ -203,14 +205,16 @@
     <ClInclude Include="Castlevania\Scenes\MenuScene.h" />
     <ClInclude Include="Castlevania\Scenes\Scene.h" />
     <ClInclude Include="Castlevania\Scenes\SceneManager.h" />
-    <ClInclude Include="Castlevania\Utilities\Audio.h" />
+    <ClInclude Include="Castlevania\Settings\Fonts.h" />
+    <ClInclude Include="Castlevania\Settings\Audios.h" />
     <ClInclude Include="Castlevania\Utilities\AudioManager.h" />
     <ClInclude Include="Direct2DGame\Animation\Animation.h" />
     <ClInclude Include="Direct2DGame\Animation\AnimationFrame.h" />
     <ClInclude Include="Direct2DGame\Base\Color.h" />
     <ClInclude Include="Direct2DGame\GameTime.h" />
     <ClInclude Include="Direct2DGame\Graphics\SpriteBatch.h" />
-    <ClInclude Include="Direct2DGame\TimeSpan.h" />
+    <ClInclude Include="Direct2DGame\Graphics\Viewport.h" />
+    <ClInclude Include="Direct2DGame\Utilities\TimeSpan.h" />
     <ClInclude Include="MarioSample\Utilities\AudioManager.h" />
     <ClInclude Include="Direct2DGame\Graphics\SpriteFont.h" />
     <ClInclude Include="Direct2DGame\Graphics\Texture.h" />
@@ -233,7 +237,7 @@
     <ClInclude Include="Direct2DGame\Content\TextureReader.h" />
     <ClInclude Include="Direct2DGame\Game.h" />
     <ClInclude Include="Direct2DGame\GameWindow.h" />
-    <ClInclude Include="Direct2DGame\GraphicsDevice.h" />
+    <ClInclude Include="Direct2DGame\Graphics\GraphicsDevice.h" />
     <ClInclude Include="Direct2DGame\GraphicsDeviceManager.h" />
     <ClInclude Include="Direct2DGame\Input\Controller.h" />
     <ClInclude Include="Direct2DGame\Input\InputManager.h" />

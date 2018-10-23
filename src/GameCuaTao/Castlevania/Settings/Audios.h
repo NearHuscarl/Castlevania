@@ -10,7 +10,7 @@ namespace Castlevania
 
 	const auto GAME_AUDIO = std::map<std::string, std::string>
 	{
-		{ WHIPPING,            "Sounds/Musics/Game_Start_Prologue.wav" },
-		{ GAME_START_PROLOGUE, "Sounds/SoundEffects/Whipping.wav" },
+		{ GAME_START_PROLOGUE,  "Sounds/Musics/Game_Start_Prologue.wav" },
+		{ WHIPPING,             "Sounds/SoundEffects/Whipping.wav" },
 	};
 }

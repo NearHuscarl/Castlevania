@@ -12,6 +12,7 @@ class Game
 public:
 	GameWindow &GetWindow();
 	GraphicsDevice &GetGraphicsDevice();
+	ContentManager &GetContent();
 
 	virtual void LoadContent();
 	virtual void Update(GameTime gameTime);

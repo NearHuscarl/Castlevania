@@ -11,15 +11,17 @@ public:
 	void Create();
 	HWND GetHandle();
 
-	void SetScreenWidth(int width);
-	void SetScreenHeight(int height);
+	void Width(int width);
+	void Height(int height);
+	int Width();
+	int Height();
 
 private:
 	HINSTANCE hInstance;
 	HWND hWnd;
 
-	int screenWidth = 800;
-	int screenHeight = 480;
+	int width = 800;
+	int height = 480;
 
 	LPCWSTR windowClassName;
 	LPCWSTR windowTitle;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GraphicsDevice.h"
+#include "Graphics/GraphicsDevice.h"
 
 class Game;
 

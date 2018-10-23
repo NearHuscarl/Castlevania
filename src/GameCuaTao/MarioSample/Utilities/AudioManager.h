@@ -9,7 +9,7 @@ namespace MarioSample
 	class AudioManager
 	{
 	public:
-		static void LoadContent(ContentManager &contentManager, std::vector<std::string> sounds);
+		static void LoadContent(ContentManager &content, std::vector<std::string> sounds);
 		static void Play(std::string name);
 		static void PlaySong(std::string name);
 		static void PlayLoop(std::string name);

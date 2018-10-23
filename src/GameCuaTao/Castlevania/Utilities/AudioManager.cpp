@@ -5,11 +5,11 @@ using namespace Castlevania;
 AudioManager::SoundDict AudioManager::soundDict;
 float AudioManager::volume;
 
-void AudioManager::LoadContent(ContentManager &contentManager, AudioPathDict audioPathDict)
+void AudioManager::LoadContent(ContentManager &content, AudioPathDict audioPathDict)
 {
 	for (auto const [audioName, path] : audioPathDict)
 	{
-		soundDict[audioName] = contentManager.Load<Sound>(path);
+		soundDict[audioName] = content.Load<Sound>(path);
 	}
 
 	// Play sound the first time to 'load' it or the game will be lagged when the

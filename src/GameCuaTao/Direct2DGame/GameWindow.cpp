@@ -38,8 +38,8 @@ void GameWindow::Create()
 		WS_OVERLAPPEDWINDOW, // WS_EX_TOPMOST | WS_VISIBLE | WS_POPUP,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
-		screenWidth,
-		screenHeight,
+		width,
+		height,
 		nullptr,
 		nullptr,
 		hInstance,
@@ -64,14 +64,24 @@ HWND GameWindow::GetHandle()
 	return hWnd;
 }
 
-void GameWindow::SetScreenWidth(int width)
+void GameWindow::Width(int width)
 {
-	screenWidth = width;
+	this->width = width;
 }
 
-void GameWindow::SetScreenHeight(int height)
+void GameWindow::Height(int height)
 {
-	screenHeight = height;
+	this->height = height;
+}
+
+int GameWindow::Width()
+{
+	return width;
+}
+
+int GameWindow::Height()
+{
+	return height;
 }
 
 LRESULT CALLBACK GameWindow::WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
