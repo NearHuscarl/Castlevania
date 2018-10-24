@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Input/Keyboard.h"
 #include "Utilities/TimeHelper.h"
 
 GameWindow &Game::GetWindow()
@@ -21,7 +22,6 @@ Game::Game()
 	serviceProvider = std::make_shared<ServiceProvider>();
 	window          = std::make_shared<GameWindow>();
 	graphics        = std::make_shared<GraphicsDeviceManager>(*this);
-	input           = &Keyboard::GetInstance();
 	content         = std::make_shared<ContentManager>(serviceProvider);
 
 	serviceProvider->Add<GraphicsDevice>(&GetGraphicsDevice());
@@ -32,7 +32,7 @@ void Game::Initialize()
 {
 	window->Create();
 	graphics->CreateDevice();
-	input->Initialize(window->GetHandle());
+	Keyboard::Initialize(window->GetHandle());
 
 	LoadContent();
 }
@@ -83,8 +83,6 @@ void Game::Run()
 
 		if (deltaTime >= GetTickPerFrame())
 		{
-			input->ProcessKeyboard();
-
 			Update(gameTime);
 			Render(gameTime);
 		}
@@ -122,4 +120,9 @@ void Game::Tick()
 	gameTime.SetPreviousTicks(currentTick);
 	gameTime.ElapsedGameTime = accumulatedTime;
 	gameTime.TotalGameTime += accumulatedTime;
+}
+
+Game::~Game()
+{
+	Keyboard::Release();
 }

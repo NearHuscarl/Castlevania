@@ -1,4 +1,5 @@
 #include "MarioSampleGame.h"
+#include "Direct2DGame/Input/InputHelper.h"
 #include "Utilities/AudioManager.h"
 
 using namespace MarioSample;
@@ -30,6 +31,8 @@ void MarioSampleGame::LoadContent()
 void MarioSampleGame::Update(GameTime gameTime)
 {
 	auto deltaTime = (float)gameTime.ElapsedGameTime.Seconds();
+
+	InputHelper::Update();
 
 	mario->Update(deltaTime);
 }

@@ -167,6 +167,7 @@
     <ClCompile Include="Direct2DGame\Animation\AnimationFrame.cpp" />
     <ClCompile Include="Direct2DGame\Animation\Sprite.cpp" />
     <ClCompile Include="Direct2DGame\Graphics\SpriteBatch.cpp" />
+    <ClCompile Include="Direct2DGame\Input\InputHelper.cpp" />
     <ClCompile Include="Direct2DGame\Utilities\TimeSpan.cpp" />
     <ClCompile Include="MarioSample\Utilities\AudioManager.cpp" />
     <ClCompile Include="Direct2DGame\Graphics\SpriteFont.cpp" />
@@ -181,7 +182,6 @@
     <ClCompile Include="Direct2DGame\GameWindow.cpp" />
     <ClCompile Include="Direct2DGame\Graphics\GraphicsDevice.cpp" />
     <ClCompile Include="Direct2DGame\GraphicsDeviceManager.cpp" />
-    <ClCompile Include="Direct2DGame\Input\Controller.cpp" />
     <ClCompile Include="Direct2DGame\Input\Keyboard.cpp" />
     <ClCompile Include="Direct2DGame\Utilities\FontHelper.cpp" />
     <ClCompile Include="Library\directx\DSUtil.cpp" />
@@ -214,6 +214,8 @@
     <ClInclude Include="Direct2DGame\GameTime.h" />
     <ClInclude Include="Direct2DGame\Graphics\SpriteBatch.h" />
     <ClInclude Include="Direct2DGame\Graphics\Viewport.h" />
+    <ClInclude Include="Direct2DGame\Input\InputHelper.h" />
+    <ClInclude Include="Direct2DGame\Input\KeyboardState.h" />
     <ClInclude Include="Direct2DGame\Utilities\TimeSpan.h" />
     <ClInclude Include="MarioSample\Utilities\AudioManager.h" />
     <ClInclude Include="Direct2DGame\Graphics\SpriteFont.h" />
@@ -239,16 +241,13 @@
     <ClInclude Include="Direct2DGame\GameWindow.h" />
     <ClInclude Include="Direct2DGame\Graphics\GraphicsDevice.h" />
     <ClInclude Include="Direct2DGame\GraphicsDeviceManager.h" />
-    <ClInclude Include="Direct2DGame\Input\Controller.h" />
     <ClInclude Include="Direct2DGame\Input\Keyboard.h" />
-    <ClInclude Include="Direct2DGame\Input\KeyEventArgs.h" />
     <ClInclude Include="MarioSample\Models\GameObject.h" />
     <ClInclude Include="MarioSample\Models\Mario.h" />
     <ClInclude Include="MarioSample\MarioSampleGame.h" />
     <ClInclude Include="Library\pugiconfig.hpp" />
     <ClInclude Include="Library\pugixml.hpp" />
     <ClInclude Include="Direct2DGame\ServiceProvider.h" />
-    <ClInclude Include="Direct2DGame\Utilities\Event.h" />
     <ClInclude Include="Direct2DGame\Utilities\FileLogger.h" />
     <ClInclude Include="Direct2DGame\Utilities\TimeHelper.h" />
     <ClInclude Include="Direct2DGame\Utilities\WinHelper.h" />

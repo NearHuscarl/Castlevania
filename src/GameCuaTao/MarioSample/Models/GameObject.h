@@ -26,6 +26,7 @@ namespace MarioSample
 
 		virtual void LoadContent(ContentManager &content) = 0;
 
+		virtual void UpdateInput();
 		virtual void Update(float deltaTime);
 
 		// update object position: distance = velocity x deltatime

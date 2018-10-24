@@ -59,5 +59,8 @@ std::unique_ptr<AbstractScene> SceneManager::GetScene(Scene scene)
 		
 		case Scene::GAMEPLAY:
 			return std::make_unique<GameplayScene>(*this);
+
+		default:
+			throw std::invalid_argument("Bad scene choice");
 	}
 }

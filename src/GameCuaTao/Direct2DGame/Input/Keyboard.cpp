@@ -1,17 +1,12 @@
 #include "Keyboard.h"
 #include "../Utilities/FileLogger.h"
 
-#define DIRECTINPUT_VERSION 0x0800
+#ifndef DIRECTINPUT_VERSION
+#define DIRECTINPUT_VERSION 0x800 
+#endif
 
-Keyboard::Keyboard()
-{
-}
-
-Keyboard &Keyboard::GetInstance()
-{
-	static auto instance = Keyboard{};
-	return instance;
-}
+Input_ Keyboard::input;
+InputDevice_ Keyboard::inputDevice;
 
 void Keyboard::Initialize(HWND hWnd)
 {
@@ -77,8 +72,10 @@ void Keyboard::Initialize(HWND hWnd)
 	FileLogger::GetInstance().Info("Keyboard has been initialized successfully");
 }
 
-void Keyboard::ProcessKeyboard()
+KeyboardState Keyboard::GetState()
 {
+	unsigned char keyStates[KEYSTATE_BUFFER_SIZE]; // DirectInput keyboard state buffer 
+
 	// Collect all key states first
 	auto result = inputDevice->GetDeviceState(sizeof(keyStates), keyStates);
 
@@ -93,55 +90,19 @@ void Keyboard::ProcessKeyboard()
 			if (result == DI_OK)
 				FileLogger::GetInstance().Info("Keyboard re-acquired!");
 			else
-				return;
+				KeyboardState(nullptr);
 		}
 		else
 		{
+			KeyboardState(nullptr);
 			// FileLogger::GetInstance().Error("DINPUT::GetDeviceState failed. Error: " + std::to_string(hr));
-			return;
 		}
 	}
 
-	KeyStateChanged(*this);
-
-
-	// Collect all buffered events
-	auto dwElements = DWORD{ KEYBOARD_BUFFER_SIZE };
-	result = inputDevice->GetDeviceData(sizeof(DeviceInputData), keyEvents, &dwElements, 0);
-	if (FAILED(result))
-	{
-		// FileLogger::GetInstance().Error("DINPUT::GetDeviceData failed. Error: " + std::to_string(hr));
-		return;
-	}
-
-	// Scan through all buffered events, check if the key is pressed or released
-	for (auto i = 0; i < dwElements; i++)
-	{
-		auto KeyCode = keyEvents[i].dwOfs;
-		auto KeyState = keyEvents[i].dwData;
-
-		if ((KeyState & 0x80) > 0)
-		{
-			KeyDown(*this, KeyEventArgs(KeyCode, -1));
-		}
-		else
-		{
-			KeyUp(*this, KeyEventArgs(KeyCode, -1));
-		}
-	}
+	return KeyboardState(keyStates);
 }
 
-bool Keyboard::IsKeyDown(int KeyCode)
-{
-	return (keyStates[KeyCode] & 0x80) > 0;
-}
-
-bool Keyboard::IsKeyUp(int KeyCode)
-{
-	return (keyStates[KeyCode] & 0x80) <= 0;
-}
-
-Keyboard::~Keyboard()
+void Keyboard::Release()
 {
 	if (inputDevice != nullptr)
 	{

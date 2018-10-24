@@ -34,6 +34,10 @@ int GameObject::GetState()
 	return state;
 }
 
+void GameObject::UpdateInput()
+{
+}
+
 void GameObject::Update(float deltaTime)
 {
 }
