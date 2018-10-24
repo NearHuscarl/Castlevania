@@ -1,7 +1,6 @@
 #pragma once
 
 #include <map>
-#include <vector>
 #include "Direct2DGame/Content/ContentManager.h"
 
 using AudioPathDict = std::map<std::string, std::string>;
@@ -12,9 +11,11 @@ namespace Castlevania
 	{
 	public:
 		static void LoadContent(ContentManager &content, AudioPathDict audioPathDict);
+
 		static void Play(std::string name);
 		static void PlaySong(std::string name);
 		static void PlayLoop(std::string name);
+
 		static void Stop(std::string name);
 		static bool IsPlaying(std::string name);
 

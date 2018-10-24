@@ -1,19 +1,19 @@
-#include "InputManager.h"
+#include "Keyboard.h"
 #include "../Utilities/FileLogger.h"
 
 #define DIRECTINPUT_VERSION 0x0800
 
-InputManager::InputManager()
+Keyboard::Keyboard()
 {
 }
 
-InputManager &InputManager::GetInstance()
+Keyboard &Keyboard::GetInstance()
 {
-	static auto instance = InputManager{};
+	static auto instance = Keyboard{};
 	return instance;
 }
 
-void InputManager::InitKeyboard(HWND hWnd)
+void Keyboard::Initialize(HWND hWnd)
 {
 	auto result = DirectInput8Create(
 		(HINSTANCE)GetWindowLong(hWnd, GWL_HINSTANCE),
@@ -77,7 +77,7 @@ void InputManager::InitKeyboard(HWND hWnd)
 	FileLogger::GetInstance().Info("Keyboard has been initialized successfully");
 }
 
-void InputManager::ProcessKeyboard()
+void Keyboard::ProcessKeyboard()
 {
 	// Collect all key states first
 	auto result = inputDevice->GetDeviceState(sizeof(keyStates), keyStates);
@@ -131,12 +131,22 @@ void InputManager::ProcessKeyboard()
 	}
 }
 
-bool InputManager::IsKeyDown(int KeyCode)
+bool Keyboard::IsKeyDown(int KeyCode)
 {
 	return (keyStates[KeyCode] & 0x80) > 0;
 }
 
-bool InputManager::IsKeyUp(int KeyCode)
+bool Keyboard::IsKeyUp(int KeyCode)
 {
 	return (keyStates[KeyCode] & 0x80) <= 0;
+}
+
+Keyboard::~Keyboard()
+{
+	if (inputDevice != nullptr)
+	{
+		inputDevice->Unacquire();
+		inputDevice->Release();
+		inputDevice = nullptr;
+	}
 }

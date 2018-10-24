@@ -91,3 +91,5 @@ With the default configuration, Visual will toss all object files into one big f
 [DirectX 9 SDK]: https://www.microsoft.com/en-us/download/details.aspx?id=6812
 [pugixml]: https://github.com/zeux/pugixml/
 [freetype]: https://github.com/ubawurinna/freetype-windows-binaries
+
+[Create smart pointer from raw pointer]: https://stackoverflow.com/questions/4665266/creating-shared-ptr-from-raw-pointer

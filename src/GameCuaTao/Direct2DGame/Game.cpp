@@ -20,19 +20,19 @@ Game::Game()
 {
 	serviceProvider = std::make_shared<ServiceProvider>();
 	window          = std::make_shared<GameWindow>();
-	graphics        = std::make_shared<GraphicsDeviceManager>(std::shared_ptr<Game>{this});
-	input           = std::shared_ptr<InputManager>{ &InputManager::GetInstance() };
+	graphics        = std::make_shared<GraphicsDeviceManager>(*this);
+	input           = &Keyboard::GetInstance();
 	content         = std::make_shared<ContentManager>(serviceProvider);
 
-	serviceProvider->Add<GraphicsDevice>(GetGraphicsDevice());
-	serviceProvider->Add<GameWindow>(GetWindow());
+	serviceProvider->Add<GraphicsDevice>(&GetGraphicsDevice());
+	serviceProvider->Add<GameWindow>(&GetWindow());
 }
 
 void Game::Initialize()
 {
 	window->Create();
 	graphics->CreateDevice();
-	input->InitKeyboard(window->GetHandle());
+	input->Initialize(window->GetHandle());
 
 	LoadContent();
 }
@@ -57,8 +57,6 @@ void Game::Draw(GameTime gameTime)
 void Game::Render(GameTime gameTime)
 {
 	auto renderDevice = GetGraphicsDevice().GetRenderDevice();
-	auto surface = GetGraphicsDevice().GetSurface();
-	auto spriteBatch = GetGraphicsDevice().GetSpriteHandler();
 
 	if (renderDevice->BeginScene())
 	{

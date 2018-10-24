@@ -26,7 +26,7 @@ private:
 	AssetDict loadedAssets;
 
 	std::shared_ptr<ServiceProvider> serviceProvider;
-	ContentReader contentReader;
+	std::unique_ptr<ContentReader> contentReader;
 
 	template<typename T>
 	std::shared_ptr<T> ReadAsset(std::string assetName);

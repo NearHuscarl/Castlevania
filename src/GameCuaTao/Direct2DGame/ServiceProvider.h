@@ -4,36 +4,39 @@
 #include <any>
 #include <map>
 #include <typeinfo>
+#include <stdexcept>
 
 // https://stackoverflow.com/questions/412165/c-service-providers#412200
 class ServiceProvider
 {
 public:
 	template<typename T>
-	void Add(T &service);
+	void Add(T *service);
 
 	template<typename T>
-	std::shared_ptr<T> Get();
+	T *Get();
 
 private:
 	std::map<std::string, std::any> services;
 };
 
 template<typename T>
-inline void ServiceProvider::Add(T &service)
+inline void ServiceProvider::Add(T *service)
 {
 	auto typeName = typeid(T).name();
-	services[typeName] = std::shared_ptr<T>(&service);
+	services.emplace(typeName, service);
 }
 
+// TODO: should we use std::shared_ptr instead of raw pointer?
 template<typename T>
-inline std::shared_ptr<T> ServiceProvider::Get()
+inline T *ServiceProvider::Get()
 {
 	auto typeName = typeid(T).name();
 	auto it = services.find(typeName);
 
 	if (it == services.end())
-		return nullptr;
+		throw std::invalid_argument("service not found");
 
-	return std::any_cast<std::shared_ptr<T>>(services[typeName]);
+	auto aaa = std::any_cast<T*>(services[typeName]);
+	return std::any_cast<T*>(services[typeName]);
 }

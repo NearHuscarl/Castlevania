@@ -283,7 +283,11 @@ CSound::~CSound()
 {
 	for (DWORD i = 0; i < m_dwNumBuffers; i++)
 	{
-		SAFE_RELEASE(m_apDSBuffer[i]);
+		// TODO: fix release() call in soundBuffer leading to memory conflict
+		auto soundBuffer = m_apDSBuffer[i];
+		//soundBuffer->Release();
+		soundBuffer = nullptr;
+		//SAFE_RELEASE(m_apDSBuffer[i]);
 	}
 
 	SAFE_DELETE_ARRAY(m_apDSBuffer);

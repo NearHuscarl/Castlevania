@@ -11,14 +11,13 @@ class ContentManager;
 class ContentReader
 {
 public:
-	ContentReader();
-	ContentReader(std::shared_ptr<ContentManager> contentManager);
+	ContentReader(ContentManager &contentManager);
 
 	template<typename T>
 	std::shared_ptr<T> ReadAsset(std::string path);
 
 private:
-	std::shared_ptr<ContentManager> contentManager;
+	ContentManager &contentManager;
 
 	AnimationReader animationReader;
 	SoundReader soundReader;

@@ -18,8 +18,8 @@ namespace MarioSample
 
 		void Jump();
 
-		void OnKeyState(InputManager &inputManager) override;
-		void OnKeyDown(InputManager &inputManager, KeyEventArgs e) override;
-		void OnKeyUp(InputManager &inputManager, KeyEventArgs e) override;
+		void OnKeyState(Keyboard &inputManager) override;
+		void OnKeyDown(Keyboard &inputManager, KeyEventArgs e) override;
+		void OnKeyUp(Keyboard &inputManager, KeyEventArgs e) override;
 	};
 }

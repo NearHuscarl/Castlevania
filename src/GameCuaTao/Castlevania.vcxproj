@@ -182,7 +182,7 @@
     <ClCompile Include="Direct2DGame\Graphics\GraphicsDevice.cpp" />
     <ClCompile Include="Direct2DGame\GraphicsDeviceManager.cpp" />
     <ClCompile Include="Direct2DGame\Input\Controller.cpp" />
-    <ClCompile Include="Direct2DGame\Input\InputManager.cpp" />
+    <ClCompile Include="Direct2DGame\Input\Keyboard.cpp" />
     <ClCompile Include="Direct2DGame\Utilities\FontHelper.cpp" />
     <ClCompile Include="Library\directx\DSUtil.cpp" />
     <ClCompile Include="Library\directx\DXUtil.cpp" />
@@ -240,7 +240,7 @@
     <ClInclude Include="Direct2DGame\Graphics\GraphicsDevice.h" />
     <ClInclude Include="Direct2DGame\GraphicsDeviceManager.h" />
     <ClInclude Include="Direct2DGame\Input\Controller.h" />
-    <ClInclude Include="Direct2DGame\Input\InputManager.h" />
+    <ClInclude Include="Direct2DGame\Input\Keyboard.h" />
     <ClInclude Include="Direct2DGame\Input\KeyEventArgs.h" />
     <ClInclude Include="MarioSample\Models\GameObject.h" />
     <ClInclude Include="MarioSample\Models\Mario.h" />

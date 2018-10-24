@@ -4,7 +4,7 @@
 ContentManager::ContentManager(std::shared_ptr<ServiceProvider> serviceProvider)
 {
 	this->serviceProvider = serviceProvider;
-	this->contentReader = ContentReader{ std::shared_ptr<ContentManager>(this) };
+	this->contentReader = std::make_unique<ContentReader>(*this);
 }
 
 void ContentManager::SetRootDirectory(std::string path)
@@ -38,7 +38,7 @@ std::shared_ptr<T> ContentManager::ReadAsset(std::string assetName)
 {
 	auto path = (rootDirectory / assetName).string();
 
-	return contentReader.ReadAsset<T>(path);
+	return contentReader->ReadAsset<T>(path);
 }
 
 template std::shared_ptr<AnimationDict> ContentManager::Load<AnimationDict>(std::string assetName);

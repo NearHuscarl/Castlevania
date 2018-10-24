@@ -3,7 +3,7 @@
 #include "GameWindow.h"
 #include "GameTime.h"
 #include "GraphicsDeviceManager.h"
-#include "Input/InputManager.h"
+#include "Input/Keyboard.h"
 #include "Content/ContentManager.h"
 #include "ServiceProvider.h"
 
@@ -27,7 +27,7 @@ protected:
 
 	std::shared_ptr<GameWindow> window;
 	std::shared_ptr<GraphicsDeviceManager> graphics;
-	std::shared_ptr<InputManager> input;
+	Keyboard *input;
 	std::shared_ptr<ContentManager> content;
 	std::shared_ptr<ServiceProvider> serviceProvider;
 

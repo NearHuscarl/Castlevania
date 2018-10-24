@@ -90,7 +90,7 @@ void Mario::Draw(SpriteBatch &spriteBatch)
 
 #pragma region INPUT HANDLER
 
-void Mario::OnKeyDown(InputManager &inputManager, KeyEventArgs e)
+void Mario::OnKeyDown(Keyboard &inputManager, KeyEventArgs e)
 {
 	FileLogger::GetInstance().Info("KeyDown: " + std::to_string(e.KeyCode));
 
@@ -107,7 +107,7 @@ void Mario::OnKeyDown(InputManager &inputManager, KeyEventArgs e)
 	}
 }
 
-void Mario::OnKeyUp(InputManager &inputManager, KeyEventArgs e)
+void Mario::OnKeyUp(Keyboard &inputManager, KeyEventArgs e)
 {
 	FileLogger::GetInstance().Info("KeyUp: " + std::to_string(e.KeyCode));
 
@@ -128,7 +128,7 @@ void Mario::OnKeyUp(InputManager &inputManager, KeyEventArgs e)
 	}
 }
 
-void Mario::OnKeyState(InputManager &inputManager)
+void Mario::OnKeyState(Keyboard &inputManager)
 {
 	switch (state)
 	{

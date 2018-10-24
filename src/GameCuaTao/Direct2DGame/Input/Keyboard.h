@@ -9,23 +9,25 @@ using InputDevice_ = LPDIRECTINPUTDEVICE8;
 using DeviceInputData = DIDEVICEOBJECTDATA;
 
 EVENT_SOURCE
-class InputManager
+class Keyboard
 {
 public:
-	static InputManager &GetInstance();
+	static Keyboard &GetInstance();
 
-	void InitKeyboard(HWND hWnd);
+	void Initialize(HWND hWnd);
 	void ProcessKeyboard();
 
 	bool IsKeyDown(int KeyCode);
 	bool IsKeyUp(int KeyCode);
 
-	EVENT void KeyStateChanged(InputManager &inputManager);
-	EVENT void KeyDown(InputManager &inputManager, KeyEventArgs e);
-	EVENT void KeyUp(InputManager &inputManager, KeyEventArgs e);
+	EVENT void KeyStateChanged(Keyboard &inputManager);
+	EVENT void KeyDown(Keyboard &inputManager, KeyEventArgs e);
+	EVENT void KeyUp(Keyboard &inputManager, KeyEventArgs e);
+	
+	~Keyboard();
 
 private:
-	InputManager();
+	Keyboard();
 
 	static constexpr int KEYBOARD_BUFFER_SIZE = 1024;
 
