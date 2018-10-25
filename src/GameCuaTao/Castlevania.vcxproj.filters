@@ -248,9 +248,6 @@
     <ClInclude Include="MarioSample\Models\Mario.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MarioSample\Models\MarioStates.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Castlevania\Models\Player\Simon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -315,6 +312,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Castlevania\Models\Player\AbstractState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioSample\Models\MarioSettings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

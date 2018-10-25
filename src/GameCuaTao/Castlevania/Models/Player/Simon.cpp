@@ -1,5 +1,7 @@
 #include "Simon.h"
 
-void Castlevania::Simon::UpdateInput()
+using namespace Castlevania;
+
+void Simon::UpdateInput()
 {
 }

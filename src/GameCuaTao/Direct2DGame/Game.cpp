@@ -79,7 +79,7 @@ void Game::Run()
 	while (IsRunning())
 	{
 		Tick();
-		auto deltaTime = gameTime.ElapsedGameTime.Milliseconds();
+		auto deltaTime = (int)gameTime.ElapsedGameTime.Milliseconds();
 
 		if (deltaTime >= GetTickPerFrame())
 		{
@@ -107,7 +107,7 @@ bool Game::IsRunning()
 	return true;
 }
 
-double Game::GetTickPerFrame()
+int Game::GetTickPerFrame()
 {
 	return 1000 / graphics->GetFramePerSecond();
 }

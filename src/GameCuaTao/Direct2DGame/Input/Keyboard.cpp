@@ -1,10 +1,6 @@
 #include "Keyboard.h"
 #include "../Utilities/FileLogger.h"
 
-#ifndef DIRECTINPUT_VERSION
-#define DIRECTINPUT_VERSION 0x800 
-#endif
-
 Input_ Keyboard::input;
 InputDevice_ Keyboard::inputDevice;
 
@@ -90,11 +86,11 @@ KeyboardState Keyboard::GetState()
 			if (result == DI_OK)
 				FileLogger::GetInstance().Info("Keyboard re-acquired!");
 			else
-				KeyboardState(nullptr);
+				return KeyboardState(nullptr);
 		}
 		else
 		{
-			KeyboardState(nullptr);
+			return KeyboardState(nullptr);
 			// FileLogger::GetInstance().Error("DINPUT::GetDeviceState failed. Error: " + std::to_string(hr));
 		}
 	}

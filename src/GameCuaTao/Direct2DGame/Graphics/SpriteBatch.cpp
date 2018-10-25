@@ -46,7 +46,10 @@ void SpriteBatch::DrawString(SpriteFont &spriteFont, std::string text, Vector po
 	if (font == nullptr)
 		return;
 
-	auto boundingBox = BoundingBox(position.x, position.y, 2000, 2000); // TODO: remove const with window width and height
+	auto x = (int)position.x;
+	auto y = (int)position.y;
+
+	auto boundingBox = BoundingBox(x, y, 2000, 2000); // TODO: remove const with window width and height
 
 	font->DrawTextA(spriteHandler, text.c_str(), -1, &boundingBox, DT_LEFT, color.Get());
 }

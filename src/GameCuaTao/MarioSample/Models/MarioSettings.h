@@ -1,9 +1,11 @@
 #pragma once
 
-#include <string>
-
 namespace MarioSample
 {
+	constexpr auto MARIO_WALKING_SPEED = 50.f;
+	constexpr auto MARIO_JUMP_SPEED_Y = 700.f;
+	constexpr auto MARIO_GRAVITY = 50.f;
+
 	enum State
 	{
 		WALK_LEFT,

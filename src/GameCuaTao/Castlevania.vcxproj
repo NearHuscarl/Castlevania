@@ -230,7 +230,7 @@
     <ClInclude Include="Direct2DGame\Utilities\FontHelper.h" />
     <ClInclude Include="Library\directx\DSUtil.h" />
     <ClInclude Include="Library\directx\DXUtil.h" />
-    <ClInclude Include="MarioSample\Models\MarioStates.h" />
+    <ClInclude Include="MarioSample\Models\MarioSettings.h" />
     <ClInclude Include="Direct2DGame\Animation\Sprite.h" />
     <ClInclude Include="Direct2DGame\Base\BoundingBox.h" />
     <ClInclude Include="Direct2DGame\Base\Vector.h" />

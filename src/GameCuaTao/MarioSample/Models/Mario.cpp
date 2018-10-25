@@ -1,14 +1,10 @@
 #include "Direct2DGame/Utilities/FileLogger.h"
 #include "Mario.h"
-#include "MarioStates.h"
+#include "MarioSettings.h"
 #include "Direct2DGame/Input/InputHelper.h"
 #include "../Utilities/AudioManager.h"
 
 using namespace MarioSample;
-
-constexpr auto MARIO_WALKING_SPEED = 50.f;
-constexpr auto MARIO_JUMP_SPEED_Y = 700.f;
-constexpr auto MARIO_GRAVITY = 50.f;
 
 void Mario::LoadContent(ContentManager &content)
 {
@@ -17,7 +13,18 @@ void Mario::LoadContent(ContentManager &content)
 	Idle();
 }
 
-void Mario::UpdateInput()
+void Mario::Update(float deltaTime)
+{
+	UpdateState();
+
+	GameObject::UpdateDistance(deltaTime);
+
+	ResolveCollision();
+
+	(*animations)[currentAnimation].Update();
+}
+
+void Mario::UpdateState()
 {
 	switch (state)
 	{
@@ -33,32 +40,21 @@ void Mario::UpdateInput()
 		case WALK_LEFT:
 			if (InputHelper::IsKeyDown(DIK_SPACE))
 				Jump();
-			else if (InputHelper::IsKeyUp(DIK_LEFT))
+			if (!InputHelper::IsKeyPressed(DIK_LEFT))
 				Idle();
 			break;
 
 		case WALK_RIGHT:
 			if (InputHelper::IsKeyDown(DIK_SPACE))
 				Jump();
-			else if (InputHelper::IsKeyUp(DIK_RIGHT))
+			if (!InputHelper::IsKeyPressed(DIK_RIGHT))
 				Idle();
 			break;
 
 		case JUMP:
-			Jump();
+			Jumping();
 			break;
 	}
-}
-
-void Mario::Update(float deltaTime)
-{
-	UpdateInput();
-
-	GameObject::UpdateDistance(deltaTime);
-
-	ResolveCollision();
-
-	(*animations)[currentAnimation].Update();
 }
 
 void Mario::ResolveCollision()
@@ -84,19 +80,18 @@ void Mario::ResolveCollision()
 
 void Mario::Jump()
 {
-	if (GetState() == JUMP)
+	SetState(JUMP);
+}
+
+void Mario::Jumping()
+{
+	if (position.y == 100)
 	{
-		if (position.y == 100)
-			velocity.y = -MARIO_JUMP_SPEED_Y;
-		else
-			SetState(IDLE);
+		AudioManager::Play("Jump");
+		velocity.y = -MARIO_JUMP_SPEED_Y;
 	}
 	else
-	{
-		SetState(JUMP);
-		if (position.y == 100)
-			AudioManager::Play("Jump");
-	}
+		SetState(IDLE);
 }
 
 void Mario::Idle()
@@ -106,7 +101,7 @@ void Mario::Idle()
 	currentAnimation = MARIO_IDLE;
 }
 
-void MarioSample::Mario::WalkLeft()
+void Mario::WalkLeft()
 {
 	SetState(WALK_LEFT);
 	velocity.x = -MARIO_WALKING_SPEED;
@@ -114,7 +109,7 @@ void MarioSample::Mario::WalkLeft()
 	currentAnimation = MARIO_WALK;
 }
 
-void MarioSample::Mario::WalkRight()
+void Mario::WalkRight()
 {
 	SetState(WALK_RIGHT);
 	velocity.x = MARIO_WALKING_SPEED;

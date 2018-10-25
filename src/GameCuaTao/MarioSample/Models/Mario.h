@@ -8,14 +8,15 @@ namespace MarioSample
 	{
 	public:
 		void LoadContent(ContentManager &content) override;
-		void UpdateInput();
 		void Update(float deltaTime) override;
 		void Draw(SpriteBatch &spriteBatch) override;
 
 	private:
+		void UpdateState();
 		void ResolveCollision();
 
 		void Jump();
+		void Jumping();
 		void Idle();
 		void WalkLeft();
 		void WalkRight();

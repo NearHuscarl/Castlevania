@@ -38,6 +38,6 @@ private:
 	bool IsRunning();
 	void Render(GameTime gameTime);
 	
-	double GetTickPerFrame();
+	int GetTickPerFrame();
 	void Tick();
 };

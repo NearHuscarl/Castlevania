@@ -2,8 +2,6 @@
 
 using namespace std::chrono;
 
-TimeSpan TimeSpan::zeroTimeSpan = TimeSpan(Duration::zero());
-
 TimeSpan::TimeSpan(Duration duration)
 {
 	this->duration = duration;
@@ -11,22 +9,23 @@ TimeSpan::TimeSpan(Duration duration)
 
 const TimeSpan TimeSpan::Zero()
 {
+	static auto zeroTimeSpan = TimeSpan(Duration::zero());
 	return zeroTimeSpan;
 }
 
 double TimeSpan::Nanoseconds()
 {
-	return duration_cast<nanoseconds>(duration).count();
+	return (double)duration_cast<nanoseconds>(duration).count();
 }
 
 double TimeSpan::Microseconds()
 {
-	return duration_cast<microseconds>(duration).count();
+	return (double)duration_cast<microseconds>(duration).count();
 }
 
 double TimeSpan::Milliseconds()
 {
-	return duration_cast<milliseconds>(duration).count();
+	return (double)duration_cast<milliseconds>(duration).count();
 }
 
 double TimeSpan::Seconds()
@@ -80,12 +79,12 @@ TimeSpan TimeSpan::FromHours(long long value)
 	return TimeSpan(duration);
 }
 
-TimeSpan &TimeSpan::operator+(const TimeSpan &other)
+TimeSpan TimeSpan::operator+(const TimeSpan &other)
 {
 	return TimeSpan(this->duration + other.duration);
 }
 
-TimeSpan &TimeSpan::operator+=(const TimeSpan &other)
+TimeSpan TimeSpan::operator+=(const TimeSpan &other)
 {
 	this->duration += other.duration;
 	return *this;
