@@ -14,6 +14,10 @@ void MenuScene::LoadContent()
 {
 	menuBackground = sceneManager.GetContent().Load<Texture>("Textures/Background/Main_Menu.png");
 
+	auto viewport = sceneManager.GetGraphicsDevice().GetViewport();
+	startGameTextPosition.x = (viewport.Width - Fonts::Main.MessureString(startGameText).x) / 2;
+	startGameTextPosition.y = (viewport.Height - Fonts::Main.MessureString(startGameText).y) / 2 + 35;
+
 	AudioManager::Play(GAME_START_PROLOGUE);
 }
 
@@ -28,7 +32,7 @@ void MenuScene::Draw(GameTime gameTime)
 	spriteBatch.GetSpriteHandler()->Begin(D3DXSPRITE_ALPHABLEND);
 
 	spriteBatch.Draw(*menuBackground, Vector::Zero(), nullptr, Color::White());
-	spriteBatch.DrawString(Fonts::Main, "PUSH START KEY", Vector(40, 40), Color::White());
+	spriteBatch.DrawString(Fonts::Main, startGameText, startGameTextPosition, Color::White());
 
 	spriteBatch.GetSpriteHandler()->End();
 }

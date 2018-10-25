@@ -17,7 +17,7 @@ public:
 	ISpriteHandler_ GetSpriteHandler();
 	
 	void Draw(Texture &texture, Vector position, BoundingBox *rectangle, Color color, SpriteEffects effects = SpriteEffects::None);
-	void DrawString(SpriteFont &spriteFont, std::string text, Vector position, Color color, SpriteEffects effects = SpriteEffects::None);
+	void DrawString(SpriteFont &spriteFont, std::string text, Vector position, Color color);
 
 private:
 	ISpriteHandler_ spriteHandler;

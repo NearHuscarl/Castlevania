@@ -16,7 +16,7 @@ std::shared_ptr<SpriteFont> SpriteFontReader::Read(std::string filePathStr, Cont
 	AddFontResourceEx(filePath.c_str(), FR_PRIVATE, NULL);
 	auto result = D3DXCreateFont(
 		renderDevice,         // Direct3D device object
-		20,                   // Height
+		16,                   // Height
 		0,                    // Width
 		FW_NORMAL,            // Weight
 		1,                    // MipLevels

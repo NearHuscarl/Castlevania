@@ -37,6 +37,5 @@ inline T *ServiceProvider::Get()
 	if (it == services.end())
 		throw std::invalid_argument("service not found");
 
-	auto aaa = std::any_cast<T*>(services[typeName]);
 	return std::any_cast<T*>(services[typeName]);
 }

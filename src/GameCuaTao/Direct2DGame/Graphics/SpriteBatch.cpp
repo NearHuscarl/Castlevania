@@ -40,7 +40,7 @@ void SpriteBatch::Draw(Texture &texture, Vector position, BoundingBox *rectangle
 	spriteHandler->SetTransform(&oldMatrix);
 }
 
-void SpriteBatch::DrawString(SpriteFont &spriteFont, std::string text, Vector position, Color color, SpriteEffects effects)
+void SpriteBatch::DrawString(SpriteFont &spriteFont, std::string text, Vector position, Color color)
 {
 	auto font = spriteFont.Get();
 	if (font == nullptr)

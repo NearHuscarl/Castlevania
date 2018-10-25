@@ -3,6 +3,6 @@
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	MarioSample::MarioSampleGame{}.Run();
-	//Castlevania::CastlevaniaGame{}.Run();
+	//MarioSample::MarioSampleGame{}.Run();
+	Castlevania::CastlevaniaGame{}.Run();
 }

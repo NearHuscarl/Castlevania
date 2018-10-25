@@ -1,7 +1,9 @@
 #pragma once
 
 #include <memory>
+#include <string>
 #include "Direct2DGame/Graphics/Texture.h"
+#include "Direct2DGame/Base/Vector.h"
 #include "AbstractScene.h"
 
 namespace Castlevania
@@ -17,5 +19,7 @@ namespace Castlevania
 
 	private:
 		std::shared_ptr<Texture> menuBackground;
+		const std::string startGameText = "PUSH START KEY";
+		Vector startGameTextPosition;
 	};
 }
