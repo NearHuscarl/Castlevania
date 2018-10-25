@@ -26,15 +26,10 @@ namespace MarioSample
 
 		virtual void LoadContent(ContentManager &content) = 0;
 
-		virtual void UpdateInput();
 		virtual void Update(float deltaTime);
-
-		// update object position: distance = velocity x deltatime
 		void UpdateDistance(float deltaTime);
 
 		virtual void Draw(SpriteBatch &spriteBatch);
-
-		virtual ~GameObject();
 
 	protected:
 		Vector position;
@@ -44,5 +39,6 @@ namespace MarioSample
 		int state;
 
 		std::shared_ptr<AnimationDict> animations;
+		std::string currentAnimation;
 	};
 }

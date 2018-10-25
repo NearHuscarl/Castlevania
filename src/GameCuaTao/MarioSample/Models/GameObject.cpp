@@ -34,10 +34,6 @@ int GameObject::GetState()
 	return state;
 }
 
-void GameObject::UpdateInput()
-{
-}
-
 void GameObject::Update(float deltaTime)
 {
 }
@@ -48,9 +44,5 @@ void GameObject::UpdateDistance(float deltaTime)
 }
 
 void GameObject::Draw(SpriteBatch &spriteBatch)
-{
-}
-
-GameObject::~GameObject()
 {
 }

@@ -14,10 +14,10 @@ void Mario::LoadContent(ContentManager &content)
 {
 	animations = content.Load<AnimationDict>("MarioAnimationDef.xml");
 	SetPosition(0.0f, 100.0f);
-	SetState(IDLE);
+	Idle();
 }
 
-void MarioSample::Mario::UpdateInput()
+void Mario::UpdateInput()
 {
 	switch (state)
 	{
@@ -25,19 +25,27 @@ void MarioSample::Mario::UpdateInput()
 			if (InputHelper::IsKeyDown(DIK_SPACE))
 				Jump();
 			if (InputHelper::IsKeyPressed(DIK_RIGHT))
-				SetState(WALK_RIGHT);
+				WalkRight();
 			else if (InputHelper::IsKeyPressed(DIK_LEFT))
-				SetState(WALK_LEFT);
+				WalkLeft();
 			break;
 
 		case WALK_LEFT:
-		case WALK_RIGHT:
 			if (InputHelper::IsKeyDown(DIK_SPACE))
 				Jump();
 			else if (InputHelper::IsKeyUp(DIK_LEFT))
-				SetState(IDLE);
+				Idle();
+			break;
+
+		case WALK_RIGHT:
+			if (InputHelper::IsKeyDown(DIK_SPACE))
+				Jump();
 			else if (InputHelper::IsKeyUp(DIK_RIGHT))
-				SetState(IDLE);
+				Idle();
+			break;
+
+		case JUMP:
+			Jump();
 			break;
 	}
 }
@@ -46,40 +54,11 @@ void Mario::Update(float deltaTime)
 {
 	UpdateInput();
 
-	switch (state)
-	{
-		case WALK_LEFT:
-			velocity.x = -MARIO_WALKING_SPEED;
-			direction = Left;
-			break;
-
-		case WALK_RIGHT:
-			velocity.x = MARIO_WALKING_SPEED;
-			direction = Right;
-			break;
-
-		case IDLE:
-			velocity.x = 0;
-			break;
-
-		case JUMP:
-			if (position.y == 100)
-				velocity.y = -MARIO_JUMP_SPEED_Y;
-			else
-				SetState(IDLE);
-			break;
-	}
-
 	GameObject::UpdateDistance(deltaTime);
 
 	ResolveCollision();
 
-	(*animations)[GetAnimation()].Update();
-}
-
-std::string Mario::GetAnimation()
-{
-	return STATE_TO_ANIMATION.at((State)state);
+	(*animations)[currentAnimation].Update();
 }
 
 void Mario::ResolveCollision()
@@ -105,13 +84,46 @@ void Mario::ResolveCollision()
 
 void Mario::Jump()
 {
-	SetState(JUMP);
-	if (position.y == 100)
-		AudioManager::Play("Jump");
+	if (GetState() == JUMP)
+	{
+		if (position.y == 100)
+			velocity.y = -MARIO_JUMP_SPEED_Y;
+		else
+			SetState(IDLE);
+	}
+	else
+	{
+		SetState(JUMP);
+		if (position.y == 100)
+			AudioManager::Play("Jump");
+	}
+}
+
+void Mario::Idle()
+{
+	SetState(IDLE);
+	velocity.x = 0;
+	currentAnimation = MARIO_IDLE;
+}
+
+void MarioSample::Mario::WalkLeft()
+{
+	SetState(WALK_LEFT);
+	velocity.x = -MARIO_WALKING_SPEED;
+	direction = Left;
+	currentAnimation = MARIO_WALK;
+}
+
+void MarioSample::Mario::WalkRight()
+{
+	SetState(WALK_RIGHT);
+	velocity.x = MARIO_WALKING_SPEED;
+	direction = Right;
+	currentAnimation = MARIO_WALK;
 }
 
 void Mario::Draw(SpriteBatch &spriteBatch)
 {
 	auto effects = direction == Left ? SpriteEffects::FlipHorizontally : SpriteEffects::None;
-	(*animations)[GetAnimation()].Draw(spriteBatch, position, Color::White(), effects);
+	(*animations)[currentAnimation].Draw(spriteBatch, position, Color::White(), effects);
 }

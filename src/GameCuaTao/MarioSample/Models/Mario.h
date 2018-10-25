@@ -8,14 +8,16 @@ namespace MarioSample
 	{
 	public:
 		void LoadContent(ContentManager &content) override;
-		void UpdateInput() override;
+		void UpdateInput();
 		void Update(float deltaTime) override;
 		void Draw(SpriteBatch &spriteBatch) override;
 
 	private:
 		void ResolveCollision();
-		std::string GetAnimation();
 
 		void Jump();
+		void Idle();
+		void WalkLeft();
+		void WalkRight();
 	};
 }

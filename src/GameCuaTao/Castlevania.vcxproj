@@ -156,6 +156,7 @@
   <ItemGroup>
     <ClCompile Include="Castlevania\CastlevaniaGame.cpp" />
     <ClCompile Include="Castlevania\Models\GameObject.cpp" />
+    <ClCompile Include="Castlevania\Models\Player\Simon.cpp" />
     <ClCompile Include="Castlevania\Scenes\AbstractScene.cpp" />
     <ClCompile Include="Castlevania\Scenes\GameplayScene.cpp" />
     <ClCompile Include="Castlevania\Scenes\IntroScene.cpp" />
@@ -198,6 +199,8 @@
   <ItemGroup>
     <ClInclude Include="Castlevania\CastlevaniaGame.h" />
     <ClInclude Include="Castlevania\Models\GameObject.h" />
+    <ClInclude Include="Castlevania\Models\IControllable.h" />
+    <ClInclude Include="Castlevania\Models\Player\AbstractState.h" />
     <ClInclude Include="Castlevania\Models\Player\Simon.h" />
     <ClInclude Include="Castlevania\Scenes\AbstractScene.h" />
     <ClInclude Include="Castlevania\Scenes\GameplayScene.h" />
