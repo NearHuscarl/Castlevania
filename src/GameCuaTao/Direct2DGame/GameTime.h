@@ -19,5 +19,5 @@ public:
 	}
 
 private:
-	long previousTicks;
+	long previousTicks = 0;
 };
