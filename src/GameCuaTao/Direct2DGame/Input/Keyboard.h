@@ -5,7 +5,6 @@
 #include <dinput.h>
 #include "KeyboardState.h"
 
-
 using Input_ = LPDIRECTINPUT8;
 using InputDevice_ = LPDIRECTINPUTDEVICE8;
 using DeviceInputData = DIDEVICEOBJECTDATA;

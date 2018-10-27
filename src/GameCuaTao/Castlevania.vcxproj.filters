@@ -164,9 +164,6 @@
     <ClInclude Include="Direct2DGame\Content\TextureReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Direct2DGame\Base\Vector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Direct2DGame\Animation\Animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -315,6 +312,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MarioSample\Models\MarioSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DGame\Base\Vector2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DGame\Base\Vector3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

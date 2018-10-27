@@ -45,7 +45,7 @@ void Animation::Update()
 	}
 }
 
-void Animation::Draw(SpriteBatch &spriteBatch, Vector position, Color color, SpriteEffects effects)
+void Animation::Draw(SpriteBatch &spriteBatch, Vector2 position, Color color, SpriteEffects effects)
 {
 	frames[currentFrame].GetSprite().Draw(spriteBatch, *texture, position, color, effects);
 }

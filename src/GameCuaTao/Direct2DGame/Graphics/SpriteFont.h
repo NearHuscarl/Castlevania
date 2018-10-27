@@ -2,7 +2,7 @@
 
 #include "string"
 #include "../Device.h"
-#include "../Base/Vector.h"
+#include "../Base/Vector2.h"
 
 class SpriteFont
 {
@@ -10,7 +10,7 @@ public:
 	SpriteFont(IFont_ font);
 
 	IFont_ Get();
-	Vector MessureString(std::string text);
+	Vector2 MessureString(std::string text);
 
 private:
 	IFont_ font;

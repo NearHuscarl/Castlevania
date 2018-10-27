@@ -1,4 +1,5 @@
 #include "SpriteBatch.h"
+#include "../Base/Vector3.h"
 
 SpriteBatch::SpriteBatch(GraphicsDevice &graphicsDevice)
 {
@@ -10,7 +11,7 @@ ISpriteHandler_ SpriteBatch::GetSpriteHandler()
 	return spriteHandler;
 }
 
-void SpriteBatch::Draw(Texture &texture, Vector position, BoundingBox *rectanglePtr, Color color, SpriteEffects effects)
+void SpriteBatch::Draw(Texture &texture, Vector2 position, BoundingBox *rectanglePtr, Color color, SpriteEffects effects)
 {
 	auto rectangle = BoundingBox{};
 	if (rectanglePtr == nullptr) // if null, draws full texture
@@ -18,29 +19,36 @@ void SpriteBatch::Draw(Texture &texture, Vector position, BoundingBox *rectangle
 	else
 		rectangle = *rectanglePtr;
 
-	auto oldMatrix = D3DXMATRIX{};
-	spriteHandler->GetTransform(&oldMatrix);
-
-	auto rotate = D3DXVECTOR2{};
+	auto scale = Vector2{};
 	if (effects == FlipHorizontally)
-		rotate = D3DXVECTOR2(-1, 1);
+		scale = Vector2(-1, 1);
 	else if (effects == FlipVertically)
-		rotate = D3DXVECTOR2(1, -1);
+		scale = Vector2(1, -1);
 	else // None
-		rotate = D3DXVECTOR2(1, 1);
+		scale = Vector2(1, 1);
 
-	auto center = D3DXVECTOR2(position.x + rectangle.Width() / 2, position.y + rectangle.Height() / 2);
+	auto center = Vector2(position.x + rectangle.Width() / 2, position.y + rectangle.Height() / 2);
 
-	auto newMatrix = D3DXMATRIX{};
-	D3DXMatrixTransformation2D(&newMatrix, &center, 0.0f, &rotate, nullptr, 0.0f, nullptr);
-	auto finalMatrix = oldMatrix * newMatrix;
+	auto oldMatrix = Matrix{};
+	auto newMatrix = Matrix{};
+	
+	spriteHandler->GetTransform(&oldMatrix);
+	D3DXMatrixTransformation2D(
+		&newMatrix, // the result matrix
+		&center,    // scaling center vector
+		0.0f,       // scaling rotation value
+		&scale,     // scaling vector
+		nullptr,    // rotating center/pivot vector
+		0.0f,       // rotating angle
+		nullptr     // translating vector
+	);
 
-	spriteHandler->SetTransform(&finalMatrix);
-	spriteHandler->Draw(texture.Get(), &rectangle, nullptr, &position, color.Get());
+	spriteHandler->SetTransform(&newMatrix);
+	spriteHandler->Draw(texture.Get(), &rectangle, nullptr, &Vector3(position), color.Get());
 	spriteHandler->SetTransform(&oldMatrix);
 }
 
-void SpriteBatch::DrawString(SpriteFont &spriteFont, std::string text, Vector position, Color color)
+void SpriteBatch::DrawString(SpriteFont &spriteFont, std::string text, Vector2 position, Color color)
 {
 	auto font = spriteFont.Get();
 	if (font == nullptr)

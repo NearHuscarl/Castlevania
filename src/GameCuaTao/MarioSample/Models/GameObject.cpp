@@ -4,8 +4,8 @@ using namespace MarioSample;
 
 GameObject::GameObject()
 {
-	position = Vector(0, 0);
-	velocity = Vector(0, 0);
+	position = Vector2(0, 0);
+	velocity = Vector2(0, 0);
 
 	direction = Right;
 }

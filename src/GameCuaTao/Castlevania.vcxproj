@@ -214,6 +214,7 @@
     <ClInclude Include="Direct2DGame\Animation\Animation.h" />
     <ClInclude Include="Direct2DGame\Animation\AnimationFrame.h" />
     <ClInclude Include="Direct2DGame\Base\Color.h" />
+    <ClInclude Include="Direct2DGame\Base\Vector3.h" />
     <ClInclude Include="Direct2DGame\GameTime.h" />
     <ClInclude Include="Direct2DGame\Graphics\SpriteBatch.h" />
     <ClInclude Include="Direct2DGame\Graphics\Viewport.h" />
@@ -233,7 +234,7 @@
     <ClInclude Include="MarioSample\Models\MarioSettings.h" />
     <ClInclude Include="Direct2DGame\Animation\Sprite.h" />
     <ClInclude Include="Direct2DGame\Base\BoundingBox.h" />
-    <ClInclude Include="Direct2DGame\Base\Vector.h" />
+    <ClInclude Include="Direct2DGame\Base\Vector2.h" />
     <ClInclude Include="Direct2DGame\Content\AbstractReader.h" />
     <ClInclude Include="Direct2DGame\Content\AnimationReader.h" />
     <ClInclude Include="Direct2DGame\Content\ContentManager.h" />

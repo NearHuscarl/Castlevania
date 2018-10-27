@@ -60,6 +60,12 @@ public:
 		return strStream.str();
 	}
 
+	static Color Transparent()
+	{
+		static auto transparent = Color{ 255, 255, 255, 0 };
+		return transparent;
+	}
+
 	static Color White()
 	{
 		static auto white = Color{ 255, 255, 255 };

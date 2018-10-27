@@ -19,3 +19,10 @@ long TimeHelper::GetTickNow()
 {
 	return GetTickCount();
 }
+
+bool TimeHelper::Every(long interval)
+{
+	auto tickNow = GetTickCount();
+
+	return (tickNow / interval) % 2 == 0;
+}

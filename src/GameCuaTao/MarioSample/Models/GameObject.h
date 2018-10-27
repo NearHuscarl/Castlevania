@@ -1,7 +1,7 @@
 #pragma once
 
 #include <map>
-#include "Direct2DGame/Base/Vector.h"
+#include "Direct2DGame/Base/Vector2.h"
 #include "Direct2DGame/Animation/Animation.h"
 #include "Direct2DGame/Content/ContentManager.h"
 
@@ -32,8 +32,8 @@ namespace MarioSample
 		virtual void Draw(SpriteBatch &spriteBatch);
 
 	protected:
-		Vector position;
-		Vector velocity;
+		Vector2 position;
+		Vector2 velocity;
 
 		Direction direction;
 		int state;

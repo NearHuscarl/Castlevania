@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Direct2DGame/Base/Vector.h"
+#include "Direct2DGame/Base/Vector2.h"
 
 namespace Castlevania
 {
@@ -10,8 +10,8 @@ namespace Castlevania
 		int GetState();
 
 	private:
-		Vector position;
-		Vector velocity;
+		Vector2 position;
+		Vector2 velocity;
 		int state;
 	};
 }

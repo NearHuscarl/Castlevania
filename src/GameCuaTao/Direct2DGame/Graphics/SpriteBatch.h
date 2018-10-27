@@ -3,7 +3,7 @@
 #include "../Graphics/GraphicsDevice.h"
 #include "../Base/BoundingBox.h"
 #include "../Base/Color.h"
-#include "../Base/Vector.h"
+#include "../Base/Vector2.h"
 #include "../Graphics/SpriteFont.h"
 #include "../Graphics/SpriteEffects.h"
 #include "../Graphics/Texture.h"
@@ -16,8 +16,8 @@ public:
 	SpriteBatch(GraphicsDevice &graphicsDevice);
 	ISpriteHandler_ GetSpriteHandler();
 	
-	void Draw(Texture &texture, Vector position, BoundingBox *rectangle, Color color, SpriteEffects effects = SpriteEffects::None);
-	void DrawString(SpriteFont &spriteFont, std::string text, Vector position, Color color);
+	void Draw(Texture &texture, Vector2 position, BoundingBox *rectangle, Color color, SpriteEffects effects = SpriteEffects::None);
+	void DrawString(SpriteFont &spriteFont, std::string text, Vector2 position, Color color);
 
 private:
 	ISpriteHandler_ spriteHandler;
