@@ -17,7 +17,9 @@ namespace Castlevania
 		SpriteBatch &GetSpriteBatch();
 
 		AbstractScene *GetCurrentScene();
-		void NextScene(Scene scene);
+
+		void SetNextScene(Scene scene);
+		void NextScene(std::unique_ptr<AbstractScene> scene);
 
 		void Update(float deltaTime);
 		void Draw(GameTime gameTime);
@@ -26,6 +28,7 @@ namespace Castlevania
 		Game &game;
 
 		std::unique_ptr<AbstractScene> currentScene;
+		std::unique_ptr<AbstractScene> nextScene = nullptr;
 		std::unique_ptr<SpriteBatch> spriteBatch;
 
 		std::unique_ptr<AbstractScene> GetScene(Scene scene);

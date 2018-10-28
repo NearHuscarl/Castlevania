@@ -123,9 +123,6 @@
     <ClCompile Include="Direct2DGame\Utilities\TimeSpan.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Castlevania\Scenes\AbstractScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Direct2DGame\Input\Keyboard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -136,6 +133,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Direct2DGame\Utilities\Stopwatch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Scenes\AbstractScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -248,9 +248,6 @@
     <ClInclude Include="Castlevania\Models\GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Castlevania\Scenes\AbstractScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Castlevania\Scenes\GameplayScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -318,6 +315,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Direct2DGame\Base\Rect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Scenes\AbstractScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,3 +1,4 @@
+#include "Direct2DGame/Input/InputHelper.h"
 #include "CastlevaniaGame.h"
 #include "Scenes/MenuScene.h"
 #include "Settings/Fonts.h"
@@ -19,7 +20,7 @@ void CastlevaniaGame::Initialize()
 	Game::Initialize();
 
 	sceneManager = std::make_unique<SceneManager>(*this);
-	sceneManager->NextScene(Scene::MENU);
+	sceneManager->SetNextScene(Scene::MENU);
 }
 
 void CastlevaniaGame::LoadContent()
@@ -32,6 +33,7 @@ void CastlevaniaGame::Update(GameTime gameTime)
 {
 	auto deltaTime = (float)gameTime.ElapsedGameTime.Milliseconds();
 
+	InputHelper::Update();
 	sceneManager->Update(deltaTime);
 }
 

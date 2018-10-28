@@ -10,6 +10,8 @@ SceneManager::SceneManager(Game &game) : game(game)
 	this->spriteBatch = std::make_unique<SpriteBatch>(game.GetGraphicsDevice());
 }
 
+#pragma region Getters
+
 GraphicsDevice &SceneManager::GetGraphicsDevice()
 {
 	return game.GetGraphicsDevice();
@@ -25,8 +27,14 @@ SpriteBatch &SceneManager::GetSpriteBatch()
 	return *spriteBatch;
 }
 
+#pragma endregion
+
 void SceneManager::Update(float deltaTime)
 {
+	if (nextScene != nullptr)
+	{
+		NextScene(std::move(nextScene));
+	}
 	currentScene->Update(deltaTime);
 }
 
@@ -35,10 +43,15 @@ void SceneManager::Draw(GameTime gameTime)
 	currentScene->Draw(gameTime);
 }
 
-void SceneManager::NextScene(Scene scene)
+void Castlevania::SceneManager::SetNextScene(Scene scene)
+{
+	nextScene = GetScene(scene);
+}
+
+void SceneManager::NextScene(std::unique_ptr<AbstractScene> scene)
 {
 	// reassign std::unique_ptr make the old object destroyed and its memory deallocated :)
-	currentScene = GetScene(scene);
+	currentScene = std::move(scene);
 	currentScene->LoadContent();
 }
 
