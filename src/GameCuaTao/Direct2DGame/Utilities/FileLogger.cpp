@@ -1,6 +1,6 @@
 #include <filesystem>
 #include "FileLogger.h"
-#include "TimeHelper.h"
+#include "Stopwatch.h"
 
 FileLogger &FileLogger::GetInstance()
 {
@@ -62,7 +62,7 @@ std::string FileLogger::GetLogTime(const char *format)
 	{
 		format = "[%Y-%m-%d %X] "; // [2018-10-20 11:50:23]
 	}
-	return TimeHelper::GetTimeNow(format);
+	return Stopwatch::GetFomattedTimeStamp(format);
 }
 
 void FileLogger::PrintLog(std::string logMessage)

@@ -19,6 +19,6 @@ namespace MarioSample
 		std::unique_ptr<SpriteBatch> spriteBatch;
 
 		std::shared_ptr<Mario> mario;
-		std::shared_ptr<SpriteFont> helpText;
+		std::shared_ptr<SpriteFont> gameFont;
 	};
 }

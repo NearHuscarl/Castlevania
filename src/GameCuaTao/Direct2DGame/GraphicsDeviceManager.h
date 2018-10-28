@@ -11,11 +11,14 @@ public:
 	
 	void CreateDevice();
 	GraphicsDevice &GetGraphicsDevice();
+	
 	int GetFramePerSecond();
+	int GetTickPerFrame();
 
 private:
 	Game &game;
 	std::shared_ptr<GraphicsDevice> graphicsDevice;
 	
-	int framePerSecond = 90;
+	int framePerSecond;
+	int tickPerFrame;
 };

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <map>
 #include "Direct2DGame/Content/ContentManager.h"
 
 using AudioPathDict = std::map<std::string, std::string>;

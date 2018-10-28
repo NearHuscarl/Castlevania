@@ -5,6 +5,7 @@
 #include "GraphicsDeviceManager.h"
 #include "Content/ContentManager.h"
 #include "ServiceProvider.h"
+#include "Utilities/Stopwatch.h"
 
 class Game
 {
@@ -33,11 +34,12 @@ protected:
 
 private:
 	bool initialized = false;
+
 	GameTime gameTime;
+	Stopwatch gameTimer;
 
 	bool IsRunning();
 	void Render(GameTime gameTime);
 	
-	int GetTickPerFrame();
 	void Tick();
 };

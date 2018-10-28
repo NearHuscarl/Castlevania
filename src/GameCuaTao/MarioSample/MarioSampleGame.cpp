@@ -21,7 +21,7 @@ void MarioSampleGame::LoadContent()
 	spriteBatch = std::make_unique<SpriteBatch>(GetGraphicsDevice());
 
 	AudioManager::LoadContent(*content, { "Jump", "Overworld" });
-	helpText = content->Load<SpriteFont>("Roboto-Bold.ttf");
+	gameFont = content->Load<SpriteFont>("Roboto-Bold.ttf");
 	mario = std::make_shared<Mario>();
 	mario->LoadContent(*content);
 
@@ -44,7 +44,7 @@ void MarioSampleGame::Draw(GameTime gameTime)
 	spriteBatch->GetSpriteHandler()->Begin(D3DXSPRITE_ALPHABLEND);
 
 	mario->Draw(*spriteBatch);
-	spriteBatch->DrawString(*helpText, "Press arrow keys to move", Vector2(30, 30), Color(255, 0, 255));
+	spriteBatch->DrawString(*gameFont, "Press arrow keys to move", Vector2(30, 30), Color(255, 0, 255));
 
 	spriteBatch->GetSpriteHandler()->End();
 }

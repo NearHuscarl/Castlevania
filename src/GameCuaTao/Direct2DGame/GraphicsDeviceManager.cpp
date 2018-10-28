@@ -8,6 +8,8 @@
 GraphicsDeviceManager::GraphicsDeviceManager(Game &game) : game(game)
 {
 	this->graphicsDevice = std::make_shared<GraphicsDevice>();
+	this->framePerSecond = 90;
+	this->tickPerFrame = 1000 / framePerSecond;
 }
 
 void GraphicsDeviceManager::CreateDevice()
@@ -28,4 +30,9 @@ GraphicsDevice &GraphicsDeviceManager::GetGraphicsDevice()
 int GraphicsDeviceManager::GetFramePerSecond()
 {
 	return framePerSecond;
+}
+
+int GraphicsDeviceManager::GetTickPerFrame()
+{
+	return tickPerFrame;
 }

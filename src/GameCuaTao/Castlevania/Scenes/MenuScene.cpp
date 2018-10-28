@@ -1,4 +1,3 @@
-#include "Direct2DGame/Utilities/TimeHelper.h"
 #include "MenuScene.h"
 #include "SceneManager.h"
 #include "../Settings/Fonts.h"
@@ -34,7 +33,7 @@ void MenuScene::Draw(GameTime gameTime)
 
 	spriteBatch.Draw(*menuBackground, Vector2::Zero(), nullptr, Color::White());
 	spriteBatch.DrawString(Fonts::Main, startGameText, startGameTextPosition,
-		TimeHelper::Every(200) ? Color::White() : Color::Transparent());
+		Stopwatch::Every(200) ? Color::White() : Color::Transparent());
 
 	spriteBatch.GetSpriteHandler()->End();
 }

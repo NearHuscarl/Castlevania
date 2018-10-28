@@ -1,6 +1,5 @@
 #include "Game.h"
 #include "Input/Keyboard.h"
-#include "Utilities/TimeHelper.h"
 
 GameWindow &Game::GetWindow()
 {
@@ -75,19 +74,21 @@ void Game::Run()
 		Initialize();
 		initialized = false;
 	}
-
+	
+	gameTimer.Start();
 	while (IsRunning())
 	{
 		Tick();
 		auto deltaTime = (int)gameTime.ElapsedGameTime.Milliseconds();
+		auto tickPerFrame = graphics->GetTickPerFrame();
 
-		if (deltaTime >= GetTickPerFrame())
+		if (deltaTime >= tickPerFrame)
 		{
 			Update(gameTime);
 			Render(gameTime);
 		}
 		else
-			Sleep(GetTickPerFrame() - deltaTime);
+			Sleep(tickPerFrame - deltaTime);
 	}
 }
 
@@ -107,14 +108,9 @@ bool Game::IsRunning()
 	return true;
 }
 
-int Game::GetTickPerFrame()
-{
-	return 1000 / graphics->GetFramePerSecond();
-}
-
 void Game::Tick()
 {
-	auto currentTick = TimeHelper::GetTickNow();
+	auto currentTick = gameTimer.ElapsedMilliseconds();
 	auto accumulatedTime = TimeSpan::FromMilliseconds(currentTick - gameTime.GetPreviousTicks());
 
 	gameTime.SetPreviousTicks(currentTick);

@@ -169,6 +169,7 @@
     <ClCompile Include="Direct2DGame\Animation\Sprite.cpp" />
     <ClCompile Include="Direct2DGame\Graphics\SpriteBatch.cpp" />
     <ClCompile Include="Direct2DGame\Input\InputHelper.cpp" />
+    <ClCompile Include="Direct2DGame\Utilities\Stopwatch.cpp" />
     <ClCompile Include="Direct2DGame\Utilities\TimeSpan.cpp" />
     <ClCompile Include="MarioSample\Utilities\AudioManager.cpp" />
     <ClCompile Include="Direct2DGame\Graphics\SpriteFont.cpp" />
@@ -192,7 +193,6 @@
     <ClCompile Include="MarioSample\Models\Mario.cpp" />
     <ClCompile Include="MarioSample\MarioSampleGame.cpp" />
     <ClCompile Include="Direct2DGame\Utilities\FileLogger.cpp" />
-    <ClCompile Include="Direct2DGame\Utilities\TimeHelper.cpp" />
     <ClCompile Include="Direct2DGame\Utilities\WinHelper.cpp" />
     <ClCompile Include="Library\pugixml\pugixml.cpp" />
   </ItemGroup>
@@ -220,6 +220,7 @@
     <ClInclude Include="Direct2DGame\Graphics\Viewport.h" />
     <ClInclude Include="Direct2DGame\Input\InputHelper.h" />
     <ClInclude Include="Direct2DGame\Input\KeyboardState.h" />
+    <ClInclude Include="Direct2DGame\Utilities\Stopwatch.h" />
     <ClInclude Include="Direct2DGame\Utilities\TimeSpan.h" />
     <ClInclude Include="MarioSample\Utilities\AudioManager.h" />
     <ClInclude Include="Direct2DGame\Graphics\SpriteFont.h" />
@@ -253,7 +254,6 @@
     <ClInclude Include="Library\pugixml.hpp" />
     <ClInclude Include="Direct2DGame\ServiceProvider.h" />
     <ClInclude Include="Direct2DGame\Utilities\FileLogger.h" />
-    <ClInclude Include="Direct2DGame\Utilities\TimeHelper.h" />
     <ClInclude Include="Direct2DGame\Utilities\WinHelper.h" />
     <ClInclude Include="Library\pugixml\pugiconfig.hpp" />
     <ClInclude Include="Library\pugixml\pugixml.hpp" />

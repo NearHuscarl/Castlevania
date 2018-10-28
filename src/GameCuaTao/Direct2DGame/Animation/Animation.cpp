@@ -1,5 +1,5 @@
 #include "Animation.h"
-#include "../Utilities/TimeHelper.h"
+#include "../Utilities/Stopwatch.h"
 
 Animation::Animation()
 {
@@ -25,7 +25,7 @@ void Animation::Add(Sprite sprite, unsigned long time)
 
 void Animation::Update()
 {
-	auto now = TimeHelper::GetTickNow();
+	auto now = Stopwatch::GetTimeStamp();
 	if (currentFrame == -1)
 	{
 		currentFrame = 0;
