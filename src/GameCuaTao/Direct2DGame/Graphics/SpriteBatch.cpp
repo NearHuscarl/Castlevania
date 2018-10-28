@@ -54,10 +54,18 @@ void SpriteBatch::DrawString(SpriteFont &spriteFont, std::string text, Vector2 p
 	if (font == nullptr)
 		return;
 
+	auto textSize = spriteFont.MessureString(text);
+	auto rect = Rect{};
+
 	auto x = (int)position.x;
 	auto y = (int)position.y;
+	auto textWidth = (int)textSize.x;
+	auto textHeight = (int)textSize.y;
 
-	auto rect = Rect(x, y, 2000, 2000); // TODO: remove const with window width and height
+	rect.left = x;
+	rect.top = y;
+	rect.right = x + textWidth;
+	rect.bottom = y + textHeight;
 
 	font->DrawTextA(spriteHandler, text.c_str(), -1, &rect, DT_LEFT, color.Get());
 }
