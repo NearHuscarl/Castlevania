@@ -234,7 +234,7 @@
     <ClInclude Include="Library\directx\DXUtil.h" />
     <ClInclude Include="MarioSample\Models\MarioSettings.h" />
     <ClInclude Include="Direct2DGame\Animation\Sprite.h" />
-    <ClInclude Include="Direct2DGame\Base\BoundingBox.h" />
+    <ClInclude Include="Direct2DGame\Base\Rect.h" />
     <ClInclude Include="Direct2DGame\Base\Vector2.h" />
     <ClInclude Include="Direct2DGame\Content\AbstractReader.h" />
     <ClInclude Include="Direct2DGame\Content\AnimationReader.h" />

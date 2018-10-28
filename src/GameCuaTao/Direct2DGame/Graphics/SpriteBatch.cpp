@@ -11,13 +11,13 @@ ISpriteHandler_ SpriteBatch::GetSpriteHandler()
 	return spriteHandler;
 }
 
-void SpriteBatch::Draw(Texture &texture, Vector2 position, BoundingBox *rectanglePtr, Color color, SpriteEffects effects)
+void SpriteBatch::Draw(Texture &texture, Vector2 position, Rect *rectPtr, Color color, SpriteEffects effects)
 {
-	auto rectangle = BoundingBox{};
-	if (rectanglePtr == nullptr) // if null, draws full texture
-		rectangle = BoundingBox(0, 0, texture.Width(), texture.Height());
+	auto rect = Rect{};
+	if (rectPtr == nullptr) // if null, draws full texture
+		rect = Rect(0, 0, texture.Width(), texture.Height());
 	else
-		rectangle = *rectanglePtr;
+		rect = *rectPtr;
 
 	auto scale = Vector2{};
 	if (effects == FlipHorizontally)
@@ -27,7 +27,7 @@ void SpriteBatch::Draw(Texture &texture, Vector2 position, BoundingBox *rectangl
 	else // None
 		scale = Vector2(1, 1);
 
-	auto center = Vector2(position.x + rectangle.Width() / 2, position.y + rectangle.Height() / 2);
+	auto center = Vector2(position.x + rect.Width() / 2, position.y + rect.Height() / 2);
 
 	auto oldMatrix = Matrix{};
 	auto newMatrix = Matrix{};
@@ -44,7 +44,7 @@ void SpriteBatch::Draw(Texture &texture, Vector2 position, BoundingBox *rectangl
 	);
 
 	spriteHandler->SetTransform(&newMatrix);
-	spriteHandler->Draw(texture.Get(), &rectangle, nullptr, &Vector3(position), color.Get());
+	spriteHandler->Draw(texture.Get(), &rect, nullptr, &Vector3(position), color.Get());
 	spriteHandler->SetTransform(&oldMatrix);
 }
 
@@ -57,7 +57,7 @@ void SpriteBatch::DrawString(SpriteFont &spriteFont, std::string text, Vector2 p
 	auto x = (int)position.x;
 	auto y = (int)position.y;
 
-	auto boundingBox = BoundingBox(x, y, 2000, 2000); // TODO: remove const with window width and height
+	auto rect = Rect(x, y, 2000, 2000); // TODO: remove const with window width and height
 
-	font->DrawTextA(spriteHandler, text.c_str(), -1, &boundingBox, DT_LEFT, color.Get());
+	font->DrawTextA(spriteHandler, text.c_str(), -1, &rect, DT_LEFT, color.Get());
 }

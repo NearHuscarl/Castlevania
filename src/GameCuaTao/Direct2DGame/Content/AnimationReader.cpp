@@ -28,7 +28,7 @@ std::shared_ptr<AnimationDict> AnimationReader::Read(std::string filePath, Conte
 		auto right = spriteNode.attribute("Right").as_int();
 		auto bottom = spriteNode.attribute("Bottom").as_int();
 
-		auto sprite = Sprite{ name, BoundingBox(left, top, right, bottom) };
+		auto sprite = Sprite{ name, Rect(left, top, right, bottom) };
 
 		sprites[name] = sprite;
 	}

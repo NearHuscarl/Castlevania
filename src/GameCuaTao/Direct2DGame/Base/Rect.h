@@ -2,14 +2,14 @@
 
 #include <windows.h>
 
-struct BoundingBox : RECT
+struct Rect : RECT
 {
-	BoundingBox()
+	Rect()
 	{
-		BoundingBox(0, 0, 0, 0);
+		Rect(0, 0, 0, 0);
 	}
 
-	BoundingBox(int left, int top, int right, int bottom)
+	Rect(int left, int top, int right, int bottom)
 	{
 		this->left = left;
 		this->top = top;

@@ -272,9 +272,6 @@
     <ClInclude Include="MarioSample\Utilities\AudioManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Direct2DGame\Base\BoundingBox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Castlevania\Utilities\AudioManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -318,6 +315,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Direct2DGame\Utilities\Stopwatch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DGame\Base\Rect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

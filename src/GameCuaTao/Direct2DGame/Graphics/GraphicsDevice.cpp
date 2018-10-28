@@ -33,11 +33,11 @@ void GraphicsDevice::CreateDevice(HWND hWnd)
 	presentationParameters.BackBufferFormat = D3DFMT_X8R8G8B8;
 	presentationParameters.BackBufferCount = 1;
 
-	auto rectangle = RECT{};
-	GetClientRect(hWnd, &rectangle);	// retrieve Window width & height 
+	auto rect = RECT{};
+	GetClientRect(hWnd, &rect);	// retrieve Window width & height 
 
-	presentationParameters.BackBufferHeight = rectangle.bottom + 1;
-	presentationParameters.BackBufferWidth = rectangle.right + 1;
+	presentationParameters.BackBufferHeight = rect.bottom + 1;
+	presentationParameters.BackBufferWidth = rect.right + 1;
 
 	device->CreateDevice(
 		D3DADAPTER_DEFAULT,
