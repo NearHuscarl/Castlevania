@@ -15,6 +15,7 @@ void Mario::LoadContent(ContentManager &content)
 
 void Mario::Update(float deltaTime)
 {
+	UpdateInput();
 	UpdateState();
 
 	GameObject::UpdateDistance(deltaTime);
@@ -24,7 +25,7 @@ void Mario::Update(float deltaTime)
 	(*animations)[currentAnimation].Update();
 }
 
-void Mario::UpdateState()
+void Mario::UpdateInput()
 {
 	switch (state)
 	{
@@ -50,7 +51,13 @@ void Mario::UpdateState()
 			if (!InputHelper::IsKeyPressed(DIK_RIGHT))
 				Idle();
 			break;
+	}
+}
 
+void Mario::UpdateState()
+{
+	switch (state)
+	{
 		case JUMP:
 			Jumping();
 			break;

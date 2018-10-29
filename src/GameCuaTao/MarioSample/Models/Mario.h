@@ -12,6 +12,7 @@ namespace MarioSample
 		void Draw(SpriteBatch &spriteBatch) override;
 
 	private:
+		void UpdateInput();
 		void UpdateState();
 		void ResolveCollision();
 
