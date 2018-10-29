@@ -318,6 +318,10 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Castlevania\Scenes\AbstractScene.h">
+    <ClInclude Include="Direct2DGame\Graphics\FontDescription.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DGame\Graphics\FontStyle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

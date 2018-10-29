@@ -14,8 +14,6 @@ void GameObject::SetPosition(float x, float y)
 {
 	position.x = x;
 	position.y = y;
-
-	direction = Right;
 }
 
 void GameObject::SetSpeed(float x, float y)
@@ -32,6 +30,10 @@ void GameObject::SetState(int state)
 int GameObject::GetState()
 {
 	return state;
+}
+
+void GameObject::LoadContent(ContentManager &content)
+{
 }
 
 void GameObject::Update(float deltaTime)

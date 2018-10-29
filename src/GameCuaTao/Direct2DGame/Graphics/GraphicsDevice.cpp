@@ -11,14 +11,14 @@ void GraphicsDevice::SetViewport(Viewport viewport)
 	this->viewport = viewport;
 }
 
-Color GraphicsDevice::GetTransparentColor()
+Color GraphicsDevice::GetColorKey()
 {
-	return transparentColor;
+	return colorKey;
 }
 
-void GraphicsDevice::SetTransparentColor(Color color)
+void GraphicsDevice::SetColorKey(Color color)
 {
-	transparentColor = color;
+	colorKey = color;
 }
 
 void GraphicsDevice::CreateDevice(HWND hWnd)

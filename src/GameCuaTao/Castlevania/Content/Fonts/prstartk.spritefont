@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Font>
+    <FontName>prstartk.ttf</FontName>
+    <Size>16</Size>
+    <Style>Regular</Style>
+  </Font>
+
+</GameContent>

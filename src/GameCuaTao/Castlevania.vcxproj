@@ -216,6 +216,8 @@
     <ClInclude Include="Direct2DGame\Base\Color.h" />
     <ClInclude Include="Direct2DGame\Base\Vector3.h" />
     <ClInclude Include="Direct2DGame\GameTime.h" />
+    <ClInclude Include="Direct2DGame\Graphics\FontDescription.h" />
+    <ClInclude Include="Direct2DGame\Graphics\FontStyle.h" />
     <ClInclude Include="Direct2DGame\Graphics\SpriteBatch.h" />
     <ClInclude Include="Direct2DGame\Graphics\Viewport.h" />
     <ClInclude Include="Direct2DGame\Input\InputHelper.h" />

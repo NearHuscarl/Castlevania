@@ -14,6 +14,8 @@ class ContentManager
 {
 public:
 	ContentManager(std::shared_ptr<ServiceProvider> serviceProvider);
+
+	std::string GetRootDirectory();
 	void SetRootDirectory(std::string path);
 
 	template<typename T>
@@ -22,7 +24,7 @@ public:
 	ServiceProvider &GetServiceProvider();
 
 private:
-	Path rootDirectory;
+	std::string rootDirectory;
 	AssetDict loadedAssets;
 
 	std::shared_ptr<ServiceProvider> serviceProvider;

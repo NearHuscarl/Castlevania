@@ -19,7 +19,7 @@ std::shared_ptr<Texture> TextureReader::Read(std::string filePathStr, ContentMan
 	auto texture = ITexture_{ nullptr };
 	auto graphicsDevice = contentManager.GetServiceProvider().Get<GraphicsDevice>();
 	auto renderDevice = graphicsDevice->GetRenderDevice();
-	auto transparentColor = graphicsDevice->GetTransparentColor();
+	auto transparentColor = graphicsDevice->GetColorKey();
 
 	result = D3DXCreateTextureFromFileEx(
 		renderDevice,		            // Direct3D device object

@@ -72,18 +72,6 @@ bool Stopwatch::Every(int interval)
 	return (GetTimeStamp() / interval) % 2 == 0;
 }
 
-bool Stopwatch::Until(int interval)
-{
-	if (!isRunning)
-		Start();
-
-	if (GetElapsedTime() < interval)
-		return false;
-
-	Stop();
-	return true;
-}
-
 long Stopwatch::GetElapsedTime()
 {
 	auto timeElapsed = elapsed;

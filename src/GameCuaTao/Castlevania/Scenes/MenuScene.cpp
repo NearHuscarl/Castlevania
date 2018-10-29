@@ -11,7 +11,7 @@ MenuScene::MenuScene(SceneManager &sceneManager) : AbstractScene(sceneManager)
 
 void MenuScene::LoadContent()
 {
-	menuBackground = sceneManager.GetContent().Load<Texture>("Textures/Background/Main_Menu.png");
+	background = sceneManager.GetContent().Load<Texture>("Textures/Background/Main_Menu.png");
 
 	auto viewport = sceneManager.GetGraphicsDevice().GetViewport();
 	auto startGameTextSize = Fonts::Main.MessureString(startGameText);
@@ -39,7 +39,7 @@ void MenuScene::Draw(GameTime gameTime)
 
 	spriteBatch.GetSpriteHandler()->Begin(D3DXSPRITE_ALPHABLEND);
 
-	spriteBatch.Draw(*menuBackground, Vector2::Zero(), nullptr, Color::White());
+	spriteBatch.Draw(*background, Vector2::Zero(), nullptr, Color::White());
 
 	if (!transitionTimer.IsRunning())
 	{

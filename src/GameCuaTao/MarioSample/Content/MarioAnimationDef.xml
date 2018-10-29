@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<root>
+<GameContent>
 
   <Spritesheet TexturePath="mario.png">
     <Sprite Left="0"  Top="0" Right="16" Bottom="29" ID="mario_walk_01" />
@@ -24,4 +24,4 @@
     </Animation>
   </Animations>
 
-</root>
+</GameContent>

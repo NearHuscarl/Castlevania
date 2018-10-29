@@ -11,8 +11,8 @@ public:
 	Viewport GetViewport();
 	void SetViewport(Viewport viewport);
 
-	Color GetTransparentColor();
-	void SetTransparentColor(Color color);
+	Color GetColorKey();
+	void SetColorKey(Color color);
 
 	void CreateDevice(HWND hWnd);
 	void Clear(Color color);
@@ -25,7 +25,7 @@ public:
 
 private:
 	Viewport viewport;
-	Color transparentColor = Color(255, 255, 255);
+	Color colorKey = Color(255, 0, 255, 255);
 
 	IRenderDevice_ renderDevice = nullptr;    // Direct3D device object
 	ISurface_ surface = nullptr;

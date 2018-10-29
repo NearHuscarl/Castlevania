@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Font>
+    <FontName>Roboto-Medium.ttf</FontName>
+    <Size>20</Size>
+    <Style>Bold</Style>
+  </Font>
+
+</GameContent>

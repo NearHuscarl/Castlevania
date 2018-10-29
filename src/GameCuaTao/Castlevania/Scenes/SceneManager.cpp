@@ -43,7 +43,7 @@ void SceneManager::Draw(GameTime gameTime)
 	currentScene->Draw(gameTime);
 }
 
-void Castlevania::SceneManager::SetNextScene(Scene scene)
+void SceneManager::SetNextScene(Scene scene)
 {
 	nextScene = GetScene(scene);
 }

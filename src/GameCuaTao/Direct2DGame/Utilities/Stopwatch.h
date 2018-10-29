@@ -24,8 +24,6 @@ public:
 	// Flip the boolean flag every <interval> miliseconds
 	static bool Every(int interval);
 
-	bool Until(int interval);
-
 private:
 	long elapsed;
 	long startTimeStamp;

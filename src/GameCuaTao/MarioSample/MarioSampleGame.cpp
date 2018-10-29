@@ -21,7 +21,7 @@ void MarioSampleGame::LoadContent()
 	spriteBatch = std::make_unique<SpriteBatch>(GetGraphicsDevice());
 
 	AudioManager::LoadContent(*content, { "Jump", "Overworld" });
-	gameFont = content->Load<SpriteFont>("Roboto-Bold.ttf");
+	gameFont = content->Load<SpriteFont>("Roboto");
 	mario = std::make_shared<Mario>();
 	mario->LoadContent(*content);
 

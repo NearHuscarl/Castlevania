@@ -7,6 +7,11 @@ ContentManager::ContentManager(std::shared_ptr<ServiceProvider> serviceProvider)
 	this->contentReader = std::make_unique<ContentReader>(*this);
 }
 
+std::string ContentManager::GetRootDirectory()
+{
+	return rootDirectory;
+}
+
 void ContentManager::SetRootDirectory(std::string path)
 {
 	rootDirectory = Path{ path }.make_preferred().string();
@@ -36,7 +41,7 @@ std::shared_ptr<T> ContentManager::Load(std::string assetName)
 template<typename T>
 std::shared_ptr<T> ContentManager::ReadAsset(std::string assetName)
 {
-	auto path = (rootDirectory / assetName).string();
+	auto path = (Path{ rootDirectory } / assetName).string();
 
 	return contentReader->ReadAsset<T>(path);
 }

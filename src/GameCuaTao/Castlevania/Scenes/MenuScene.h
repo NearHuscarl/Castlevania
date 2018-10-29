@@ -19,7 +19,7 @@ namespace Castlevania
 		void Draw(GameTime gameTime) override;
 
 	private:
-		std::shared_ptr<Texture> menuBackground;
+		std::shared_ptr<Texture> background;
 
 		const std::string startGameText = "PUSH START KEY";
 		Vector2 startGameTextPosition;

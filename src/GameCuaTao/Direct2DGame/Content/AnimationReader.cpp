@@ -8,8 +8,8 @@
 
 std::shared_ptr<AnimationDict> AnimationReader::Read(std::string filePath, ContentManager &contentManager)
 {
-	auto animationsDoc = pugi::xml_document{};
-	auto result = animationsDoc.load_file(filePath.c_str());
+	auto xmlDocument = pugi::xml_document{};
+	auto result = xmlDocument.load_file(filePath.c_str());
 
 	if (!result)
 	{
@@ -17,7 +17,7 @@ std::shared_ptr<AnimationDict> AnimationReader::Read(std::string filePath, Conte
 		throw LoadContentException(result.description());
 	}
 
-	auto rootDoc = animationsDoc.child("root");
+	auto rootDoc = xmlDocument.child("GameContent");
 	auto sprites = SpriteDict{};
 	
 	for (auto spriteNode : rootDoc.child("Spritesheet").children("Sprite"))
