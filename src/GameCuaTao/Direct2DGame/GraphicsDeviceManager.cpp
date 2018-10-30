@@ -14,11 +14,11 @@ GraphicsDeviceManager::GraphicsDeviceManager(Game &game) : game(game)
 
 void GraphicsDeviceManager::CreateDevice()
 {
-	auto window = game.GetWindow();
-	auto hWnd = window.GetHandle();
-	auto viewport = Viewport{ 0, 0, window.Width(), window.Height() };
-	
+	auto hWnd = game.GetWindow().GetHandle();
 	graphicsDevice->CreateDevice(hWnd);
+	
+	auto display = graphicsDevice->GetDisplay();
+	auto viewport = Viewport{ 0, 0, display.Width(), display.Height() };
 	graphicsDevice->SetViewport(viewport);
 }
 

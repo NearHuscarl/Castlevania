@@ -23,19 +23,20 @@ std::shared_ptr<SpriteFont> SpriteFontReader::Read(std::string configFile, Conte
 		throw LoadContentException("Font file not found: " + configFile);
 
 	auto filePath = WinHelper::s2ws(filePathStr);
-	auto familyName = WinHelper::s2ws(FontHelper::GetFamilyName(filePathStr));
-	auto font = IFont_{ nullptr };
 	auto graphicsDevice = contentManager.GetServiceProvider().Get<GraphicsDevice>();
-	auto renderDevice = graphicsDevice->GetRenderDevice();
 
 	AddFontResourceEx(filePath.c_str(), FR_PRIVATE, NULL);
 
+	auto renderDevice = graphicsDevice->GetRenderDevice();
+	auto size = (int)options.size;
 	auto bold = options.style == FontStyle::Bold ? FW_BOLD : FW_NORMAL;
 	auto italic = options.style == FontStyle::Italic;
+	auto familyName = WinHelper::s2ws(FontHelper::GetFamilyName(filePathStr));
+	auto font = IFont_{ nullptr };
 
 	auto result = D3DXCreateFont(
 		renderDevice,         // Direct3D device object
-		options.size,         // Height
+		size,                 // Height
 		0,                    // Width
 		bold,                 // Weight
 		1,                    // MipLevels

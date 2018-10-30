@@ -2,34 +2,36 @@
 
 #include "GameObject.h"
 
-namespace MarioSample
+namespace Castlevania
 {
-	class Mario : public GameObject
+	enum class Direction
+	{
+		Left,
+		Right
+	};
+
+	class Simon : public GameObject
 	{
 	public:
 		void LoadContent(ContentManager &content) override;
-		void Update(float deltaTime) override;
+		virtual void Update(float deltaTime) override;
 		void Draw(SpriteBatch &spriteBatch) override;
 
-	private:
-		void UpdateInput();
-		void UpdateState();
-		void ResolveCollision(float deltaTime);
-
-		void Jump();
-		void Jumping();
 		void Idle();
 		void WalkLeft();
 		void WalkRight();
+		void TurnBackward();
 
+	protected:
 		enum class State
 		{
 			WALKING_LEFT,
 			WALKING_RIGHT,
 			IDLE,
-			JUMPING,
+			TURNING_BACKWARD,
 		};
 
 		State state;
+		Direction direction;
 	};
 }

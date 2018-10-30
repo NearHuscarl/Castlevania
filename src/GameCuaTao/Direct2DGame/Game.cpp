@@ -19,9 +19,9 @@ ContentManager &Game::GetContent()
 Game::Game()
 {
 	serviceProvider = std::make_shared<ServiceProvider>();
-	window          = std::make_shared<GameWindow>();
-	graphics        = std::make_shared<GraphicsDeviceManager>(*this);
-	content         = std::make_shared<ContentManager>(serviceProvider);
+	window          = std::make_unique<GameWindow>();
+	graphics        = std::make_unique<GraphicsDeviceManager>(*this);
+	content         = std::make_unique<ContentManager>(serviceProvider);
 
 	serviceProvider->Add<GraphicsDevice>(&GetGraphicsDevice());
 	serviceProvider->Add<GameWindow>(&GetWindow());

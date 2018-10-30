@@ -11,8 +11,8 @@ CastlevaniaGame::CastlevaniaGame()
 {
 	content->SetRootDirectory("Castlevania/Content");
 
-	window->Width(529);
-	window->Height(485);
+	window->Width(528);
+	window->Height(487);
 }
 
 void CastlevaniaGame::Initialize()
@@ -31,7 +31,7 @@ void CastlevaniaGame::LoadContent()
 
 void CastlevaniaGame::Update(GameTime gameTime)
 {
-	auto deltaTime = (float)gameTime.ElapsedGameTime.Milliseconds();
+	auto deltaTime = (float)gameTime.ElapsedGameTime.Seconds();
 
 	InputHelper::Update();
 	sceneManager->Update(deltaTime);

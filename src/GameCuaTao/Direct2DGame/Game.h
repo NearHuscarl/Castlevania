@@ -27,9 +27,9 @@ protected:
 
 	virtual void Initialize();
 
-	std::shared_ptr<GameWindow> window;
-	std::shared_ptr<GraphicsDeviceManager> graphics;
-	std::shared_ptr<ContentManager> content;
+	std::unique_ptr<GameWindow> window;
+	std::unique_ptr<GraphicsDeviceManager> graphics;
+	std::unique_ptr<ContentManager> content;
 	std::shared_ptr<ServiceProvider> serviceProvider;
 
 private:

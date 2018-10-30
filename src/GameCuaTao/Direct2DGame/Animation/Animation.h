@@ -9,6 +9,8 @@ public:
 	Animation();
 	Animation(std::shared_ptr<Texture> texture, unsigned long defaultTime = 100);
 
+	AnimationFrame GetCurrentFrame();
+
 	void Add(Sprite sprite, unsigned long time = 0);
 	void Update();
 	void Draw(SpriteBatch &spriteBatch, Vector2 position, Color color, SpriteEffects effects);

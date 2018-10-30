@@ -1,5 +1,3 @@
-#include <memory>
-#include <map>
 #include "Library/pugixml/pugixml.hpp"
 #include "AnimationReader.h"
 #include "LoadContentException.h"
@@ -23,14 +21,22 @@ std::shared_ptr<AnimationDict> AnimationReader::Read(std::string filePath, Conte
 	for (auto spriteNode : rootDoc.child("Spritesheet").children("Sprite"))
 	{
 		auto name = spriteNode.attribute("ID").as_string();
-		auto left = spriteNode.attribute("Left").as_int();
-		auto top = spriteNode.attribute("Top").as_int();
-		auto right = spriteNode.attribute("Right").as_int();
-		auto bottom = spriteNode.attribute("Bottom").as_int();
 
-		auto sprite = Sprite{ name, Rect(left, top, right, bottom) };
+		auto spriteFrame = Rect{
+			spriteNode.child("SpriteFrame").attribute("Left").as_int(),
+			spriteNode.child("SpriteFrame").attribute("Top").as_int(),
+			spriteNode.child("SpriteFrame").attribute("Right").as_int(),
+			spriteNode.child("SpriteFrame").attribute("Bottom").as_int()
+		};
 
-		sprites[name] = sprite;
+		auto spriteBoundary = Rect{
+			spriteNode.child("SpriteBoundary").attribute("Left").as_int(),
+			spriteNode.child("SpriteBoundary").attribute("Top").as_int(),
+			spriteNode.child("SpriteBoundary").attribute("Right").as_int(),
+			spriteNode.child("SpriteBoundary").attribute("Bottom").as_int()
+		};
+
+		sprites[name] = Sprite{ name, spriteFrame, spriteBoundary };
 	}
 
 	auto texturePath = rootDoc.child("Spritesheet").attribute("TexturePath").as_string();

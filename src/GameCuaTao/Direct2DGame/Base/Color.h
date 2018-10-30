@@ -72,6 +72,12 @@ public:
 		return white;
 	}
 
+	static Color Black()
+	{
+		static auto black = Color{ 0, 0, 0 };
+		return black;
+	}
+
 	static Color LavenderBlue()
 	{
 		static auto lavenderBlue = Color{ 200, 200, 255 };

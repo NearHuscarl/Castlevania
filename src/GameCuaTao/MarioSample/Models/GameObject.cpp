@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "..\..\Castlevania\Models\GameObject.h"
 
 using namespace MarioSample;
 
@@ -7,7 +8,7 @@ GameObject::GameObject()
 	position = Vector2(0, 0);
 	velocity = Vector2(0, 0);
 
-	direction = Right;
+	direction = Direction::Right;
 }
 
 void GameObject::SetPosition(float x, float y)
@@ -22,16 +23,6 @@ void GameObject::SetSpeed(float x, float y)
 	velocity.y = y;
 }
 
-void GameObject::SetState(int state)
-{
-	this->state = state;
-}
-
-int GameObject::GetState()
-{
-	return state;
-}
-
 void GameObject::LoadContent(ContentManager &content)
 {
 }
@@ -43,6 +34,11 @@ void GameObject::Update(float deltaTime)
 void GameObject::UpdateDistance(float deltaTime)
 {
 	position += velocity * deltaTime;
+}
+
+Animation &GameObject::GetAnimation()
+{
+	return (*animations)[currentAnimation];
 }
 
 void GameObject::Draw(SpriteBatch &spriteBatch)

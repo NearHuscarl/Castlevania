@@ -14,6 +14,14 @@ Animation::Animation(std::shared_ptr<Texture> texture, unsigned long defaultTime
 	this->currentFrame = -1;
 }
 
+AnimationFrame Animation::GetCurrentFrame()
+{
+	if (currentFrame == -1)
+		return frames[0];
+
+	return frames[currentFrame];
+}
+
 void Animation::Add(Sprite sprite, unsigned long time)
 {
 	if (time == 0)

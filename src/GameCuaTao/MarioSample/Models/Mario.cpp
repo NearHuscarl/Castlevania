@@ -18,18 +18,16 @@ void Mario::Update(float deltaTime)
 	UpdateInput();
 	UpdateState();
 
-	GameObject::UpdateDistance(deltaTime);
+	ResolveCollision(deltaTime);
 
-	ResolveCollision();
-
-	(*animations)[currentAnimation].Update();
+	GetAnimation().Update();
 }
 
 void Mario::UpdateInput()
 {
 	switch (state)
 	{
-		case IDLE:
+		case State::IDLE:
 			if (InputHelper::IsKeyDown(DIK_SPACE))
 				Jump();
 			if (InputHelper::IsKeyPressed(DIK_RIGHT))
@@ -38,14 +36,14 @@ void Mario::UpdateInput()
 				WalkLeft();
 			break;
 
-		case WALK_LEFT:
+		case State::WALKING_LEFT:
 			if (InputHelper::IsKeyDown(DIK_SPACE))
 				Jump();
 			if (!InputHelper::IsKeyPressed(DIK_LEFT))
 				Idle();
 			break;
 
-		case WALK_RIGHT:
+		case State::WALKING_RIGHT:
 			if (InputHelper::IsKeyDown(DIK_SPACE))
 				Jump();
 			if (!InputHelper::IsKeyPressed(DIK_RIGHT))
@@ -58,14 +56,16 @@ void Mario::UpdateState()
 {
 	switch (state)
 	{
-		case JUMP:
+		case State::JUMPING:
 			Jumping();
 			break;
 	}
 }
 
-void Mario::ResolveCollision()
+void Mario::ResolveCollision(float deltaTime)
 {
+	GameObject::UpdateDistance(deltaTime);
+
 	// simple fall down
 	velocity.y += MARIO_GRAVITY;
 	if (position.y > 100)
@@ -87,7 +87,7 @@ void Mario::ResolveCollision()
 
 void Mario::Jump()
 {
-	SetState(JUMP);
+	state = State::JUMPING;
 }
 
 void Mario::Jumping()
@@ -98,34 +98,34 @@ void Mario::Jumping()
 		velocity.y = -MARIO_JUMP_SPEED_Y;
 	}
 	else
-		SetState(IDLE);
+		state = State::IDLE;
 }
 
 void Mario::Idle()
 {
-	SetState(IDLE);
+	state = State::IDLE;
 	velocity.x = 0;
 	currentAnimation = MARIO_IDLE;
 }
 
 void Mario::WalkLeft()
 {
-	SetState(WALK_LEFT);
+	state = State::WALKING_LEFT;
 	velocity.x = -MARIO_WALKING_SPEED;
-	direction = Left;
+	direction = Direction::Left;
 	currentAnimation = MARIO_WALK;
 }
 
 void Mario::WalkRight()
 {
-	SetState(WALK_RIGHT);
+	state = State::WALKING_RIGHT;
 	velocity.x = MARIO_WALKING_SPEED;
-	direction = Right;
+	direction = Direction::Right;
 	currentAnimation = MARIO_WALK;
 }
 
 void Mario::Draw(SpriteBatch &spriteBatch)
 {
-	auto effects = direction == Left ? SpriteEffects::FlipHorizontally : SpriteEffects::None;
-	(*animations)[currentAnimation].Draw(spriteBatch, position, Color::White(), effects);
+	auto effects = direction == Direction::Left ? SpriteEffects::FlipHorizontally : SpriteEffects::None;
+	GetAnimation().Draw(spriteBatch, position, Color::White(), effects);
 }

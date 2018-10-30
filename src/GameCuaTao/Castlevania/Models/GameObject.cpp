@@ -2,12 +2,79 @@
 
 using namespace Castlevania;
 
-void GameObject::SetState(int state)
+void GameObject::SetPosition(Vector2 position)
 {
-	this->state = state;
+	this->position = position;
 }
 
-int GameObject::GetState()
+void GameObject::SetPosition(float x, float y)
 {
-	return state;
+	position.x = x;
+	position.y = y;
+}
+
+void GameObject::SetSpeed(float x, float y)
+{
+	velocity.x = x;
+	velocity.y = y;
+}
+
+Vector2 GameObject::GetOriginPosition()
+{
+	return Vector2(
+		position.x + GetFrameRect().Width() / 2,
+		position.y + GetFrameRect().Height() / 2);
+}
+
+Rect GameObject::GetFrameRect()
+{
+	auto sprite = GetAnimation().GetCurrentFrame().GetSprite();
+	auto spriteFrame = sprite.GetSpriteFrame();
+
+	auto rect = Rect{};
+
+	rect.left = position.x;
+	rect.top = position.y;
+	rect.right = rect.left + spriteFrame.Width();
+	rect.bottom = rect.top + spriteFrame.Height();
+
+	return rect;
+}
+
+Rect GameObject::GetBoundingBox()
+{
+	auto sprite = GetAnimation().GetCurrentFrame().GetSprite();
+	auto spriteFrame = sprite.GetSpriteBoundary();
+	auto spriteBoundary = sprite.GetSpriteBoundary();
+
+	auto rect = Rect{};
+
+	rect.left = position.x + (spriteFrame.X() - spriteBoundary.X());
+	rect.top = position.y + (spriteFrame.Y() - spriteBoundary.Y());
+	rect.right = rect.left + spriteBoundary.Width();
+	rect.bottom = rect.top + spriteBoundary.Height();
+
+	return rect;
+}
+
+Animation &GameObject::GetAnimation()
+{
+	return (*animations)[currentAnimation];
+}
+
+void GameObject::LoadContent(ContentManager &content)
+{
+}
+
+void GameObject::Update(float deltaTime)
+{
+}
+
+void GameObject::UpdateDistance(float deltaTime)
+{
+	position += velocity * deltaTime;
+}
+
+void GameObject::Draw(SpriteBatch &spriteBatch)
+{
 }

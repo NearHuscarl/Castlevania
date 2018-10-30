@@ -16,8 +16,8 @@ void MenuScene::LoadContent()
 	auto viewport = sceneManager.GetGraphicsDevice().GetViewport();
 	auto startGameTextSize = Fonts::Main.MessureString(startGameText);
 	
-	startGameTextPosition.x = (viewport.Width - startGameTextSize.x) / 2;
-	startGameTextPosition.y = (viewport.Height - startGameTextSize.y) / 2 + 35;
+	startGameTextPosition.x = (viewport.width - startGameTextSize.x) / 2;
+	startGameTextPosition.y = (viewport.height - startGameTextSize.y) / 2 + 35;
 }
 
 void MenuScene::Update(float deltaTime)

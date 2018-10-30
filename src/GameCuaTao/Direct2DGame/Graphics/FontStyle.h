@@ -1,6 +1,6 @@
 #pragma once
 
-enum FontStyle
+enum class FontStyle
 {
 	Bold,
 	Italic,

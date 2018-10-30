@@ -4,6 +4,7 @@
 #include "Viewport.h"
 #include "../Device.h"
 #include "../Base/Color.h"
+#include "../Base/Rect.h"
 
 class GraphicsDevice
 {
@@ -13,6 +14,8 @@ public:
 
 	Color GetColorKey();
 	void SetColorKey(Color color);
+
+	Rect GetDisplay();
 
 	void CreateDevice(HWND hWnd);
 	void Clear(Color color);
@@ -26,6 +29,7 @@ public:
 private:
 	Viewport viewport;
 	Color colorKey = Color(255, 0, 255, 255);
+	Rect display;
 
 	IRenderDevice_ renderDevice = nullptr;    // Direct3D device object
 	ISurface_ surface = nullptr;

@@ -106,3 +106,4 @@ With the default configuration, Visual will toss all object files into one big f
 [freetype]: https://github.com/ubawurinna/freetype-windows-binaries
 
 [create smart pointer from raw pointer]: https://stackoverflow.com/questions/4665266/creating-shared-ptr-from-raw-pointer
+[Seperate animation and physical bounding box]: http://community.monogame.net/t/examples-of-good-adaptive-code-for-animated-sprites/9569

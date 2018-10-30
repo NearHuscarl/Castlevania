@@ -21,6 +21,11 @@ void GraphicsDevice::SetColorKey(Color color)
 	colorKey = color;
 }
 
+Rect GraphicsDevice::GetDisplay()
+{
+	return display;
+}
+
 void GraphicsDevice::CreateDevice(HWND hWnd)
 {
 	auto device = Direct3DCreate9(D3D_SDK_VERSION);
@@ -33,11 +38,10 @@ void GraphicsDevice::CreateDevice(HWND hWnd)
 	presentationParameters.BackBufferFormat = D3DFMT_X8R8G8B8;
 	presentationParameters.BackBufferCount = 1;
 
-	auto rect = RECT{};
-	GetClientRect(hWnd, &rect);	// retrieve Window width & height 
+	GetClientRect(hWnd, &display);	// retrieve Window width & height 
 
-	presentationParameters.BackBufferHeight = rect.bottom + 1;
-	presentationParameters.BackBufferWidth = rect.right + 1;
+	presentationParameters.BackBufferHeight = display.bottom;
+	presentationParameters.BackBufferWidth = display.right;
 
 	device->CreateDevice(
 		D3DADAPTER_DEFAULT,

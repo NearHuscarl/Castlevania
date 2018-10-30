@@ -6,14 +6,6 @@ namespace MarioSample
 	constexpr auto MARIO_JUMP_SPEED_Y = 700.f;
 	constexpr auto MARIO_GRAVITY = 50.f;
 
-	enum State
-	{
-		WALK_LEFT,
-		WALK_RIGHT,
-		IDLE,
-		JUMP,
-	};
-
 	// Animation types
 	constexpr auto MARIO_WALK = "mario_walk";
 	constexpr auto MARIO_IDLE = "mario_idle";

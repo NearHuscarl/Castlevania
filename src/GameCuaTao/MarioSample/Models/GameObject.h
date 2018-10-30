@@ -7,7 +7,7 @@
 
 namespace MarioSample
 {
-	enum Direction
+	enum class Direction
 	{
 		Left,
 		Right,
@@ -21,22 +21,19 @@ namespace MarioSample
 		void SetPosition(float x, float y);
 		void SetSpeed(float vx, float vy);
 
-		void SetState(int state);
-		int GetState();
-
 		virtual void LoadContent(ContentManager &content) = 0;
 
 		virtual void Update(float deltaTime);
 		void UpdateDistance(float deltaTime);
 
 		virtual void Draw(SpriteBatch &spriteBatch);
+		Animation &GetAnimation();
 
 	protected:
 		Vector2 position;
 		Vector2 velocity;
 
 		Direction direction;
-		int state;
 
 		std::shared_ptr<AnimationDict> animations;
 		std::string currentAnimation;

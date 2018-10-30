@@ -46,13 +46,13 @@ void SceneManager::Draw(GameTime gameTime)
 void SceneManager::SetNextScene(Scene scene)
 {
 	nextScene = GetScene(scene);
+	nextScene->LoadContent();
 }
 
 void SceneManager::NextScene(std::unique_ptr<AbstractScene> scene)
 {
 	// reassign std::unique_ptr make the old object destroyed and its memory deallocated :)
 	currentScene = std::move(scene);
-	currentScene->LoadContent();
 }
 
 AbstractScene *SceneManager::GetCurrentScene()

@@ -156,7 +156,8 @@
   <ItemGroup>
     <ClCompile Include="Castlevania\CastlevaniaGame.cpp" />
     <ClCompile Include="Castlevania\Models\GameObject.cpp" />
-    <ClCompile Include="Castlevania\Models\Player\Simon.cpp" />
+    <ClCompile Include="Castlevania\Models\Player.cpp" />
+    <ClCompile Include="Castlevania\Models\Simon.cpp" />
     <ClCompile Include="Castlevania\Scenes\AbstractScene.cpp" />
     <ClCompile Include="Castlevania\Scenes\GameplayScene.cpp" />
     <ClCompile Include="Castlevania\Scenes\IntroScene.cpp" />
@@ -169,6 +170,7 @@
     <ClCompile Include="Direct2DGame\Animation\Sprite.cpp" />
     <ClCompile Include="Direct2DGame\Graphics\SpriteBatch.cpp" />
     <ClCompile Include="Direct2DGame\Input\InputHelper.cpp" />
+    <ClCompile Include="Direct2DGame\MathHelper.cpp" />
     <ClCompile Include="Direct2DGame\Utilities\Stopwatch.cpp" />
     <ClCompile Include="Direct2DGame\Utilities\TimeSpan.cpp" />
     <ClCompile Include="MarioSample\Utilities\AudioManager.cpp" />
@@ -200,8 +202,9 @@
     <ClInclude Include="Castlevania\CastlevaniaGame.h" />
     <ClInclude Include="Castlevania\Models\GameObject.h" />
     <ClInclude Include="Castlevania\Models\IControllable.h" />
-    <ClInclude Include="Castlevania\Models\Player\AbstractState.h" />
-    <ClInclude Include="Castlevania\Models\Player\Simon.h" />
+    <ClInclude Include="Castlevania\Models\Player.h" />
+    <ClInclude Include="Castlevania\Models\Simon.h" />
+    <ClInclude Include="Castlevania\Models\SimonSettings.h" />
     <ClInclude Include="Castlevania\Scenes\AbstractScene.h" />
     <ClInclude Include="Castlevania\Scenes\GameplayScene.h" />
     <ClInclude Include="Castlevania\Scenes\IntroScene.h" />
@@ -214,6 +217,7 @@
     <ClInclude Include="Direct2DGame\Animation\Animation.h" />
     <ClInclude Include="Direct2DGame\Animation\AnimationFrame.h" />
     <ClInclude Include="Direct2DGame\Base\Color.h" />
+    <ClInclude Include="Direct2DGame\Base\Point.h" />
     <ClInclude Include="Direct2DGame\Base\Vector3.h" />
     <ClInclude Include="Direct2DGame\GameTime.h" />
     <ClInclude Include="Direct2DGame\Graphics\FontDescription.h" />
@@ -222,6 +226,7 @@
     <ClInclude Include="Direct2DGame\Graphics\Viewport.h" />
     <ClInclude Include="Direct2DGame\Input\InputHelper.h" />
     <ClInclude Include="Direct2DGame\Input\KeyboardState.h" />
+    <ClInclude Include="Direct2DGame\MathHelper.h" />
     <ClInclude Include="Direct2DGame\Utilities\Stopwatch.h" />
     <ClInclude Include="Direct2DGame\Utilities\TimeSpan.h" />
     <ClInclude Include="MarioSample\Utilities\AudioManager.h" />

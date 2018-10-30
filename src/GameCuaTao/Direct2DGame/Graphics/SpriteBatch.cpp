@@ -20,9 +20,9 @@ void SpriteBatch::Draw(Texture &texture, Vector2 position, Rect *rectPtr, Color 
 		rect = *rectPtr;
 
 	auto scale = Vector2{};
-	if (effects == FlipHorizontally)
+	if (effects == SpriteEffects::FlipHorizontally)
 		scale = Vector2(-1, 1);
-	else if (effects == FlipVertically)
+	else if (effects == SpriteEffects::FlipVertically)
 		scale = Vector2(1, -1);
 	else // None
 		scale = Vector2(1, 1);

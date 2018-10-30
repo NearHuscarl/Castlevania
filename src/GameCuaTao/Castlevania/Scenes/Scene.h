@@ -2,7 +2,7 @@
 
 namespace Castlevania
 {
-	enum Scene
+	enum class Scene
 	{
 		MENU,
 		INTRO,

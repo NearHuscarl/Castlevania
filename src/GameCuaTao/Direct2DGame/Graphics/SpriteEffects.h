@@ -1,6 +1,6 @@
 #pragma once
 
-enum SpriteEffects
+enum class SpriteEffects
 {
 	None,
 	FlipHorizontally,

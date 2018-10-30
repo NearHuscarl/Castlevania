@@ -1,17 +1,33 @@
 #pragma once
 
-#include "Direct2DGame/Base/Vector2.h"
+#include <memory>
+#include "Direct2DGame/Content/ContentManager.h"
 
 namespace Castlevania
 {
 	class GameObject
 	{
-		void SetState(int state);
-		int GetState();
+	public:
+		void SetPosition(Vector2 position);
+		void SetPosition(float x, float y);
+		void SetSpeed(float vx, float vy);
 
-	private:
+		Vector2 GetOriginPosition(); // Get the center of the object bounding box to the world
+		virtual Rect GetFrameRect();
+		virtual Rect GetBoundingBox();
+		Animation &GetAnimation();
+
+		virtual void LoadContent(ContentManager &content);
+		virtual void Update(float deltaTime);
+		void UpdateDistance(float deltaTime);
+
+		virtual void Draw(SpriteBatch &spriteBatch);
+
+	protected:
 		Vector2 position;
 		Vector2 velocity;
-		int state;
+
+		std::shared_ptr<AnimationDict> animations;
+		std::string currentAnimation;
 	};
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <windows.h>
+#include "Point.h"
 
 struct Rect : RECT
 {
@@ -17,6 +18,16 @@ struct Rect : RECT
 		this->bottom = bottom;
 	}
 
+	int X()
+	{
+		return left;
+	}
+
+	int Y()
+	{
+		return top;
+	}
+
 	int Width()
 	{
 		return right - left;
@@ -25,5 +36,10 @@ struct Rect : RECT
 	int Height()
 	{
 		return bottom - top;
+	}
+
+	Point Center()
+	{
+		return Point(X() + Width() / 2, Y() + Height() / 2);
 	}
 };

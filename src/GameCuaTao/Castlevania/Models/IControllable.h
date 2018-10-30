@@ -1,6 +1,9 @@
 #pragma once
 
-class IControllable
+namespace Castlevania
 {
-	virtual void UpdateInput() = 0;
-};
+	class IControllable
+	{
+		virtual void UpdateInput() = 0;
+	};
+}
