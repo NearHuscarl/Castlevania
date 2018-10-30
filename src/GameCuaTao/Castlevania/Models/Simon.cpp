@@ -1,4 +1,3 @@
-#include "Direct2DGame/MathHelper.h"
 #include "Simon.h"
 #include "SimonSettings.h"
 
