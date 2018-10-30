@@ -33,8 +33,8 @@ Rect GameObject::GetFrameRect()
 
 	auto rect = Rect{};
 
-	rect.left = position.x;
-	rect.top = position.y;
+	rect.left = (int)position.x;
+	rect.top = (int)position.y;
 	rect.right = rect.left + spriteFrame.Width();
 	rect.bottom = rect.top + spriteFrame.Height();
 
@@ -49,8 +49,9 @@ Rect GameObject::GetBoundingBox()
 
 	auto rect = Rect{};
 
-	rect.left = position.x + (spriteFrame.X() - spriteBoundary.X());
-	rect.top = position.y + (spriteFrame.Y() - spriteBoundary.Y());
+	// spriteFrame is usually larger than the spriteBoundary so we need to take account of the offset
+	rect.left = (int)position.x + (spriteFrame.X() - spriteBoundary.X());
+	rect.top = (int)position.y + (spriteFrame.Y() - spriteBoundary.Y());
 	rect.right = rect.left + spriteBoundary.Width();
 	rect.bottom = rect.top + spriteBoundary.Height();
 

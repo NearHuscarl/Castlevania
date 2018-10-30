@@ -42,4 +42,19 @@ struct Rect : RECT
 	{
 		return Point(X() + Width() / 2, Y() + Height() / 2);
 	}
+
+	static Rect Empty()
+	{
+		static auto emptyRectangle = Rect{};
+		return emptyRectangle;
+	}
+
+	bool operator==(Rect other)
+	{
+		return (
+			this->X() == other.X() &&
+			this->Y() == other.Y() &&
+			this->Width() == other.Width() &&
+			this->Height() == other.Height());
+	}
 };

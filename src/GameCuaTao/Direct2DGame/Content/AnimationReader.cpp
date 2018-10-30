@@ -36,7 +36,10 @@ std::shared_ptr<AnimationDict> AnimationReader::Read(std::string filePath, Conte
 			spriteNode.child("SpriteBoundary").attribute("Bottom").as_int()
 		};
 
-		sprites[name] = Sprite{ name, spriteFrame, spriteBoundary };
+		if (spriteBoundary == Rect::Empty())
+			sprites[name] = Sprite{ name, spriteFrame };
+		else
+			sprites[name] = Sprite{ name, spriteFrame, spriteBoundary };
 	}
 
 	auto texturePath = rootDoc.child("Spritesheet").attribute("TexturePath").as_string();

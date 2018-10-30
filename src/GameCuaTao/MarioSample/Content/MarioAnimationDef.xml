@@ -3,9 +3,17 @@
 <GameContent>
 
   <Spritesheet TexturePath="mario.png">
-    <Sprite Left="0"  Top="0" Right="16" Bottom="29" ID="mario_walk_01" />
-    <Sprite Left="29" Top="0" Right="47" Bottom="29" ID="mario_walk_02" />
-    <Sprite Left="59" Top="1" Right="77" Bottom="29" ID="mario_walk_03" />
+    <Sprite ID="mario_walk_01">
+      <SpriteFrame Left="0"  Top="0" Right="16" Bottom="29" />
+    </Sprite>
+    
+    <Sprite ID="mario_walk_02">
+      <SpriteFrame Left="29" Top="0" Right="47" Bottom="29" />
+    </Sprite>
+
+    <Sprite ID="mario_walk_03">
+      <SpriteFrame Left="59" Top="1" Right="77" Bottom="29" />
+    </Sprite>
   </Spritesheet>
 
   <Animations>
