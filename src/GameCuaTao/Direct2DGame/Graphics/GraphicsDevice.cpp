@@ -1,6 +1,61 @@
 #include "GraphicsDevice.h"
 #include "../Utilities/FileLogger.h"
 
+// Initialize DirectX, create a Direct3D device for rendering within the window, initial Sprite library for
+// rendering 2D images
+// - hInst: Application instance handle
+// - hWnd: Application window handle
+GraphicsDevice::GraphicsDevice(GraphicsDeviceInformation gdi)
+{
+	presentationParameters = gdi.presentationParameters;
+	driverType = gdi.driverType;
+	viewport = Viewport{ 0, 0, GetDisplay().Width(), GetDisplay().Height() };
+
+	Initialize();
+}
+
+void GraphicsDevice::Initialize()
+{
+	auto device = Direct3DCreate9(D3D_SDK_VERSION);
+	auto deviceType = D3DDEVTYPE{};
+
+	switch (driverType)
+	{
+		case DeviceDriverType::Hardware:
+			deviceType = D3DDEVTYPE_HAL;
+			break;
+
+		case DeviceDriverType::Reference:
+			deviceType = D3DDEVTYPE_REF;
+			break;
+
+		case DeviceDriverType::Software:
+			deviceType = D3DDEVTYPE_SW;
+			break;
+	}
+
+	device->CreateDevice(
+		D3DADAPTER_DEFAULT,                  // Use default video card
+		deviceType,                          // Use the hardware renderer
+		nullptr,                             // Window handle
+		D3DCREATE_SOFTWARE_VERTEXPROCESSING, // Do not use T&L (for compatibility)
+		&presentationParameters,             // Presentation parameters
+		&renderDevice);                      // Pointer to the new device
+
+	if (renderDevice == nullptr)
+	{
+		FileLogger::GetInstance().Error("CreateDevice failed");
+		return;
+	}
+
+	renderDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &surface);
+
+	// Initialize sprite helper from Direct3DX helper library
+	D3DXCreateSprite(renderDevice, &spriteHandler);
+
+	FileLogger::GetInstance().Info("Initialize GraphicsDriver done");
+}
+
 Viewport GraphicsDevice::GetViewport()
 {
 	return viewport;
@@ -23,46 +78,9 @@ void GraphicsDevice::SetColorKey(Color color)
 
 Rect GraphicsDevice::GetDisplay()
 {
-	return display;
-}
-
-void GraphicsDevice::CreateDevice(HWND hWnd)
-{
-	auto device = Direct3DCreate9(D3D_SDK_VERSION);
-	auto presentationParameters = PresentationParameters{};
-
-	ZeroMemory(&presentationParameters, sizeof(presentationParameters));
-
-	presentationParameters.Windowed = TRUE;
-	presentationParameters.SwapEffect = D3DSWAPEFFECT_DISCARD;
-	presentationParameters.BackBufferFormat = D3DFMT_X8R8G8B8;
-	presentationParameters.BackBufferCount = 1;
-
-	GetClientRect(hWnd, &display);	// retrieve Window width & height 
-
-	presentationParameters.BackBufferHeight = display.bottom;
-	presentationParameters.BackBufferWidth = display.right;
-
-	device->CreateDevice(
-		D3DADAPTER_DEFAULT,
-		D3DDEVTYPE_HAL,
-		hWnd,
-		D3DCREATE_SOFTWARE_VERTEXPROCESSING,
-		&presentationParameters,
-		&renderDevice);
-
-	if (renderDevice == nullptr)
-	{
-		FileLogger::GetInstance().Error("CreateDevice failed");
-		return;
-	}
-
-	renderDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &surface);
-
-	// Initialize sprite helper from Direct3DX helper library
-	D3DXCreateSprite(renderDevice, &spriteHandler);
-
-	FileLogger::GetInstance().Info("InitGame done");
+	return Rect(0, 0,
+		presentationParameters.BackBufferWidth,
+		presentationParameters.BackBufferHeight);
 }
 
 void GraphicsDevice::Clear(Color color)

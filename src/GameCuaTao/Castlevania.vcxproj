@@ -220,6 +220,8 @@
     <ClInclude Include="Direct2DGame\Base\Point.h" />
     <ClInclude Include="Direct2DGame\Base\Vector3.h" />
     <ClInclude Include="Direct2DGame\GameTime.h" />
+    <ClInclude Include="Direct2DGame\GraphicsDeviceInformation.h" />
+    <ClInclude Include="Direct2DGame\Graphics\DeviceDriverType.h" />
     <ClInclude Include="Direct2DGame\Graphics\FontDescription.h" />
     <ClInclude Include="Direct2DGame\Graphics\FontStyle.h" />
     <ClInclude Include="Direct2DGame\Graphics\SpriteBatch.h" />

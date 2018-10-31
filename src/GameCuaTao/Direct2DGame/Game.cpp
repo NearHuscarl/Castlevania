@@ -11,6 +11,11 @@ GraphicsDevice &Game::GetGraphicsDevice()
 	return graphics->GetGraphicsDevice();
 }
 
+GraphicsDeviceManager &Game::GetGraphicsDeviceManager()
+{
+	return *graphics;
+}
+
 ContentManager &Game::GetContent()
 {
 	return *content;
@@ -18,18 +23,17 @@ ContentManager &Game::GetContent()
 
 Game::Game()
 {
-	serviceProvider = std::make_shared<ServiceProvider>();
-	window          = std::make_unique<GameWindow>();
-	graphics        = std::make_unique<GraphicsDeviceManager>(*this);
-	content         = std::make_unique<ContentManager>(serviceProvider);
+	service  = std::make_shared<ServiceProvider>();
+	window   = std::make_unique<GameWindow>(*this);
+	graphics = std::make_unique<GraphicsDeviceManager>(*this);
+	content  = std::make_unique<ContentManager>(service);
 
-	serviceProvider->Add<GraphicsDevice>(&GetGraphicsDevice());
-	serviceProvider->Add<GameWindow>(&GetWindow());
+	service->Add<GraphicsDeviceManager>(graphics.get());
+	service->Add<GameWindow>(&GetWindow());
 }
 
 void Game::Initialize()
 {
-	window->Create();
 	graphics->CreateDevice();
 	Keyboard::Initialize(window->GetHandle());
 

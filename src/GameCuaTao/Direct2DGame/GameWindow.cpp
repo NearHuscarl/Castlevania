@@ -1,18 +1,45 @@
 #include "GameWindow.h"
+#include "Game.h"
 #include "Utilities/FileLogger.h"
 
-GameWindow::GameWindow()
+GameWindow::GameWindow(Game &game) : game(game)
 {
-	this->hInstance = GetModuleHandle(nullptr);
+	hInstance = GetModuleHandle(nullptr);
+
+	width = GraphicsDeviceManager::DefaultBackbufferWidth;
+	height = GraphicsDeviceManager::DefaultBackbufferHeight;
+
 	// TODO: refactor
 	windowClassName = L"SampleWindow";
 	windowTitle = L"02 - Sprite animation";
 }
 
+Rect GameWindow::GetClientBound()
+{
+	return Rect{ 0, 0, width, height }; // TODO: take account of position
+}
+
+Rect GameWindow::GetWindowBound()
+{
+	return windowBound;
+}
+
+HWND GameWindow::GetHandle()
+{
+	return hWnd;
+}
+
 void GameWindow::Create()
 {
-	auto WINDOW_CLASS_NAME = windowClassName;
-	auto MAIN_WINDOW_TITLE = windowTitle;
+	width = game.GetGraphicsDeviceManager().GetBackBufferWidth();
+	height = game.GetGraphicsDeviceManager().GetBackBufferHeight();
+
+	// AdjustWindowRectEx() is used to calculate the whole window size from client size
+	// Only use this BEFORE creating window, there's no guarantee that it will produce
+	// an accurate set of window dimensions for an existing window
+	// https://stackoverflow.com/questions/140347/win32-mfc-get-window-rect-from-client-rect
+	windowBound = GetClientBound();
+	AdjustWindowRectEx(&windowBound, WS_OVERLAPPEDWINDOW, false, 0);
 
 	auto windowClassEx = WNDCLASSEX{};
 	windowClassEx.cbSize = sizeof(WNDCLASSEX);
@@ -27,19 +54,19 @@ void GameWindow::Create()
 	windowClassEx.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	windowClassEx.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
 	windowClassEx.lpszMenuName = nullptr;
-	windowClassEx.lpszClassName = WINDOW_CLASS_NAME;
+	windowClassEx.lpszClassName = windowClassName;
 	windowClassEx.hIconSm = nullptr;
 
 	RegisterClassEx(&windowClassEx);
 
 	hWnd = CreateWindow(
-		WINDOW_CLASS_NAME,
-		MAIN_WINDOW_TITLE,
+		windowClassName,
+		windowTitle,
 		WS_OVERLAPPEDWINDOW, // WS_EX_TOPMOST | WS_VISIBLE | WS_POPUP,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
-		width,
-		height,
+		windowBound.Width(),
+		windowBound.Height(),
 		nullptr,
 		nullptr,
 		hInstance,
@@ -57,31 +84,6 @@ void GameWindow::Create()
 		ShowWindow(hWnd, SW_SHOWNORMAL);
 		UpdateWindow(hWnd);
 	}
-}
-
-HWND GameWindow::GetHandle()
-{
-	return hWnd;
-}
-
-void GameWindow::Width(int width)
-{
-	this->width = width;
-}
-
-void GameWindow::Height(int height)
-{
-	this->height = height;
-}
-
-int GameWindow::Width()
-{
-	return width;
-}
-
-int GameWindow::Height()
-{
-	return height;
 }
 
 LRESULT CALLBACK GameWindow::WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

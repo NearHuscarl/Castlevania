@@ -7,8 +7,9 @@ using namespace MarioSample;
 MarioSampleGame::MarioSampleGame()
 {
 	content->SetRootDirectory("MarioSample/Content");
-	window->Width(320);
-	window->Height(240);
+
+	graphics->SetBackBufferWidth(320);
+	graphics->SetBackBufferHeight(240);
 }
 
 void MarioSampleGame::Initialize()

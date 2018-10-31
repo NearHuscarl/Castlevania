@@ -1,9 +1,6 @@
 #pragma once
 
 #include "../Graphics/GraphicsDevice.h"
-#include "../Base/Rect.h"
-#include "../Base/Color.h"
-#include "../Base/Vector2.h"
 #include "../Graphics/SpriteFont.h"
 #include "../Graphics/SpriteEffects.h"
 #include "../Graphics/Texture.h"

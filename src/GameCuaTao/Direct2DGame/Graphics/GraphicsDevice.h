@@ -2,6 +2,7 @@
 
 #include <Windows.h>
 #include "Viewport.h"
+#include "../GraphicsDeviceInformation.h"
 #include "../Device.h"
 #include "../Base/Color.h"
 #include "../Base/Rect.h"
@@ -9,6 +10,9 @@
 class GraphicsDevice
 {
 public:
+	GraphicsDevice(GraphicsDeviceInformation gdi);
+	void Initialize();
+
 	Viewport GetViewport();
 	void SetViewport(Viewport viewport);
 
@@ -17,7 +21,6 @@ public:
 
 	Rect GetDisplay();
 
-	void CreateDevice(HWND hWnd);
 	void Clear(Color color);
 
 	IRenderDevice_ GetRenderDevice();
@@ -27,9 +30,10 @@ public:
 	virtual ~GraphicsDevice();
 
 private:
+	DeviceDriverType driverType;
+	PresentationParameters presentationParameters;
 	Viewport viewport;
 	Color colorKey = Color(255, 0, 255, 255);
-	Rect display;
 
 	IRenderDevice_ renderDevice = nullptr;    // Direct3D device object
 	ISurface_ surface = nullptr;

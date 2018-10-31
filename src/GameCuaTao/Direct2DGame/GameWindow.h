@@ -2,26 +2,29 @@
 
 #include <Windows.h>
 #include <string>
+#include "Base/Rect.h"
+
+class Game;
 
 class GameWindow
 {
 public:
-	GameWindow();
-
+	GameWindow(Game &game);
 	void Create();
-	HWND GetHandle();
 
-	void Width(int width);
-	void Height(int height);
-	int Width();
-	int Height();
+	HWND GetHandle();
+	Rect GetClientBound();
+	Rect GetWindowBound();
 
 private:
+	Game &game;
+
 	HINSTANCE hInstance;
 	HWND hWnd;
 
-	int width = 800;
-	int height = 480;
+	int width;
+	int height;
+	Rect windowBound;
 
 	LPCWSTR windowClassName;
 	LPCWSTR windowTitle;

@@ -1,6 +1,8 @@
 #pragma once
 
+// TODO: refactor
 #include <d3dx9.h>
+//#include <d3d9types.h>
 
 using IDevice_ = IDirect3D9*;
 

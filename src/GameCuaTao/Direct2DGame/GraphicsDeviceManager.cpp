@@ -1,25 +1,51 @@
 #include "Game.h"
 #include "GraphicsDeviceManager.h"
 
-// Initialize DirectX, create a Direct3D device for rendering within the window, initial Sprite library for
-// rendering 2D images
-// - hInst: Application instance handle
-// - hWnd: Application window handle
 GraphicsDeviceManager::GraphicsDeviceManager(Game &game) : game(game)
 {
-	this->graphicsDevice = std::make_shared<GraphicsDevice>();
-	this->framePerSecond = 90;
-	this->tickPerFrame = 1000 / framePerSecond;
+	// TODO: refactor
+	framePerSecond = 90;
+	tickPerFrame = 1000 / framePerSecond;
+
+	isFullScreen = false;                       // Set to true for windowed mode, false for fullscreen mode
+	backBufferFormat = D3DFMT_X8R8G8B8;         // Format of the back buffer, D3DFORMAT
+	backBufferCount = 1;                        // Number of back buffers. 1 is double buffering
+	swapEffect = D3DSWAPEFFECT_DISCARD;         // Swapping method for back buffer
+	backBufferWidth = DefaultBackbufferWidth;   // Width of back buffer
+	backBufferHeight = DefaultBackbufferHeight; // Height of back buffer
+}
+
+int GraphicsDeviceManager::GetBackBufferWidth()
+{
+	return backBufferWidth;
+}
+
+void GraphicsDeviceManager::SetBackBufferWidth(int width)
+{
+	backBufferWidth = width;
+}
+
+int GraphicsDeviceManager::GetBackBufferHeight()
+{
+	return backBufferHeight;
+}
+
+void GraphicsDeviceManager::SetBackBufferHeight(int height)
+{
+	backBufferHeight = height;
 }
 
 void GraphicsDeviceManager::CreateDevice()
 {
-	auto hWnd = game.GetWindow().GetHandle();
-	graphicsDevice->CreateDevice(hWnd);
-	
-	auto display = graphicsDevice->GetDisplay();
-	auto viewport = Viewport{ 0, 0, display.Width(), display.Height() };
-	graphicsDevice->SetViewport(viewport);
+	if (!initialized)
+	{
+		Initialize();
+		initialized = true;
+	}
+
+	auto gdi = GraphicsDeviceInformation{};
+	PrepareGraphicsDeviceInformation(gdi);
+	graphicsDevice = std::make_unique<GraphicsDevice>(gdi);
 }
 
 GraphicsDevice &GraphicsDeviceManager::GetGraphicsDevice()
@@ -35,4 +61,31 @@ int GraphicsDeviceManager::GetFramePerSecond()
 int GraphicsDeviceManager::GetTickPerFrame()
 {
 	return tickPerFrame;
+}
+
+void GraphicsDeviceManager::Initialize()
+{
+	game.GetWindow().Create();
+}
+
+void GraphicsDeviceManager::PreparePresentationParameters(PresentationParameters &presentationParameters)
+{
+	presentationParameters.hDeviceWindow = game.GetWindow().GetHandle();
+	presentationParameters.Windowed = isFullScreen ? false : true;
+	presentationParameters.BackBufferFormat = backBufferFormat;
+	presentationParameters.BackBufferCount = backBufferCount;
+	presentationParameters.BackBufferWidth = backBufferWidth;
+	presentationParameters.BackBufferHeight = backBufferHeight;
+	presentationParameters.SwapEffect = swapEffect;
+}
+
+void GraphicsDeviceManager::PrepareGraphicsDeviceInformation(GraphicsDeviceInformation &gdi)
+{
+	auto pp = PresentationParameters{};
+	ZeroMemory(&pp, sizeof(pp));
+	
+	PreparePresentationParameters(pp);
+	
+	gdi.presentationParameters = pp;
+	gdi.driverType = DeviceDriverType::Hardware;
 }

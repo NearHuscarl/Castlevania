@@ -3,7 +3,7 @@
 #include "SpriteFontReader.h"
 #include "ContentManager.h"
 #include "LoadContentException.h"
-#include "../Graphics/GraphicsDevice.h"
+#include "../GraphicsDeviceManager.h"
 #include "../Utilities/FileLogger.h"
 #include "../Utilities/FontHelper.h"
 #include "../Utilities/WinHelper.h"
@@ -23,11 +23,11 @@ std::shared_ptr<SpriteFont> SpriteFontReader::Read(std::string configFile, Conte
 		throw LoadContentException("Font file not found: " + configFile);
 
 	auto filePath = WinHelper::s2ws(filePathStr);
-	auto graphicsDevice = contentManager.GetServiceProvider().Get<GraphicsDevice>();
+	auto graphics = contentManager.GetServiceProvider().Get<GraphicsDeviceManager>();
 
 	AddFontResourceEx(filePath.c_str(), FR_PRIVATE, NULL);
 
-	auto renderDevice = graphicsDevice->GetRenderDevice();
+	auto renderDevice = graphics->GetGraphicsDevice().GetRenderDevice();
 	auto size = (int)options.size;
 	auto bold = options.style == FontStyle::Bold ? FW_BOLD : FW_NORMAL;
 	auto italic = options.style == FontStyle::Italic;

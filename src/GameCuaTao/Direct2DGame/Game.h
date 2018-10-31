@@ -12,6 +12,7 @@ class Game
 public:
 	GameWindow &GetWindow();
 	GraphicsDevice &GetGraphicsDevice();
+	GraphicsDeviceManager &GetGraphicsDeviceManager();
 	ContentManager &GetContent();
 
 	virtual void LoadContent();
@@ -30,7 +31,7 @@ protected:
 	std::unique_ptr<GameWindow> window;
 	std::unique_ptr<GraphicsDeviceManager> graphics;
 	std::unique_ptr<ContentManager> content;
-	std::shared_ptr<ServiceProvider> serviceProvider;
+	std::shared_ptr<ServiceProvider> service;
 
 private:
 	bool initialized = false;

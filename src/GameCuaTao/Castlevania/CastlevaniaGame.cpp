@@ -11,8 +11,8 @@ CastlevaniaGame::CastlevaniaGame()
 {
 	content->SetRootDirectory("Castlevania/Content");
 
-	window->Width(528);
-	window->Height(487);
+	graphics->SetBackBufferWidth(512);
+	graphics->SetBackBufferHeight(448);
 }
 
 void CastlevaniaGame::Initialize()

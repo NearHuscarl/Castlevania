@@ -75,9 +75,9 @@ void Mario::ResolveCollision(float deltaTime)
 	}
 
 	// simple screen edge collision!!!
-	if (velocity.x > 0 && position.x > 290)
+	if (velocity.x > 0 && position.x > 305)
 	{
-		position.x = 290;
+		position.x = 305;
 	}
 	if (velocity.x < 0 && position.x < 0)
 	{
