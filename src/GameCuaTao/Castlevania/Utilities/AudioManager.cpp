@@ -14,11 +14,19 @@ void AudioManager::LoadContent(ContentManager &content, AudioPathDict audioPathD
 
 	// Play sound the first time to 'load' it or the game will be lagged when the
 	// first sound effects is actually played. TODO: hacky, need a proper fix
-	//auto dummySound = soundDict.begin()->second;
-	//if (dummySound != nullptr)
-	//{
-	//	dummySound->Play(0, 0, DSBVOLUME_MIN);
-	//}
+
+	// Voice management flags
+	// The voice management flags are valid only for buffers created with the DSBCAPS_LOCDEFER flag,
+	// and are used for sounds that are to play in hardware. These flags enable hardware resources
+	// that are already in use to be yielded to the current sound.Only buffers created with the
+	// DSBCAPS_LOCDEFER flag are candidates for premature termination.
+	// Since we created a primary buffer with DSBCAPS_PRIMARYBUFFER flag (in DSUtil.cpp), the option
+	// DSBPLAY_TERMINATEBY_PRIORITY will not be valid, so the sound is not played(?)
+	auto dummySound = soundDict.begin()->second;
+	if (dummySound != nullptr)
+	{
+		dummySound->Play(0, DSBPLAY_TERMINATEBY_PRIORITY);
+	}
 }
 
 void AudioManager::Play(std::string name)
