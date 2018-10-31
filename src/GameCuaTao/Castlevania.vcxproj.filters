@@ -203,9 +203,6 @@
     <ClInclude Include="Library\pugixml\pugixml.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Direct2DGame\Device.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Direct2DGame\Graphics\SpriteEffects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -345,6 +342,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Direct2DGame\Graphics\DeviceDriverType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DGame\Direct3D9.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,8 +1,7 @@
 #pragma once
 
-// TODO: refactor
-#include <d3dx9.h>
-//#include <d3d9types.h>
+#include <d3d9.h>
+#include <d3dx9math.h>
 
 using IDevice_ = IDirect3D9*;
 
@@ -14,6 +13,12 @@ using ITexture_ = IDirect3DTexture9*;
 using IFont_ = ID3DXFont*;
 
 using ImageInfo = D3DXIMAGE_INFO;
-using PresentationParameters = D3DPRESENT_PARAMETERS;
 
+// Math
 using Matrix = D3DXMATRIX;
+
+// Type
+using DeviceType = D3DDEVTYPE;
+using SurfaceFormat = D3DFORMAT;
+using SwapEffect = D3DSWAPEFFECT;
+using PresentationParameters = D3DPRESENT_PARAMETERS;

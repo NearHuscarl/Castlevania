@@ -4,7 +4,6 @@
 #include "../Graphics/SpriteFont.h"
 #include "../Graphics/SpriteEffects.h"
 #include "../Graphics/Texture.h"
-#include "../Device.h"
 
 // An extension to DirectX sprite handler ID3DXSprite
 class SpriteBatch

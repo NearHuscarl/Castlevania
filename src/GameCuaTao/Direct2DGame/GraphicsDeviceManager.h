@@ -30,11 +30,11 @@ private:
 	std::shared_ptr<GraphicsDevice> graphicsDevice;
 	
 	bool isFullScreen;
-	D3DFORMAT backBufferFormat;
+	SurfaceFormat backBufferFormat;
 	unsigned int backBufferCount;
 	unsigned int backBufferWidth;
 	unsigned int backBufferHeight;
-	D3DSWAPEFFECT swapEffect;
+	SwapEffect swapEffect;
 	
 	int framePerSecond;
 	int tickPerFrame;

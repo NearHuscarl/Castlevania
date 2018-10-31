@@ -15,6 +15,7 @@ void AudioManager::LoadContent(ContentManager &content, AudioPathDict audioPathD
 	// Play sound the first time to 'load' it or the game will be lagged when the
 	// first sound effects is actually played. TODO: hacky, need a proper fix
 
+	// https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ee418074(v=vs.85)
 	// Voice management flags
 	// The voice management flags are valid only for buffers created with the DSBCAPS_LOCDEFER flag,
 	// and are used for sounds that are to play in hardware. These flags enable hardware resources

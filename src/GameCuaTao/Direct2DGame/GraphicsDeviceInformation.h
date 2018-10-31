@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Device.h"
+#include "Direct3D9.h"
 #include "Graphics/DeviceDriverType.h"
 
 struct GraphicsDeviceInformation

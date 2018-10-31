@@ -1,7 +1,7 @@
 #pragma once
 
 #include "string"
-#include "../Device.h"
+#include "../Direct3D9.h"
 #include "../Base/Vector2.h"
 
 class SpriteFont

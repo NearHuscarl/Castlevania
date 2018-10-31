@@ -236,7 +236,7 @@
     <ClInclude Include="Direct2DGame\Graphics\Texture.h" />
     <ClInclude Include="Direct2DGame\Content\SoundReader.h" />
     <ClInclude Include="Direct2DGame\Content\SpriteFontReader.h" />
-    <ClInclude Include="Direct2DGame\Device.h" />
+    <ClInclude Include="Direct2DGame\Direct3D9.h" />
     <ClInclude Include="Direct2DGame\Graphics\SpriteEffects.h" />
     <ClInclude Include="Direct2DGame\Utilities\FontHelper.h" />
     <ClInclude Include="Library\directx\DSUtil.h" />

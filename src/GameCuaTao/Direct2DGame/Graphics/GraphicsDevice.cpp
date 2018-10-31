@@ -17,7 +17,7 @@ GraphicsDevice::GraphicsDevice(GraphicsDeviceInformation gdi)
 void GraphicsDevice::Initialize()
 {
 	auto device = Direct3DCreate9(D3D_SDK_VERSION);
-	auto deviceType = D3DDEVTYPE{};
+	auto deviceType = DeviceType{};
 
 	switch (driverType)
 	{
