@@ -1,6 +1,6 @@
 #pragma once
 
-#include <d3dx9.h>
+#include "../Direct3D9.h"
 
 struct Vector2 : D3DXVECTOR2
 {

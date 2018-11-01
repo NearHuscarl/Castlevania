@@ -1,6 +1,5 @@
 #pragma once
 
-#include <d3dx9.h>
 #include "Vector2.h"
 
 struct Vector3 : D3DXVECTOR3

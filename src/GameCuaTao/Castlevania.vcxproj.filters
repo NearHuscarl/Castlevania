@@ -347,6 +347,9 @@
     <ClInclude Include="Direct2DGame\Direct3D9.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Direct2DGame\Input\DirectInput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

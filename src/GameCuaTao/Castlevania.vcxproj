@@ -219,6 +219,7 @@
     <ClInclude Include="Direct2DGame\Base\Color.h" />
     <ClInclude Include="Direct2DGame\Base\Point.h" />
     <ClInclude Include="Direct2DGame\Base\Vector3.h" />
+    <ClInclude Include="Direct2DGame\Input\DirectInput.h" />
     <ClInclude Include="Direct2DGame\GameTime.h" />
     <ClInclude Include="Direct2DGame\GraphicsDeviceInformation.h" />
     <ClInclude Include="Direct2DGame\Graphics\DeviceDriverType.h" />
