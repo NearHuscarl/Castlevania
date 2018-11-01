@@ -7,18 +7,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameCuaTao", "GameCuaTao\Ca
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Castlevania|x86 = Castlevania|x86
 		Debug|x86 = Debug|x86
-		MarioSample|x86 = MarioSample|x86
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{28B2F97D-9DAE-4B2D-B50C-20F78D14C071}.Castlevania|x86.ActiveCfg = Debug|Win32
-		{28B2F97D-9DAE-4B2D-B50C-20F78D14C071}.Castlevania|x86.Build.0 = Debug|Win32
 		{28B2F97D-9DAE-4B2D-B50C-20F78D14C071}.Debug|x86.ActiveCfg = Debug|Win32
 		{28B2F97D-9DAE-4B2D-B50C-20F78D14C071}.Debug|x86.Build.0 = Debug|Win32
-		{28B2F97D-9DAE-4B2D-B50C-20F78D14C071}.MarioSample|x86.ActiveCfg = Castlevania|Win32
-		{28B2F97D-9DAE-4B2D-B50C-20F78D14C071}.MarioSample|x86.Build.0 = Castlevania|Win32
 		{28B2F97D-9DAE-4B2D-B50C-20F78D14C071}.Release|x86.ActiveCfg = Release|Win32
 		{28B2F97D-9DAE-4B2D-B50C-20F78D14C071}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection

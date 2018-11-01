@@ -5,7 +5,7 @@ using namespace Castlevania;
 
 void Simon::LoadContent(ContentManager &content)
 {
-	animations = content.Load<AnimationDict>("Textures/Object/SimonAnimation.xml");
+	animations = content.Load<AnimationDict>("Characters/Players/SimonAnimation.xml");
 	Idle();
 }
 

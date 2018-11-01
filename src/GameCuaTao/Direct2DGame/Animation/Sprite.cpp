@@ -18,6 +18,11 @@ Sprite::Sprite(std::string spriteID, Rect spriteFrame, Rect spriteBoundary)
 	this->spriteBoundary = spriteBoundary;
 }
 
+std::string Sprite::GetID()
+{
+	return id;
+}
+
 Rect Sprite::GetSpriteFrame()
 {
 	return spriteFrame;

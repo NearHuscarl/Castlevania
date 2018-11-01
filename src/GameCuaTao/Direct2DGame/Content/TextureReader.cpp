@@ -23,20 +23,20 @@ std::shared_ptr<Texture> TextureReader::Read(std::string filePathStr, ContentMan
 	auto transparentColor = graphicsDevice.GetColorKey();
 
 	result = D3DXCreateTextureFromFileEx(
-		renderDevice,		            // Direct3D device object
-		filePath.c_str(),					// Path to the image to load
-		info.Width,							// Texture width
-		info.Height,						// Texture height
-		1,                            // Mip-map levels (1 for no chain)
+		renderDevice,           // Direct3D device object
+		filePath.c_str(),       // Path to the image to load
+		info.Width,             // Texture width
+		info.Height,            // Texture height
+		1,                      // Mip-map levels (1 for no chain)
 		D3DUSAGE_DYNAMIC,
-		D3DFMT_UNKNOWN,               // Surface format (default)
-		D3DPOOL_DEFAULT,              // Memory class for the texture
-		D3DX_DEFAULT,                 // Image filter
-		D3DX_DEFAULT,                 // Mip filter
-		transparentColor.Get(),       // Color key for transparency
-		&info,                        // Image file info
-		nullptr,                      // Color palette
-		&texture);							// Created texture pointer
+		D3DFMT_UNKNOWN,         // Surface format (default)
+		D3DPOOL_DEFAULT,        // Memory class for the texture
+		D3DX_DEFAULT,           // Image filter
+		D3DX_DEFAULT,           // Mip filter
+		transparentColor.Get(), // Color key for transparency
+		&info,                  // Image file info
+		nullptr,                // Color palette
+		&texture);              // Created texture pointer
 
 	if (result != D3D_OK)
 	{

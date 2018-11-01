@@ -2,7 +2,7 @@
 
 <GameContent>
   <!-- 48 x 64 -->
-  <Spritesheet TexturePath="Textures/Object/Simon.png">
+  <Spritesheet TexturePath="Simon.png">
     <Sprite ID="walk_01">
       <SpriteFrame Left="428" Top="0" Right="476" Bottom="64" />
       <SpriteBoundary Left="435" Top="3" Right="469" Bottom="65" />

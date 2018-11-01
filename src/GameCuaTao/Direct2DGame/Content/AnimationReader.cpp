@@ -1,4 +1,3 @@
-#include "Library/pugixml/pugixml.hpp"
 #include "AnimationReader.h"
 #include "LoadContentException.h"
 #include "ContentManager.h"
@@ -17,31 +16,22 @@ std::shared_ptr<AnimationDict> AnimationReader::Read(std::string filePath, Conte
 
 	auto rootDoc = xmlDocument.child("GameContent");
 	auto sprites = SpriteDict{};
-	auto left = int{}, top = int{}, right = int{}, bottom = int{};
 
 	for (auto spriteNode : rootDoc.child("Spritesheet").children("Sprite"))
 	{
-		auto name = spriteNode.attribute("ID").as_string();
-
-		left = spriteNode.child("SpriteFrame").attribute("Left").as_int();
-		top = spriteNode.child("SpriteFrame").attribute("Top").as_int();
-		right = spriteNode.child("SpriteFrame").attribute("Right").as_int();
-		bottom = spriteNode.child("SpriteFrame").attribute("Bottom").as_int();
-		auto spriteFrame = Rect{ left, top, right - left, bottom - top};
-
-		left = spriteNode.child("SpriteBoundary").attribute("Left").as_int();
-		top = spriteNode.child("SpriteBoundary").attribute("Top").as_int();
-		right = spriteNode.child("SpriteBoundary").attribute("Right").as_int();
-		bottom = spriteNode.child("SpriteBoundary").attribute("Bottom").as_int();
-		auto spriteBoundary = Rect{ left, top, right - left, bottom - top };
-
-		if (spriteBoundary == Rect::Empty())
-			sprites[name] = Sprite{ name, spriteFrame };
-		else
-			sprites[name] = Sprite{ name, spriteFrame, spriteBoundary };
+		auto sprite = ReadSprite(spriteNode);
+		sprites[sprite.GetID()] = sprite;
 	}
 
-	auto texturePath = rootDoc.child("Spritesheet").attribute("TexturePath").as_string();
+	auto texturePath = std::string(rootDoc.child("Spritesheet").attribute("TexturePath").as_string());
+	auto fullPath = (Path{ contentManager.GetRootDirectory() } / texturePath).string();
+	
+	if (!std::filesystem::exists(fullPath)) // fallback to the same directory as animationDef xml file if path not found
+	{
+		fullPath = (Path{ filePath }.parent_path() / texturePath).string();
+		texturePath = std::filesystem::relative(Path{ fullPath }, contentManager.GetRootDirectory()).string();
+	}
+
 	auto texture = contentManager.Load<Texture>(texturePath);
 	auto animations = AnimationDict{};
 
@@ -61,4 +51,34 @@ std::shared_ptr<AnimationDict> AnimationReader::Read(std::string filePath, Conte
 	}
 
 	return std::make_shared<AnimationDict>(animations);
+}
+
+Sprite AnimationReader::ReadSprite(pugi::xml_node spriteNode)
+{
+	auto name = spriteNode.attribute("ID").as_string();
+
+	auto left = int{};
+	auto top = int{};
+	auto right = int{};
+	auto bottom = int{};
+
+	left = spriteNode.child("SpriteFrame").attribute("Left").as_int();
+	top = spriteNode.child("SpriteFrame").attribute("Top").as_int();
+	right = spriteNode.child("SpriteFrame").attribute("Right").as_int();
+	bottom = spriteNode.child("SpriteFrame").attribute("Bottom").as_int();
+	auto spriteFrame = Rect{ left, top, right - left, bottom - top };
+
+	left = spriteNode.child("SpriteBoundary").attribute("Left").as_int();
+	top = spriteNode.child("SpriteBoundary").attribute("Top").as_int();
+	right = spriteNode.child("SpriteBoundary").attribute("Right").as_int();
+	bottom = spriteNode.child("SpriteBoundary").attribute("Bottom").as_int();
+	auto spriteBoundary = Rect{ left, top, right - left, bottom - top };
+	
+	auto sprite = Sprite{};
+	if (spriteBoundary == Rect::Empty())
+		sprite = Sprite{ name, spriteFrame };
+	else
+		sprite = Sprite{ name, spriteFrame, spriteBoundary };
+	
+	return sprite;
 }

@@ -10,6 +10,7 @@ public:
 	Sprite(std::string spriteID, Rect spriteFrame);
 	Sprite(std::string spriteID, Rect spriteFrame, Rect spriteBoundary);
 
+	std::string GetID();
 	Rect GetSpriteFrame();
 	Rect GetSpriteBoundary();
 
