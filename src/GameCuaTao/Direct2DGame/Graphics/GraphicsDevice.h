@@ -33,7 +33,7 @@ private:
 	DeviceDriverType driverType;
 	PresentationParameters presentationParameters;
 	Viewport viewport;
-	Color colorKey = Color(255, 0, 255, 255);
+	Color colorKey = Color{ 255, 0, 255, 255 };
 
 	IRenderDevice_ renderDevice = nullptr;    // Direct3D device object
 	ISurface_ surface = nullptr;

@@ -1,7 +1,7 @@
 #include "ContentReader.h"
 #include "ContentManager.h"
 
-ContentReader::ContentReader(ContentManager &contentManager) : contentManager(contentManager)
+ContentReader::ContentReader(ContentManager &contentManager) : contentManager{ contentManager }
 {
 }
 

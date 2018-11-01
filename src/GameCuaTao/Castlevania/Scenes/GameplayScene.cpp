@@ -3,7 +3,7 @@
 
 using namespace Castlevania;
 
-GameplayScene::GameplayScene(SceneManager &sceneManager) : AbstractScene(sceneManager)
+GameplayScene::GameplayScene(SceneManager &sceneManager) : AbstractScene{ sceneManager }
 {
 }
 

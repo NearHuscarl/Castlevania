@@ -1,12 +1,11 @@
 #include "GameObject.h"
-#include "..\..\Castlevania\Models\GameObject.h"
 
 using namespace MarioSample;
 
 GameObject::GameObject()
 {
-	position = Vector2(0, 0);
-	velocity = Vector2(0, 0);
+	position = Vector2::Zero();
+	velocity = Vector2::Zero();
 
 	direction = Direction::Right;
 }

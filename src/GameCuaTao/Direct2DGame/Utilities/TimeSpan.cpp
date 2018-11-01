@@ -9,7 +9,7 @@ TimeSpan::TimeSpan(Duration duration)
 
 const TimeSpan TimeSpan::Zero()
 {
-	static auto zeroTimeSpan = TimeSpan(Duration::zero());
+	static auto zeroTimeSpan = TimeSpan{ Duration::zero() };
 	return zeroTimeSpan;
 }
 
@@ -45,43 +45,43 @@ double TimeSpan::Hours()
 
 TimeSpan TimeSpan::FromNanoseconds(long long value)
 {
-	auto duration = Duration(nanoseconds(value));
-	return TimeSpan(duration);
+	auto duration = Duration{ nanoseconds(value) };
+	return TimeSpan{ duration };
 }
 
 TimeSpan TimeSpan::FromMicroseconds(long long value)
 {
-	auto duration = Duration(microseconds(value));
-	return TimeSpan(duration);
+	auto duration = Duration{ microseconds(value) };
+	return TimeSpan{ duration };
 }
 
 TimeSpan TimeSpan::FromMilliseconds(long long value)
 {
-	auto duration = Duration(milliseconds(value));
-	return TimeSpan(duration);
+	auto duration = Duration{ milliseconds(value) };
+	return TimeSpan{ duration };
 }
 
 TimeSpan TimeSpan::FromSeconds(long long value)
 {
-	auto duration = Duration(seconds(value));
-	return TimeSpan(duration);
+	auto duration = Duration{ seconds(value) };
+	return TimeSpan{ duration };
 }
 
 TimeSpan TimeSpan::FromMinutes(long long value)
 {
-	auto duration = Duration(minutes(value));
-	return TimeSpan(duration);
+	auto duration = Duration{ minutes(value) };
+	return TimeSpan{ duration };
 }
 
 TimeSpan TimeSpan::FromHours(long long value)
 {
-	auto duration = Duration(hours(value));
-	return TimeSpan(duration);
+	auto duration = Duration{ hours(value) };
+	return TimeSpan{ duration };
 }
 
 TimeSpan TimeSpan::operator+(const TimeSpan &other)
 {
-	return TimeSpan(this->duration + other.duration);
+	return TimeSpan{ this->duration + other.duration };
 }
 
 TimeSpan TimeSpan::operator+=(const TimeSpan &other)

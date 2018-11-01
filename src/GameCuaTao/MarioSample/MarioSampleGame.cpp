@@ -44,7 +44,7 @@ void MarioSampleGame::Draw(GameTime gameTime)
 	spriteBatch->GetSpriteHandler()->Begin(D3DXSPRITE_ALPHABLEND);
 
 	mario->Draw(*spriteBatch);
-	spriteBatch->DrawString(*gameFont, "Press arrow keys to move", Vector2(30, 30), Color(255, 0, 255));
+	spriteBatch->DrawString(*gameFont, "Press arrow keys to move", Vector2{ 30, 30 }, Color{ 255, 0, 255 });
 
 	spriteBatch->GetSpriteHandler()->End();
 }

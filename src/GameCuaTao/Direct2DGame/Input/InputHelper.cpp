@@ -1,7 +1,7 @@
 #include "InputHelper.h"
 
-KeyboardState InputHelper::currentKeyboardState = KeyboardState(nullptr);
-KeyboardState InputHelper::previousKeyboardState = KeyboardState(nullptr);
+KeyboardState InputHelper::currentKeyboardState = KeyboardState{ nullptr };
+KeyboardState InputHelper::previousKeyboardState = KeyboardState{ nullptr };
 
 void InputHelper::Update()
 {

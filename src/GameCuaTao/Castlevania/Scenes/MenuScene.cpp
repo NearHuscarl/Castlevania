@@ -5,7 +5,7 @@
 
 using namespace Castlevania;
 
-MenuScene::MenuScene(SceneManager &sceneManager) : AbstractScene(sceneManager)
+MenuScene::MenuScene(SceneManager &sceneManager) : AbstractScene{ sceneManager }
 {
 }
 

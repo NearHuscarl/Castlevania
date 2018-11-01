@@ -15,19 +15,19 @@ void SpriteBatch::Draw(Texture &texture, Vector2 position, Rect *rectPtr, Color 
 {
 	auto rect = Rect{};
 	if (rectPtr == nullptr) // if null, draws full texture
-		rect = Rect(0, 0, texture.Width(), texture.Height());
+		rect = Rect{ 0, 0, texture.Width(), texture.Height() };
 	else
 		rect = *rectPtr;
 
 	auto scale = Vector2{};
 	if (effects == SpriteEffects::FlipHorizontally)
-		scale = Vector2(-1, 1);
+		scale = Vector2{ -1, 1 };
 	else if (effects == SpriteEffects::FlipVertically)
-		scale = Vector2(1, -1);
+		scale = Vector2{ 1, -1 };
 	else // None
-		scale = Vector2(1, 1);
+		scale = Vector2{ 1, 1 };
 
-	auto center = Vector2(position.x + rect.Width() / 2, position.y + rect.Height() / 2);
+	auto center = Vector2{ position.x + rect.Width() / 2, position.y + rect.Height() / 2 };
 
 	auto oldMatrix = Matrix{};
 	auto newMatrix = Matrix{};
@@ -44,7 +44,7 @@ void SpriteBatch::Draw(Texture &texture, Vector2 position, Rect *rectPtr, Color 
 	);
 
 	spriteHandler->SetTransform(&newMatrix);
-	spriteHandler->Draw(texture.Get(), &rect, nullptr, &Vector3(position), color.Get());
+	spriteHandler->Draw(texture.Get(), &rect, nullptr, &Vector3{ position }, color.Get());
 	spriteHandler->SetTransform(&oldMatrix);
 }
 

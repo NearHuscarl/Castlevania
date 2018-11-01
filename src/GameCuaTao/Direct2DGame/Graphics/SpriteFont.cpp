@@ -15,7 +15,7 @@ Vector2 SpriteFont::MessureString(std::string text)
 {
 	if (font == nullptr)
 	{
-		return Vector2(0, 0);
+		return Vector2::Zero();
 	}
 
 	auto rect = Rect{};
@@ -27,5 +27,5 @@ Vector2 SpriteFont::MessureString(std::string text)
 	auto width = (float)(rect.right - rect.left);
 	auto height = (float)(rect.bottom - rect.top);
 
-	return Vector2(width, height);
+	return Vector2{ width, height };
 }

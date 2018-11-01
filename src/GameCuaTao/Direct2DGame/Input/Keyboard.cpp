@@ -1,8 +1,8 @@
 #include "Keyboard.h"
 #include "../Utilities/FileLogger.h"
 
-Input_ Keyboard::input;
-InputDevice_ Keyboard::inputDevice;
+Input_ Keyboard::input = Input_{ nullptr };
+InputDevice_ Keyboard::inputDevice = InputDevice_{ nullptr };
 
 void Keyboard::Initialize(HWND hWnd)
 {
@@ -86,16 +86,16 @@ KeyboardState Keyboard::GetState()
 			if (result == DI_OK)
 				FileLogger::GetInstance().Info("Keyboard re-acquired!");
 			else
-				return KeyboardState(nullptr);
+				return KeyboardState{ nullptr };
 		}
 		else
 		{
-			return KeyboardState(nullptr);
+			return KeyboardState{ nullptr };
 			// FileLogger::GetInstance().Error("DINPUT::GetDeviceState failed. Error: " + std::to_string(hr));
 		}
 	}
 
-	return KeyboardState(keyStates);
+	return KeyboardState{ keyStates };
 }
 
 void Keyboard::Release()

@@ -5,17 +5,16 @@
 
 struct Rect : RECT
 {
-	Rect()
+	Rect() : Rect(0, 0, 0, 0)
 	{
-		Rect(0, 0, 0, 0);
 	}
 
-	Rect(int left, int top, int right, int bottom)
+	Rect(int left, int top, int width, int height)
 	{
 		this->left = left;
 		this->top = top;
-		this->right = right;
-		this->bottom = bottom;
+		this->right = left + width;
+		this->bottom = top + height;
 	}
 
 	int X()
@@ -40,7 +39,7 @@ struct Rect : RECT
 
 	Point Center()
 	{
-		return Point(X() + Width() / 2, Y() + Height() / 2);
+		return Point{ X() + Width() / 2, Y() + Height() / 2 };
 	}
 
 	static Rect Empty()

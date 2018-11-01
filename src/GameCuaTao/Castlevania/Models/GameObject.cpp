@@ -21,9 +21,9 @@ void GameObject::SetSpeed(float x, float y)
 
 Vector2 GameObject::GetOriginPosition()
 {
-	return Vector2(
+	return Vector2{
 		position.x + GetFrameRect().Width() / 2,
-		position.y + GetFrameRect().Height() / 2);
+		position.y + GetFrameRect().Height() / 2 };
 }
 
 Rect GameObject::GetFrameRect()

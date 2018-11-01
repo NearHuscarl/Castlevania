@@ -78,9 +78,9 @@ void GraphicsDevice::SetColorKey(Color color)
 
 Rect GraphicsDevice::GetDisplay()
 {
-	return Rect(0, 0,
-		presentationParameters.BackBufferWidth,
-		presentationParameters.BackBufferHeight);
+	return Rect{ 0, 0,
+		(int)presentationParameters.BackBufferWidth,
+		(int)presentationParameters.BackBufferHeight };
 }
 
 void GraphicsDevice::Clear(Color color)

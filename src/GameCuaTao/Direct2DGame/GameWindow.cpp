@@ -2,9 +2,11 @@
 #include "Game.h"
 #include "Utilities/FileLogger.h"
 
-GameWindow::GameWindow(Game &game) : game(game)
+HINSTANCE GameWindow::instance = HINSTANCE{ nullptr };
+
+GameWindow::GameWindow(Game &game) : game{ game }
 {
-	hInstance = GetModuleHandle(nullptr);
+	instance = GetModuleHandle(nullptr);
 
 	width = GraphicsDeviceManager::DefaultBackbufferWidth;
 	height = GraphicsDeviceManager::DefaultBackbufferHeight;
@@ -16,7 +18,10 @@ GameWindow::GameWindow(Game &game) : game(game)
 
 Rect GameWindow::GetClientBound()
 {
-	return Rect{ 0, 0, width, height }; // TODO: take account of position
+	auto position = POINT{};
+	ClientToScreen(handle, &position);
+
+	return Rect{ position.x, position.y, width, height };
 }
 
 Rect GameWindow::GetWindowBound()
@@ -26,7 +31,7 @@ Rect GameWindow::GetWindowBound()
 
 HWND GameWindow::GetHandle()
 {
-	return hWnd;
+	return handle;
 }
 
 void GameWindow::Create()
@@ -45,7 +50,7 @@ void GameWindow::Create()
 	windowClassEx.cbSize = sizeof(WNDCLASSEX);
 
 	windowClassEx.style = CS_HREDRAW | CS_VREDRAW;
-	windowClassEx.hInstance = hInstance;
+	windowClassEx.hInstance = instance;
 
 	windowClassEx.lpfnWndProc = (WNDPROC)WinProc;
 	windowClassEx.cbClsExtra = 0;
@@ -59,7 +64,7 @@ void GameWindow::Create()
 
 	RegisterClassEx(&windowClassEx);
 
-	hWnd = CreateWindow(
+	handle = CreateWindow(
 		windowClassName,
 		windowTitle,
 		WS_OVERLAPPEDWINDOW, // WS_EX_TOPMOST | WS_VISIBLE | WS_POPUP,
@@ -69,20 +74,20 @@ void GameWindow::Create()
 		windowBound.Height(),
 		nullptr,
 		nullptr,
-		hInstance,
+		instance,
 		nullptr);
 
-	if (!hWnd)
+	if (!handle)
 	{
 		// TODO: use string template to populate error code
 		auto ErrCode = GetLastError();
 		FileLogger::GetInstance().Error("CreateWindow failed");
-		hWnd = nullptr;
+		handle = nullptr;
 	}
 	else
 	{
-		ShowWindow(hWnd, SW_SHOWNORMAL);
-		UpdateWindow(hWnd);
+		ShowWindow(handle, SW_SHOWNORMAL);
+		UpdateWindow(handle);
 	}
 }
 

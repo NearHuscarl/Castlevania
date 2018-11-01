@@ -1,7 +1,7 @@
 #include "Game.h"
 #include "GraphicsDeviceManager.h"
 
-GraphicsDeviceManager::GraphicsDeviceManager(Game &game) : game(game)
+GraphicsDeviceManager::GraphicsDeviceManager(Game &game) : game{ game }
 {
 	// TODO: refactor
 	framePerSecond = 90;

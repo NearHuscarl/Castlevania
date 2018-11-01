@@ -19,8 +19,8 @@ public:
 private:
 	Game &game;
 
-	HINSTANCE hInstance;
-	HWND hWnd;
+	static HINSTANCE instance;
+	HWND handle;
 
 	int width;
 	int height;

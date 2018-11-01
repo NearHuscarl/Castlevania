@@ -5,7 +5,7 @@
 
 using namespace Castlevania;
 
-SceneManager::SceneManager(Game &game) : game(game)
+SceneManager::SceneManager(Game &game) : game{ game }
 {
 	this->spriteBatch = std::make_unique<SpriteBatch>(game.GetGraphicsDevice());
 }

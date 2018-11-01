@@ -17,24 +17,23 @@ std::shared_ptr<AnimationDict> AnimationReader::Read(std::string filePath, Conte
 
 	auto rootDoc = xmlDocument.child("GameContent");
 	auto sprites = SpriteDict{};
-	
+	auto left = int{}, top = int{}, right = int{}, bottom = int{};
+
 	for (auto spriteNode : rootDoc.child("Spritesheet").children("Sprite"))
 	{
 		auto name = spriteNode.attribute("ID").as_string();
 
-		auto spriteFrame = Rect{
-			spriteNode.child("SpriteFrame").attribute("Left").as_int(),
-			spriteNode.child("SpriteFrame").attribute("Top").as_int(),
-			spriteNode.child("SpriteFrame").attribute("Right").as_int(),
-			spriteNode.child("SpriteFrame").attribute("Bottom").as_int()
-		};
+		left = spriteNode.child("SpriteFrame").attribute("Left").as_int();
+		top = spriteNode.child("SpriteFrame").attribute("Top").as_int();
+		right = spriteNode.child("SpriteFrame").attribute("Right").as_int();
+		bottom = spriteNode.child("SpriteFrame").attribute("Bottom").as_int();
+		auto spriteFrame = Rect{ left, top, right - left, bottom - top};
 
-		auto spriteBoundary = Rect{
-			spriteNode.child("SpriteBoundary").attribute("Left").as_int(),
-			spriteNode.child("SpriteBoundary").attribute("Top").as_int(),
-			spriteNode.child("SpriteBoundary").attribute("Right").as_int(),
-			spriteNode.child("SpriteBoundary").attribute("Bottom").as_int()
-		};
+		left = spriteNode.child("SpriteBoundary").attribute("Left").as_int();
+		top = spriteNode.child("SpriteBoundary").attribute("Top").as_int();
+		right = spriteNode.child("SpriteBoundary").attribute("Right").as_int();
+		bottom = spriteNode.child("SpriteBoundary").attribute("Bottom").as_int();
+		auto spriteBoundary = Rect{ left, top, right - left, bottom - top };
 
 		if (spriteBoundary == Rect::Empty())
 			sprites[name] = Sprite{ name, spriteFrame };

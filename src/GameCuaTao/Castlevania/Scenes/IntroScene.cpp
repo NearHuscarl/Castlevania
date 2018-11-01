@@ -8,7 +8,7 @@ using namespace Castlevania;
 
 constexpr auto GROUND_POSITION_Y = 338.f;
 
-IntroScene::IntroScene(SceneManager &sceneManager) : AbstractScene(sceneManager)
+IntroScene::IntroScene(SceneManager &sceneManager) : AbstractScene{ sceneManager }
 {
 	simon = std::make_unique<Simon>();
 }
@@ -21,8 +21,8 @@ void IntroScene::LoadContent()
 	
 	simon->LoadContent(sceneManager.GetContent());
 	
-	startPosition = Vector2((float)viewport.width - simon->GetBoundingBox().Width() / 2, GROUND_POSITION_Y);
-	gatePosition = Vector2((float)viewport.width / 2, GROUND_POSITION_Y);
+	startPosition = Vector2{ (float)viewport.width - simon->GetBoundingBox().Width() / 2, GROUND_POSITION_Y };
+	gatePosition = Vector2{ (float)viewport.width / 2, GROUND_POSITION_Y };
 
 	simon->SetPosition(startPosition);
 	
