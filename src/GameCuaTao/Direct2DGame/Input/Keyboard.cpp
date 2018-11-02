@@ -4,10 +4,10 @@
 Input_ Keyboard::input = Input_{ nullptr };
 InputDevice_ Keyboard::inputDevice = InputDevice_{ nullptr };
 
-void Keyboard::Initialize(HWND hWnd)
+void Keyboard::Initialize(HWND handle)
 {
 	auto result = DirectInput8Create(
-		(HINSTANCE)GetWindowLong(hWnd, GWL_HINSTANCE),
+		(HINSTANCE)GetWindowLong(handle, GWL_HINSTANCE),
 		DIRECTINPUT_VERSION,
 		IID_IDirectInput8, (void**)&input, nullptr);
 
@@ -36,7 +36,7 @@ void Keyboard::Initialize(HWND hWnd)
 
 	result = inputDevice->SetDataFormat(&c_dfDIKeyboard);
 
-	result = inputDevice->SetCooperativeLevel(hWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
+	result = inputDevice->SetCooperativeLevel(handle, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 
 
 	// IMPORTANT STEP TO USE BUFFERED DEVICE DATA!

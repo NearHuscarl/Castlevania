@@ -6,7 +6,7 @@
 class Keyboard
 {
 public:
-	static void Initialize(HWND hWnd);
+	static void Initialize(HWND handle);
 	static KeyboardState GetState();
 	static void Release();
 

@@ -91,7 +91,7 @@ void GameWindow::Create()
 	}
 }
 
-LRESULT CALLBACK GameWindow::WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK GameWindow::WinProc(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -99,7 +99,7 @@ LRESULT CALLBACK GameWindow::WinProc(HWND hWnd, UINT message, WPARAM wParam, LPA
 			PostQuitMessage(0);
 			break;
 		default:
-			return DefWindowProc(hWnd, message, wParam, lParam);
+			return DefWindowProc(handle, message, wParam, lParam);
 	}
 
 	return 0;

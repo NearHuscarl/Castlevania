@@ -155,6 +155,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Castlevania\CastlevaniaGame.cpp" />
+    <ClCompile Include="Castlevania\Models\Bat.cpp" />
     <ClCompile Include="Castlevania\Models\GameObject.cpp" />
     <ClCompile Include="Castlevania\Models\Player.cpp" />
     <ClCompile Include="Castlevania\Models\Simon.cpp" />
@@ -200,6 +201,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Castlevania\CastlevaniaGame.h" />
+    <ClInclude Include="Castlevania\Models\Bat.h" />
     <ClInclude Include="Castlevania\Models\GameObject.h" />
     <ClInclude Include="Castlevania\Models\IControllable.h" />
     <ClInclude Include="Castlevania\Models\Player.h" />
@@ -211,8 +213,8 @@
     <ClInclude Include="Castlevania\Scenes\MenuScene.h" />
     <ClInclude Include="Castlevania\Scenes\Scene.h" />
     <ClInclude Include="Castlevania\Scenes\SceneManager.h" />
-    <ClInclude Include="Castlevania\Settings\Fonts.h" />
     <ClInclude Include="Castlevania\Settings\Audios.h" />
+    <ClInclude Include="Castlevania\Settings\Fonts.h" />
     <ClInclude Include="Castlevania\Utilities\AudioManager.h" />
     <ClInclude Include="Direct2DGame\Animation\Animation.h" />
     <ClInclude Include="Direct2DGame\Animation\AnimationFrame.h" />

@@ -4,24 +4,20 @@
 #include "../Utilities/WinHelper.h"
 #include "../GameWindow.h"
 
-void SoundReader::InitDirectSound(HWND hWnd)
+void SoundReader::InitDirectSound(HWND handle)
 {
 	// Initialize DirectSound
 	soundManager = std::make_unique<SoundManager>();
 
-	auto result = soundManager->Initialize(hWnd, DSSCL_PRIORITY);
+	auto result = soundManager->Initialize(handle, DSSCL_PRIORITY);
 
 	if (result != DS_OK)
-	{
 		throw LoadContentException("Cannot initialize CSoundManager");
-	}
 
 	result = soundManager->SetPrimaryBufferFormat(2, 22050, 16);
 
 	if (result != DS_OK)
-	{
 		throw LoadContentException("Cannot set primary buffer format for CSoundManager");
-	}
 }
 
 std::shared_ptr<Sound> SoundReader::Read(std::string filePathStr, ContentManager &contentManager)

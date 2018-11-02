@@ -33,3 +33,27 @@ private:
 	template<typename T>
 	std::shared_ptr<T> ReadAsset(std::string assetName);
 };
+
+template<typename T>
+inline std::shared_ptr<T> ContentManager::Load(std::string assetName)
+{
+	assetName = Path{ assetName }.make_preferred().string(); // Replace path seperator '/' with '\\'
+
+	auto it = loadedAssets.find(assetName);
+	if (it != loadedAssets.end()) // Asset already loaded before, just return it
+	{
+		return std::any_cast<std::shared_ptr<T>>(loadedAssets[assetName]);
+	}
+
+	loadedAssets.emplace(assetName, ReadAsset<T>(assetName));
+
+	return std::any_cast<std::shared_ptr<T>>(loadedAssets[assetName]);
+}
+
+template<typename T>
+inline std::shared_ptr<T> ContentManager::ReadAsset(std::string assetName)
+{
+	auto path = (Path{ rootDirectory } / assetName).string();
+
+	return contentReader->ReadAsset<T>(path);
+}

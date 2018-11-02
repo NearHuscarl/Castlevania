@@ -81,40 +81,16 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Castlevania\CastlevaniaGame.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MarioSample\Models\GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MarioSample\Models\Mario.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Castlevania\Models\GameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Castlevania\Scenes\SceneManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Castlevania\Scenes\MenuScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MarioSample\Utilities\AudioManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Direct2DGame\Graphics\SpriteBatch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Castlevania\Scenes\IntroScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Castlevania\Scenes\GameplayScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Castlevania\Utilities\AudioManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Castlevania\Settings\Fonts.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Direct2DGame\Graphics\GraphicsDevice.cpp">
@@ -132,16 +108,43 @@
     <ClCompile Include="Direct2DGame\Utilities\Stopwatch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Castlevania\Scenes\AbstractScene.cpp">
+    <ClCompile Include="Direct2DGame\MathHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Castlevania\Models\Simon.cpp">
+    <ClCompile Include="Castlevania\Models\Bat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Models\GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Castlevania\Models\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Direct2DGame\MathHelper.cpp">
+    <ClCompile Include="Castlevania\Models\Simon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Scenes\AbstractScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Scenes\GameplayScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Scenes\IntroScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Scenes\MenuScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Scenes\SceneManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Settings\Fonts.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Utilities\AudioManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\CastlevaniaGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -233,9 +236,6 @@
     <ClInclude Include="MarioSample\MarioSampleGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Castlevania\CastlevaniaGame.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Direct2DGame\GameTime.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -245,34 +245,10 @@
     <ClInclude Include="MarioSample\Models\Mario.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Castlevania\Models\GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Castlevania\Scenes\GameplayScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Castlevania\Scenes\MenuScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Castlevania\Scenes\IntroScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Castlevania\Scenes\SceneManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Castlevania\Scenes\Scene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Direct2DGame\Graphics\SpriteBatch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MarioSample\Utilities\AudioManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Castlevania\Utilities\AudioManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Castlevania\Settings\Fonts.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Direct2DGame\Graphics\Viewport.h">
@@ -282,9 +258,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Direct2DGame\Utilities\TimeSpan.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Castlevania\Settings\Audios.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Direct2DGame\Input\Keyboard.h">
@@ -311,25 +284,10 @@
     <ClInclude Include="Direct2DGame\Base\Rect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Castlevania\Scenes\AbstractScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Castlevania\Models\Simon.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Castlevania\Models\SimonSettings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Direct2DGame\Graphics\FontDescription.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Direct2DGame\Graphics\FontStyle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Castlevania\Models\IControllable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Castlevania\Models\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Direct2DGame\Base\Point.h">
@@ -348,6 +306,54 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Direct2DGame\Input\DirectInput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Bat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\GameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\IControllable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Simon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\SimonSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Scenes\AbstractScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Scenes\GameplayScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Scenes\IntroScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Scenes\MenuScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Scenes\Scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Scenes\SceneManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Settings\Audios.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Settings\Fonts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Utilities\AudioManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\CastlevaniaGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

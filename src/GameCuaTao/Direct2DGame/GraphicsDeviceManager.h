@@ -20,8 +20,8 @@ public:
 	void CreateDevice();
 	GraphicsDevice &GetGraphicsDevice();
 	
-	int GetFramePerSecond();
-	int GetTickPerFrame();
+	float GetFramePerSecond();
+	float GetTickPerFrame();
 
 private:
 	bool initialized = false;
@@ -36,8 +36,8 @@ private:
 	unsigned int backBufferHeight;
 	SwapEffect swapEffect;
 	
-	int framePerSecond;
-	int tickPerFrame;
+	float framePerSecond;
+	float tickPerFrame;
 
 	void Initialize();
 

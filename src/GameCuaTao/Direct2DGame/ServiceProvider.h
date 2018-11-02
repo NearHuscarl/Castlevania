@@ -3,7 +3,7 @@
 #include <string>
 #include <any>
 #include <map>
-#include <typeinfo>
+#include <typeindex>
 #include <stdexcept>
 
 // https://stackoverflow.com/questions/412165/c-service-providers#412200
@@ -17,21 +17,20 @@ public:
 	T *Get();
 
 private:
-	std::map<std::string, std::any> services;
+	std::map<std::type_index, std::any> services;
 };
 
 template<typename T>
 inline void ServiceProvider::Add(T *service)
 {
-	auto typeName = typeid(T).name();
+	auto typeName = std::type_index{ typeid(T) };
 	services.emplace(typeName, service);
 }
 
-// TODO: should we use std::shared_ptr instead of raw pointer?
 template<typename T>
 inline T *ServiceProvider::Get()
 {
-	auto typeName = typeid(T).name();
+	auto typeName = std::type_index{ typeid(T) };
 	auto it = services.find(typeName);
 
 	if (it == services.end())

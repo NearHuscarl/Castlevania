@@ -13,5 +13,5 @@ public:
 
 private:
 	std::unique_ptr<SoundManager> soundManager = nullptr;
-	void InitDirectSound(HWND hWnd);
+	void InitDirectSound(HWND handle);
 };

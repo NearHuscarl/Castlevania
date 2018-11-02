@@ -53,12 +53,12 @@ GraphicsDevice &GraphicsDeviceManager::GetGraphicsDevice()
 	return *graphicsDevice;
 }
 
-int GraphicsDeviceManager::GetFramePerSecond()
+float GraphicsDeviceManager::GetFramePerSecond()
 {
 	return framePerSecond;
 }
 
-int GraphicsDeviceManager::GetTickPerFrame()
+float GraphicsDeviceManager::GetTickPerFrame()
 {
 	return tickPerFrame;
 }

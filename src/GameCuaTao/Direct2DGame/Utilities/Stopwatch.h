@@ -3,7 +3,7 @@
 #include <string>
 #include "TimeSpan.h"
 
-// This is based on .NET framework's Stopwatch class
+// This class is based on .NET framework's Stopwatch
 class Stopwatch
 {
 public:

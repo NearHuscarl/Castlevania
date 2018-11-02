@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../Direct3D9.h"
 #include <string>
 #include <sstream>
 

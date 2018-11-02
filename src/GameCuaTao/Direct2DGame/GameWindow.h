@@ -29,5 +29,5 @@ private:
 	LPCWSTR windowClassName;
 	LPCWSTR windowTitle;
 
-	static LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK WinProc(HWND handle, UINT message, WPARAM wParam, LPARAM lParam);
 };
