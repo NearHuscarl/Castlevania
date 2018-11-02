@@ -1,7 +1,7 @@
 #pragma once
 
-#include "KeyboardState.h"
 #include "Keyboard.h"
+#include "KeyboardState.h"
 
 class InputHelper
 {

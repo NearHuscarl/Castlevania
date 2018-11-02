@@ -23,6 +23,8 @@ namespace Castlevania
 
 		virtual void Draw(SpriteBatch &spriteBatch);
 
+		virtual ~GameObject();
+
 	protected:
 		Vector2 position;
 		Vector2 velocity;

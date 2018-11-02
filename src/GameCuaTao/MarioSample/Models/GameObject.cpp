@@ -43,3 +43,7 @@ Animation &GameObject::GetAnimation()
 void GameObject::Draw(SpriteBatch &spriteBatch)
 {
 }
+
+GameObject::~GameObject()
+{
+}

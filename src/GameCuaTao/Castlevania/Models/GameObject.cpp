@@ -1,5 +1,4 @@
 #include "GameObject.h"
-#include "Direct2DGame/Content/ContentManager.h"
 
 using namespace Castlevania;
 
@@ -78,5 +77,9 @@ void GameObject::UpdateDistance(float deltaTime)
 }
 
 void GameObject::Draw(SpriteBatch &spriteBatch)
+{
+}
+
+GameObject::~GameObject()
 {
 }

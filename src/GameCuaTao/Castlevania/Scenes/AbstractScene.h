@@ -15,6 +15,8 @@ namespace Castlevania
 		virtual void Update(float deltaTime) = 0;
 		virtual void Draw(GameTime gameTime) = 0;
 
+		virtual ~AbstractScene();
+
 	protected:
 		SceneManager &sceneManager;
 	};

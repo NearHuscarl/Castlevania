@@ -29,6 +29,8 @@ namespace MarioSample
 		virtual void Draw(SpriteBatch &spriteBatch);
 		Animation &GetAnimation();
 
+		virtual ~GameObject();
+
 	protected:
 		Vector2 position;
 		Vector2 velocity;

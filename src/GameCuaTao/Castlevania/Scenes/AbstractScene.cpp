@@ -6,3 +6,7 @@ using namespace Castlevania;
 AbstractScene::AbstractScene(SceneManager &sceneManager) : sceneManager{ sceneManager }
 {
 }
+
+AbstractScene::~AbstractScene()
+{
+}
