@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "Direct2DGame/Content/ContentManager.h"
 
 using namespace Castlevania;
 

@@ -105,6 +105,9 @@
     <PostBuildEvent>
       <Message>Copy DLLs to Target Directory</Message>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>$(ProjectDir)Deployment\cppclean.sh</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

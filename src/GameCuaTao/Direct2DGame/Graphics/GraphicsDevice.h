@@ -2,7 +2,6 @@
 
 #include <Windows.h>
 #include "Viewport.h"
-#include "../Direct3D9.h"
 #include "../GraphicsDeviceInformation.h"
 #include "../Base/Color.h"
 #include "../Base/Rect.h"

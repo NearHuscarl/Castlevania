@@ -31,3 +31,6 @@ packages/
 
 # Logger
 Logs/
+
+# cpp lint output
+cpplint.txt
