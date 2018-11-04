@@ -25,7 +25,7 @@ public:
 	static TimeSpan FromMinutes(long long value);
 	static TimeSpan FromHours(long long value);
 
-	TimeSpan operator+(const TimeSpan &other);
+	TimeSpan operator+(const TimeSpan &other) const;
 	TimeSpan operator+=(const TimeSpan &other);
 
 private:

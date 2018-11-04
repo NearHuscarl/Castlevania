@@ -53,7 +53,7 @@ void GraphicsDevice::Initialize()
 	// Initialize sprite helper from Direct3DX helper library
 	D3DXCreateSprite(renderDevice, &spriteHandler);
 
-	FileLogger::GetInstance().Info("Initialize GraphicsDriver done");
+	FileLogger::GetInstance().Info("Initialize GraphicsDevice done");
 }
 
 Viewport GraphicsDevice::GetViewport()

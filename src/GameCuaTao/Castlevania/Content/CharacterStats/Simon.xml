@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Character>
+    <Name>Simon</Name>
+    <Speed>50.0</Speed>
+    <StartingAnimation>idle</StartingAnimation>
+  </Character>
+
+</GameContent>

@@ -14,16 +14,16 @@ std::shared_ptr<AnimationDict> AnimationReader::Read(std::string filePath, Conte
 		throw LoadContentException(result.description());
 	}
 
-	auto rootDoc = xmlDocument.child("GameContent");
+	auto rootNode = xmlDocument.child("GameContent");
 	auto sprites = SpriteDict{};
 
-	for (auto spriteNode : rootDoc.child("Spritesheet").children("Sprite"))
+	for (auto spriteNode : rootNode.child("Spritesheet").children("Sprite"))
 	{
 		auto sprite = ReadSprite(spriteNode);
 		sprites[sprite.GetID()] = sprite;
 	}
 
-	auto texturePath = std::string(rootDoc.child("Spritesheet").attribute("TexturePath").as_string());
+	auto texturePath = std::string(rootNode.child("Spritesheet").attribute("TexturePath").as_string());
 	auto fullPath = (Path{ contentManager.GetRootDirectory() } / texturePath).string();
 	
 	if (!std::filesystem::exists(fullPath)) // fallback to the same directory as animationDef xml file if path not found
@@ -35,7 +35,7 @@ std::shared_ptr<AnimationDict> AnimationReader::Read(std::string filePath, Conte
 	auto texture = contentManager.Load<Texture>(texturePath);
 	auto animations = AnimationDict{};
 
-	for (auto animationNode : rootDoc.child("Animations").children("Animation"))
+	for (auto animationNode : rootNode.child("Animations").children("Animation"))
 	{
 		auto defaultAnimateTime = animationNode.attribute("DefaultTime").as_uint();
 		auto animation = Animation{ texture, defaultAnimateTime };

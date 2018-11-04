@@ -3,16 +3,16 @@
 <GameContent>
   <Spritesheet TexturePath="Bat.png">
     <Sprite ID="fly_01">
-      <SpriteFrame Left="0" Top="0" Right="16" Bottom="16" />
+      <SpriteFrame Left="1" Top="1" Right="17" Bottom="17" />
     </Sprite>
 
     <Sprite ID="fly_02">
-      <SpriteFrame Left="16" Top="0" Right="32" Bottom="32" />
+      <SpriteFrame Left="18" Top="1" Right="34" Bottom="33" />
     </Sprite>
   </Spritesheet>
 
   <Animations>
-    <Animation Name="fly" DefaultTime="100">
+    <Animation Name="fly" DefaultTime="65">
       <Frame SpriteID="fly_01" />
       <Frame SpriteID="fly_02" />
     </Animation>

@@ -3,7 +3,7 @@
 #include <map>
 #include "Library/pugixml/pugixml.hpp"
 #include "AbstractReader.h"
-#include "../Animation/Animation.h"
+#include "../Data/Animation.h"
 
 using SpriteDict = std::map<std::string, Sprite>;
 using AnimationDict = std::map<std::string, Animation>;

@@ -33,5 +33,7 @@ namespace Castlevania
 
 		State state;
 		Direction direction;
+
+		void SetDirection(Direction direction);
 	};
 }

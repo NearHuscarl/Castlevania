@@ -68,7 +68,7 @@ FontDescription SpriteFontReader::ReadFontConfig(std::string configFile)
 		throw LoadContentException(result.description());
 	}
 
-	auto fontDoc = xmlDocument.child("GameContent").child("Font");
+	auto fontNode = xmlDocument.child("GameContent").child("Font");
 	auto options = FontDescription{};
 	static auto fontStyles = std::map<std::string, FontStyle>
 	{
@@ -77,10 +77,10 @@ FontDescription SpriteFontReader::ReadFontConfig(std::string configFile)
 		{ "Italic", FontStyle::Italic },
 	};
 
-	options.fontName = fontDoc.child("FontName").text().as_string();
-	options.directory = fontDoc.child("Directory").text().as_string();
-	options.size = fontDoc.child("Size").text().as_float();
-	options.style = fontStyles.at(fontDoc.child("Style").text().as_string());
+	options.fontName = fontNode.child("FontName").text().as_string();
+	options.directory = fontNode.child("Directory").text().as_string();
+	options.size = fontNode.child("Size").text().as_float();
+	options.style = fontStyles.at(fontNode.child("Style").text().as_string());
 
 	return options;
 }

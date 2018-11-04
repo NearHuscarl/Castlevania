@@ -1,11 +1,25 @@
 #include "Simon.h"
-#include "SimonSettings.h"
+#include "../Settings/Animations.h"
 
 using namespace Castlevania;
+
+void Simon::SetDirection(Direction direction)
+{
+	this->direction = direction;
+
+	if (direction == Direction::Left)
+		this->rotation = Vector2(-1, 0);
+	else // Direction::Right
+		this->rotation = Vector2(1, 0);
+}
 
 void Simon::LoadContent(ContentManager &content)
 {
 	animations = content.Load<AnimationDict>("Characters/Players/SimonAnimation.xml");
+	auto stats = content.Load<CharacterStats>("CharacterStats/Simon.xml");
+
+	currentAnimation = stats->startingAnimation;
+	speed = stats->speed; // default velocity
 	Idle();
 }
 
@@ -31,29 +45,29 @@ void Simon::Draw(SpriteBatch &spriteBatch)
 void Simon::Idle()
 {
 	state = State::IDLE;
-	velocity.x = 0;
+	velocity = 0;
 	currentAnimation = IDLE_ANIMATION;
 }
 
 void Simon::WalkLeft()
 {
 	state = State::WALKING_LEFT;
-	direction = Direction::Left;
-	velocity.x = -WALKING_SPEED;
+	SetDirection(Direction::Left);
+	velocity = speed;
 	currentAnimation = WALK_ANIMATION;
 }
 
 void Simon::WalkRight()
 {
 	state = State::WALKING_RIGHT;
-	direction = Direction::Right;
-	velocity.x = WALKING_SPEED;
+	SetDirection(Direction::Right);
+	velocity = speed;
 	currentAnimation = WALK_ANIMATION;
 }
 
 void Simon::TurnBackward()
 {
 	state = State::TURNING_BACKWARD;
-	velocity.x = 0;
+	velocity = 0;
 	currentAnimation = TURN_BACKWARD_ANIMATION;
 }

@@ -2,7 +2,7 @@
 
 #include <map>
 #include "Direct2DGame/Base/Vector2.h"
-#include "Direct2DGame/Animation/Animation.h"
+#include "Direct2DGame/Data/Animation.h"
 #include "Direct2DGame/Content/ContentManager.h"
 
 namespace MarioSample

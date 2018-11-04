@@ -79,7 +79,7 @@ TimeSpan TimeSpan::FromHours(long long value)
 	return TimeSpan{ duration };
 }
 
-TimeSpan TimeSpan::operator+(const TimeSpan &other)
+TimeSpan TimeSpan::operator+(const TimeSpan &other) const
 {
 	return TimeSpan{ this->duration + other.duration };
 }

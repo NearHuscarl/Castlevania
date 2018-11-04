@@ -8,9 +8,10 @@ namespace Castlevania
 	class GameObject
 	{
 	public:
-		void SetPosition(Vector2 position);
+		void SetVelocity(float velocity);
+		void SetRotation(float degrees);
 		void SetPosition(float x, float y);
-		void SetSpeed(float vx, float vy);
+		void SetPosition(Vector2 position);
 
 		Vector2 GetOriginPosition(); // Get the center of the object bounding box to the world
 		virtual Rect GetFrameRect();
@@ -26,8 +27,10 @@ namespace Castlevania
 		virtual ~GameObject();
 
 	protected:
+		Vector2 rotation;
 		Vector2 position;
-		Vector2 velocity;
+		float velocity;
+		float speed;
 
 		std::shared_ptr<AnimationDict> animations;
 		std::string currentAnimation;
