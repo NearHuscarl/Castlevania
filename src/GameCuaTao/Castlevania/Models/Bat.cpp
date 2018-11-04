@@ -4,10 +4,10 @@ using namespace Castlevania;
 
 void Bat::LoadContent(ContentManager &content)
 {
-	animations = content.Load<AnimationDict>("Characters/NPCs/BatAnimationDef.xml");
+	animations = content.Load<AnimationSet>("Characters/NPCs/BatAnimationDef.xml");
 	auto stats = content.Load<CharacterStats>("CharacterStats/Bat.xml");
 
-	currentAnimation = stats->startingAnimation;
+	animations->Play(stats->startingAnimation);
 	speed = stats->speed;
 	velocity = speed;
 }

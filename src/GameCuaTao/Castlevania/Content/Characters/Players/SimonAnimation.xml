@@ -35,21 +35,21 @@
   </Spritesheet>
 
   <Animations>
-    <Animation Name="idle" DefaultTime="100">
+    <Animation Name="idle" DefaultTime="100" IsLooping="True">
       <Frame SpriteID="walk_01" />
     </Animation>
 
-    <Animation Name="jump" DefaultTime="100">
+    <Animation Name="jump" DefaultTime="100" IsLooping="True">
       <Frame SpriteID="jump_01" />
     </Animation>
 
-    <Animation Name="walk" DefaultTime="100">
+    <Animation Name="walk" DefaultTime="100" IsLooping="True">
       <Frame SpriteID="walk_01" />
       <Frame SpriteID="walk_02" />
       <Frame SpriteID="walk_03" />
     </Animation>
 
-    <Animation Name="turn_backward" DefaultTime="100">
+    <Animation Name="turn_backward" DefaultTime="100" IsLooping="True">
       <Frame SpriteID="turn_backward_01" />
     </Animation>
   </Animations>

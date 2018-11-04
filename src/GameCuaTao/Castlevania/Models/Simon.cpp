@@ -15,10 +15,9 @@ void Simon::SetDirection(Direction direction)
 
 void Simon::LoadContent(ContentManager &content)
 {
-	animations = content.Load<AnimationDict>("Characters/Players/SimonAnimation.xml");
+	animations = content.Load<AnimationSet>("Characters/Players/SimonAnimation.xml");
 	auto stats = content.Load<CharacterStats>("CharacterStats/Simon.xml");
 
-	currentAnimation = stats->startingAnimation;
 	speed = stats->speed; // default velocity
 	Idle();
 }
@@ -46,7 +45,7 @@ void Simon::Idle()
 {
 	state = State::IDLE;
 	velocity = 0;
-	currentAnimation = IDLE_ANIMATION;
+	animations->Play(IDLE_ANIMATION);
 }
 
 void Simon::WalkLeft()
@@ -54,7 +53,7 @@ void Simon::WalkLeft()
 	state = State::WALKING_LEFT;
 	SetDirection(Direction::Left);
 	velocity = speed;
-	currentAnimation = WALK_ANIMATION;
+	animations->Play(WALK_ANIMATION);
 }
 
 void Simon::WalkRight()
@@ -62,12 +61,12 @@ void Simon::WalkRight()
 	state = State::WALKING_RIGHT;
 	SetDirection(Direction::Right);
 	velocity = speed;
-	currentAnimation = WALK_ANIMATION;
+	animations->Play(WALK_ANIMATION);
 }
 
 void Simon::TurnBackward()
 {
 	state = State::TURNING_BACKWARD;
 	velocity = 0;
-	currentAnimation = TURN_BACKWARD_ANIMATION;
+	animations->Play(TURN_BACKWARD_ANIMATION);
 }

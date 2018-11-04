@@ -7,19 +7,25 @@ class Animation
 {
 public:
 	Animation();
-	Animation(std::shared_ptr<Texture> texture, unsigned long defaultTime = 100);
+	Animation(std::string name, std::shared_ptr<Texture> texture, int defaultTime = 100, bool isLooping = true);
 
+	std::string GetName();
 	AnimationFrame GetCurrentFrame();
 
-	void Add(Sprite sprite, unsigned long time = 0);
+	bool IsComplete();
+
+	void Add(Sprite sprite, int time = 0);
 	void Update();
 	void Draw(SpriteBatch &spriteBatch, Vector2 position, Color color, SpriteEffects effects);
 
 private:
-	unsigned long lastFrameTime;
-	unsigned long defaultTime;
+	bool isLooping;
+
+	int lastFrameTime;
+	int defaultTime;
 	int currentFrame;
 
+	std::string name;
 	std::vector<AnimationFrame> frames;
 	std::shared_ptr<Texture> texture;
 };

@@ -6,12 +6,12 @@ class AnimationFrame
 {
 public:
 	AnimationFrame();
-	AnimationFrame(Sprite sprite, unsigned long time);
+	AnimationFrame(Sprite sprite, int time);
 
-	unsigned long GetTime();
+	int GetTime();
 	Sprite &GetSprite();
 
 private:
 	Sprite sprite;
-	unsigned long time;
+	int time;
 };

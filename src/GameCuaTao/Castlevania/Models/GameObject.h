@@ -32,7 +32,6 @@ namespace Castlevania
 		float velocity;
 		float speed;
 
-		std::shared_ptr<AnimationDict> animations;
-		std::string currentAnimation;
+		std::shared_ptr<AnimationSet> animations;
 	};
 }

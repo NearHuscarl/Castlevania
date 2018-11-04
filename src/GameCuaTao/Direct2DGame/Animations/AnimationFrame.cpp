@@ -4,13 +4,13 @@ AnimationFrame::AnimationFrame()
 {
 }
 
-AnimationFrame::AnimationFrame(Sprite sprite, unsigned long time)
+AnimationFrame::AnimationFrame(Sprite sprite, int time)
 {
 	this->sprite = sprite;
 	this->time = time;
 }
 
-unsigned long AnimationFrame::GetTime()
+int AnimationFrame::GetTime()
 {
 	return time;
 }

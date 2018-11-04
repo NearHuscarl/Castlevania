@@ -5,13 +5,20 @@ Animation::Animation()
 {
 }
 
-Animation::Animation(std::shared_ptr<Texture> texture, unsigned long defaultTime)
+Animation::Animation(std::string name, std::shared_ptr<Texture> texture, int defaultTime, bool isLooping)
 {
+	this->name = name;
 	this->texture = texture;
 	this->defaultTime = defaultTime;
+	this->isLooping = isLooping;
 
 	this->lastFrameTime = 0;
 	this->currentFrame = -1;
+}
+
+std::string Animation::GetName()
+{
+	return name;
 }
 
 AnimationFrame Animation::GetCurrentFrame()
@@ -22,7 +29,15 @@ AnimationFrame Animation::GetCurrentFrame()
 	return frames[currentFrame];
 }
 
-void Animation::Add(Sprite sprite, unsigned long time)
+bool Animation::IsComplete()
+{
+	if (!isLooping && currentFrame == frames.size())
+		return true;
+
+	return false;
+}
+
+void Animation::Add(Sprite sprite, int time)
 {
 	if (time == 0)
 		time = this->defaultTime;

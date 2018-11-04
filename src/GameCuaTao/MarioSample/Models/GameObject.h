@@ -2,7 +2,7 @@
 
 #include <map>
 #include "Direct2DGame/Base/Vector2.h"
-#include "Direct2DGame/Data/Animation.h"
+#include "Direct2DGame/Animations/Animation.h"
 #include "Direct2DGame/Content/ContentManager.h"
 
 namespace MarioSample
@@ -37,7 +37,6 @@ namespace MarioSample
 
 		Direction direction;
 
-		std::shared_ptr<AnimationDict> animations;
-		std::string currentAnimation;
+		std::shared_ptr<AnimationSet> animations;
 	};
 }

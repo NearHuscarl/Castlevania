@@ -37,7 +37,7 @@ void GameObject::UpdateDistance(float deltaTime)
 
 Animation &GameObject::GetAnimation()
 {
-	return (*animations)[currentAnimation];
+	return animations->GetCurrentAnimation();
 }
 
 void GameObject::Draw(SpriteBatch &spriteBatch)

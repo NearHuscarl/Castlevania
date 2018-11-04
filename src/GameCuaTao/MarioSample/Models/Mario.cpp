@@ -8,7 +8,7 @@ using namespace MarioSample;
 
 void Mario::LoadContent(ContentManager &content)
 {
-	animations = content.Load<AnimationDict>("MarioAnimationDef.xml");
+	animations = content.Load<AnimationSet>("MarioAnimationDef.xml");
 	SetPosition(0.0f, 100.0f);
 	Idle();
 }
@@ -105,7 +105,7 @@ void Mario::Idle()
 {
 	state = State::IDLE;
 	velocity.x = 0;
-	currentAnimation = MARIO_IDLE;
+	animations->Play(MARIO_IDLE);
 }
 
 void Mario::WalkLeft()
@@ -113,7 +113,7 @@ void Mario::WalkLeft()
 	state = State::WALKING_LEFT;
 	velocity.x = -MARIO_WALKING_SPEED;
 	direction = Direction::Left;
-	currentAnimation = MARIO_WALK;
+	animations->Play(MARIO_WALK);
 }
 
 void Mario::WalkRight()
@@ -121,7 +121,7 @@ void Mario::WalkRight()
 	state = State::WALKING_RIGHT;
 	velocity.x = MARIO_WALKING_SPEED;
 	direction = Direction::Right;
-	currentAnimation = MARIO_WALK;
+	animations->Play(MARIO_WALK);
 }
 
 void Mario::Draw(SpriteBatch &spriteBatch)

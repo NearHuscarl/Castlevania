@@ -1,9 +1,9 @@
-#include "AnimationReader.h"
+#include "AnimationSetReader.h"
 #include "LoadContentException.h"
 #include "ContentManager.h"
 #include "../Utilities/FileLogger.h"
 
-std::shared_ptr<AnimationDict> AnimationReader::Read(std::string filePath, ContentManager &contentManager)
+std::shared_ptr<AnimationSet> AnimationSetReader::Read(std::string filePath, ContentManager &contentManager)
 {
 	auto xmlDocument = pugi::xml_document{};
 	auto result = xmlDocument.load_file(filePath.c_str());
@@ -30,8 +30,10 @@ std::shared_ptr<AnimationDict> AnimationReader::Read(std::string filePath, Conte
 
 	for (auto animationNode : rootNode.child("Animations").children("Animation"))
 	{
-		auto defaultAnimateTime = animationNode.attribute("DefaultTime").as_uint();
-		auto animation = Animation{ texture, defaultAnimateTime };
+		auto name = animationNode.attribute("Name").as_string();
+		auto defaultAnimateTime = animationNode.attribute("DefaultTime").as_int();
+		auto isLooping = animationNode.attribute("IsLooping").as_bool();
+		auto animation = Animation{ name, texture, defaultAnimateTime, isLooping };
 
 		for (auto frameNode : animationNode.children("Frame"))
 		{
@@ -39,14 +41,13 @@ std::shared_ptr<AnimationDict> AnimationReader::Read(std::string filePath, Conte
 			animation.Add(sprites[name]);
 		}
 
-		auto name = animationNode.attribute("Name").as_string();
 		animations[name] = animation;
 	}
 
-	return std::make_shared<AnimationDict>(animations);
+	return std::make_shared<AnimationSet>(animations);
 }
 
-SpriteDict AnimationReader::ReadSprites(pugi::xml_node rootNode)
+SpriteDict AnimationSetReader::ReadSprites(pugi::xml_node rootNode)
 {
 	auto sprites = SpriteDict{};
 

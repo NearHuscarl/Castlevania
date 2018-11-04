@@ -70,7 +70,7 @@ Rect GameObject::GetBoundingBox()
 
 Animation &GameObject::GetAnimation()
 {
-	return (*animations)[currentAnimation];
+	return animations->GetCurrentAnimation();
 }
 
 void GameObject::LoadContent(ContentManager &content)

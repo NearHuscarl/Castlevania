@@ -158,6 +158,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Castlevania\CastlevaniaGame.cpp" />
+    <ClCompile Include="Direct2DGame\Content\AnimationSetReader.cpp" />
+    <ClCompile Include="Direct2DGame\Animations\AnimationSet.cpp" />
     <ClCompile Include="Castlevania\Models\Bat.cpp" />
     <ClCompile Include="Castlevania\Models\GameObject.cpp" />
     <ClCompile Include="Castlevania\Models\Player.cpp" />
@@ -170,9 +172,9 @@
     <ClCompile Include="Castlevania\Settings\Fonts.cpp" />
     <ClCompile Include="Castlevania\Utilities\AudioManager.cpp" />
     <ClCompile Include="Direct2DGame\Content\CharacterStatsReader.cpp" />
-    <ClCompile Include="Direct2DGame\Data\Animation.cpp" />
-    <ClCompile Include="Direct2DGame\Data\AnimationFrame.cpp" />
-    <ClCompile Include="Direct2DGame\Data\Sprite.cpp" />
+    <ClCompile Include="Direct2DGame\Animations\Animation.cpp" />
+    <ClCompile Include="Direct2DGame\Animations\AnimationFrame.cpp" />
+    <ClCompile Include="Direct2DGame\Animations\Sprite.cpp" />
     <ClCompile Include="Direct2DGame\Graphics\SpriteBatch.cpp" />
     <ClCompile Include="Direct2DGame\Input\InputHelper.cpp" />
     <ClCompile Include="Direct2DGame\MathHelper.cpp" />
@@ -181,7 +183,6 @@
     <ClCompile Include="MarioSample\Utilities\AudioManager.cpp" />
     <ClCompile Include="Direct2DGame\Graphics\SpriteFont.cpp" />
     <ClCompile Include="Direct2DGame\Graphics\Texture.cpp" />
-    <ClCompile Include="Direct2DGame\Content\AnimationReader.cpp" />
     <ClCompile Include="Direct2DGame\Content\ContentManager.cpp" />
     <ClCompile Include="Direct2DGame\Content\ContentReader.cpp" />
     <ClCompile Include="Direct2DGame\Content\SoundReader.cpp" />
@@ -205,6 +206,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Castlevania\CastlevaniaGame.h" />
+    <ClInclude Include="Direct2DGame\Content\AnimationSetReader.h" />
+    <ClInclude Include="Direct2DGame\Animations\AnimationSet.h" />
     <ClInclude Include="Castlevania\Models\Bat.h" />
     <ClInclude Include="Castlevania\Models\GameObject.h" />
     <ClInclude Include="Castlevania\Models\IControllable.h" />
@@ -220,8 +223,8 @@
     <ClInclude Include="Castlevania\Settings\Audios.h" />
     <ClInclude Include="Castlevania\Settings\Fonts.h" />
     <ClInclude Include="Castlevania\Utilities\AudioManager.h" />
-    <ClInclude Include="Direct2DGame\Data\Animation.h" />
-    <ClInclude Include="Direct2DGame\Data\AnimationFrame.h" />
+    <ClInclude Include="Direct2DGame\Animations\Animation.h" />
+    <ClInclude Include="Direct2DGame\Animations\AnimationFrame.h" />
     <ClInclude Include="Direct2DGame\Base\Color.h" />
     <ClInclude Include="Direct2DGame\Base\Point.h" />
     <ClInclude Include="Direct2DGame\Base\Vector3.h" />
@@ -252,11 +255,10 @@
     <ClInclude Include="Library\directx\DSUtil.h" />
     <ClInclude Include="Library\directx\DXUtil.h" />
     <ClInclude Include="MarioSample\Models\MarioSettings.h" />
-    <ClInclude Include="Direct2DGame\Data\Sprite.h" />
+    <ClInclude Include="Direct2DGame\Animations\Sprite.h" />
     <ClInclude Include="Direct2DGame\Base\Rect.h" />
     <ClInclude Include="Direct2DGame\Base\Vector2.h" />
     <ClInclude Include="Direct2DGame\Content\AbstractReader.h" />
-    <ClInclude Include="Direct2DGame\Content\AnimationReader.h" />
     <ClInclude Include="Direct2DGame\Content\ContentManager.h" />
     <ClInclude Include="Direct2DGame\Content\ContentReader.h" />
     <ClInclude Include="Direct2DGame\Content\LoadContentException.h" />
@@ -279,6 +281,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="cpplint.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
