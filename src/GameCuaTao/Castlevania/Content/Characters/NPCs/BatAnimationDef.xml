@@ -3,11 +3,11 @@
 <GameContent>
   <Spritesheet TexturePath="Bat.png">
     <Sprite ID="fly_01">
-      <SpriteFrame Left="1" Top="1" Right="17" Bottom="17" />
+      <SpriteFrame Left="1" Top="1" Width="16" Height="16" />
     </Sprite>
 
     <Sprite ID="fly_02">
-      <SpriteFrame Left="18" Top="1" Right="34" Bottom="33" />
+      <SpriteFrame Left="18" Top="1" Width="16" Height="16" />
     </Sprite>
   </Spritesheet>
 

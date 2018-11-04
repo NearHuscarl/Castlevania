@@ -15,14 +15,7 @@ std::shared_ptr<AnimationDict> AnimationReader::Read(std::string filePath, Conte
 	}
 
 	auto rootNode = xmlDocument.child("GameContent");
-	auto sprites = SpriteDict{};
-
-	for (auto spriteNode : rootNode.child("Spritesheet").children("Sprite"))
-	{
-		auto sprite = ReadSprite(spriteNode);
-		sprites[sprite.GetID()] = sprite;
-	}
-
+	auto sprites = ReadSprites(rootNode);
 	auto texturePath = std::string(rootNode.child("Spritesheet").attribute("TexturePath").as_string());
 	auto fullPath = (Path{ contentManager.GetRootDirectory() } / texturePath).string();
 	
@@ -53,32 +46,39 @@ std::shared_ptr<AnimationDict> AnimationReader::Read(std::string filePath, Conte
 	return std::make_shared<AnimationDict>(animations);
 }
 
-Sprite AnimationReader::ReadSprite(pugi::xml_node spriteNode)
+SpriteDict AnimationReader::ReadSprites(pugi::xml_node rootNode)
 {
-	auto name = spriteNode.attribute("ID").as_string();
+	auto sprites = SpriteDict{};
 
-	auto left = int{};
-	auto top = int{};
-	auto right = int{};
-	auto bottom = int{};
+	for (auto spriteNode : rootNode.child("Spritesheet").children("Sprite"))
+	{
+		auto name = spriteNode.attribute("ID").as_string();
 
-	left = spriteNode.child("SpriteFrame").attribute("Left").as_int();
-	top = spriteNode.child("SpriteFrame").attribute("Top").as_int();
-	right = spriteNode.child("SpriteFrame").attribute("Right").as_int();
-	bottom = spriteNode.child("SpriteFrame").attribute("Bottom").as_int();
-	auto spriteFrame = Rect{ left, top, right - left, bottom - top };
+		auto left = int{};
+		auto top = int{};
+		auto width = int{};
+		auto height = int{};
 
-	left = spriteNode.child("SpriteBoundary").attribute("Left").as_int();
-	top = spriteNode.child("SpriteBoundary").attribute("Top").as_int();
-	right = spriteNode.child("SpriteBoundary").attribute("Right").as_int();
-	bottom = spriteNode.child("SpriteBoundary").attribute("Bottom").as_int();
-	auto spriteBoundary = Rect{ left, top, right - left, bottom - top };
-	
-	auto sprite = Sprite{};
-	if (spriteBoundary == Rect::Empty())
-		sprite = Sprite{ name, spriteFrame };
-	else
-		sprite = Sprite{ name, spriteFrame, spriteBoundary };
-	
-	return sprite;
+		left = spriteNode.child("SpriteFrame").attribute("Left").as_int();
+		top = spriteNode.child("SpriteFrame").attribute("Top").as_int();
+		width = spriteNode.child("SpriteFrame").attribute("Width").as_int();
+		height = spriteNode.child("SpriteFrame").attribute("Height").as_int();
+		auto spriteFrame = Rect{ left, top, width, height };
+
+		left = spriteNode.child("SpriteBoundary").attribute("Left").as_int();
+		top = spriteNode.child("SpriteBoundary").attribute("Top").as_int();
+		width = spriteNode.child("SpriteBoundary").attribute("Width").as_int();
+		height = spriteNode.child("SpriteBoundary").attribute("Height").as_int();
+		auto spriteBoundary = Rect{ left, top, width, height };
+
+		auto sprite = Sprite{};
+		if (spriteBoundary == Rect::Empty())
+			sprite = Sprite{ name, spriteFrame };
+		else
+			sprite = Sprite{ name, spriteFrame, spriteBoundary };
+		
+		sprites[sprite.GetID()] = sprite;
+	}
+
+	return sprites;
 }

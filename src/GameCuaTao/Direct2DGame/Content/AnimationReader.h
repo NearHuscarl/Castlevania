@@ -5,8 +5,8 @@
 #include "AbstractReader.h"
 #include "../Data/Animation.h"
 
-using SpriteDict = std::map<std::string, Sprite>;
 using AnimationDict = std::map<std::string, Animation>;
+using SpriteDict = std::map<std::string, Sprite>;
 
 class AnimationReader : public AbstractReader<AnimationDict>
 {
@@ -14,5 +14,5 @@ public:
 	std::shared_ptr<AnimationDict> Read(std::string filePath, ContentManager &contentManager) override;
 
 private:
-	Sprite ReadSprite(pugi::xml_node spriteNode);
+	SpriteDict ReadSprites(pugi::xml_node rootNode);
 };

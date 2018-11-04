@@ -4,33 +4,33 @@
   <!-- 48 x 64 -->
   <Spritesheet TexturePath="Simon.png">
     <Sprite ID="walk_01">
-      <SpriteFrame Left="428" Top="0" Right="476" Bottom="64" />
-      <SpriteBoundary Left="435" Top="3" Right="469" Bottom="65" />
+      <SpriteFrame Left="428" Top="0" Width="48" Height="64" />
+      <SpriteBoundary Left="436" Top="4" Width="32" Height="60" />
     </Sprite>
 
     <Sprite ID="walk_02">
-      <SpriteFrame Left="248" Top="0" Right="296" Bottom="64" />
-      <SpriteBoundary Left="259" Top="2" Right="285" Bottom="65" />
+      <SpriteFrame Left="248" Top="0" Width="48" Height="64" />
+      <SpriteBoundary Left="260" Top="3" Width="24" Height="61" />
     </Sprite>
 
     <Sprite ID="walk_03">
-      <SpriteFrame Left="305" Top="0" Right="353" Bottom="64" />
-      <SpriteBoundary Left="313" Top="3" Right="345" Bottom="65" />
+      <SpriteFrame Left="305" Top="0" Width="48" Height="64" />
+      <SpriteBoundary Left="314" Top="4" Width="30" Height="60" />
     </Sprite>
 
     <Sprite ID="walk_04">
-      <SpriteFrame Left="366" Top="0" Right="414" Bottom="64" />
-      <SpriteBoundary Left="377" Top="1" Right="403" Bottom="65" />
+      <SpriteFrame Left="366" Top="0" Width="48" Height="64" />
+      <SpriteBoundary Left="378" Top="2" Width="24" Height="62" />
     </Sprite>
 
     <Sprite ID="jump_01">
-      <SpriteFrame Left="188" Top="0" Right="236" Bottom="64" />
-      <SpriteBoundary Left="195" Top="0" Right="229" Bottom="48" />
+      <SpriteFrame Left="188" Top="0" Width="48" Height="64" />
+      <SpriteBoundary Left="196" Top="1" Width="32" Height="46" />
     </Sprite>
 
     <Sprite ID="turn_backward_01">
-      <SpriteFrame Left="360" Top="66" Right="408" Bottom="130" />
-      <SpriteBoundary Left="367" Top="65" Right="401" Bottom="131" />
+      <SpriteFrame Left="360" Top="66" Width="48" Height="64" />
+      <SpriteBoundary Left="368" Top="66" Width="32" Height="64" />
     </Sprite>
   </Spritesheet>
 

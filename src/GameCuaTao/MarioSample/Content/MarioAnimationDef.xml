@@ -4,15 +4,15 @@
 
   <Spritesheet TexturePath="mario.png">
     <Sprite ID="mario_walk_01">
-      <SpriteFrame Left="0"  Top="0" Right="16" Bottom="29" />
+      <SpriteFrame Left="2" Top="1" Width="14" Height="27" />
     </Sprite>
     
     <Sprite ID="mario_walk_02">
-      <SpriteFrame Left="29" Top="0" Right="47" Bottom="29" />
+      <SpriteFrame Left="31" Top="1" Width="16" Height="27" />
     </Sprite>
 
     <Sprite ID="mario_walk_03">
-      <SpriteFrame Left="59" Top="1" Right="77" Bottom="29" />
+      <SpriteFrame Left="61" Top="2" Width="16" Height="26" />
     </Sprite>
   </Spritesheet>
 
