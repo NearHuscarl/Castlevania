@@ -83,27 +83,26 @@ With the default configuration, Visual will toss all object files into one big f
 -  [Smart pointers need careful programmers]
 -  [UIT-SE102-Game-Project ]
 -  [Game Programming Patterns]
+-  [Evolve Your Heirachy]
 -  [Monogame Framework]
 -  [Monogame Samples]
-    - [CatapaultWars]
-    - [NetRumble]
-    - [RolePlayingGame]
+   -  [CatapaultWars]
+   -  [NetRumble]
+   -  [RolePlayingGame]
 
 [native event]: https://msdn.microsoft.com/en-us/library/ee2k0a7d.aspx
-
 [back to the basics! essentials of modern c++ style]: https://github.com/CppCon/CppCon2014/blob/master/Presentations/Back%20to%20the%20Basics!%20Essentials%20of%20Modern%20C%2B%2B%20Style/Back%20to%20the%20Basics!%20Essentials%20of%20Modern%20C%2B%2B%20Style%20-%20Herb%20Sutter%20-%20CppCon%202014.pdf
 [smart pointers need careful programmers]: https://yatb.giacomodrago.com/en/post/11/cpp11-smart-pointers-need-careful-programmers.html
 [uit-se102-game-project ]: https://github.com/danhph/UIT-SE102-Game-Project
 [game programming patterns]: http://gameprogrammingpatterns.com/contents.html
+[evolve your heirachy]: http://cowboyprogramming.com/2007/01/05/evolve-your-heirachy/
 [monogame framework]: https://github.com/MonoGame/MonoGame
 [monogame samples]: https://github.com/CartBlanche/MonoGame-Samples
-[CatapaultWars]: https://github.com/CartBlanche/MonoGame-Samples/tree/master/CatapaultWars
-[NetRumble]: https://github.com/CartBlanche/MonoGame-Samples/tree/master/NetRumble
-[RolePlayingGame]: https://github.com/CartBlanche/MonoGame-Samples/tree/master/RolePlayingGame
-
+[catapaultwars]: https://github.com/CartBlanche/MonoGame-Samples/tree/master/CatapaultWars
+[netrumble]: https://github.com/CartBlanche/MonoGame-Samples/tree/master/NetRumble
+[roleplayinggame]: https://github.com/CartBlanche/MonoGame-Samples/tree/master/RolePlayingGame
 [directx 9 sdk]: https://www.microsoft.com/en-us/download/details.aspx?id=6812
 [pugixml]: https://github.com/zeux/pugixml/
 [freetype]: https://github.com/ubawurinna/freetype-windows-binaries
-
 [create smart pointer from raw pointer]: https://stackoverflow.com/questions/4665266/creating-shared-ptr-from-raw-pointer
-[Seperate animation and physical bounding box]: http://community.monogame.net/t/examples-of-good-adaptive-code-for-animated-sprites/9569
+[seperate animation and physical bounding box]: http://community.monogame.net/t/examples-of-good-adaptive-code-for-animated-sprites/9569
