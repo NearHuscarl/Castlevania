@@ -1,9 +1,9 @@
-#include "AnimationSetReader.h"
+#include "AnimationFactoryReader.h"
 #include "LoadContentException.h"
 #include "ContentManager.h"
 #include "../Utilities/FileLogger.h"
 
-std::shared_ptr<AnimationSet> AnimationSetReader::Read(std::string filePath, ContentManager &contentManager)
+std::shared_ptr<AnimationFactory> AnimationFactoryReader::Read(std::string filePath, ContentManager &contentManager)
 {
 	auto xmlDocument = pugi::xml_document{};
 	auto result = xmlDocument.load_file(filePath.c_str());
@@ -15,7 +15,6 @@ std::shared_ptr<AnimationSet> AnimationSetReader::Read(std::string filePath, Con
 	}
 
 	auto rootNode = xmlDocument.child("GameContent");
-	auto sprites = ReadSprites(rootNode);
 	auto texturePath = std::string(rootNode.child("Spritesheet").attribute("TexturePath").as_string());
 	auto fullPath = (Path{ contentManager.GetRootDirectory() } / texturePath).string();
 	
@@ -26,6 +25,7 @@ std::shared_ptr<AnimationSet> AnimationSetReader::Read(std::string filePath, Con
 	}
 
 	auto texture = contentManager.Load<Texture>(texturePath);
+	auto textureRegions = ReadTextureRegions(rootNode, texture);
 	auto animations = AnimationDict{};
 
 	for (auto animationNode : rootNode.child("Animations").children("Animation"))
@@ -33,23 +33,23 @@ std::shared_ptr<AnimationSet> AnimationSetReader::Read(std::string filePath, Con
 		auto name = animationNode.attribute("Name").as_string();
 		auto defaultAnimateTime = animationNode.attribute("DefaultTime").as_int();
 		auto isLooping = animationNode.attribute("IsLooping").as_bool();
-		auto animation = Animation{ name, texture, defaultAnimateTime, isLooping };
+		auto animation = Animation{ name, defaultAnimateTime, isLooping };
 
 		for (auto frameNode : animationNode.children("Frame"))
 		{
 			auto name = frameNode.attribute("SpriteID").as_string();
-			animation.Add(sprites[name]);
+			animation.Add(textureRegions.at(name));
 		}
 
-		animations[name] = animation;
+		animations.emplace(name, animation);
 	}
 
-	return std::make_shared<AnimationSet>(animations);
+	return std::make_shared<AnimationFactory>(animations);
 }
 
-SpriteDict AnimationSetReader::ReadSprites(pugi::xml_node rootNode)
+TextureRegionDict AnimationFactoryReader::ReadTextureRegions(pugi::xml_node rootNode, std::shared_ptr<Texture> texture)
 {
-	auto sprites = SpriteDict{};
+	auto textureRegions = TextureRegionDict{};
 
 	for (auto spriteNode : rootNode.child("Spritesheet").children("Sprite"))
 	{
@@ -72,14 +72,11 @@ SpriteDict AnimationSetReader::ReadSprites(pugi::xml_node rootNode)
 		height = spriteNode.child("SpriteBoundary").attribute("Height").as_int();
 		auto spriteBoundary = Rect{ left, top, width, height };
 
-		auto sprite = Sprite{};
 		if (spriteBoundary == Rect::Empty())
-			sprite = Sprite{ name, spriteFrame };
+			textureRegions.emplace(name, TextureRegion{ texture, spriteFrame });
 		else
-			sprite = Sprite{ name, spriteFrame, spriteBoundary };
-		
-		sprites[sprite.GetID()] = sprite;
+			textureRegions.emplace(name, TextureRegion{ texture, spriteFrame, spriteBoundary });
 	}
 
-	return sprites;
+	return textureRegions;
 }

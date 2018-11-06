@@ -2,8 +2,9 @@
 
 #include <map>
 #include "Direct2DGame/Base/Vector2.h"
-#include "Direct2DGame/Animations/Animation.h"
 #include "Direct2DGame/Content/ContentManager.h"
+#include "Direct2DGame/Extensions/Sprites/SpriteExtensions.h"
+#include "Direct2DGame/Extensions/Animations/AnimatedSprite.h"
 
 namespace MarioSample
 {
@@ -27,16 +28,13 @@ namespace MarioSample
 		void UpdateDistance(float deltaTime);
 
 		virtual void Draw(SpriteBatch &spriteBatch);
-		Animation &GetAnimation();
-
 		virtual ~GameObject();
 
 	protected:
 		Vector2 position;
 		Vector2 velocity;
-
 		Direction direction;
 
-		std::shared_ptr<AnimationSet> animations;
+		std::unique_ptr<AnimatedSprite> sprite;
 	};
 }

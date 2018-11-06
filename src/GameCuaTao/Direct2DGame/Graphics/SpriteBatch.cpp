@@ -11,7 +11,12 @@ ISpriteHandler_ SpriteBatch::GetSpriteHandler()
 	return spriteHandler;
 }
 
-void SpriteBatch::Draw(Texture &texture, Vector2 position, Rect *rectPtr, Color color, SpriteEffects effects)
+void SpriteBatch::Draw(Texture &texture, Vector2 position, Color color)
+{
+	Draw(texture, position, nullptr, color, 0.0f, Vector2::One(), SpriteEffects::None);
+}
+
+void SpriteBatch::Draw(Texture &texture, Vector2 position, Rect *rectPtr, Color color, float rotation, Vector2 scale, SpriteEffects effects)
 {
 	auto rect = Rect{};
 	if (rectPtr == nullptr) // if null, draws full texture
@@ -19,13 +24,13 @@ void SpriteBatch::Draw(Texture &texture, Vector2 position, Rect *rectPtr, Color 
 	else
 		rect = *rectPtr;
 
-	auto scale = Vector2{};
+	auto scaleVec = Vector2{};
 	if (effects == SpriteEffects::FlipHorizontally)
-		scale = Vector2{ -1, 1 };
+		scaleVec = Vector2{ -1, 1 } * scale;
 	else if (effects == SpriteEffects::FlipVertically)
-		scale = Vector2{ 1, -1 };
+		scaleVec = Vector2{ 1, -1 } * scale;
 	else // None
-		scale = Vector2{ 1, 1 };
+		scaleVec = Vector2{ 1, 1 } * scale;
 
 	auto center = Vector2{ position.x + rect.Width() / 2, position.y + rect.Height() / 2 };
 
@@ -37,9 +42,9 @@ void SpriteBatch::Draw(Texture &texture, Vector2 position, Rect *rectPtr, Color 
 		&newMatrix, // the result matrix
 		&center,    // scaling center vector
 		0.0f,       // scaling rotation value
-		&scale,     // scaling vector
-		nullptr,    // rotating center/pivot vector
-		0.0f,       // rotating angle
+		&scaleVec,  // scaling vector
+		&center,    // rotating center/pivot vector
+		rotation,   // rotating angle (radians)
 		nullptr     // translating vector
 	);
 

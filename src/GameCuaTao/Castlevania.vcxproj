@@ -158,8 +158,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Castlevania\CastlevaniaGame.cpp" />
-    <ClCompile Include="Direct2DGame\Content\AnimationSetReader.cpp" />
-    <ClCompile Include="Direct2DGame\Animations\AnimationSet.cpp" />
+    <ClCompile Include="Direct2DGame\Extensions\Animations\AnimatedSprite.cpp" />
+    <ClCompile Include="Direct2DGame\Extensions\Animations\AnimationFactory.cpp" />
+    <ClCompile Include="Direct2DGame\Content\AnimationFactoryReader.cpp" />
     <ClCompile Include="Castlevania\Models\Bat.cpp" />
     <ClCompile Include="Castlevania\Models\GameObject.cpp" />
     <ClCompile Include="Castlevania\Models\Player.cpp" />
@@ -172,9 +173,11 @@
     <ClCompile Include="Castlevania\Settings\Fonts.cpp" />
     <ClCompile Include="Castlevania\Utilities\AudioManager.cpp" />
     <ClCompile Include="Direct2DGame\Content\CharacterStatsReader.cpp" />
-    <ClCompile Include="Direct2DGame\Animations\Animation.cpp" />
-    <ClCompile Include="Direct2DGame\Animations\AnimationFrame.cpp" />
-    <ClCompile Include="Direct2DGame\Animations\Sprite.cpp" />
+    <ClCompile Include="Direct2DGame\Extensions\Animations\Animation.cpp" />
+    <ClCompile Include="Direct2DGame\Extensions\Animations\AnimationFrame.cpp" />
+    <ClCompile Include="Direct2DGame\Extensions\Sprites\Sprite.cpp" />
+    <ClCompile Include="Direct2DGame\Extensions\Sprites\SpriteExtensions.cpp" />
+    <ClCompile Include="Direct2DGame\Extensions\TextureRegion.cpp" />
     <ClCompile Include="Direct2DGame\Graphics\SpriteBatch.cpp" />
     <ClCompile Include="Direct2DGame\Input\InputHelper.cpp" />
     <ClCompile Include="Direct2DGame\MathHelper.cpp" />
@@ -206,8 +209,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Castlevania\CastlevaniaGame.h" />
-    <ClInclude Include="Direct2DGame\Content\AnimationSetReader.h" />
-    <ClInclude Include="Direct2DGame\Animations\AnimationSet.h" />
+    <ClInclude Include="Direct2DGame\Extensions\Animations\AnimatedSprite.h" />
+    <ClInclude Include="Direct2DGame\Extensions\Animations\AnimationFactory.h" />
+    <ClInclude Include="Direct2DGame\Content\AnimationFactoryReader.h" />
     <ClInclude Include="Castlevania\Models\Bat.h" />
     <ClInclude Include="Castlevania\Models\GameObject.h" />
     <ClInclude Include="Castlevania\Models\IControllable.h" />
@@ -223,14 +227,16 @@
     <ClInclude Include="Castlevania\Settings\Audios.h" />
     <ClInclude Include="Castlevania\Settings\Fonts.h" />
     <ClInclude Include="Castlevania\Utilities\AudioManager.h" />
-    <ClInclude Include="Direct2DGame\Animations\Animation.h" />
-    <ClInclude Include="Direct2DGame\Animations\AnimationFrame.h" />
+    <ClInclude Include="Direct2DGame\Extensions\Animations\Animation.h" />
+    <ClInclude Include="Direct2DGame\Extensions\Animations\AnimationFrame.h" />
     <ClInclude Include="Direct2DGame\Base\Color.h" />
     <ClInclude Include="Direct2DGame\Base\Point.h" />
     <ClInclude Include="Direct2DGame\Base\Vector3.h" />
     <ClInclude Include="Direct2DGame\Content\CharacterStatsReader.h" />
     <ClInclude Include="Direct2DGame\Data\CharacterStats.h" />
     <ClInclude Include="Direct2DGame\Data\WeaponStats.h" />
+    <ClInclude Include="Direct2DGame\Extensions\TextureRegion.h" />
+    <ClInclude Include="Direct2DGame\IDrawable.h" />
     <ClInclude Include="Direct2DGame\Input\DirectInput.h" />
     <ClInclude Include="Direct2DGame\GameTime.h" />
     <ClInclude Include="Direct2DGame\GraphicsDeviceInformation.h" />
@@ -241,7 +247,10 @@
     <ClInclude Include="Direct2DGame\Graphics\Viewport.h" />
     <ClInclude Include="Direct2DGame\Input\InputHelper.h" />
     <ClInclude Include="Direct2DGame\Input\KeyboardState.h" />
+    <ClInclude Include="Direct2DGame\IUpdateable.h" />
     <ClInclude Include="Direct2DGame\MathHelper.h" />
+    <ClInclude Include="Direct2DGame\Extensions\Sprites\SpriteExtensions.h" />
+    <ClInclude Include="Direct2DGame\Extensions\Transform.h" />
     <ClInclude Include="Direct2DGame\Utilities\Stopwatch.h" />
     <ClInclude Include="Direct2DGame\Utilities\TimeSpan.h" />
     <ClInclude Include="MarioSample\Utilities\AudioManager.h" />
@@ -255,7 +264,7 @@
     <ClInclude Include="Library\directx\DSUtil.h" />
     <ClInclude Include="Library\directx\DXUtil.h" />
     <ClInclude Include="MarioSample\Models\MarioSettings.h" />
-    <ClInclude Include="Direct2DGame\Animations\Sprite.h" />
+    <ClInclude Include="Direct2DGame\Extensions\Sprites\Sprite.h" />
     <ClInclude Include="Direct2DGame\Base\Rect.h" />
     <ClInclude Include="Direct2DGame\Base\Vector2.h" />
     <ClInclude Include="Direct2DGame\Content\AbstractReader.h" />

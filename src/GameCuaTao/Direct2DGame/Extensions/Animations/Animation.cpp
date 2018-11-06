@@ -1,14 +1,9 @@
 #include "Animation.h"
-#include "../Utilities/Stopwatch.h"
+#include "../../Utilities/Stopwatch.h"
 
-Animation::Animation()
-{
-}
-
-Animation::Animation(std::string name, std::shared_ptr<Texture> texture, int defaultTime, bool isLooping)
+Animation::Animation(std::string name, int defaultTime, bool isLooping)
 {
 	this->name = name;
-	this->texture = texture;
 	this->defaultTime = defaultTime;
 	this->isLooping = isLooping;
 
@@ -37,12 +32,12 @@ bool Animation::IsComplete()
 	return false;
 }
 
-void Animation::Add(Sprite sprite, int time)
+void Animation::Add(TextureRegion textureRegion, int time)
 {
 	if (time == 0)
 		time = this->defaultTime;
 
-	auto frame = AnimationFrame{ sprite, time };
+	auto frame = AnimationFrame{ textureRegion, time };
 	frames.push_back(frame);
 }
 
@@ -66,9 +61,4 @@ void Animation::Update()
 				currentFrame = 0;
 		}
 	}
-}
-
-void Animation::Draw(SpriteBatch &spriteBatch, Vector2 position, Color color, SpriteEffects effects)
-{
-	frames[currentFrame].GetSprite().Draw(spriteBatch, *texture, position, color, effects);
 }

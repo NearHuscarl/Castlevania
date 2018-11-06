@@ -35,11 +35,6 @@ void GameObject::UpdateDistance(float deltaTime)
 	position += velocity * deltaTime;
 }
 
-Animation &GameObject::GetAnimation()
-{
-	return animations->GetCurrentAnimation();
-}
-
 void GameObject::Draw(SpriteBatch &spriteBatch)
 {
 }

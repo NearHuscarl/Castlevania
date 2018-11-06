@@ -83,6 +83,11 @@ public:
 		return lavenderBlue;
 	}
 
+	Color operator*(float scale)
+	{
+		return Color(R() * (int)scale, G() * (int)scale, B() * (int)scale, A() * (int)scale);
+	}
+
 private:
 	unsigned long packedValue;
 };

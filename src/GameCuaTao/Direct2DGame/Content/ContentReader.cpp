@@ -6,9 +6,9 @@ ContentReader::ContentReader(ContentManager &contentManager) : contentManager{ c
 }
 
 template<>
-std::shared_ptr<AnimationSet> ContentReader::ReadAsset<AnimationSet>(std::string filePath)
+std::shared_ptr<AnimationFactory> ContentReader::ReadAsset<AnimationFactory>(std::string filePath)
 {
-	return animationSetReader.Read(filePath, contentManager);
+	return animationFactoryReader.Read(filePath, contentManager);
 }
 
 template<>

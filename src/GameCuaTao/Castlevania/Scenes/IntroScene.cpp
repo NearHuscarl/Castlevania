@@ -56,11 +56,11 @@ void IntroScene::Update(float deltaTime)
 
 void IntroScene::Draw(GameTime gameTime)
 {
-	auto spriteBatch = sceneManager.GetSpriteBatch();
+	auto &spriteBatch = sceneManager.GetSpriteBatch();
 
 	spriteBatch.GetSpriteHandler()->Begin(D3DXSPRITE_ALPHABLEND);
 
-	spriteBatch.Draw(*background, Vector2::Zero(), nullptr, Color::White());
+	spriteBatch.Draw(*background, Vector2::Zero(), Color::White());
 	simon->Draw(spriteBatch);
 	bat1->Draw(spriteBatch);
 	bat2->Draw(spriteBatch);

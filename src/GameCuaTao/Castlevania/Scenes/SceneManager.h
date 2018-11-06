@@ -2,6 +2,7 @@
 
 #include <memory>
 #include "Direct2DGame/Game.h"
+#include "Direct2DGame/Extensions/Sprites/SpriteExtensions.h"
 #include "AbstractScene.h"
 #include "Scene.h"
 
@@ -14,7 +15,7 @@ namespace Castlevania
 
 		GraphicsDevice &GetGraphicsDevice();
 		ContentManager &GetContent();
-		SpriteBatch &GetSpriteBatch();
+		SpriteExtensions &GetSpriteBatch();
 
 		AbstractScene *GetCurrentScene();
 
@@ -29,7 +30,7 @@ namespace Castlevania
 
 		std::unique_ptr<AbstractScene> currentScene;
 		std::unique_ptr<AbstractScene> nextScene = nullptr;
-		std::unique_ptr<SpriteBatch> spriteBatch;
+		std::unique_ptr<SpriteExtensions> spriteBatch;
 
 		std::unique_ptr<AbstractScene> GetScene(Scene scene);
 	};

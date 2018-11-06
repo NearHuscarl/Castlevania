@@ -4,21 +4,23 @@ using namespace Castlevania;
 
 void Bat::LoadContent(ContentManager &content)
 {
-	animations = content.Load<AnimationSet>("Characters/NPCs/BatAnimationDef.xml");
+	auto animationFactory = content.Load<AnimationFactory>("Characters/NPCs/BatAnimationDef.xml");
+	sprite = std::make_unique<AnimatedSprite>(animationFactory);
 	auto stats = content.Load<CharacterStats>("CharacterStats/Bat.xml");
 
-	animations->Play(stats->startingAnimation);
 	speed = stats->speed;
 	velocity = speed;
+
+	sprite->Play(stats->startingAnimation);
 }
 
 void Bat::Update(float deltaTime)
 {
 	GameObject::UpdateDistance(deltaTime);
-	GetAnimation().Update();
+	sprite->Update(deltaTime);
 }
 
-void Bat::Draw(SpriteBatch &spritebatch)
+void Bat::Draw(SpriteExtensions &spriteBatch)
 {
-	GetAnimation().Draw(spritebatch, position, Color::White(), SpriteEffects::None);
+	spriteBatch.Draw(*sprite, transform);
 }

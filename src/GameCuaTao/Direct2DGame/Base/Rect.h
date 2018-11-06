@@ -3,7 +3,7 @@
 #include <windows.h>
 #include "Point.h"
 
-struct Rect : RECT
+struct Rect : public RECT
 {
 	Rect() : Rect(0, 0, 0, 0)
 	{

@@ -8,17 +8,19 @@ void Simon::SetDirection(Direction direction)
 	this->direction = direction;
 
 	if (direction == Direction::Left)
-		this->rotation = Vector2(-1, 0);
+		this->directionVec = Vector2(-1, 0);
 	else // Direction::Right
-		this->rotation = Vector2(1, 0);
+		this->directionVec = Vector2(1, 0);
 }
 
 void Simon::LoadContent(ContentManager &content)
 {
-	animations = content.Load<AnimationSet>("Characters/Players/SimonAnimation.xml");
-	auto stats = content.Load<CharacterStats>("CharacterStats/Simon.xml");
+	auto animationFactory = content.Load<AnimationFactory>("Characters/Players/SimonAnimation.xml");
+	sprite = std::make_unique<AnimatedSprite>(animationFactory);
 
+	auto stats = content.Load<CharacterStats>("CharacterStats/Simon.xml");
 	speed = stats->speed; // default velocity
+
 	Idle();
 }
 
@@ -26,26 +28,24 @@ void Simon::Update(float deltaTime)
 {
 	GameObject::UpdateDistance(deltaTime);
 
-	GetAnimation().Update();
+	sprite->Update(deltaTime);
 }
 
-void Simon::Draw(SpriteBatch &spriteBatch)
+void Simon::Draw(SpriteExtensions &spriteBatch)
 {
-	auto effect = SpriteEffects{};
-
 	if (direction == Direction::Right)
-		effect = SpriteEffects::None;
+		sprite->SetEffect(SpriteEffects::None);
 	else
-		effect = SpriteEffects::FlipHorizontally;
+		sprite->SetEffect(SpriteEffects::FlipHorizontally);
 
-	GetAnimation().Draw(spriteBatch, position, Color::White(), effect);
+	spriteBatch.Draw(*sprite, transform);
 }
 
 void Simon::Idle()
 {
 	state = State::IDLE;
 	velocity = 0;
-	animations->Play(IDLE_ANIMATION);
+	sprite->Play(IDLE_ANIMATION);
 }
 
 void Simon::WalkLeft()
@@ -53,7 +53,7 @@ void Simon::WalkLeft()
 	state = State::WALKING_LEFT;
 	SetDirection(Direction::Left);
 	velocity = speed;
-	animations->Play(WALK_ANIMATION);
+	sprite->Play(WALK_ANIMATION);
 }
 
 void Simon::WalkRight()
@@ -61,12 +61,12 @@ void Simon::WalkRight()
 	state = State::WALKING_RIGHT;
 	SetDirection(Direction::Right);
 	velocity = speed;
-	animations->Play(WALK_ANIMATION);
+	sprite->Play(WALK_ANIMATION);
 }
 
 void Simon::TurnBackward()
 {
 	state = State::TURNING_BACKWARD;
 	velocity = 0;
-	animations->Play(TURN_BACKWARD_ANIMATION);
+	sprite->Play(TURN_BACKWARD_ANIMATION);
 }

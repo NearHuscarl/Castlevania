@@ -35,11 +35,11 @@ void MenuScene::Update(float deltaTime)
 
 void MenuScene::Draw(GameTime gameTime)
 {
-	auto spriteBatch = sceneManager.GetSpriteBatch();
+	auto &spriteBatch = sceneManager.GetSpriteBatch();
 
 	spriteBatch.GetSpriteHandler()->Begin(D3DXSPRITE_ALPHABLEND);
 
-	spriteBatch.Draw(*background, Vector2::Zero(), nullptr, Color::White());
+	spriteBatch.Draw(*background, Vector2::Zero(), Color::White());
 
 	if (!transitionTimer.IsRunning())
 	{

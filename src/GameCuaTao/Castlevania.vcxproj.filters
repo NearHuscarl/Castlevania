@@ -138,19 +138,28 @@
     <ClCompile Include="Castlevania\Models\GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Direct2DGame\Content\AnimationSetReader.cpp">
+    <ClCompile Include="Direct2DGame\Content\AnimationFactoryReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Direct2DGame\Animations\Animation.cpp">
+    <ClCompile Include="Direct2DGame\Extensions\Animations\Animation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Direct2DGame\Animations\AnimationFrame.cpp">
+    <ClCompile Include="Direct2DGame\Extensions\Animations\AnimationFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Direct2DGame\Animations\AnimationSet.cpp">
+    <ClCompile Include="Direct2DGame\Extensions\Animations\AnimationFrame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Direct2DGame\Animations\Sprite.cpp">
+    <ClCompile Include="Direct2DGame\Extensions\TextureRegion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DGame\Extensions\Sprites\Sprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DGame\Extensions\Animations\AnimatedSprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DGame\Extensions\Sprites\SpriteExtensions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -353,37 +362,43 @@
     <ClInclude Include="Direct2DGame\Data\WeaponStats.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Direct2DGame\Data\Sprite.h">
+    <ClInclude Include="Castlevania\Settings\Animations.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Direct2DGame\Data\CharacterStats.h">
+    <ClInclude Include="Direct2DGame\IUpdateable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Direct2DGame\Data\WeaponStats.h">
+    <ClInclude Include="Direct2DGame\IDrawable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Castlevania\Models\GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Castlevania\Settings\Animations.h">
+    <ClInclude Include="Direct2DGame\Content\AnimationFactoryReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Direct2DGame\Data\AnimationSet.h">
+    <ClInclude Include="Direct2DGame\Extensions\Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Direct2DGame\Content\AnimationSetReader.h">
+    <ClInclude Include="Direct2DGame\Extensions\Animations\Animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Direct2DGame\Animations\AnimationSet.h">
+    <ClInclude Include="Direct2DGame\Extensions\Animations\AnimationFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Direct2DGame\Animations\Animation.h">
+    <ClInclude Include="Direct2DGame\Extensions\Animations\AnimationFrame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Direct2DGame\Animations\AnimationFrame.h">
+    <ClInclude Include="Direct2DGame\Extensions\TextureRegion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Direct2DGame\Animations\Sprite.h">
+    <ClInclude Include="Direct2DGame\Extensions\Sprites\SpriteExtensions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DGame\Extensions\Sprites\Sprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DGame\Extensions\Animations\AnimatedSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

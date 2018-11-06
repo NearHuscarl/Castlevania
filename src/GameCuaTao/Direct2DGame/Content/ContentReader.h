@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "AnimationSetReader.h"
+#include "AnimationFactoryReader.h"
 #include "CharacterStatsReader.h"
 #include "SoundReader.h"
 #include "SpriteFontReader.h"
@@ -20,7 +20,7 @@ public:
 private:
 	ContentManager &contentManager;
 
-	AnimationSetReader animationSetReader;
+	AnimationFactoryReader animationFactoryReader;
 	CharacterStatsReader characterStatsReader;
 	SoundReader soundReader;
 	SpriteFontReader spriteFontReader;

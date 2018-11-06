@@ -8,7 +8,8 @@ using namespace MarioSample;
 
 void Mario::LoadContent(ContentManager &content)
 {
-	animations = content.Load<AnimationSet>("MarioAnimationDef.xml");
+	auto animationFactory = content.Load<AnimationFactory>("MarioAnimationDef.xml");
+	sprite = std::make_unique<AnimatedSprite>(animationFactory);
 	SetPosition(0.0f, 100.0f);
 	Idle();
 }
@@ -20,7 +21,7 @@ void Mario::Update(float deltaTime)
 
 	ResolveCollision(deltaTime);
 
-	GetAnimation().Update();
+	sprite->Update(deltaTime);
 }
 
 void Mario::UpdateInput()
@@ -105,7 +106,7 @@ void Mario::Idle()
 {
 	state = State::IDLE;
 	velocity.x = 0;
-	animations->Play(MARIO_IDLE);
+	sprite->Play(MARIO_IDLE);
 }
 
 void Mario::WalkLeft()
@@ -113,7 +114,7 @@ void Mario::WalkLeft()
 	state = State::WALKING_LEFT;
 	velocity.x = -MARIO_WALKING_SPEED;
 	direction = Direction::Left;
-	animations->Play(MARIO_WALK);
+	sprite->Play(MARIO_WALK);
 }
 
 void Mario::WalkRight()
@@ -121,11 +122,14 @@ void Mario::WalkRight()
 	state = State::WALKING_RIGHT;
 	velocity.x = MARIO_WALKING_SPEED;
 	direction = Direction::Right;
-	animations->Play(MARIO_WALK);
+	sprite->Play(MARIO_WALK);
 }
 
 void Mario::Draw(SpriteBatch &spriteBatch)
 {
-	auto effects = direction == Direction::Left ? SpriteEffects::FlipHorizontally : SpriteEffects::None;
-	GetAnimation().Draw(spriteBatch, position, Color::White(), effects);
+	auto effect = direction == Direction::Left ? SpriteEffects::FlipHorizontally : SpriteEffects::None;
+	auto texture = sprite->GetTextureRegion().GetTexture();
+	auto srcRectangle = sprite->GetTextureRegion().GetFrameRectangle();
+
+	spriteBatch.Draw(texture, position, &srcRectangle, Color::White(), 0.0f, Vector2::One(), effect);
 }

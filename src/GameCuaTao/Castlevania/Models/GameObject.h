@@ -2,6 +2,8 @@
 
 #include <memory>
 #include "Direct2DGame/Content/ContentManager.h"
+#include "Direct2DGame/Extensions/Sprites/SpriteExtensions.h"
+#include "Direct2DGame/Extensions/Animations/AnimatedSprite.h"
 
 namespace Castlevania
 {
@@ -16,22 +18,21 @@ namespace Castlevania
 		Vector2 GetOriginPosition(); // Get the center of the object bounding box to the world
 		virtual Rect GetFrameRect();
 		virtual Rect GetBoundingBox();
-		Animation &GetAnimation();
 
 		virtual void LoadContent(ContentManager &content);
 		virtual void Update(float deltaTime);
 		void UpdateDistance(float deltaTime);
 
-		virtual void Draw(SpriteBatch &spriteBatch);
+		virtual void Draw(SpriteExtensions &spriteBatch);
 
 		virtual ~GameObject();
 
 	protected:
-		Vector2 rotation;
-		Vector2 position;
+		Transform transform;
+		Vector2 directionVec;
 		float velocity;
 		float speed;
 
-		std::shared_ptr<AnimationSet> animations;
+		std::unique_ptr<AnimatedSprite> sprite;
 	};
 }

@@ -2,7 +2,7 @@
 
 #include "Vector2.h"
 
-struct Vector3 : D3DXVECTOR3
+struct Vector3 : public D3DXVECTOR3
 {
 	Vector3(Vector2 vector)
 	{

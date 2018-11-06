@@ -10,4 +10,7 @@ public:
 
 	static float ToRadians(float degrees);
 	static Vector2 Degrees2Vector(float degrees);
+
+private:
+	static const double PI_180;
 };

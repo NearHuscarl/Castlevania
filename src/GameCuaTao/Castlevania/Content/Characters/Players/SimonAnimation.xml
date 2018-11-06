@@ -35,7 +35,7 @@
   </Spritesheet>
 
   <Animations>
-    <Animation Name="idle" DefaultTime="100" IsLooping="True">
+    <Animation Name="idle" DefaultTime="100" IsLooping="False">
       <Frame SpriteID="walk_01" />
     </Animation>
 

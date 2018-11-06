@@ -12,7 +12,8 @@ public:
 	SpriteBatch(GraphicsDevice &graphicsDevice);
 	ISpriteHandler_ GetSpriteHandler();
 	
-	void Draw(Texture &texture, Vector2 position, Rect *rectangle, Color color, SpriteEffects effects = SpriteEffects::None);
+	void Draw(Texture &texture, Vector2 position, Color color);
+	void Draw(Texture &texture, Vector2 position, Rect *rectangle, Color color, float rotation, Vector2 scale, SpriteEffects effects);
 	void DrawString(SpriteFont &spriteFont, std::string text, Vector2 position, Color color);
 
 private:

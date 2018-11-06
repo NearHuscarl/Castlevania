@@ -9,6 +9,6 @@ namespace Castlevania
 	public:
 		void LoadContent(ContentManager &content) override;
 		void Update(float deltaTime) override;
-		void Draw(SpriteBatch &spritebatch) override;
+		void Draw(SpriteExtensions &spriteBatch) override;
 	};
 }

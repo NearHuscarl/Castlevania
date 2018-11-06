@@ -7,7 +7,7 @@ using namespace Castlevania;
 
 SceneManager::SceneManager(Game &game) : game{ game }
 {
-	this->spriteBatch = std::make_unique<SpriteBatch>(game.GetGraphicsDevice());
+	this->spriteBatch = std::make_unique<SpriteExtensions>(game.GetGraphicsDevice());
 }
 
 #pragma region Getters
@@ -22,7 +22,7 @@ ContentManager &SceneManager::GetContent()
 	return game.GetContent();
 }
 
-SpriteBatch &SceneManager::GetSpriteBatch()
+SpriteExtensions &SceneManager::GetSpriteBatch()
 {
 	return *spriteBatch;
 }
