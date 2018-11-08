@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="48" height="12" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#3c3c3c" nextlayerid="7" nextobjectid="25">
+ <tileset firstgid="1" source="Simon.tsx"/>
+ <tileset firstgid="25" source="Fire_Pit.tsx"/>
+ <imagelayer id="2" name="Background">
+  <image source="Intro.png" width="1536" height="384"/>
+ </imagelayer>
+ <layer id="1" name="TileLayer01" width="48" height="12">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3BAQEAAACCIP+vbkhAAQB8GfAKkrAACQAA
+  </data>
+ </layer>
+ <objectgroup id="3" name="Bounds">
+  <object id="20" name="Ground" x="0" y="288.33" width="1536" height="20"/>
+  <object id="21" name="EntryTrigger" x="1378" y="257.5" width="30" height="30"/>
+  <object id="22" name="LeftBorder" x="0" y="0" width="3" height="288"/>
+  <object id="24" name="RightBorder" x="1533" y="0" width="3" height="288"/>
+ </objectgroup>
+ <objectgroup id="4" name="Game">
+  <object id="14" name="Simon" gid="8" x="20" y="288" width="60" height="66"/>
+  <object id="15" name="FirePit" gid="25" x="175" y="290" width="32" height="64"/>
+  <object id="16" name="FirePit" gid="25" x="434" y="290" width="32" height="64"/>
+  <object id="17" name="FirePit" gid="25" x="685" y="290" width="32" height="64"/>
+  <object id="18" name="FirePit" gid="25" x="942" y="290" width="32" height="64"/>
+  <object id="19" name="FirePit" gid="25" x="1199" y="290" width="32" height="64"/>
+ </objectgroup>
+</map>

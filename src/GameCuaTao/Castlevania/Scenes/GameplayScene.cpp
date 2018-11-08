@@ -1,10 +1,12 @@
 #include "GameplayScene.h"
 #include "SceneManager.h"
+#include "Direct2DGame/Extensions/Tiled/TiledMap.h"
 
 using namespace Castlevania;
 
 GameplayScene::GameplayScene(SceneManager &sceneManager) : AbstractScene{ sceneManager }
 {
+	auto tiledMap = sceneManager.GetContent().Load<TiledMap>("TiledMaps/Intro.tmx");
 }
 
 void GameplayScene::LoadContent()

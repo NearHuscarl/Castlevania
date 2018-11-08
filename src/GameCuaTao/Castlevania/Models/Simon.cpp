@@ -3,14 +3,17 @@
 
 using namespace Castlevania;
 
-void Simon::SetDirection(Direction direction)
-{
-	this->direction = direction;
+// TODO: use collision detection instead of hardcode GROUND_POSITION_Y
+constexpr auto GROUND_POSITION_Y = 100.0f;
 
-	if (direction == Direction::Left)
-		this->directionVec = Vector2(-1, 0);
+void Simon::SetFacing(Facing facing)
+{
+	this->facing = facing;
+
+	if (facing == Facing::Left)
+		this->direction = Vector2(-1, 0);
 	else // Direction::Right
-		this->directionVec = Vector2(1, 0);
+		this->direction = Vector2(1, 0);
 }
 
 void Simon::LoadContent(ContentManager &content)
@@ -33,7 +36,7 @@ void Simon::Update(float deltaTime)
 
 void Simon::Draw(SpriteExtensions &spriteBatch)
 {
-	if (direction == Direction::Right)
+	if (facing == Facing::Right)
 		sprite->SetEffect(SpriteEffects::None);
 	else
 		sprite->SetEffect(SpriteEffects::FlipHorizontally);
@@ -51,7 +54,7 @@ void Simon::Idle()
 void Simon::WalkLeft()
 {
 	state = State::WALKING_LEFT;
-	SetDirection(Direction::Left);
+	SetFacing(Facing::Left);
 	velocity = speed;
 	sprite->Play(WALK_ANIMATION);
 }
@@ -59,7 +62,7 @@ void Simon::WalkLeft()
 void Simon::WalkRight()
 {
 	state = State::WALKING_RIGHT;
-	SetDirection(Direction::Right);
+	SetFacing(Facing::Right);
 	velocity = speed;
 	sprite->Play(WALK_ANIMATION);
 }

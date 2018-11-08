@@ -11,7 +11,7 @@ namespace Castlevania
 	{
 	public:
 		void SetVelocity(float velocity);
-		void SetRotation(float degrees);
+		void SetDirection(float degrees);
 		void SetPosition(float x, float y);
 		void SetPosition(Vector2 position);
 
@@ -29,7 +29,7 @@ namespace Castlevania
 
 	protected:
 		Transform transform;
-		Vector2 directionVec;
+		Vector2 direction;
 		float velocity;
 		float speed;
 

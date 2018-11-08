@@ -6,6 +6,7 @@
 #include "SoundReader.h"
 #include "SpriteFontReader.h"
 #include "TextureReader.h"
+#include "TiledMapReader.h"
 
 class ContentManager;
 
@@ -25,4 +26,5 @@ private:
 	SoundReader soundReader;
 	SpriteFontReader spriteFontReader;
 	TextureReader textureReader;
+	TiledMapReader tiledMapReader;
 };

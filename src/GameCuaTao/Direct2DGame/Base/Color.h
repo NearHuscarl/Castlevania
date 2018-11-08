@@ -88,6 +88,22 @@ public:
 		return Color(R() * (int)scale, G() * (int)scale, B() * (int)scale, A() * (int)scale);
 	}
 
+	static Color FromHex(std::string hexColor)
+	{
+		if (hexColor[0] == '#')
+			hexColor.erase(0, 1);
+
+		auto r = std::stoi(hexColor.substr(0, 2), nullptr, 16);
+		auto g = std::stoi(hexColor.substr(2, 2), nullptr, 16);
+		auto b = std::stoi(hexColor.substr(4, 2), nullptr, 16);
+		auto a = 0;
+
+		if (hexColor.length() == 8)
+			a = std::stoi(hexColor.substr(6, 2), nullptr, 16);
+
+		return Color(r, g, b, a);
+	}
+
 private:
 	unsigned long packedValue;
 };

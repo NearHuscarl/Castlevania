@@ -18,10 +18,11 @@ public:
 	std::string GetRootDirectory();
 	void SetRootDirectory(std::string path);
 
+	ServiceProvider &GetServiceProvider();
+
 	template<typename T>
 	std::shared_ptr<T> Load(std::string assetName);
-
-	ServiceProvider &GetServiceProvider();
+	std::string ResolvePath(Path path, std::string filename); // Return asset relative path to rootDirectory
 
 private:
 	std::string rootDirectory;

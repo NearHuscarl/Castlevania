@@ -16,12 +16,11 @@ std::shared_ptr<AnimationFactory> AnimationFactoryReader::Read(std::string fileP
 
 	auto rootNode = xmlDocument.child("GameContent");
 	auto texturePath = std::string(rootNode.child("Spritesheet").attribute("TexturePath").as_string());
-	auto fullPath = (Path{ contentManager.GetRootDirectory() } / texturePath).string();
+	auto fullPath = Path{ contentManager.GetRootDirectory() } / texturePath;
 	
 	if (!std::filesystem::exists(fullPath)) // fallback to the same directory as animationDef xml file if path not found
 	{
-		fullPath = (Path{ filePath }.parent_path() / texturePath).string();
-		texturePath = std::filesystem::relative(Path{ fullPath }, contentManager.GetRootDirectory()).string();
+		texturePath = contentManager.ResolvePath(Path{ filePath }.parent_path(), texturePath);
 	}
 
 	auto texture = contentManager.Load<Texture>(texturePath);

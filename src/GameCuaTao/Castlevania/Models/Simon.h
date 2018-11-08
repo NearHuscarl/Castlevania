@@ -4,7 +4,7 @@
 
 namespace Castlevania
 {
-	enum class Direction
+	enum class Facing
 	{
 		Left,
 		Right
@@ -17,6 +17,7 @@ namespace Castlevania
 		virtual void Update(float deltaTime) override;
 		void Draw(SpriteExtensions &spriteBatch) override;
 
+		// TODO: make an IntroController, those should be in private
 		void Idle();
 		void WalkLeft();
 		void WalkRight();
@@ -32,8 +33,8 @@ namespace Castlevania
 		};
 
 		State state;
-		Direction direction;
+		Facing facing;
 
-		void SetDirection(Direction direction);
+		void SetFacing(Facing facing);
 	};
 }

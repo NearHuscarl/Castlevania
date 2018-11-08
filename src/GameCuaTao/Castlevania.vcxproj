@@ -158,6 +158,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Castlevania\CastlevaniaGame.cpp" />
+    <ClCompile Include="Direct2DGame\Content\TiledMapReader.cpp" />
     <ClCompile Include="Direct2DGame\Extensions\Animations\AnimatedSprite.cpp" />
     <ClCompile Include="Direct2DGame\Extensions\Animations\AnimationFactory.cpp" />
     <ClCompile Include="Direct2DGame\Content\AnimationFactoryReader.cpp" />
@@ -178,6 +179,8 @@
     <ClCompile Include="Direct2DGame\Extensions\Sprites\Sprite.cpp" />
     <ClCompile Include="Direct2DGame\Extensions\Sprites\SpriteExtensions.cpp" />
     <ClCompile Include="Direct2DGame\Extensions\TextureRegion.cpp" />
+    <ClCompile Include="Direct2DGame\Extensions\Tiled\TiledMap.cpp" />
+    <ClCompile Include="Direct2DGame\Extensions\Tiled\TileSet.cpp" />
     <ClCompile Include="Direct2DGame\Graphics\SpriteBatch.cpp" />
     <ClCompile Include="Direct2DGame\Input\InputHelper.cpp" />
     <ClCompile Include="Direct2DGame\MathHelper.cpp" />
@@ -209,6 +212,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Castlevania\CastlevaniaGame.h" />
+    <ClInclude Include="Direct2DGame\Content\TiledMapReader.h" />
     <ClInclude Include="Direct2DGame\Extensions\Animations\AnimatedSprite.h" />
     <ClInclude Include="Direct2DGame\Extensions\Animations\AnimationFactory.h" />
     <ClInclude Include="Direct2DGame\Content\AnimationFactoryReader.h" />
@@ -236,6 +240,8 @@
     <ClInclude Include="Direct2DGame\Data\CharacterStats.h" />
     <ClInclude Include="Direct2DGame\Data\WeaponStats.h" />
     <ClInclude Include="Direct2DGame\Extensions\TextureRegion.h" />
+    <ClInclude Include="Direct2DGame\Extensions\Tiled\TiledMap.h" />
+    <ClInclude Include="Direct2DGame\Extensions\Tiled\TileSet.h" />
     <ClInclude Include="Direct2DGame\IDrawable.h" />
     <ClInclude Include="Direct2DGame\Input\DirectInput.h" />
     <ClInclude Include="Direct2DGame\GameTime.h" />

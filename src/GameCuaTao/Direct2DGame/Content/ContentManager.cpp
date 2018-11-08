@@ -20,3 +20,9 @@ ServiceProvider &ContentManager::GetServiceProvider()
 {
 	return *serviceProvider;
 }
+
+std::string ContentManager::ResolvePath(Path path, std::string filename)
+{
+	auto fullPath = path / filename;
+	return std::filesystem::relative(fullPath, rootDirectory).string();
+}

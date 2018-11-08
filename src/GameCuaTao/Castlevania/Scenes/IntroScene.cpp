@@ -19,7 +19,7 @@ void IntroScene::LoadContent()
 {
 	auto viewport = sceneManager.GetGraphicsDevice().GetViewport();
 
-	background = sceneManager.GetContent().Load<Texture>("Textures/Background/Intro_Scene.png");
+	background = sceneManager.GetContent().Load<Texture>("Textures/Backgrounds/Intro_Scene.png");
 	
 	simon->LoadContent(sceneManager.GetContent());
 	bat1->LoadContent(sceneManager.GetContent());
@@ -31,11 +31,11 @@ void IntroScene::LoadContent()
 	simon->SetPosition(startPosition);
 
 	bat1->SetPosition(41, 210);
-	bat1->SetRotation(30.f);
+	bat1->SetDirection(30.f);
 	bat1->SetVelocity(40.f);
 
 	bat2->SetPosition(288, 115);
-	bat2->SetRotation(165.f);
+	bat2->SetDirection(165.f);
 	bat2->SetVelocity(12.f);
 
 	AudioManager::Play(GAME_START_PROLOGUE);

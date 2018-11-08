@@ -11,7 +11,7 @@ MenuScene::MenuScene(SceneManager &sceneManager) : AbstractScene{ sceneManager }
 
 void MenuScene::LoadContent()
 {
-	background = sceneManager.GetContent().Load<Texture>("Textures/Background/Main_Menu.png");
+	background = sceneManager.GetContent().Load<Texture>("Textures/Backgrounds/Main_Menu.png");
 
 	auto viewport = sceneManager.GetGraphicsDevice().GetViewport();
 	auto startGameTextSize = Fonts::Main.MessureString(startGameText);
