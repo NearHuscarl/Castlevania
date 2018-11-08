@@ -3,7 +3,7 @@
 #include <map>
 #include "Direct2DGame/Base/Vector2.h"
 #include "Direct2DGame/Content/ContentManager.h"
-#include "Direct2DGame/Extensions/Sprites/SpriteExtensions.h"
+#include "Direct2DGame/Graphics/SpriteBatch.h"
 #include "Direct2DGame/Extensions/Animations/AnimatedSprite.h"
 
 namespace MarioSample

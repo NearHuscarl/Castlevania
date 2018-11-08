@@ -6,12 +6,13 @@ SpriteExtensions::SpriteExtensions(GraphicsDevice &graphicsDevice) : SpriteBatch
 
 void SpriteExtensions::Draw(Sprite sprite, Transform transform)
 {
+	Draw(sprite, transform.position, transform.rotation, transform.scale);
+}
+
+void SpriteExtensions::Draw(Sprite sprite, Vector2 position, float rotation, Vector2 scale)
+{
 	if (sprite.IsVisible())
 	{
-		auto position = transform.position;
-		auto rotation = transform.rotation;
-		auto scale = transform.scale;
-
 		auto &texture = sprite.GetTextureRegion().GetTexture();
 		auto spriteFrame = sprite.GetTextureRegion().GetFrameRectangle();
 		auto color = sprite.GetColor() * sprite.GetAlpha();

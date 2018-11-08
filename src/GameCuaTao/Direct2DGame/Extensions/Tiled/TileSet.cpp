@@ -23,7 +23,7 @@ TileSet::TileSet(std::shared_ptr<Texture> texture, int tileWidth, int tileHeight
 	}
 }
 
-Tiles &TileSet::GetTiles()
+Tile &TileSet::GetTile(int row, int column)
 {
-	return tiles;
+	return tiles.at(std::make_pair(row, column));
 }

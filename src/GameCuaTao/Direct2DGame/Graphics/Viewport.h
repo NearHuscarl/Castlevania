@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Base/Vector2.h"
+#include "../Base/Rect.h"
 
 struct Viewport
 {
@@ -19,5 +20,10 @@ struct Viewport
 	Vector2 Unproject(Vector2 source)
 	{
 		return Vector2{ source.x + x, source.y + y };
+	}
+
+	Rect Bounds()
+	{
+		return Rect(x, y, width, height);
 	}
 };

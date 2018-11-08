@@ -14,7 +14,7 @@ class TileSet
 public:
 	TileSet(std::shared_ptr<Texture> texture, int tileWidth, int tileHeight, int rows, int columns);
 
-	Tiles &GetTiles();
+	Tile &GetTile(int row, int column);
 
 private:
 	std::shared_ptr<Texture> texture;

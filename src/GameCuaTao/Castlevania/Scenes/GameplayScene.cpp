@@ -1,16 +1,15 @@
 #include "GameplayScene.h"
 #include "SceneManager.h"
-#include "Direct2DGame/Extensions/Tiled/TiledMap.h"
 
 using namespace Castlevania;
 
 GameplayScene::GameplayScene(SceneManager &sceneManager) : AbstractScene{ sceneManager }
 {
-	auto tiledMap = sceneManager.GetContent().Load<TiledMap>("TiledMaps/Intro.tmx");
 }
 
 void GameplayScene::LoadContent()
 {
+	tiledMap = sceneManager.GetContent().Load<TiledMap>("TiledMaps/Intro.tmx");
 }
 
 void GameplayScene::Update(float deltaTime)
@@ -23,7 +22,7 @@ void GameplayScene::Draw(GameTime gameTime)
 
 	spriteBatch.GetSpriteHandler()->Begin(D3DXSPRITE_ALPHABLEND);
 
-	// Draw stuff
+	tiledMap->Draw(spriteBatch, sceneManager.GetGraphicsDevice().GetViewport());
 
 	spriteBatch.GetSpriteHandler()->End();
 }

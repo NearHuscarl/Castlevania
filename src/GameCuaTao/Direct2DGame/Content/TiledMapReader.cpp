@@ -46,6 +46,7 @@ TiledMapObjects TiledMapReader::ReadTiledMapObjects(pugi::xml_node mapNode)
 		for (auto objectNode : objectGroupNode.children("object"))
 		{
 			auto objectProperties = TiledMapObjectProperties{};
+
 			for (auto attribute : objectNode.attributes())
 			{
 				objectProperties[attribute.name()] = attribute.value();

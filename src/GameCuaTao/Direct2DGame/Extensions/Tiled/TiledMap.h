@@ -3,6 +3,7 @@
 #include <map>
 #include <vector>
 #include "TileSet.h"
+#include "../Sprites/SpriteExtensions.h"
 
 using TiledMapObjectProperties = std::map<std::string, std::string>;
 using TiledMapObjects = std::vector<std::map<std::string, std::string>>;
@@ -14,6 +15,8 @@ public:
 
 	void CreateTileSet(std::shared_ptr<Texture> texture);
 	void CreateMapObjects(TiledMapObjects objects);
+
+	void Draw(SpriteExtensions spriteBatch, Viewport viewport);
 
 private:
 	std::string name;

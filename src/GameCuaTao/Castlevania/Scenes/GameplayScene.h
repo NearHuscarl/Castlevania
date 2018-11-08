@@ -1,6 +1,7 @@
 #pragma once
 
 #include "AbstractScene.h"
+#include "Direct2DGame/Extensions/Tiled/TiledMap.h"
 
 namespace Castlevania
 {
@@ -12,5 +13,8 @@ namespace Castlevania
 		void LoadContent() override;
 		void Update(float deltaTime) override;
 		void Draw(GameTime gameTime) override;
+
+	private:
+		std::shared_ptr<TiledMap> tiledMap;
 	};
 }
