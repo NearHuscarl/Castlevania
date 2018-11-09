@@ -33,7 +33,9 @@ void SceneManager::Update(float deltaTime)
 {
 	if (nextScene != nullptr)
 	{
-		NextScene(std::move(nextScene));
+		// reassign std::unique_ptr make the old object destroyed
+		// and its memory deallocated automatically :)
+		currentScene = std::move(nextScene);
 	}
 	currentScene->Update(deltaTime);
 }
@@ -45,22 +47,11 @@ void SceneManager::Draw(GameTime gameTime)
 
 void SceneManager::SetNextScene(Scene scene)
 {
-	nextScene = GetScene(scene);
+	nextScene = ConstructScene(scene);
 	nextScene->LoadContent();
 }
 
-void SceneManager::NextScene(std::unique_ptr<AbstractScene> scene)
-{
-	// reassign std::unique_ptr make the old object destroyed and its memory deallocated :)
-	currentScene = std::move(scene);
-}
-
-AbstractScene *SceneManager::GetCurrentScene()
-{
-	return currentScene.get();
-}
-
-std::unique_ptr<AbstractScene> SceneManager::GetScene(Scene scene)
+std::unique_ptr<AbstractScene> SceneManager::ConstructScene(Scene scene)
 {
 	switch (scene)
 	{

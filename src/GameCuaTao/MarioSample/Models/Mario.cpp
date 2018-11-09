@@ -128,7 +128,7 @@ void Mario::WalkRight()
 void Mario::Draw(SpriteBatch &spriteBatch)
 {
 	auto effect = direction == Direction::Left ? SpriteEffects::FlipHorizontally : SpriteEffects::None;
-	auto texture = sprite->GetTextureRegion().GetTexture();
+	auto &texture = sprite->GetTextureRegion().GetTexture();
 	auto srcRectangle = sprite->GetTextureRegion().GetFrameRectangle();
 
 	spriteBatch.Draw(texture, position, &srcRectangle, Color::White(), 0.0f, Vector2::One(), effect);

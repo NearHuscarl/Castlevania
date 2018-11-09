@@ -29,7 +29,7 @@ void SpriteBatch::Draw(Texture &texture, Vector2 position, Rect *rectPtr, Color 
 		scaleVec = Vector2{ -1, 1 } * scale;
 	else if (effects == SpriteEffects::FlipVertically)
 		scaleVec = Vector2{ 1, -1 } * scale;
-	else // None
+	else // SpriteEffects::None
 		scaleVec = Vector2{ 1, 1 } * scale;
 
 	auto center = Vector2{ position.x + rect.Width() / 2, position.y + rect.Height() / 2 };

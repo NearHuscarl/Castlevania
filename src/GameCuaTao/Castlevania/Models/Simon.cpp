@@ -11,9 +11,9 @@ void Simon::SetFacing(Facing facing)
 	this->facing = facing;
 
 	if (facing == Facing::Left)
-		this->direction = Vector2(-1, 0);
+		this->direction = Vector2{ -1, 0 };
 	else // Direction::Right
-		this->direction = Vector2(1, 0);
+		this->direction = Vector2{ 1, 0 };
 }
 
 void Simon::LoadContent(ContentManager &content)
