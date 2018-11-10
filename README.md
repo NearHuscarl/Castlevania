@@ -68,6 +68,7 @@ With the default configuration, Visual will toss all object files into one big f
 
 -  Visual Studio 2017
 -  C++17
+-  [Tiled] - A general purpose tile map editor for all tile-based games
 
 ### Libraries
 
@@ -91,6 +92,9 @@ With the default configuration, Visual will toss all object files into one big f
    -  [RolePlayingGame]
 
 [native event]: https://msdn.microsoft.com/en-us/library/ee2k0a7d.aspx
+
+[Tiled]: https://www.mapeditor.org/
+
 [back to the basics! essentials of modern c++ style]: https://github.com/CppCon/CppCon2014/blob/master/Presentations/Back%20to%20the%20Basics!%20Essentials%20of%20Modern%20C%2B%2B%20Style/Back%20to%20the%20Basics!%20Essentials%20of%20Modern%20C%2B%2B%20Style%20-%20Herb%20Sutter%20-%20CppCon%202014.pdf
 [smart pointers need careful programmers]: https://yatb.giacomodrago.com/en/post/11/cpp11-smart-pointers-need-careful-programmers.html
 [uit-se102-game-project ]: https://github.com/danhph/UIT-SE102-Game-Project
