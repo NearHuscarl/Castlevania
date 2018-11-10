@@ -13,7 +13,7 @@ void Keyboard::Initialize(HWND handle)
 
 	if (result != DI_OK)
 	{
-		FileLogger::GetInstance().Error("DirectInput8Create failed!");
+		FileLogger::GetInstance().Error("{}(): DirectInput8Create failed!", __FUNCTION__);
 		return;
 	}
 
@@ -22,7 +22,7 @@ void Keyboard::Initialize(HWND handle)
 	// TO-DO: put in exception handling
 	if (result != DI_OK)
 	{
-		FileLogger::GetInstance().Error("CreateDevice failed!");
+		FileLogger::GetInstance().Error("{}(): CreateDevice failed!", __FUNCTION__);
 		return;
 	}
 
@@ -61,7 +61,7 @@ void Keyboard::Initialize(HWND handle)
 	result = inputDevice->Acquire();
 	if (result != DI_OK)
 	{
-		FileLogger::GetInstance().Error("DINPUT8::Acquire failed!");
+		FileLogger::GetInstance().Error("{}(): DINPUT8::Acquire failed!", __FUNCTION__);
 		return;
 	}
 
@@ -90,8 +90,8 @@ KeyboardState Keyboard::GetState()
 		}
 		else
 		{
+			FileLogger::GetInstance().Error("{}(): DINPUT::GetDeviceState failed: {}", __FUNCTION__, result);
 			return KeyboardState{ nullptr };
-			// FileLogger::GetInstance().Error("DINPUT::GetDeviceState failed. Error: " + std::to_string(hr));
 		}
 	}
 

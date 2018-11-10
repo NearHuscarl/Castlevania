@@ -4,20 +4,20 @@
 #include "LoadContentException.h"
 #include "../Utilities/FileLogger.h"
 
-std::shared_ptr<TiledMap> TiledMapReader::Read(std::string path, ContentManager &contentManager)
+std::shared_ptr<TiledMap> TiledMapReader::Read(std::string filePath, ContentManager &contentManager)
 {
 	auto xmlDocument = pugi::xml_document{};
-	auto result = xmlDocument.load_file(path.c_str());
+	auto result = xmlDocument.load_file(filePath.c_str());
 
 	if (!result)
 	{
-		FileLogger::GetInstance().Error(result.description());
+		FileLogger::GetInstance().Error("{}() failed: {}. Path: {}", __FUNCTION__, result.description(), filePath);
 		throw LoadContentException(result.description());
 	}
 
 	auto mapNode = xmlDocument.child("map");
 
-	auto name = path;
+	auto name = filePath;
 	auto mapWidth = mapNode.attribute("width").as_int();
 	auto mapHeight = mapNode.attribute("height").as_int();
 	auto tileWidth = mapNode.attribute("tilewidth").as_int();
@@ -28,7 +28,7 @@ std::shared_ptr<TiledMap> TiledMapReader::Read(std::string path, ContentManager 
 	
 	// image.source store the relative path to the tmx file itself
 	auto textureRelativePath = mapNode.child("imagelayer").child("image").attribute("source").as_string();
-	auto texturePath = contentManager.ResolvePath(Path{ path }.parent_path(), textureRelativePath);
+	auto texturePath = contentManager.ResolvePath(Path{ filePath }.parent_path(), textureRelativePath);
 	auto texture = contentManager.Load<Texture>(texturePath);
 
 	map->CreateTileSet(texture);

@@ -64,7 +64,7 @@ FontDescription SpriteFontReader::ReadFontConfig(std::string configFile)
 
 	if (!result)
 	{
-		FileLogger::GetInstance().Error(result.description());
+		FileLogger::GetInstance().Error("{}() failed: {}. Path: {}", __FUNCTION__, result.description(), configFile);
 		throw LoadContentException(result.description());
 	}
 

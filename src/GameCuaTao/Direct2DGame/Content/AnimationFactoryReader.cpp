@@ -10,7 +10,7 @@ std::shared_ptr<AnimationFactory> AnimationFactoryReader::Read(std::string fileP
 
 	if (!result)
 	{
-		FileLogger::GetInstance().Error(result.description());
+		FileLogger::GetInstance().Error("{}() failed: {}. Path: {}", __FUNCTION__, result.description(), filePath);
 		throw LoadContentException(result.description());
 	}
 

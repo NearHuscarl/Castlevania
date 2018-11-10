@@ -53,7 +53,7 @@ std::unique_ptr<GameObject> ObjectFactory::ConstructObject(std::string name)
 			break;
 
 		case EntityType::FirePit:
-			return std::make_unique<FirePit>(); // TODO:
+			return std::make_unique<FirePit>();
 			break;
 
 		case EntityType::Boundary:

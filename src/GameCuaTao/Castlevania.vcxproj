@@ -71,7 +71,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>Library\directx\Include;Library\freetype\Include;$(IncludePath)</IncludePath>
+    <IncludePath>Library\directx\Include;Library\freetype\Include;Library\fmt\Include;$(IncludePath)</IncludePath>
     <LibraryPath>Library\directx\Lib;Library\freetype\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

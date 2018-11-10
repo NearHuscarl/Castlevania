@@ -9,7 +9,7 @@ namespace Castlevania
 	{
 	public:
 		Player();
-		void Update(float deltaTime);
+		void Update(float deltaTime) override;
 		void UpdateInput() override;
 	};
 }

@@ -13,6 +13,7 @@ std::shared_ptr<Texture> TextureReader::Read(std::string filePathStr, ContentMan
 
 	if (result != D3D_OK)
 	{
+		FileLogger::GetInstance().Error("{}() failed: {}", __FUNCTION__, filePathStr);
 		throw LoadContentException("D3DXGetImageInfoFromFile() failed: " + filePathStr);
 	}
 

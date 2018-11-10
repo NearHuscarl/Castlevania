@@ -44,7 +44,7 @@ void GraphicsDevice::Initialize()
 
 	if (renderDevice == nullptr)
 	{
-		FileLogger::GetInstance().Error("CreateDevice failed");
+		FileLogger::GetInstance().Error("{}(): CreateDevice failed", __FUNCTION__);
 		return;
 	}
 
