@@ -8,24 +8,41 @@ public:
 	KeyboardState(unsigned char *keyStates)
 	{
 		if (keyStates == nullptr)
-			return;
+		{
+			InitializeEmptyKeyStates();
+		}
+		else
+		{
+			InitializeKeyStates(keyStates);
+		}
+	}
 
+	bool IsKeyDown(int KeyCode)
+	{
+		return (keyStates[KeyCode] & 0x80);
+	}
+
+	bool IsKeyUp(int KeyCode)
+	{
+		return !(keyStates[KeyCode] & 0x80);
+	}
+
+private:
+	unsigned char keyStates[KEYSTATE_BUFFER_SIZE]; // DirectInput keyboard state buffer
+
+	void InitializeKeyStates(unsigned char *keyStates)
+	{
 		for (auto i = 0; i < KEYSTATE_BUFFER_SIZE; i++)
 		{
 			this->keyStates[i] = keyStates[i];
 		}
 	}
 
-	bool IsKeyDown(int KeyCode)
+	void InitializeEmptyKeyStates()
 	{
-		return (keyStates[KeyCode] & 0x80) > 0;
+		for (auto i = 0; i < KEYSTATE_BUFFER_SIZE; i++)
+		{
+			this->keyStates[i] = '\0';
+		}
 	}
-
-	bool IsKeyUp(int KeyCode)
-	{
-		return (keyStates[KeyCode] & 0x80) <= 0;
-	}
-
-private:
-	unsigned char keyStates[KEYSTATE_BUFFER_SIZE]; // DirectInput keyboard state buffer 
 };

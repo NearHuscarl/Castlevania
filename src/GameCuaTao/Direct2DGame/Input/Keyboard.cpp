@@ -59,13 +59,11 @@ void Keyboard::Initialize(HWND handle)
 	result = inputDevice->SetProperty(DIPROP_BUFFERSIZE, &dipdw.diph);
 
 	result = inputDevice->Acquire();
-	if (result != DI_OK)
-	{
-		FileLogger::GetInstance().Error("{}(): DINPUT8::Acquire failed!", __FUNCTION__);
-		return;
-	}
 
-	FileLogger::GetInstance().Info("Keyboard has been initialized successfully");
+	if (result != DI_OK)
+		FileLogger::GetInstance().Error("{}(): DINPUT8::Acquire failed!", __FUNCTION__);
+	else
+		FileLogger::GetInstance().Info("Keyboard has been initialized successfully");
 }
 
 KeyboardState Keyboard::GetState()
@@ -80,7 +78,6 @@ KeyboardState Keyboard::GetState()
 		// If the keyboard lost focus or was not acquired then try to get control back.
 		if ((result == DIERR_INPUTLOST) || (result == DIERR_NOTACQUIRED))
 		{
-			// TODO: error here (potentially)
 			result = inputDevice->Acquire();
 
 			if (result == DI_OK)

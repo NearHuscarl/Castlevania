@@ -16,7 +16,6 @@ public:
 	std::string GetFilename();
 	std::string GetFullPath();
 
-	// TODO: remove
 	void Debug(std::string logMessage);
 	void Info(std::string logMessage);
 	void Warn(std::string logMessage);
