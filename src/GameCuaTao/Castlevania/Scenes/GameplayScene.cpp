@@ -5,24 +5,50 @@ using namespace Castlevania;
 
 GameplayScene::GameplayScene(SceneManager &sceneManager) : AbstractScene{ sceneManager }
 {
+	camera = std::make_unique<Camera>(sceneManager.GetGraphicsDevice());
 }
 
 void GameplayScene::LoadContent()
 {
-	tiledMap = sceneManager.GetContent().Load<TiledMap>("TiledMaps/Intro.tmx");
+	auto &stageManager = sceneManager.GetStageManager();
+	
+	map = stageManager.NextMap(Map::STAGE_01_COURTYARD);
+	gameObjects = stageManager.LoadGameObjects();
+	camera->SetMoveArea(0, 0, map->GetWidthInPixels(), map->GetHeightInPixels());
+
+	for (auto &gameObject : gameObjects)
+	{
+		gameObject->LoadContent(sceneManager.GetContent());
+
+		if (gameObject->GetType() == EntityType::Player)
+		{
+			player = dynamic_cast<Player*>(gameObject.get());
+		}
+	}
 }
 
 void GameplayScene::Update(float deltaTime)
 {
+	camera->LookAt(player->GetOriginPosition(), Scrolling::Horizontally);
+
+	for (auto const &gameObject : gameObjects)
+	{
+		gameObject->Update(deltaTime);
+	}
 }
 
 void GameplayScene::Draw(GameTime gameTime)
 {
-	auto spriteBatch = sceneManager.GetSpriteBatch();
+	auto &spriteBatch = sceneManager.GetSpriteBatch();
 
-	spriteBatch.GetSpriteHandler()->Begin(D3DXSPRITE_ALPHABLEND);
+	spriteBatch.Begin(D3DXSPRITE_ALPHABLEND);
 
-	tiledMap->Draw(spriteBatch, sceneManager.GetGraphicsDevice().GetViewport());
+	map->Draw(spriteBatch);
 
-	spriteBatch.GetSpriteHandler()->End();
+	for (auto const &gameObject : gameObjects)
+	{
+		gameObject->Draw(spriteBatch);
+	}
+
+	spriteBatch.End();
 }

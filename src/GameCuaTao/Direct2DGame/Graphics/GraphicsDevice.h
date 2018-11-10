@@ -12,7 +12,7 @@ public:
 	GraphicsDevice(GraphicsDeviceInformation gdi);
 	void Initialize();
 
-	Viewport GetViewport();
+	Viewport &GetViewport();
 	void SetViewport(Viewport viewport);
 
 	Color GetColorKey();

@@ -3,6 +3,10 @@
 
 using namespace Castlevania;
 
+Player::Player() : Simon(EntityType::Player)
+{
+}
+
 void Player::Update(float deltaTime)
 {
 	UpdateInput();
@@ -12,17 +16,10 @@ void Player::Update(float deltaTime)
 
 void Player::UpdateInput()
 {
-	//switch (state)
-	//{
-	//	case IDLE:
-	//		break;
-	//}
-	if (InputHelper::IsKeyDown(DIK_RIGHT))
-	{
+	if (InputHelper::IsKeyPressed(DIK_RIGHT))
 		WalkRight();
-	}
-	else if (InputHelper::IsKeyDown(DIK_LEFT))
-	{
+	else if (InputHelper::IsKeyPressed(DIK_LEFT))
 		WalkLeft();
-	}
+	else
+		Idle();
 }

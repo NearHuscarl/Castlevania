@@ -3,8 +3,8 @@
  <image source="../Items/Fire_Pit.png" width="64" height="64"/>
  <tile id="0">
   <animation>
-   <frame tileid="0" duration="100"/>
-   <frame tileid="1" duration="100"/>
+   <frame tileid="0" duration="200"/>
+   <frame tileid="1" duration="200"/>
   </animation>
  </tile>
 </tileset>

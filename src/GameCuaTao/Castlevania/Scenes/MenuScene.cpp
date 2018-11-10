@@ -37,7 +37,7 @@ void MenuScene::Draw(GameTime gameTime)
 {
 	auto &spriteBatch = sceneManager.GetSpriteBatch();
 
-	spriteBatch.GetSpriteHandler()->Begin(D3DXSPRITE_ALPHABLEND);
+	spriteBatch.Begin(D3DXSPRITE_ALPHABLEND);
 
 	spriteBatch.Draw(*background, Vector2::Zero(), Color::White());
 
@@ -51,5 +51,5 @@ void MenuScene::Draw(GameTime gameTime)
 			Stopwatch::Every(120) ? Color::White() : Color::Transparent());
 	}
 
-	spriteBatch.GetSpriteHandler()->End();
+	spriteBatch.End();
 }

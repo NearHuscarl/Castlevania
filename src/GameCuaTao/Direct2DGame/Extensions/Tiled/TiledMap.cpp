@@ -11,6 +11,16 @@ TiledMap::TiledMap(std::string name, int width, int height, int tileWidth, int t
 	this->backgroundColor = backgroundColor;
 }
 
+int TiledMap::GetWidthInPixels()
+{
+	return width * tileWidth;
+}
+
+int TiledMap::GetHeightInPixels()
+{
+	return height * tileHeight;
+}
+
 void TiledMap::CreateTileSet(std::shared_ptr<Texture> texture)
 {
 	tileSet = std::make_unique<TileSet>(texture, tileWidth, tileHeight, rows, columns);
@@ -21,14 +31,19 @@ void TiledMap::CreateMapObjects(TiledMapObjects objects)
 	this->objects = objects;
 }
 
-void TiledMap::Draw(SpriteExtensions spriteBatch, Viewport viewport)
+TiledMapObjects TiledMap::GetMapObjects()
 {
-	auto viewportRect = viewport.Bounds();
+	return objects;
+}
 
-	auto startRow = (int)viewportRect.left / tileWidth;
-	auto endRow = (int)viewportRect.right / tileWidth + 1;
-	auto startColumn = (int)viewportRect.top / tileHeight;
-	auto endColumn = (int)viewportRect.bottom / tileHeight + 1;
+void TiledMap::Draw(SpriteExtensions spriteBatch)
+{
+	auto camRect = spriteBatch.GetGraphicsDevice().GetViewport().Bounds();
+
+	auto startRow = (int)camRect.left / tileWidth;
+	auto endRow = (int)camRect.right / tileWidth + 1;
+	auto startColumn = (int)camRect.top / tileHeight;
+	auto endColumn = (int)camRect.bottom / tileHeight + 1;
 
 	startRow = MathHelper::Clamp(startRow, 0, rows - 1);
 	endRow = MathHelper::Clamp(endRow, 0, rows - 1);
@@ -41,10 +56,9 @@ void TiledMap::Draw(SpriteExtensions spriteBatch, Viewport viewport)
 		{
 			auto tile = tileSet->GetTile(row, column);
 			auto rect = tile.GetTextureRegion().GetFrameRectangle();
-			auto worldPosition = Vector2{ (float)rect.X(), (float)rect.Y() };
-			auto camPosition = viewport.Project(worldPosition);
+			auto position = Vector2{ (float)rect.X(), (float)rect.Y() };
 
-			spriteBatch.Draw(tile, camPosition);
+			spriteBatch.Draw(tile, position);
 		}
 	}
 }

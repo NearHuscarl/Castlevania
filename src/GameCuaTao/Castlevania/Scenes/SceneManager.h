@@ -5,6 +5,7 @@
 #include "Direct2DGame/Extensions/Sprites/SpriteExtensions.h"
 #include "AbstractScene.h"
 #include "Scene.h"
+#include "../Stages/StageManager.h"
 
 namespace Castlevania
 {
@@ -16,8 +17,7 @@ namespace Castlevania
 		GraphicsDevice &GetGraphicsDevice();
 		ContentManager &GetContent();
 		SpriteExtensions &GetSpriteBatch();
-
-		AbstractScene *GetCurrentScene();
+		StageManager &GetStageManager();
 
 		void SetNextScene(Scene scene);
 
@@ -26,6 +26,7 @@ namespace Castlevania
 
 	private:
 		Game &game;
+		std::unique_ptr<StageManager> stageManager;
 
 		std::unique_ptr<AbstractScene> currentScene;
 		std::unique_ptr<AbstractScene> nextScene;

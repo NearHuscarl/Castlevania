@@ -2,6 +2,10 @@
 
 using namespace Castlevania;
 
+Bat::Bat() : GameObject(EntityType::Bat)
+{
+}
+
 void Bat::LoadContent(ContentManager &content)
 {
 	auto animationFactory = content.Load<AnimationFactory>("Characters/NPCs/BatAnimationDef.xml");

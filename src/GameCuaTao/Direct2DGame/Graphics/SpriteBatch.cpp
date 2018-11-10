@@ -1,14 +1,24 @@
 #include "SpriteBatch.h"
 #include "../Base/Vector3.h"
 
-SpriteBatch::SpriteBatch(GraphicsDevice &graphicsDevice)
+SpriteBatch::SpriteBatch(GraphicsDevice &graphicsDevice) : graphicsDevice{ graphicsDevice }
 {
 	spriteHandler = graphicsDevice.GetSpriteHandler();
 }
 
-ISpriteHandler_ SpriteBatch::GetSpriteHandler()
+GraphicsDevice &SpriteBatch::GetGraphicsDevice()
 {
-	return spriteHandler;
+	return graphicsDevice;
+}
+
+void SpriteBatch::Begin(unsigned long flag)
+{
+	spriteHandler->Begin(flag);
+}
+
+void SpriteBatch::End()
+{
+	spriteHandler->End();
 }
 
 void SpriteBatch::Draw(Texture &texture, Vector2 position, Color color)
@@ -32,6 +42,7 @@ void SpriteBatch::Draw(Texture &texture, Vector2 position, Rect *rectPtr, Color 
 	else // SpriteEffects::None
 		scaleVec = Vector2{ 1, 1 } * scale;
 
+	position = graphicsDevice.GetViewport().Project(position);
 	auto center = Vector2{ position.x + rect.Width() / 2, position.y + rect.Height() / 2 };
 
 	auto oldMatrix = Matrix{};

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="48" height="12" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#3c3c3c" nextlayerid="7" nextobjectid="25">
- <tileset firstgid="1" source="Simon.tsx"/>
- <tileset firstgid="25" source="Fire_Pit.tsx"/>
+ <tileset firstgid="1" source="../Simon.tsx"/>
+ <tileset firstgid="25" source="../Fire_Pit.tsx"/>
  <imagelayer id="2" name="Background">
-  <image source="Intro.png" width="1536" height="384"/>
+  <image source="Courtyard.png" width="1536" height="384"/>
  </imagelayer>
  <layer id="1" name="TileLayer01" width="48" height="12">
   <data encoding="base64" compression="gzip">
@@ -17,7 +17,7 @@
   <object id="24" name="RightBorder" x="1533" y="0" width="3" height="288"/>
  </objectgroup>
  <objectgroup id="4" name="Game">
-  <object id="14" name="Simon" gid="8" x="20" y="288" width="60" height="66"/>
+  <object id="14" name="Player" gid="8" x="20" y="288" width="60" height="66"/>
   <object id="15" name="FirePit" gid="25" x="175" y="290" width="32" height="64"/>
   <object id="16" name="FirePit" gid="25" x="434" y="290" width="32" height="64"/>
   <object id="17" name="FirePit" gid="25" x="685" y="290" width="32" height="64"/>

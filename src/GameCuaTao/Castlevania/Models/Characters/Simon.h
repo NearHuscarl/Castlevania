@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GameObject.h"
+#include "../GameObject.h"
 
 namespace Castlevania
 {
@@ -13,6 +13,9 @@ namespace Castlevania
 	class Simon : public GameObject
 	{
 	public:
+		Simon();
+		Simon(EntityType type);
+
 		void LoadContent(ContentManager &content) override;
 		virtual void Update(float deltaTime) override;
 		void Draw(SpriteExtensions &spriteBatch) override;

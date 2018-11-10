@@ -1,10 +1,18 @@
 #include "Simon.h"
-#include "../Settings/Animations.h"
+#include "../../Settings/Animations.h"
 
 using namespace Castlevania;
 
 // TODO: use collision detection instead of hardcode GROUND_POSITION_Y
 constexpr auto GROUND_POSITION_Y = 100.0f;
+
+Simon::Simon() : Simon(EntityType::Simon)
+{
+}
+
+Simon::Simon(EntityType type) : GameObject(type)
+{
+}
 
 void Simon::SetFacing(Facing facing)
 {
@@ -12,7 +20,7 @@ void Simon::SetFacing(Facing facing)
 
 	if (facing == Facing::Left)
 		this->direction = Vector2{ -1, 0 };
-	else // Direction::Right
+	else // Facing::Right
 		this->direction = Vector2{ 1, 0 };
 }
 
@@ -25,6 +33,7 @@ void Simon::LoadContent(ContentManager &content)
 	speed = stats->speed; // default velocity
 
 	Idle();
+	facing = Facing::Right;
 }
 
 void Simon::Update(float deltaTime)

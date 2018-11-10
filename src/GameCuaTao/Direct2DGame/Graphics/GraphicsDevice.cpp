@@ -56,7 +56,7 @@ void GraphicsDevice::Initialize()
 	FileLogger::GetInstance().Info("Initialize GraphicsDevice done");
 }
 
-Viewport GraphicsDevice::GetViewport()
+Viewport &GraphicsDevice::GetViewport()
 {
 	return viewport;
 }

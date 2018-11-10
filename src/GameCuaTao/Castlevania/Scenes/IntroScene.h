@@ -3,8 +3,8 @@
 #include <memory>
 #include "Direct2DGame/Graphics/Texture.h"
 #include "AbstractScene.h"
-#include "../Models/Simon.h"
-#include "../Models/Bat.h"
+#include "../Models/Characters/Simon.h"
+#include "../Models/Characters/Bat.h"
 
 namespace Castlevania
 {

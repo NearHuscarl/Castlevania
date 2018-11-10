@@ -3,6 +3,16 @@
 
 using namespace Castlevania;
 
+GameObject::GameObject(EntityType type)
+{
+	this->type = type;
+}
+
+EntityType GameObject::GetType()
+{
+	return type;
+}
+
 // TODO: remove public setters
 void GameObject::SetVelocity(float velocity)
 {
@@ -26,7 +36,12 @@ void GameObject::SetPosition(float x, float y)
 
 void GameObject::SetPosition(Vector2 position)
 {
-	transform.position = position;
+	SetPosition(position.x, position.y);
+}
+
+Vector2 GameObject::GetPosition()
+{
+	return transform.position;
 }
 
 Vector2 GameObject::GetOriginPosition()
