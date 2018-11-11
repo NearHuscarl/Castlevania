@@ -82,8 +82,8 @@ KeyboardState Keyboard::GetState()
 
 			if (result == DI_OK)
 				FileLogger::GetInstance().Info("Keyboard re-acquired!");
-			else
-				return KeyboardState{ nullptr };
+			
+			return KeyboardState{ nullptr };
 		}
 		else
 		{
