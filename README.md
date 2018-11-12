@@ -75,6 +75,7 @@ With the default configuration, Visual will toss all object files into one big f
 -  [DirectX 9 SDK]
 -  [pugixml] - Light-weight, simple and fast XML parser for C++
 -  [freetype] - A freely available software library to render fonts
+-  [fmt] - A modern formatting library
 
 [sample project]: https://github.com/dungdna2000/gamedev-intro-tutorials/
 
@@ -108,5 +109,6 @@ With the default configuration, Visual will toss all object files into one big f
 [directx 9 sdk]: https://www.microsoft.com/en-us/download/details.aspx?id=6812
 [pugixml]: https://github.com/zeux/pugixml/
 [freetype]: https://github.com/ubawurinna/freetype-windows-binaries
+[fmt]: https://github.com/fmtlib/fmt
 [create smart pointer from raw pointer]: https://stackoverflow.com/questions/4665266/creating-shared-ptr-from-raw-pointer
 [seperate animation and physical bounding box]: http://community.monogame.net/t/examples-of-good-adaptive-code-for-animated-sprites/9569
