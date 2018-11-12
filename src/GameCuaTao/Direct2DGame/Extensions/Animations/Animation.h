@@ -16,9 +16,11 @@ public:
 
 	void Add(TextureRegion textureRegion, int time = 0);
 	void Update();
+	void Reset();
 
 private:
 	bool isLooping;
+	bool isComplete;
 
 	int lastFrameTime;
 	int defaultTime;

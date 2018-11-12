@@ -7,6 +7,11 @@ AnimatedSprite::AnimatedSprite(std::shared_ptr<AnimationFactory> animationFactor
 	this->animationFactory = animationFactory;
 }
 
+bool AnimatedSprite::AnimateComplete()
+{
+	return currentAnimation->IsComplete();
+}
+
 void AnimatedSprite::Play(std::string name)
 {
 	if (currentAnimation->GetName() != name || currentAnimation->IsComplete())
@@ -15,7 +20,7 @@ void AnimatedSprite::Play(std::string name)
 	}
 }
 
-void AnimatedSprite::Update(float deltaTime)
+void AnimatedSprite::Update()
 {
 	if (!currentAnimation->IsComplete())
 	{

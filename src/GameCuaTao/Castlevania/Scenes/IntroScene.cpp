@@ -31,12 +31,10 @@ void IntroScene::LoadContent()
 	simon->SetPosition(startPosition);
 
 	bat1->SetPosition(41, 210);
-	bat1->SetDirection(30.f);
-	bat1->SetVelocity(40.f);
+	bat1->SetLinearVelocity(40, 30);
 
 	bat2->SetPosition(288, 115);
-	bat2->SetDirection(165.f);
-	bat2->SetVelocity(12.f);
+	bat2->SetLinearVelocity(12, 165);
 
 	AudioManager::Play(GAME_START_PROLOGUE);
 }

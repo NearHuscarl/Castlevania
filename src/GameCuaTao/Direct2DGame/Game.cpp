@@ -27,6 +27,7 @@ Game::Game()
 	window   = std::make_unique<GameWindow>(*this);
 	graphics = std::make_unique<GraphicsDeviceManager>(*this);
 	content  = std::make_unique<ContentManager>(service);
+	keyboard = std::make_unique<Keyboard>();
 
 	service->Add<GraphicsDeviceManager>(graphics.get());
 	service->Add<GameWindow>(&GetWindow());
@@ -35,7 +36,7 @@ Game::Game()
 void Game::Initialize()
 {
 	graphics->CreateDevice();
-	Keyboard::Initialize(window->GetHandle());
+	keyboard->Initialize(window->GetHandle());
 
 	LoadContent();
 }
@@ -80,7 +81,7 @@ void Game::Run()
 	}
 	
 	gameTimer.Start();
-	while (IsRunning())
+	while (ProcessEvents())
 	{
 		Tick();
 		auto deltaTime = (int)gameTime.ElapsedGameTime.Milliseconds();
@@ -96,7 +97,7 @@ void Game::Run()
 	}
 }
 
-bool Game::IsRunning()
+bool Game::ProcessEvents()
 {
 	auto msg = MSG{};
 
@@ -124,5 +125,5 @@ void Game::Tick()
 
 Game::~Game()
 {
-	Keyboard::Release();
+	keyboard->Release();
 }

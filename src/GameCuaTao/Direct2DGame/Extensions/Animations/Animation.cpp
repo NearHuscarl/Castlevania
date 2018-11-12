@@ -1,4 +1,5 @@
 #include "Animation.h"
+#include "../../MathHelper.h"
 #include "../../Utilities/Stopwatch.h"
 
 Animation::Animation(std::string name, int defaultTime, bool isLooping)
@@ -7,8 +8,7 @@ Animation::Animation(std::string name, int defaultTime, bool isLooping)
 	this->defaultTime = defaultTime;
 	this->isLooping = isLooping;
 
-	this->lastFrameTime = 0;
-	this->currentFrame = -1;
+	Reset();
 }
 
 std::string Animation::GetName()
@@ -18,18 +18,18 @@ std::string Animation::GetName()
 
 AnimationFrame Animation::GetCurrentFrame()
 {
-	if (currentFrame == -1)
-		return frames[0];
+	auto frameNow = currentFrame;
 
-	return frames[currentFrame];
+	// Not the most elegant way to get current frame but it works for now
+	frameNow = MathHelper::Max(frameNow, 0);
+	frameNow = MathHelper::Min(frameNow, (int)frames.size() - 1);
+
+	return frames[frameNow];
 }
 
 bool Animation::IsComplete()
 {
-	if (!isLooping && currentFrame == frames.size())
-		return true;
-
-	return false;
+	return isComplete;
 }
 
 void Animation::Add(TextureRegion textureRegion, int time)
@@ -43,22 +43,39 @@ void Animation::Add(TextureRegion textureRegion, int time)
 
 void Animation::Update()
 {
+	if (isComplete)
+		return;
+
 	auto now = Stopwatch::GetTimeStamp();
+
 	if (currentFrame == -1)
 	{
 		currentFrame = 0;
 		lastFrameTime = now;
+		return;
 	}
-	else
-	{
-		auto frameTimeout = frames[currentFrame].GetTime();
-		if (now - lastFrameTime > frameTimeout)
-		{
-			currentFrame++;
-			lastFrameTime = now;
 
-			if (currentFrame == frames.size())
+	auto frameTimeout = frames[currentFrame].GetTime();
+	
+	if (now - lastFrameTime > frameTimeout)
+	{
+		currentFrame++;
+		lastFrameTime = now;
+
+		if (currentFrame == frames.size())
+		{
+			if (!isLooping)
+				isComplete = true;
+			else
 				currentFrame = 0;
 		}
 	}
+}
+
+void Animation::Reset()
+{
+	isComplete = false;
+
+	this->lastFrameTime = 0;
+	this->currentFrame = -1;
 }

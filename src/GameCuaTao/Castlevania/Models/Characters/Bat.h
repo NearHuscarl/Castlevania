@@ -9,7 +9,6 @@ namespace Castlevania
 	public:
 		Bat();
 		void LoadContent(ContentManager &content) override;
-		void Update(float deltaTime) override;
 		void Draw(SpriteExtensions &spriteBatch) override;
 	};
 }

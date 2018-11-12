@@ -2,10 +2,10 @@
 
 <GameContent>
 
-  <Character>
-    <Name>Bat</Name>
-    <Speed>30.0</Speed>
-    <StartingAnimation>fly</StartingAnimation>
+  <Character
+    Name="Bat"
+    Speed="30.0"
+    StartingAnimation="fly">
   </Character>
 
 </GameContent>

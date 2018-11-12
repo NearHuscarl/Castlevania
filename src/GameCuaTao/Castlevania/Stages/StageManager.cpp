@@ -13,18 +13,13 @@ void StageManager::LoadContent(ContentManager &content)
 std::shared_ptr<TiledMap> StageManager::NextMap(Map name)
 {
 	currentMap = maps.at(name);
+
 	return currentMap;
 }
 
-GameObjects StageManager::LoadGameObjects()
+ObjectCollection StageManager::LoadGameObjects()
 {
 	auto mapObjects = currentMap->GetMapObjects();
-	auto gameObjects = GameObjects{};
 
-	for (auto mapObject : mapObjects)
-	{
-		gameObjects.push_back(objectFactory.CreateObject(mapObject));
-	}
-
-	return gameObjects;
+	return objectFactory.CreateObjectCollection(mapObjects);
 }

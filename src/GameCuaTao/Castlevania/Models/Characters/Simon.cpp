@@ -4,43 +4,64 @@
 using namespace Castlevania;
 
 // TODO: use collision detection instead of hardcode GROUND_POSITION_Y
-constexpr auto GROUND_POSITION_Y = 100.0f;
-
-Simon::Simon() : Simon(EntityType::Simon)
-{
-}
+constexpr auto GROUND_POSITION_Y = 307.0f;
+// TODO: put into Body class
+constexpr auto GRAVITY = 18.0f;
+constexpr auto STRETCH_LEG_VELOCITY_Y = 200.0f;
 
 Simon::Simon(EntityType type) : GameObject(type)
 {
 }
 
-void Simon::SetFacing(Facing facing)
+MoveState Castlevania::Simon::GetState()
 {
-	this->facing = facing;
-
-	if (facing == Facing::Left)
-		this->direction = Vector2{ -1, 0 };
-	else // Facing::Right
-		this->direction = Vector2{ 1, 0 };
+	return moveState;
 }
 
 void Simon::LoadContent(ContentManager &content)
 {
-	auto animationFactory = content.Load<AnimationFactory>("Characters/Players/SimonAnimation.xml");
+	auto animationFactory = content.Load<AnimationFactory>("Characters/Players/Simon.xml");
 	sprite = std::make_unique<AnimatedSprite>(animationFactory);
 
 	auto stats = content.Load<CharacterStats>("CharacterStats/Simon.xml");
-	speed = stats->speed; // default velocity
+	speed = std::stof(stats->at("WalkSpeed"));
+	jumpSpeed = std::stof(stats->at("JumpSpeed"));
 
 	Idle();
-	facing = Facing::Right;
 }
 
 void Simon::Update(float deltaTime)
 {
 	GameObject::UpdateDistance(deltaTime);
+	
+	switch (moveState)
+	{
+		case MoveState::JUMPING:
+			velocity.y = -jumpSpeed;
+			moveState = MoveState::JUMPED;
+			break;
 
-	sprite->Update(deltaTime);
+		case MoveState::JUMPED:
+			velocity.y += GRAVITY;
+			
+			if (velocity.y > STRETCH_LEG_VELOCITY_Y)
+				sprite->Play(IDLE_ANIMATION);
+
+			if (position.y > GROUND_POSITION_Y)
+			{
+				position.y = GROUND_POSITION_Y;
+				velocity.y = 0;
+				Idle();
+			}
+			break;
+	}
+
+	switch (attackState)
+	{
+		case AttackState::ATTACKING:
+			Attacking();
+			break;
+	}
 }
 
 void Simon::Draw(SpriteExtensions &spriteBatch)
@@ -50,35 +71,88 @@ void Simon::Draw(SpriteExtensions &spriteBatch)
 	else
 		sprite->SetEffect(SpriteEffects::FlipHorizontally);
 
-	spriteBatch.Draw(*sprite, transform);
+	sprite->Update();
+	//DrawBoundingBox(spriteBatch);
+	spriteBatch.Draw(*sprite, position);
 }
+
+#pragma region Commands
 
 void Simon::Idle()
 {
-	state = State::IDLE;
-	velocity = 0;
+	moveState = MoveState::IDLE;
+	velocity = Vector2::Zero();
 	sprite->Play(IDLE_ANIMATION);
 }
 
 void Simon::WalkLeft()
 {
-	state = State::WALKING_LEFT;
-	SetFacing(Facing::Left);
-	velocity = speed;
+	moveState = MoveState::WALKING_LEFT;
+	facing = Facing::Left;
+	velocity.x = -speed;
 	sprite->Play(WALK_ANIMATION);
 }
 
 void Simon::WalkRight()
 {
-	state = State::WALKING_RIGHT;
-	SetFacing(Facing::Right);
-	velocity = speed;
+	moveState = MoveState::WALKING_RIGHT;
+	facing = Facing::Right;
+	velocity.x = speed;
 	sprite->Play(WALK_ANIMATION);
+}
+
+void Simon::Jump()
+{
+	moveState = MoveState::JUMPING;
+	sprite->Play(JUMP_ANIMATION);
+}
+
+void Simon::Duck()
+{
+	moveState = MoveState::DUCKING;
+	velocity = Vector2::Zero();
+	sprite->Play(DUCK_ANIMATION);
+}
+
+void Simon::Attack()
+{
+	attackState = AttackState::ATTACKING;
+
+	if (moveState == MoveState::WALKING_LEFT || moveState == MoveState::WALKING_RIGHT)
+	{
+		velocity = Vector2::Zero();
+		sprite->Play(ATTACK_ANIMATION);
+	}
+	else if (moveState == MoveState::IDLE)
+		sprite->Play(ATTACK_ANIMATION);
+	else if (moveState == MoveState::JUMPED)
+		sprite->Play(JUMP_ATTACK_ANIMATION);
+	else if (moveState == MoveState::DUCKING)
+		sprite->Play(DUCK_ATTACK_ANIMATION);
+}
+
+void Simon::Attacking()
+{
+	if (sprite->AnimateComplete())
+	{
+		attackState = AttackState::INACTIVE;
+
+		if (moveState == MoveState::WALKING_LEFT
+			|| moveState == MoveState::WALKING_RIGHT
+			|| moveState == MoveState::IDLE)
+			Idle();
+		else if (moveState == MoveState::JUMPING)
+			moveState == MoveState::JUMPED;
+		else if (moveState == MoveState::DUCKING)
+			Duck();
+	}
 }
 
 void Simon::TurnBackward()
 {
-	state = State::TURNING_BACKWARD;
-	velocity = 0;
+	moveState = MoveState::TURNING_BACKWARD;
+	velocity = Vector2::Zero();
 	sprite->Play(TURN_BACKWARD_ANIMATION);
 }
+
+#pragma endregion

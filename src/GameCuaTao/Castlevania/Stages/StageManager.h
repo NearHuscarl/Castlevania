@@ -21,7 +21,7 @@ namespace Castlevania
 	public:
 		void LoadContent(ContentManager &content);
 		std::shared_ptr<TiledMap> NextMap(Map name);
-		GameObjects LoadGameObjects();
+		ObjectCollection LoadGameObjects();
 
 	private:
 		Maps maps;

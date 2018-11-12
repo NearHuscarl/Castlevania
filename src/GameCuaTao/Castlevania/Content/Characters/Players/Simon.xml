@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+  <!-- 48 x 64 -->
+  <Spritesheet TexturePath="Simon.png">
+    <Sprite ID="attack_01">
+      <SpriteFrame Left="300" Top="66" Width="60" Height="66" />
+      <SpriteBoundary Left="300" Top="70" Width="48" Height="60" />
+    </Sprite>
+
+    <Sprite ID="attack_02">
+      <SpriteFrame Left="360" Top="66" Width="60" Height="66" />
+      <SpriteBoundary Left="376" Top="70" Width="32" Height="60" />
+    </Sprite>
+
+    <Sprite ID="attack_03">
+      <SpriteFrame Left="420" Top="66" Width="60" Height="66" />
+      <SpriteBoundary Left="436" Top="72" Width="43" Height="58" />
+    </Sprite>
+
+    <Sprite ID="jump_01">
+      <SpriteFrame Left="240" Top="0" Width="60" Height="66" />
+      <SpriteBoundary Left="256" Top="1" Width="32" Height="46" />
+    </Sprite>
+
+    <Sprite ID="duck_01"> <!-- OffsetY = -9 -->
+      <SpriteFrame Left="240" Top="-9" Width="60" Height="66" />
+      <SpriteBoundary Left="256" Top="-16" Width="32" Height="46" />
+    </Sprite>
+
+    <Sprite ID="walk_01">
+      <SpriteFrame Left="0" Top="0" Width="60" Height="66" />
+      <SpriteBoundary Left="24" Top="3" Width="24" Height="61" />
+    </Sprite>
+
+    <Sprite ID="walk_02">
+      <SpriteFrame Left="60" Top="0" Width="60" Height="66" />
+      <SpriteBoundary Left="78" Top="4" Width="30" Height="60" />
+    </Sprite>
+
+    <Sprite ID="walk_03">
+      <SpriteFrame Left="120" Top="0" Width="60" Height="66" />
+      <SpriteBoundary Left="196" Top="4" Width="32" Height="60" />
+    </Sprite>
+
+    <Sprite ID="walk_04">
+      <SpriteFrame Left="180" Top="0" Width="60" Height="66" />
+      <SpriteBoundary Left="378" Top="2" Width="24" Height="62" />
+    </Sprite>
+
+    <Sprite ID="go_upstairs_01">
+      <SpriteFrame Left="60" Top="66" Width="60" Height="66" />
+      <SpriteBoundary Left="74" Top="68" Width="24" Height="62" />
+    </Sprite>
+
+    <Sprite ID="go_upstairs_02">
+      <SpriteFrame Left="120" Top="66" Width="60" Height="66" />
+      <SpriteBoundary Left="131" Top="68" Width="30" Height="62" />
+    </Sprite>
+
+    <Sprite ID="go_downstairs_01">
+      <SpriteFrame Left="180" Top="66" Width="60" Height="66" />
+      <SpriteBoundary Left="206" Top="68" Width="24" Height="62" />
+    </Sprite>
+
+    <Sprite ID="go_downstairs_02">
+      <SpriteFrame Left="240" Top="66" Width="60" Height="66" />
+      <SpriteBoundary Left="258" Top="68" Width="32" Height="62" />
+    </Sprite>
+
+    <Sprite ID="go_upstairs_attack_01">
+      <SpriteFrame Left="120" Top="132" Width="60" Height="66" />
+      <SpriteBoundary Left="120" Top="134" Width="41" Height="62" />
+    </Sprite>
+
+    <Sprite ID="go_upstairs_attack_02">
+      <SpriteFrame Left="180" Top="132" Width="60" Height="66" />
+      <SpriteBoundary Left="189" Top="134" Width="32" Height="62" />
+    </Sprite>
+
+    <Sprite ID="go_upstairs_attack_03">
+      <SpriteFrame Left="240" Top="132" Width="60" Height="66" />
+      <SpriteBoundary Left="249" Top="136" Width="44" Height="60" />
+    </Sprite>
+
+    <Sprite ID="go_downstairs_attack_01">
+      <SpriteFrame Left="300" Top="132" Width="60" Height="66" />
+      <SpriteBoundary Left="302" Top="134" Width="48" Height="62" />
+    </Sprite>
+
+    <Sprite ID="go_downstairs_attack_02">
+      <SpriteFrame Left="360" Top="132" Width="60" Height="66" />
+      <SpriteBoundary Left="378" Top="134" Width="32" Height="62" />
+    </Sprite>
+
+    <Sprite ID="go_downstairs_attack_03">
+      <SpriteFrame Left="420" Top="132" Width="60" Height="66" />
+      <SpriteBoundary Left="438" Top="136" Width="41" Height="60" />
+    </Sprite>
+
+    <Sprite ID="jump_attack_01">
+      <SpriteFrame Left="300" Top="0" Width="60" Height="66" />
+      <SpriteBoundary Left="300" Top="1" Width="48" Height="46" />
+    </Sprite>
+
+    <Sprite ID="jump_attack_02">
+      <SpriteFrame Left="360" Top="0" Width="60" Height="66" />
+      <SpriteBoundary Left="377" Top="1" Width="32" Height="46" />
+    </Sprite>
+
+    <Sprite ID="jump_attack_03">
+      <SpriteFrame Left="420" Top="0" Width="60" Height="66" />
+      <SpriteBoundary Left="435" Top="3" Width="44" Height="44" />
+    </Sprite>
+
+    <Sprite ID="duck_attack_01"> <!-- OffsetY = -9 -->
+      <SpriteFrame Left="300" Top="-9" Width="60" Height="66" />
+      <SpriteBoundary Left="300" Top="-16" Width="48" Height="46" />
+    </Sprite>
+
+    <Sprite ID="duck_attack_02"> <!-- OffsetY = -9 -->
+      <SpriteFrame Left="360" Top="-9" Width="60" Height="66" />
+      <SpriteBoundary Left="377" Top="-16" Width="32" Height="46" />
+    </Sprite>
+
+    <Sprite ID="duck_attack_03"> <!-- OffsetY = -9 -->
+      <SpriteFrame Left="420" Top="-9" Width="60" Height="66" />
+      <SpriteBoundary Left="435" Top="-14" Width="44" Height="44" />
+    </Sprite>
+
+    <Sprite ID="turn_backward_01">
+      <SpriteFrame Left="0" Top="66" Width="60" Height="66" />
+      <SpriteBoundary Left="8" Top="66" Width="32" Height="64" />
+    </Sprite>
+
+    <Sprite ID="is_hit_01">
+      <SpriteFrame Left="0" Top="132" Width="60" Height="66" />
+      <SpriteBoundary Left="18" Top="138" Width="32" Height="58" />
+    </Sprite>
+  </Spritesheet>
+
+  <Animations>
+    <Animation Name="idle" DefaultTime="100" IsLooping="False">
+      <Frame SpriteID="walk_04" />
+    </Animation>
+
+    <Animation Name="attack" DefaultTime="100" IsLooping="False">
+      <Frame SpriteID="attack_01" />
+      <Frame SpriteID="attack_02" />
+      <Frame SpriteID="attack_03" />
+    </Animation>
+
+    <Animation Name="jump" DefaultTime="100" IsLooping="False">
+      <Frame SpriteID="jump_01" />
+    </Animation>
+
+    <Animation Name="duck" DefaultTime="100" IsLooping="False">
+      <Frame SpriteID="duck_01" />
+    </Animation>
+
+    <Animation Name="walk" DefaultTime="150" IsLooping="True">
+      <Frame SpriteID="walk_01" />
+      <Frame SpriteID="walk_02" />
+      <Frame SpriteID="walk_03" />
+      <Frame SpriteID="walk_04" />
+    </Animation>
+
+    <Animation Name="go_upstairs" DefaultTime="100" IsLooping="True">
+      <Frame SpriteID="go_upstairs_01" />
+      <Frame SpriteID="go_upstairs_02" />
+    </Animation>
+
+    <Animation Name="go_downstairs" DefaultTime="100" IsLooping="True">
+      <Frame SpriteID="go_downstairs_01" />
+      <Frame SpriteID="go_downstairs_02" />
+    </Animation>
+
+    <Animation Name="go_upstairs_attack" DefaultTime="100" IsLooping="False">
+      <Frame SpriteID="go_upstairs_attack_01" />
+      <Frame SpriteID="go_upstairs_attack_02" />
+      <Frame SpriteID="go_upstairs_attack_03" />
+    </Animation>
+
+    <Animation Name="go_downstairs_attack" DefaultTime="100" IsLooping="False">
+      <Frame SpriteID="go_downstairs_attack_01" />
+      <Frame SpriteID="go_downstairs_attack_02" />
+      <Frame SpriteID="go_downstairs_attack_03" />
+    </Animation>
+
+    <Animation Name="jump_attack" DefaultTime="100" IsLooping="False">
+      <Frame SpriteID="attack_01" />
+      <Frame SpriteID="attack_02" />
+      <Frame SpriteID="attack_03" />
+    </Animation>
+
+    <Animation Name="duck_attack" DefaultTime="100" IsLooping="False">
+      <Frame SpriteID="duck_attack_01" />
+      <Frame SpriteID="duck_attack_02" />
+      <Frame SpriteID="duck_attack_03" />
+    </Animation>
+
+    <Animation Name="turn_backward" DefaultTime="100" IsLooping="False">
+      <Frame SpriteID="turn_backward_01" />
+    </Animation>
+
+    <Animation Name="is_hit" DefaultTime="100" IsLooping="False">
+      <Frame SpriteID="is_hit_01" />
+    </Animation>
+  </Animations>
+
+</GameContent>

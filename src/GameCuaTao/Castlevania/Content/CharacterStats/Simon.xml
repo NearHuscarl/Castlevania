@@ -2,10 +2,11 @@
 
 <GameContent>
 
-  <Character>
-    <Name>Simon</Name>
-    <Speed>50.0</Speed>
-    <StartingAnimation>idle</StartingAnimation>
+  <Character
+    Name="Simon"
+    WalkSpeed="120.0"
+    JumpSpeed="420.0"
+    StartingAnimation="idle">
   </Character>
 
 </GameContent>

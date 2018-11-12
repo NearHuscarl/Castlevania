@@ -5,8 +5,8 @@
 
 struct Viewport
 {
-	int x;
-	int y;
+	float x;
+	float y;
 	int width;
 	int height;
 
@@ -24,6 +24,6 @@ struct Viewport
 
 	Rect Bounds()
 	{
-		return Rect(x, y, width, height);
+		return Rect((int)x, (int)y, width, height);
 	}
 };

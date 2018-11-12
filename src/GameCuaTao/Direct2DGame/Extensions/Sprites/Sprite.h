@@ -15,8 +15,8 @@ public:
 	void SetTextureRegion(TextureRegion textureRegion);
 	TextureRegion GetTextureRegion();
 	
-	Rect GetFrameRectangle(Transform transform);
-	Rect GetBoundingRectangle(Transform transform);
+	Rect GetFrameRectangle(Vector2 position);
+	Rect GetBoundingRectangle(Vector2 position);
 
 	void SetAlpha(float alpha);
 	float GetAlpha();

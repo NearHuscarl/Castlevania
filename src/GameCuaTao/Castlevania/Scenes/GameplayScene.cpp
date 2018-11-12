@@ -13,17 +13,19 @@ void GameplayScene::LoadContent()
 	auto &stageManager = sceneManager.GetStageManager();
 	
 	map = stageManager.NextMap(Map::STAGE_01_COURTYARD);
-	gameObjects = stageManager.LoadGameObjects();
 	camera->SetMoveArea(0, 0, map->GetWidthInPixels(), map->GetHeightInPixels());
+	
+	objectCollection = stageManager.LoadGameObjects();
+	
+	player = std::make_unique<Player>();
+	player->SetPosition(objectCollection.positions[CHECKPOINT]);
+	player->LoadContent(sceneManager.GetContent());
 
-	for (auto &gameObject : gameObjects)
+	Keyboard::Register(player->GetController());
+
+	for (auto &entity : objectCollection.entities) // TODO: put LoadContent in constructor?
 	{
-		gameObject->LoadContent(sceneManager.GetContent());
-
-		if (gameObject->GetType() == EntityType::Player)
-		{
-			player = dynamic_cast<Player*>(gameObject.get());
-		}
+		entity->LoadContent(sceneManager.GetContent());
 	}
 }
 
@@ -31,7 +33,9 @@ void GameplayScene::Update(float deltaTime)
 {
 	camera->LookAt(player->GetOriginPosition(), Scrolling::Horizontally);
 
-	for (auto const &gameObject : gameObjects)
+	player->Update(deltaTime);
+
+	for (auto const &gameObject : objectCollection.entities)
 	{
 		gameObject->Update(deltaTime);
 	}
@@ -45,10 +49,12 @@ void GameplayScene::Draw(GameTime gameTime)
 
 	map->Draw(spriteBatch);
 
-	for (auto const &gameObject : gameObjects)
+	for (auto const &gameObject : objectCollection.entities)
 	{
 		gameObject->Draw(spriteBatch);
 	}
+
+	player->Draw(spriteBatch);
 
 	spriteBatch.End();
 }

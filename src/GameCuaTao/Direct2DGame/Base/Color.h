@@ -20,6 +20,7 @@ public:
 	static Color Transparent();
 	static Color White();
 	static Color Black();
+	static Color Pink();
 	static Color LavenderBlue();
 
 	Color operator*(float scale);

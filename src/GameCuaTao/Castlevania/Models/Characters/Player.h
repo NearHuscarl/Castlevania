@@ -1,15 +1,17 @@
 #pragma once
 
+#include "Controller.h"
 #include "Simon.h"
-#include "../IControllable.h"
 
 namespace Castlevania
 {
-	class Player : public Simon, public IControllable
+	class Player : public Simon
 	{
 	public:
 		Player();
-		void Update(float deltaTime) override;
-		void UpdateInput() override;
+		IController *GetController();
+
+	private:
+		std::unique_ptr<Controller> controller;
 	};
 }

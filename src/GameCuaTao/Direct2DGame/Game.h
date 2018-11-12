@@ -5,6 +5,7 @@
 #include "GraphicsDeviceManager.h"
 #include "Content/ContentManager.h"
 #include "ServiceProvider.h"
+#include "Input/Keyboard.h"
 #include "Utilities/Stopwatch.h"
 
 class Game
@@ -32,6 +33,7 @@ protected:
 	std::unique_ptr<GraphicsDeviceManager> graphics;
 	std::unique_ptr<ContentManager> content;
 	std::shared_ptr<ServiceProvider> service;
+	std::shared_ptr<Keyboard> keyboard;
 
 private:
 	bool initialized = false;
@@ -39,7 +41,7 @@ private:
 	GameTime gameTime;
 	Stopwatch gameTimer;
 
-	bool IsRunning();
+	bool ProcessEvents();
 	void Render(GameTime gameTime);
 	
 	void Tick();

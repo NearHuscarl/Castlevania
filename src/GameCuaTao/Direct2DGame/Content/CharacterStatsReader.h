@@ -1,7 +1,9 @@
 #pragma once
 
+#include <map>
 #include "AbstractReader.h"
-#include "../Data/CharacterStats.h"
+
+using CharacterStats = std::map<std::string, std::string>;
 
 class CharacterStatsReader : public AbstractReader<CharacterStats>
 {

@@ -15,6 +15,7 @@ MarioSampleGame::MarioSampleGame()
 void MarioSampleGame::Initialize()
 {
 	Game::Initialize();
+	InputHelper::Initialize(keyboard.get());
 }
 
 void MarioSampleGame::LoadContent()

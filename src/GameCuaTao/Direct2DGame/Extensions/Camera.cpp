@@ -55,8 +55,8 @@ void Camera::ClampMove()
 	if (moveArea == Rect::Empty())
 		return;
 
-	viewport.x = MathHelper::Max(viewport.x, moveArea.X());
-	viewport.y = MathHelper::Max(viewport.y, moveArea.Y());
-	viewport.x = MathHelper::Min(viewport.x, moveArea.Width() - viewport.width);
-	viewport.y = MathHelper::Min(viewport.y, moveArea.Height() - viewport.height);
+	viewport.x = MathHelper::Min(viewport.x, (float)moveArea.Width() - viewport.width);
+	viewport.y = MathHelper::Min(viewport.y, (float)moveArea.Height() - viewport.height);
+	viewport.x = MathHelper::Max(viewport.x, (float)moveArea.X());
+	viewport.y = MathHelper::Max(viewport.y, (float)moveArea.Y());
 }

@@ -8,30 +8,33 @@ GameObject::GameObject(EntityType type)
 	this->type = type;
 }
 
+#pragma region Getters / Setters
+
 EntityType GameObject::GetType()
 {
 	return type;
 }
 
 // TODO: remove public setters
-void GameObject::SetVelocity(float velocity)
+void GameObject::SetVelocity(Vector2 velocity)
 {
 	this->velocity = velocity;
 }
 
-void GameObject::SetDirection(float degrees)
+void GameObject::SetLinearVelocity(float speed, float angle)
 {
 	// The X-Y axis in game has the value Y inverted compare to the X-Y axis in math
 	// To convert the X-Y axis from math to game, we need to flip the degrees sign because
 	//   with sin(θ) = y, sin(-θ) = -y
 	//   with cos(θ) = x, cos(θ) = x
-	direction = MathHelper::Degrees2Vector(-degrees);
+	auto direction = MathHelper::Degrees2Vector(-angle);
+	velocity = direction * speed;
 }
 
 void GameObject::SetPosition(float x, float y)
 {
-	transform.position.x = x;
-	transform.position.y = y;
+	position.x = x;
+	position.y = y;
 }
 
 void GameObject::SetPosition(Vector2 position)
@@ -41,25 +44,27 @@ void GameObject::SetPosition(Vector2 position)
 
 Vector2 GameObject::GetPosition()
 {
-	return transform.position;
+	return position;
 }
 
 Vector2 GameObject::GetOriginPosition()
 {
 	return Vector2{
-		transform.position.x + GetFrameRect().Width() / 2,
-		transform.position.y + GetFrameRect().Height() / 2 };
+		position.x + GetFrameRect().Width() / 2,
+		position.y + GetFrameRect().Height() / 2 };
 }
 
 Rect GameObject::GetFrameRect()
 {
-	return sprite->GetFrameRectangle(transform);
+	return sprite->GetFrameRectangle(position);
 }
 
 Rect GameObject::GetBoundingBox()
 {
-	return sprite->GetBoundingRectangle(transform);
+	return sprite->GetBoundingRectangle(position);
 }
+
+#pragma endregion
 
 void GameObject::LoadContent(ContentManager &content)
 {
@@ -71,11 +76,17 @@ void GameObject::Update(float deltaTime)
 
 void GameObject::UpdateDistance(float deltaTime)
 {
-	transform.position += direction * velocity * deltaTime;
+	position += velocity * deltaTime;
 }
 
 void GameObject::Draw(SpriteExtensions &spriteBatch)
 {
+}
+
+void GameObject::DrawBoundingBox(SpriteExtensions &spriteBatch)
+{
+	auto boundingBox = GetBoundingBox();
+	spriteBatch.Draw(boundingBox, Color::Pink());
 }
 
 GameObject::~GameObject()

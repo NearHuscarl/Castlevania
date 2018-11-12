@@ -1,8 +1,14 @@
 #include "Keyboard.h"
+#include "KeyboardState.h"
 #include "../Utilities/FileLogger.h"
 
-Input_ Keyboard::input = Input_{ nullptr };
-InputDevice_ Keyboard::inputDevice = InputDevice_{ nullptr };
+IController *Keyboard::controller = nullptr;
+
+Keyboard::Keyboard()
+{
+	input = nullptr;
+	inputDevice = nullptr;
+}
 
 void Keyboard::Initialize(HWND handle)
 {
@@ -66,11 +72,16 @@ void Keyboard::Initialize(HWND handle)
 		FileLogger::GetInstance().Info("Keyboard has been initialized successfully");
 }
 
+void Keyboard::Register(IController *controller)
+{
+	Keyboard::controller = controller;
+}
+
 KeyboardState Keyboard::GetState()
 {
 	unsigned char keyStates[KEYSTATE_BUFFER_SIZE]; // DirectInput keyboard state buffer 
 
-	// Collect all key states first
+		// Collect all key states first
 	auto result = inputDevice->GetDeviceState(sizeof(keyStates), keyStates);
 
 	if (FAILED(result))
@@ -82,7 +93,7 @@ KeyboardState Keyboard::GetState()
 
 			if (result == DI_OK)
 				FileLogger::GetInstance().Info("Keyboard re-acquired!");
-			
+
 			return KeyboardState{ nullptr };
 		}
 		else
@@ -93,6 +104,44 @@ KeyboardState Keyboard::GetState()
 	}
 
 	return KeyboardState{ keyStates };
+}
+
+void Keyboard::Update()
+{
+	if (controller == nullptr)
+		return;
+
+	controller->OnKeyStateChanged(GetState());
+	HandleEvents();
+}
+
+void Keyboard::HandleEvents()
+{
+	// Collect all buffered events
+	auto dwElements = DWORD{ KEYBOARD_BUFFER_SIZE };
+	auto result = inputDevice->GetDeviceData(sizeof(DeviceInputData), keyEvents, &dwElements, 0);
+
+	if (FAILED(result))
+	{
+		// FileLogger::GetInstance().Error("DINPUT::GetDeviceData failed. Error: " + std::to_string(hr));
+		return;
+	}
+
+	// Scan through all buffered events, check if the key is pressed or released
+	for (auto i = 0; i < dwElements; i++)
+	{
+		auto keyCode = keyEvents[i].dwOfs;
+		auto KeyState = keyEvents[i].dwData;
+
+		if ((KeyState & 0x80) > 0)
+		{
+			controller->OnKeyDown(keyCode);
+		}
+		else
+		{
+			controller->OnKeyUp(keyCode);
+		}
+	}
 }
 
 void Keyboard::Release()

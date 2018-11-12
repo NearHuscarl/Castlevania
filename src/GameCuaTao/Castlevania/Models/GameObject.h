@@ -8,14 +8,20 @@
 
 namespace Castlevania
 {
+	enum class Facing
+	{
+		Right,
+		Left,
+	};
+
 	class GameObject
 	{
 	public:
 		GameObject(EntityType type);
 
 		EntityType GetType();
-		void SetVelocity(float velocity);
-		void SetDirection(float degrees);
+		void SetVelocity(Vector2 velocity);
+		void SetLinearVelocity(float speed, float angle = 0.0f); // angle in degree
 		void SetPosition(float x, float y);
 		void SetPosition(Vector2 position);
 		Vector2 GetPosition();
@@ -24,24 +30,21 @@ namespace Castlevania
 		virtual Rect GetFrameRect();
 		virtual Rect GetBoundingBox();
 
-
 		virtual void LoadContent(ContentManager &content);
 		virtual void Update(float deltaTime);
 		void UpdateDistance(float deltaTime);
 
 		virtual void Draw(SpriteExtensions &spriteBatch);
+		virtual void DrawBoundingBox(SpriteExtensions &spriteBatch);
 
 		virtual ~GameObject();
 
 	protected:
 		EntityType type;
-		Transform transform;
-		Vector2 direction;
-		float velocity;
+		Vector2 position;
+		Vector2 velocity;
 		float speed;
 
 		std::unique_ptr<AnimatedSprite> sprite;
 	};
-
-	using GameObjects = std::vector<std::unique_ptr<GameObject>>;
 }

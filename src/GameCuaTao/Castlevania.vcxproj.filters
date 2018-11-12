@@ -189,6 +189,12 @@
     <ClCompile Include="Direct2DGame\Base\Color.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Castlevania\Settings\Button.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Models\Characters\Controller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\pugixml.hpp">
@@ -338,9 +344,6 @@
     <ClInclude Include="Direct2DGame\Input\DirectInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Castlevania\Models\IControllable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Castlevania\Scenes\AbstractScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -374,12 +377,6 @@
     <ClInclude Include="Direct2DGame\Content\CharacterStatsReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Direct2DGame\Data\CharacterStats.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Direct2DGame\Data\WeaponStats.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Castlevania\Settings\Animations.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -393,9 +390,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Direct2DGame\Content\AnimationFactoryReader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Direct2DGame\Extensions\Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Direct2DGame\Extensions\Animations\Animation.h">
@@ -450,6 +444,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Castlevania\Models\Items\FirePit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Settings\Button.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Body\Body.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DGame\Input\IController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Characters\Controller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Factories\ObjectCollection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

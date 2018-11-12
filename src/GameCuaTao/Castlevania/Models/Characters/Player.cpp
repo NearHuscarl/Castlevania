@@ -1,25 +1,14 @@
 #include "Player.h"
-#include "Direct2DGame/Input/InputHelper.h"
+#include "../../Settings/Button.h"
 
 using namespace Castlevania;
 
 Player::Player() : Simon(EntityType::Player)
 {
+	controller = std::make_unique<Controller>(*this);
 }
 
-void Player::Update(float deltaTime)
+IController *Player::GetController()
 {
-	UpdateInput();
-
-	Simon::Update(deltaTime);
-}
-
-void Player::UpdateInput()
-{
-	if (InputHelper::IsKeyPressed(DIK_RIGHT))
-		WalkRight();
-	else if (InputHelper::IsKeyPressed(DIK_LEFT))
-		WalkLeft();
-	else
-		Idle();
+	return controller.get();
 }

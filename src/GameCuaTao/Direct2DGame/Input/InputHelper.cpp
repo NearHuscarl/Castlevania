@@ -1,12 +1,18 @@
 #include "InputHelper.h"
 
-KeyboardState InputHelper::currentKeyboardState = KeyboardState{ nullptr };
-KeyboardState InputHelper::previousKeyboardState = KeyboardState{ nullptr };
+Keyboard *InputHelper::keyboard = nullptr;
+KeyboardState InputHelper::currentKeyboardState = nullptr;
+KeyboardState InputHelper::previousKeyboardState = nullptr;
+
+void InputHelper::Initialize(Keyboard *keyboard)
+{
+	InputHelper::keyboard = keyboard;
+}
 
 void InputHelper::Update()
 {
 	previousKeyboardState = currentKeyboardState;
-	currentKeyboardState = Keyboard::GetState();
+	currentKeyboardState = keyboard->GetState();
 }
 
 bool InputHelper::IsKeyDown(int keyCode)

@@ -1,7 +1,7 @@
 #include "Sprite.h"
 
 Sprite::Sprite(std::shared_ptr<Texture> texture)
-	: Sprite(TextureRegion(texture))
+	: Sprite(TextureRegion{ texture })
 {
 }
 
@@ -23,10 +23,9 @@ TextureRegion Sprite::GetTextureRegion()
 	return textureRegion;
 }
 
-Rect Sprite::GetFrameRectangle(Transform transform)
+Rect Sprite::GetFrameRectangle(Vector2 position)
 {
 	auto spriteFrame = textureRegion.GetFrameRectangle();
-	auto position = transform.position;
 	auto rect = Rect{};
 
 	rect.left = (int)position.x;
@@ -37,11 +36,10 @@ Rect Sprite::GetFrameRectangle(Transform transform)
 	return rect;
 }
 
-Rect Sprite::GetBoundingRectangle(Transform transform)
+Rect Sprite::GetBoundingRectangle(Vector2 position)
 {
 	auto spriteFrame = textureRegion.GetFrameRectangle();
 	auto spriteBoundary = textureRegion.GetBoundingRectangle();
-	auto position = transform.position;
 	auto rect = Rect{};
 
 	// spriteFrame is usually larger than the spriteBoundary so we need to take account of the offset

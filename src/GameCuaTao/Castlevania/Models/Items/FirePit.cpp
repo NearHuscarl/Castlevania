@@ -14,10 +14,10 @@ void FirePit::LoadContent(ContentManager &content)
 
 void FirePit::Update(float deltaTime)
 {
-	sprite->Update(deltaTime);
 }
 
 void FirePit::Draw(SpriteExtensions &spriteBatch)
 {
-	spriteBatch.Draw(*sprite, transform);
+	sprite->Update();
+	spriteBatch.Draw(*sprite, position);
 }

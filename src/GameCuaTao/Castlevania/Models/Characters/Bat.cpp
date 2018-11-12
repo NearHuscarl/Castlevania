@@ -8,23 +8,19 @@ Bat::Bat() : GameObject(EntityType::Bat)
 
 void Bat::LoadContent(ContentManager &content)
 {
-	auto animationFactory = content.Load<AnimationFactory>("Characters/NPCs/BatAnimationDef.xml");
+	auto animationFactory = content.Load<AnimationFactory>("Characters/NPCs/Bat.xml");
 	sprite = std::make_unique<AnimatedSprite>(animationFactory);
+
 	auto stats = content.Load<CharacterStats>("CharacterStats/Bat.xml");
+	auto speed = std::stof(stats->at("Speed"));
+	auto animation = stats->at("StartingAnimation");
 
-	speed = stats->speed;
-	velocity = speed;
-
-	sprite->Play(stats->startingAnimation);
-}
-
-void Bat::Update(float deltaTime)
-{
-	GameObject::UpdateDistance(deltaTime);
-	sprite->Update(deltaTime);
+	SetLinearVelocity(speed);
+	sprite->Play(animation);
 }
 
 void Bat::Draw(SpriteExtensions &spriteBatch)
 {
-	spriteBatch.Draw(*sprite, transform);
+	sprite->Update();
+	spriteBatch.Draw(*sprite, position);
 }

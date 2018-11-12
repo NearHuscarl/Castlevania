@@ -20,8 +20,6 @@ void Mario::Update(float deltaTime)
 	UpdateState();
 
 	ResolveCollision(deltaTime);
-
-	sprite->Update(deltaTime);
 }
 
 void Mario::UpdateInput()
@@ -131,5 +129,6 @@ void Mario::Draw(SpriteBatch &spriteBatch)
 	auto &texture = sprite->GetTextureRegion().GetTexture();
 	auto srcRectangle = sprite->GetTextureRegion().GetFrameRectangle();
 
+	sprite->Update();
 	spriteBatch.Draw(texture, position, &srcRectangle, Color::White(), 0.0f, Vector2::One(), effect);
 }

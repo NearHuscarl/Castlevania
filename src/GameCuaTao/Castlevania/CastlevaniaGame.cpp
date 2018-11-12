@@ -33,7 +33,7 @@ void CastlevaniaGame::Update(GameTime gameTime)
 {
 	auto deltaTime = (float)gameTime.ElapsedGameTime.Seconds();
 
-	InputHelper::Update();
+	keyboard->Update();
 	sceneManager->Update(deltaTime);
 }
 

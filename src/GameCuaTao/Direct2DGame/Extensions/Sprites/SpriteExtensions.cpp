@@ -21,3 +21,12 @@ void SpriteExtensions::Draw(Sprite sprite, Vector2 position, float rotation, Vec
 		Draw(texture, position, &spriteFrame, color, rotation, scale, effect);
 	}
 }
+
+void SpriteExtensions::Draw(Rect rect, Color color)
+{
+	auto renderDevice = graphicsDevice.GetRenderDevice();
+	auto surface = graphicsDevice.GetSurface();
+
+	renderDevice->ColorFill(surface, nullptr, color.Get());
+	renderDevice->StretchRect(surface, nullptr, nullptr, &rect, D3DTEXF_NONE);
+}

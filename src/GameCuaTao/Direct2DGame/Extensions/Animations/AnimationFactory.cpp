@@ -15,5 +15,9 @@ Animation *AnimationFactory::Create()
 
 Animation *AnimationFactory::Create(std::string name)
 {
-	return &animations.at(name);
+	auto animation = &animations.at(name);
+
+	animation->Reset();
+
+	return animation;
 }

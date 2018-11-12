@@ -15,23 +15,59 @@ ObjectFactory::ObjectFactory()
 		{ "Bat", EntityType::Bat },
 		{ "Cloud", EntityType::Cloud },
 		{ "FirePit", EntityType::FirePit },
-		{ "Ground", EntityType::Boundary },
-		{ "LeftBorder", EntityType::Boundary },
-		{ "RightBorder", EntityType::Boundary },
-		{ "EntryTrigger", EntityType::Boundary }, // TODO:
 	};
 }
 
-std::unique_ptr<GameObject> ObjectFactory::CreateObject(ObjectProperties properties)
+ObjectCollection ObjectFactory::CreateObjectCollection(ObjectsProperties objectsProperties)
 {
-	auto name = properties.at("name");
-	auto object = ConstructObject(name);
+	auto objectCollection = ObjectCollection{};
 
-	auto x = std::stof(properties.at("x"));
-	auto y = std::stof(properties.at("y"));
-	object->SetPosition(x, y);
+	for (auto properties : objectsProperties)
+	{
+		auto name = properties.at("name");
 
-	return object;
+		if (BOUNDARIES.find(name) != BOUNDARIES.end())
+		{
+			auto x = std::stoi(properties.at("x"));
+			auto y = std::stoi(properties.at("y"));
+			auto width = std::stoi(properties.at("width"));
+			auto height = std::stoi(properties.at("height"));
+			auto trigger = Rect{ x, y - height, width, height };
+
+			objectCollection.boundaries[name] = trigger;
+		}
+		else if (TRIGGERS.find(name) != TRIGGERS.end())
+		{
+			auto x = std::stoi(properties.at("x"));
+			auto y = std::stoi(properties.at("y"));
+			auto width = std::stoi(properties.at("width"));
+			auto height = std::stoi(properties.at("height"));
+			auto trigger = Rect{ x, y - height, width, height };
+			
+			objectCollection.triggers[name] = trigger;
+		}
+		else if (POSITIONS.find(name) != POSITIONS.end())
+		{
+			auto x = std::stof(properties.at("x"));
+			auto y = std::stof(properties.at("y"));
+			auto height = std::stoi(properties.at("height"));
+			auto position = Vector2{ x, y - height };
+
+			objectCollection.positions[name] = position;
+		}
+		else // GameObject (Simon, Bat, Skeleton...)
+		{
+			auto object = ConstructObject(name);
+			auto x = std::stof(properties.at("x"));
+			auto y = std::stof(properties.at("y"));
+			auto height = std::stoi(properties.at("height"));
+
+			object->SetPosition(x, y - height);
+			objectCollection.entities.push_back(std::move(object));
+		}
+	}
+
+	return objectCollection;
 }
 
 std::unique_ptr<GameObject> ObjectFactory::ConstructObject(std::string name)
@@ -42,23 +78,15 @@ std::unique_ptr<GameObject> ObjectFactory::ConstructObject(std::string name)
 	{
 		case EntityType::Simon:
 			return std::make_unique<Simon>();
-			break;
 
 		case EntityType::Player:
 			return std::make_unique<Player>();
-			break;
 
 		case EntityType::Bat:
 			return std::make_unique<Bat>();
-			break;
 
 		case EntityType::FirePit:
 			return std::make_unique<FirePit>();
-			break;
-
-		case EntityType::Boundary:
-			return std::make_unique<Bat>(); // TODO:
-			break;
 
 		default:
 			throw std::invalid_argument("Object name is invalid");

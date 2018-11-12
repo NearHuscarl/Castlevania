@@ -17,9 +17,10 @@ std::shared_ptr<CharacterStats> CharacterStatsReader::Read(std::string filePath,
 	auto characterNode = xmlDocument.child("GameContent").child("Character");
 	auto characterStats = CharacterStats{};
 
-	characterStats.name = characterNode.child("Name").text().as_string();
-	characterStats.speed = characterNode.child("Speed").text().as_float();
-	characterStats.startingAnimation = characterNode.child("StartingAnimation").text().as_string();
+	for (auto attribute : characterNode.attributes())
+	{
+		characterStats[attribute.name()] = attribute.value();
+	}
 
 	return std::shared_ptr<CharacterStats>(new CharacterStats(characterStats));
 }

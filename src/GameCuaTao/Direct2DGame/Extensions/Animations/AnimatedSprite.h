@@ -8,8 +8,10 @@ class AnimatedSprite : public Sprite
 public:
 	AnimatedSprite(std::shared_ptr<AnimationFactory> animationFactory);
 
+	bool AnimateComplete();
+
 	void Play(std::string name);
-	void Update(float deltaTime);
+	void Update();
 
 private:
 	std::shared_ptr<AnimationFactory> animationFactory;

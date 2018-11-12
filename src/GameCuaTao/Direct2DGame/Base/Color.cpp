@@ -72,6 +72,12 @@ Color Color::Black()
 	return black;
 }
 
+Color Color::Pink()
+{
+	static auto pink = Color{ 255, 0, 255 };
+	return pink;
+}
+
 Color Color::LavenderBlue()
 {
 	static auto lavenderBlue = Color{ 200, 200, 255 };

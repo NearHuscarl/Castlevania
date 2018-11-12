@@ -12,7 +12,7 @@
   </Spritesheet>
 
   <Animations>
-    <Animation Name="fly" DefaultTime="65">
+    <Animation Name="fly" DefaultTime="65" IsLooping="True">
       <Frame SpriteID="fly_01" />
       <Frame SpriteID="fly_02" />
     </Animation>

@@ -10,5 +10,6 @@ namespace Castlevania
 		Cloud,
 		FirePit,
 		Boundary,
+		Position,
 	};
 }

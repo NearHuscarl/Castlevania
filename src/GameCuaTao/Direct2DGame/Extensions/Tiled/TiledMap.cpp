@@ -41,18 +41,20 @@ void TiledMap::Draw(SpriteExtensions spriteBatch)
 	auto camRect = spriteBatch.GetGraphicsDevice().GetViewport().Bounds();
 
 	auto startRow = (int)camRect.left / tileWidth;
-	auto endRow = (int)camRect.right / tileWidth + 1;
+	auto endRow = (int)camRect.right / tileWidth;
 	auto startColumn = (int)camRect.top / tileHeight;
-	auto endColumn = (int)camRect.bottom / tileHeight + 1;
+	auto endColumn = (int)camRect.bottom / tileHeight;
 
 	startRow = MathHelper::Clamp(startRow, 0, rows - 1);
 	endRow = MathHelper::Clamp(endRow, 0, rows - 1);
 	startColumn = MathHelper::Clamp(startColumn, 0, columns - 1);
 	endColumn = MathHelper::Clamp(endColumn, 0, columns - 1);
 
-	for (auto row = startRow; row < endRow; row++)
+	//auto &mapTex = tileSet->GetTile(0, 0).GetTextureRegion().GetTexture();
+	//spriteBatch.Draw(mapTex, Vector2{ 0, 0 }, &Rect{ 0, 0, 1600, 400 }, Color::White(), 0, Vector2::One(), SpriteEffects::None);
+	for (auto row = startRow; row <= endRow; row++)
 	{
-		for (auto column = startColumn; column < endColumn; column++)
+		for (auto column = startColumn; column <= endColumn; column++)
 		{
 			auto tile = tileSet->GetTile(row, column);
 			auto rect = tile.GetTextureRegion().GetFrameRectangle();
