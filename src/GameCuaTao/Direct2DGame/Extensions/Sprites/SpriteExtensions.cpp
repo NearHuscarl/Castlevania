@@ -2,6 +2,16 @@
 
 SpriteExtensions::SpriteExtensions(GraphicsDevice &graphicsDevice) : SpriteBatch(graphicsDevice)
 {
+	auto renderDevice = graphicsDevice.GetRenderDevice();
+	auto viewport = graphicsDevice.GetViewport();
+
+	renderDevice->CreateOffscreenPlainSurface(
+		viewport.width,  // Width of the surface
+		viewport.height, // Height of the surface
+		D3DFMT_X8R8G8B8, // Surface format
+		D3DPOOL_DEFAULT, // Memory pool to use
+		&plainSurface,   // Pointer to ther surface
+		nullptr);        // Reserved (always nullptr)
 }
 
 void SpriteExtensions::Draw(Sprite sprite, Transform transform)
@@ -24,9 +34,15 @@ void SpriteExtensions::Draw(Sprite sprite, Vector2 position, float rotation, Vec
 
 void SpriteExtensions::Draw(Rect rect, Color color)
 {
+	End(); // Force drawing all sprites so the surface will be drawn on the next Begin() call
+	Begin(D3DXSPRITE_ALPHABLEND);
+
 	auto renderDevice = graphicsDevice.GetRenderDevice();
 	auto surface = graphicsDevice.GetSurface();
+	auto viewport = graphicsDevice.GetViewport();
+	auto camPosition = viewport.Project((float)rect.X(), (float)rect.Y());
+	auto destRect = Rect{ (int)camPosition.x, (int)camPosition.y, rect.Width(), rect.Height() };
 
-	renderDevice->ColorFill(surface, nullptr, color.Get());
-	renderDevice->StretchRect(surface, nullptr, nullptr, &rect, D3DTEXF_NONE);
+	renderDevice->ColorFill(plainSurface, nullptr, color.Get());
+	renderDevice->StretchRect(plainSurface, nullptr, surface, &destRect, D3DTEXF_NONE);
 }

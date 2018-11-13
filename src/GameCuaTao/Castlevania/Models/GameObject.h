@@ -35,7 +35,7 @@ namespace Castlevania
 		void UpdateDistance(float deltaTime);
 
 		virtual void Draw(SpriteExtensions &spriteBatch);
-		virtual void DrawBoundingBox(SpriteExtensions &spriteBatch);
+		virtual void DrawBoundingBox(SpriteExtensions &spriteBatch); // For debugging purpose
 
 		virtual ~GameObject();
 

@@ -13,9 +13,14 @@ Simon::Simon(EntityType type) : GameObject(type)
 {
 }
 
-MoveState Castlevania::Simon::GetState()
+MoveState Castlevania::Simon::GetMoveState()
 {
 	return moveState;
+}
+
+AttackState Castlevania::Simon::GetAttackState()
+{
+	return attackState;
 }
 
 void Simon::LoadContent(ContentManager &content)
@@ -72,7 +77,8 @@ void Simon::Draw(SpriteExtensions &spriteBatch)
 		sprite->SetEffect(SpriteEffects::FlipHorizontally);
 
 	sprite->Update();
-	//DrawBoundingBox(spriteBatch);
+
+	spriteBatch.Draw(GetBoundingBox(), Color::Pink()); // Used in debugging
 	spriteBatch.Draw(*sprite, position);
 }
 
@@ -142,7 +148,7 @@ void Simon::Attacking()
 			|| moveState == MoveState::IDLE)
 			Idle();
 		else if (moveState == MoveState::JUMPING)
-			moveState == MoveState::JUMPED;
+			moveState = MoveState::JUMPED;
 		else if (moveState == MoveState::DUCKING)
 			Duck();
 	}

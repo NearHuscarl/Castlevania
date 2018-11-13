@@ -10,6 +10,11 @@ struct Viewport
 	int width;
 	int height;
 
+	Vector2 Project(float x, float y)
+	{
+		return Project(Vector2{ x, y });
+	}
+
 	// Get position relative to screen space from world space position
 	Vector2 Project(Vector2 source)
 	{

@@ -26,7 +26,8 @@ namespace Castlevania
 	public:
 		Simon(EntityType type = EntityType::Simon);
 
-		MoveState GetState();
+		MoveState GetMoveState();
+		AttackState GetAttackState();
 
 		void LoadContent(ContentManager &content) override;
 		virtual void Update(float deltaTime) override;
