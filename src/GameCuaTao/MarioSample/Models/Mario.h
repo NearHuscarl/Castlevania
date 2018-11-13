@@ -1,20 +1,28 @@
 #pragma once
 
 #include "GameObject.h"
+#include "MarioController.h"
 
 namespace MarioSample
 {
+	enum class State
+	{
+		WALKING_LEFT,
+		WALKING_RIGHT,
+		IDLE,
+		JUMPING,
+	};
+
 	class Mario : public GameObject
 	{
 	public:
+		Mario();
+		State GetState();
+		IController *GetController();
+
 		void LoadContent(ContentManager &content) override;
 		void Update(float deltaTime) override;
 		void Draw(SpriteBatch &spriteBatch) override;
-
-	private:
-		void UpdateInput();
-		void UpdateState();
-		void ResolveCollision(float deltaTime);
 
 		void Jump();
 		void Jumping();
@@ -22,14 +30,11 @@ namespace MarioSample
 		void WalkLeft();
 		void WalkRight();
 
-		enum class State
-		{
-			WALKING_LEFT,
-			WALKING_RIGHT,
-			IDLE,
-			JUMPING,
-		};
-
+	private:
 		State state;
+		MarioController controller;
+
+		void UpdateState();
+		void ResolveCollision(float deltaTime);
 	};
 }

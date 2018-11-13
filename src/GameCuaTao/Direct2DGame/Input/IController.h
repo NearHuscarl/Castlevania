@@ -1,5 +1,6 @@
 #pragma once
 
+#include "DirectInput.h"
 #include "KeyboardState.h"
 
 class IController

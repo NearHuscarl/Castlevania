@@ -194,6 +194,7 @@
     <ClCompile Include="Direct2DGame\MathHelper.cpp" />
     <ClCompile Include="Direct2DGame\Utilities\Stopwatch.cpp" />
     <ClCompile Include="Direct2DGame\Utilities\TimeSpan.cpp" />
+    <ClCompile Include="MarioSample\Models\MarioController.cpp" />
     <ClCompile Include="MarioSample\Utilities\AudioManager.cpp" />
     <ClCompile Include="Direct2DGame\Graphics\SpriteFont.cpp" />
     <ClCompile Include="Direct2DGame\Graphics\Texture.cpp" />
@@ -273,6 +274,7 @@
     <ClInclude Include="Direct2DGame\Extensions\Sprites\SpriteExtensions.h" />
     <ClInclude Include="Direct2DGame\Utilities\Stopwatch.h" />
     <ClInclude Include="Direct2DGame\Utilities\TimeSpan.h" />
+    <ClInclude Include="MarioSample\Models\MarioController.h" />
     <ClInclude Include="MarioSample\Utilities\AudioManager.h" />
     <ClInclude Include="Direct2DGame\Graphics\SpriteFont.h" />
     <ClInclude Include="Direct2DGame\Graphics\Texture.h" />

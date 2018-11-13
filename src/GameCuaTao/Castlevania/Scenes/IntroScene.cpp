@@ -42,9 +42,19 @@ void IntroScene::LoadContent()
 void IntroScene::Update(float deltaTime)
 {
 	if (simon->GetOriginPosition().x >= gatePosition.x)
+	{
 		simon->WalkLeft();
+	}
 	else
+	{
 		simon->TurnBackward();
+		transitionTimer.Start();
+	}
+
+	if (transitionTimer.ElapsedMilliseconds() > 4000)
+	{
+		sceneManager.SetNextScene(Scene::GAMEPLAY);
+	}
 
 	bat1->Update(deltaTime);
 	bat2->Update(deltaTime);

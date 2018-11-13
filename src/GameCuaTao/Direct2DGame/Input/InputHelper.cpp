@@ -11,6 +11,8 @@ void InputHelper::Initialize(Keyboard *keyboard)
 
 void InputHelper::Update()
 {
+	keyboard->Update();
+
 	previousKeyboardState = currentKeyboardState;
 	currentKeyboardState = keyboard->GetState();
 }

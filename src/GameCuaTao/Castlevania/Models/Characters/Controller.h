@@ -11,8 +11,8 @@ namespace Castlevania
 		Controller(Simon &player);
 
 		void OnKeyStateChanged(KeyboardState &keyboardState) override;
-		void OnKeyDown(int KeyCode) override;
-		void OnKeyUp(int KeyCode) override;
+		void OnKeyDown(int keyCode) override;
+		void OnKeyUp(int keyCode) override;
 
 	private:
 		Simon &player;

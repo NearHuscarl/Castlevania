@@ -6,6 +6,20 @@
 
 using namespace MarioSample;
 
+Mario::Mario() : controller{ *this }
+{
+}
+
+State MarioSample::Mario::GetState()
+{
+	return state;
+}
+
+IController *Mario::GetController()
+{
+	return &controller;
+}
+
 void Mario::LoadContent(ContentManager &content)
 {
 	auto animationFactory = content.Load<AnimationFactory>("MarioAnimationDef.xml");
@@ -16,39 +30,8 @@ void Mario::LoadContent(ContentManager &content)
 
 void Mario::Update(float deltaTime)
 {
-	UpdateInput();
 	UpdateState();
-
 	ResolveCollision(deltaTime);
-}
-
-void Mario::UpdateInput()
-{
-	switch (state)
-	{
-		case State::IDLE:
-			if (InputHelper::IsKeyDown(DIK_SPACE))
-				Jump();
-			if (InputHelper::IsKeyPressed(DIK_RIGHT))
-				WalkRight();
-			else if (InputHelper::IsKeyPressed(DIK_LEFT))
-				WalkLeft();
-			break;
-
-		case State::WALKING_LEFT:
-			if (InputHelper::IsKeyDown(DIK_SPACE))
-				Jump();
-			if (!InputHelper::IsKeyPressed(DIK_LEFT))
-				Idle();
-			break;
-
-		case State::WALKING_RIGHT:
-			if (InputHelper::IsKeyDown(DIK_SPACE))
-				Jump();
-			if (!InputHelper::IsKeyPressed(DIK_RIGHT))
-				Idle();
-			break;
-	}
 }
 
 void Mario::UpdateState()

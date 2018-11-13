@@ -1,5 +1,4 @@
 #include "MarioSampleGame.h"
-#include "Direct2DGame/Input/InputHelper.h"
 #include "Utilities/AudioManager.h"
 
 using namespace MarioSample;
@@ -15,7 +14,6 @@ MarioSampleGame::MarioSampleGame()
 void MarioSampleGame::Initialize()
 {
 	Game::Initialize();
-	InputHelper::Initialize(keyboard.get());
 }
 
 void MarioSampleGame::LoadContent()
@@ -24,9 +22,11 @@ void MarioSampleGame::LoadContent()
 
 	AudioManager::LoadContent(*content, { "Jump", "Overworld" });
 	gameFont = content->Load<SpriteFont>("Roboto");
+
 	mario = std::make_shared<Mario>();
 	mario->LoadContent(*content);
 
+	Keyboard::Register(mario->GetController());
 	AudioManager::PlaySong("Overworld");
 }
 
@@ -34,7 +34,7 @@ void MarioSampleGame::Update(GameTime gameTime)
 {
 	auto deltaTime = (float)gameTime.ElapsedGameTime.Seconds();
 
-	InputHelper::Update();
+	keyboard->Update();
 	mario->Update(deltaTime);
 }
 
