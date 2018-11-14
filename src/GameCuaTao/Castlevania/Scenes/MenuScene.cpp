@@ -26,6 +26,10 @@ void MenuScene::Update(float deltaTime)
 	{
 		transitionTimer.Start();
 	}
+	else if (InputHelper::IsKeyPressed(DIK_HOME))
+	{
+		sceneManager.SetNextScene(Scene::GAMEPLAY);
+	}
 
 	if (transitionTimer.ElapsedMilliseconds() >= 800)
 	{

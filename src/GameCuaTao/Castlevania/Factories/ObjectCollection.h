@@ -31,7 +31,7 @@ namespace Castlevania
 	{
 		std::map<std::string, Rect> boundaries;
 		std::map<std::string, Rect> triggers;
-		std::map<std::string, Vector2> positions;
+		std::map<std::string, Vector2> locations;
 		std::vector<std::unique_ptr<GameObject>> entities;
 	};
 }

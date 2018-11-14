@@ -17,6 +17,7 @@ namespace Castlevania
 	class GameObject
 	{
 	public:
+		GameObject();
 		GameObject(EntityType type);
 
 		EntityType GetType();

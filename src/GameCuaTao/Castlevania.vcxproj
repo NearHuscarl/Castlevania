@@ -161,6 +161,7 @@
     <ClCompile Include="Castlevania\Factories\ObjectFactory.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Controller.cpp" />
     <ClCompile Include="Castlevania\Models\Items\FirePit.cpp" />
+    <ClCompile Include="Castlevania\Models\Weapons\Whip.cpp" />
     <ClCompile Include="Castlevania\Settings\Button.cpp" />
     <ClCompile Include="Castlevania\Stages\StageManager.cpp" />
     <ClCompile Include="Direct2DGame\Base\Color.cpp" />
@@ -227,6 +228,7 @@
     <ClInclude Include="Castlevania\Models\Characters\Controller.h" />
     <ClInclude Include="Castlevania\Models\EntityType.h" />
     <ClInclude Include="Castlevania\Models\Items\FirePit.h" />
+    <ClInclude Include="Castlevania\Models\Weapons\Whip.h" />
     <ClInclude Include="Castlevania\Settings\Button.h" />
     <ClInclude Include="Castlevania\Stages\StageManager.h" />
     <ClInclude Include="Direct2DGame\Content\TiledMapReader.h" />

@@ -5,6 +5,7 @@
 #include <string>
 #include <fstream>
 #include <filesystem>
+#include <sstream>
 
 using Path = std::filesystem::path;
 
@@ -86,11 +87,11 @@ inline void FileLogger::Error(Args ...args)
 template<typename ...Args>
 inline void FileLogger::PrintLog(std::string tag, Args ...logMessage)
 {
-	logFile
-		<< GetLogTime()
-		<< tag
-		<< fmt::format(std::forward<Args>(logMessage)...)
-		<< std::endl;
+	auto sstream = std::stringstream{};
+
+	sstream << tag << fmt::format(std::forward<Args>(logMessage)...);
+
+	PrintLog(sstream.str());
 }
 
 #pragma endregion

@@ -8,6 +8,7 @@ class AnimatedSprite : public Sprite
 public:
 	AnimatedSprite(std::shared_ptr<AnimationFactory> animationFactory);
 
+	Animation &GetCurrentAnimation();
 	bool AnimateComplete();
 
 	void Play(std::string name);

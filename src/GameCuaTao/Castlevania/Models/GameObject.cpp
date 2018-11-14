@@ -3,6 +3,11 @@
 
 using namespace Castlevania;
 
+GameObject::GameObject()
+{
+	type = EntityType::Unknown;
+}
+
 GameObject::GameObject(EntityType type)
 {
 	this->type = type;

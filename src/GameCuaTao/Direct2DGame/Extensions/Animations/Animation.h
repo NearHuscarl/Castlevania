@@ -11,6 +11,7 @@ public:
 
 	std::string GetName();
 	AnimationFrame GetCurrentFrame();
+	int GetCurrentFrameIndex();
 
 	bool IsComplete();
 

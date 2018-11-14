@@ -18,13 +18,18 @@ std::string Animation::GetName()
 
 AnimationFrame Animation::GetCurrentFrame()
 {
+	return frames[GetCurrentFrameIndex()];
+}
+
+int Animation::GetCurrentFrameIndex()
+{
 	auto frameNow = currentFrame;
 
 	// Not the most elegant way to get current frame but it works for now
 	frameNow = MathHelper::Max(frameNow, 0);
 	frameNow = MathHelper::Min(frameNow, (int)frames.size() - 1);
 
-	return frames[frameNow];
+	return frameNow;
 }
 
 bool Animation::IsComplete()
@@ -76,6 +81,6 @@ void Animation::Reset()
 {
 	isComplete = false;
 
-	this->lastFrameTime = 0;
-	this->currentFrame = -1;
+	lastFrameTime = 0;
+	currentFrame = -1;
 }

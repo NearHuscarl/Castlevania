@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../GameObject.h"
+#include "../Weapons/Whip.h"
 
 namespace Castlevania
 {
@@ -26,8 +27,11 @@ namespace Castlevania
 	public:
 		Simon(EntityType type = EntityType::Simon);
 
+		void SetFacing(Facing facing);
+
 		MoveState GetMoveState();
 		AttackState GetAttackState();
+		void SetNextMoveState(MoveState state);
 
 		void LoadContent(ContentManager &content) override;
 		virtual void Update(float deltaTime) override;
@@ -43,9 +47,12 @@ namespace Castlevania
 
 	protected:
 		MoveState moveState;
+		MoveState nextMoveState;
 		AttackState attackState;
 		Facing facing;
 		float jumpSpeed;
+
+		std::unique_ptr<Whip> whip;
 
 		void Attacking();
 	};

@@ -53,7 +53,7 @@ ObjectCollection ObjectFactory::CreateObjectCollection(ObjectsProperties objects
 			auto height = std::stoi(properties.at("height"));
 			auto position = Vector2{ x, y - height };
 
-			objectCollection.positions[name] = position;
+			objectCollection.locations[name] = position;
 		}
 		else // GameObject (Simon, Bat, Skeleton...)
 		{

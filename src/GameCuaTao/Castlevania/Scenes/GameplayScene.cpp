@@ -18,7 +18,7 @@ void GameplayScene::LoadContent()
 	objectCollection = stageManager.LoadGameObjects();
 	
 	player = std::make_unique<Player>();
-	player->SetPosition(objectCollection.positions[CHECKPOINT]);
+	player->SetPosition(objectCollection.locations[CHECKPOINT]);
 	player->LoadContent(sceneManager.GetContent());
 
 	Keyboard::Register(player->GetController());

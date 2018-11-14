@@ -2,7 +2,6 @@
 
 #include "Direct2DGame/Input/IController.h"
 
-
 namespace MarioSample
 {
 	class Mario;

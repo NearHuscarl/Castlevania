@@ -11,5 +11,6 @@ namespace Castlevania
 		FirePit,
 		Boundary,
 		Position,
+		Unknown,
 	};
 }

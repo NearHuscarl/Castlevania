@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+  <Spritesheet TexturePath="Whip.png">
+    <Sprite ID="whip_11">
+      <SpriteFrame Left="1" Top="7" Width="16" Height="48" />
+    </Sprite>
+
+    <Sprite ID="whip_12">
+      <SpriteFrame Left="41" Top="1" Width="32" Height="38" />
+    </Sprite>
+
+    <Sprite ID="whip_13">
+      <SpriteFrame Left="95" Top="5" Width="46" Height="16" />
+    </Sprite>
+
+    <Sprite ID="whip_21">
+      <SpriteFrame Left="1" Top="75" Width="16" Height="48" />
+    </Sprite>
+
+    <Sprite ID="whip_22">
+      <SpriteFrame Left="41" Top="69" Width="32" Height="38" />
+    </Sprite>
+
+    <Sprite ID="whip_23">
+      <SpriteFrame Left="95" Top="79" Width="46" Height="12" />
+    </Sprite>
+
+    <Sprite ID="whip_31">
+      <SpriteFrame Left="1" Top="143" Width="16" Height="48" />
+    </Sprite>
+
+    <Sprite ID="whip_32">
+      <SpriteFrame Left="41" Top="137" Width="32" Height="38" />
+    </Sprite>
+
+    <Sprite ID="whip_33">
+      <SpriteFrame Left="95" Top="147" Width="78" Height="12" />
+    </Sprite>
+  </Spritesheet>
+
+  <Animations>
+    <Animation Name="Whip_level_01" DefaultTime="100" IsLooping="False">
+      <Frame SpriteID="whip_11" />
+      <Frame SpriteID="whip_12" />
+      <Frame SpriteID="whip_13" />
+    </Animation>
+
+    <Animation Name="Whip_level_02" DefaultTime="100" IsLooping="False">
+      <Frame SpriteID="whip_21" />
+      <Frame SpriteID="whip_22" />
+      <Frame SpriteID="whip_23" />
+    </Animation>
+
+    <Animation Name="Whip_level_03" DefaultTime="100" IsLooping="False">
+      <Frame SpriteID="whip_31" />
+      <Frame SpriteID="whip_32" />
+      <Frame SpriteID="whip_33" />
+    </Animation>
+  </Animations>
+
+</GameContent>

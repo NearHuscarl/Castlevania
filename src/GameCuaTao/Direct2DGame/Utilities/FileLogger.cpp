@@ -1,6 +1,7 @@
 #include <filesystem>
 #include "FileLogger.h"
 #include "Stopwatch.h"
+#include "WinHelper.h"
 
 FileLogger &FileLogger::GetInstance()
 {
@@ -68,6 +69,7 @@ std::string FileLogger::GetLogTime(const char *format)
 void FileLogger::PrintLog(std::string logMessage)
 {
 	logFile << GetLogTime() << logMessage << std::endl;
+	OutputDebugString(WinHelper::s2ws(logMessage + "\n").c_str()); // Print to visual output window
 }
 
 FileLogger::~FileLogger()

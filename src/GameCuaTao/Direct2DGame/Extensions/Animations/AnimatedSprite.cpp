@@ -7,6 +7,11 @@ AnimatedSprite::AnimatedSprite(std::shared_ptr<AnimationFactory> animationFactor
 	this->animationFactory = animationFactory;
 }
 
+Animation &AnimatedSprite::GetCurrentAnimation()
+{
+	return *currentAnimation;
+}
+
 bool AnimatedSprite::AnimateComplete()
 {
 	return currentAnimation->IsComplete();
