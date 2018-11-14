@@ -27,13 +27,9 @@ void Controller::OnKeyStateChanged(KeyboardState &keyboardState)
 				player.WalkRight();
 			break;
 
-		case MoveState::WALKING_LEFT:
-			if (keyboardState.IsKeyUp(Button::WalkLeft))
-				player.Idle();
-			break;
-
-		case MoveState::WALKING_RIGHT:
-			if (keyboardState.IsKeyUp(Button::WalkRight))
+		case MoveState::WALKING:
+			if (keyboardState.IsKeyUp(Button::WalkLeft) && player.GetFacing() == Facing::Left
+				|| keyboardState.IsKeyUp(Button::WalkRight) && player.GetFacing() == Facing::Right)
 				player.Idle();
 			break;
 
@@ -60,8 +56,7 @@ void Controller::OnKeyDown(int keyCode)
 				player.Attack();
 			break;
 
-		case MoveState::WALKING_LEFT:
-		case MoveState::WALKING_RIGHT:
+		case MoveState::WALKING:
 			if (keyboardState.IsKeyDown(Button::WalkLeft) && keyboardState.IsKeyDown(Button::WalkRight))
 				player.Idle();
 			else if (keyCode == Button::Jump)
@@ -73,6 +68,7 @@ void Controller::OnKeyDown(int keyCode)
 			break;
 
 		case MoveState::JUMPED:
+		case MoveState::LANDING:
 		case MoveState::DUCKING:
 			if (keyCode == Button::Attack)
 				player.Attack();

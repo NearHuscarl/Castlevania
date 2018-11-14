@@ -8,10 +8,13 @@ namespace Castlevania
 	enum class MoveState
 	{
 		IDLE,
-		WALKING_LEFT,
-		WALKING_RIGHT,
+		WALKING,
 		JUMPING,
 		JUMPED, // TODO: remove, use collision detection
+		
+		// Simon bends her knee after attacking on the air. Normally she
+		// would stretch her leg on her way down if she is in IDLE state
+		LANDING,
 		DUCKING,
 		TURNING_BACKWARD,
 	};
@@ -28,10 +31,9 @@ namespace Castlevania
 		Simon(EntityType type = EntityType::Simon);
 
 		void SetFacing(Facing facing);
-
+		Facing GetFacing();
 		MoveState GetMoveState();
 		AttackState GetAttackState();
-		void SetNextMoveState(MoveState state);
 
 		void LoadContent(ContentManager &content) override;
 		virtual void Update(float deltaTime) override;
@@ -45,15 +47,16 @@ namespace Castlevania
 		void Attack();
 		void TurnBackward();
 
-	protected:
+	private:
 		MoveState moveState;
-		MoveState nextMoveState;
 		AttackState attackState;
 		Facing facing;
 		float jumpSpeed;
 
 		std::unique_ptr<Whip> whip;
 
-		void Attacking();
+		void Land(); // Internal command to change from JumpAttacking state to Landing state
+		void UpdateJumpState();
+		void UpdateAttackState();
 	};
 }

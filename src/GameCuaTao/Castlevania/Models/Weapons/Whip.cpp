@@ -30,7 +30,6 @@ void Whip::Draw(SpriteExtensions &spriteBatch)
 {
 	if (isActive)
 	{
-		int min;
 		if (facing == Facing::Left)
 			sprite->SetEffect(SpriteEffects::FlipHorizontally);
 		else

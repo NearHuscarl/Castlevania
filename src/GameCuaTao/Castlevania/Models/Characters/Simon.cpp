@@ -20,6 +20,11 @@ void Simon::SetFacing(Facing facing)
 	whip->SetFacing(facing);
 }
 
+Facing Castlevania::Simon::GetFacing()
+{
+	return facing;
+}
+
 MoveState Castlevania::Simon::GetMoveState()
 {
 	return moveState;
@@ -28,11 +33,6 @@ MoveState Castlevania::Simon::GetMoveState()
 AttackState Castlevania::Simon::GetAttackState()
 {
 	return attackState;
-}
-
-void Simon::SetNextMoveState(MoveState state)
-{
-	nextMoveState = state;
 }
 
 void Simon::LoadContent(ContentManager &content)
@@ -61,26 +61,72 @@ void Simon::Update(float deltaTime)
 			break;
 
 		case MoveState::JUMPED:
-			velocity.y += GRAVITY;
-			
 			if (velocity.y > STRETCH_LEG_VELOCITY_Y && attackState == AttackState::INACTIVE)
 				sprite->Play(IDLE_ANIMATION);
 
-			if (position.y > GROUND_POSITION_Y)
-			{
-				position.y = GROUND_POSITION_Y;
-				velocity.y = 0;
-				Idle();
-			}
+			UpdateJumpState();
+			break;
+
+		case MoveState::LANDING:
+			UpdateJumpState();
 			break;
 	}
 
 	switch (attackState)
 	{
 		case AttackState::ATTACKING:
-			Attacking();
+			UpdateAttackState();
 			break;
 	}
+}
+
+void Simon::UpdateJumpState()
+{
+	velocity.y += GRAVITY;
+
+	if (position.y > GROUND_POSITION_Y)
+	{
+		position.y = GROUND_POSITION_Y;
+		velocity.y = 0;
+
+		if (attackState == AttackState::INACTIVE)
+			Idle();
+		else // AttackState::ATTACKING
+			velocity.x = 0; // Still keep attacking on the ground but not moving anymore
+	}
+}
+
+void Simon::UpdateAttackState()
+{
+	if (sprite->AnimateComplete())
+	{
+		attackState = AttackState::INACTIVE;
+
+		switch (moveState)
+		{
+			case MoveState::WALKING:
+			case MoveState::IDLE:
+				Idle();
+				break;
+
+			case MoveState::JUMPING:
+			case MoveState::JUMPED:
+				Land();
+				break;
+
+			case MoveState::DUCKING:
+				Duck();
+				break;
+		}
+
+		whip->Withdraw();
+	}
+}
+
+void Simon::Land()
+{
+	moveState = MoveState::LANDING;
+	sprite->Play(JUMP_ANIMATION);
 }
 
 void Simon::Draw(SpriteExtensions &spriteBatch)
@@ -108,7 +154,7 @@ void Simon::Idle()
 
 void Simon::WalkLeft()
 {
-	moveState = MoveState::WALKING_LEFT;
+	moveState = MoveState::WALKING;
 	SetFacing(Facing::Left);
 	velocity.x = -speed;
 	sprite->Play(WALK_ANIMATION);
@@ -116,7 +162,7 @@ void Simon::WalkLeft()
 
 void Simon::WalkRight()
 {
-	moveState = MoveState::WALKING_RIGHT;
+	moveState = MoveState::WALKING;
 	SetFacing(Facing::Right);
 	velocity.x = speed;
 	sprite->Play(WALK_ANIMATION);
@@ -138,43 +184,32 @@ void Simon::Duck()
 void Simon::Attack()
 {
 	attackState = AttackState::ATTACKING;
-	nextMoveState = moveState;
 
-	if (moveState == MoveState::WALKING_LEFT || moveState == MoveState::WALKING_RIGHT)
+	switch (moveState)
 	{
-		velocity = Vector2::Zero();
-		sprite->Play(ATTACK_ANIMATION);
+		case MoveState::WALKING:
+			velocity = Vector2::Zero();
+			sprite->Play(ATTACK_ANIMATION);
+			break;
+
+		case MoveState::IDLE:
+			sprite->Play(ATTACK_ANIMATION);
+			break;
+
+		case MoveState::JUMPED:
+		case MoveState::LANDING:
+			sprite->Play(JUMP_ATTACK_ANIMATION);
+			break;
+
+		case MoveState::DUCKING:
+			sprite->Play(DUCK_ATTACK_ANIMATION);
+			break;
+
+		default:
+			return;
 	}
-	else if (moveState == MoveState::IDLE)
-		sprite->Play(ATTACK_ANIMATION);
-	else if (moveState == MoveState::JUMPED)
-		sprite->Play(JUMP_ATTACK_ANIMATION);
-	else if (moveState == MoveState::DUCKING)
-		sprite->Play(DUCK_ATTACK_ANIMATION);
-	else
-		return;
 
 	whip->Unleash();
-}
-
-void Simon::Attacking()
-{
-	if (sprite->AnimateComplete())
-	{
-		attackState = AttackState::INACTIVE;
-		moveState = nextMoveState;
-
-		if (moveState == MoveState::WALKING_LEFT
-			|| moveState == MoveState::WALKING_RIGHT
-			|| moveState == MoveState::IDLE)
-			Idle();
-		else if (moveState == MoveState::JUMPING)
-			moveState = MoveState::JUMPED;
-		else if (moveState == MoveState::DUCKING)
-			Duck();
-
-		whip->Withdraw();
-	}
 }
 
 void Simon::TurnBackward()
