@@ -12,9 +12,9 @@ std::shared_ptr<AnimationFactory> ContentReader::ReadAsset<AnimationFactory>(std
 }
 
 template<>
-std::shared_ptr<CharacterStats> ContentReader::ReadAsset<CharacterStats>(std::string filePath)
+std::shared_ptr<Dictionary> ContentReader::ReadAsset<Dictionary>(std::string filePath)
 {
-	return characterStatsReader.Read(filePath, contentManager);
+	return dictionaryReader.Read(filePath, contentManager);
 }
 
 template<>

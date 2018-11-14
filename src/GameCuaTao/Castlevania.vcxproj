@@ -181,7 +181,7 @@
     <ClCompile Include="Castlevania\Scenes\SceneManager.cpp" />
     <ClCompile Include="Castlevania\Settings\Fonts.cpp" />
     <ClCompile Include="Castlevania\Utilities\AudioManager.cpp" />
-    <ClCompile Include="Direct2DGame\Content\CharacterStatsReader.cpp" />
+    <ClCompile Include="Direct2DGame\Content\DictionaryReader.cpp" />
     <ClCompile Include="Direct2DGame\Extensions\Animations\Animation.cpp" />
     <ClCompile Include="Direct2DGame\Extensions\Animations\AnimationFrame.cpp" />
     <ClCompile Include="Direct2DGame\Extensions\Camera.cpp" />
@@ -254,7 +254,7 @@
     <ClInclude Include="Direct2DGame\Base\Color.h" />
     <ClInclude Include="Direct2DGame\Base\Point.h" />
     <ClInclude Include="Direct2DGame\Base\Vector3.h" />
-    <ClInclude Include="Direct2DGame\Content\CharacterStatsReader.h" />
+    <ClInclude Include="Direct2DGame\Content\DictionaryReader.h" />
     <ClInclude Include="Direct2DGame\Extensions\Camera.h" />
     <ClInclude Include="Direct2DGame\Extensions\TextureRegion.h" />
     <ClInclude Include="Direct2DGame\Extensions\Tiled\TiledMap.h" />

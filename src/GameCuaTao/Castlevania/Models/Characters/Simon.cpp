@@ -40,7 +40,7 @@ void Simon::LoadContent(ContentManager &content)
 	auto animationFactory = content.Load<AnimationFactory>("Characters/Players/Simon.xml");
 	sprite = std::make_unique<AnimatedSprite>(animationFactory);
 
-	auto stats = content.Load<CharacterStats>("CharacterStats/Simon.xml");
+	auto stats = content.Load<Dictionary>("CharacterStats/Simon.xml");
 	speed = std::stof(stats->at("WalkSpeed"));
 	jumpSpeed = std::stof(stats->at("JumpSpeed"));
 

@@ -2,11 +2,11 @@
 
 <GameContent>
 
-  <Character
+  <Dictionary
     Name="Simon"
     WalkSpeed="120.0"
     JumpSpeed="420.0"
     StartingAnimation="idle">
-  </Character>
+  </Dictionary>
 
 </GameContent>

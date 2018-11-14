@@ -11,7 +11,7 @@ void Bat::LoadContent(ContentManager &content)
 	auto animationFactory = content.Load<AnimationFactory>("Characters/NPCs/Bat.xml");
 	sprite = std::make_unique<AnimatedSprite>(animationFactory);
 
-	auto stats = content.Load<CharacterStats>("CharacterStats/Bat.xml");
+	auto stats = content.Load<Dictionary>("CharacterStats/Bat.xml");
 	auto speed = std::stof(stats->at("Speed"));
 	auto animation = stats->at("StartingAnimation");
 

@@ -2,7 +2,7 @@
 
 #include <string>
 #include "AnimationFactoryReader.h"
-#include "CharacterStatsReader.h"
+#include "DictionaryReader.h"
 #include "SoundReader.h"
 #include "SpriteFontReader.h"
 #include "TextureReader.h"
@@ -22,7 +22,7 @@ private:
 	ContentManager &contentManager;
 
 	AnimationFactoryReader animationFactoryReader;
-	CharacterStatsReader characterStatsReader;
+	DictionaryReader dictionaryReader;
 	SoundReader soundReader;
 	SpriteFontReader spriteFontReader;
 	TextureReader textureReader;

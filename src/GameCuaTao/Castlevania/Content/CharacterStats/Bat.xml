@@ -2,10 +2,10 @@
 
 <GameContent>
 
-  <Character
+  <Dictionary
     Name="Bat"
     Speed="30.0"
     StartingAnimation="fly">
-  </Character>
+  </Dictionary>
 
 </GameContent>
