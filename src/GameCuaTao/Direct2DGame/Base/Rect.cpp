@@ -46,8 +46,8 @@ Rect Rect::Empty()
 bool Rect::operator==(Rect other)
 {
 	return (
-		this->X() == other.X() &&
-		this->Y() == other.Y() &&
+		this->X() == other.Y() &&
+		this->X() == other.Y() &&
 		this->Width() == other.Width() &&
 		this->Height() == other.Height());
 }
@@ -56,7 +56,25 @@ bool Rect::Contains(Rect value)
 {
 	return (
 		this->left <= value.left &&
-		this->right >= value.right &&
 		this->top <= value.top &&
+		this->right >= value.right &&
 		this->bottom >= value.bottom);
+}
+
+bool Rect::Intersects(Rect value)
+{
+	return (
+		this->left < value.right ||
+		this->top < value.bottom ||
+		this->right > value.left ||
+		this->bottom > value.top);
+}
+
+bool Rect::TouchesOrIntersects(Rect value)
+{
+	return (
+		this->left <= value.right ||
+		this->top <= value.bottom ||
+		this->right >= value.left ||
+		this->bottom >= value.top);
 }

@@ -4,6 +4,7 @@
 #include <set>
 #include "Direct2DGame/Base/Rect.h"
 #include "../Models/GameObject.h"
+#include "../Models/RectangleObject.h"
 
 namespace Castlevania
 {
@@ -29,9 +30,9 @@ namespace Castlevania
 
 	struct ObjectCollection
 	{
-		std::map<std::string, Rect> boundaries;
-		std::map<std::string, Rect> triggers;
-		std::map<std::string, Vector2> locations;
+		std::vector<std::unique_ptr<RectangleObject>> boundaries;
+		std::vector<std::unique_ptr<RectangleObject>> triggers;
 		std::vector<std::unique_ptr<GameObject>> entities;
+		std::map<std::string, Vector2> locations;
 	};
 }

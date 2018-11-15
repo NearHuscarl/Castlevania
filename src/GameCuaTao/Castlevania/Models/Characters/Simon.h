@@ -36,7 +36,7 @@ namespace Castlevania
 		AttackState GetAttackState();
 
 		void LoadContent(ContentManager &content) override;
-		virtual void Update(float deltaTime) override;
+		virtual void Update(float deltaTime, ObjectCollection *objectCollection = nullptr) override;
 		void Draw(SpriteExtensions &spriteBatch) override;
 
 		void Idle();

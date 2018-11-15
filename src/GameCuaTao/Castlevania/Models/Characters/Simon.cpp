@@ -49,7 +49,7 @@ void Simon::LoadContent(ContentManager &content)
 	Idle();
 }
 
-void Simon::Update(float deltaTime)
+void Simon::Update(float deltaTime, ObjectCollection *objectCollection)
 {
 	GameObject::UpdateDistance(deltaTime);
 	

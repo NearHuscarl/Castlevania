@@ -3,12 +3,13 @@
 
 using namespace Castlevania;
 
-GameObject::GameObject()
+GameObject::GameObject() : GameObject(EntityType::Unknown)
 {
-	type = EntityType::Unknown;
 }
 
-GameObject::GameObject(EntityType type)
+GameObject::GameObject(EntityType type) :
+	body{ *this },
+	collisionSystem{ *this }
 {
 	this->type = type;
 }
@@ -24,6 +25,11 @@ EntityType GameObject::GetType()
 void GameObject::SetVelocity(Vector2 velocity)
 {
 	this->velocity = velocity;
+}
+
+Vector2 GameObject::GetVelocity()
+{
+	return velocity;
 }
 
 void GameObject::SetLinearVelocity(float speed, float angle)
@@ -52,6 +58,11 @@ Vector2 GameObject::GetPosition()
 	return position;
 }
 
+Body Castlevania::GameObject::GetBody()
+{
+	return body;
+}
+
 Vector2 GameObject::GetOriginPosition()
 {
 	return Vector2{
@@ -75,8 +86,9 @@ void GameObject::LoadContent(ContentManager &content)
 {
 }
 
-void GameObject::Update(float deltaTime)
+void GameObject::Update(float deltaTime, ObjectCollection *objectCollection)
 {
+	body.Update(deltaTime);
 }
 
 void GameObject::UpdateDistance(float deltaTime)

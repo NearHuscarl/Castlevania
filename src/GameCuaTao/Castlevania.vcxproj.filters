@@ -201,6 +201,15 @@
     <ClCompile Include="Direct2DGame\Content\DictionaryReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Castlevania\Models\Body\Body.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Models\Systems\CollisionSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Models\RectangleObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\pugixml.hpp">
@@ -471,6 +480,27 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Direct2DGame\Content\DictionaryReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Body\CollisionResult.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Body\Direction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Systems\CollisionSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Body\CollisionData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\RectangleObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\IDynamic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Body\IColliable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

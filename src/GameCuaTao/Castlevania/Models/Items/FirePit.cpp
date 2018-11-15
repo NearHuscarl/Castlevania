@@ -12,10 +12,6 @@ void FirePit::LoadContent(ContentManager &content)
 	sprite = std::make_unique<AnimatedSprite>(animationFactory);
 }
 
-void FirePit::Update(float deltaTime)
-{
-}
-
 void FirePit::Draw(SpriteExtensions &spriteBatch)
 {
 	sprite->Update();

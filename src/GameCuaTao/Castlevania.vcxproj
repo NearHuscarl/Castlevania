@@ -159,8 +159,11 @@
   <ItemGroup>
     <ClCompile Include="Castlevania\CastlevaniaGame.cpp" />
     <ClCompile Include="Castlevania\Factories\ObjectFactory.cpp" />
+    <ClCompile Include="Castlevania\Models\Body\Body.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Controller.cpp" />
     <ClCompile Include="Castlevania\Models\Items\FirePit.cpp" />
+    <ClCompile Include="Castlevania\Models\RectangleObject.cpp" />
+    <ClCompile Include="Castlevania\Models\Systems\CollisionSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\Whip.cpp" />
     <ClCompile Include="Castlevania\Settings\Button.cpp" />
     <ClCompile Include="Castlevania\Stages\StageManager.cpp" />
@@ -225,9 +228,16 @@
     <ClInclude Include="Castlevania\Factories\ObjectCollection.h" />
     <ClInclude Include="Castlevania\Factories\ObjectFactory.h" />
     <ClInclude Include="Castlevania\Models\Body\Body.h" />
+    <ClInclude Include="Castlevania\Models\Body\CollisionData.h" />
+    <ClInclude Include="Castlevania\Models\Body\CollisionResult.h" />
+    <ClInclude Include="Castlevania\Models\Body\Direction.h" />
+    <ClInclude Include="Castlevania\Models\Body\IColliable.h" />
     <ClInclude Include="Castlevania\Models\Characters\Controller.h" />
     <ClInclude Include="Castlevania\Models\EntityType.h" />
+    <ClInclude Include="Castlevania\Models\IDynamic.h" />
     <ClInclude Include="Castlevania\Models\Items\FirePit.h" />
+    <ClInclude Include="Castlevania\Models\RectangleObject.h" />
+    <ClInclude Include="Castlevania\Models\Systems\CollisionSystem.h" />
     <ClInclude Include="Castlevania\Models\Weapons\Whip.h" />
     <ClInclude Include="Castlevania\Settings\Button.h" />
     <ClInclude Include="Castlevania\Stages\StageManager.h" />

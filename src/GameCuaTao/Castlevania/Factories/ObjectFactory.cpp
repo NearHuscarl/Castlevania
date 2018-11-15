@@ -1,4 +1,5 @@
 #include "ObjectFactory.h"
+#include "../Models/RectangleObject.h"
 #include "../Models/Characters/Simon.h"
 #include "../Models/Characters/Player.h"
 #include "../Models/Characters/Bat.h"
@@ -32,9 +33,10 @@ ObjectCollection ObjectFactory::CreateObjectCollection(ObjectsProperties objects
 			auto y = std::stoi(properties.at("y"));
 			auto width = std::stoi(properties.at("width"));
 			auto height = std::stoi(properties.at("height"));
-			auto trigger = Rect{ x, y - height, width, height };
+			auto boundary = Rect{ x, y - height, width, height };
+			auto object = std::make_unique<RectangleObject>(boundary);
 
-			objectCollection.boundaries[name] = trigger;
+			objectCollection.boundaries.push_back(std::move(object));
 		}
 		else if (TRIGGERS.find(name) != TRIGGERS.end())
 		{
@@ -43,8 +45,9 @@ ObjectCollection ObjectFactory::CreateObjectCollection(ObjectsProperties objects
 			auto width = std::stoi(properties.at("width"));
 			auto height = std::stoi(properties.at("height"));
 			auto trigger = Rect{ x, y - height, width, height };
-			
-			objectCollection.triggers[name] = trigger;
+			auto object = std::make_unique<RectangleObject>(trigger);
+
+			objectCollection.triggers.push_back(std::move(object));
 		}
 		else if (POSITIONS.find(name) != POSITIONS.end())
 		{
