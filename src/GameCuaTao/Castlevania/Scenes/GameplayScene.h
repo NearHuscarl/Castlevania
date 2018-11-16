@@ -3,9 +3,8 @@
 #include "AbstractScene.h"
 #include "Direct2DGame/Extensions/Tiled/TiledMap.h"
 #include "Direct2DGame/Extensions/Camera.h"
-#include "../Factories/ObjectCollection.h"
 #include "../Models/GameObject.h"
-#include "../Models/Characters/Player.h"
+#include "../Stages/StageManager.h"
 
 namespace Castlevania
 {
@@ -19,10 +18,12 @@ namespace Castlevania
 		void Draw(GameTime gameTime) override;
 
 	private:
+		std::unique_ptr<StageManager> stageManager;
 		std::shared_ptr<TiledMap> map;
 		std::unique_ptr<Camera> camera;
 		std::unique_ptr<Player> player; // Our player need special attention
 
+		ObjectFactory objectFactory;
 		ObjectCollection objectCollection; // TODO: move to Grid class (implement spatial partition)
 	};
 }

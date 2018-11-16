@@ -4,9 +4,10 @@
 #include "Direct2DGame/Extensions/Sprites/SpriteExtensions.h"
 #include "Direct2DGame/Extensions/Animations/AnimatedSprite.h"
 #include "Systems/CollisionSystem.h"
+#include "Systems/CollisionResponseSystem.h"
 #include "EntityType.h"
 #include "Body/Body.h"
-#include "IDynamic.h"
+#include "IGameObject.h"
 
 namespace Castlevania
 {
@@ -18,24 +19,30 @@ namespace Castlevania
 		Left,
 	};
 
-	class GameObject : public IDynamic
+	class GameObject : public IGameObject
 	{
 	public:
 		GameObject();
+		GameObject(Rect boundingBox);
 		GameObject(EntityType type);
 
 		EntityType GetType() override;
-		void SetVelocity(Vector2 velocity);
-		Vector2 GetVelocity() override;
-		void SetLinearVelocity(float speed, float angle = 0.0f); // angle in degree
+
+		Vector2 GetPosition() override;
 		void SetPosition(float x, float y);
 		void SetPosition(Vector2 position);
-		Vector2 GetPosition() override;
-		Body GetBody();
+		
+		Vector2 GetVelocity() override;
+		void SetVelocity(Vector2 velocity);
+		void SetLinearVelocity(float speed, float angle = 0.0f); // angle in degree
 
 		Vector2 GetOriginPosition(); // Get the center of the object's bounding box to the world
+		
+		Body GetBody();
 		virtual Rect GetFrameRect();
 		virtual Rect GetBoundingBox() override;
+
+		void Move(Vector2 direction);
 
 		virtual void LoadContent(ContentManager &content);
 		virtual void Update(float deltaTime, ObjectCollection *objectCollection = nullptr);
@@ -54,7 +61,9 @@ namespace Castlevania
 		Body body;
 
 		std::unique_ptr<AnimatedSprite> sprite;
+		std::unique_ptr<Rect> boundingBox;
 
 		CollisionSystem collisionSystem;
+		CollisionResponseSystem collisionResponseSystem;
 	};
 }

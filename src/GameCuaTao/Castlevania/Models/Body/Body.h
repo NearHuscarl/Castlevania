@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../IDynamic.h"
+#include "../IGameObject.h"
 #include "CollisionResult.h"
 #include "Direction.h"
 
@@ -9,10 +9,10 @@ namespace Castlevania
 	class Body
 	{
 	public:
-		Body(IDynamic &dynamicObject);
+		Body(IGameObject &dynamicObject);
 
 		void Update(float deltaTime);
-		CollisionResult PredictCollision(IDynamic &dynamicObject);
+		CollisionResult PredictCollision(IGameObject &dynamicObject);
 		CollisionResult PredictCollision(IColliable &staticObject);
 
 	private:
@@ -30,7 +30,7 @@ namespace Castlevania
 		using BroadPhase = Rect;
 
 		float deltaTime; // in milliseconds
-		IDynamic &parent;
+		IGameObject &parent;
 
 		SweptAABBResult SweptAABB(Rect movingRect, Vector2 distance, Rect staticRect);
 		BroadPhase CreateBroadPhase(Rect rect, Vector2 distance);

@@ -160,9 +160,9 @@
     <ClCompile Include="Castlevania\CastlevaniaGame.cpp" />
     <ClCompile Include="Castlevania\Factories\ObjectFactory.cpp" />
     <ClCompile Include="Castlevania\Models\Body\Body.cpp" />
-    <ClCompile Include="Castlevania\Models\Characters\Controller.cpp" />
+    <ClCompile Include="Castlevania\Models\Characters\Player\Controller.cpp" />
     <ClCompile Include="Castlevania\Models\Items\FirePit.cpp" />
-    <ClCompile Include="Castlevania\Models\RectangleObject.cpp" />
+    <ClCompile Include="Castlevania\Models\Systems\CollisionResponseSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\CollisionSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\Whip.cpp" />
     <ClCompile Include="Castlevania\Settings\Button.cpp" />
@@ -175,8 +175,7 @@
     <ClCompile Include="Direct2DGame\Content\AnimationFactoryReader.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Bat.cpp" />
     <ClCompile Include="Castlevania\Models\GameObject.cpp" />
-    <ClCompile Include="Castlevania\Models\Characters\Player.cpp" />
-    <ClCompile Include="Castlevania\Models\Characters\Simon.cpp" />
+    <ClCompile Include="Castlevania\Models\Characters\Player\Player.cpp" />
     <ClCompile Include="Castlevania\Scenes\AbstractScene.cpp" />
     <ClCompile Include="Castlevania\Scenes\GameplayScene.cpp" />
     <ClCompile Include="Castlevania\Scenes\IntroScene.cpp" />
@@ -232,11 +231,11 @@
     <ClInclude Include="Castlevania\Models\Body\CollisionResult.h" />
     <ClInclude Include="Castlevania\Models\Body\Direction.h" />
     <ClInclude Include="Castlevania\Models\Body\IColliable.h" />
-    <ClInclude Include="Castlevania\Models\Characters\Controller.h" />
+    <ClInclude Include="Castlevania\Models\Characters\Player\Controller.h" />
     <ClInclude Include="Castlevania\Models\EntityType.h" />
-    <ClInclude Include="Castlevania\Models\IDynamic.h" />
+    <ClInclude Include="Castlevania\Models\IGameObject.h" />
     <ClInclude Include="Castlevania\Models\Items\FirePit.h" />
-    <ClInclude Include="Castlevania\Models\RectangleObject.h" />
+    <ClInclude Include="Castlevania\Models\Systems\CollisionResponseSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\CollisionSystem.h" />
     <ClInclude Include="Castlevania\Models\Weapons\Whip.h" />
     <ClInclude Include="Castlevania\Settings\Button.h" />
@@ -247,8 +246,7 @@
     <ClInclude Include="Direct2DGame\Content\AnimationFactoryReader.h" />
     <ClInclude Include="Castlevania\Models\Characters\Bat.h" />
     <ClInclude Include="Castlevania\Models\GameObject.h" />
-    <ClInclude Include="Castlevania\Models\Characters\Player.h" />
-    <ClInclude Include="Castlevania\Models\Characters\Simon.h" />
+    <ClInclude Include="Castlevania\Models\Characters\Player\Player.h" />
     <ClInclude Include="Castlevania\Settings\Animations.h" />
     <ClInclude Include="Castlevania\Scenes\AbstractScene.h" />
     <ClInclude Include="Castlevania\Scenes\GameplayScene.h" />

@@ -10,7 +10,7 @@ constexpr auto GROUND_POSITION_Y = 338.f;
 
 IntroScene::IntroScene(SceneManager &sceneManager) : AbstractScene{ sceneManager }
 {
-	simon = std::make_unique<Simon>();
+	player = std::make_unique<Player>();
 	bat1 = std::make_unique<Bat>();
 	bat2 = std::make_unique<Bat>();
 }
@@ -21,14 +21,14 @@ void IntroScene::LoadContent()
 
 	background = sceneManager.GetContent().Load<Texture>("Textures/Backgrounds/Intro_Scene.png");
 	
-	simon->LoadContent(sceneManager.GetContent());
+	player->LoadContent(sceneManager.GetContent());
 	bat1->LoadContent(sceneManager.GetContent());
 	bat2->LoadContent(sceneManager.GetContent());
 
-	startPosition = Vector2{ (float)viewport.width - simon->GetBoundingBox().Width() / 2, GROUND_POSITION_Y };
+	startPosition = Vector2{ (float)viewport.width - player->GetBoundingBox().Width() / 2, GROUND_POSITION_Y };
 	gatePosition = Vector2{ (float)viewport.width / 2, GROUND_POSITION_Y };
 
-	simon->SetPosition(startPosition);
+	player->SetPosition(startPosition);
 
 	bat1->SetPosition(41, 210);
 	bat1->SetLinearVelocity(40, 30);
@@ -41,13 +41,13 @@ void IntroScene::LoadContent()
 
 void IntroScene::Update(float deltaTime)
 {
-	if (simon->GetOriginPosition().x >= gatePosition.x)
+	if (player->GetOriginPosition().x >= gatePosition.x)
 	{
-		simon->WalkLeft();
+		player->WalkLeft();
 	}
 	else
 	{
-		simon->TurnBackward();
+		player->TurnBackward();
 		transitionTimer.Start();
 	}
 
@@ -59,7 +59,7 @@ void IntroScene::Update(float deltaTime)
 	bat1->Update(deltaTime);
 	bat2->Update(deltaTime);
 
-	simon->Update(deltaTime);
+	player->Update(deltaTime);
 }
 
 void IntroScene::Draw(GameTime gameTime)
@@ -69,7 +69,7 @@ void IntroScene::Draw(GameTime gameTime)
 	spriteBatch.Begin(D3DXSPRITE_ALPHABLEND);
 
 	spriteBatch.Draw(*background, Vector2::Zero(), Color::White());
-	simon->Draw(spriteBatch);
+	player->Draw(spriteBatch);
 	bat1->Draw(spriteBatch);
 	bat2->Draw(spriteBatch);
 

@@ -1,12 +1,19 @@
 #pragma once
 
-#include "Direct2DGame/IUpdateable.h"
+#include "../Body/CollisionData.h"
 
 namespace Castlevania
 {
-	class CollisionResponseSystem : public IUpdateable
+	class GameObject;
+
+	class CollisionResponseSystem
 	{
 	public:
-		void Update(GameTime gameTime) override;
+		CollisionResponseSystem(GameObject &parent);
+
+		void Update(float deltaTime, CollisionData collisionData);
+
+	private:
+		GameObject &parent;
 	};
 }

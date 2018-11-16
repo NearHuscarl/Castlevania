@@ -1,9 +1,9 @@
 #include "Controller.h"
-#include "../../Settings/Button.h"
+#include "../../../Settings/Button.h"
 
 using namespace Castlevania;
 
-Controller::Controller(Simon &player) :
+Controller::Controller(Player &player) :
 	player{ player },
 	keyboardState{ nullptr }
 {

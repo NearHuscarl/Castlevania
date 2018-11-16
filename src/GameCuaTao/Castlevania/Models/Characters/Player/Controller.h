@@ -1,21 +1,21 @@
 #pragma once
 
 #include "Direct2DGame/Input/IController.h"
-#include "Simon.h"
+#include "Player.h"
 
 namespace Castlevania
 {
 	class Controller : public IController
 	{
 	public:
-		Controller(Simon &player);
+		Controller(Player &player);
 
 		void OnKeyStateChanged(KeyboardState &keyboardState) override;
 		void OnKeyDown(int keyCode) override;
 		void OnKeyUp(int keyCode) override;
 
 	private:
-		Simon &player;
+		Player &player;
 		KeyboardState keyboardState;
 	};
 }

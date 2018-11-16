@@ -1,4 +1,5 @@
 #include "SpriteExtensions.h"
+#include "Direct2DGame/MathHelper.h"
 
 SpriteExtensions::SpriteExtensions(GraphicsDevice &graphicsDevice) : SpriteBatch(graphicsDevice)
 {
@@ -42,6 +43,11 @@ void SpriteExtensions::Draw(Rect rect, Color color)
 	auto viewport = graphicsDevice.GetViewport();
 	auto camPosition = viewport.Project((float)rect.X(), (float)rect.Y());
 	auto destRect = Rect{ (int)camPosition.x, (int)camPosition.y, rect.Width(), rect.Height() };
+
+	// Clamp width for ground rect because surface will not be drawn on screen when its width
+	// and height excess screen size
+	destRect.left = MathHelper::Max((float)destRect.left, viewport.x);
+	destRect.right = MathHelper::Min((float)destRect.right, viewport.x + viewport.width);
 
 	renderDevice->ColorFill(plainSurface, nullptr, color.Get());
 	renderDevice->StretchRect(plainSurface, nullptr, surface, &destRect, D3DTEXF_NONE);

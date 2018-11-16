@@ -4,7 +4,7 @@
 
 using namespace Castlevania;
 
-Body::Body(IDynamic &dynamicObject) : parent{ dynamicObject }
+Body::Body(IGameObject &dynamicObject) : parent{ dynamicObject }
 {
 }
 
@@ -19,12 +19,13 @@ void Body::Update(float deltaTime)
 // checked against). It's not neccesary one of the object has to be moving or static
 // since we already calculate the relative distance the 'moving' object travel
 // to the 'static' object
-CollisionResult Body::PredictCollision(IDynamic &dynamicObject)
+CollisionResult Body::PredictCollision(IGameObject &dynamicObject)
 {
 	// deal with moving object: m speed = original m speed - collide object speed
 	auto staticVelocity = dynamicObject.GetVelocity();
 	auto staticDistance = staticVelocity * deltaTime;
-	auto movingDistance = parent.GetPosition();
+	auto movingVelocity = parent.GetVelocity();
+	auto movingDistance = movingVelocity * deltaTime;
 	auto distance = movingDistance - staticDistance;
 
 	auto staticRect = dynamicObject.GetBoundingBox();
@@ -40,7 +41,8 @@ CollisionResult Body::PredictCollision(IDynamic &dynamicObject)
 
 CollisionResult Body::PredictCollision(IColliable &staticObject)
 {
-	auto distance = parent.GetPosition();
+	auto velocity = parent.GetVelocity();
+	auto distance = velocity * deltaTime;
 	auto movingRect = parent.GetBoundingBox();
 	auto staticRect = staticObject.GetBoundingBox();
 

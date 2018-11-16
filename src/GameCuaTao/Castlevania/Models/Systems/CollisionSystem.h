@@ -13,9 +13,7 @@ namespace Castlevania
 		CollisionSystem(GameObject &parent);
 
 		CollisionData GetCollisionData();
-
 		void Update(float deltaTime, ObjectCollection &objectCollection);
-		void ResolveCollision(CollisionData collisionData, float deltaTime);
 
 	private:
 		GameObject &parent;

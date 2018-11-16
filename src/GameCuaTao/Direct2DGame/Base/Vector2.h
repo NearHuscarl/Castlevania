@@ -37,9 +37,14 @@ struct Vector2 : public D3DXVECTOR2
 		return Vector2(value.x, value.y);
 	}
 
-	Vector2 operator-(const D3DXVECTOR2 &value) const
+	Vector2 operator+(const Vector2 &value) const
 	{
-		return *this - value;
+		return Vector2{ this->x + value.x, this->y + value.y };
+	}
+
+	Vector2 operator-(const Vector2 &value) const
+	{
+		return Vector2{ this->x - value.x, this->y - value.y };
 	}
 
 	Vector2 operator+(const float value) const

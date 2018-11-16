@@ -1,12 +1,14 @@
 #pragma once
 
 #include "Body/IColliable.h"
+#include "EntityType.h"
 
 namespace Castlevania
 {
-	class IDynamic : public IColliable
+	class IGameObject : public IColliable
 	{
 	public:
+		virtual EntityType GetType() = 0;
 		virtual Vector2 GetVelocity() = 0;
 	};
 }

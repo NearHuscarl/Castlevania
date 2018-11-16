@@ -1,7 +1,6 @@
 #include "ObjectFactory.h"
-#include "../Models/RectangleObject.h"
-#include "../Models/Characters/Simon.h"
-#include "../Models/Characters/Player.h"
+#include "../Models/GameObject.h"
+#include "../Models/Characters/Player/Controller.h"
 #include "../Models/Characters/Bat.h"
 #include "../Models/Items/FirePit.h"
 
@@ -11,7 +10,6 @@ ObjectFactory::ObjectFactory()
 {
 	stringToType =
 	{
-		{ "Simon", EntityType::Simon },
 		{ "Player", EntityType::Player },
 		{ "Bat", EntityType::Bat },
 		{ "Cloud", EntityType::Cloud },
@@ -27,25 +25,25 @@ ObjectCollection ObjectFactory::CreateObjectCollection(ObjectsProperties objects
 	{
 		auto name = properties.at("name");
 
-		if (BOUNDARIES.find(name) != BOUNDARIES.end())
+		if (BOUNDARIES.find(name) != BOUNDARIES.end()) // rectangle
 		{
 			auto x = std::stoi(properties.at("x"));
 			auto y = std::stoi(properties.at("y"));
 			auto width = std::stoi(properties.at("width"));
 			auto height = std::stoi(properties.at("height"));
-			auto boundary = Rect{ x, y - height, width, height };
-			auto object = std::make_unique<RectangleObject>(boundary);
+			auto boundary = Rect{ x, y, width, height };
+			auto object = std::make_unique<GameObject>(boundary);
 
 			objectCollection.boundaries.push_back(std::move(object));
 		}
-		else if (TRIGGERS.find(name) != TRIGGERS.end())
+		else if (TRIGGERS.find(name) != TRIGGERS.end()) // rectangle
 		{
 			auto x = std::stoi(properties.at("x"));
 			auto y = std::stoi(properties.at("y"));
 			auto width = std::stoi(properties.at("width"));
 			auto height = std::stoi(properties.at("height"));
-			auto trigger = Rect{ x, y - height, width, height };
-			auto object = std::make_unique<RectangleObject>(trigger);
+			auto trigger = Rect{ x, y, width, height };
+			auto object = std::make_unique<GameObject>(trigger);
 
 			objectCollection.triggers.push_back(std::move(object));
 		}
@@ -58,7 +56,7 @@ ObjectCollection ObjectFactory::CreateObjectCollection(ObjectsProperties objects
 
 			objectCollection.locations[name] = position;
 		}
-		else // GameObject (Simon, Bat, Skeleton...)
+		else // GameObject (Player, Bat, Skeleton...) // tile
 		{
 			auto object = ConstructObject(name);
 			auto x = std::stof(properties.at("x"));
@@ -79,11 +77,8 @@ std::unique_ptr<GameObject> ObjectFactory::ConstructObject(std::string name)
 	
 	switch (type)
 	{
-		case EntityType::Simon:
-			return std::make_unique<Simon>();
-
 		case EntityType::Player:
-			return std::make_unique<Player>();
+			return CreatePlayer();
 
 		case EntityType::Bat:
 			return std::make_unique<Bat>();
@@ -94,4 +89,18 @@ std::unique_ptr<GameObject> ObjectFactory::ConstructObject(std::string name)
 		default:
 			throw std::invalid_argument("Object name is invalid");
 	}
+}
+
+std::unique_ptr<Player> ObjectFactory::CreatePlayer()
+{
+	auto player = std::make_unique<Player>();
+
+	player->SetController(std::make_unique<Controller>(*player.get()));
+
+	return player;
+}
+
+std::unique_ptr<Player> ObjectFactory::CreateSimon()
+{
+	return std::unique_ptr<Player>();
 }

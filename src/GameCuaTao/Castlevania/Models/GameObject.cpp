@@ -7,9 +7,15 @@ GameObject::GameObject() : GameObject(EntityType::Unknown)
 {
 }
 
+GameObject::GameObject(Rect boundingBox) : GameObject(EntityType::Boundary)
+{
+	this->boundingBox = std::make_unique<Rect>(boundingBox);
+}
+
 GameObject::GameObject(EntityType type) :
 	body{ *this },
-	collisionSystem{ *this }
+	collisionSystem{ *this },
+	collisionResponseSystem{ *this }
 {
 	this->type = type;
 }
@@ -21,25 +27,9 @@ EntityType GameObject::GetType()
 	return type;
 }
 
-// TODO: remove public setters
-void GameObject::SetVelocity(Vector2 velocity)
+Vector2 GameObject::GetPosition()
 {
-	this->velocity = velocity;
-}
-
-Vector2 GameObject::GetVelocity()
-{
-	return velocity;
-}
-
-void GameObject::SetLinearVelocity(float speed, float angle)
-{
-	// The X-Y axis in game has the value Y inverted compare to the X-Y axis in math
-	// To convert the X-Y axis from math to game, we need to flip the degrees sign because
-	//   with sin(θ) = y, sin(-θ) = -y
-	//   with cos(θ) = x, cos(θ) = x
-	auto direction = MathHelper::Degrees2Vector(-angle);
-	velocity = direction * speed;
+	return position;
 }
 
 void GameObject::SetPosition(float x, float y)
@@ -53,14 +43,24 @@ void GameObject::SetPosition(Vector2 position)
 	SetPosition(position.x, position.y);
 }
 
-Vector2 GameObject::GetPosition()
+Vector2 GameObject::GetVelocity()
 {
-	return position;
+	return velocity;
 }
 
-Body Castlevania::GameObject::GetBody()
+void GameObject::SetVelocity(Vector2 velocity)
 {
-	return body;
+	this->velocity = velocity;
+}
+
+void GameObject::SetLinearVelocity(float speed, float angle)
+{
+	// The X-Y axis in game has the value Y inverted compare to the X-Y axis in math
+	// To convert the X-Y axis from math to game, we need to flip the degrees sign because
+	//   with sin(θ) = y, sin(-θ) = -y
+	//   with cos(θ) = x, cos(θ) = x
+	auto direction = MathHelper::Degrees2Vector(-angle);
+	velocity = direction * speed;
 }
 
 Vector2 GameObject::GetOriginPosition()
@@ -70,6 +70,11 @@ Vector2 GameObject::GetOriginPosition()
 		position.y + GetFrameRect().Height() / 2 };
 }
 
+Body Castlevania::GameObject::GetBody()
+{
+	return body;
+}
+
 Rect GameObject::GetFrameRect()
 {
 	return sprite->GetFrameRectangle(position);
@@ -77,10 +82,21 @@ Rect GameObject::GetFrameRect()
 
 Rect GameObject::GetBoundingBox()
 {
-	return sprite->GetBoundingRectangle(position);
+	if (sprite != nullptr)
+		return sprite->GetBoundingRectangle(position);
+	
+	if (boundingBox != nullptr)
+		return *boundingBox;
+
+	return Rect::Empty();
 }
 
 #pragma endregion
+
+void GameObject::Move(Vector2 direction)
+{
+	position += direction;
+}
 
 void GameObject::LoadContent(ContentManager &content)
 {
@@ -102,8 +118,7 @@ void GameObject::Draw(SpriteExtensions &spriteBatch)
 
 void GameObject::DrawBoundingBox(SpriteExtensions &spriteBatch)
 {
-	auto boundingBox = GetBoundingBox();
-	spriteBatch.Draw(boundingBox, Color::Pink());
+	spriteBatch.Draw(GetBoundingBox(), Color::Pink());
 }
 
 GameObject::~GameObject()

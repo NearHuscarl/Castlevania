@@ -1,5 +1,5 @@
-#include "Simon.h"
-#include "../../Settings/Animations.h"
+#include "Player.h"
+#include "../../../Settings/Animations.h"
 
 using namespace Castlevania;
 
@@ -9,33 +9,43 @@ constexpr auto GROUND_POSITION_Y = 307.0f;
 constexpr auto GRAVITY = 18.0f;
 constexpr auto STRETCH_LEG_VELOCITY_Y = 200.0f;
 
-Simon::Simon(EntityType type) : GameObject(type)
+Player::Player() : GameObject(EntityType::Player)
 {
-	whip = std::make_unique<Whip>(*this);
+	this->whip = std::make_unique<Whip>(*this);
 }
 
-void Simon::SetFacing(Facing facing)
+void Player::SetFacing(Facing facing)
 {
 	this->facing = facing;
 	whip->SetFacing(facing);
 }
 
-Facing Castlevania::Simon::GetFacing()
+Facing Player::GetFacing()
 {
 	return facing;
 }
 
-MoveState Castlevania::Simon::GetMoveState()
+MoveState Player::GetMoveState()
 {
 	return moveState;
 }
 
-AttackState Castlevania::Simon::GetAttackState()
+AttackState Player::GetAttackState()
 {
 	return attackState;
 }
 
-void Simon::LoadContent(ContentManager &content)
+void Player::SetController(std::unique_ptr<IController> controller)
+{
+	this->controller = std::move(controller);
+}
+
+IController *Player::GetController()
+{
+	return controller.get();
+}
+
+void Player::LoadContent(ContentManager &content)
 {
 	auto animationFactory = content.Load<AnimationFactory>("Characters/Players/Simon.xml");
 	sprite = std::make_unique<AnimatedSprite>(animationFactory);
@@ -49,10 +59,13 @@ void Simon::LoadContent(ContentManager &content)
 	Idle();
 }
 
-void Simon::Update(float deltaTime, ObjectCollection *objectCollection)
+void Player::Update(float deltaTime, ObjectCollection *objectCollection)
 {
-	GameObject::UpdateDistance(deltaTime);
-	
+	GameObject::Update(deltaTime);
+
+	collisionSystem.Update(deltaTime, *objectCollection);
+	collisionResponseSystem.Update(deltaTime, collisionSystem.GetCollisionData());
+
 	switch (moveState)
 	{
 		case MoveState::JUMPING:
@@ -80,23 +93,31 @@ void Simon::Update(float deltaTime, ObjectCollection *objectCollection)
 	}
 }
 
-void Simon::UpdateJumpState()
+void Player::UpdateJumpState()
 {
-	velocity.y += GRAVITY;
-
-	if (position.y > GROUND_POSITION_Y)
+	if (velocity.y == 0) // Touch ground
 	{
-		position.y = GROUND_POSITION_Y;
-		velocity.y = 0;
-
 		if (attackState == AttackState::INACTIVE)
 			Idle();
 		else // AttackState::ATTACKING
 			velocity.x = 0; // Still keep attacking on the ground but not moving anymore
 	}
+	else
+		velocity.y += GRAVITY;
+
+	//if (position.y > GROUND_POSITION_Y)
+	//{
+	//	position.y = GROUND_POSITION_Y;
+	//	velocity.y = 0;
+
+	//	if (attackState == AttackState::INACTIVE)
+	//		Idle();
+	//	else // AttackState::ATTACKING
+	//		velocity.x = 0; // Still keep attacking on the ground but not moving anymore
+	//}
 }
 
-void Simon::UpdateAttackState()
+void Player::UpdateAttackState()
 {
 	if (sprite->AnimateComplete())
 	{
@@ -123,20 +144,20 @@ void Simon::UpdateAttackState()
 	}
 }
 
-void Simon::Land()
+void Player::Land()
 {
 	moveState = MoveState::LANDING;
 	sprite->Play(JUMP_ANIMATION);
 }
 
-void Simon::Draw(SpriteExtensions &spriteBatch)
+void Player::Draw(SpriteExtensions &spriteBatch)
 {
 	if (facing == Facing::Right)
 		sprite->SetEffect(SpriteEffects::None);
 	else
 		sprite->SetEffect(SpriteEffects::FlipHorizontally);
 
-	//spriteBatch.Draw(GetBoundingBox(), Color::Pink()); // TODO: remove debugging code
+	spriteBatch.Draw(GetBoundingBox(), Color::Pink()); // TODO: remove debugging code
 	sprite->Update();
 	spriteBatch.Draw(*sprite, position);
 	
@@ -145,14 +166,14 @@ void Simon::Draw(SpriteExtensions &spriteBatch)
 
 #pragma region Commands
 
-void Simon::Idle()
+void Player::Idle()
 {
 	moveState = MoveState::IDLE;
 	velocity = Vector2::Zero();
 	sprite->Play(IDLE_ANIMATION);
 }
 
-void Simon::WalkLeft()
+void Player::WalkLeft()
 {
 	moveState = MoveState::WALKING;
 	SetFacing(Facing::Left);
@@ -160,7 +181,7 @@ void Simon::WalkLeft()
 	sprite->Play(WALK_ANIMATION);
 }
 
-void Simon::WalkRight()
+void Player::WalkRight()
 {
 	moveState = MoveState::WALKING;
 	SetFacing(Facing::Right);
@@ -168,20 +189,20 @@ void Simon::WalkRight()
 	sprite->Play(WALK_ANIMATION);
 }
 
-void Simon::Jump()
+void Player::Jump()
 {
 	moveState = MoveState::JUMPING;
 	sprite->Play(JUMP_ANIMATION);
 }
 
-void Simon::Duck()
+void Player::Duck()
 {
 	moveState = MoveState::DUCKING;
 	velocity = Vector2::Zero();
 	sprite->Play(DUCK_ANIMATION);
 }
 
-void Simon::Attack()
+void Player::Attack()
 {
 	attackState = AttackState::ATTACKING;
 
@@ -212,7 +233,7 @@ void Simon::Attack()
 	whip->Unleash();
 }
 
-void Simon::TurnBackward()
+void Player::TurnBackward()
 {
 	moveState = MoveState::TURNING_BACKWARD;
 	velocity = Vector2::Zero();

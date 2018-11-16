@@ -4,7 +4,7 @@
 #include "Direct2DGame/Graphics/Texture.h"
 #include "Direct2DGame/Utilities/Stopwatch.h"
 #include "AbstractScene.h"
-#include "../Models/Characters/Simon.h"
+#include "../Models/Characters/Player/Player.h"
 #include "../Models/Characters/Bat.h"
 
 namespace Castlevania
@@ -21,7 +21,7 @@ namespace Castlevania
 	private:
 		std::shared_ptr<Texture> background;
 
-		std::unique_ptr<Simon> simon;
+		std::unique_ptr<Player> player;
 		std::unique_ptr<Bat> bat1; // left-side bat
 		std::unique_ptr<Bat> bat2; // right-side bat
 

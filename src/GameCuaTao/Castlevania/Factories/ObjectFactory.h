@@ -3,6 +3,7 @@
 #include "ObjectCollection.h"
 #include "../Models/GameObject.h"
 #include "../Models/EntityType.h"
+#include "../Models/Characters/Player/Player.h"
 
 namespace Castlevania
 {
@@ -13,7 +14,11 @@ namespace Castlevania
 	{
 	public:
 		ObjectFactory();
+
 		ObjectCollection CreateObjectCollection(ObjectsProperties properties);
+		
+		std::unique_ptr<Player> CreatePlayer();
+		std::unique_ptr<Player> CreateSimon();
 
 	private:
 		std::map<std::string, EntityType> stringToType;
