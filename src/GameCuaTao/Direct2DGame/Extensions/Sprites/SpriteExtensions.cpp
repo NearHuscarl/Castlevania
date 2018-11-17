@@ -46,8 +46,8 @@ void SpriteExtensions::Draw(RectF rect, Color color)
 
 	// Clamp width for ground rect because surface will not be drawn on screen when its width
 	// and height excess screen size
-	destRect.left = MathHelper::Max(destRect.left, viewport.x);
-	destRect.right = MathHelper::Min(destRect.right, viewport.x + viewport.width);
+	destRect.left = MathHelper::Max(destRect.left, viewport.x + 2);
+	destRect.right = MathHelper::Min(destRect.right, viewport.x + viewport.width - 2);
 
 	renderDevice->ColorFill(plainSurface, nullptr, color.Get());
 	renderDevice->StretchRect(plainSurface, nullptr, surface, &(Rect)destRect, D3DTEXF_NONE);

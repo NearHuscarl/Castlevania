@@ -30,6 +30,10 @@ void MenuScene::Update(float deltaTime)
 	{
 		sceneManager.SetNextScene(Scene::GAMEPLAY);
 	}
+	else if (InputHelper::IsKeyPressed(DIK_END))
+	{
+		sceneManager.SetNextScene(Scene::PLAYGROUND);
+	}
 
 	if (transitionTimer.ElapsedMilliseconds() >= 800)
 	{

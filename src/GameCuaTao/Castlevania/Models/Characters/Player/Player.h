@@ -2,7 +2,6 @@
 
 #include "../../GameObject.h"
 #include "../../Weapons/Whip.h"
-#include "Direct2DGame/Input/IController.h"
 
 namespace Castlevania
 {
@@ -36,9 +35,6 @@ namespace Castlevania
 		MoveState GetMoveState();
 		AttackState GetAttackState();
 
-		void SetController(std::unique_ptr<IController> controller);
-		IController *GetController();
-
 		void LoadContent(ContentManager &content) override;
 		virtual void Update(float deltaTime, ObjectCollection *objectCollection = nullptr) override;
 		void Draw(SpriteExtensions &spriteBatch) override;
@@ -57,7 +53,6 @@ namespace Castlevania
 		Facing facing;
 		float jumpSpeed;
 
-		std::unique_ptr<IController> controller;
 		std::unique_ptr<Whip> whip;
 
 		void Land(); // Internal command to change from JumpAttacking state to Landing state

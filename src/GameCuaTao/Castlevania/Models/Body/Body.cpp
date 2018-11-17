@@ -8,6 +8,11 @@ Body::Body(IGameObject &dynamicObject) : parent{ dynamicObject }
 {
 }
 
+float Body::GetDeltaTime()
+{
+	return deltaTime;
+}
+
 void Body::Update(float deltaTime)
 {
 	this->deltaTime = deltaTime;
@@ -19,32 +24,15 @@ void Body::Update(float deltaTime)
 // checked against). It's not neccesary one of the object has to be moving or static
 // since we already calculate the relative distance the 'moving' object travel
 // to the 'static' object
-CollisionResult Body::PredictCollision(IGameObject &dynamicObject)
-{
-	// deal with moving object: m speed = original m speed - collide object speed
-	auto staticVelocity = dynamicObject.GetVelocity();
-	auto staticDistance = staticVelocity * deltaTime;
-	auto movingVelocity = parent.GetVelocity();
-	auto movingDistance = movingVelocity * deltaTime;
-	auto distance = movingDistance - staticDistance;
-
-	auto staticRect = dynamicObject.GetBoundingBox();
-	auto movingRect = parent.GetBoundingBox();
-
-	auto sweptAABBResult = SweptAABB(movingRect, distance, staticRect);
-
-	return CollisionResult{
-		sweptAABBResult.timeToCollide,
-		sweptAABBResult.direction,
-		dynamicObject };
-}
-
 CollisionResult Body::PredictCollision(IColliable &staticObject)
 {
-	auto velocity = parent.GetVelocity();
-	auto distance = velocity * deltaTime;
-	auto movingRect = parent.GetBoundingBox();
+	// deal with moving object: m speed = original m speed - collide object speed
+	auto staticDistance = staticObject.GetDistance();
+	auto movingDistance = parent.GetDistance();
+	auto distance = movingDistance - staticDistance;
+
 	auto staticRect = staticObject.GetBoundingBox();
+	auto movingRect = parent.GetBoundingBox();
 
 	auto sweptAABBResult = SweptAABB(movingRect, distance, staticRect);
 

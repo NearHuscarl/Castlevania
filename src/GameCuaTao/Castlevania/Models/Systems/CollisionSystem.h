@@ -1,19 +1,18 @@
 #pragma once
 
-#include "../Body/CollisionData.h"
+#include "ICollisionSystem.h"
 
 namespace Castlevania
 {
 	class GameObject;
-	struct ObjectCollection;
 
-	class CollisionSystem
+	class CollisionSystem : public ICollisionSystem
 	{
 	public:
 		CollisionSystem(GameObject &parent);
 
-		CollisionData GetCollisionData();
-		void Update(float deltaTime, ObjectCollection &objectCollection);
+		CollisionData GetCollisionData() override;
+		void Update(ObjectCollection &objectCollection) override;
 
 	private:
 		GameObject &parent;

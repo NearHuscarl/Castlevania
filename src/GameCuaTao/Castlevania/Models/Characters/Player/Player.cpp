@@ -35,16 +35,6 @@ AttackState Player::GetAttackState()
 	return attackState;
 }
 
-void Player::SetController(std::unique_ptr<IController> controller)
-{
-	this->controller = std::move(controller);
-}
-
-IController *Player::GetController()
-{
-	return controller.get();
-}
-
 void Player::LoadContent(ContentManager &content)
 {
 	auto animationFactory = content.Load<AnimationFactory>("Characters/Players/Simon.xml");
@@ -63,8 +53,9 @@ void Player::Update(float deltaTime, ObjectCollection *objectCollection)
 {
 	GameObject::Update(deltaTime);
 	UpdateStates();
-	collisionSystem->Update(deltaTime, *objectCollection);
-	collisionResponseSystem->Update(deltaTime, collisionSystem->GetCollisionData());
+	movementSystem->Update();
+	collisionSystem->Update(*objectCollection);
+	collisionResponseSystem->Update(collisionSystem->GetCollisionData());
 }
 
 void Player::UpdateStates()
@@ -160,7 +151,7 @@ void Player::Draw(SpriteExtensions &spriteBatch)
 	else
 		sprite->SetEffect(SpriteEffects::FlipHorizontally);
 
-	spriteBatch.Draw(GetBoundingBox(), Color::Pink()); // TODO: remove debugging code
+	DrawBoundingBox(spriteBatch); // NOTE: remove debugging code
 	sprite->Update();
 	spriteBatch.Draw(*sprite, position);
 	

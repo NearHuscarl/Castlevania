@@ -23,13 +23,13 @@ TextureRegion Sprite::GetTextureRegion()
 	return textureRegion;
 }
 
-Rect Sprite::GetFrameRectangle(Vector2 position)
+RectF Sprite::GetFrameRectangle(Vector2 position)
 {
 	auto spriteFrame = textureRegion.GetFrameRectangle();
-	auto rect = Rect{};
+	auto rect = RectF{};
 
-	rect.left = (int)position.x;
-	rect.top = (int)position.y;
+	rect.left = position.x;
+	rect.top = position.y;
 	rect.right = rect.left + spriteFrame.Width();
 	rect.bottom = rect.top + spriteFrame.Height();
 

@@ -18,10 +18,12 @@ public:
 	std::string ToString();
 
 	static Color Transparent();
-	static Color White();
 	static Color Black();
-	static Color Pink();
+	static Color Green();
 	static Color LavenderBlue();
+	static Color Magenta();
+	static Color Red();
+	static Color White();
 
 	Color operator*(float scale);
 

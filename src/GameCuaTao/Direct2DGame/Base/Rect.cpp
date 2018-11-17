@@ -65,18 +65,18 @@ bool Rect::Contains(Rect value)
 bool Rect::Intersects(Rect value)
 {
 	return (
-		this->left < value.right ||
-		this->top < value.bottom ||
-		this->right > value.left ||
+		this->left < value.right &&
+		this->top < value.bottom &&
+		this->right > value.left &&
 		this->bottom > value.top);
 }
 
 bool Rect::TouchesOrIntersects(Rect value)
 {
 	return (
-		this->left <= value.right ||
-		this->top <= value.bottom ||
-		this->right >= value.left ||
+		this->left <= value.right &&
+		this->top <= value.bottom &&
+		this->right >= value.left &&
 		this->bottom >= value.top);
 }
 

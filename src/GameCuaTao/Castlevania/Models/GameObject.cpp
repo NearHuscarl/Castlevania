@@ -1,5 +1,6 @@
 ﻿#include "GameObject.h"
 #include "Direct2DGame/MathHelper.h"
+#include "Direct2DGame/Input/Keyboard.h"
 
 using namespace Castlevania;
 
@@ -27,6 +28,14 @@ EntityType GameObject::GetType()
 Vector2 GameObject::GetPosition()
 {
 	return position;
+}
+
+Vector2 GameObject::GetDistance()
+{
+	if (movementSystem != nullptr)
+		return movementSystem->GetDistance();
+
+	return Vector2::Zero();
 }
 
 void GameObject::SetPosition(float x, float y)
@@ -72,7 +81,7 @@ Body Castlevania::GameObject::GetBody()
 	return body;
 }
 
-Rect GameObject::GetFrameRect()
+RectF GameObject::GetFrameRect()
 {
 	return sprite->GetFrameRectangle(position);
 }
@@ -88,14 +97,34 @@ RectF GameObject::GetBoundingBox()
 	return RectF::Empty();
 }
 
-void GameObject::SetCollisionSystem(std::unique_ptr<CollisionSystem> collisionSystem)
+IController *GameObject::GetController()
 {
-	this->collisionSystem = std::move(collisionSystem);
+	return controller.get();
 }
 
-void GameObject::SetCollisionResponseSystem(std::unique_ptr<CollisionResponseSystem> collisionResponseSystem)
+template<>
+void GameObject::Attach(std::unique_ptr<IController> system)
 {
-	this->collisionResponseSystem = std::move(collisionResponseSystem);
+	this->controller = std::move(system);
+	Keyboard::Register(controller.get());
+}
+
+template<>
+void GameObject::Attach(std::unique_ptr<IMovementSystem> system)
+{
+	this->movementSystem = std::move(system);
+}
+
+template<>
+void GameObject::Attach(std::unique_ptr<ICollisionSystem> system)
+{
+	this->collisionSystem = std::move(system);
+}
+
+template<>
+void GameObject::Attach(std::unique_ptr<ICollisionResponseSystem> system)
+{
+	this->collisionResponseSystem = std::move(system);
 }
 
 #pragma endregion
@@ -125,7 +154,12 @@ void GameObject::Draw(SpriteExtensions &spriteBatch)
 
 void GameObject::DrawBoundingBox(SpriteExtensions &spriteBatch)
 {
-	spriteBatch.Draw(GetBoundingBox(), Color::Pink());
+	if (type == EntityType::Boundary)
+		spriteBatch.Draw(GetBoundingBox(), Color::Green());
+	else if (type == EntityType::Whip)
+		spriteBatch.Draw(GetBoundingBox(), Color::Red());
+	else
+		spriteBatch.Draw(GetBoundingBox(), Color::Magenta());
 }
 
 GameObject::~GameObject()

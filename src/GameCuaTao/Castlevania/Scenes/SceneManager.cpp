@@ -2,6 +2,7 @@
 #include "MenuScene.h"
 #include "IntroScene.h"
 #include "GameplayScene.h"
+#include "PlaygroundScene.h"
 
 using namespace Castlevania;
 
@@ -64,6 +65,9 @@ std::unique_ptr<AbstractScene> SceneManager::ConstructScene(Scene scene)
 		
 		case Scene::GAMEPLAY:
 			return std::make_unique<GameplayScene>(*this);
+
+		case Scene::PLAYGROUND:
+			return std::make_unique<PlaygroundScene>(*this);
 
 		default:
 			throw std::invalid_argument("Bad scene choice");

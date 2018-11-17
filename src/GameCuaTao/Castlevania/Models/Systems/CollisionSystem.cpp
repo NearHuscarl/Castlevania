@@ -14,7 +14,7 @@ CollisionData CollisionSystem::GetCollisionData()
 	return collisionData;
 }
 
-void CollisionSystem::Update(float deltaTime, ObjectCollection &objectCollection)
+void CollisionSystem::Update(ObjectCollection &objectCollection)
 {
 	auto results = std::vector<CollisionResult>{};
 

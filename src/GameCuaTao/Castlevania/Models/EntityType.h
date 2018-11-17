@@ -4,12 +4,13 @@ namespace Castlevania
 {
 	enum class EntityType
 	{
+		Boundary,
 		Player,
 		Bat,
 		Cloud,
 		FirePit,
-		Boundary,
 		Position,
+		Whip,
 		Unknown,
 	};
 }

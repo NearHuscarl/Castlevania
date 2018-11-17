@@ -8,7 +8,7 @@ PlayerResponseSystem::PlayerResponseSystem(Player &parent) :
 {
 }
 
-void PlayerResponseSystem::Update(float deltaTime, CollisionData collisionData)
+void PlayerResponseSystem::Update(CollisionData collisionData)
 {
-	CollisionResponseSystem::Update(deltaTime, collisionData);
+	CollisionResponseSystem::Update(collisionData);
 }

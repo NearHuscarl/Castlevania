@@ -11,8 +11,9 @@ namespace Castlevania
 	public:
 		Body(IGameObject &dynamicObject);
 
+		float GetDeltaTime();
 		void Update(float deltaTime);
-		CollisionResult PredictCollision(IGameObject &dynamicObject);
+
 		CollisionResult PredictCollision(IColliable &staticObject);
 
 	private:
@@ -29,7 +30,7 @@ namespace Castlevania
 
 		using BroadPhase = RectF;
 
-		float deltaTime; // in milliseconds
+		float deltaTime;
 		IGameObject &parent;
 
 		SweptAABBResult SweptAABB(RectF movingRect, Vector2 distance, RectF staticRect);

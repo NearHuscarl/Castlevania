@@ -3,7 +3,7 @@
  <tileset firstgid="1" source="../Simon.tsx"/>
  <tileset firstgid="25" source="../Fire_Pit.tsx"/>
  <imagelayer id="2" name="Background">
-  <image source="Courtyard.png" width="1536" height="448"/>
+  <image source="Playground.png" width="1536" height="448"/>
  </imagelayer>
  <layer id="1" name="TileLayer01" width="24" height="7">
   <data encoding="base64" compression="gzip">
@@ -13,7 +13,7 @@
  <objectgroup id="3" name="Bounds">
   <object id="20" name="Ground" x="0" y="371" width="1536" height="20"/>
   <object id="21" name="NextMap" x="1378" y="340" width="30" height="30"/>
-  <object id="22" name="LeftBorder" x="-22" y="0" width="25" height="371"/>
+  <object id="22" name="LeftBorder" x="302" y="30.3333" width="25" height="241"/>
   <object id="24" name="RightBorder" x="1533" y="0" width="25" height="371"/>
  </objectgroup>
  <objectgroup id="4" name="Game">

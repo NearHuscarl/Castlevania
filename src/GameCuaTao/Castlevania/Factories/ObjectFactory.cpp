@@ -97,9 +97,15 @@ std::unique_ptr<Player> ObjectFactory::CreatePlayer()
 {
 	auto player = std::make_unique<Player>();
 
-	player->SetController(std::make_unique<Controller>(*player.get()));
-	player->SetCollisionSystem(std::make_unique<CollisionSystem>(*player.get()));
-	player->SetCollisionResponseSystem(std::make_unique<PlayerResponseSystem>(*player.get()));
+	auto controller = std::make_unique<Controller>(*player.get());
+	auto movementSystem = std::make_unique<MovementSystem>(*player.get());
+	auto collisionSystem = std::make_unique<CollisionSystem>(*player.get());
+	auto responseSystem = std::make_unique<PlayerResponseSystem>(*player.get());
+
+	player->Attach<IController>(std::move(controller));
+	player->Attach<IMovementSystem>(std::move(movementSystem));
+	player->Attach<ICollisionSystem>(std::move(collisionSystem));
+	player->Attach<ICollisionResponseSystem>(std::move(responseSystem));
 
 	return player;
 }

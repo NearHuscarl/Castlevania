@@ -60,28 +60,40 @@ Color Color::Transparent()
 	return transparent;
 }
 
-Color Color::White()
-{
-	static auto white = Color{ 255, 255, 255 };
-	return white;
-}
-
 Color Color::Black()
 {
 	static auto black = Color{ 0, 0, 0 };
 	return black;
 }
 
-Color Color::Pink()
+Color Color::Green()
 {
-	static auto pink = Color{ 255, 0, 255 };
-	return pink;
+	static auto green = Color{ 0, 128, 0 };
+	return green;
 }
 
 Color Color::LavenderBlue()
 {
 	static auto lavenderBlue = Color{ 200, 200, 255 };
 	return lavenderBlue;
+}
+
+Color Color::Magenta()
+{
+	static auto magenta = Color{ 255, 0, 255 };
+	return magenta;
+}
+
+Color Color::Red()
+{
+	static auto red = Color{ 255, 0, 0 };
+	return red;
+}
+
+Color Color::White()
+{
+	static auto white = Color{ 255, 255, 255 };
+	return white;
 }
 
 Color Color::operator*(float scale)

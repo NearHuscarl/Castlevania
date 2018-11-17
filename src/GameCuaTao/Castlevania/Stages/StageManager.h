@@ -12,6 +12,7 @@ namespace Castlevania
 		STAGE_01_COURTYARD,
 		STAGE_01_GREAT_HALL,
 		STAGE_01_UNDERGROUND,
+		PLAYGROUND,
 	};
 
 	using Maps = std::map<Map, std::shared_ptr<TiledMap>>;

@@ -64,18 +64,18 @@ bool RectF::Contains(RectF value)
 bool RectF::Intersects(RectF value)
 {
 	return (
-		this->left < value.right ||
-		this->top < value.bottom ||
-		this->right > value.left ||
+		this->left < value.right &&
+		this->top < value.bottom &&
+		this->right > value.left &&
 		this->bottom > value.top);
 }
 
 bool RectF::TouchesOrIntersects(RectF value)
 {
 	return (
-		this->left <= value.right ||
-		this->top <= value.bottom ||
-		this->right >= value.left ||
+		this->left <= value.right &&
+		this->top <= value.bottom &&
+		this->right >= value.left &&
 		this->bottom >= value.top);
 }
 

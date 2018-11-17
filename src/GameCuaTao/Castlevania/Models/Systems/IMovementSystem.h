@@ -1,14 +1,13 @@
 #pragma once
 
-#include "Direct2DGame/Extensions/RectF.h"
 #include "Direct2DGame/Base/Vector2.h"
 
 namespace Castlevania
 {
-	class IColliable
+	class IMovementSystem
 	{
 	public:
 		virtual Vector2 GetDistance() = 0;
-		virtual RectF GetBoundingBox() = 0;
+		virtual void Update() = 0;
 	};
 }

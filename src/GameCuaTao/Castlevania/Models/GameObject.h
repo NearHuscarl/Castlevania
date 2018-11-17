@@ -3,6 +3,8 @@
 #include "Direct2DGame/Content/ContentManager.h"
 #include "Direct2DGame/Extensions/Sprites/SpriteExtensions.h"
 #include "Direct2DGame/Extensions/Animations/AnimatedSprite.h"
+#include "Direct2DGame/Input/IController.h"
+#include "Systems/MovementSystem.h"
 #include "Systems/CollisionSystem.h"
 #include "Systems/CollisionResponseSystem.h"
 #include "EntityType.h"
@@ -28,7 +30,8 @@ namespace Castlevania
 
 		EntityType GetType() override;
 
-		Vector2 GetPosition() override;
+		Vector2 GetPosition();
+		Vector2 GetDistance() override;
 		void SetPosition(float x, float y);
 		void SetPosition(Vector2 position);
 		
@@ -39,11 +42,13 @@ namespace Castlevania
 		Vector2 GetOriginPosition(); // Get the center of the object's bounding box to the world
 		
 		Body GetBody();
-		virtual Rect GetFrameRect();
+		virtual RectF GetFrameRect();
 		virtual RectF GetBoundingBox() override;
 
-		void SetCollisionSystem(std::unique_ptr<CollisionSystem> collisionSystem);
-		void SetCollisionResponseSystem(std::unique_ptr<CollisionResponseSystem> collisionResponseSystem);
+		IController *GetController();
+
+		template<typename T>
+		void Attach(std::unique_ptr<T> system);
 
 		void Move(Vector2 direction);
 
@@ -66,7 +71,9 @@ namespace Castlevania
 		std::unique_ptr<AnimatedSprite> sprite;
 		std::unique_ptr<RectF> boundingBox;
 
-		std::unique_ptr<CollisionSystem> collisionSystem;
-		std::unique_ptr<CollisionResponseSystem> collisionResponseSystem;
+		std::unique_ptr<IController> controller;
+		std::unique_ptr<IMovementSystem> movementSystem;
+		std::unique_ptr<ICollisionSystem> collisionSystem;
+		std::unique_ptr<ICollisionResponseSystem> collisionResponseSystem;
 	};
 }

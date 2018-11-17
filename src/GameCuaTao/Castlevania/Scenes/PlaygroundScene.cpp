@@ -1,24 +1,24 @@
-#include "GameplayScene.h"
+#include "PlaygroundScene.h"
 #include "SceneManager.h"
 
 using namespace Castlevania;
 
-GameplayScene::GameplayScene(SceneManager &sceneManager) : AbstractScene{ sceneManager }
+PlaygroundScene::PlaygroundScene(SceneManager &sceneManager) : AbstractScene{ sceneManager }
 {
 	camera = std::make_unique<Camera>(sceneManager.GetGraphicsDevice());
 	stageManager = std::make_unique<StageManager>();
 }
 
-void GameplayScene::LoadContent()
+void PlaygroundScene::LoadContent()
 {
 	auto &content = sceneManager.GetContent();
 
 	stageManager->LoadContent(content);
-	map = stageManager->NextMap(Map::STAGE_01_COURTYARD);
+	map = stageManager->NextMap(Map::PLAYGROUND);
 	camera->SetMoveArea(0, 0, map->GetWidthInPixels(), map->GetHeightInPixels());
-	
+
 	objectCollection = stageManager->LoadGameObjects();
-	
+
 	player = objectFactory.CreatePlayer();
 	player->SetPosition(objectCollection.locations[CHECKPOINT]);
 	player->LoadContent(content);
@@ -29,7 +29,7 @@ void GameplayScene::LoadContent()
 	}
 }
 
-void GameplayScene::Update(float deltaTime)
+void PlaygroundScene::Update(float deltaTime)
 {
 	camera->LookAt(player->GetOriginPosition(), Scrolling::Horizontally);
 
@@ -41,7 +41,7 @@ void GameplayScene::Update(float deltaTime)
 	}
 }
 
-void GameplayScene::Draw(GameTime gameTime)
+void PlaygroundScene::Draw(GameTime gameTime)
 {
 	auto &spriteBatch = sceneManager.GetSpriteBatch();
 

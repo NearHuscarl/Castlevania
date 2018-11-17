@@ -9,7 +9,7 @@ const auto HITPOINTS = std::map<int, int> // TODO: do we need hitpoint?
 	{ 3, 300 },
 };
 
-Whip::Whip(GameObject &owner) : owner{ owner }
+Whip::Whip(GameObject &owner) : GameObject(EntityType::Whip), owner{ owner }
 {
 	level = 1;
 }
@@ -40,7 +40,8 @@ void Whip::Draw(SpriteExtensions &spriteBatch)
 		sprite->Update();
 		position = GetPositionRelativeToPlayer(owner);
 
-		//spriteBatch.Draw(GetBoundingBox(), Color::Pink()); // TODO: remove debugging code
+		DrawBoundingBox(spriteBatch); // NOTE: remove debugging code
+		//spriteBatch.Draw(GetBoundingBox(), Color::Magenta()); // TODO: remove debugging code
 		spriteBatch.Draw(*sprite, position);
 	}
 }
