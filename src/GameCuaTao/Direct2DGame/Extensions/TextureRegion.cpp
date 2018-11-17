@@ -9,10 +9,10 @@ TextureRegion::TextureRegion(std::shared_ptr<Texture> texture, Rect frame)
 {
 	this->texture = texture;
 	this->frame = frame;
-	this->boundary = frame;
+	this->boundary = (RectF)frame;
 }
 
-TextureRegion::TextureRegion(std::shared_ptr<Texture> texture, Rect frame, Rect boundary)
+TextureRegion::TextureRegion(std::shared_ptr<Texture> texture, Rect frame, RectF boundary)
 {
 	this->texture = texture;
 	this->frame = frame;
@@ -29,7 +29,7 @@ Rect TextureRegion::GetFrameRectangle()
 	return frame;
 }
 
-Rect TextureRegion::GetBoundingRectangle()
+RectF TextureRegion::GetBoundingRectangle()
 {
 	return boundary;
 }

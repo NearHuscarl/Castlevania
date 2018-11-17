@@ -62,10 +62,13 @@ void Player::LoadContent(ContentManager &content)
 void Player::Update(float deltaTime, ObjectCollection *objectCollection)
 {
 	GameObject::Update(deltaTime);
+	UpdateStates();
+	collisionSystem->Update(deltaTime, *objectCollection);
+	collisionResponseSystem->Update(deltaTime, collisionSystem->GetCollisionData());
+}
 
-	collisionSystem.Update(deltaTime, *objectCollection);
-	collisionResponseSystem.Update(deltaTime, collisionSystem.GetCollisionData());
-
+void Player::UpdateStates()
+{
 	switch (moveState)
 	{
 		case MoveState::JUMPING:

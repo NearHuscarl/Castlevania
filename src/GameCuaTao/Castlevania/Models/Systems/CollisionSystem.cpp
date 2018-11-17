@@ -51,14 +51,14 @@ CollisionData CollisionSystem::FilterCollision(CollisionResults collisionResults
 		if (result.direction == Direction::Left || result.direction == Direction::Right)
 		{
 			minTime.x = MathHelper::Min(minTime.x, result.timeToCollide);
-			minNormal.x = result.direction == Direction::Left ? -1 : 1;
+			minNormal.x = result.direction == Direction::Left ? -1.0f : 1.0f;
 			minIndex_x = i;
 		}
 
 		if (result.direction == Direction::Top || result.direction == Direction::Bottom)
 		{
 			minTime.y = MathHelper::Min(minTime.y, result.timeToCollide);
-			minNormal.y = result.direction == Direction::Top ? -1 : 1;
+			minNormal.y = result.direction == Direction::Top ? -1.0f : 1.0f;
 			minIndex_y = i;
 		}
 	}

@@ -11,7 +11,7 @@ namespace Castlevania
 	public:
 		CollisionResponseSystem(GameObject &parent);
 
-		void Update(float deltaTime, CollisionData collisionData);
+		virtual void Update(float deltaTime, CollisionData collisionData);
 
 	private:
 		GameObject &parent;

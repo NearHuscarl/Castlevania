@@ -3,20 +3,21 @@
 #include <memory>
 #include "../Graphics/Texture.h"
 #include "../Base/Rect.h"
+#include "RectF.h"
 
 class TextureRegion
 {
 public:
 	TextureRegion(std::shared_ptr<Texture> texture);
 	TextureRegion(std::shared_ptr<Texture> texture, Rect frame);
-	TextureRegion(std::shared_ptr<Texture> texture, Rect frame, Rect boundary);
+	TextureRegion(std::shared_ptr<Texture> texture, Rect frame, RectF boundary);
 
 	Texture &GetTexture();
 	Rect GetFrameRectangle();
-	Rect GetBoundingRectangle();
+	RectF GetBoundingRectangle();
 
 private:
 	std::shared_ptr<Texture> texture;
 	Rect frame; // used to draw
-	Rect boundary; // used to detect collision
+	RectF boundary; // used to detect collision
 };

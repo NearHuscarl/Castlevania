@@ -79,9 +79,7 @@ void GameWindow::Create()
 
 	if (!handle)
 	{
-		// TODO: use string template to populate error code
-		auto ErrCode = GetLastError();
-		FileLogger::GetInstance().Error("CreateWindow failed");
+		FileLogger::GetInstance().Error("{}(): CreateWindow failed with error code {}", __FUNCTION__, GetLastError());
 		handle = nullptr;
 	}
 	else

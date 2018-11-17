@@ -36,26 +36,26 @@ Rect Sprite::GetFrameRectangle(Vector2 position)
 	return rect;
 }
 
-Rect Sprite::GetBoundingRectangle(Vector2 position)
+RectF Sprite::GetBoundingRectangle(Vector2 position)
 {
 	auto spriteFrame = textureRegion.GetFrameRectangle();
 	auto spriteBoundary = textureRegion.GetBoundingRectangle();
-	auto rect = Rect{};
+	auto rect = RectF{};
 	// spriteFrame is usually larger than the spriteBoundary so we need to take account of the offset
 	auto offsetX = spriteBoundary.X() - spriteFrame.X();
 	
 	if (effect == SpriteEffects::None)
 	{
-		rect.left = (int)position.x + offsetX;
+		rect.left = position.x + offsetX;
 		rect.right = rect.left + spriteBoundary.Width();
 	}
 	else if (effect == SpriteEffects::FlipHorizontally)
 	{
-		rect.right = (int)position.x + spriteFrame.Width() - offsetX;
+		rect.right = position.x + spriteFrame.Width() - offsetX;
 		rect.left = rect.right - spriteBoundary.Width();
 	}
 
-	rect.top = (int)position.y + (spriteBoundary.Y() - spriteFrame.Y());
+	rect.top = position.y + (spriteBoundary.Y() - spriteFrame.Y());
 	rect.bottom = rect.top + spriteBoundary.Height();
 
 	return rect;

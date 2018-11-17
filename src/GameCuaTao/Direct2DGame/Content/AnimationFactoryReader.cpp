@@ -54,24 +54,21 @@ TextureRegionDict AnimationFactoryReader::ReadTextureRegions(pugi::xml_node root
 	{
 		auto name = spriteNode.attribute("ID").as_string();
 
-		auto left = int{};
-		auto top = int{};
-		auto width = int{};
-		auto height = int{};
+		auto spriteFrame = Rect{
+			spriteNode.child("SpriteFrame").attribute("Left").as_int(),
+			spriteNode.child("SpriteFrame").attribute("Top").as_int(),
+			spriteNode.child("SpriteFrame").attribute("Width").as_int(),
+			spriteNode.child("SpriteFrame").attribute("Height").as_int(),
+		};
 
-		left = spriteNode.child("SpriteFrame").attribute("Left").as_int();
-		top = spriteNode.child("SpriteFrame").attribute("Top").as_int();
-		width = spriteNode.child("SpriteFrame").attribute("Width").as_int();
-		height = spriteNode.child("SpriteFrame").attribute("Height").as_int();
-		auto spriteFrame = Rect{ left, top, width, height };
+		auto spriteBoundary = RectF{
+			spriteNode.child("SpriteBoundary").attribute("Left").as_float(),
+			spriteNode.child("SpriteBoundary").attribute("Top").as_float(),
+			spriteNode.child("SpriteBoundary").attribute("Width").as_float(),
+			spriteNode.child("SpriteBoundary").attribute("Height").as_float(),
+		};
 
-		left = spriteNode.child("SpriteBoundary").attribute("Left").as_int();
-		top = spriteNode.child("SpriteBoundary").attribute("Top").as_int();
-		width = spriteNode.child("SpriteBoundary").attribute("Width").as_int();
-		height = spriteNode.child("SpriteBoundary").attribute("Height").as_int();
-		auto spriteBoundary = Rect{ left, top, width, height };
-
-		if (spriteBoundary == Rect::Empty())
+		if (spriteBoundary == RectF::Empty())
 			textureRegions.emplace(name, TextureRegion{ texture, spriteFrame });
 		else
 			textureRegions.emplace(name, TextureRegion{ texture, spriteFrame, spriteBoundary });

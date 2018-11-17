@@ -23,7 +23,7 @@ namespace Castlevania
 	{
 	public:
 		GameObject();
-		GameObject(Rect boundingBox);
+		GameObject(RectF boundingBox);
 		GameObject(EntityType type);
 
 		EntityType GetType() override;
@@ -40,7 +40,10 @@ namespace Castlevania
 		
 		Body GetBody();
 		virtual Rect GetFrameRect();
-		virtual Rect GetBoundingBox() override;
+		virtual RectF GetBoundingBox() override;
+
+		void SetCollisionSystem(std::unique_ptr<CollisionSystem> collisionSystem);
+		void SetCollisionResponseSystem(std::unique_ptr<CollisionResponseSystem> collisionResponseSystem);
 
 		void Move(Vector2 direction);
 
@@ -61,9 +64,9 @@ namespace Castlevania
 		Body body;
 
 		std::unique_ptr<AnimatedSprite> sprite;
-		std::unique_ptr<Rect> boundingBox;
+		std::unique_ptr<RectF> boundingBox;
 
-		CollisionSystem collisionSystem;
-		CollisionResponseSystem collisionResponseSystem;
+		std::unique_ptr<CollisionSystem> collisionSystem;
+		std::unique_ptr<CollisionResponseSystem> collisionResponseSystem;
 	};
 }

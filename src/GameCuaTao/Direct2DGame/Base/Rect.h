@@ -3,6 +3,8 @@
 #include <windows.h>
 #include "Point.h"
 
+struct RectF;
+
 struct Rect : public RECT
 {
 	Rect();
@@ -20,4 +22,6 @@ struct Rect : public RECT
 	bool Contains(Rect value);
 	bool Intersects(Rect value);
 	bool TouchesOrIntersects(Rect value);
+
+	operator RectF(); // Implicit conversion
 };

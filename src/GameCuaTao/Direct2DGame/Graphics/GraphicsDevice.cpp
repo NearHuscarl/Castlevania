@@ -9,7 +9,7 @@ GraphicsDevice::GraphicsDevice(GraphicsDeviceInformation gdi)
 {
 	presentationParameters = gdi.presentationParameters;
 	driverType = gdi.driverType;
-	viewport = Viewport{ 0, 0, GetDisplay().Width(), GetDisplay().Height() };
+	viewport = Viewport{ 0, 0, (int)GetDisplay().Width(), (int)GetDisplay().Height() };
 
 	Initialize();
 }

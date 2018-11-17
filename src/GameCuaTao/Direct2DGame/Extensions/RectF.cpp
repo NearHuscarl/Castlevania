@@ -1,11 +1,10 @@
-#include "Rect.h"
-#include "../Extensions/RectF.h"
+#include "RectF.h"
 
-Rect::Rect() : Rect(0, 0, 0, 0)
+RectF::RectF() : RectF(0, 0, 0, 0)
 {
 }
 
-Rect::Rect(int left, int top, int width, int height)
+RectF::RectF(float left, float top, float width, float height)
 {
 	this->left = left;
 	this->top = top;
@@ -13,38 +12,38 @@ Rect::Rect(int left, int top, int width, int height)
 	this->bottom = top + height;
 }
 
-int Rect::X()
+float RectF::X()
 {
 	return left;
 }
 
-int Rect::Y()
+float RectF::Y()
 {
 	return top;
 }
 
-int Rect::Width()
+float RectF::Width()
 {
 	return right - left;
 }
 
-int Rect::Height()
+float RectF::Height()
 {
 	return bottom - top;
 }
 
-Point Rect::Center()
+Vector2 RectF::GetPosition()
 {
-	return Point{ X() + Width() / 2, Y() + Height() / 2 };
+	return Vector2{ X(), Y() };
 }
 
-Rect Rect::Empty()
+RectF RectF::Empty()
 {
-	static auto emptyRectangle = Rect{};
-	return emptyRectangle;
+	static auto emptyRectFangle = RectF{};
+	return emptyRectFangle;
 }
 
-bool Rect::operator==(Rect other)
+bool RectF::operator==(RectF other)
 {
 	return (
 		this->X() == other.Y() &&
@@ -53,7 +52,7 @@ bool Rect::operator==(Rect other)
 		this->Height() == other.Height());
 }
 
-bool Rect::Contains(Rect value)
+bool RectF::Contains(RectF value)
 {
 	return (
 		this->left <= value.left &&
@@ -62,7 +61,7 @@ bool Rect::Contains(Rect value)
 		this->bottom >= value.bottom);
 }
 
-bool Rect::Intersects(Rect value)
+bool RectF::Intersects(RectF value)
 {
 	return (
 		this->left < value.right ||
@@ -71,7 +70,7 @@ bool Rect::Intersects(Rect value)
 		this->bottom > value.top);
 }
 
-bool Rect::TouchesOrIntersects(Rect value)
+bool RectF::TouchesOrIntersects(RectF value)
 {
 	return (
 		this->left <= value.right ||
@@ -80,7 +79,7 @@ bool Rect::TouchesOrIntersects(Rect value)
 		this->bottom >= value.top);
 }
 
-Rect::operator RectF()
+RectF::operator Rect()
 {
-	return RectF{ (float)left, (float)top, (float)Width(), (float)Height() };
+	return Rect{ (int)left, (int)top, (int)Width(), (int)Height() };
 }

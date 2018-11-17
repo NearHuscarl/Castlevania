@@ -35,6 +35,7 @@ namespace Castlevania
 		Facing GetFacing();
 		MoveState GetMoveState();
 		AttackState GetAttackState();
+
 		void SetController(std::unique_ptr<IController> controller);
 		IController *GetController();
 
@@ -60,6 +61,8 @@ namespace Castlevania
 		std::unique_ptr<Whip> whip;
 
 		void Land(); // Internal command to change from JumpAttacking state to Landing state
+
+		void UpdateStates();
 		void UpdateJumpState();
 		void UpdateAttackState();
 	};

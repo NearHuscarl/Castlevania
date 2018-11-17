@@ -7,15 +7,12 @@ GameObject::GameObject() : GameObject(EntityType::Unknown)
 {
 }
 
-GameObject::GameObject(Rect boundingBox) : GameObject(EntityType::Boundary)
+GameObject::GameObject(RectF boundingBox) : GameObject(EntityType::Boundary)
 {
-	this->boundingBox = std::make_unique<Rect>(boundingBox);
+	this->boundingBox = std::make_unique<RectF>(boundingBox);
 }
 
-GameObject::GameObject(EntityType type) :
-	body{ *this },
-	collisionSystem{ *this },
-	collisionResponseSystem{ *this }
+GameObject::GameObject(EntityType type) : body{ *this }
 {
 	this->type = type;
 }
@@ -80,7 +77,7 @@ Rect GameObject::GetFrameRect()
 	return sprite->GetFrameRectangle(position);
 }
 
-Rect GameObject::GetBoundingBox()
+RectF GameObject::GetBoundingBox()
 {
 	if (sprite != nullptr)
 		return sprite->GetBoundingRectangle(position);
@@ -88,7 +85,17 @@ Rect GameObject::GetBoundingBox()
 	if (boundingBox != nullptr)
 		return *boundingBox;
 
-	return Rect::Empty();
+	return RectF::Empty();
+}
+
+void GameObject::SetCollisionSystem(std::unique_ptr<CollisionSystem> collisionSystem)
+{
+	this->collisionSystem = std::move(collisionSystem);
+}
+
+void GameObject::SetCollisionResponseSystem(std::unique_ptr<CollisionResponseSystem> collisionResponseSystem)
+{
+	this->collisionResponseSystem = std::move(collisionResponseSystem);
 }
 
 #pragma endregion

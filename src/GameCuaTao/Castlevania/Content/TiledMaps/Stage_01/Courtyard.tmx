@@ -13,8 +13,8 @@
  <objectgroup id="3" name="Bounds">
   <object id="20" name="Ground" x="0" y="371" width="1536" height="20"/>
   <object id="21" name="NextMap" x="1378" y="340" width="30" height="30"/>
-  <object id="22" name="LeftBorder" x="0" y="0" width="3" height="371"/>
-  <object id="24" name="RightBorder" x="1533" y="0" width="3" height="371"/>
+  <object id="22" name="LeftBorder" x="-22" y="0" width="25" height="371"/>
+  <object id="24" name="RightBorder" x="1533" y="0" width="25" height="371"/>
  </objectgroup>
  <objectgroup id="4" name="Game">
   <object id="14" name="Checkpoint" gid="4" x="69" y="373" width="60" height="66"/>

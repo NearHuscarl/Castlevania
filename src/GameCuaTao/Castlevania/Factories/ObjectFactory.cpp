@@ -2,6 +2,8 @@
 #include "../Models/GameObject.h"
 #include "../Models/Characters/Player/Controller.h"
 #include "../Models/Characters/Bat.h"
+#include "../Models/Systems/CollisionSystem.h"
+#include "../Models/Systems/PlayerResponseSystem.h"
 #include "../Models/Items/FirePit.h"
 
 using namespace Castlevania;
@@ -27,22 +29,22 @@ ObjectCollection ObjectFactory::CreateObjectCollection(ObjectsProperties objects
 
 		if (BOUNDARIES.find(name) != BOUNDARIES.end()) // rectangle
 		{
-			auto x = std::stoi(properties.at("x"));
-			auto y = std::stoi(properties.at("y"));
-			auto width = std::stoi(properties.at("width"));
-			auto height = std::stoi(properties.at("height"));
-			auto boundary = Rect{ x, y, width, height };
+			auto x = std::stof(properties.at("x"));
+			auto y = std::stof(properties.at("y"));
+			auto width = std::stof(properties.at("width"));
+			auto height = std::stof(properties.at("height"));
+			auto boundary = RectF{ x, y, width, height };
 			auto object = std::make_unique<GameObject>(boundary);
 
 			objectCollection.boundaries.push_back(std::move(object));
 		}
 		else if (TRIGGERS.find(name) != TRIGGERS.end()) // rectangle
 		{
-			auto x = std::stoi(properties.at("x"));
-			auto y = std::stoi(properties.at("y"));
-			auto width = std::stoi(properties.at("width"));
-			auto height = std::stoi(properties.at("height"));
-			auto trigger = Rect{ x, y, width, height };
+			auto x = std::stof(properties.at("x"));
+			auto y = std::stof(properties.at("y"));
+			auto width = std::stof(properties.at("width"));
+			auto height = std::stof(properties.at("height"));
+			auto trigger = RectF{ x, y, width, height };
 			auto object = std::make_unique<GameObject>(trigger);
 
 			objectCollection.triggers.push_back(std::move(object));
@@ -96,6 +98,8 @@ std::unique_ptr<Player> ObjectFactory::CreatePlayer()
 	auto player = std::make_unique<Player>();
 
 	player->SetController(std::make_unique<Controller>(*player.get()));
+	player->SetCollisionSystem(std::make_unique<CollisionSystem>(*player.get()));
+	player->SetCollisionResponseSystem(std::make_unique<PlayerResponseSystem>(*player.get()));
 
 	return player;
 }

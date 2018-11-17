@@ -33,7 +33,7 @@ void SpriteExtensions::Draw(Sprite sprite, Vector2 position, float rotation, Vec
 	}
 }
 
-void SpriteExtensions::Draw(Rect rect, Color color)
+void SpriteExtensions::Draw(RectF rect, Color color)
 {
 	End(); // Force drawing all sprites so the surface will be drawn on the next Begin() call
 	Begin(D3DXSPRITE_ALPHABLEND);
@@ -41,14 +41,14 @@ void SpriteExtensions::Draw(Rect rect, Color color)
 	auto renderDevice = graphicsDevice.GetRenderDevice();
 	auto surface = graphicsDevice.GetSurface();
 	auto viewport = graphicsDevice.GetViewport();
-	auto camPosition = viewport.Project((float)rect.X(), (float)rect.Y());
-	auto destRect = Rect{ (int)camPosition.x, (int)camPosition.y, rect.Width(), rect.Height() };
+	auto camPosition = viewport.Project(rect.X(), rect.Y());
+	auto destRect = RectF{ camPosition.x, camPosition.y, rect.Width(), rect.Height() };
 
 	// Clamp width for ground rect because surface will not be drawn on screen when its width
 	// and height excess screen size
-	destRect.left = MathHelper::Max((float)destRect.left, viewport.x);
-	destRect.right = MathHelper::Min((float)destRect.right, viewport.x + viewport.width);
+	destRect.left = MathHelper::Max(destRect.left, viewport.x);
+	destRect.right = MathHelper::Min(destRect.right, viewport.x + viewport.width);
 
 	renderDevice->ColorFill(plainSurface, nullptr, color.Get());
-	renderDevice->StretchRect(plainSurface, nullptr, surface, &destRect, D3DTEXF_NONE);
+	renderDevice->StretchRect(plainSurface, nullptr, surface, &(Rect)destRect, D3DTEXF_NONE);
 }

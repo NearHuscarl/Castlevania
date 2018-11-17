@@ -9,7 +9,6 @@ CollisionResponseSystem::CollisionResponseSystem(GameObject &parent) : parent{ p
 
 void CollisionResponseSystem::Update(float deltaTime, CollisionData collisionData)
 {
-	auto position = parent.GetPosition();
 	auto velocity = parent.GetVelocity();
 	auto distance = velocity * deltaTime;
 

@@ -54,7 +54,7 @@ CollisionResult Body::PredictCollision(IColliable &staticObject)
 		staticObject };
 }
 
-Body::SweptAABBResult Body::SweptAABB(Rect movingRect, Vector2 distance, Rect staticRect)
+Body::SweptAABBResult Body::SweptAABB(RectF movingRect, Vector2 distance, RectF staticRect)
 {
 	// Broad-phase test 
 	auto broadPhase = CreateBroadPhase(movingRect, distance);
@@ -117,7 +117,7 @@ Body::SweptAABBResult Body::SweptAABB(Rect movingRect, Vector2 distance, Rect st
 		exitTime_y = exitDistance.y / distance.y;
 	}
 
-	if (entryTime_x <= 0 && entryTime_y <= 0 || entryTime_x > 1 || entryTime_y > 1)
+	if (entryTime_x < 0 && entryTime_y < 0 || entryTime_x > 1 || entryTime_y > 1)
 		return SweptAABBResult::Empty();
 
 	auto entryTime = MathHelper::Max(entryTime_x, entryTime_y);
@@ -145,14 +145,14 @@ Body::SweptAABBResult Body::SweptAABB(Rect movingRect, Vector2 distance, Rect st
 	return SweptAABBResult{ entryTime, direction };
 }
 
-Body::BroadPhase Body::CreateBroadPhase(Rect rect, Vector2 distance)
+Body::BroadPhase Body::CreateBroadPhase(RectF rect, Vector2 distance)
 {
 	auto broadPhase = BroadPhase{};
 
-	broadPhase.left   = MathHelper::Min(rect.left,   rect.left   + (long)distance.x);
-	broadPhase.top    = MathHelper::Min(rect.top,    rect.top    + (long)distance.y);
-	broadPhase.right  = MathHelper::Max(rect.right,  rect.right  + (long)distance.x);
-	broadPhase.bottom = MathHelper::Max(rect.bottom, rect.bottom + (long)distance.y);
+	broadPhase.left   = MathHelper::Min(rect.left,   rect.left   + distance.x);
+	broadPhase.top    = MathHelper::Min(rect.top,    rect.top    + distance.y);
+	broadPhase.right  = MathHelper::Max(rect.right,  rect.right  + distance.x);
+	broadPhase.bottom = MathHelper::Max(rect.bottom, rect.bottom + distance.y);
 
 	return broadPhase;
 }

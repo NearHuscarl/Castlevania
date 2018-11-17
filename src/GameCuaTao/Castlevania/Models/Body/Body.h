@@ -27,12 +27,12 @@ namespace Castlevania
 			}
 		};
 
-		using BroadPhase = Rect;
+		using BroadPhase = RectF;
 
 		float deltaTime; // in milliseconds
 		IGameObject &parent;
 
-		SweptAABBResult SweptAABB(Rect movingRect, Vector2 distance, Rect staticRect);
-		BroadPhase CreateBroadPhase(Rect rect, Vector2 distance);
+		SweptAABBResult SweptAABB(RectF movingRect, Vector2 distance, RectF staticRect);
+		BroadPhase CreateBroadPhase(RectF rect, Vector2 distance);
 	};
 }
