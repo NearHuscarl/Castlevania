@@ -46,7 +46,7 @@ namespace Castlevania
 		
 		virtual RectF GetFrameRect();
 		virtual RectF GetBoundingBox() override;
-		Body GetBody() override;
+		Body &GetBody() override;
 
 		IController *GetController();
 

@@ -33,7 +33,9 @@ Vector2 GameObject::GetPosition()
 Vector2 GameObject::GetDistance()
 {
 	if (movementSystem != nullptr)
+	{
 		return movementSystem->GetDistance();
+	}
 
 	return Vector2::Zero();
 }
@@ -102,7 +104,7 @@ RectF GameObject::GetBoundingBox()
 	return RectF::Empty();
 }
 
-Body Castlevania::GameObject::GetBody()
+Body &Castlevania::GameObject::GetBody()
 {
 	return body;
 }
@@ -157,7 +159,7 @@ void GameObject::Update(float deltaTime, ObjectCollection *objectCollection)
 		collisionSystem->Update(*objectCollection);
 
 	if (collisionResponseSystem != nullptr)
-		collisionResponseSystem->Update(collisionSystem->GetCollisionData());
+		collisionResponseSystem->Update();
 }
 
 void GameObject::UpdateDistance(float deltaTime)
@@ -172,9 +174,11 @@ void GameObject::Draw(SpriteExtensions &spriteBatch)
 void GameObject::DrawBoundingBox(SpriteExtensions &spriteBatch)
 {
 	if (type == EntityType::Boundary)
-		spriteBatch.Draw(GetBoundingBox(), Color::Green());
+		spriteBatch.Draw(GetBoundingBox(), Color::Blue());
 	else if (type == EntityType::Whip)
 		spriteBatch.Draw(GetBoundingBox(), Color::Red());
+	else if (type == EntityType::FirePit)
+		spriteBatch.Draw(GetBoundingBox(), Color::Green());
 	else
 		spriteBatch.Draw(GetBoundingBox(), Color::Magenta());
 }

@@ -15,8 +15,21 @@ Vector2 PlayerMovementSystem::GetDistance()
 void PlayerMovementSystem::Update(float deltaTime)
 {
 	auto velocity = parent.GetVelocity();
+	auto moveState = parent.GetMoveState();
 
-	velocity.y += GRAVITY;
+	if (moveState == MoveState::JUMPING
+		|| moveState == MoveState::LANDING
+		|| moveState == MoveState::FALLING)
+	{
+		velocity.y += GRAVITY;
+	}
+	else
+	{
+		if (!parent.isOnGround)
+			parent.moveState = MoveState::FALLING_HARD;
+
+		velocity.y = FALL_SPEED;
+	}
 
 	distance = velocity * deltaTime;
 

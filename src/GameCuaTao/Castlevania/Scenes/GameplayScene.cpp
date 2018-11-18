@@ -20,7 +20,7 @@ void GameplayScene::LoadContent()
 	objectCollection = stageManager->LoadGameObjects();
 	
 	player = objectFactory.CreatePlayer();
-	player->SetPosition(objectCollection.locations[CHECKPOINT]);
+	player->SetPosition(objectCollection.locations["Checkpoint"]);
 	player->LoadContent(content);
 
 	for (auto &entity : objectCollection.entities) // TODO: put LoadContent in constructor?

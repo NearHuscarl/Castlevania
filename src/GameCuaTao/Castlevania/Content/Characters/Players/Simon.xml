@@ -20,7 +20,7 @@
 
     <Sprite ID="jump_01">
       <SpriteFrame Left="240" Top="0" Width="60" Height="66" />
-      <SpriteBoundary Left="256" Top="9" Width="32" Height="46" />
+      <SpriteBoundary Left="256" Top="9" Width="32" Height="55" />
     </Sprite>
 
     <Sprite ID="duck_01"> <!-- OffsetY = -9 -->

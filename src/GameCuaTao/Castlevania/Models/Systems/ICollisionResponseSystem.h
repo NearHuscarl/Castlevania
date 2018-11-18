@@ -7,6 +7,6 @@ namespace Castlevania
 	class ICollisionResponseSystem
 	{
 	public:
-		virtual void Update(CollisionData collisionData) = 0;
+		virtual void Update() = 0;
 	};
 }

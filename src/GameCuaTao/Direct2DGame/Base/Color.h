@@ -19,6 +19,7 @@ public:
 
 	static Color Transparent();
 	static Color Black();
+	static Color Blue();
 	static Color Green();
 	static Color LavenderBlue();
 	static Color Magenta();

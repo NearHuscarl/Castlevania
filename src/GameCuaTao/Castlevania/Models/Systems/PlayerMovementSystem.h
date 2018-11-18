@@ -7,6 +7,8 @@ namespace Castlevania
 {
 	class GameObject;
 
+	constexpr auto FALL_SPEED = 1000.0f; // TODO: put in xml
+
 	class PlayerMovementSystem : public IMovementSystem
 	{
 	public:

@@ -7,9 +7,10 @@ CollisionResponseSystem::CollisionResponseSystem(GameObject &parent) : parent{ p
 {
 }
 
-void CollisionResponseSystem::Update(CollisionData collisionData)
+void CollisionResponseSystem::Update()
 {
 	auto distance = parent.GetDistance();
+	auto collisionData = parent.GetBody().GetCollisionData();
 
 	if (collisionData.collisionResults.size() == 0)
 	{

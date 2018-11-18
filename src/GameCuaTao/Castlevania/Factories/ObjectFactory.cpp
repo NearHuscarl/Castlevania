@@ -27,8 +27,9 @@ ObjectCollection ObjectFactory::CreateObjectCollection(ObjectsProperties objects
 	for (auto properties : objectsProperties)
 	{
 		auto name = properties.at("name");
+		auto type = properties.at("type");
 
-		if (BOUNDARIES.find(name) != BOUNDARIES.end()) // rectangle
+		if (type == BOUNDARY) // rectangle
 		{
 			auto x = std::stof(properties.at("x"));
 			auto y = std::stof(properties.at("y"));
@@ -39,7 +40,7 @@ ObjectCollection ObjectFactory::CreateObjectCollection(ObjectsProperties objects
 
 			objectCollection.boundaries.push_back(std::move(object));
 		}
-		else if (TRIGGERS.find(name) != TRIGGERS.end()) // rectangle
+		else if (type == TRIGGER) // rectangle
 		{
 			auto x = std::stof(properties.at("x"));
 			auto y = std::stof(properties.at("y"));
@@ -50,7 +51,7 @@ ObjectCollection ObjectFactory::CreateObjectCollection(ObjectsProperties objects
 
 			objectCollection.triggers.push_back(std::move(object));
 		}
-		else if (POSITIONS.find(name) != POSITIONS.end())
+		else if (type == POSITION)
 		{
 			auto x = std::stof(properties.at("x"));
 			auto y = std::stof(properties.at("y"));
@@ -59,7 +60,7 @@ ObjectCollection ObjectFactory::CreateObjectCollection(ObjectsProperties objects
 
 			objectCollection.locations[name] = position;
 		}
-		else // GameObject (Player, Bat, Skeleton...) // tile
+		else if (type == OBJECT) // GameObject (Player, Bat, Skeleton...) // tile
 		{
 			auto object = ConstructObject(name);
 			auto x = std::stof(properties.at("x"));
@@ -90,7 +91,7 @@ std::unique_ptr<GameObject> ObjectFactory::ConstructObject(std::string name)
 			return std::make_unique<FirePit>();
 
 		default:
-			throw std::invalid_argument("Object name is invalid");
+			throw std::invalid_argument("Invalid object name");
 	}
 }
 

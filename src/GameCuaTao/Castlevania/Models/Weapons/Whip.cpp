@@ -81,11 +81,11 @@ Vector2 Whip::GetPositionRelativeToPlayer(GameObject &player)
 		switch (currentFrameIndex)
 		{
 			case 0:
-				return Vector2{ (float)playerBbox.left - whipBbox.Width() + 1, (float)playerBbox.top + 14 };
+				return Vector2{ playerBbox.left - whipBbox.Width() + 1, playerBbox.top + 14 };
 			case 1:
-				return Vector2{ (float)playerBbox.left - whipBbox.Width(), (float)playerBbox.top + 9 };
+				return Vector2{ playerBbox.left - whipBbox.Width(), playerBbox.top + 9 };
 			case 2:
-				return Vector2{ (float)playerBbox.right - 3, (float)playerBbox.top + 10 };
+				return Vector2{ playerBbox.right - 3, playerBbox.top + 10 };
 			default:
 				return Vector2::Zero();
 		}
@@ -95,11 +95,11 @@ Vector2 Whip::GetPositionRelativeToPlayer(GameObject &player)
 		switch (currentFrameIndex)
 		{
 			case 0:
-				return Vector2{ (float)playerBbox.right - 1, (float)playerBbox.top + 14 };
+				return Vector2{ playerBbox.right - 1, playerBbox.top + 14 };
 			case 1:
-				return Vector2{ (float)playerBbox.right, (float)playerBbox.top + 9 };
+				return Vector2{ playerBbox.right, playerBbox.top + 9 };
 			case 2:
-				return Vector2{ (float)playerBbox.left - whipBbox.Width() + 3, (float)playerBbox.top + 10 };
+				return Vector2{ playerBbox.left - whipBbox.Width() + 3, playerBbox.top + 10 };
 			default:
 				return Vector2::Zero();
 		}

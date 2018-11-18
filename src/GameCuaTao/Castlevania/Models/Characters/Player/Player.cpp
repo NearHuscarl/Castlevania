@@ -3,7 +3,9 @@
 
 using namespace Castlevania;
 
-constexpr auto STRETCH_LEG_VELOCITY_Y = 200.0f;
+constexpr auto BEND_KNEE_ON_JUMPING_Y = 330.0f;
+constexpr auto STRETCH_LEG_ON_FALLING_Y = 200.0f;
+constexpr auto JUMP_COOLDOWN = 400; // 0.4 seconds
 
 Player::Player() : GameObject(EntityType::Player)
 {
@@ -31,15 +33,6 @@ AttackState Player::GetAttackState()
 	return attackState;
 }
 
-// NOTE: revert or not
-void Player::SetVelocity(Vector2 velocity)
-{
-	//if (velocity == Vector2::Zero())
-	//	Idle();
-
-	this->velocity = velocity;
-}
-
 void Player::LoadContent(ContentManager &content)
 {
 	auto animationFactory = content.Load<AnimationFactory>("Characters/Players/Simon.xml");
@@ -56,8 +49,8 @@ void Player::LoadContent(ContentManager &content)
 
 void Player::Update(float deltaTime, ObjectCollection *objectCollection)
 {
-	UpdateStates();
 	GameObject::Update(deltaTime, objectCollection);
+	UpdateStates();
 
 	sprite->Update();
 	whip->Update(deltaTime, objectCollection);
@@ -68,8 +61,24 @@ void Player::UpdateStates()
 	switch (moveState)
 	{
 		case MoveState::JUMPING:
-			if (velocity.y > STRETCH_LEG_VELOCITY_Y && attackState == AttackState::INACTIVE)
+			if (velocity.y > -BEND_KNEE_ON_JUMPING_Y && attackState == AttackState::INACTIVE)
+				sprite->Play(JUMP_ANIMATION);
+			if (velocity.y >= 0)
+				moveState = MoveState::FALLING;
+			break;
+
+		case MoveState::FALLING:
+			if (velocity.y > STRETCH_LEG_ON_FALLING_Y && attackState == AttackState::INACTIVE)
 				sprite->Play(IDLE_ANIMATION);
+			break;
+
+		case MoveState::LANDING_HARD:
+			if (jumpCooldown.ElapsedMilliseconds() >= JUMP_COOLDOWN)
+			{
+				Idle();
+				jumpCooldown.Reset();
+			}
+			break;
 	}
 
 	switch (attackState)
@@ -94,7 +103,8 @@ void Player::UpdateAttackState()
 				break;
 
 			case MoveState::JUMPING:
-				Land();
+			case MoveState::FALLING:
+				Landing();
 				break;
 
 			case MoveState::DUCKING:
@@ -106,7 +116,7 @@ void Player::UpdateAttackState()
 	}
 }
 
-void Player::Land()
+void Player::Landing()
 {
 	moveState = MoveState::LANDING;
 	sprite->Play(JUMP_ANIMATION);
@@ -135,7 +145,7 @@ void Player::DrawBoundingBox(SpriteExtensions &spriteBatch)
 void Player::Idle()
 {
 	moveState = MoveState::IDLE;
-	velocity = Vector2::Zero();
+	velocity.x = 0.0f;
 	sprite->Play(IDLE_ANIMATION);
 }
 
@@ -159,7 +169,6 @@ void Player::Jump()
 {
 	velocity.y = -jumpSpeed;
 	moveState = MoveState::JUMPING;
-	sprite->Play(JUMP_ANIMATION);
 }
 
 void Player::Duck()
@@ -205,6 +214,22 @@ void Player::TurnBackward()
 	moveState = MoveState::TURNING_BACKWARD;
 	velocity = Vector2::Zero();
 	sprite->Play(TURN_BACKWARD_ANIMATION);
+}
+
+void Player::Land()
+{
+	if (velocity.y > 600.0f) // Falling down very fast, do a superhero landing
+	{
+		moveState = MoveState::LANDING_HARD;
+		velocity = Vector2::Zero();
+		jumpCooldown.Start();
+		sprite->Play(DUCK_ANIMATION);
+	}
+	else
+		Idle();
+
+	if (attackState == AttackState::ATTACKING)
+		velocity.x = 0; // Still keep attacking on the ground but not moving anymore
 }
 
 #pragma endregion

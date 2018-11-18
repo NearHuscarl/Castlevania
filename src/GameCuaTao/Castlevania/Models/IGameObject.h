@@ -7,6 +7,6 @@ namespace Castlevania
 	class IGameObject : public IColliable
 	{
 	public:
-		virtual Body GetBody() = 0;
+		virtual Body &GetBody() = 0;
 	};
 }

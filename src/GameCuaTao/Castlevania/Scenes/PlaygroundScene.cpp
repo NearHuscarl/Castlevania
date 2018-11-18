@@ -1,3 +1,4 @@
+#include "Direct2DGame/Input/InputHelper.h"
 #include "PlaygroundScene.h"
 #include "SceneManager.h"
 
@@ -20,7 +21,7 @@ void PlaygroundScene::LoadContent()
 	objectCollection = stageManager->LoadGameObjects();
 
 	player = objectFactory.CreatePlayer();
-	player->SetPosition(objectCollection.locations[CHECKPOINT]);
+	player->SetPosition(objectCollection.locations["Checkpoint_01"]);
 	player->LoadContent(content);
 
 	for (auto &entity : objectCollection.entities) // TODO: put LoadContent in constructor?
@@ -34,6 +35,13 @@ void PlaygroundScene::Update(float deltaTime)
 	camera->LookAt(player->GetOriginPosition(), Scrolling::Horizontally);
 
 	player->Update(deltaTime, &objectCollection);
+
+	if (InputHelper::IsKeyDown(DIK_1))
+		player->SetPosition(objectCollection.locations["Checkpoint_01"]);
+	else if (InputHelper::IsKeyDown(DIK_2))
+		player->SetPosition(objectCollection.locations["Checkpoint_02"]);
+	else if (InputHelper::IsKeyDown(DIK_3))
+		player->SetPosition(objectCollection.locations["Checkpoint_03"]);
 
 	for (auto const &gameObject : objectCollection.entities)
 	{

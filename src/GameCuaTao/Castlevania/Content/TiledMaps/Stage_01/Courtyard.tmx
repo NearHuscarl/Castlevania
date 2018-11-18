@@ -11,17 +11,17 @@
   </data>
  </layer>
  <objectgroup id="3" name="Bounds">
-  <object id="20" name="Ground" x="0" y="371" width="1536" height="20"/>
-  <object id="21" name="NextMap" x="1378" y="340" width="30" height="30"/>
-  <object id="22" name="LeftBorder" x="-22" y="0" width="25" height="371"/>
-  <object id="24" name="RightBorder" x="1533" y="0" width="25" height="371"/>
+  <object id="20" name="Ground" type="Boundary" x="0" y="371" width="1536" height="20"/>
+  <object id="21" name="NextMap" type="Trigger" x="1378" y="340" width="30" height="30"/>
+  <object id="22" name="LeftBorder" type="Boundary" x="-22" y="0" width="25" height="371"/>
+  <object id="24" name="RightBorder" type="Boundary" x="1533" y="0" width="25" height="371"/>
  </objectgroup>
  <objectgroup id="4" name="Game">
-  <object id="14" name="Checkpoint" gid="4" x="69" y="373" width="60" height="66"/>
-  <object id="15" name="FirePit" gid="25" x="175" y="373" width="32" height="64"/>
-  <object id="16" name="FirePit" gid="25" x="434" y="373" width="32" height="64"/>
-  <object id="17" name="FirePit" gid="25" x="685" y="373" width="32" height="64"/>
-  <object id="18" name="FirePit" gid="25" x="942" y="373" width="32" height="64"/>
-  <object id="19" name="FirePit" gid="25" x="1199" y="373" width="32" height="64"/>
+  <object id="14" name="Checkpoint" type="Position" gid="4" x="69" y="370" width="60" height="66"/>
+  <object id="15" name="FirePit" type="Object" gid="25" x="175" y="373" width="32" height="64"/>
+  <object id="16" name="FirePit" type="Object" gid="25" x="434" y="373" width="32" height="64"/>
+  <object id="17" name="FirePit" type="Object" gid="25" x="685" y="373" width="32" height="64"/>
+  <object id="18" name="FirePit" type="Object" gid="25" x="942" y="373" width="32" height="64"/>
+  <object id="19" name="FirePit" type="Object" gid="25" x="1199" y="373" width="32" height="64"/>
  </objectgroup>
 </map>

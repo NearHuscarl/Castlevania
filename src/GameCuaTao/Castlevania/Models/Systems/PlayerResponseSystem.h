@@ -10,7 +10,7 @@ namespace Castlevania
 	public:
 		PlayerResponseSystem(Player &parent);
 
-		void Update(CollisionData collisionData) override;
+		void Update() override;
 
 	private:
 		Player &parent;

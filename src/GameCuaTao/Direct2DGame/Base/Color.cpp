@@ -66,6 +66,12 @@ Color Color::Black()
 	return black;
 }
 
+Color Color::Blue()
+{
+	static auto blue = Color{ 0, 0, 255 };
+	return blue;
+}
+
 Color Color::Green()
 {
 	static auto green = Color{ 0, 128, 0 };

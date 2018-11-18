@@ -3,7 +3,7 @@
 #include "../Base/Vector2.h"
 #include "../Base/Rect.h"
 
-// A rectangle but store value in float, is used to calculate bounding box for a more precise
+// A rectangle but store value in float, is used to calculate bounding box for
 // real-time collision detection
 struct RectF
 {

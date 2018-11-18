@@ -15,27 +15,27 @@
     </Sprite>
 
     <Sprite ID="whip_21">
-      <SpriteFrame Left="1" Top="75" Width="16" Height="48" />
+      <SpriteFrame Left="1" Top="67" Width="16" Height="48" />
     </Sprite>
 
     <Sprite ID="whip_22">
-      <SpriteFrame Left="41" Top="69" Width="32" Height="38" />
+      <SpriteFrame Left="41" Top="61" Width="32" Height="38" />
     </Sprite>
 
     <Sprite ID="whip_23">
-      <SpriteFrame Left="95" Top="79" Width="46" Height="12" />
+      <SpriteFrame Left="95" Top="71" Width="46" Height="12" />
     </Sprite>
 
     <Sprite ID="whip_31">
-      <SpriteFrame Left="1" Top="143" Width="16" Height="48" />
+      <SpriteFrame Left="1" Top="136" Width="16" Height="48" />
     </Sprite>
 
     <Sprite ID="whip_32">
-      <SpriteFrame Left="41" Top="137" Width="32" Height="38" />
+      <SpriteFrame Left="41" Top="130" Width="32" Height="38" />
     </Sprite>
 
     <Sprite ID="whip_33">
-      <SpriteFrame Left="95" Top="147" Width="78" Height="12" />
+      <SpriteFrame Left="95" Top="140" Width="78" Height="12" />
     </Sprite>
   </Spritesheet>
 

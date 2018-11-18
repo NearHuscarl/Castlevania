@@ -25,6 +25,8 @@ void Controller::OnKeyStateChanged(KeyboardState &keyboardState)
 				player.WalkLeft();
 			else if (keyboardState.IsKeyDown(Button::WalkRight))
 				player.WalkRight();
+			else if (keyboardState.IsKeyDown(Button::Duck))
+				player.Duck();
 			break;
 
 		case MoveState::WALKING:
@@ -50,8 +52,6 @@ void Controller::OnKeyDown(int keyCode)
 		case MoveState::IDLE:
 			if (keyCode == Button::Jump)
 				player.Jump();
-			else if (keyCode == Button::Duck)
-				player.Duck();
 			else if (keyCode == Button::Attack)
 				player.Attack();
 			break;
@@ -68,6 +68,7 @@ void Controller::OnKeyDown(int keyCode)
 			break;
 
 		case MoveState::JUMPING:
+		case MoveState::FALLING:
 		case MoveState::LANDING:
 		case MoveState::DUCKING:
 			if (keyCode == Button::Attack)

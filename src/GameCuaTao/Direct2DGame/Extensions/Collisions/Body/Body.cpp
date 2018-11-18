@@ -6,6 +6,16 @@ Body::Body(IColliable &colliableObject) : parent{ colliableObject }
 {
 }
 
+CollisionData Body::GetCollisionData()
+{
+	return collisionData;
+}
+
+void Body::SetCollisionData(CollisionData collisionData)
+{
+	this->collisionData = CollisionData{collisionData};
+}
+
 // Extension of original SweptAABB to deal with two moving objects
 // 'moving' and 'static' prefixes in variable names refer to the moving object
 // (the one that check for collision) and the static object (the one that is
@@ -46,24 +56,24 @@ Body::SweptAABBResult Body::SweptAABB(RectF movingRect, Vector2 distance, RectF 
 
 	if (distance.x > 0)
 	{
-		entryDistance.x = (float)(staticRect.left - movingRect.right);
-		exitDistance.x = (float)(staticRect.right - movingRect.left);
+		entryDistance.x = staticRect.left - movingRect.right;
+		exitDistance.x = staticRect.right - movingRect.left;
 	}
 	else
 	{
-		entryDistance.x = (float)(staticRect.right - movingRect.left);
-		exitDistance.x = (float)(staticRect.left - movingRect.right);
+		entryDistance.x = staticRect.right - movingRect.left;
+		exitDistance.x = staticRect.left - movingRect.right;
 	}
 
 	if (distance.y > 0)
 	{
-		entryDistance.y = (float)(staticRect.top - movingRect.bottom);
-		exitDistance.y = (float)(staticRect.bottom - movingRect.top);
+		entryDistance.y = staticRect.top - movingRect.bottom;
+		exitDistance.y = staticRect.bottom - movingRect.top;
 	}
 	else
 	{
-		entryDistance.y = (float)(staticRect.bottom - movingRect.top);
-		exitDistance.y = (float)(staticRect.top - movingRect.bottom);
+		entryDistance.y = staticRect.bottom - movingRect.top;
+		exitDistance.y = staticRect.top - movingRect.bottom;
 	}
 
 	auto entryTime_x = float{};

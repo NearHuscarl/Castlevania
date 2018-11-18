@@ -1,12 +1,14 @@
 #pragma once
 
-#include "CollisionResult.h"
-#include "Direction.h"
+#include "CollisionData.h"
 
 class Body
 {
 public:
 	Body(IColliable &colliableObject);
+
+	CollisionData GetCollisionData();
+	void SetCollisionData(CollisionData collisionData);
 
 	CollisionResult PredictCollision(IColliable &staticObject);
 
@@ -25,6 +27,7 @@ private:
 	using BroadPhase = RectF;
 
 	IColliable &parent;
+	CollisionData collisionData;
 
 	SweptAABBResult SweptAABB(RectF movingRect, Vector2 distance, RectF staticRect);
 	BroadPhase CreateBroadPhase(RectF rect, Vector2 distance);

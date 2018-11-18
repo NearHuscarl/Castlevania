@@ -9,11 +9,6 @@ CollisionSystem::CollisionSystem(GameObject &parent) : parent{ parent }
 {
 }
 
-CollisionData CollisionSystem::GetCollisionData()
-{
-	return collisionData;
-}
-
 void CollisionSystem::Update(ObjectCollection &objectCollection)
 {
 	auto results = std::vector<CollisionResult>{};
@@ -29,7 +24,7 @@ void CollisionSystem::Update(ObjectCollection &objectCollection)
 	}
 
 	// TODO: do we need to sort?
-	collisionData = FilterCollision(results);
+	parent.GetBody().SetCollisionData(FilterCollision(results));
 }
 
 // Get the list of objects that has the shortest time to collide with

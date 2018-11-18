@@ -7,25 +7,10 @@
 
 namespace Castlevania
 {
-	constexpr auto NEXT_MAP = "NextMap";
-	constexpr auto CHECKPOINT = "Checkpoint";
-
-	const std::set<std::string> BOUNDARIES =
-	{
-		"LeftBorder",
-		"RightBorder",
-		"Ground",
-	};
-
-	const std::set<std::string> TRIGGERS =
-	{
-		NEXT_MAP,
-	};
-
-	const std::set<std::string> POSITIONS =
-	{
-		CHECKPOINT,
-	};
+	constexpr auto BOUNDARY = "Boundary";
+	constexpr auto TRIGGER = "Trigger";
+	constexpr auto POSITION = "Position";
+	constexpr auto OBJECT = "Object";
 
 	struct ObjectCollection
 	{

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Direct2DGame/Extensions/Collisions/Body/CollisionData.h"
 #include "ICollisionSystem.h"
 
 namespace Castlevania
@@ -11,12 +12,10 @@ namespace Castlevania
 	public:
 		CollisionSystem(GameObject &parent);
 
-		CollisionData GetCollisionData();
-		void Update(ObjectCollection &objectCollection);
+		void Update(ObjectCollection &objectCollection) override;
 
 	protected:
 		GameObject &parent;
-		CollisionData collisionData;
 
 		CollisionData FilterCollision(CollisionResults collisionResults);
 	};
