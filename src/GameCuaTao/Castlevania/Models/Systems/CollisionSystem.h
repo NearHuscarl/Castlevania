@@ -11,10 +11,10 @@ namespace Castlevania
 	public:
 		CollisionSystem(GameObject &parent);
 
-		CollisionData GetCollisionData() override;
-		void Update(ObjectCollection &objectCollection) override;
+		CollisionData GetCollisionData();
+		void Update(ObjectCollection &objectCollection);
 
-	private:
+	protected:
 		GameObject &parent;
 		CollisionData collisionData;
 

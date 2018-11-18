@@ -1,6 +1,6 @@
-﻿#include "GameObject.h"
-#include "Direct2DGame/MathHelper.h"
+﻿#include "Direct2DGame/MathHelper.h"
 #include "Direct2DGame/Input/Keyboard.h"
+#include "GameObject.h"
 
 using namespace Castlevania;
 
@@ -20,9 +20,9 @@ GameObject::GameObject(EntityType type) : body{ *this }
 
 #pragma region Getters / Setters
 
-EntityType GameObject::GetType()
+int GameObject::GetType()
 {
-	return type;
+	return (int)type;
 }
 
 Vector2 GameObject::GetPosition()
@@ -49,6 +49,13 @@ void GameObject::SetPosition(Vector2 position)
 	SetPosition(position.x, position.y);
 }
 
+Vector2 GameObject::GetOriginPosition()
+{
+	return Vector2{
+		position.x + GetFrameRect().Width() / 2,
+		position.y + GetFrameRect().Height() / 2 };
+}
+
 Vector2 GameObject::GetVelocity()
 {
 	return velocity;
@@ -59,6 +66,16 @@ void GameObject::SetVelocity(Vector2 velocity)
 	this->velocity = velocity;
 }
 
+void GameObject::SetVelocity_X(float x)
+{
+	velocity.x = x;
+}
+
+void GameObject::SetVelocity_Y(float y)
+{
+	velocity.y = y;
+}
+
 void GameObject::SetLinearVelocity(float speed, float angle)
 {
 	// The X-Y axis in game has the value Y inverted compare to the X-Y axis in math
@@ -67,18 +84,6 @@ void GameObject::SetLinearVelocity(float speed, float angle)
 	//   with cos(θ) = x, cos(θ) = x
 	auto direction = MathHelper::Degrees2Vector(-angle);
 	velocity = direction * speed;
-}
-
-Vector2 GameObject::GetOriginPosition()
-{
-	return Vector2{
-		position.x + GetFrameRect().Width() / 2,
-		position.y + GetFrameRect().Height() / 2 };
-}
-
-Body Castlevania::GameObject::GetBody()
-{
-	return body;
 }
 
 RectF GameObject::GetFrameRect()
@@ -95,6 +100,11 @@ RectF GameObject::GetBoundingBox()
 		return *boundingBox;
 
 	return RectF::Empty();
+}
+
+Body Castlevania::GameObject::GetBody()
+{
+	return body;
 }
 
 IController *GameObject::GetController()
@@ -140,7 +150,14 @@ void GameObject::LoadContent(ContentManager &content)
 
 void GameObject::Update(float deltaTime, ObjectCollection *objectCollection)
 {
-	body.Update(deltaTime);
+	if (movementSystem != nullptr)
+		movementSystem->Update(deltaTime);
+
+	if (collisionSystem != nullptr)
+		collisionSystem->Update(*objectCollection);
+
+	if (collisionResponseSystem != nullptr)
+		collisionResponseSystem->Update(collisionSystem->GetCollisionData());
 }
 
 void GameObject::UpdateDistance(float deltaTime)

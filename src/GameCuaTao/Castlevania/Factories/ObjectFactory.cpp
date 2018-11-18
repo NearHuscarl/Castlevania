@@ -1,9 +1,10 @@
 #include "ObjectFactory.h"
-#include "../Models/GameObject.h"
+#include "../Models/EntityType.h"
 #include "../Models/Characters/Player/Controller.h"
-#include "../Models/Characters/Bat.h"
 #include "../Models/Systems/CollisionSystem.h"
+#include "../Models/Systems/PlayerMovementSystem.h"
 #include "../Models/Systems/PlayerResponseSystem.h"
+#include "../Models/Characters/Bat.h"
 #include "../Models/Items/FirePit.h"
 
 using namespace Castlevania;
@@ -98,7 +99,7 @@ std::unique_ptr<Player> ObjectFactory::CreatePlayer()
 	auto player = std::make_unique<Player>();
 
 	auto controller = std::make_unique<Controller>(*player.get());
-	auto movementSystem = std::make_unique<MovementSystem>(*player.get());
+	auto movementSystem = std::make_unique<PlayerMovementSystem>(*player.get());
 	auto collisionSystem = std::make_unique<CollisionSystem>(*player.get());
 	auto responseSystem = std::make_unique<PlayerResponseSystem>(*player.get());
 

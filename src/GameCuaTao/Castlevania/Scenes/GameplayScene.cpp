@@ -54,11 +54,6 @@ void GameplayScene::Draw(GameTime gameTime)
 		gameObject->Draw(spriteBatch);
 	}
 
-	for (auto const &gameObject : objectCollection.boundaries)
-	{
-		gameObject->DrawBoundingBox(spriteBatch);
-	}
-
 	player->Draw(spriteBatch);
 
 	spriteBatch.End();

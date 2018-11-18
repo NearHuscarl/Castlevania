@@ -51,6 +51,7 @@ void PlaygroundScene::Draw(GameTime gameTime)
 
 	for (auto const &gameObject : objectCollection.entities)
 	{
+		gameObject->DrawBoundingBox(spriteBatch);
 		gameObject->Draw(spriteBatch);
 	}
 
@@ -59,6 +60,7 @@ void PlaygroundScene::Draw(GameTime gameTime)
 		gameObject->DrawBoundingBox(spriteBatch);
 	}
 
+	player->DrawBoundingBox(spriteBatch);
 	player->Draw(spriteBatch);
 
 	spriteBatch.End();

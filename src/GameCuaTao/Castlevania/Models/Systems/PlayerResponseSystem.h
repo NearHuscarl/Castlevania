@@ -1,11 +1,11 @@
 #pragma once
 
-#include "CollisionResponseSystem.h"
+#include "ICollisionResponseSystem.h"
 #include "../Characters/Player/Player.h"
 
 namespace Castlevania
 {
-	class PlayerResponseSystem : public CollisionResponseSystem
+	class PlayerResponseSystem : public ICollisionResponseSystem
 	{
 	public:
 		PlayerResponseSystem(Player &parent);

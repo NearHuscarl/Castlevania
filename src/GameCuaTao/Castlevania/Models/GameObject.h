@@ -1,15 +1,15 @@
 #pragma once
 
 #include "Direct2DGame/Content/ContentManager.h"
-#include "Direct2DGame/Extensions/Sprites/SpriteExtensions.h"
 #include "Direct2DGame/Extensions/Animations/AnimatedSprite.h"
+#include "Direct2DGame/Extensions/Collisions/Body/Body.h"
+#include "Direct2DGame/Extensions/Sprites/SpriteExtensions.h"
 #include "Direct2DGame/Input/IController.h"
-#include "Systems/MovementSystem.h"
-#include "Systems/CollisionSystem.h"
-#include "Systems/CollisionResponseSystem.h"
-#include "EntityType.h"
-#include "Body/Body.h"
+#include "Systems/IMovementSystem.h"
+#include "Systems/ICollisionSystem.h"
+#include "Systems/ICollisionResponseSystem.h"
 #include "IGameObject.h"
+#include "EntityType.h"
 
 namespace Castlevania
 {
@@ -28,29 +28,30 @@ namespace Castlevania
 		GameObject(RectF boundingBox);
 		GameObject(EntityType type);
 
-		EntityType GetType() override;
+		int GetType() override;
 
 		Vector2 GetPosition();
-		Vector2 GetDistance() override;
 		void SetPosition(float x, float y);
 		void SetPosition(Vector2 position);
-		
-		Vector2 GetVelocity() override;
-		void SetVelocity(Vector2 velocity);
-		void SetLinearVelocity(float speed, float angle = 0.0f); // angle in degree
-
 		Vector2 GetOriginPosition(); // Get the center of the object's bounding box to the world
+
+		void Move(Vector2 direction);
+		Vector2 GetDistance() override;
 		
-		Body GetBody();
+		Vector2 GetVelocity();
+		virtual void SetVelocity(Vector2 velocity);
+		void SetVelocity_X(float x);
+		void SetVelocity_Y(float y);
+		void SetLinearVelocity(float speed, float angle = 0.0f); // angle in degree
+		
 		virtual RectF GetFrameRect();
 		virtual RectF GetBoundingBox() override;
+		Body GetBody() override;
 
 		IController *GetController();
 
 		template<typename T>
 		void Attach(std::unique_ptr<T> system);
-
-		void Move(Vector2 direction);
 
 		virtual void LoadContent(ContentManager &content);
 		virtual void Update(float deltaTime, ObjectCollection *objectCollection = nullptr);

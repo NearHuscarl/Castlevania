@@ -37,7 +37,7 @@ CollisionData CollisionSystem::FilterCollision(CollisionResults collisionResults
 {
 	if (collisionResults.size() == 0)
 		return CollisionData{};
-	
+
 	auto minNormal = Vector2::Zero();
 	auto minTime = Vector2::One();
 

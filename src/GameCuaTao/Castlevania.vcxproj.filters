@@ -189,9 +189,6 @@
     <ClCompile Include="Direct2DGame\Content\DictionaryReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Castlevania\Models\Body\Body.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Castlevania\Models\Systems\CollisionSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -217,6 +214,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Castlevania\Scenes\PlaygroundScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Models\Systems\PlayerMovementSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DGame\Extensions\Collisions\Body\Body.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -458,9 +461,6 @@
     <ClInclude Include="Castlevania\Settings\Button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Castlevania\Models\Body\Body.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Direct2DGame\Input\IController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -476,19 +476,7 @@
     <ClInclude Include="Direct2DGame\Content\DictionaryReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Castlevania\Models\Body\CollisionResult.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Castlevania\Models\Body\Direction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Castlevania\Models\Systems\CollisionSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Castlevania\Models\Body\CollisionData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Castlevania\Models\Body\IColliable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Castlevania\Models\Systems\CollisionResponseSystem.h">
@@ -528,6 +516,24 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Castlevania\Scenes\PlaygroundScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Systems\PlayerMovementSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DGame\Extensions\Collisions\Body\Body.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DGame\Extensions\Collisions\Body\CollisionData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DGame\Extensions\Collisions\Body\CollisionResult.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DGame\Extensions\Collisions\Body\Direction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DGame\Extensions\Collisions\Body\IColliable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -11,8 +11,10 @@ namespace Castlevania
 		Whip(GameObject &owner);
 
 		void SetFacing(Facing facing);
+		RectF GetBoundingBox() override;
 
 		void LoadContent(ContentManager &content) override;
+		void Update(float deltaTime, ObjectCollection *objectCollection) override;
 		void Draw(SpriteExtensions &spriteBatch) override;
 
 		void Unleash();

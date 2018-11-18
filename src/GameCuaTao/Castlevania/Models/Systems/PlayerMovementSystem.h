@@ -1,22 +1,22 @@
 #pragma once
 
 #include "IMovementSystem.h"
+#include "../Characters/Player/Player.h"
 
 namespace Castlevania
 {
 	class GameObject;
 
-	class MovementSystem : public IMovementSystem
+	class PlayerMovementSystem : public IMovementSystem
 	{
 	public:
-		MovementSystem(GameObject &parent);
+		PlayerMovementSystem(Player &parent);
 
 		Vector2 GetDistance() override;
 		void Update(float deltaTime) override;
 
 	private:
-		GameObject &parent;
-		float deltaTime;
+		Player &parent;
 		Vector2 distance; // estimated distance next frame
 	};
 }

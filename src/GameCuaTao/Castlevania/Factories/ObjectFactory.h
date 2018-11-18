@@ -2,7 +2,6 @@
 
 #include "ObjectCollection.h"
 #include "../Models/GameObject.h"
-#include "../Models/EntityType.h"
 #include "../Models/Characters/Player/Player.h"
 
 namespace Castlevania

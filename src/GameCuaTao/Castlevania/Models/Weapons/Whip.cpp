@@ -19,11 +19,30 @@ void Whip::SetFacing(Facing facing)
 	this->facing = facing;
 }
 
+RectF Whip::GetBoundingBox()
+{
+	if (!isActive)
+		return RectF::Empty();
+
+	return GameObject::GetBoundingBox();
+}
+
 void Whip::LoadContent(ContentManager &content)
 {
 	auto animationFactory = content.Load<AnimationFactory>("Items/Whip.xml");
 	sprite = std::make_unique<AnimatedSprite>(animationFactory);
 	Withdraw();
+}
+
+void Whip::Update(float deltaTime, ObjectCollection * objectCollection)
+{
+	if (isActive)
+	{
+		// Update the sprite first before getting position so GetPositionRelativeToPlayer()
+		// can access to the latest frame index
+		sprite->Update();
+		position = GetPositionRelativeToPlayer(owner);
+	}
 }
 
 void Whip::Draw(SpriteExtensions &spriteBatch)
@@ -35,13 +54,6 @@ void Whip::Draw(SpriteExtensions &spriteBatch)
 		else
 			sprite->SetEffect(SpriteEffects::None);
 
-		// Update the sprite first before getting position so GetPositionRelativeToPlayer()
-		// can access to the latest frame index
-		sprite->Update();
-		position = GetPositionRelativeToPlayer(owner);
-
-		DrawBoundingBox(spriteBatch); // NOTE: remove debugging code
-		//spriteBatch.Draw(GetBoundingBox(), Color::Magenta()); // TODO: remove debugging code
 		spriteBatch.Draw(*sprite, position);
 	}
 }

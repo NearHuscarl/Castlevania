@@ -1,14 +1,12 @@
 #pragma once
 
-#include "Body/IColliable.h"
-#include "EntityType.h"
+#include "Direct2DGame/Extensions/Collisions/Body/Body.h"
 
 namespace Castlevania
 {
 	class IGameObject : public IColliable
 	{
 	public:
-		virtual EntityType GetType() = 0;
-		virtual Vector2 GetVelocity() = 0;
+		virtual Body GetBody() = 0;
 	};
 }

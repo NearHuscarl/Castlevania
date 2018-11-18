@@ -1,21 +1,9 @@
 #include <limits>
-#include "Direct2DGame/MathHelper.h"
 #include "Body.h"
+#include "../../../MathHelper.h"
 
-using namespace Castlevania;
-
-Body::Body(IGameObject &dynamicObject) : parent{ dynamicObject }
+Body::Body(IColliable &colliableObject) : parent{ colliableObject }
 {
-}
-
-float Body::GetDeltaTime()
-{
-	return deltaTime;
-}
-
-void Body::Update(float deltaTime)
-{
-	this->deltaTime = deltaTime;
 }
 
 // Extension of original SweptAABB to deal with two moving objects

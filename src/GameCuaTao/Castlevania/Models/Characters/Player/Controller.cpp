@@ -67,7 +67,7 @@ void Controller::OnKeyDown(int keyCode)
 				player.Attack();
 			break;
 
-		case MoveState::JUMPED:
+		case MoveState::JUMPING:
 		case MoveState::LANDING:
 		case MoveState::DUCKING:
 			if (keyCode == Button::Attack)

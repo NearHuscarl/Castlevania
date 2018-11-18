@@ -3,10 +3,6 @@
 
 using namespace Castlevania;
 
-// TODO: use collision detection instead of hardcode GROUND_POSITION_Y
-constexpr auto GROUND_POSITION_Y = 307.0f;
-// TODO: put into Body class
-constexpr auto GRAVITY = 18.0f;
 constexpr auto STRETCH_LEG_VELOCITY_Y = 200.0f;
 
 Player::Player() : GameObject(EntityType::Player)
@@ -35,6 +31,15 @@ AttackState Player::GetAttackState()
 	return attackState;
 }
 
+// NOTE: revert or not
+void Player::SetVelocity(Vector2 velocity)
+{
+	//if (velocity == Vector2::Zero())
+	//	Idle();
+
+	this->velocity = velocity;
+}
+
 void Player::LoadContent(ContentManager &content)
 {
 	auto animationFactory = content.Load<AnimationFactory>("Characters/Players/Simon.xml");
@@ -51,11 +56,11 @@ void Player::LoadContent(ContentManager &content)
 
 void Player::Update(float deltaTime, ObjectCollection *objectCollection)
 {
-	GameObject::Update(deltaTime);
 	UpdateStates();
-	movementSystem->Update();
-	collisionSystem->Update(*objectCollection);
-	collisionResponseSystem->Update(collisionSystem->GetCollisionData());
+	GameObject::Update(deltaTime, objectCollection);
+
+	sprite->Update();
+	whip->Update(deltaTime, objectCollection);
 }
 
 void Player::UpdateStates()
@@ -63,20 +68,8 @@ void Player::UpdateStates()
 	switch (moveState)
 	{
 		case MoveState::JUMPING:
-			velocity.y = -jumpSpeed;
-			moveState = MoveState::JUMPED;
-			break;
-
-		case MoveState::JUMPED:
 			if (velocity.y > STRETCH_LEG_VELOCITY_Y && attackState == AttackState::INACTIVE)
 				sprite->Play(IDLE_ANIMATION);
-
-			UpdateJumpState();
-			break;
-
-		case MoveState::LANDING:
-			UpdateJumpState();
-			break;
 	}
 
 	switch (attackState)
@@ -85,30 +78,6 @@ void Player::UpdateStates()
 			UpdateAttackState();
 			break;
 	}
-}
-
-void Player::UpdateJumpState()
-{
-	if (velocity.y == 0) // Touch ground
-	{
-		if (attackState == AttackState::INACTIVE)
-			Idle();
-		else // AttackState::ATTACKING
-			velocity.x = 0; // Still keep attacking on the ground but not moving anymore
-	}
-	else
-		velocity.y += GRAVITY;
-
-	//if (position.y > GROUND_POSITION_Y)
-	//{
-	//	position.y = GROUND_POSITION_Y;
-	//	velocity.y = 0;
-
-	//	if (attackState == AttackState::INACTIVE)
-	//		Idle();
-	//	else // AttackState::ATTACKING
-	//		velocity.x = 0; // Still keep attacking on the ground but not moving anymore
-	//}
 }
 
 void Player::UpdateAttackState()
@@ -125,7 +94,6 @@ void Player::UpdateAttackState()
 				break;
 
 			case MoveState::JUMPING:
-			case MoveState::JUMPED:
 				Land();
 				break;
 
@@ -151,11 +119,15 @@ void Player::Draw(SpriteExtensions &spriteBatch)
 	else
 		sprite->SetEffect(SpriteEffects::FlipHorizontally);
 
-	DrawBoundingBox(spriteBatch); // NOTE: remove debugging code
-	sprite->Update();
 	spriteBatch.Draw(*sprite, position);
 	
 	whip->Draw(spriteBatch);
+}
+
+void Player::DrawBoundingBox(SpriteExtensions &spriteBatch)
+{
+	GameObject::DrawBoundingBox(spriteBatch);
+	whip->DrawBoundingBox(spriteBatch);
 }
 
 #pragma region Commands
@@ -185,6 +157,7 @@ void Player::WalkRight()
 
 void Player::Jump()
 {
+	velocity.y = -jumpSpeed;
 	moveState = MoveState::JUMPING;
 	sprite->Play(JUMP_ANIMATION);
 }
@@ -211,7 +184,7 @@ void Player::Attack()
 			sprite->Play(ATTACK_ANIMATION);
 			break;
 
-		case MoveState::JUMPED:
+		case MoveState::JUMPING:
 		case MoveState::LANDING:
 			sprite->Play(JUMP_ATTACK_ANIMATION);
 			break;

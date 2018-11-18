@@ -12,9 +12,8 @@ Vector2 MovementSystem::GetDistance()
 	return distance;
 }
 
-void MovementSystem::Update()
+void MovementSystem::Update(float deltaTime)
 {
-	auto deltaTime = parent.GetBody().GetDeltaTime();
 	auto velocity = parent.GetVelocity();
 
 	distance = velocity * deltaTime;

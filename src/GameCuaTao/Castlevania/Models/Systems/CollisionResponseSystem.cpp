@@ -9,9 +9,7 @@ CollisionResponseSystem::CollisionResponseSystem(GameObject &parent) : parent{ p
 
 void CollisionResponseSystem::Update(CollisionData collisionData)
 {
-	auto velocity = parent.GetVelocity();
-	auto deltaTime = parent.GetBody().GetDeltaTime();
-	auto distance = velocity * deltaTime;
+	auto distance = parent.GetDistance();
 
 	if (collisionData.collisionResults.size() == 0)
 	{
@@ -24,6 +22,8 @@ void CollisionResponseSystem::Update(CollisionData collisionData)
 
 	// *0.4f : need to push out a bit to avoid overlapping next frame
 	distance = distance * time + normal * 0.4f;
+
+	auto velocity = parent.GetVelocity();
 
 	if (normal.x != 0)
 		velocity.x = 0;
