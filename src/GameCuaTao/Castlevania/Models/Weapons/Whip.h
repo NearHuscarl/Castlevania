@@ -1,11 +1,11 @@
 #pragma once
 
 #include <map>
-#include "../GameObject.h"
+#include "../AnimatedObject.h"
 
 namespace Castlevania
 {
-	class Whip : public GameObject
+	class Whip : public AnimatedObject
 	{
 	public:
 		Whip(GameObject &owner);
@@ -21,11 +21,9 @@ namespace Castlevania
 		void Withdraw();
 
 	private:
-		Facing facing;
 		Vector2 GetPositionRelativeToPlayer(GameObject &player);
 		GameObject &owner;
 		int level; // 1, 2, 3
 		int hitPoint;
-		bool isActive;
 	};
 }

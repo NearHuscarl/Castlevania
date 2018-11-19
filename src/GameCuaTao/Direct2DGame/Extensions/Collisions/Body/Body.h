@@ -9,6 +9,9 @@ public:
 
 	CollisionData GetCollisionData();
 	void SetCollisionData(CollisionData collisionData);
+	
+	bool Enabled();
+	void Enabled(bool value);
 
 	CollisionResult PredictCollision(IColliable &staticObject);
 
@@ -28,6 +31,7 @@ private:
 
 	IColliable &parent;
 	CollisionData collisionData;
+	bool enabled;
 
 	SweptAABBResult SweptAABB(RectF movingRect, Vector2 distance, RectF staticRect);
 	BroadPhase CreateBroadPhase(RectF rect, Vector2 distance);

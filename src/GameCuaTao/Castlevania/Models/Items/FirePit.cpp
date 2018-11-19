@@ -2,18 +2,28 @@
 
 using namespace Castlevania;
 
-FirePit::FirePit() : GameObject(EntityType::FirePit)
+FirePit::FirePit() : AnimatedObject(EntityType::FirePit)
 {
+}
+
+void FirePit::SetSpawnedItem(std::unique_ptr<GameObject> item)
+{
+	this->item = std::move(item);
 }
 
 void FirePit::LoadContent(ContentManager &content)
 {
-	auto animationFactory = content.Load<AnimationFactory>("Items/Fire_Pit.xml");
-	sprite = std::make_unique<AnimatedSprite>(animationFactory);
+	AnimatedObject::LoadContent(content);
 }
 
-void FirePit::Draw(SpriteExtensions &spriteBatch)
+void FirePit::Update(float deltaTime, ObjectCollection *objectCollection)
 {
-	sprite->Update();
-	spriteBatch.Draw(*sprite, position);
+	AnimatedObject::Update(deltaTime, objectCollection);
+}
+
+std::unique_ptr<GameObject> FirePit::SpawnItem()
+{
+	body.Enabled(false);
+
+	return std::move(item);
 }

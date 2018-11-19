@@ -1,7 +1,7 @@
 #pragma once
 
-#include "IMovementSystem.h"
-#include "../Characters/Player/Player.h"
+#include "../../Systems/IMovementSystem.h"
+#include "Player.h"
 
 namespace Castlevania
 {

@@ -1,5 +1,5 @@
 #include "PlayerMovementSystem.h"
-#include "../GameObject.h"
+#include "../../GameObject.h"
 
 using namespace Castlevania;
 
@@ -30,8 +30,7 @@ void PlayerMovementSystem::Update(float deltaTime)
 
 		velocity.y = FALL_SPEED;
 	}
+	parent.SetVelocity(velocity);
 
 	distance = velocity * deltaTime;
-
-	parent.SetVelocity(velocity);
 }

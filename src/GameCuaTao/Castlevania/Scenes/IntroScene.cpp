@@ -11,8 +11,8 @@ constexpr auto GROUND_POSITION_Y = 338.f;
 IntroScene::IntroScene(SceneManager &sceneManager) : AbstractScene{ sceneManager }
 {
 	player = std::make_unique<Player>();
-	bat1 = std::make_unique<Bat>();
-	bat2 = std::make_unique<Bat>();
+	bat1 = objectFactory.CreateBat();
+	bat2 = objectFactory.CreateBat();
 }
 
 void IntroScene::LoadContent()

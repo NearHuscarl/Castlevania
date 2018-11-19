@@ -11,20 +11,36 @@ CollisionSystem::CollisionSystem(GameObject &parent) : parent{ parent }
 
 void CollisionSystem::Update(ObjectCollection &objectCollection)
 {
-	auto results = std::vector<CollisionResult>{};
+	if (!parent.GetBody().Enabled())
+		return;
 
+	auto results = std::vector<CollisionResult>{};
 	auto &boundaries = objectCollection.boundaries;
+	auto &entities = objectCollection.entities;
 
 	for (auto &boundary : boundaries)
 	{
-		auto result = parent.GetBody().PredictCollision(*boundary.get());
+		CalculateCollision(*boundary, results);
+	}
 
-		if (result.ShouldCollide())
-			results.push_back(result);
+	for (auto &entity : entities)
+	{
+		CalculateCollision(*entity, results);
 	}
 
 	// TODO: do we need to sort?
 	parent.GetBody().SetCollisionData(FilterCollision(results));
+}
+
+void CollisionSystem::CalculateCollision(GameObject &gameObject, CollisionResults &results)
+{
+	if (!gameObject.GetBody().Enabled())
+		return;
+
+	auto result = parent.GetBody().PredictCollision(gameObject);
+
+	if (result.ShouldCollide())
+		results.push_back(result);
 }
 
 // Get the list of objects that has the shortest time to collide with

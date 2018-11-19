@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Direct2DGame/Content/ContentManager.h"
-#include "Direct2DGame/Extensions/Animations/AnimatedSprite.h"
 #include "Direct2DGame/Extensions/Collisions/Body/Body.h"
 #include "Direct2DGame/Extensions/Sprites/SpriteExtensions.h"
 #include "Direct2DGame/Input/IController.h"
@@ -15,17 +14,9 @@ namespace Castlevania
 {
 	struct ObjectCollection;
 
-	enum class Facing
-	{
-		Right,
-		Left,
-	};
-
 	class GameObject : public IGameObject
 	{
 	public:
-		GameObject();
-		GameObject(RectF boundingBox);
 		GameObject(EntityType type);
 
 		int GetType() override;
@@ -45,7 +36,8 @@ namespace Castlevania
 		void SetLinearVelocity(float speed, float angle = 0.0f); // angle in degree
 		
 		virtual RectF GetFrameRect();
-		virtual RectF GetBoundingBox() override;
+		virtual RectF GetBoundingBox();
+
 		Body &GetBody() override;
 
 		IController *GetController();
@@ -55,8 +47,6 @@ namespace Castlevania
 
 		virtual void LoadContent(ContentManager &content);
 		virtual void Update(float deltaTime, ObjectCollection *objectCollection = nullptr);
-		void UpdateDistance(float deltaTime);
-
 		virtual void Draw(SpriteExtensions &spriteBatch);
 		virtual void DrawBoundingBox(SpriteExtensions &spriteBatch); // For debugging purpose
 
@@ -69,9 +59,7 @@ namespace Castlevania
 		float speed;
 		Body body;
 
-		std::unique_ptr<AnimatedSprite> sprite;
-		std::unique_ptr<RectF> boundingBox;
-
+	private:
 		std::unique_ptr<IController> controller;
 		std::unique_ptr<IMovementSystem> movementSystem;
 		std::unique_ptr<ICollisionSystem> collisionSystem;

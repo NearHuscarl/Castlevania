@@ -6,7 +6,7 @@ PlayerResponseSystem::PlayerResponseSystem(Player &parent) : parent{ parent }
 {
 }
 
-void PlayerResponseSystem::Update()
+void PlayerResponseSystem::Update(ObjectCollection &objectCollection)
 {
 	auto distance = parent.GetDistance();
 	auto collisionData = parent.GetBody().GetCollisionData();
@@ -26,15 +26,10 @@ void PlayerResponseSystem::Update()
 		switch (type)
 		{
 			case EntityType::Boundary:
-				auto normal = collisionData.minNormal;
-				auto time = collisionData.minTime;
-
-				// *0.4f : need to push out a bit to avoid overlapping next frame
-				distance = distance * time + normal * 0.4f;
-				parent.Move(distance);
-
 				if (result.direction == Direction::Top) // Touch ground
 				{
+					ClampDistance_Y(collisionData, distance);
+
 					parent.isOnGround = true;
 
 					if (parent.GetMoveState() == MoveState::FALLING
@@ -46,13 +41,34 @@ void PlayerResponseSystem::Update()
 				}
 				else if (result.direction == Direction::Right || result.direction == Direction::Left)
 				{
+					ClampDistance_X(collisionData, distance);
 					parent.SetVelocity_X(0);
 				}
 				else // (result.direction == Direction::Bottom)
 				{
+					ClampDistance_Y(collisionData, distance);
 					parent.SetVelocity_Y(0);
 				}
 				break;
 		}
 	}
+
+	parent.Move(distance);
+}
+
+void PlayerResponseSystem::ClampDistance_X(CollisionData collisionData, Vector2 &distance)
+{
+	auto time = collisionData.minTime;
+	auto normal = collisionData.minNormal;
+
+	// *0.4f : need to push out a bit to avoid overlapping next frame
+	distance.x = distance.x * time.x + normal.x * 0.4f;
+}
+
+void PlayerResponseSystem::ClampDistance_Y(CollisionData collisionData, Vector2 &distance)
+{
+	auto time = collisionData.minTime;
+	auto normal = collisionData.minNormal;
+
+	distance.y = distance.y * time.y + normal.y * 0.4f;
 }

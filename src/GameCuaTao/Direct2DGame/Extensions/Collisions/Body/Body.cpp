@@ -4,6 +4,7 @@
 
 Body::Body(IColliable &colliableObject) : parent{ colliableObject }
 {
+	enabled = true;
 }
 
 CollisionData Body::GetCollisionData()
@@ -14,6 +15,16 @@ CollisionData Body::GetCollisionData()
 void Body::SetCollisionData(CollisionData collisionData)
 {
 	this->collisionData = CollisionData{collisionData};
+}
+
+bool Body::Enabled()
+{
+	return enabled;
+}
+
+void Body::Enabled(bool value)
+{
+	enabled = value;
 }
 
 // Extension of original SweptAABB to deal with two moving objects

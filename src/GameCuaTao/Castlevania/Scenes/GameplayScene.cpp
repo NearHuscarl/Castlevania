@@ -37,7 +37,7 @@ void GameplayScene::Update(float deltaTime)
 
 	for (auto const &gameObject : objectCollection.entities)
 	{
-		gameObject->Update(deltaTime);
+		gameObject->Update(deltaTime, &objectCollection);
 	}
 }
 

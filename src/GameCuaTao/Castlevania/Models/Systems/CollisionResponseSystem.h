@@ -11,7 +11,7 @@ namespace Castlevania
 	public:
 		CollisionResponseSystem(GameObject &parent);
 
-		virtual void Update() override;
+		virtual void Update(ObjectCollection &objectCollection) override;
 
 	private:
 		GameObject &parent;

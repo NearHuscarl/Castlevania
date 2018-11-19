@@ -4,15 +4,6 @@
 
 using namespace Castlevania;
 
-GameObject::GameObject() : GameObject(EntityType::Unknown)
-{
-}
-
-GameObject::GameObject(RectF boundingBox) : GameObject(EntityType::Boundary)
-{
-	this->boundingBox = std::make_unique<RectF>(boundingBox);
-}
-
 GameObject::GameObject(EntityType type) : body{ *this }
 {
 	this->type = type;
@@ -90,17 +81,11 @@ void GameObject::SetLinearVelocity(float speed, float angle)
 
 RectF GameObject::GetFrameRect()
 {
-	return sprite->GetFrameRectangle(position);
+	return RectF::Empty();
 }
 
 RectF GameObject::GetBoundingBox()
 {
-	if (sprite != nullptr)
-		return sprite->GetBoundingRectangle(position);
-	
-	if (boundingBox != nullptr)
-		return *boundingBox;
-
 	return RectF::Empty();
 }
 
@@ -155,16 +140,11 @@ void GameObject::Update(float deltaTime, ObjectCollection *objectCollection)
 	if (movementSystem != nullptr)
 		movementSystem->Update(deltaTime);
 
-	if (collisionSystem != nullptr)
+	if (collisionSystem != nullptr && objectCollection != nullptr)
 		collisionSystem->Update(*objectCollection);
 
-	if (collisionResponseSystem != nullptr)
-		collisionResponseSystem->Update();
-}
-
-void GameObject::UpdateDistance(float deltaTime)
-{
-	position += velocity * deltaTime;
+	if (collisionResponseSystem != nullptr && objectCollection != nullptr)
+		collisionResponseSystem->Update(*objectCollection);
 }
 
 void GameObject::Draw(SpriteExtensions &spriteBatch)

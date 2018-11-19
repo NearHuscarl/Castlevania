@@ -1,14 +1,13 @@
 #pragma once
 
-#include "../GameObject.h"
+#include "../AnimatedObject.h"
 
 namespace Castlevania
 {
-	class Bat : public GameObject
+	class Bat : public AnimatedObject
 	{
 	public:
 		Bat();
 		void LoadContent(ContentManager &content) override;
-		void Draw(SpriteExtensions &spriteBatch) override;
 	};
 }

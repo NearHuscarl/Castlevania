@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../RectF.h"
-#include "../../../Base/Vector2.h"
+#include "../RectF.h"
+#include "../../Base/Vector2.h"
 
 class IColliable
 {

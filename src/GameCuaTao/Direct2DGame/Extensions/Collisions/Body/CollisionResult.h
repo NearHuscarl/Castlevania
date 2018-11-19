@@ -1,8 +1,8 @@
 #pragma once
 
 #include <vector>
-#include "IColliable.h"
-#include "Direction.h"
+#include "../IColliable.h"
+#include "../../Direction.h"
 
 struct CollisionResult
 {

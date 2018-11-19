@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Direct2DGame/Utilities/Stopwatch.h"
-#include "../../GameObject.h"
 #include "../../Weapons/Whip.h"
 
 namespace Castlevania
@@ -28,10 +27,10 @@ namespace Castlevania
 		// mid-air
 		LANDING,
 
-		// The moment when Simon touch ground after falling from a higher
-		// platform, she has to do a superhero landing (DUCK sprite) and
+		// The moment when Simon touches ground after falling from a higher
+		// platform, she has to do a superhero landing (DUCK animations) and
 		// wait a moment before changing back into IDLE state. if simon just
-		// JUMP and FALL on the same platform, she'd change straight into
+		// JUMPes and FALLs on the same platform, she'd change straight into
 		// IDLE state after touching the ground
 		LANDING_HARD,
 		
@@ -45,17 +44,17 @@ namespace Castlevania
 		ATTACKING,
 	};
 
-	class Player : public GameObject
+	class Player : public AnimatedObject
 	{
 	public:
 		Player();
 
-		Facing GetFacing();
+		void SetWhip(std::unique_ptr<Whip> whip);
 		MoveState GetMoveState();
 		AttackState GetAttackState();
 
 		void LoadContent(ContentManager &content) override;
-		virtual void Update(float deltaTime, ObjectCollection *objectCollection = nullptr) override;
+		void Update(float deltaTime, ObjectCollection *objectCollection = nullptr) override;
 		void Draw(SpriteExtensions &spriteBatch) override;
 		void DrawBoundingBox(SpriteExtensions &spriteBatch) override;
 
@@ -70,7 +69,6 @@ namespace Castlevania
 	private:
 		MoveState moveState;
 		AttackState attackState;
-		Facing facing;
 		float jumpSpeed;
 		
 		Stopwatch jumpCooldown;

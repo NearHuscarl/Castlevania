@@ -7,11 +7,11 @@ namespace Castlevania
 {
 	class GameObject;
 
-	// A collision detection system for dynamic objects using Swept AABB algorithm
-	class CollisionSystem : public ICollisionSystem
+	// A collision detection system for static objects only
+	class SimpleCollisionSystem : public ICollisionSystem
 	{
 	public:
-		CollisionSystem(GameObject &parent);
+		SimpleCollisionSystem(GameObject &parent);
 
 		void Update(ObjectCollection &objectCollection) override;
 
@@ -19,6 +19,5 @@ namespace Castlevania
 		GameObject &parent;
 
 		void CalculateCollision(GameObject &gameObject, CollisionResults &results);
-		CollisionData FilterCollision(CollisionResults collisionResults);
 	};
 }

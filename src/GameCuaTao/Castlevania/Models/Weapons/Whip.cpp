@@ -9,7 +9,9 @@ const auto HITPOINTS = std::map<int, int> // TODO: do we need hitpoint?
 	{ 3, 300 },
 };
 
-Whip::Whip(GameObject &owner) : GameObject(EntityType::Whip), owner{ owner }
+Whip::Whip(GameObject &owner) :
+	AnimatedObject(EntityType::Whip),
+	owner{ owner }
 {
 	level = 1;
 }
@@ -21,58 +23,53 @@ void Whip::SetFacing(Facing facing)
 
 RectF Whip::GetBoundingBox()
 {
-	if (!isActive)
+	if (!body.Enabled())
 		return RectF::Empty();
 
-	return GameObject::GetBoundingBox();
+	return AnimatedObject::GetBoundingBox();
 }
 
 void Whip::LoadContent(ContentManager &content)
 {
-	auto animationFactory = content.Load<AnimationFactory>("Items/Whip.xml");
-	sprite = std::make_unique<AnimatedSprite>(animationFactory);
+	AnimatedObject::LoadContent(content);
 	Withdraw();
 }
 
-void Whip::Update(float deltaTime, ObjectCollection * objectCollection)
+void Whip::Update(float deltaTime, ObjectCollection *objectCollection)
 {
-	if (isActive)
+	if (body.Enabled())
 	{
-		// Update the sprite first before getting position so GetPositionRelativeToPlayer()
+		AnimatedObject::Update(deltaTime, objectCollection);
+
+		// Update the animations first before getting position so GetPositionRelativeToPlayer()
 		// can access to the latest frame index
-		sprite->Update();
 		position = GetPositionRelativeToPlayer(owner);
 	}
 }
 
 void Whip::Draw(SpriteExtensions &spriteBatch)
 {
-	if (isActive)
+	if (body.Enabled())
 	{
-		if (facing == Facing::Left)
-			sprite->SetEffect(SpriteEffects::FlipHorizontally);
-		else
-			sprite->SetEffect(SpriteEffects::None);
-
-		spriteBatch.Draw(*sprite, position);
+		AnimatedObject::Draw(spriteBatch);
 	}
 }
 
 void Whip::Unleash()
 {
-	isActive = true;
-	sprite->Play("Whip_level_0" + std::to_string(level));
+	body.Enabled(true);
+	GetSprite().Play("Whip_level_0" + std::to_string(level));
 }
 
 void Whip::Withdraw()
 {
-	isActive = false;
-	sprite->GetCurrentAnimation().Reset();
+	body.Enabled(false);
+	GetSprite().GetCurrentAnimation().Reset();
 }
 
 Vector2 Whip::GetPositionRelativeToPlayer(GameObject &player)
 {
-	auto currentFrameIndex = sprite->GetCurrentAnimation().GetCurrentFrameIndex();
+	auto currentFrameIndex = GetSprite().GetCurrentAnimation().GetCurrentFrameIndex();
 	auto playerBbox = player.GetBoundingBox();
 	auto whipBbox = this->GetBoundingBox();
 

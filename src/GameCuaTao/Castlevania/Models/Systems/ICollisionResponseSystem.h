@@ -4,9 +4,11 @@
 
 namespace Castlevania
 {
+	struct ObjectCollection;
+
 	class ICollisionResponseSystem
 	{
 	public:
-		virtual void Update() = 0;
+		virtual void Update(ObjectCollection &objectCollection) = 0;
 	};
 }
