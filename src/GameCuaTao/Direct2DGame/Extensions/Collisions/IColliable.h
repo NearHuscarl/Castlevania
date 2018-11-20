@@ -10,4 +10,5 @@ public:
 	virtual int GetType() = 0;
 	virtual Vector2 GetDistance() = 0;
 	virtual RectF GetBoundingBox() = 0;
+	virtual ~IColliable() {}
 };

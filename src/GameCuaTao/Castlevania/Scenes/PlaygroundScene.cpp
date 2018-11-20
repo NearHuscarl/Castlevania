@@ -4,10 +4,12 @@
 
 using namespace Castlevania;
 
-PlaygroundScene::PlaygroundScene(SceneManager &sceneManager) : AbstractScene{ sceneManager }
+PlaygroundScene::PlaygroundScene(SceneManager &sceneManager, ObjectFactory &objectFactory) :
+	AbstractScene{ sceneManager },
+	objectFactory{ objectFactory }
 {
 	camera = std::make_unique<Camera>(sceneManager.GetGraphicsDevice());
-	stageManager = std::make_unique<StageManager>();
+	stageManager = std::make_unique<StageManager>(objectFactory);
 }
 
 void PlaygroundScene::LoadContent()
@@ -22,12 +24,6 @@ void PlaygroundScene::LoadContent()
 
 	player = objectFactory.CreatePlayer();
 	player->SetPosition(objectCollection.locations["Checkpoint_01"]);
-	player->LoadContent(content);
-
-	for (auto &entity : objectCollection.entities) // TODO: put LoadContent in constructor?
-	{
-		entity->LoadContent(content);
-	}
 }
 
 void PlaygroundScene::Update(float deltaTime)

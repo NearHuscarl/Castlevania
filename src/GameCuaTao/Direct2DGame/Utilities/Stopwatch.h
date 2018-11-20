@@ -12,6 +12,7 @@ public:
 	void Start();
 	void Stop();
 	void Reset();
+	void Restart();
 
 	bool IsRunning();
 
@@ -21,7 +22,7 @@ public:
 	static long GetTimeStamp();
 	static std::string GetFomattedTimeStamp(const char *format);
 
-	// Flip the boolean flag every <interval> miliseconds
+	// Flip the boolean flag every <interval> / 2 miliseconds
 	static bool Every(int interval);
 
 private:

@@ -17,6 +17,11 @@ void Body::SetCollisionData(CollisionData collisionData)
 	this->collisionData = CollisionData{collisionData};
 }
 
+void Body::ClearCollisionData()
+{
+	collisionData = CollisionData{};
+}
+
 bool Body::Enabled()
 {
 	return enabled;

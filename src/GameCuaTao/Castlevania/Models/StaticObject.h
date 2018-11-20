@@ -1,7 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
-#include "Systems/ISpriteRenderingSystem.h"
+#include "Systems/Rendering/ISpriteRenderingSystem.h"
 
 namespace Castlevania
 {
@@ -24,7 +24,6 @@ namespace Castlevania
 
 		~StaticObject();
 
-	private:
 		std::unique_ptr<ISpriteRenderingSystem> renderingSystem;
 	};
 }

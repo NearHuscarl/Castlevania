@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+  <Spritesheet TexturePath="Flame.png">
+    <Sprite ID="flame_01">
+      <SpriteFrame Left="0" Top="0" Width="42" Height="44" />
+    </Sprite>
+
+    <Sprite ID="flame_02">
+      <SpriteFrame Left="42" Top="0" Width="42" Height="44" />
+    </Sprite>
+
+    <Sprite ID="flame_03">
+      <SpriteFrame Left="84" Top="0" Width="42" Height="44" />
+    </Sprite>
+  </Spritesheet>
+
+  <Animations>
+    <Animation Name="Flame" DefaultTime="200" IsLooping="False">
+      <Frame SpriteID="flame_01" />
+      <Frame SpriteID="flame_02" />
+      <Frame SpriteID="flame_03" />
+    </Animation>
+  </Animations>
+
+</GameContent>

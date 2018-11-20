@@ -3,6 +3,8 @@
 
 using namespace Castlevania;
 
+constexpr auto FALL_SPEED = 1000.0f; // TODO: put in xml
+
 PlayerMovementSystem::PlayerMovementSystem(Player &parent) : parent{ parent }
 {
 }
@@ -10,6 +12,11 @@ PlayerMovementSystem::PlayerMovementSystem(Player &parent) : parent{ parent }
 Vector2 PlayerMovementSystem::GetDistance()
 {
 	return distance;
+}
+
+void PlayerMovementSystem::SetDistance(Vector2 distance)
+{
+	this->distance = distance;
 }
 
 void PlayerMovementSystem::Update(float deltaTime)

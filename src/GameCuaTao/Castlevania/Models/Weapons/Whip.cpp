@@ -1,4 +1,6 @@
 #include "Whip.h"
+#include "Direct2DGame/MathHelper.h"
+#include "WhipFlashingRenderingSystem.h"
 
 using namespace Castlevania;
 
@@ -24,9 +26,16 @@ void Whip::SetFacing(Facing facing)
 RectF Whip::GetBoundingBox()
 {
 	if (!body.Enabled())
+	{
 		return RectF::Empty();
+	}
 
 	return AnimatedObject::GetBoundingBox();
+}
+
+int Whip::GetLevel()
+{
+	return level;
 }
 
 void Whip::LoadContent(ContentManager &content)
@@ -37,34 +46,34 @@ void Whip::LoadContent(ContentManager &content)
 
 void Whip::Update(float deltaTime, ObjectCollection *objectCollection)
 {
+	AnimatedObject::Update(deltaTime, objectCollection);
+	
 	if (body.Enabled())
 	{
-		AnimatedObject::Update(deltaTime, objectCollection);
-
-		// Update the animations first before getting position so GetPositionRelativeToPlayer()
+		// Update the animation first before getting position so GetPositionRelativeToPlayer()
 		// can access to the latest frame index
 		position = GetPositionRelativeToPlayer(owner);
 	}
 }
 
-void Whip::Draw(SpriteExtensions &spriteBatch)
+void Whip::Draw(SpriteExtensions &spriteBatch) // TODO: remove?
 {
-	if (body.Enabled())
-	{
-		AnimatedObject::Draw(spriteBatch);
-	}
+	AnimatedObject::Draw(spriteBatch);
 }
 
 void Whip::Unleash()
 {
 	body.Enabled(true);
-	GetSprite().Play("Whip_level_0" + std::to_string(level));
 }
 
 void Whip::Withdraw()
 {
 	body.Enabled(false);
-	GetSprite().GetCurrentAnimation().Reset();
+}
+
+void Whip::Upgrade()
+{
+	level = MathHelper::Min(++level, WHIP_MAX_LEVEL);
 }
 
 Vector2 Whip::GetPositionRelativeToPlayer(GameObject &player)
@@ -82,7 +91,7 @@ Vector2 Whip::GetPositionRelativeToPlayer(GameObject &player)
 			case 1:
 				return Vector2{ playerBbox.left - whipBbox.Width(), playerBbox.top + 9 };
 			case 2:
-				return Vector2{ playerBbox.right - 3, playerBbox.top + 10 };
+				return Vector2{ playerBbox.right - 3, playerBbox.top + 26 - whipBbox.Height() };
 			default:
 				return Vector2::Zero();
 		}
@@ -96,7 +105,7 @@ Vector2 Whip::GetPositionRelativeToPlayer(GameObject &player)
 			case 1:
 				return Vector2{ playerBbox.right, playerBbox.top + 9 };
 			case 2:
-				return Vector2{ playerBbox.left - whipBbox.Width() + 3, playerBbox.top + 10 };
+				return Vector2{ playerBbox.left - whipBbox.Width() + 3, playerBbox.top + 26 - whipBbox.Height() };
 			default:
 				return Vector2::Zero();
 		}

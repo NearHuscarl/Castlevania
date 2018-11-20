@@ -2,60 +2,114 @@
 
 <GameContent>
   <Spritesheet TexturePath="Whip.png">
-    <Sprite ID="whip_11">
+    <Sprite ID="whip_level_1_01">
       <SpriteFrame Left="1" Top="7" Width="16" Height="48" />
     </Sprite>
 
-    <Sprite ID="whip_12">
+    <Sprite ID="whip_level_1_02">
       <SpriteFrame Left="41" Top="1" Width="32" Height="38" />
     </Sprite>
 
-    <Sprite ID="whip_13">
+    <Sprite ID="whip_level_1_03">
       <SpriteFrame Left="95" Top="5" Width="46" Height="16" />
     </Sprite>
 
-    <Sprite ID="whip_21">
+    <Sprite ID="whip_level_2_01">
       <SpriteFrame Left="1" Top="67" Width="16" Height="48" />
     </Sprite>
 
-    <Sprite ID="whip_22">
+    <Sprite ID="whip_level_2_02">
       <SpriteFrame Left="41" Top="61" Width="32" Height="38" />
     </Sprite>
 
-    <Sprite ID="whip_23">
+    <Sprite ID="whip_level_2_03">
       <SpriteFrame Left="95" Top="71" Width="46" Height="12" />
     </Sprite>
 
-    <Sprite ID="whip_31">
-      <SpriteFrame Left="1" Top="136" Width="16" Height="48" />
+    <Sprite ID="whip_level_3_magenta_01">
+      <SpriteFrame Left="1" Top="127" Width="16" Height="48" />
     </Sprite>
 
-    <Sprite ID="whip_32">
-      <SpriteFrame Left="41" Top="130" Width="32" Height="38" />
+    <Sprite ID="whip_level_3_magenta_02">
+      <SpriteFrame Left="41" Top="121" Width="32" Height="38" />
     </Sprite>
 
-    <Sprite ID="whip_33">
-      <SpriteFrame Left="95" Top="140" Width="78" Height="12" />
+    <Sprite ID="whip_level_3_magenta_03">
+      <SpriteFrame Left="95" Top="131" Width="78" Height="12" />
+    </Sprite>
+
+    <Sprite ID="whip_level_3_red_01">
+      <SpriteFrame Left="1" Top="187" Width="16" Height="48" />
+    </Sprite>
+
+    <Sprite ID="whip_level_3_red_02">
+      <SpriteFrame Left="41" Top="181" Width="32" Height="38" />
+    </Sprite>
+
+    <Sprite ID="whip_level_3_red_03">
+      <SpriteFrame Left="95" Top="191" Width="78" Height="12" />
+    </Sprite>
+
+    <Sprite ID="whip_level_3_yellow_01">
+      <SpriteFrame Left="1" Top="247" Width="16" Height="48" />
+    </Sprite>
+
+    <Sprite ID="whip_level_3_yellow_02">
+      <SpriteFrame Left="41" Top="241" Width="32" Height="38" />
+    </Sprite>
+
+    <Sprite ID="whip_level_3_yellow_03">
+      <SpriteFrame Left="95" Top="251" Width="78" Height="12" />
+    </Sprite>
+
+    <Sprite ID="whip_level_3_blue_01">
+      <SpriteFrame Left="1" Top="307" Width="16" Height="48" />
+    </Sprite>
+
+    <Sprite ID="whip_level_3_blue_02">
+      <SpriteFrame Left="41" Top="301" Width="32" Height="38" />
+    </Sprite>
+
+    <Sprite ID="whip_level_3_blue_03">
+      <SpriteFrame Left="95" Top="311" Width="78" Height="12" />
     </Sprite>
   </Spritesheet>
 
   <Animations>
     <Animation Name="Whip_level_01" DefaultTime="100" IsLooping="False">
-      <Frame SpriteID="whip_11" />
-      <Frame SpriteID="whip_12" />
-      <Frame SpriteID="whip_13" />
+      <Frame SpriteID="whip_level_1_01" />
+      <Frame SpriteID="whip_level_1_02" />
+      <Frame SpriteID="whip_level_1_03" />
     </Animation>
 
     <Animation Name="Whip_level_02" DefaultTime="100" IsLooping="False">
-      <Frame SpriteID="whip_21" />
-      <Frame SpriteID="whip_22" />
-      <Frame SpriteID="whip_23" />
+      <Frame SpriteID="whip_level_2_01" />
+      <Frame SpriteID="whip_level_2_02" />
+      <Frame SpriteID="whip_level_2_03" />
     </Animation>
 
-    <Animation Name="Whip_level_03" DefaultTime="100" IsLooping="False">
-      <Frame SpriteID="whip_31" />
-      <Frame SpriteID="whip_32" />
-      <Frame SpriteID="whip_33" />
+    <Animation Name="Whip_level_03_magenta" DefaultTime="100" IsLooping="False">
+      <Frame SpriteID="whip_level_3_magenta_01" />
+      <Frame SpriteID="whip_level_3_magenta_02" />
+      <Frame SpriteID="whip_level_3_magenta_03" />
+    </Animation>
+
+    <Animation Name="Whip_level_03_red" DefaultTime="100" IsLooping="False">
+      <Frame SpriteID="whip_level_3_red_01" />
+      <Frame SpriteID="whip_level_3_red_02" />
+      <Frame SpriteID="whip_level_3_red_03" />
+    </Animation>
+
+    <Animation Name="Whip_level_03_yellow" DefaultTime="100" IsLooping="False">
+      <Frame SpriteID="whip_level_3_yellow_01" />
+      <Frame SpriteID="whip_level_3_yellow_02" />
+      <Frame SpriteID="whip_level_3_yellow_03" />
+    </Animation>
+
+    <Animation Name="Whip_level_03_blue" DefaultTime="100" IsLooping="False">
+      <Frame SpriteID="whip_level_3_blue_01" />
+      <Frame SpriteID="whip_level_3_blue_02" />
+      <Frame SpriteID="whip_level_3_blue_03" />
     </Animation>
   </Animations>
 

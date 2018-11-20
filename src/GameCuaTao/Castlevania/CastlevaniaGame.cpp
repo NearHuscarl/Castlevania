@@ -1,7 +1,6 @@
 #include "Direct2DGame/Input/InputHelper.h"
 #include "CastlevaniaGame.h"
 #include "Scenes/MenuScene.h"
-#include "Settings/Fonts.h"
 #include "Utilities/AudioManager.h"
 #include "Settings/Audios.h"
 
@@ -26,7 +25,6 @@ void CastlevaniaGame::Initialize()
 
 void CastlevaniaGame::LoadContent()
 {
-	Fonts::LoadContent(*content);
 	AudioManager::LoadContent(*content, GAME_AUDIO);
 }
 

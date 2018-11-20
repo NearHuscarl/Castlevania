@@ -20,6 +20,8 @@ namespace Castlevania
 	class StageManager
 	{
 	public:
+		StageManager(ObjectFactory &objectFactory);
+
 		void LoadContent(ContentManager &content);
 		std::shared_ptr<TiledMap> NextMap(Map name);
 		ObjectCollection LoadGameObjects();
@@ -27,6 +29,6 @@ namespace Castlevania
 	private:
 		Maps maps;
 		std::shared_ptr<TiledMap> currentMap;
-		ObjectFactory objectFactory;
+		ObjectFactory &objectFactory;
 	};
 }

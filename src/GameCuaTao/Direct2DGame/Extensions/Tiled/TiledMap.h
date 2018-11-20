@@ -4,7 +4,6 @@
 #include <vector>
 #include "TileSet.h"
 #include "../Sprites/SpriteExtensions.h"
-#include "../Camera.h"
 
 using TiledMapObjectProperties = std::map<std::string, std::string>;
 using TiledMapObjects = std::vector<TiledMapObjectProperties>;

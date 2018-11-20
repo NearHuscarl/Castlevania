@@ -21,12 +21,20 @@ void SpriteBatch::End()
 	spriteHandler->End();
 }
 
-void SpriteBatch::Draw(Texture &texture, Vector2 position, Color color)
+void SpriteBatch::Draw(Texture &texture, Vector2 position, Color color, bool useViewport)
 {
-	Draw(texture, position, nullptr, color, 0.0f, Vector2::One(), SpriteEffects::None);
+	Draw(texture, position, nullptr, color, 0.0f, Vector2::One(), SpriteEffects::None, useViewport);
 }
 
-void SpriteBatch::Draw(Texture &texture, Vector2 position, Rect *rectPtr, Color color, float rotation, Vector2 scale, SpriteEffects effects)
+void SpriteBatch::Draw(
+	Texture &texture,
+	Vector2 position,
+	Rect *rectPtr,
+	Color color,
+	float rotation,
+	Vector2 scale,
+	SpriteEffects effects,
+	bool useViewport)
 {
 	auto rect = Rect{};
 	if (rectPtr == nullptr) // if null, draws full texture
@@ -42,7 +50,8 @@ void SpriteBatch::Draw(Texture &texture, Vector2 position, Rect *rectPtr, Color 
 	else // SpriteEffects::None
 		scaleVec = Vector2{ 1, 1 } * scale;
 
-	position = graphicsDevice.GetViewport().Project(position);
+	if (useViewport)
+		position = graphicsDevice.GetViewport().Project(position);
 	auto center = Vector2{ position.x + rect.Width() / 2, position.y + rect.Height() / 2 };
 
 	auto oldMatrix = Matrix{};
@@ -64,7 +73,7 @@ void SpriteBatch::Draw(Texture &texture, Vector2 position, Rect *rectPtr, Color 
 	spriteHandler->SetTransform(&oldMatrix);
 }
 
-void SpriteBatch::DrawString(SpriteFont &spriteFont, std::string text, Vector2 position, Color color)
+void SpriteBatch::DrawString(SpriteFont &spriteFont, std::string text, Vector2 position, Color color, bool useViewport)
 {
 	auto font = spriteFont.Get();
 	if (font == nullptr)
@@ -72,6 +81,9 @@ void SpriteBatch::DrawString(SpriteFont &spriteFont, std::string text, Vector2 p
 
 	auto textSize = spriteFont.MessureString(text);
 	auto rect = Rect{};
+	
+	if (useViewport)
+		position = graphicsDevice.GetViewport().Project(position);
 
 	auto x = (int)position.x;
 	auto y = (int)position.y;

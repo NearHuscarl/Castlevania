@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Systems/ICollisionResponseSystem.h"
+#include "../Systems/CollisionResponse/ICollisionResponseSystem.h"
 #include "Whip.h"
 
 namespace Castlevania

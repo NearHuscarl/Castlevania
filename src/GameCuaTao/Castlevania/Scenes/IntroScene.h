@@ -13,7 +13,7 @@ namespace Castlevania
 	class IntroScene : public AbstractScene
 	{
 	public:
-		IntroScene(SceneManager &sceneManager);
+		IntroScene(SceneManager &sceneManager, ObjectFactory &objectFactory);
 
 		void LoadContent() override;
 		void Update(float deltaTime) override;
@@ -22,7 +22,7 @@ namespace Castlevania
 	private:
 		std::shared_ptr<Texture> background;
 
-		ObjectFactory objectFactory;
+		ObjectFactory &objectFactory;
 
 		std::unique_ptr<Player> player;
 		std::unique_ptr<Bat> bat1; // left-side bat

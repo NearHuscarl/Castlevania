@@ -2,6 +2,10 @@
 
 using namespace Castlevania;
 
+StageManager::StageManager(ObjectFactory &objectFactory) : objectFactory{ objectFactory }
+{
+}
+
 void StageManager::LoadContent(ContentManager &content)
 {
 	//maps[Map::INTRO] = content.Load<TiledMap>("TiledMaps/Intro.tmx");

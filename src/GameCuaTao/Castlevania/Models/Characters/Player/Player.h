@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Direct2DGame/Utilities/Stopwatch.h"
+#include "PlayerData.h"
 #include "../../Weapons/Whip.h"
 
 namespace Castlevania
@@ -28,7 +29,7 @@ namespace Castlevania
 		LANDING,
 
 		// The moment when Simon touches ground after falling from a higher
-		// platform, she has to do a superhero landing (DUCK animations) and
+		// platform, she has to do a superhero landing (DUCK sprite) and
 		// wait a moment before changing back into IDLE state. if simon just
 		// JUMPes and FALLs on the same platform, she'd change straight into
 		// IDLE state after touching the ground
@@ -49,6 +50,7 @@ namespace Castlevania
 	public:
 		Player();
 
+		const PlayerData &GetData();
 		void SetWhip(std::unique_ptr<Whip> whip);
 		MoveState GetMoveState();
 		AttackState GetAttackState();
@@ -67,6 +69,7 @@ namespace Castlevania
 		void TurnBackward();
 
 	private:
+		PlayerData data;
 		MoveState moveState;
 		AttackState attackState;
 		float jumpSpeed;
@@ -81,7 +84,7 @@ namespace Castlevania
 		void Landing(); // Internal command to change from JumpAttacking state to Landing state
 		void Land();
 
-		void UpdateStates();
+		void UpdateStates(float deltaTime);
 		void UpdateAttackState();
 
 		friend class PlayerResponseSystem;

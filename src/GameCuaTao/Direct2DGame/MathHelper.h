@@ -17,6 +17,8 @@ public:
 	static float ToRadians(float degrees);
 	static Vector2 Degrees2Vector(float degrees);
 
+	static int RandomBetween(int min, int max);
+
 private:
 	static const double PI_180;
 };

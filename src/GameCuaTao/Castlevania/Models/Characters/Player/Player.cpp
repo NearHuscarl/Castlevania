@@ -18,6 +18,11 @@ void Player::SetFacing(Facing facing)
 	whip->SetFacing(facing);
 }
 
+const PlayerData &Player::GetData()
+{
+	return data;
+}
+
 void Player::SetWhip(std::unique_ptr<Whip> whip)
 {
 	this->whip = std::move(whip);
@@ -41,21 +46,19 @@ void Player::LoadContent(ContentManager &content)
 	speed = std::stof(stats->at("WalkSpeed"));
 	jumpSpeed = std::stof(stats->at("JumpSpeed"));
 
-	whip->LoadContent(content);
-
 	Idle();
 }
 
 void Player::Update(float deltaTime, ObjectCollection *objectCollection)
 {
 	GameObject::Update(deltaTime, objectCollection);
-	UpdateStates();
+	UpdateStates(deltaTime);
 
 	GetSprite().Update();
 	whip->Update(deltaTime, objectCollection);
 }
 
-void Player::UpdateStates()
+void Player::UpdateStates(float deltaTime)
 {
 	switch (moveState)
 	{
@@ -86,6 +89,8 @@ void Player::UpdateStates()
 			UpdateAttackState();
 			break;
 	}
+
+	data.timeLeft.CountDown();
 }
 
 void Player::UpdateAttackState()
@@ -189,6 +194,7 @@ void Player::Attack()
 
 		case MoveState::JUMPING:
 		case MoveState::LANDING:
+		case MoveState::FALLING:
 			GetSprite().Play(JUMP_ATTACK_ANIMATION);
 			break;
 
@@ -220,10 +226,15 @@ void Player::Land()
 		GetSprite().Play(DUCK_ANIMATION);
 	}
 	else
-		Idle();
-
-	if (attackState == AttackState::ATTACKING)
-		velocity.x = 0; // Still keep attacking on the ground but not moving anymore
+	{
+		if (attackState == AttackState::ATTACKING)
+		{
+			velocity.x = 0; // Still keep attacking on the ground but not moving anymore
+			moveState = MoveState::IDLE; // Set moveState so the character know what to do when finish attacking
+		}
+		else
+			Idle();
+	}
 }
 
 #pragma endregion

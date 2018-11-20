@@ -3,13 +3,17 @@
 #include "IntroScene.h"
 #include "GameplayScene.h"
 #include "PlaygroundScene.h"
+#include "../Utilities/SpriteHelper.h"
 
 using namespace Castlevania;
 
 SceneManager::SceneManager(Game &game) : game{ game }
 {
-	this->spriteBatch = std::make_unique<SpriteExtensions>(game.GetGraphicsDevice());
 	this->nextScene = nullptr;
+	this->objectFactory = std::make_unique<ObjectFactory>(GetContent());
+	this->spriteBatch = std::make_unique<SpriteExtensions>(game.GetGraphicsDevice());
+
+	SpriteHelper::LoadContent(GetContent());
 }
 
 #pragma region Getters
@@ -61,13 +65,13 @@ std::unique_ptr<AbstractScene> SceneManager::ConstructScene(Scene scene)
 			return std::make_unique<MenuScene>(*this);
 		
 		case Scene::INTRO:
-			return std::make_unique<IntroScene>(*this);
+			return std::make_unique<IntroScene>(*this, *objectFactory);
 		
 		case Scene::GAMEPLAY:
-			return std::make_unique<GameplayScene>(*this);
+			return std::make_unique<GameplayScene>(*this, *objectFactory);
 
 		case Scene::PLAYGROUND:
-			return std::make_unique<PlaygroundScene>(*this);
+			return std::make_unique<PlaygroundScene>(*this, *objectFactory);
 
 		default:
 			throw std::invalid_argument("Bad scene choice");

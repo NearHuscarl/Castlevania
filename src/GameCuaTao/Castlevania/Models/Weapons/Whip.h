@@ -5,6 +5,8 @@
 
 namespace Castlevania
 {
+	constexpr auto WHIP_MAX_LEVEL = 3;
+
 	class Whip : public AnimatedObject
 	{
 	public:
@@ -12,6 +14,7 @@ namespace Castlevania
 
 		void SetFacing(Facing facing);
 		RectF GetBoundingBox() override;
+		int GetLevel();
 
 		void LoadContent(ContentManager &content) override;
 		void Update(float deltaTime, ObjectCollection *objectCollection) override;
@@ -19,6 +22,7 @@ namespace Castlevania
 
 		void Unleash();
 		void Withdraw();
+		void Upgrade();
 
 	private:
 		Vector2 GetPositionRelativeToPlayer(GameObject &player);

@@ -1,7 +1,6 @@
 #include "Direct2DGame/Input/InputHelper.h"
 #include "MenuScene.h"
 #include "SceneManager.h"
-#include "../Settings/Fonts.h"
 
 using namespace Castlevania;
 
@@ -11,10 +10,12 @@ MenuScene::MenuScene(SceneManager &sceneManager) : AbstractScene{ sceneManager }
 
 void MenuScene::LoadContent()
 {
-	background = sceneManager.GetContent().Load<Texture>("Textures/Backgrounds/Main_Menu.png");
+	auto &content = sceneManager.GetContent();
+	background = content.Load<Texture>("Textures/Backgrounds/Main_Menu.png");
+	menuFont = content.Load<SpriteFont>("Fonts/MainFont");
 
 	auto viewport = sceneManager.GetGraphicsDevice().GetViewport();
-	auto startGameTextSize = Fonts::Main.MessureString(startGameText);
+	auto startGameTextSize = menuFont->MessureString(startGameText);
 	
 	startGameTextPosition.x = (viewport.width - startGameTextSize.x) / 2;
 	startGameTextPosition.y = (viewport.height - startGameTextSize.y) / 2 + 35;
@@ -51,11 +52,11 @@ void MenuScene::Draw(GameTime gameTime)
 
 	if (!transitionTimer.IsRunning())
 	{
-		spriteBatch.DrawString(Fonts::Main, startGameText, startGameTextPosition, Color::White());
+		spriteBatch.DrawString(*menuFont, startGameText, startGameTextPosition, Color::White());
 	}
 	else
 	{
-		spriteBatch.DrawString(Fonts::Main, startGameText, startGameTextPosition,
+		spriteBatch.DrawString(*menuFont, startGameText, startGameTextPosition,
 			Stopwatch::Every(120) ? Color::White() : Color::Transparent());
 	}
 

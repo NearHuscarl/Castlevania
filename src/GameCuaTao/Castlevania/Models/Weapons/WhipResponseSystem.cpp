@@ -1,7 +1,6 @@
 #include "WhipResponseSystem.h"
 #include "../../Factories/ObjectCollection.h"
 #include "../Items/FirePit.h"
-#include "../Items/Heart.h"
 
 using namespace Castlevania;
 
@@ -23,12 +22,13 @@ void WhipResponseSystem::Update(ObjectCollection &objectCollection)
 		switch (type)
 		{
 			case EntityType::FirePit:
-				auto &object = dynamic_cast<FirePit&>(result.collidedObject);
-				auto item = object.SpawnItem();
+				auto &firePit = dynamic_cast<FirePit&>(result.collidedObject);
+				auto item = firePit.SpawnItem();
 
-				item->SetPosition(object.GetPosition());
+				item->SetOriginPosition(firePit.GetOriginPosition());
+				firePit.Destroy();
 
-				//objectCollection.entities.push_back(item);
+				objectCollection.entities.push_back(std::move(item));
 				break;
 		}
 	}

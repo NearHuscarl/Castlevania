@@ -3,10 +3,15 @@
 
 using namespace Castlevania;
 
-GameplayScene::GameplayScene(SceneManager &sceneManager) : AbstractScene{ sceneManager }
+GameplayScene::GameplayScene(SceneManager &sceneManager, ObjectFactory &objectFactory) :
+	AbstractScene{ sceneManager },
+	objectFactory{ objectFactory }
 {
 	camera = std::make_unique<Camera>(sceneManager.GetGraphicsDevice());
-	stageManager = std::make_unique<StageManager>();
+	stageManager = std::make_unique<StageManager>(objectFactory);
+
+	player = objectFactory.CreatePlayer();
+	hud = std::make_unique<Hud>(player->GetData());
 }
 
 void GameplayScene::LoadContent()
@@ -14,19 +19,14 @@ void GameplayScene::LoadContent()
 	auto &content = sceneManager.GetContent();
 
 	stageManager->LoadContent(content);
+	hud->LoadContent(content);
+
 	map = stageManager->NextMap(Map::STAGE_01_COURTYARD);
 	camera->SetMoveArea(0, 0, map->GetWidthInPixels(), map->GetHeightInPixels());
 	
 	objectCollection = stageManager->LoadGameObjects();
 	
-	player = objectFactory.CreatePlayer();
 	player->SetPosition(objectCollection.locations["Checkpoint"]);
-	player->LoadContent(content);
-
-	for (auto &entity : objectCollection.entities) // TODO: put LoadContent in constructor?
-	{
-		entity->LoadContent(content);
-	}
 }
 
 void GameplayScene::Update(float deltaTime)
@@ -34,10 +34,19 @@ void GameplayScene::Update(float deltaTime)
 	camera->LookAt(player->GetOriginPosition(), Scrolling::Horizontally);
 
 	player->Update(deltaTime, &objectCollection);
+	auto &entities = objectCollection.entities;
 
-	for (auto const &gameObject : objectCollection.entities)
+	for (auto const &entity : entities)
 	{
-		gameObject->Update(deltaTime, &objectCollection);
+		entity->Update(deltaTime, &objectCollection);
+	}
+
+	for (int i = entities.size() - 1; i >= 0; i--) // Remove dead objects
+	{
+		auto &entity = entities[i];
+
+		if (entity->IsDestroyed())
+			entities.erase(entities.begin() + i);
 	}
 }
 
@@ -48,12 +57,16 @@ void GameplayScene::Draw(GameTime gameTime)
 	spriteBatch.Begin(D3DXSPRITE_ALPHABLEND);
 
 	map->Draw(spriteBatch);
+	hud->Draw(spriteBatch);
+	auto &entities = objectCollection.entities;
 
-	for (auto const &gameObject : objectCollection.entities)
+	for (auto const &entity : entities)
 	{
-		gameObject->Draw(spriteBatch);
+		entity->DrawBoundingBox(spriteBatch); // NOTE: remove
+		entity->Draw(spriteBatch);
 	}
 
+	player->DrawBoundingBox(spriteBatch); // NOTE: remove
 	player->Draw(spriteBatch);
 
 	spriteBatch.End();

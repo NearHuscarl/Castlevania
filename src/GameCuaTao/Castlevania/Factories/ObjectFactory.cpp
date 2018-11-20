@@ -1,19 +1,26 @@
 #include "ObjectFactory.h"
 #include "../Models/EntityType.h"
 #include "../Models/RectangleObject.h"
+#include "../Models/Systems/Movement/MovementSystem.h"
+#include "../Models/Systems/Collision/CollisionSystem.h"
+#include "../Models/Systems/Collision/SimpleCollisionSystem.h"
+#include "../Models/Systems/Collision/StaticCollisionSystem.h"
+#include "../Models/Systems/CollisionResponse/StaticResponseSystem.h"
+#include "../Models/Systems/Rendering/SpriteRenderingSystem.h"
+#include "../Models/Systems/Rendering/AnimationRenderingSystem.h"
 #include "../Models/Characters/Player/Controller.h"
 #include "../Models/Characters/Player/PlayerMovementSystem.h"
+#include "../Models/Characters/Player/PlayerCollisionSystem.h"
 #include "../Models/Characters/Player/PlayerResponseSystem.h"
-#include "../Models/Systems/CollisionSystem.h"
-#include "../Models/Systems/SimpleCollisionSystem.h"
-#include "../Models/Systems/AnimationRenderingSystem.h"
-#include "../Models/Characters/Bat.h"
-#include "../Models/Items/FirePit.h"
+#include "../Models/Weapons/WhipRenderingSystem.h"
+#include "../Models/Weapons/WhipFlashingRenderingSystem.h"
 #include "../Models/Weapons/WhipResponseSystem.h"
 
 using namespace Castlevania;
 
-ObjectFactory::ObjectFactory()
+constexpr auto ITEM_FALL_SPEED = 120.0f;
+
+ObjectFactory::ObjectFactory(ContentManager &content) : content{ content }
 {
 	stringToType =
 	{
@@ -94,7 +101,7 @@ std::unique_ptr<GameObject> ObjectFactory::ConstructObject(ObjectProperties prop
 			return CreatePlayer();
 
 		case EntityType::Bat:
-			return std::make_unique<Bat>();
+			return CreateBat();
 
 		case EntityType::FirePit:
 			return CreateFirePit(properties);
@@ -103,10 +110,10 @@ std::unique_ptr<GameObject> ObjectFactory::ConstructObject(ObjectProperties prop
 			return std::make_unique<Knife>();
 
 		case EntityType::Heart:
-			return std::make_unique<Heart>();
+			return CreateHeart();
 
 		case EntityType::WhipPowerup:
-			return std::make_unique<WhipPowerup>();
+			return CreateWhipPowerup();
 
 		default:
 			throw std::invalid_argument("Invalid object name");
@@ -119,6 +126,7 @@ std::unique_ptr<Bat> ObjectFactory::CreateBat()
 	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*bat, "Characters/NPCs/Bat.xml");
 
 	bat->AttachRenderer<IAnimationRenderingSystem>(std::move(renderingSystem));
+	bat->LoadContent(content);
 
 	return bat;
 }
@@ -129,8 +137,8 @@ std::unique_ptr<Player> ObjectFactory::CreatePlayer()
 
 	auto controller = std::make_unique<Controller>(*player);
 	auto movementSystem = std::make_unique<PlayerMovementSystem>(*player);
-	auto collisionSystem = std::make_unique<CollisionSystem>(*player);
-	auto responseSystem = std::make_unique<PlayerResponseSystem>(*player);
+	auto collisionSystem = std::make_unique<PlayerCollisionSystem>(*player);
+	auto responseSystem = std::make_unique<PlayerResponseSystem>(*player, *this);
 	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*player, "Characters/Players/Simon.xml");
 
 	player->Attach<IController>(std::move(controller));
@@ -142,6 +150,7 @@ std::unique_ptr<Player> ObjectFactory::CreatePlayer()
 	auto whip = CreateWhip(*player);
 	
 	player->SetWhip(std::move(whip));
+	player->LoadContent(content);
 
 	return player;
 }
@@ -154,11 +163,13 @@ std::unique_ptr<Player> ObjectFactory::CreateSimon()
 std::unique_ptr<FirePit> ObjectFactory::CreateFirePit(ObjectProperties properties)
 {
 	auto firePit = std::make_unique<FirePit>();
+
 	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*firePit, "Items/Fire_Pit.xml");
 	auto item = ConstructObject({ {"name", properties.at("Item")} });
 
 	firePit->AttachRenderer<IAnimationRenderingSystem>(std::move(renderingSystem));
 	firePit->SetSpawnedItem(std::move(item));
+	firePit->LoadContent(content);
 	
 	return firePit;
 }
@@ -169,11 +180,70 @@ std::unique_ptr<Whip> ObjectFactory::CreateWhip(GameObject &gameObject)
 
 	auto collisionSystem = std::make_unique<SimpleCollisionSystem>(*whip);
 	auto responseSystem = std::make_unique<WhipResponseSystem>(*whip);
-	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*whip, "Items/Whip.xml");
+	auto renderingSystem = std::make_unique<WhipRenderingSystem>(*whip, "Items/Whip.xml");
 
 	whip->Attach<ICollisionSystem>(std::move(collisionSystem));
 	whip->Attach<ICollisionResponseSystem>(std::move(responseSystem));
 	whip->AttachRenderer<IAnimationRenderingSystem>(std::move(renderingSystem));
 
+	whip->LoadContent(content);
+
 	return whip;
+}
+
+std::unique_ptr<Whip> ObjectFactory::CreateFlashingWhip(GameObject &gameObject)
+{
+	auto whip = std::make_unique<Whip>(gameObject);
+
+	auto collisionSystem = std::make_unique<SimpleCollisionSystem>(*whip);
+	auto responseSystem = std::make_unique<WhipResponseSystem>(*whip);
+	auto renderingSystem = std::make_unique<WhipFlashingRenderingSystem>(*whip, "Items/Whip.xml");
+
+	whip->Attach<ICollisionSystem>(std::move(collisionSystem));
+	whip->Attach<ICollisionResponseSystem>(std::move(responseSystem));
+	whip->AttachRenderer<IAnimationRenderingSystem>(std::move(renderingSystem));
+
+	whip->LoadContent(content);
+
+	return whip;
+}
+
+std::unique_ptr<StaticObject> ObjectFactory::CreateHeart()
+{
+	auto heart = std::make_unique<StaticObject>(EntityType::Heart);
+
+	auto movementSystem = std::make_unique<MovementSystem>(*heart);
+	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*heart);
+	auto responseSystem = std::make_unique<StaticResponseSystem>(*heart);
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*heart, "Items/Heart.png");
+	
+	heart->Attach<IMovementSystem>(std::move(movementSystem));
+	heart->Attach<ICollisionSystem>(std::move(collisionSystem));
+	heart->Attach<ICollisionResponseSystem>(std::move(responseSystem));
+	heart->AttachRenderer<ISpriteRenderingSystem>(std::move(renderingSystem));
+	heart->LoadContent(content);
+
+	heart->SetVelocity_Y(ITEM_FALL_SPEED); // Fall down
+
+	return heart;
+}
+
+std::unique_ptr<StaticObject> ObjectFactory::CreateWhipPowerup()
+{
+	auto whipPowerup = std::make_unique<StaticObject>(EntityType::WhipPowerup);
+
+	auto movementSystem = std::make_unique<MovementSystem>(*whipPowerup);
+	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*whipPowerup);
+	auto responseSystem = std::make_unique<StaticResponseSystem>(*whipPowerup);
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*whipPowerup, "Items/Whip_Powerup.png");
+
+	whipPowerup->Attach<IMovementSystem>(std::move(movementSystem));
+	whipPowerup->Attach<ICollisionSystem>(std::move(collisionSystem));
+	whipPowerup->Attach<ICollisionResponseSystem>(std::move(responseSystem));
+	whipPowerup->AttachRenderer<ISpriteRenderingSystem>(std::move(renderingSystem));
+	whipPowerup->LoadContent(content);
+
+	whipPowerup->SetVelocity_Y(ITEM_FALL_SPEED); // Fall down
+
+	return whipPowerup;
 }

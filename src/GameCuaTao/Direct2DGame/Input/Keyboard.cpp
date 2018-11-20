@@ -1,5 +1,4 @@
 #include "Keyboard.h"
-#include "KeyboardState.h"
 #include "../Utilities/FileLogger.h"
 
 IController *Keyboard::controller = nullptr;

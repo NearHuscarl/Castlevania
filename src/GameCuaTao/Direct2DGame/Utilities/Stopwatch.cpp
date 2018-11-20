@@ -34,6 +34,12 @@ void Stopwatch::Reset()
 	isRunning = false;
 }
 
+void Stopwatch::Restart()
+{
+	Reset();
+	Start();
+}
+
 bool Stopwatch::IsRunning()
 {
 	return isRunning;

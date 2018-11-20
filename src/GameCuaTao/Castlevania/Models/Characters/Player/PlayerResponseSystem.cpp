@@ -1,74 +1,130 @@
 #include "PlayerResponseSystem.h"
+#include "../../StaticObject.h"
+#include "../../../Factories/ObjectCollection.h"
 
 using namespace Castlevania;
 
-PlayerResponseSystem::PlayerResponseSystem(Player &parent) : parent{ parent }
+PlayerResponseSystem::PlayerResponseSystem(Player &parent, ObjectFactory &objectFactory) :
+	parent{ parent },
+	objectFactory{ objectFactory }
 {
 }
 
 void PlayerResponseSystem::Update(ObjectCollection &objectCollection)
 {
-	auto distance = parent.GetDistance();
 	auto collisionData = parent.GetBody().GetCollisionData();
 
 	parent.isOnGround = false;
 
 	if (collisionData.collisionResults.size() == 0)
-	{
-		parent.Move(distance);
 		return;
-	}
 
 	for (auto result : collisionData.collisionResults)
 	{
 		auto type = (EntityType)result.collidedObject.GetType();
+		auto &collidedObject = result.collidedObject;
 
 		switch (type)
 		{
 			case EntityType::Boundary:
-				if (result.direction == Direction::Top) // Touch ground
-				{
-					ClampDistance_Y(collisionData, distance);
+				OnCollideWithBoundary(result);
+				break;
 
-					parent.isOnGround = true;
+			case EntityType::Heart:
+				OnCollideWithHeart(result);
+				break;
 
-					if (parent.GetMoveState() == MoveState::FALLING
-						|| parent.GetMoveState() == MoveState::LANDING
-						|| parent.GetMoveState() == MoveState::FALLING_HARD)
-					{
-						parent.Land();
-					}
-				}
-				else if (result.direction == Direction::Right || result.direction == Direction::Left)
-				{
-					ClampDistance_X(collisionData, distance);
-					parent.SetVelocity_X(0);
-				}
-				else // (result.direction == Direction::Bottom)
-				{
-					ClampDistance_Y(collisionData, distance);
-					parent.SetVelocity_Y(0);
-				}
+			case EntityType::WhipPowerup:
+				OnCollideWithWhipPowerup(result);
+				break;
+
+			case EntityType::Knife:
+				OnCollideWithKnife(result);
 				break;
 		}
 	}
-
-	parent.Move(distance);
 }
 
-void PlayerResponseSystem::ClampDistance_X(CollisionData collisionData, Vector2 &distance)
+void PlayerResponseSystem::ClampDistance_X(CollisionData collisionData)
 {
+	auto distance = parent.GetDistance();
 	auto time = collisionData.minTime;
 	auto normal = collisionData.minNormal;
 
 	// *0.4f : need to push out a bit to avoid overlapping next frame
 	distance.x = distance.x * time.x + normal.x * 0.4f;
+	parent.SetDistance(distance);
 }
 
-void PlayerResponseSystem::ClampDistance_Y(CollisionData collisionData, Vector2 &distance)
+void PlayerResponseSystem::ClampDistance_Y(CollisionData collisionData)
 {
+	auto distance = parent.GetDistance();
 	auto time = collisionData.minTime;
 	auto normal = collisionData.minNormal;
 
 	distance.y = distance.y * time.y + normal.y * 0.4f;
+	parent.SetDistance(distance);
+}
+
+void PlayerResponseSystem::OnCollideWithBoundary(CollisionResult &result)
+{
+	auto distance = parent.GetDistance();
+	auto collisionData = parent.GetBody().GetCollisionData();
+
+	switch (result.direction)
+	{
+		case Direction::Top: // Touch ground
+			ClampDistance_Y(collisionData);
+
+			parent.isOnGround = true;
+
+			if (parent.GetMoveState() == MoveState::FALLING
+				|| parent.GetMoveState() == MoveState::LANDING
+				|| parent.GetMoveState() == MoveState::FALLING_HARD)
+			{
+				parent.Land();
+			}
+			break;
+
+		case Direction::Left:
+		case Direction::Right:
+			ClampDistance_X(collisionData);
+			parent.SetVelocity_X(0);
+			break;
+
+		case Direction::Bottom:
+			ClampDistance_Y(collisionData);
+			parent.SetVelocity_Y(0);
+			break;
+	}
+}
+
+void PlayerResponseSystem::OnCollideWithHeart(CollisionResult &result)
+{
+	auto &heart = dynamic_cast<StaticObject&>(result.collidedObject);
+
+	parent.data.hearts++;
+	heart.Destroy();
+}
+
+void PlayerResponseSystem::OnCollideWithWhipPowerup(CollisionResult &result)
+{
+	auto &whipPowerup = dynamic_cast<StaticObject&>(result.collidedObject);
+
+	auto &whip = parent.whip;
+
+	whip->Upgrade();
+
+	if (whip->GetLevel() == WHIP_MAX_LEVEL)
+	{
+		whip = objectFactory.CreateFlashingWhip(parent);
+		whip->SetFacing(parent.facing);
+	}
+
+	whipPowerup.Destroy();
+}
+
+void PlayerResponseSystem::OnCollideWithKnife(CollisionResult &result)
+{
+	//auto &knife = dynamic_cast<StaticObject&>(result.collidedObject);
 }

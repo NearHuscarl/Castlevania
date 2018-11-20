@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <string>
+#include "Direct2DGame/Graphics/SpriteFont.h"
 #include "Direct2DGame/Graphics/Texture.h"
 #include "Direct2DGame/Base/Vector2.h"
 #include "Direct2DGame/Utilities/Stopwatch.h"
@@ -20,6 +21,7 @@ namespace Castlevania
 
 	private:
 		std::shared_ptr<Texture> background;
+		std::shared_ptr<SpriteFont> menuFont;
 
 		const std::string startGameText = "PUSH START KEY";
 		Vector2 startGameTextPosition;

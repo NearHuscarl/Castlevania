@@ -8,7 +8,9 @@ using namespace Castlevania;
 
 constexpr auto GROUND_POSITION_Y = 338.f;
 
-IntroScene::IntroScene(SceneManager &sceneManager) : AbstractScene{ sceneManager }
+IntroScene::IntroScene(SceneManager &sceneManager, ObjectFactory &objectFactory) :
+	AbstractScene{ sceneManager },
+	objectFactory{ objectFactory }
 {
 	player = std::make_unique<Player>();
 	bat1 = objectFactory.CreateBat();
@@ -21,10 +23,6 @@ void IntroScene::LoadContent()
 
 	background = sceneManager.GetContent().Load<Texture>("Textures/Backgrounds/Intro_Scene.png");
 	
-	player->LoadContent(sceneManager.GetContent());
-	bat1->LoadContent(sceneManager.GetContent());
-	bat2->LoadContent(sceneManager.GetContent());
-
 	startPosition = Vector2{ (float)viewport.width - player->GetBoundingBox().Width() / 2, GROUND_POSITION_Y };
 	gatePosition = Vector2{ (float)viewport.width / 2, GROUND_POSITION_Y };
 

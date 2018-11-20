@@ -1,5 +1,6 @@
 ﻿#include "Direct2DGame/MathHelper.h"
 #include "Direct2DGame/Input/Keyboard.h"
+#include "../Utilities/SpriteHelper.h"
 #include "GameObject.h"
 
 using namespace Castlevania;
@@ -21,16 +22,6 @@ Vector2 GameObject::GetPosition()
 	return position;
 }
 
-Vector2 GameObject::GetDistance()
-{
-	if (movementSystem != nullptr)
-	{
-		return movementSystem->GetDistance();
-	}
-
-	return Vector2::Zero();
-}
-
 void GameObject::SetPosition(float x, float y)
 {
 	position.x = x;
@@ -42,11 +33,32 @@ void GameObject::SetPosition(Vector2 position)
 	SetPosition(position.x, position.y);
 }
 
+Vector2 GameObject::GetDistance()
+{
+	if (movementSystem != nullptr)
+		return movementSystem->GetDistance();
+
+	return Vector2::Zero();
+}
+
+void GameObject::SetDistance(Vector2 distance)
+{
+	if (movementSystem != nullptr)
+		return movementSystem->SetDistance(distance);
+}
+
 Vector2 GameObject::GetOriginPosition()
 {
 	return Vector2{
 		position.x + GetFrameRect().Width() / 2,
 		position.y + GetFrameRect().Height() / 2 };
+}
+
+void GameObject::SetOriginPosition(Vector2 value)
+{
+	position = Vector2{
+		value.x - GetFrameRect().Width() / 2,
+		value.y - GetFrameRect().Height() / 2 };
 }
 
 Vector2 GameObject::GetVelocity()
@@ -94,9 +106,24 @@ Body &Castlevania::GameObject::GetBody()
 	return body;
 }
 
+void GameObject::Destroy()
+{
+	isDestroyed = true;
+}
+
+bool GameObject::IsDestroyed()
+{
+	return isDestroyed;
+}
+
 IController *GameObject::GetController()
 {
 	return controller.get();
+}
+
+void GameObject::Move(Vector2 direction)
+{
+	position += direction;
 }
 
 template<>
@@ -126,11 +153,6 @@ void GameObject::Attach(std::unique_ptr<ICollisionResponseSystem> system)
 
 #pragma endregion
 
-void GameObject::Move(Vector2 direction)
-{
-	position += direction;
-}
-
 void GameObject::LoadContent(ContentManager &content)
 {
 }
@@ -145,6 +167,8 @@ void GameObject::Update(float deltaTime, ObjectCollection *objectCollection)
 
 	if (collisionResponseSystem != nullptr && objectCollection != nullptr)
 		collisionResponseSystem->Update(*objectCollection);
+
+	Move(GetDistance()); // Can move properly now after handling potential collisions with other objects
 }
 
 void GameObject::Draw(SpriteExtensions &spriteBatch)
@@ -153,14 +177,28 @@ void GameObject::Draw(SpriteExtensions &spriteBatch)
 
 void GameObject::DrawBoundingBox(SpriteExtensions &spriteBatch)
 {
-	if (type == EntityType::Boundary)
-		spriteBatch.Draw(GetBoundingBox(), Color::Blue());
-	else if (type == EntityType::Whip)
-		spriteBatch.Draw(GetBoundingBox(), Color::Red());
-	else if (type == EntityType::FirePit)
-		spriteBatch.Draw(GetBoundingBox(), Color::Green());
-	else
-		spriteBatch.Draw(GetBoundingBox(), Color::Magenta());
+	switch (type)
+	{
+		case EntityType::Boundary:
+			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::Blue());
+			break;
+
+		case EntityType::Whip:
+			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::Red());
+			break;
+
+		case EntityType::FirePit:
+			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::Green());
+			break;
+
+		case EntityType::Player:
+			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::LavenderBlue());
+			break;
+
+		default:
+			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::Magenta());
+			break;
+	}
 }
 
 GameObject::~GameObject()

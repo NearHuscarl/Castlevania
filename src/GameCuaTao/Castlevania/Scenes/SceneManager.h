@@ -5,6 +5,7 @@
 #include "Direct2DGame/Extensions/Sprites/SpriteExtensions.h"
 #include "AbstractScene.h"
 #include "Scene.h"
+#include "../Factories/ObjectFactory.h"
 
 namespace Castlevania
 {
@@ -26,6 +27,7 @@ namespace Castlevania
 		Game &game;
 		std::unique_ptr<AbstractScene> currentScene;
 		std::unique_ptr<AbstractScene> nextScene;
+		std::unique_ptr<ObjectFactory> objectFactory;
 		std::unique_ptr<SpriteExtensions> spriteBatch;
 
 		std::unique_ptr<AbstractScene> ConstructScene(Scene scene);

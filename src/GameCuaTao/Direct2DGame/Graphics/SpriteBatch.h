@@ -16,9 +16,18 @@ public:
 	void Begin(unsigned long flags);
 	void End();
 
-	void Draw(Texture &texture, Vector2 position, Color color);
-	void Draw(Texture &texture, Vector2 position, Rect *rectangle, Color color, float rotation, Vector2 scale, SpriteEffects effects);
-	void DrawString(SpriteFont &spriteFont, std::string text, Vector2 position, Color color);
+	void Draw(Texture &texture, Vector2 position, Color color, bool useViewport = true);
+	void Draw(
+		Texture &texture,
+		Vector2 position,
+		Rect *rectangle,
+		Color color,
+		float rotation,
+		Vector2 scale,
+		SpriteEffects effects,
+		bool useViewport = true);
+
+	void DrawString(SpriteFont &spriteFont, std::string text, Vector2 position, Color color, bool useViewport = true);
 
 protected:
 	GraphicsDevice &graphicsDevice;

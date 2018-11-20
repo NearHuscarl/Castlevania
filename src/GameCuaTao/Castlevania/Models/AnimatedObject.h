@@ -2,7 +2,7 @@
 
 #include "Direct2DGame/Extensions/Animations/AnimatedSprite.h"
 #include "GameObject.h"
-#include "Systems/IAnimationRenderingSystem.h"
+#include "Systems/Rendering/IAnimationRenderingSystem.h"
 
 namespace Castlevania
 {
@@ -37,7 +37,6 @@ namespace Castlevania
 	protected:
 		Facing facing;
 
-	private:
 		std::unique_ptr<IAnimationRenderingSystem> renderingSystem;
 	};
 }

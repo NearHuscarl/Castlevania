@@ -9,6 +9,7 @@ public:
 
 	CollisionData GetCollisionData();
 	void SetCollisionData(CollisionData collisionData);
+	void ClearCollisionData();
 	
 	bool Enabled();
 	void Enabled(bool value);
