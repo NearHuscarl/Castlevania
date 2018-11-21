@@ -1,10 +1,10 @@
 #pragma once
 
-#include <map>
+#include <vector>
 #include "../Sprites/Sprite.h"
 
 using Tile = Sprite;
-using Tiles = std::map<std::pair<int, int>, Tile>; // map[(row, column)] : Tile
+using Tiles = std::vector<std::vector<Tile>>; // map[(row, column)] : Tile
 
 class TileSet
 {

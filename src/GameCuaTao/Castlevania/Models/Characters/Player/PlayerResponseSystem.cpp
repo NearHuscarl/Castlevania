@@ -1,5 +1,4 @@
 #include "PlayerResponseSystem.h"
-#include "../../StaticObject.h"
 #include "../../../Factories/ObjectCollection.h"
 
 using namespace Castlevania;
@@ -38,8 +37,8 @@ void PlayerResponseSystem::Update(ObjectCollection &objectCollection)
 				OnCollideWithWhipPowerup(result);
 				break;
 
-			case EntityType::Knife:
-				OnCollideWithKnife(result);
+			case EntityType::KnifeItem:
+				OnCollideWithKnifeItem(result, objectCollection);
 				break;
 		}
 	}
@@ -101,7 +100,7 @@ void PlayerResponseSystem::OnCollideWithBoundary(CollisionResult &result)
 
 void PlayerResponseSystem::OnCollideWithHeart(CollisionResult &result)
 {
-	auto &heart = dynamic_cast<StaticObject&>(result.collidedObject);
+	auto &heart = dynamic_cast<GameObject&>(result.collidedObject);
 
 	parent.data.hearts++;
 	heart.Destroy();
@@ -109,8 +108,7 @@ void PlayerResponseSystem::OnCollideWithHeart(CollisionResult &result)
 
 void PlayerResponseSystem::OnCollideWithWhipPowerup(CollisionResult &result)
 {
-	auto &whipPowerup = dynamic_cast<StaticObject&>(result.collidedObject);
-
+	auto &whipPowerup = dynamic_cast<GameObject&>(result.collidedObject);
 	auto &whip = parent.whip;
 
 	whip->Upgrade();
@@ -124,7 +122,11 @@ void PlayerResponseSystem::OnCollideWithWhipPowerup(CollisionResult &result)
 	whipPowerup.Destroy();
 }
 
-void PlayerResponseSystem::OnCollideWithKnife(CollisionResult &result)
+void PlayerResponseSystem::OnCollideWithKnifeItem(CollisionResult &result, ObjectCollection &objectCollection)
 {
-	//auto &knife = dynamic_cast<StaticObject&>(result.collidedObject);
+	auto &item = dynamic_cast<GameObject&>(result.collidedObject);
+	auto itemType = (EntityType)item.GetType();
+	
+	item.Destroy();
+	parent.SetSecondaryWeapon(itemType);
 }

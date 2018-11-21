@@ -28,7 +28,10 @@ void AnimatedSprite::Play(std::string name)
 {
 	if (currentAnimation->GetName() != name || currentAnimation->IsComplete())
 	{
-		currentAnimation = animationFactory->Create(name);
+		if (name == "")
+			currentAnimation = animationFactory->Create(); // Play the default animation
+		else
+			currentAnimation = animationFactory->Create(name);
 	}
 }
 

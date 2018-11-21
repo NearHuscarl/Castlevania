@@ -12,6 +12,9 @@ namespace Castlevania
 
 		Vector2 GetDistance() override;
 		void SetDistance(Vector2 distance) override;
+
+		virtual void Receive(int message) override {};
+
 		void Update(float deltaTime) override;
 
 	private:

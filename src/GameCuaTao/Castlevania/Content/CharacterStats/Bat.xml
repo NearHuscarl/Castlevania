@@ -4,8 +4,7 @@
 
   <Dictionary
     Name="Bat"
-    Speed="30.0"
-    StartingAnimation="fly">
+    Speed="30.0">
   </Dictionary>
 
 </GameContent>

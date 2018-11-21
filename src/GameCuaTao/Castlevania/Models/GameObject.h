@@ -6,6 +6,7 @@
 #include "Direct2DGame/Input/IController.h"
 #include "Systems/Movement/IMovementSystem.h"
 #include "Systems/Collision/ICollisionSystem.h"
+#include "Systems/Rendering/IRenderingSystem.h"
 #include "Systems/CollisionResponse/ICollisionResponseSystem.h"
 #include "IGameObject.h"
 #include "EntityType.h"
@@ -13,6 +14,13 @@
 namespace Castlevania
 {
 	struct ObjectCollection;
+
+	enum class Facing
+	{
+		Right,
+		Left,
+		None,
+	};
 
 	class GameObject : public IGameObject
 	{
@@ -40,6 +48,11 @@ namespace Castlevania
 		virtual RectF GetFrameRect();
 		virtual RectF GetBoundingBox();
 
+		Sprite &GetSprite();
+		Facing GetFacing();
+		virtual void SetFacing(Facing facing);
+		virtual void SetVisibility(bool value);
+
 		Body &GetBody() override;
 		void Destroy();
 		bool IsDestroyed();
@@ -63,12 +76,18 @@ namespace Castlevania
 		Vector2 position;
 		Vector2 velocity;
 		float speed;
+		Facing facing;
 		Body body;
 		bool isDestroyed;
+
+		std::vector<IReceiver*> components;
 
 		std::unique_ptr<IController> controller;
 		std::unique_ptr<IMovementSystem> movementSystem;
 		std::unique_ptr<ICollisionSystem> collisionSystem;
 		std::unique_ptr<ICollisionResponseSystem> collisionResponseSystem;
+		std::unique_ptr<IRenderingSystem> renderingSystem;
+
+		void SendMessageToSystems(int message);
 	};
 }

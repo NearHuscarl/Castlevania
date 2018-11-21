@@ -18,6 +18,7 @@ namespace Castlevania
 		// Items
 		Heart,
 		WhipPowerup,
+		KnifeItem,
 		
 		Unknown,
 	};

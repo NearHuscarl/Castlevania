@@ -2,6 +2,7 @@
 #include "Direct2DGame/MathHelper.h"
 #include "WhipRenderingSystem.h"
 #include "Whip.h"
+#include "WhipSettings.h"
 
 using namespace Castlevania;
 
@@ -21,6 +22,12 @@ AnimatedSprite &WhipRenderingSystem::GetSprite()
 	return *sprite;
 }
 
+void WhipRenderingSystem::Receive(int message)
+{
+	if (message == WHIP_ENABLED_CHANGED)
+		OnEnabledChanged();
+}
+
 void WhipRenderingSystem::LoadContent(ContentManager &content)
 {
 	auto animationFactory = content.Load<AnimationFactory>(spriteConfigPath);
@@ -31,24 +38,13 @@ void WhipRenderingSystem::LoadContent(ContentManager &content)
 
 void WhipRenderingSystem::Update(float deltaTime)
 {
-	if (IsEnabledChanged())
-	{
-		OnEnabledChange();
-	}
-
 	if (!parent.GetBody().Enabled())
 		return;
 
 	sprite->Update();
-
-	if (parent.GetFacing() == Facing::Left)
-	{
-		sprite->SetEffect(SpriteEffects::FlipHorizontally);
-	}
-	else
-	{
-		sprite->SetEffect(SpriteEffects::None);
-	}
+	// Update the animation first before getting position so UpdatePositionRelativeToPlayer()
+	// can access to the latest frame index
+	UpdatePositionRelativeToPlayer();
 }
 
 void WhipRenderingSystem::Draw(SpriteExtensions &spriteBatch)
@@ -59,31 +55,66 @@ void WhipRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 	spriteBatch.Draw(*sprite, parent.GetPosition());
 }
 
-bool WhipRenderingSystem::IsEnabledChanged()
-{
-	static auto enabled = parent.GetBody().Enabled();
-
-	if (enabled != parent.GetBody().Enabled())
-	{
-		enabled = parent.GetBody().Enabled();
-		return true;
-	}
-
-	return false;
-}
-
-void WhipRenderingSystem::OnEnabledChange()
+void WhipRenderingSystem::OnEnabledChanged()
 {
 	auto enabled = parent.GetBody().Enabled();
 	auto level = MathHelper::Min(parent.GetLevel(), 2);
 
 	if (enabled)
 	{
-		// Play level 1 or 2 whip animation, level 3 whip is another seperate object
+		// Play level 1 or 2 whip animation, level 3 whip is another seperate system
 		sprite->Play("Whip_level_0" + std::to_string(level));
 	}
 	else
 	{
 		sprite->GetCurrentAnimation().Reset();
 	}
+}
+
+void WhipRenderingSystem::UpdatePositionRelativeToPlayer()
+{
+	auto &player = parent.GetOwner();
+	auto currentFrameIndex = GetSprite().GetCurrentAnimation().GetCurrentFrameIndex();
+	auto playerBbox = player.GetBoundingBox();
+	auto whipBbox = this->GetBoundingBox();
+	auto newPosition = Vector2{};
+
+	if (parent.GetFacing() == Facing::Right)
+	{
+		switch (currentFrameIndex)
+		{
+			case 0:
+				newPosition = Vector2{ playerBbox.left - whipBbox.Width() + 1, playerBbox.top + 14 };
+				break;
+			case 1:
+				newPosition = Vector2{ playerBbox.left - whipBbox.Width(), playerBbox.top + 9 };
+				break;
+			case 2:
+				newPosition = Vector2{ playerBbox.right - 3, playerBbox.top + 26 - whipBbox.Height() };
+				break;
+			default:
+				newPosition = Vector2::Zero();
+				break;
+		}
+	}
+	else // Facing::Left
+	{
+		switch (currentFrameIndex)
+		{
+			case 0:
+				newPosition = Vector2{ playerBbox.right - 1, playerBbox.top + 14 };
+				break;
+			case 1:
+				newPosition = Vector2{ playerBbox.right, playerBbox.top + 9 };
+				break;
+			case 2:
+				newPosition = Vector2{ playerBbox.left - whipBbox.Width() + 3, playerBbox.top + 26 - whipBbox.Height() };
+				break;
+			default:
+				newPosition = Vector2::Zero();
+				break;
+		}
+	}
+
+	parent.SetPosition(newPosition);
 }

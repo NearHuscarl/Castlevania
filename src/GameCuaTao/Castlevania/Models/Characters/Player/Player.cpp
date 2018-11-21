@@ -1,21 +1,34 @@
 #include "Player.h"
-#include "../../../Settings/Animations.h"
+#include "PlayerSettings.h"
 
 using namespace Castlevania;
 
-constexpr auto BEND_KNEE_ON_JUMPING_Y = 330.0f;
-constexpr auto STRETCH_LEG_ON_FALLING_Y = 200.0f;
 constexpr auto JUMP_COOLDOWN = 400; // 0.4 seconds
 
-Player::Player() : AnimatedObject(EntityType::Player)
+Player::Player() : GameObject(EntityType::Player)
 {
 	this->whip = std::make_unique<Whip>(*this);
 }
 
 void Player::SetFacing(Facing facing)
 {
-	this->facing = facing;
+	GameObject::SetFacing(facing);
 	whip->SetFacing(facing);
+}
+
+void Player::SetMoveState(MoveState moveState)
+{
+	this->moveState = moveState;
+	SendMessageToSystems(MOVE_STATE_CHANGED);
+}
+
+void Player::SetAttackState(AttackState attackState)
+{
+	if (moveState == MoveState::WALKING)
+		velocity.x = 0;
+
+	this->attackState = attackState;
+	SendMessageToSystems(ATTACK_STATE_CHANGED);
 }
 
 const PlayerData &Player::GetData()
@@ -38,9 +51,20 @@ AttackState Player::GetAttackState()
 	return attackState;
 }
 
+EntityType Player::GetSecondaryWeapon()
+{
+	return data.secondaryWeapon;
+}
+
+void Player::SetSecondaryWeapon(EntityType weapon)
+{
+	//secondaryWeapon->GetBody().Enabled(false);
+	data.secondaryWeapon = weapon;
+}
+
 void Player::LoadContent(ContentManager &content)
 {
-	AnimatedObject::LoadContent(content);
+	GameObject::LoadContent(content);
 
 	auto stats = content.Load<Dictionary>("CharacterStats/Simon.xml");
 	speed = std::stof(stats->at("WalkSpeed"));
@@ -54,8 +78,10 @@ void Player::Update(float deltaTime, ObjectCollection *objectCollection)
 	GameObject::Update(deltaTime, objectCollection);
 	UpdateStates(deltaTime);
 
-	GetSprite().Update();
 	whip->Update(deltaTime, objectCollection);
+
+	for (auto &weapon : secondaryWeapons)
+		weapon->Update(deltaTime, objectCollection);
 }
 
 void Player::UpdateStates(float deltaTime)
@@ -63,15 +89,8 @@ void Player::UpdateStates(float deltaTime)
 	switch (moveState)
 	{
 		case MoveState::JUMPING:
-			if (velocity.y > -BEND_KNEE_ON_JUMPING_Y && attackState == AttackState::INACTIVE)
-				GetSprite().Play(JUMP_ANIMATION);
 			if (velocity.y >= 0)
-				moveState = MoveState::FALLING;
-			break;
-
-		case MoveState::FALLING:
-			if (velocity.y > STRETCH_LEG_ON_FALLING_Y && attackState == AttackState::INACTIVE)
-				GetSprite().Play(IDLE_ANIMATION);
+				SetMoveState(MoveState::FALLING);
 			break;
 
 		case MoveState::LANDING_HARD:
@@ -83,54 +102,57 @@ void Player::UpdateStates(float deltaTime)
 			break;
 	}
 
-	switch (attackState)
-	{
-		case AttackState::ATTACKING:
-			UpdateAttackState();
-			break;
-	}
-
 	data.timeLeft.CountDown();
 }
 
-void Player::UpdateAttackState()
+void Player::OnAttackComplete()
 {
-	if (GetSprite().AnimateComplete())
+	switch (attackState)
 	{
-		attackState = AttackState::INACTIVE;
+		case AttackState::WHIPPING:
+			whip->Withdraw();
+			break;
 
-		switch (moveState)
-		{
-			case MoveState::WALKING:
-			case MoveState::IDLE:
-				Idle();
-				break;
-
-			case MoveState::JUMPING:
-			case MoveState::FALLING:
-				Landing();
-				break;
-
-			case MoveState::DUCKING:
-				Duck();
-				break;
-		}
-
-		whip->Withdraw();
+		case AttackState::THROWING:
+			// Launch the most recently added weapon
+			auto &weapon = secondaryWeapons.back();
+			weapon->Throw();
+			break;
 	}
+
+	switch (moveState)
+	{
+		case MoveState::WALKING:
+		case MoveState::IDLE:
+			Idle();
+			break;
+
+		case MoveState::JUMPING:
+		case MoveState::FALLING:
+			Landing();
+			break;
+
+		case MoveState::DUCKING:
+			Duck();
+			break;
+	}
+
+	SetAttackState(AttackState::INACTIVE);
 }
 
 void Player::Landing()
 {
-	moveState = MoveState::LANDING;
-	GetSprite().Play(JUMP_ANIMATION);
+	SetMoveState(MoveState::LANDING);
 }
 
 void Player::Draw(SpriteExtensions &spriteBatch)
 {
-	AnimatedObject::Draw(spriteBatch);
+	GameObject::Draw(spriteBatch);
 	
 	whip->Draw(spriteBatch);
+	
+	for (auto &weapon : secondaryWeapons)
+		weapon->Draw(spriteBatch);
 }
 
 void Player::DrawBoundingBox(SpriteExtensions &spriteBatch)
@@ -143,91 +165,75 @@ void Player::DrawBoundingBox(SpriteExtensions &spriteBatch)
 
 void Player::Idle()
 {
-	moveState = MoveState::IDLE;
+	SetMoveState(MoveState::IDLE);
 	velocity.x = 0.0f;
-	GetSprite().Play(IDLE_ANIMATION);
 }
 
 void Player::WalkLeft()
 {
-	moveState = MoveState::WALKING;
+	SetMoveState(MoveState::WALKING);
 	SetFacing(Facing::Left);
 	velocity.x = -speed;
-	GetSprite().Play(WALK_ANIMATION);
 }
 
 void Player::WalkRight()
 {
-	moveState = MoveState::WALKING;
+	SetMoveState(MoveState::WALKING);
 	SetFacing(Facing::Right);
 	velocity.x = speed;
-	GetSprite().Play(WALK_ANIMATION);
 }
 
 void Player::Jump()
 {
+	SetMoveState(MoveState::JUMPING);
 	velocity.y = -jumpSpeed;
-	moveState = MoveState::JUMPING;
 }
 
 void Player::Duck()
 {
-	moveState = MoveState::DUCKING;
+	SetMoveState(MoveState::DUCKING);
 	velocity = Vector2::Zero();
-	GetSprite().Play(DUCK_ANIMATION);
 }
 
 void Player::Attack()
 {
-	attackState = AttackState::ATTACKING;
-
-	switch (moveState)
-	{
-		case MoveState::WALKING:
-			velocity = Vector2::Zero();
-			GetSprite().Play(ATTACK_ANIMATION);
-			break;
-
-		case MoveState::IDLE:
-			GetSprite().Play(ATTACK_ANIMATION);
-			break;
-
-		case MoveState::JUMPING:
-		case MoveState::LANDING:
-		case MoveState::FALLING:
-			GetSprite().Play(JUMP_ATTACK_ANIMATION);
-			break;
-
-		case MoveState::DUCKING:
-			GetSprite().Play(DUCK_ATTACK_ANIMATION);
-			break;
-
-		default:
-			return;
-	}
-
+	SetAttackState(AttackState::WHIPPING);
 	whip->Unleash();
+}
+
+void Player::Throw(std::unique_ptr<RangedWeapon> weapon)
+{
+	if (data.hearts == 0)
+		return;
+
+	weapon->SetOwner(this);
+	weapon->GetBody().Enabled(false);
+	weapon->SetVisibility(false);
+
+	SetAttackState(AttackState::THROWING);
+	secondaryWeapons.push_back(std::move(weapon));
+
+	data.hearts--;
 }
 
 void Player::TurnBackward()
 {
-	moveState = MoveState::TURNING_BACKWARD;
+	SetMoveState(MoveState::TURNING_BACKWARD);
 	velocity = Vector2::Zero();
-	GetSprite().Play(TURN_BACKWARD_ANIMATION);
 }
 
 void Player::Land()
 {
 	if (velocity.y > 600.0f) // Falling down very fast, do a superhero landing
 	{
-		moveState = MoveState::LANDING_HARD;
+		SetMoveState(MoveState::LANDING_HARD);
 		velocity = Vector2::Zero();
 		jumpCooldown.Start();
-		GetSprite().Play(DUCK_ANIMATION);
 	}
 	else
 	{
-		if (attackState == AttackState::ATTACKING)
+		if (attackState == AttackState::WHIPPING
+			|| attackState == AttackState::THROWING)
 		{
 			velocity.x = 0; // Still keep attacking on the ground but not moving anymore
 			moveState = MoveState::IDLE; // Set moveState so the character know what to do when finish attacking

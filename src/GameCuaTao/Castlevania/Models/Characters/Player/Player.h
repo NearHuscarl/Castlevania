@@ -3,6 +3,7 @@
 #include "Direct2DGame/Utilities/Stopwatch.h"
 #include "PlayerData.h"
 #include "../../Weapons/Whip.h"
+#include "../../Weapons/RangedWeapon.h"
 
 namespace Castlevania
 {
@@ -42,10 +43,11 @@ namespace Castlevania
 	enum class AttackState
 	{
 		INACTIVE,
-		ATTACKING,
+		WHIPPING,
+		THROWING,
 	};
 
-	class Player : public AnimatedObject
+	class Player : public GameObject
 	{
 	public:
 		Player();
@@ -54,6 +56,8 @@ namespace Castlevania
 		void SetWhip(std::unique_ptr<Whip> whip);
 		MoveState GetMoveState();
 		AttackState GetAttackState();
+		EntityType GetSecondaryWeapon();
+		void SetSecondaryWeapon(EntityType weapon);
 
 		void LoadContent(ContentManager &content) override;
 		void Update(float deltaTime, ObjectCollection *objectCollection = nullptr) override;
@@ -66,6 +70,7 @@ namespace Castlevania
 		void Jump();
 		void Duck();
 		void Attack();
+		void Throw(std::unique_ptr<RangedWeapon> weapon); // Throw secondary weapon (knife, axe, boomerang)
 		void TurnBackward();
 
 	private:
@@ -75,19 +80,25 @@ namespace Castlevania
 		float jumpSpeed;
 		
 		Stopwatch jumpCooldown;
-		bool isOnGround;
 
 		std::unique_ptr<Whip> whip;
+		std::vector<std::unique_ptr<RangedWeapon>> secondaryWeapons;
 
-		void SetFacing(Facing facing);
+		void SetFacing(Facing facing) override;
+		void SetMoveState(MoveState moveState);
+		void SetAttackState(AttackState attackState);
 
 		void Landing(); // Internal command to change from JumpAttacking state to Landing state
 		void Land();
 
 		void UpdateStates(float deltaTime);
-		void UpdateAttackState();
+		void OnAttackComplete();
 
 		friend class PlayerResponseSystem;
 		friend class PlayerMovementSystem;
+		friend class PlayerRenderingSystem;
+
+		// Component-related flags
+		bool isOnGround;
 	};
 }

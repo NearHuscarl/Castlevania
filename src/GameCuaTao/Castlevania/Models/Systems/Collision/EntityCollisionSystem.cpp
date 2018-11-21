@@ -1,14 +1,14 @@
-#include "StaticCollisionSystem.h"
+#include "EntityCollisionSystem.h"
 #include "../../GameObject.h"
 #include "../../../Factories/ObjectCollection.h"
 
 using namespace Castlevania;
 
-StaticCollisionSystem::StaticCollisionSystem(GameObject &parent) : CollisionSystem{ parent }
+EntityCollisionSystem::EntityCollisionSystem(GameObject &parent) : CollisionSystem{ parent }
 {
 }
 
-void StaticCollisionSystem::Update(ObjectCollection &objectCollection)
+void EntityCollisionSystem::Update(ObjectCollection &objectCollection)
 {
 	auto &body = parent.GetBody();
 
@@ -19,11 +19,11 @@ void StaticCollisionSystem::Update(ObjectCollection &objectCollection)
 	}
 
 	auto results = std::vector<CollisionResult>{};
-	auto &boundaries = objectCollection.boundaries;
+	auto &entities = objectCollection.entities;
 
-	for (auto &boundary : boundaries)
+	for (auto &entity : entities)
 	{
-		CalculateCollision(*boundary, results);
+		CalculateCollision(*entity, results);
 	}
 
 	// TODO: do we need to sort?

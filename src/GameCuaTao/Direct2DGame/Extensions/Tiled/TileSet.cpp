@@ -8,6 +8,8 @@ TileSet::TileSet(std::shared_ptr<Texture> texture, int tileWidth, int tileHeight
 
 	for (auto row = 0; row < rows; row++)
 	{
+		tiles.push_back(std::vector<Tile>{}); // Add new row
+
 		for (auto column = 0; column < columns; column++)
 		{
 			auto rect = Rect{
@@ -18,12 +20,12 @@ TileSet::TileSet(std::shared_ptr<Texture> texture, int tileWidth, int tileHeight
 			};
 
 			auto textureRegion = TextureRegion{ texture, rect };
-			tiles.emplace(std::make_pair(row, column), Tile{ textureRegion });
+			tiles[row].push_back(Tile{ textureRegion });
 		}
 	}
 }
 
 Tile &TileSet::GetTile(int row, int column)
 {
-	return tiles.at(std::make_pair(row, column));
+	return tiles.at(row).at(column);
 }

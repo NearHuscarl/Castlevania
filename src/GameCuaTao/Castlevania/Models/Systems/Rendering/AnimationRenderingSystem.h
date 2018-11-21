@@ -1,23 +1,26 @@
 #pragma once
 
-#include "IAnimationRenderingSystem.h"
+#include "Direct2DGame/Extensions/Animations/AnimatedSprite.h"
+#include "IRenderingSystem.h"
 
 namespace Castlevania
 {
-	class AnimationRenderingSystem : public IAnimationRenderingSystem
+	class AnimationRenderingSystem : public IRenderingSystem
 	{
 	public:
-		AnimationRenderingSystem(AnimatedObject &parent, std::string spriteConfigPath);
+		AnimationRenderingSystem(GameObject &parent, std::string spriteConfigPath);
 
 		RectF GetBoundingBox() override;
-		AnimatedSprite &GetSprite() override;
+		Sprite &GetSprite() override;
+
+		virtual void Receive(int message) override {};
 
 		void LoadContent(ContentManager &content) override;
 		void Update(float deltaTime) override;
 		void Draw(SpriteExtensions &spriteBatch) override;
 
 	protected:
-		AnimatedObject &parent;
+		GameObject &parent;
 		std::unique_ptr<AnimatedSprite> sprite;
 		std::string spriteConfigPath;
 	};

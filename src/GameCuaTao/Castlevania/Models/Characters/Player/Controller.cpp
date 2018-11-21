@@ -3,9 +3,10 @@
 
 using namespace Castlevania;
 
-Controller::Controller(Player &player) :
+Controller::Controller(Player &player, ObjectFactory &objectFactory) :
 	player{ player },
-	keyboardState{ nullptr }
+	keyboardState{ nullptr },
+	objectFactory{ objectFactory }
 {
 }
 
@@ -13,7 +14,7 @@ void Controller::OnKeyStateChanged(KeyboardState &keyboardState)
 {
 	this->keyboardState = keyboardState;
 
-	if (player.GetAttackState() == AttackState::ATTACKING)
+	if (player.GetAttackState() == AttackState::WHIPPING)
 		return;
 
 	switch (player.GetMoveState())
@@ -44,7 +45,7 @@ void Controller::OnKeyStateChanged(KeyboardState &keyboardState)
 
 void Controller::OnKeyDown(int keyCode)
 {
-	if (player.GetAttackState() == AttackState::ATTACKING)
+	if (player.GetAttackState() == AttackState::WHIPPING)
 		return;
 
 	switch (player.GetMoveState())
@@ -54,6 +55,8 @@ void Controller::OnKeyDown(int keyCode)
 				player.Jump();
 			else if (keyCode == Button::Attack)
 				player.Attack();
+			else if (keyCode == Button::Throw)
+				Throw();
 			break;
 
 		case MoveState::WALKING:
@@ -65,6 +68,8 @@ void Controller::OnKeyDown(int keyCode)
 				player.Duck();
 			else if (keyCode == Button::Attack)
 				player.Attack();
+			else if (keyCode == Button::Throw)
+				Throw();
 			break;
 
 		case MoveState::JUMPING:
@@ -73,12 +78,31 @@ void Controller::OnKeyDown(int keyCode)
 		case MoveState::DUCKING:
 			if (keyCode == Button::Attack)
 				player.Attack();
+			else if (keyCode == Button::Throw)
+				Throw();
 			break;
 	}
 }
 
 void Controller::OnKeyUp(int keyCode)
 {
-	if (player.GetAttackState() == AttackState::ATTACKING)
+	if (player.GetAttackState() == AttackState::WHIPPING)
 		return;
+}
+
+void Controller::Throw()
+{
+	auto weaponItem = player.GetSecondaryWeapon();
+
+	switch (weaponItem)
+	{
+		case EntityType::KnifeItem:
+		{
+			auto weapon = objectFactory.CreateKnife();
+			
+			player.Throw(std::move(weapon));
+			break;
+		}
+	}
+
 }

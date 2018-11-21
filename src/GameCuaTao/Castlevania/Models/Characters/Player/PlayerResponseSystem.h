@@ -11,6 +11,7 @@ namespace Castlevania
 	public:
 		PlayerResponseSystem(Player &parent, ObjectFactory &objectFactory);
 
+		virtual void Receive(int message) override {};
 		void Update(ObjectCollection &objectCollection) override;
 
 	private:
@@ -23,6 +24,6 @@ namespace Castlevania
 		void OnCollideWithBoundary(CollisionResult &result);
 		void OnCollideWithHeart(CollisionResult &result);
 		void OnCollideWithWhipPowerup(CollisionResult &result);
-		void OnCollideWithKnife(CollisionResult &result);
+		void OnCollideWithKnifeItem(CollisionResult &result, ObjectCollection &objectCollection);
 	};
 }

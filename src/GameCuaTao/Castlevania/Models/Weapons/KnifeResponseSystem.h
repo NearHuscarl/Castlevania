@@ -1,19 +1,21 @@
 #pragma once
 
 #include "../Systems/CollisionResponse/ICollisionResponseSystem.h"
-#include "Whip.h"
+#include "../GameObject.h"
 
 namespace Castlevania
 {
-	class WhipResponseSystem : public ICollisionResponseSystem
+	class KnifeResponseSystem : public ICollisionResponseSystem
 	{
 	public:
-		WhipResponseSystem(Whip &parent);
+		KnifeResponseSystem(GameObject &parent);
 
 		virtual void Receive(int message) override {};
 		void Update(ObjectCollection &objectCollection);
 
 	private:
-		Whip &parent;
+		GameObject &parent;
+
+		void OnCollideWithBoundary(CollisionResult &result);
 	};
 }

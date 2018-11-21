@@ -20,7 +20,7 @@
   <object id="14" name="Checkpoint" type="Position" gid="4" x="69" y="370" width="60" height="66"/>
   <object id="15" name="FirePit" type="Object" gid="25" x="175" y="373" width="32" height="64">
    <properties>
-    <property name="Item" value="Heart"/>
+    <property name="Item" value="KnifeItem"/>
    </properties>
   </object>
   <object id="16" name="FirePit" type="Object" gid="25" x="434" y="373" width="32" height="64">
@@ -40,7 +40,7 @@
   </object>
   <object id="19" name="FirePit" type="Object" gid="25" x="1199" y="373" width="32" height="64">
    <properties>
-    <property name="Item" value="Knife"/>
+    <property name="Item" value="KnifeItem"/>
    </properties>
   </object>
  </objectgroup>

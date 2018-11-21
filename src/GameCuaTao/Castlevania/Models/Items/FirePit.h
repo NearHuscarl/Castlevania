@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../AnimatedObject.h"
+#include "../GameObject.h"
 
 namespace Castlevania
 {
-	class FirePit : public AnimatedObject
+	class FirePit : public GameObject
 	{
 	public:
 		FirePit();

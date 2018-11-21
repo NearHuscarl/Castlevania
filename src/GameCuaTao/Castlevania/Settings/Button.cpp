@@ -3,6 +3,7 @@
 using namespace Castlevania;
 
 int Button::Attack = DIK_Z;
+int Button::Throw = DIK_C;
 int Button::Jump = DIK_X;
 int Button::WalkLeft = DIK_LEFT;
 int Button::WalkRight = DIK_RIGHT;

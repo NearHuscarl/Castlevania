@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "../../GameObject.h"
+#include "../../EntityType.h"
 #include "../../../Utilities/Timer.h"
 
 namespace Castlevania
@@ -16,7 +16,7 @@ namespace Castlevania
 		int playerHealth = 16;
 		int bossHealth = 16;
 
-		std::unique_ptr<GameObject> secondaryWeapon = nullptr;
+		EntityType secondaryWeapon = EntityType::Unknown;
 
 		int hearts = 5;
 		int p = 3; // TODO: what is P

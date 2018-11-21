@@ -93,12 +93,43 @@ void GameObject::SetLinearVelocity(float speed, float angle)
 
 RectF GameObject::GetFrameRect()
 {
-	return RectF::Empty();
+	return GetSprite().GetFrameRectangle(position);
 }
 
 RectF GameObject::GetBoundingBox()
 {
-	return RectF::Empty();
+	if (!body.Enabled())
+		return RectF::Empty();
+
+	return GetSprite().GetBoundingRectangle(position);
+}
+
+Sprite &GameObject::GetSprite()
+{
+	return renderingSystem->GetSprite();
+}
+
+Facing GameObject::GetFacing()
+{
+	return facing;
+}
+
+void GameObject::SetFacing(Facing facing)
+{
+	if (this->facing == facing)
+		return;
+
+	this->facing = facing;
+
+	if (facing == Facing::Left)
+		GetSprite().SetEffect(SpriteEffects::FlipHorizontally);
+	else
+		GetSprite().SetEffect(SpriteEffects::None);
+}
+
+void GameObject::SetVisibility(bool value)
+{
+	GetSprite().SetIsVisible(value);
 }
 
 Body &Castlevania::GameObject::GetBody()
@@ -130,31 +161,42 @@ template<>
 void GameObject::Attach(std::unique_ptr<IController> system)
 {
 	this->controller = std::move(system);
-	Keyboard::Register(controller.get());
+	Keyboard::Register(controller.get()); // TODO: this should not be here
 }
 
 template<>
 void GameObject::Attach(std::unique_ptr<IMovementSystem> system)
 {
+	components.push_back(system.get());
 	this->movementSystem = std::move(system);
 }
 
 template<>
 void GameObject::Attach(std::unique_ptr<ICollisionSystem> system)
 {
+	components.push_back(system.get());
 	this->collisionSystem = std::move(system);
 }
 
 template<>
 void GameObject::Attach(std::unique_ptr<ICollisionResponseSystem> system)
 {
+	components.push_back(system.get());
 	this->collisionResponseSystem = std::move(system);
+}
+
+template<>
+void GameObject::Attach(std::unique_ptr<IRenderingSystem> system)
+{
+	components.push_back(system.get());
+	this->renderingSystem = std::move(system);
 }
 
 #pragma endregion
 
 void GameObject::LoadContent(ContentManager &content)
 {
+	renderingSystem->LoadContent(content);
 }
 
 void GameObject::Update(float deltaTime, ObjectCollection *objectCollection)
@@ -168,11 +210,15 @@ void GameObject::Update(float deltaTime, ObjectCollection *objectCollection)
 	if (collisionResponseSystem != nullptr && objectCollection != nullptr)
 		collisionResponseSystem->Update(*objectCollection);
 
+	if (renderingSystem != nullptr)
+		renderingSystem->Update(deltaTime);
+
 	Move(GetDistance()); // Can move properly now after handling potential collisions with other objects
 }
 
 void GameObject::Draw(SpriteExtensions &spriteBatch)
 {
+	renderingSystem->Draw(spriteBatch);
 }
 
 void GameObject::DrawBoundingBox(SpriteExtensions &spriteBatch)
@@ -198,6 +244,14 @@ void GameObject::DrawBoundingBox(SpriteExtensions &spriteBatch)
 		default:
 			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::Magenta());
 			break;
+	}
+}
+
+void GameObject::SendMessageToSystems(int message)
+{
+	for (auto &component : components)
+	{
+		component->Receive(message);
 	}
 }
 

@@ -1,9 +1,9 @@
 #include "SpriteRenderingSystem.h"
-#include "../../StaticObject.h"
+#include "../../GameObject.h"
 
 using namespace Castlevania;
 
-SpriteRenderingSystem::SpriteRenderingSystem(StaticObject &parent, std::string spritePath) :
+SpriteRenderingSystem::SpriteRenderingSystem(GameObject &parent, std::string spritePath) :
 	parent{ parent }
 {
 	this->spritePath = spritePath;

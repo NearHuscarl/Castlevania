@@ -50,8 +50,6 @@ void TiledMap::Draw(SpriteExtensions spriteBatch)
 	startColumn = MathHelper::Clamp(startColumn, 0, columns - 1);
 	endColumn = MathHelper::Clamp(endColumn, 0, columns - 1);
 
-	//auto &mapTex = tileSet->GetTile(0, 0).GetTextureRegion().GetTexture();
-	//spriteBatch.Draw(mapTex, Vector2{ 0, 0 }, &Rect{ 0, 0, 1600, 400 }, Color::White(), 0, Vector2::One(), SpriteEffects::None);
 	for (auto row = startRow; row <= endRow; row++)
 	{
 		for (auto column = startColumn; column <= endColumn; column++)

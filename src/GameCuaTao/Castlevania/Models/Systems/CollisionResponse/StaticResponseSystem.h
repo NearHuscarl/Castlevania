@@ -12,6 +12,7 @@ namespace Castlevania
 	public:
 		StaticResponseSystem(GameObject &parent);
 
+		virtual void Receive(int message) override {};
 		virtual void Update(ObjectCollection &objectCollection) override;
 
 	private:

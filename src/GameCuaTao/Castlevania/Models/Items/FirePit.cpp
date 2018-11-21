@@ -2,7 +2,7 @@
 
 using namespace Castlevania;
 
-FirePit::FirePit() : AnimatedObject(EntityType::FirePit)
+FirePit::FirePit() : GameObject(EntityType::FirePit)
 {
 }
 
@@ -13,12 +13,12 @@ void FirePit::SetSpawnedItem(std::unique_ptr<GameObject> item)
 
 void FirePit::LoadContent(ContentManager &content)
 {
-	AnimatedObject::LoadContent(content);
+	GameObject::LoadContent(content);
 }
 
 void FirePit::Update(float deltaTime, ObjectCollection *objectCollection)
 {
-	AnimatedObject::Update(deltaTime, objectCollection);
+	GameObject::Update(deltaTime, objectCollection);
 }
 
 std::unique_ptr<GameObject> FirePit::SpawnItem()
