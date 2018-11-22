@@ -9,10 +9,14 @@ RangedWeapon::RangedWeapon(EntityType type) : GameObject(type)
 	owner = nullptr;
 }
 
+RangedWeaponState RangedWeapon::GetState()
+{
+	return state;
+}
+
 void RangedWeapon::SetOwner(GameObject *owner)
 {
 	this->owner = owner;
-	body.Enabled(false);
 }
 
 void RangedWeapon::Throw()
@@ -32,6 +36,8 @@ void RangedWeapon::Throw()
 		velocity.x = THROW_SPEED;
 	else
 		velocity.x = -THROW_SPEED;
+
+	state = RangedWeaponState::Flying;
 }
 
 void RangedWeapon::Draw(SpriteExtensions &spriteBatch)

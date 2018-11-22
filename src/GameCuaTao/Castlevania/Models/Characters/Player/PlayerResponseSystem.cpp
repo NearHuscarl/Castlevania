@@ -108,6 +108,13 @@ void PlayerResponseSystem::OnCollideWithHeart(CollisionResult &result)
 
 void PlayerResponseSystem::OnCollideWithWhipPowerup(CollisionResult &result)
 {
+	// Only consume this powerup on the ground because I only have flashing sprites on ground
+	if (parent.GetMoveState() != MoveState::IDLE
+		&& parent.GetMoveState() != MoveState::WALKING)
+		return;
+
+	parent.Flash();
+
 	auto &whipPowerup = dynamic_cast<GameObject&>(result.collidedObject);
 	auto &whip = parent.whip;
 
@@ -124,9 +131,9 @@ void PlayerResponseSystem::OnCollideWithWhipPowerup(CollisionResult &result)
 
 void PlayerResponseSystem::OnCollideWithKnifeItem(CollisionResult &result, ObjectCollection &objectCollection)
 {
-	auto &item = dynamic_cast<GameObject&>(result.collidedObject);
-	auto itemType = (EntityType)item.GetType();
+	auto &knifeItem = dynamic_cast<GameObject&>(result.collidedObject);
+	auto itemType = (EntityType)knifeItem.GetType();
 	
-	item.Destroy();
+	knifeItem.Destroy();
 	parent.SetSecondaryWeapon(itemType);
 }

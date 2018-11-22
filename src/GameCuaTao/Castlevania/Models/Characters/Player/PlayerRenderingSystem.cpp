@@ -65,8 +65,12 @@ void PlayerRenderingSystem::Update(float deltaTime)
 			}
 			break;
 
-		case AttackState::WHIPPING:
 		case AttackState::THROWING:
+			// the animation frame in which simon is throwing
+			if (sprite->GetCurrentAnimation().GetCurrentFrameIndex() == 2)
+				parent.DoThrow();
+
+		case AttackState::WHIPPING:
 			if (sprite->AnimateComplete())
 			{
 				parent.OnAttackComplete();
@@ -119,6 +123,28 @@ void PlayerRenderingSystem::OnMoveStateChanged()
 		case MoveState::LANDING:
 			sprite->Play(JUMP_ANIMATION);
 			break;
+
+		case MoveState::FLASHING:
+		{
+			auto currentFrameIndex = sprite->GetCurrentAnimation().GetCurrentFrameIndex();
+
+			switch (currentFrameIndex)
+			{
+				case 0:
+					sprite->Play(FLASH_01_ANIMATION);
+					break;
+				case 1:
+					sprite->Play(FLASH_02_ANIMATION);
+					break;
+				case 2:
+					sprite->Play(FLASH_03_ANIMATION);
+					break;
+				case 3:
+					sprite->Play(FLASH_04_ANIMATION);
+					break;
+			}
+			break;
+		}
 
 		case MoveState::TURNING_BACKWARD:
 			sprite->Play(TURN_BACKWARD_ANIMATION);

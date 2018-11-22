@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="24" height="7" tilewidth="64" tileheight="64" infinite="0" backgroundcolor="#3c3c3c" nextlayerid="7" nextobjectid="37">
  <tileset firstgid="1" source="../Simon.tsx"/>
- <tileset firstgid="25" source="../Fire_Pit.tsx"/>
+ <tileset firstgid="41" source="../Fire_Pit.tsx"/>
  <imagelayer id="2" name="Background">
   <image source="Courtyard.png" width="1536" height="448"/>
  </imagelayer>
@@ -18,27 +18,27 @@
  </objectgroup>
  <objectgroup id="4" name="Game">
   <object id="14" name="Checkpoint" type="Position" gid="4" x="69" y="370" width="60" height="66"/>
-  <object id="15" name="FirePit" type="Object" gid="25" x="175" y="373" width="32" height="64">
-   <properties>
-    <property name="Item" value="KnifeItem"/>
-   </properties>
-  </object>
-  <object id="16" name="FirePit" type="Object" gid="25" x="434" y="373" width="32" height="64">
-   <properties>
-    <property name="Item" value="WhipPowerup"/>
-   </properties>
-  </object>
-  <object id="17" name="FirePit" type="Object" gid="25" x="685" y="373" width="32" height="64">
-   <properties>
-    <property name="Item" value="WhipPowerup"/>
-   </properties>
-  </object>
-  <object id="18" name="FirePit" type="Object" gid="25" x="942" y="373" width="32" height="64">
+  <object id="15" name="FirePit" type="Object" gid="41" x="175" y="373" width="32" height="64">
    <properties>
     <property name="Item" value="Heart"/>
    </properties>
   </object>
-  <object id="19" name="FirePit" type="Object" gid="25" x="1199" y="373" width="32" height="64">
+  <object id="16" name="FirePit" type="Object" gid="41" x="434" y="373" width="32" height="64">
+   <properties>
+    <property name="Item" value="WhipPowerup"/>
+   </properties>
+  </object>
+  <object id="17" name="FirePit" type="Object" gid="41" x="685" y="373" width="32" height="64">
+   <properties>
+    <property name="Item" value="WhipPowerup"/>
+   </properties>
+  </object>
+  <object id="18" name="FirePit" type="Object" gid="41" x="942" y="373" width="32" height="64">
+   <properties>
+    <property name="Item" value="Heart"/>
+   </properties>
+  </object>
+  <object id="19" name="FirePit" type="Object" gid="41" x="1199" y="373" width="32" height="64">
    <properties>
     <property name="Item" value="KnifeItem"/>
    </properties>

@@ -137,6 +137,66 @@
       <SpriteFrame Left="0" Top="132" Width="60" Height="66" />
       <SpriteBoundary Left="18" Top="138" Width="32" Height="58" />
     </Sprite>
+
+    <Sprite ID="walk_flash_red_01">
+      <SpriteFrame Left="0" Top="198" Width="60" Height="66" />
+      <SpriteBoundary Left="24" Top="201" Width="24" Height="61" />
+    </Sprite>
+
+    <Sprite ID="walk_flash_magenta_01">
+      <SpriteFrame Left="60" Top="198" Width="60" Height="66" />
+      <SpriteBoundary Left="84" Top="201" Width="24" Height="61" />
+    </Sprite>
+
+    <Sprite ID="walk_flash_blue_01">
+      <SpriteFrame Left="120" Top="198" Width="60" Height="66" />
+      <SpriteBoundary Left="144" Top="201" Width="24" Height="61" />
+    </Sprite>
+
+    <Sprite ID="walk_flash_red_02">
+      <SpriteFrame Left="180" Top="198" Width="60" Height="66" />
+      <SpriteBoundary Left="198" Top="202" Width="30" Height="60" />
+    </Sprite>
+
+    <Sprite ID="walk_flash_magenta_02">
+      <SpriteFrame Left="240" Top="198" Width="60" Height="66" />
+      <SpriteBoundary Left="258" Top="202" Width="30" Height="60" />
+    </Sprite>
+
+    <Sprite ID="walk_flash_blue_02">
+      <SpriteFrame Left="300" Top="198" Width="60" Height="66" />
+      <SpriteBoundary Left="318" Top="202" Width="30" Height="60" />
+    </Sprite>
+
+    <Sprite ID="walk_flash_red_03">
+      <SpriteFrame Left="0" Top="264" Width="60" Height="66" />
+      <SpriteBoundary Left="24" Top="266" Width="24" Height="62" />
+    </Sprite>
+
+    <Sprite ID="walk_flash_magenta_03">
+      <SpriteFrame Left="60" Top="264" Width="60" Height="66" />
+      <SpriteBoundary Left="84" Top="266" Width="24" Height="62" />
+    </Sprite>
+
+    <Sprite ID="walk_flash_blue_03">
+      <SpriteFrame Left="120" Top="264" Width="60" Height="66" />
+      <SpriteBoundary Left="144" Top="266" Width="24" Height="62" />
+    </Sprite>
+
+    <Sprite ID="walk_flash_red_04">
+      <SpriteFrame Left="180" Top="264" Width="60" Height="66" />
+      <SpriteBoundary Left="196" Top="268" Width="32" Height="60" />
+    </Sprite>
+
+    <Sprite ID="walk_flash_magenta_04">
+      <SpriteFrame Left="240" Top="264" Width="60" Height="66" />
+      <SpriteBoundary Left="256" Top="268" Width="32" Height="60" />
+    </Sprite>
+
+    <Sprite ID="walk_flash_blue_04">
+      <SpriteFrame Left="300" Top="264" Width="60" Height="66" />
+      <SpriteBoundary Left="316" Top="268" Width="32" Height="60" />
+    </Sprite>
   </Spritesheet>
   
 </GameContent>

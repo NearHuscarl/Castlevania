@@ -5,6 +5,10 @@
 using namespace Castlevania;
 
 constexpr auto JUMP_COOLDOWN = 400; // 0.4 seconds
+constexpr auto FLASHING_TIME = 900; // milliseconds
+
+Stopwatch jumpCooldown;
+Stopwatch flashTimer;
 
 Player::Player() : GameObject(EntityType::Player)
 {
@@ -106,6 +110,14 @@ void Player::UpdateStates(float deltaTime)
 				jumpCooldown.Reset();
 			}
 			break;
+
+		case MoveState::FLASHING:
+			if (flashTimer.ElapsedMilliseconds() >= FLASHING_TIME)
+			{
+				Idle();
+				flashTimer.Reset();
+			}
+			break;
 	}
 
 	data.timeLeft.CountDown();
@@ -118,12 +130,6 @@ void Player::OnAttackComplete()
 		case AttackState::WHIPPING:
 			whip->Withdraw();
 			break;
-
-		case AttackState::THROWING:
-			// Launch the most recently added weapon
-			auto &weapon = secondaryWeapons.back();
-			weapon->Throw();
-			break;
 	}
 
 	switch (moveState)
@@ -135,7 +141,7 @@ void Player::OnAttackComplete()
 
 		case MoveState::JUMPING:
 		case MoveState::FALLING:
-			Landing();
+			SetMoveState(MoveState::LANDING);
 			break;
 
 		case MoveState::DUCKING:
@@ -144,11 +150,6 @@ void Player::OnAttackComplete()
 	}
 
 	SetAttackState(AttackState::INACTIVE);
-}
-
-void Player::Landing()
-{
-	SetMoveState(MoveState::LANDING);
 }
 
 void Player::Draw(SpriteExtensions &spriteBatch)
@@ -233,6 +234,15 @@ void Player::TurnBackward()
 	velocity = Vector2::Zero();
 }
 
+void Player::DoThrow()
+{
+	// Launch the most recently added weapon
+	auto &weapon = secondaryWeapons.back();
+
+	if (weapon->GetState() == RangedWeaponState::Sheathed)
+		weapon->Throw();
+}
+
 void Player::Land()
 {
 	if (velocity.y > 600.0f) // Falling down very fast, do a superhero landing
@@ -252,6 +262,13 @@ void Player::Land()
 		else
 			Idle();
 	}
+}
+
+void Player::Flash()
+{
+	SetMoveState(MoveState::FLASHING);
+	velocity = Vector2::Zero();
+	flashTimer.Start();
 }
 
 #pragma endregion

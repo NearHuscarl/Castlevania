@@ -36,6 +36,9 @@ namespace Castlevania
 		// IDLE state after touching the ground
 		LANDING_HARD,
 		
+		// Simon freezes and starts flashing when consumes whip-upgrade powerup
+		FLASHING,
+
 		DUCKING,
 		TURNING_BACKWARD,
 	};
@@ -78,8 +81,6 @@ namespace Castlevania
 		MoveState moveState;
 		AttackState attackState;
 		float jumpSpeed;
-		
-		Stopwatch jumpCooldown;
 
 		std::unique_ptr<Whip> whip;
 		std::vector<std::unique_ptr<RangedWeapon>> secondaryWeapons;
@@ -88,8 +89,9 @@ namespace Castlevania
 		void SetMoveState(MoveState moveState);
 		void SetAttackState(AttackState attackState);
 
-		void Landing(); // Internal command to change from JumpAttacking state to Landing state
+		void DoThrow(); // finish throwing maneuver, weapon is now launching
 		void Land();
+		void Flash(); // simon flashing when received whip-upgrade powerup
 
 		void UpdateStates(float deltaTime);
 		void OnAttackComplete();

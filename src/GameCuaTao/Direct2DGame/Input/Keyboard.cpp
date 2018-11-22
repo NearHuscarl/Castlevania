@@ -127,7 +127,7 @@ void Keyboard::HandleEvents()
 	}
 
 	// Scan through all buffered events, check if the key is pressed or released
-	for (auto i = 0; i < dwElements; i++)
+	for (DWORD i = 0; i < dwElements; i++)
 	{
 		auto keyCode = keyEvents[i].dwOfs;
 		auto KeyState = keyEvents[i].dwData;

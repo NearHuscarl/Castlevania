@@ -4,12 +4,19 @@
 
 namespace Castlevania
 {
+	enum class RangedWeaponState
+	{
+		Sheathed,
+		Flying,
+	};
+
 	// Throwable weapon like Knife, Axe, Boomerang,...
 	class RangedWeapon : public GameObject
 	{
 	public:
 		RangedWeapon(EntityType type);
 
+		RangedWeaponState GetState();
 		void SetOwner(GameObject *owner);
 		void Throw();
 
@@ -17,5 +24,6 @@ namespace Castlevania
 
 	private:
 		GameObject *owner;
+		RangedWeaponState state;
 	};
 }
