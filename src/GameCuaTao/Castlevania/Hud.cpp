@@ -24,7 +24,12 @@ void Hud::LoadContent(ContentManager &content)
 	hudFont = content.Load<SpriteFont>("Fonts/MainFont.font.xml");
 	borderTexture = content.Load<Texture>("Hud/Border.png");
 	heartTexture = content.Load<Texture>("Hud/Heart.png");
-	hpBlockAtlas = content.Load<Spritesheet>("Hud/HP_Block.atlas.xml");
+	
+	auto hpBlockAtlas = content.Load<Spritesheet>("Hud/HP_Block.atlas.xml");
+	
+	playerFullBlock = std::make_unique<Sprite>(hpBlockAtlas->at("player_full"));
+	bossFullBlock = std::make_unique<Sprite>(hpBlockAtlas->at("boss_full"));
+	emptyBlock = std::make_unique<Sprite>(hpBlockAtlas->at("empty"));
 
 	knifeTexture = content.Load<Texture>("Hud/Knife.png");
 }
@@ -106,28 +111,24 @@ void Hud::DrawHealthBars(SpriteExtensions &spriteBatch)
 	{
 		if (i <= data.playerHealth)
 		{
-			auto hpBlockTexture = hpBlockAtlas->at("player_full");
 			auto position = Vector2{ playerHealthPosition.x + i * 9, playerHealthPosition.y };
-			spriteBatch.Draw(hpBlockTexture, position, Color::White(), false);
+			spriteBatch.Draw(*playerFullBlock, position, false);
 		}
 		else
 		{
-			auto hpBlockTexture = hpBlockAtlas->at("empty");
 			auto position = Vector2{ playerHealthPosition.x + i * 9, playerHealthPosition.y };
-			spriteBatch.Draw(hpBlockTexture, position, Color::White(), false);
+			spriteBatch.Draw(*emptyBlock, position, false);
 		}
 
 		if (i <= data.bossHealth)
 		{
-			auto hpBlockTexture = hpBlockAtlas->at("boss_full");
 			auto position = Vector2{ enemyHealthPosition.x + i * 9, enemyHealthPosition.y };
-			spriteBatch.Draw(hpBlockTexture, position, Color::White(), false);
+			spriteBatch.Draw(*bossFullBlock, position, false);
 		}
 		else
 		{
-			auto hpBlockTexture = hpBlockAtlas->at("empty");
 			auto position = Vector2{ enemyHealthPosition.x + i * 9, enemyHealthPosition.y };
-			spriteBatch.Draw(hpBlockTexture, position, Color::White(), false);
+			spriteBatch.Draw(*emptyBlock, position, false);
 		}
 	}
 }

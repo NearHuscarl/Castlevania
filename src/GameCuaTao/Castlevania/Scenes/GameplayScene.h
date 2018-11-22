@@ -3,7 +3,7 @@
 #include "AbstractScene.h"
 #include "Direct2DGame/Extensions/Tiled/TiledMap.h"
 #include "Direct2DGame/Extensions/Camera.h"
-#include "../Stages/StageManager.h"
+#include "../Utilities/StageManager.h"
 #include "../Hud.h"
 
 namespace Castlevania

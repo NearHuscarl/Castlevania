@@ -1,10 +1,10 @@
 #pragma once
 
-#include <map>
+#include <unordered_map>
 #include "AbstractReader.h"
 #include "../Extensions/TextureRegion.h"
 
-using Spritesheet = std::map<std::string, TextureRegion>;
+using Spritesheet = std::unordered_map<std::string, TextureRegion>;
 
 class SpritesheetReader : public AbstractReader<Spritesheet>
 {

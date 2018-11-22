@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Direct2DGame/Extensions/Collisions/Body/CollisionData.h"
 #include "CollisionSystem.h"
 
 namespace Castlevania

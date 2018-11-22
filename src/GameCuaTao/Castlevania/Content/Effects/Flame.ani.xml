@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Animations AtlasPath="Flame.atlas.xml">
+    <Animation Name="Flame" DefaultTime="150" IsLooping="False">
+      <Frame SpriteID="flame_01" />
+      <Frame SpriteID="flame_02" />
+      <Frame SpriteID="flame_03" />
+    </Animation>
+  </Animations>
+
+</GameContent>

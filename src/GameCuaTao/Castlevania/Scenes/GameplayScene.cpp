@@ -34,8 +34,8 @@ void GameplayScene::Update(float deltaTime)
 	camera->LookAt(player->GetOriginPosition(), Scrolling::Horizontally);
 
 	player->Update(deltaTime, &objectCollection);
-	auto &entities = objectCollection.entities;
 
+	auto &entities = objectCollection.entities;
 	for (auto const &entity : entities)
 	{
 		entity->Update(deltaTime, &objectCollection);
@@ -58,9 +58,8 @@ void GameplayScene::Draw(GameTime gameTime)
 
 	map->Draw(spriteBatch);
 	hud->Draw(spriteBatch);
-	auto &entities = objectCollection.entities;
 
-	for (auto const &entity : entities)
+	for (auto const &entity : objectCollection.entities)
 	{
 		entity->DrawBoundingBox(spriteBatch); // NOTE: remove
 		entity->Draw(spriteBatch);

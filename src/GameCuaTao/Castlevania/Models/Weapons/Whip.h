@@ -16,7 +16,6 @@ namespace Castlevania
 		GameObject &GetOwner();
 
 		void LoadContent(ContentManager &content) override;
-		void Update(float deltaTime, ObjectCollection *objectCollection) override;
 
 		void Unleash();
 		void Withdraw();

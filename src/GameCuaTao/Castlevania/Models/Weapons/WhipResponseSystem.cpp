@@ -31,10 +31,6 @@ void WhipResponseSystem::Update(ObjectCollection &objectCollection)
 void WhipResponseSystem::OnCollideWithFirePit(CollisionResult &result, ObjectCollection &objectCollection)
 {
 	auto &firePit = dynamic_cast<FirePit&>(result.collidedObject);
-	auto item = firePit.SpawnItem();
 
-	item->SetOriginPosition(firePit.GetOriginPosition());
-	firePit.Destroy();
-
-	objectCollection.entities.push_back(std::move(item));
+	firePit.OnBeingHit();
 }

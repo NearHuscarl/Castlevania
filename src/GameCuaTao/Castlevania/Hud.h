@@ -22,7 +22,10 @@ namespace Castlevania
 		std::shared_ptr<Texture> borderTexture;
 		std::shared_ptr<Texture> heartTexture;
 		std::shared_ptr<Texture> knifeTexture;
-		std::shared_ptr<Spritesheet> hpBlockAtlas;
+
+		std::unique_ptr<Sprite> playerFullBlock;
+		std::unique_ptr<Sprite> bossFullBlock;
+		std::unique_ptr<Sprite> emptyBlock;
 
 		Vector2 scoreTextPosition;
 		Vector2 timeTextPosition;

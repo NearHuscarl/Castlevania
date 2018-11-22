@@ -61,7 +61,7 @@ CollisionData CollisionSystem::FilterCollision(CollisionResults collisionResults
 	auto minIndex_y = -1;
 	auto collidedIndexes = std::vector<int>{}; // index of collision results already collide with parent
 
-	for (int i = 0; i < collisionResults.size(); i++)
+	for (unsigned int i = 0; i < collisionResults.size(); i++)
 	{
 		auto result = collisionResults[i];
 

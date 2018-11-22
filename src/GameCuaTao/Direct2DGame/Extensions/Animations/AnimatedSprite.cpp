@@ -1,32 +1,32 @@
 #include "AnimatedSprite.h"
 
 AnimatedSprite::AnimatedSprite(std::shared_ptr<AnimationFactory> animationFactory) :
-	Sprite{ animationFactory->Create()->GetCurrentFrame().GetTextureRegion() }
+	Sprite{ animationFactory->Create().GetCurrentFrame().GetTextureRegion() },
+	currentAnimation{ animationFactory->Create() }
 {
 	this->animationFactory = animationFactory;
-	this->currentAnimation = animationFactory->Create();
 }
 
 AnimatedSprite::AnimatedSprite(std::shared_ptr<AnimationFactory> animationFactory, std::vector<std::string> animations) :
-	Sprite{ animationFactory->Create()->GetCurrentFrame().GetTextureRegion() }
+	Sprite{ animationFactory->Create().GetCurrentFrame().GetTextureRegion() },
+	currentAnimation{ animationFactory->Create() }
 {
 	this->animationFactory = animationFactory->CreateAnimationFactory(animations);
-	this->currentAnimation = animationFactory->Create();
 }
 
 Animation &AnimatedSprite::GetCurrentAnimation()
 {
-	return *currentAnimation;
+	return currentAnimation;
 }
 
 bool AnimatedSprite::AnimateComplete()
 {
-	return currentAnimation->IsComplete();
+	return currentAnimation.IsComplete();
 }
 
 void AnimatedSprite::Play(std::string name)
 {
-	if (currentAnimation->GetName() != name || currentAnimation->IsComplete())
+	if (currentAnimation.GetName() != name || currentAnimation.IsComplete())
 	{
 		if (name == "")
 			currentAnimation = animationFactory->Create(); // Play the default animation
@@ -37,9 +37,9 @@ void AnimatedSprite::Play(std::string name)
 
 void AnimatedSprite::Update()
 {
-	if (!currentAnimation->IsComplete())
+	if (!currentAnimation.IsComplete())
 	{
-		currentAnimation->Update();
-		SetTextureRegion(currentAnimation->GetCurrentFrame().GetTextureRegion());
+		currentAnimation.Update();
+		SetTextureRegion(currentAnimation.GetCurrentFrame().GetTextureRegion());
 	}
 }

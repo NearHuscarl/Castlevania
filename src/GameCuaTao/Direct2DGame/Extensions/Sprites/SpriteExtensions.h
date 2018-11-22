@@ -10,17 +10,8 @@ public:
 	SpriteExtensions(GraphicsDevice &graphicsDevice);
 
 	using SpriteBatch::Draw;
-
-	void Draw(TextureRegion textureRegion, Vector2 position, Color color, bool useViewport = true);
-	void Draw(
-		TextureRegion textureRegion,
-		Vector2 position,
-		Color color,
-		float rotation,
-		Vector2 scale,
-		SpriteEffects effects,
-		bool useViewport);
 	
-	void Draw(Sprite sprite, Transform transform);
-	void Draw(Sprite sprite, Vector2 position, float rotation = 0.0f, Vector2 scale = Vector2::One());
+	void Draw(Sprite sprite, Vector2 position, bool useViewport = true);
+	void Draw(Sprite sprite, Transform transform, bool useViewport = true);
+	void Draw(Sprite sprite, Vector2 position, float rotation, Vector2 scale, bool useViewport = true);
 };

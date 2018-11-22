@@ -17,5 +17,5 @@ public:
 
 private:
 	std::shared_ptr<AnimationFactory> animationFactory;
-	Animation *currentAnimation;
+	Animation currentAnimation;
 };

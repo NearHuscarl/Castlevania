@@ -35,11 +35,6 @@ void Whip::LoadContent(ContentManager &content)
 	Withdraw();
 }
 
-void Whip::Update(float deltaTime, ObjectCollection *objectCollection)
-{
-	GameObject::Update(deltaTime, objectCollection);
-}
-
 void Whip::Unleash()
 {
 	body.Enabled(true);

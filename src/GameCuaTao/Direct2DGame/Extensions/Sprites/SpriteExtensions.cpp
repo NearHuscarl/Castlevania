@@ -5,25 +5,17 @@ SpriteExtensions::SpriteExtensions(GraphicsDevice &graphicsDevice) : SpriteBatch
 {
 }
 
-void SpriteExtensions::Draw(TextureRegion textureRegion, Vector2 position, Color color, bool useViewport)
+void SpriteExtensions::Draw(Sprite sprite, Vector2 position, bool useViewport)
 {
-	Draw(textureRegion, position, color, 0.0f, Vector2::One(), SpriteEffects::None, useViewport);
+	Draw(sprite, position, 0.0f, Vector2::One(), useViewport);
 }
 
-void SpriteExtensions::Draw(TextureRegion textureRegion, Vector2 position, Color color, float rotation, Vector2 scale, SpriteEffects effects, bool useViewport)
+void SpriteExtensions::Draw(Sprite sprite, Transform transform, bool useViewport)
 {
-	auto &texture = textureRegion.GetTexture();
-	auto srcRect = textureRegion.GetFrameRectangle();
-
-	Draw(texture, position, &srcRect, color, rotation, scale, effects, useViewport);
+	Draw(sprite, transform.position, transform.rotation, transform.scale, useViewport);
 }
 
-void SpriteExtensions::Draw(Sprite sprite, Transform transform)
-{
-	Draw(sprite, transform.position, transform.rotation, transform.scale);
-}
-
-void SpriteExtensions::Draw(Sprite sprite, Vector2 position, float rotation, Vector2 scale)
+void SpriteExtensions::Draw(Sprite sprite, Vector2 position, float rotation, Vector2 scale, bool useViewport)
 {
 	if (sprite.IsVisible())
 	{
@@ -32,6 +24,6 @@ void SpriteExtensions::Draw(Sprite sprite, Vector2 position, float rotation, Vec
 		auto color = sprite.GetColor() * sprite.GetAlpha();
 		auto effects = sprite.GetEffect();
 
-		Draw(texture, position, &spriteFrame, color, rotation, scale, effects);
+		Draw(texture, position, &spriteFrame, color, rotation, scale, effects, useViewport);
 	}
 }

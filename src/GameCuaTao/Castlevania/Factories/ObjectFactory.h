@@ -6,6 +6,8 @@
 #include "../Models/Characters/Bat.h"
 #include "../Models/Items/FirePit.h"
 #include "../Models/Weapons/Whip.h"
+#include "../Models/Items/Powerup.h"
+#include "../Effects/EffectFactory.h"
 
 namespace Castlevania
 {
@@ -26,12 +28,16 @@ namespace Castlevania
 		std::unique_ptr<Whip> CreateWhip(GameObject &gameObject);
 		std::unique_ptr<Whip> CreateFlashingWhip(GameObject &gameObject);
 		std::unique_ptr<RangedWeapon> CreateKnife();
-		std::unique_ptr<GameObject> CreateKnifeItem();
-		std::unique_ptr<GameObject> CreateHeart();
-		std::unique_ptr<GameObject> CreateWhipPowerup();
+		std::unique_ptr<Powerup> CreateKnifeItem();
+		std::unique_ptr<Powerup> CreateHeart();
+		std::unique_ptr<Powerup> CreateWhipPowerup();
+
+		std::unique_ptr<Powerup> CreatePowerup(std::string name);
 
 	private:
 		ContentManager &content;
+		std::unique_ptr<EffectFactory> effectManager;
+		
 		std::map<std::string, EntityType> stringToType;
 
 		std::unique_ptr<GameObject> ConstructObject(ObjectProperties properties);

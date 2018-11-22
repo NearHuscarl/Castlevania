@@ -8,18 +8,14 @@ AnimationFactory::AnimationFactory(AnimationDict animations)
 	}
 }
 
-Animation *AnimationFactory::Create()
+Animation AnimationFactory::Create()
 {
-	return &animations.begin()->second;
+	return animations.begin()->second;
 }
 
-Animation *AnimationFactory::Create(std::string name)
+Animation AnimationFactory::Create(std::string name)
 {
-	auto animation = &animations.at(name);
-
-	animation->Reset();
-
-	return animation;
+	return animations.at(name);
 }
 
 std::shared_ptr<AnimationFactory> AnimationFactory::CreateAnimationFactory(std::vector<std::string> animationNames)

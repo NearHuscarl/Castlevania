@@ -25,6 +25,8 @@ constexpr auto ITEM_FALL_SPEED = 120.0f;
 
 ObjectFactory::ObjectFactory(ContentManager &content) : content{ content }
 {
+	effectManager = std::make_unique<EffectFactory>(content);
+
 	stringToType =
 	{
 		{ "Player", EntityType::Player },
@@ -112,6 +114,17 @@ std::unique_ptr<GameObject> ObjectFactory::ConstructObject(ObjectProperties prop
 		case EntityType::Knife:
 			return CreateKnife();
 
+		default:
+			throw std::invalid_argument("Invalid object name");
+	}
+}
+
+std::unique_ptr<Powerup> ObjectFactory::CreatePowerup(std::string name)
+{
+	auto type = stringToType.at(name);
+
+	switch (type)
+	{
 		case EntityType::Heart:
 			return CreateHeart();
 
@@ -159,6 +172,7 @@ std::unique_ptr<Player> ObjectFactory::CreatePlayer()
 	player->LoadContent(content);
 
 	return player;
+
 }
 
 std::unique_ptr<Player> ObjectFactory::CreateSimon()
@@ -171,10 +185,12 @@ std::unique_ptr<FirePit> ObjectFactory::CreateFirePit(ObjectProperties propertie
 	auto firePit = std::make_unique<FirePit>();
 
 	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*firePit, "Items/Fire_Pit.ani.xml");
-	auto item = ConstructObject({ {"name", properties.at("Item")} });
+	auto item = CreatePowerup(properties.at("Item"));
+	auto effect = effectManager->CreateFlameEffect();
 
 	firePit->Attach<IRenderingSystem>(std::move(renderingSystem));
 	firePit->SetSpawnedItem(std::move(item));
+	firePit->SetHitEffect(std::move(effect));
 	firePit->LoadContent(content);
 	
 	return firePit;
@@ -233,9 +249,9 @@ std::unique_ptr<RangedWeapon> ObjectFactory::CreateKnife()
 	return knife;
 }
 
-std::unique_ptr<GameObject> ObjectFactory::CreateKnifeItem()
+std::unique_ptr<Powerup> ObjectFactory::CreateKnifeItem()
 {
-	auto knifeItem = std::make_unique<GameObject>(EntityType::KnifeItem);
+	auto knifeItem = std::make_unique<Powerup>(EntityType::KnifeItem);
 
 	auto movementSystem = std::make_unique<MovementSystem>(*knifeItem);
 	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*knifeItem);
@@ -253,9 +269,9 @@ std::unique_ptr<GameObject> ObjectFactory::CreateKnifeItem()
 	return knifeItem;
 }
 
-std::unique_ptr<GameObject> ObjectFactory::CreateHeart()
+std::unique_ptr<Powerup> ObjectFactory::CreateHeart()
 {
-	auto heart = std::make_unique<GameObject>(EntityType::Heart);
+	auto heart = std::make_unique<Powerup>(EntityType::Heart);
 
 	auto movementSystem = std::make_unique<MovementSystem>(*heart);
 	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*heart);
@@ -273,9 +289,9 @@ std::unique_ptr<GameObject> ObjectFactory::CreateHeart()
 	return heart;
 }
 
-std::unique_ptr<GameObject> ObjectFactory::CreateWhipPowerup()
+std::unique_ptr<Powerup> ObjectFactory::CreateWhipPowerup()
 {
-	auto whipPowerup = std::make_unique<GameObject>(EntityType::WhipPowerup);
+	auto whipPowerup = std::make_unique<Powerup>(EntityType::WhipPowerup);
 
 	auto movementSystem = std::make_unique<MovementSystem>(*whipPowerup);
 	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*whipPowerup);
