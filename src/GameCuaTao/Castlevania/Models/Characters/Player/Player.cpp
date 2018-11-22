@@ -1,3 +1,4 @@
+#include "Direct2DGame/Input/InputHelper.h"
 #include "Player.h"
 #include "PlayerSettings.h"
 
@@ -75,6 +76,11 @@ void Player::LoadContent(ContentManager &content)
 
 void Player::Update(float deltaTime, ObjectCollection *objectCollection)
 {
+	if (InputHelper::IsKeyDown(DIK_9)) // NOTE: remove debugging code
+		data.hearts += 20;
+	else if (InputHelper::IsKeyDown(DIK_0))
+		data.playerHealth = MAX_HEALTH;
+
 	GameObject::Update(deltaTime, objectCollection);
 	UpdateStates(deltaTime);
 
@@ -214,6 +220,11 @@ void Player::Throw(std::unique_ptr<RangedWeapon> weapon)
 	secondaryWeapons.push_back(std::move(weapon));
 
 	data.hearts--;
+
+	if (data.hearts == 0)
+	{
+		data.secondaryWeapon = EntityType::Unknown;
+	}
 }
 
 void Player::TurnBackward()

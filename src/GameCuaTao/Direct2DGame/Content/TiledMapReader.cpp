@@ -1,4 +1,3 @@
-#include "Library/pugixml/pugixml.hpp"
 #include "TiledMapReader.h"
 #include "ContentManager.h"
 #include "LoadContentException.h"
@@ -27,9 +26,9 @@ std::shared_ptr<TiledMap> TiledMapReader::Read(std::string filePath, ContentMana
 	auto map = std::make_shared<TiledMap>(name, mapWidth, mapHeight, tileWidth, tileHeight, Color::FromHex(backgroundColor));
 	
 	// image.source store the relative path to the tmx file itself
-	auto textureRelativePath = mapNode.child("imagelayer").child("image").attribute("source").as_string();
-	auto texturePath = contentManager.ResolvePath(Path{ filePath }.parent_path(), textureRelativePath);
-	auto texture = contentManager.Load<Texture>(texturePath);
+	auto texturePath = mapNode.child("imagelayer").child("image").attribute("source").as_string();
+	auto resolvedTexturePath = contentManager.ResolvePath(Path{ filePath }.parent_path(), texturePath);
+	auto texture = contentManager.Load<Texture>(resolvedTexturePath);
 
 	map->CreateTileSet(texture);
 	map->CreateMapObjects(ReadTiledMapObjects(mapNode));

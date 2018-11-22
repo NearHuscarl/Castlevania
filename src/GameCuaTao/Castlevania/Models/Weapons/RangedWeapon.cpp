@@ -2,7 +2,7 @@
 
 using namespace Castlevania;
 
-constexpr auto THROW_SPEED = 500.0f;
+constexpr auto THROW_SPEED = 700.0f;
 
 RangedWeapon::RangedWeapon(EntityType type) : GameObject(type)
 {

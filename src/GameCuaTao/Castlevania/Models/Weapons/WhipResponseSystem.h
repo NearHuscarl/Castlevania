@@ -15,5 +15,7 @@ namespace Castlevania
 
 	private:
 		Whip &parent;
+
+		void OnCollideWithFirePit(CollisionResult &result, ObjectCollection &objectCollection);
 	};
 }

@@ -16,6 +16,6 @@ namespace Castlevania
 	private:
 		GameObject &parent;
 
-		void OnCollideWithBoundary(CollisionResult &result);
+		void OnCollideWithFirePit(CollisionResult &result, ObjectCollection &objectCollection);
 	};
 }

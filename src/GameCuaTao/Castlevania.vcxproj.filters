@@ -240,9 +240,6 @@
     <ClCompile Include="Castlevania\Models\Systems\CollisionResponse\StaticResponseSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Castlevania\HUD.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Castlevania\Utilities\Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -268,6 +265,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Castlevania\Models\Weapons\RangedWeapon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Hud.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DGame\Content\SpritesheetReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -645,6 +648,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Castlevania\Models\Weapons\RangedWeapon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DGame\Content\SpritesheetReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

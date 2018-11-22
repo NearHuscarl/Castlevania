@@ -1,14 +1,14 @@
 #pragma once
 
 #include <string>
-#include <map>
+#include <unordered_map>
 #include <any>
 #include <filesystem>
 #include "../ServiceProvider.h"
 #include "ContentReader.h"
 
 using Path = std::filesystem::path;
-using AssetDict = std::map<std::string, std::any>;
+using AssetDict = std::unordered_map<std::string, std::any>;
 
 class ContentManager
 {
@@ -22,7 +22,7 @@ public:
 
 	template<typename T>
 	std::shared_ptr<T> Load(std::string assetName);
-	std::string ResolvePath(Path path, std::string filename); // Return asset relative path to rootDirectory
+	std::string ResolvePath(Path path, std::string filename = ""); // Get path relative to rootDirectory
 
 private:
 	std::string rootDirectory;

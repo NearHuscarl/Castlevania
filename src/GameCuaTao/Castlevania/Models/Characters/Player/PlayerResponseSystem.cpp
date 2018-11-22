@@ -102,7 +102,7 @@ void PlayerResponseSystem::OnCollideWithHeart(CollisionResult &result)
 {
 	auto &heart = dynamic_cast<GameObject&>(result.collidedObject);
 
-	parent.data.hearts++;
+	parent.data.hearts += 5;
 	heart.Destroy();
 }
 

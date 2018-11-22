@@ -12,7 +12,7 @@ void MenuScene::LoadContent()
 {
 	auto &content = sceneManager.GetContent();
 	background = content.Load<Texture>("Textures/Backgrounds/Main_Menu.png");
-	menuFont = content.Load<SpriteFont>("Fonts/MainFont");
+	menuFont = content.Load<SpriteFont>("Fonts/MainFont.font.xml");
 
 	auto viewport = sceneManager.GetGraphicsDevice().GetViewport();
 	auto startGameTextSize = menuFont->MessureString(startGameText);

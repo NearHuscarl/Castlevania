@@ -6,19 +6,36 @@
 
 namespace Castlevania
 {
+	constexpr auto MAX_HEALTH = 16;
+
 	struct PlayerData
 	{
 	public:
-		int score = 0;
-		Timer timeLeft = Timer(300); // in seconds
-		int stage = 1;
+		PlayerData()
+		{
+			score = 0;
+			timeLeft = Timer(300); // in seconds
+			stage = 1;
 
-		int playerHealth = 16;
-		int bossHealth = 16;
+			playerHealth = MAX_HEALTH;
+			bossHealth = MAX_HEALTH;
 
-		EntityType secondaryWeapon = EntityType::Unknown;
+			secondaryWeapon = EntityType::Unknown;
 
-		int hearts = 5;
-		int p = 3; // TODO: what is P
+			hearts = 5;
+			lives = 3;
+		}
+
+		int score;
+		Timer timeLeft; // in seconds
+		int stage;
+
+		int playerHealth;
+		int bossHealth;
+
+		EntityType secondaryWeapon;
+
+		int hearts;
+		int lives;
 	};
 }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Library/pugixml/pugixml.hpp"
 #include "AbstractReader.h"
 #include "../Extensions/Tiled/TiledMap.h"
 

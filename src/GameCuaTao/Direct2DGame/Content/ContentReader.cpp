@@ -30,6 +30,12 @@ std::shared_ptr<SpriteFont> ContentReader::ReadAsset<SpriteFont>(std::string fil
 }
 
 template<>
+std::shared_ptr<Spritesheet> ContentReader::ReadAsset<Spritesheet>(std::string filePath)
+{
+	return spritesheetReader.Read(filePath, contentManager);
+}
+
+template<>
 std::shared_ptr<Texture> ContentReader::ReadAsset<Texture>(std::string filePath)
 {
 	return textureReader.Read(filePath, contentManager);

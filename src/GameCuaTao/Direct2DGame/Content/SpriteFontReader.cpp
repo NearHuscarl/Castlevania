@@ -11,13 +11,7 @@
 std::shared_ptr<SpriteFont> SpriteFontReader::Read(std::string configFile, ContentManager &contentManager)
 {
 	auto options = ReadFontConfig(configFile);
-
-	if (options.directory == "")
-		options.directory = Path{ configFile }.parent_path().string();
-	else
-		options.directory = (Path{ contentManager.GetRootDirectory() } / options.directory).string();
-
-	auto filePathStr = (Path{ options.directory } / options.fontName).string();
+	auto filePathStr = (Path{ configFile }.parent_path() / options.fontName).string();
 
 	if (!std::filesystem::exists(filePathStr))
 		throw LoadContentException("Font file not found: " + configFile);
@@ -56,9 +50,6 @@ std::shared_ptr<SpriteFont> SpriteFontReader::Read(std::string configFile, Conte
 
 FontDescription SpriteFontReader::ReadFontConfig(std::string configFile)
 {
-	if (!Path{ configFile }.has_extension())
-		configFile += ".spritefont";
-
 	auto xmlDocument = pugi::xml_document{};
 	auto result = xmlDocument.load_file(configFile.c_str());
 
@@ -78,7 +69,6 @@ FontDescription SpriteFontReader::ReadFontConfig(std::string configFile)
 	};
 
 	options.fontName = fontNode.child("FontName").text().as_string();
-	options.directory = fontNode.child("Directory").text().as_string();
 	options.size = fontNode.child("Size").text().as_float();
 	options.style = fontStyles.at(fontNode.child("Style").text().as_string());
 

@@ -1,3 +1,4 @@
+#include "Library/pugixml/pugixml.hpp"
 #include "AnimationFactoryReader.h"
 #include "LoadContentException.h"
 #include "ContentManager.h"
@@ -15,16 +16,9 @@ std::shared_ptr<AnimationFactory> AnimationFactoryReader::Read(std::string fileP
 	}
 
 	auto rootNode = xmlDocument.child("GameContent");
-	auto texturePath = std::string(rootNode.child("Spritesheet").attribute("TexturePath").as_string());
-	auto fullPath = Path{ contentManager.GetRootDirectory() } / texturePath;
-	
-	if (!std::filesystem::exists(fullPath)) // fallback to the same directory as animationDef xml file if path not found
-	{
-		texturePath = contentManager.ResolvePath(Path{ filePath }.parent_path(), texturePath);
-	}
-
-	auto texture = contentManager.Load<Texture>(texturePath);
-	auto textureRegions = ReadTextureRegions(rootNode, texture);
+	auto atlasPath = rootNode.child("Animations").attribute("AtlasPath").as_string();
+	auto resolvedAtlasPath = contentManager.ResolvePath(Path{ filePath }.parent_path(), atlasPath);
+	auto spritesheet = contentManager.Load<Spritesheet>(resolvedAtlasPath);
 	auto animations = AnimationDict{};
 
 	for (auto animationNode : rootNode.child("Animations").children("Animation"))
@@ -37,42 +31,11 @@ std::shared_ptr<AnimationFactory> AnimationFactoryReader::Read(std::string fileP
 		for (auto frameNode : animationNode.children("Frame"))
 		{
 			auto name = frameNode.attribute("SpriteID").as_string();
-			animation.Add(textureRegions.at(name));
+			animation.Add(spritesheet->at(name));
 		}
 
 		animations.emplace(name, animation);
 	}
 
 	return std::make_shared<AnimationFactory>(animations);
-}
-
-TextureRegionDict AnimationFactoryReader::ReadTextureRegions(pugi::xml_node rootNode, std::shared_ptr<Texture> texture)
-{
-	auto textureRegions = TextureRegionDict{};
-
-	for (auto spriteNode : rootNode.child("Spritesheet").children("Sprite"))
-	{
-		auto name = spriteNode.attribute("ID").as_string();
-
-		auto spriteFrame = Rect{
-			spriteNode.child("SpriteFrame").attribute("Left").as_int(),
-			spriteNode.child("SpriteFrame").attribute("Top").as_int(),
-			spriteNode.child("SpriteFrame").attribute("Width").as_int(),
-			spriteNode.child("SpriteFrame").attribute("Height").as_int(),
-		};
-
-		auto spriteBoundary = RectF{
-			spriteNode.child("SpriteBoundary").attribute("Left").as_float(),
-			spriteNode.child("SpriteBoundary").attribute("Top").as_float(),
-			spriteNode.child("SpriteBoundary").attribute("Width").as_float(),
-			spriteNode.child("SpriteBoundary").attribute("Height").as_float(),
-		};
-
-		if (spriteBoundary == RectF::Empty())
-			textureRegions.emplace(name, TextureRegion{ texture, spriteFrame });
-		else
-			textureRegions.emplace(name, TextureRegion{ texture, spriteFrame, spriteBoundary });
-	}
-
-	return textureRegions;
 }

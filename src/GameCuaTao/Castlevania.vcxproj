@@ -175,6 +175,7 @@
     <ClCompile Include="Castlevania\Models\Weapons\WhipResponseSystem.cpp" />
     <ClCompile Include="Castlevania\Utilities\SpriteHelper.cpp" />
     <ClCompile Include="Castlevania\Utilities\Timer.cpp" />
+    <ClCompile Include="Direct2DGame\Content\SpritesheetReader.cpp" />
     <ClCompile Include="Direct2DGame\Extensions\Collisions\Body\Body.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Player\Controller.cpp" />
     <ClCompile Include="Castlevania\Models\Items\FirePit.cpp" />
@@ -269,6 +270,7 @@
     <ClInclude Include="Castlevania\Utilities\EffectManager.h" />
     <ClInclude Include="Castlevania\Utilities\SpriteHelper.h" />
     <ClInclude Include="Castlevania\Utilities\Timer.h" />
+    <ClInclude Include="Direct2DGame\Content\SpritesheetReader.h" />
     <ClInclude Include="Direct2DGame\Extensions\Collisions\Body\Body.h" />
     <ClInclude Include="Direct2DGame\Extensions\Collisions\Body\CollisionData.h" />
     <ClInclude Include="Direct2DGame\Extensions\Collisions\Body\CollisionResult.h" />

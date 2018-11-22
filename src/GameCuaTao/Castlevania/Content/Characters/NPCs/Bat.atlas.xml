@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <GameContent>
+
   <Spritesheet TexturePath="Bat.png">
     <Sprite ID="fly_01">
       <SpriteFrame Left="1" Top="1" Width="16" Height="16" />
@@ -10,12 +11,5 @@
       <SpriteFrame Left="18" Top="1" Width="16" Height="16" />
     </Sprite>
   </Spritesheet>
-
-  <Animations>
-    <Animation Name="fly" DefaultTime="65" IsLooping="True">
-      <Frame SpriteID="fly_01" />
-      <Frame SpriteID="fly_02" />
-    </Animation>
-  </Animations>
 
 </GameContent>

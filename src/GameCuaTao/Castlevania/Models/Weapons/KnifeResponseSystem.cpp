@@ -1,5 +1,6 @@
 #include "KnifeResponseSystem.h"
 #include "../../Factories/ObjectCollection.h"
+#include "../Items/FirePit.h"
 
 using namespace Castlevania;
 
@@ -20,30 +21,20 @@ void KnifeResponseSystem::Update(ObjectCollection &objectCollection)
 
 		switch (type)
 		{
-			case EntityType::Boundary:
-				OnCollideWithBoundary(result);
+			case EntityType::FirePit:
+				OnCollideWithFirePit(result, objectCollection);
 				break;
 		}
 	}
 }
 
-void KnifeResponseSystem::OnCollideWithBoundary(CollisionResult &result)
+void KnifeResponseSystem::OnCollideWithFirePit(CollisionResult &result, ObjectCollection &objectCollection)
 {
-	auto collisionData = parent.GetBody().GetCollisionData();
-	auto distance = parent.GetDistance();
-	auto time = collisionData.minTime;
-	auto normal = collisionData.minNormal;
+	auto &firePit = dynamic_cast<FirePit&>(result.collidedObject);
+	auto item = firePit.SpawnItem();
 
-	// *0.4f : need to push out a bit to avoid overlapping next frame
-	distance = distance * time + normal * 0.4f;
-	parent.SetDistance(distance);
+	item->SetOriginPosition(firePit.GetOriginPosition());
+	firePit.Destroy();
 
-	auto velocity = parent.GetVelocity();
-
-	if (normal.x != 0)
-		velocity.x = 0;
-	if (normal.y != 0)
-		velocity.y = 0;
-
-	parent.SetVelocity(velocity);
+	objectCollection.entities.push_back(std::move(item));
 }

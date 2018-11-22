@@ -22,14 +22,19 @@ void WhipResponseSystem::Update(ObjectCollection &objectCollection)
 		switch (type)
 		{
 			case EntityType::FirePit:
-				auto &firePit = dynamic_cast<FirePit&>(result.collidedObject);
-				auto item = firePit.SpawnItem();
-
-				item->SetOriginPosition(firePit.GetOriginPosition());
-				firePit.Destroy();
-
-				objectCollection.entities.push_back(std::move(item));
+				OnCollideWithFirePit(result, objectCollection);
 				break;
 		}
 	}
+}
+
+void WhipResponseSystem::OnCollideWithFirePit(CollisionResult &result, ObjectCollection &objectCollection)
+{
+	auto &firePit = dynamic_cast<FirePit&>(result.collidedObject);
+	auto item = firePit.SpawnItem();
+
+	item->SetOriginPosition(firePit.GetOriginPosition());
+	firePit.Destroy();
+
+	objectCollection.entities.push_back(std::move(item));
 }

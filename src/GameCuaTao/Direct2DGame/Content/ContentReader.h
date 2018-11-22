@@ -5,6 +5,7 @@
 #include "DictionaryReader.h"
 #include "SoundReader.h"
 #include "SpriteFontReader.h"
+#include "SpritesheetReader.h"
 #include "TextureReader.h"
 #include "TiledMapReader.h"
 
@@ -25,6 +26,7 @@ private:
 	DictionaryReader dictionaryReader;
 	SoundReader soundReader;
 	SpriteFontReader spriteFontReader;
+	SpritesheetReader spritesheetReader;
 	TextureReader textureReader;
 	TiledMapReader tiledMapReader;
 };

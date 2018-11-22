@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <GameContent>
+
   <Spritesheet TexturePath="Fire_Pit.png">
     <Sprite ID="fire_pit_01">
       <SpriteFrame Left="0" Top="0" Width="32" Height="64" />
@@ -10,12 +11,5 @@
       <SpriteFrame Left="32" Top="0" Width="32" Height="64" />
     </Sprite>
   </Spritesheet>
-
-  <Animations>
-    <Animation Name="Fire" DefaultTime="200" IsLooping="True">
-      <Frame SpriteID="fire_pit_01" />
-      <Frame SpriteID="fire_pit_02" />
-    </Animation>
-  </Animations>
 
 </GameContent>

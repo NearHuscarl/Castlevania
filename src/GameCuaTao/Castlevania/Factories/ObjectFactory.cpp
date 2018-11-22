@@ -129,7 +129,7 @@ std::unique_ptr<GameObject> ObjectFactory::ConstructObject(ObjectProperties prop
 std::unique_ptr<Bat> ObjectFactory::CreateBat()
 {
 	auto bat = std::unique_ptr<Bat>();
-	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*bat, "Characters/NPCs/Bat.xml");
+	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*bat, "Characters/NPCs/Bat.ani.xml");
 
 	bat->Attach<IRenderingSystem>(std::move(renderingSystem));
 	bat->LoadContent(content);
@@ -145,7 +145,7 @@ std::unique_ptr<Player> ObjectFactory::CreatePlayer()
 	auto movementSystem = std::make_unique<PlayerMovementSystem>(*player);
 	auto collisionSystem = std::make_unique<PlayerCollisionSystem>(*player);
 	auto responseSystem = std::make_unique<PlayerResponseSystem>(*player, *this);
-	auto renderingSystem = std::make_unique<PlayerRenderingSystem>(*player, "Characters/Players/Simon.xml");
+	auto renderingSystem = std::make_unique<PlayerRenderingSystem>(*player, "Characters/Players/Simon.ani.xml");
 
 	player->Attach<IController>(std::move(controller));
 	player->Attach<IMovementSystem>(std::move(movementSystem));
@@ -170,7 +170,7 @@ std::unique_ptr<FirePit> ObjectFactory::CreateFirePit(ObjectProperties propertie
 {
 	auto firePit = std::make_unique<FirePit>();
 
-	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*firePit, "Items/Fire_Pit.xml");
+	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*firePit, "Items/Fire_Pit.ani.xml");
 	auto item = ConstructObject({ {"name", properties.at("Item")} });
 
 	firePit->Attach<IRenderingSystem>(std::move(renderingSystem));
@@ -186,7 +186,7 @@ std::unique_ptr<Whip> ObjectFactory::CreateWhip(GameObject &gameObject)
 
 	auto collisionSystem = std::make_unique<EntityCollisionSystem>(*whip);
 	auto responseSystem = std::make_unique<WhipResponseSystem>(*whip);
-	auto renderingSystem = std::make_unique<WhipRenderingSystem>(*whip, "Items/Whip.xml");
+	auto renderingSystem = std::make_unique<WhipRenderingSystem>(*whip, "Items/Whip.ani.xml");
 
 	whip->Attach<ICollisionSystem>(std::move(collisionSystem));
 	whip->Attach<ICollisionResponseSystem>(std::move(responseSystem));
@@ -203,7 +203,7 @@ std::unique_ptr<Whip> ObjectFactory::CreateFlashingWhip(GameObject &gameObject)
 
 	auto collisionSystem = std::make_unique<EntityCollisionSystem>(*whip);
 	auto responseSystem = std::make_unique<WhipResponseSystem>(*whip);
-	auto renderingSystem = std::make_unique<WhipFlashingRenderingSystem>(*whip, "Items/Whip.xml");
+	auto renderingSystem = std::make_unique<WhipFlashingRenderingSystem>(*whip, "Items/Whip.ani.xml");
 
 	whip->Attach<ICollisionSystem>(std::move(collisionSystem));
 	whip->Attach<ICollisionResponseSystem>(std::move(responseSystem));

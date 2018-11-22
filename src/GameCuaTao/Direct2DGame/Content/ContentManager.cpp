@@ -23,6 +23,12 @@ ServiceProvider &ContentManager::GetServiceProvider()
 
 std::string ContentManager::ResolvePath(Path path, std::string filename)
 {
-	auto fullPath = path / filename;
+	auto fullPath = Path{};
+	
+	if (filename != "")
+		fullPath = path / filename;
+	else
+		fullPath = path;
+
 	return std::filesystem::relative(fullPath, rootDirectory).string();
 }

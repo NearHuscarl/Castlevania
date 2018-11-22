@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Spritesheet TexturePath="HP_Block.png">
+    <Sprite ID="player_full">
+      <SpriteFrame Left="0" Top="0" Width="9" Height="14" />
+    </Sprite>
+
+    <Sprite ID="empty">
+      <SpriteFrame Left="9" Top="0" Width="9" Height="14" />
+    </Sprite>
+
+    <Sprite ID="boss_full">
+      <SpriteFrame Left="18" Top="0" Width="9" Height="14" />
+    </Sprite>
+  </Spritesheet>
+
+</GameContent>

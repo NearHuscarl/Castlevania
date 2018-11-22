@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Animations AtlasPath="Fire_Pit.atlas.xml">
+    <Animation Name="Fire" DefaultTime="200" IsLooping="True">
+      <Frame SpriteID="fire_pit_01" />
+      <Frame SpriteID="fire_pit_02" />
+    </Animation>
+  </Animations>
+
+</GameContent>
