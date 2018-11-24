@@ -4,14 +4,18 @@
 #include <vector>
 #include "TileSet.h"
 #include "../Sprites/SpriteExtensions.h"
+#include "../Sprites/IDrawable.h"
 
 using TiledMapObjectProperties = std::map<std::string, std::string>;
 using TiledMapObjects = std::vector<TiledMapObjectProperties>;
 
-class TiledMap
+class TiledMap : public IDrawable
 {
 public:
 	TiledMap(std::string name, int width, int height, int tileWidth, int tileHeight, Color backgroundColor);
+
+	Vector2 GetPosition();
+	void SetPosition(Vector2 position);
 
 	int GetWidthInPixels();
 	int GetHeightInPixels();
@@ -20,10 +24,11 @@ public:
 	void CreateMapObjects(TiledMapObjects objects);
 	TiledMapObjects GetMapObjects();
 
-	void Draw(SpriteExtensions spriteBatch);
+	void Draw(SpriteExtensions &spriteBatch) override;
 
 private:
 	std::string name;
+	Vector2 position;
 
 	int width;
 	int height;
@@ -35,6 +40,6 @@ private:
 	TiledMapObjects objects;
 	Color backgroundColor = Color::Black();
 
-	int &rows = width; // width in tiles
-	int &columns = height; // height in tiles
+	int &columns = width; // height in tiles
+	int &rows = height; // width in tiles
 };

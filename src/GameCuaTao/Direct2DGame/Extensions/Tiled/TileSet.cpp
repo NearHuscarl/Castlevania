@@ -1,6 +1,6 @@
 #include "TileSet.h"
 
-TileSet::TileSet(std::shared_ptr<Texture> texture, int tileWidth, int tileHeight, int rows, int columns)
+TileSet::TileSet(std::shared_ptr<Texture> texture, int tileWidth, int tileHeight, int columns, int rows)
 {
 	this->texture = texture;
 	this->tileWidth = tileWidth;
@@ -13,8 +13,8 @@ TileSet::TileSet(std::shared_ptr<Texture> texture, int tileWidth, int tileHeight
 		for (auto column = 0; column < columns; column++)
 		{
 			auto rect = Rect{
-				tileWidth * row,
-				tileHeight * column,
+				tileWidth * column,
+				tileHeight * row,
 				tileWidth,
 				tileHeight,
 			};

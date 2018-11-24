@@ -10,13 +10,21 @@ namespace Castlevania
 	class Hud
 	{
 	public:
-		Hud(const PlayerData &data);
+		Hud(GraphicsDevice &graphicsDevice);
+
+		int GetWidth();
+		int GetHeight();
+
+		void Register(const PlayerData &data);
 
 		void LoadContent(ContentManager &content);
 		void Draw(SpriteExtensions &spriteBatch);
 
 	private:
-		const PlayerData &data;
+		const PlayerData *data;
+
+		int width;
+		int height;
 
 		std::shared_ptr<SpriteFont> hudFont;
 		std::shared_ptr<Texture> borderTexture;

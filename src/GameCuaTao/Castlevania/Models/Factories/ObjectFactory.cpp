@@ -1,23 +1,23 @@
 #include "ObjectFactory.h"
-#include "../Models/EntityType.h"
-#include "../Models/RectangleObject.h"
-#include "../Models/Systems/Movement/MovementSystem.h"
-#include "../Models/Systems/Collision/CollisionSystem.h"
-#include "../Models/Systems/Collision/EntityCollisionSystem.h"
-#include "../Models/Systems/Collision/StaticCollisionSystem.h"
-#include "../Models/Systems/Collision/StandardCollisionSystem.h"
-#include "../Models/Systems/CollisionResponse/StaticResponseSystem.h"
-#include "../Models/Systems/Rendering/SpriteRenderingSystem.h"
-#include "../Models/Systems/Rendering/AnimationRenderingSystem.h"
-#include "../Models/Characters/Player/Controller.h"
-#include "../Models/Characters/Player/PlayerMovementSystem.h"
-#include "../Models/Characters/Player/PlayerCollisionSystem.h"
-#include "../Models/Characters/Player/PlayerResponseSystem.h"
-#include "../Models/Characters/Player/PlayerRenderingSystem.h"
-#include "../Models/Weapons/WhipRenderingSystem.h"
-#include "../Models/Weapons/WhipFlashingRenderingSystem.h"
-#include "../Models/Weapons/WhipResponseSystem.h"
-#include "../Models/Weapons/KnifeResponseSystem.h"
+#include "../EntityType.h"
+#include "../RectangleObject.h"
+#include "../Systems/Movement/MovementSystem.h"
+#include "../Systems/Collision/CollisionSystem.h"
+#include "../Systems/Collision/EntityCollisionSystem.h"
+#include "../Systems/Collision/StaticCollisionSystem.h"
+#include "../Systems/Collision/StandardCollisionSystem.h"
+#include "../Systems/CollisionResponse/StaticResponseSystem.h"
+#include "../Systems/Rendering/SpriteRenderingSystem.h"
+#include "../Systems/Rendering/AnimationRenderingSystem.h"
+#include "../Characters/Player/Controller.h"
+#include "../Characters/Player/PlayerMovementSystem.h"
+#include "../Characters/Player/PlayerCollisionSystem.h"
+#include "../Characters/Player/PlayerResponseSystem.h"
+#include "../Characters/Player/PlayerRenderingSystem.h"
+#include "../Weapons/WhipRenderingSystem.h"
+#include "../Weapons/WhipFlashingRenderingSystem.h"
+#include "../Weapons/WhipResponseSystem.h"
+#include "../Weapons/KnifeResponseSystem.h"
 
 using namespace Castlevania;
 
@@ -26,122 +26,11 @@ constexpr auto ITEM_FALL_SPEED = 120.0f;
 ObjectFactory::ObjectFactory(ContentManager &content) : content{ content }
 {
 	effectManager = std::make_unique<EffectFactory>(content);
-
-	stringToType =
-	{
-		{ "Player", EntityType::Player },
-		{ "Bat", EntityType::Bat },
-		{ "Cloud", EntityType::Cloud },
-		{ "FirePit", EntityType::FirePit },
-		{ "Whip", EntityType::Whip },
-		{ "KnifeItem", EntityType::KnifeItem },
-		{ "Heart", EntityType::Heart },
-		{ "WhipPowerup", EntityType::WhipPowerup },
-	};
-}
-
-ObjectCollection ObjectFactory::CreateObjectCollection(ObjectsProperties objectsProperties)
-{
-	auto objectCollection = ObjectCollection{};
-
-	for (auto properties : objectsProperties)
-	{
-		auto name = properties.at("name");
-		auto type = properties.at("type");
-
-		if (type == BOUNDARY) // rectangle
-		{
-			auto x = std::stof(properties.at("x"));
-			auto y = std::stof(properties.at("y"));
-			auto width = std::stof(properties.at("width"));
-			auto height = std::stof(properties.at("height"));
-			auto boundary = RectF{ x, y, width, height };
-			auto object = std::make_unique<RectangleObject>(boundary);
-
-			objectCollection.boundaries.push_back(std::move(object));
-		}
-		else if (type == TRIGGER) // rectangle
-		{
-			auto x = std::stof(properties.at("x"));
-			auto y = std::stof(properties.at("y"));
-			auto width = std::stof(properties.at("width"));
-			auto height = std::stof(properties.at("height"));
-			auto trigger = RectF{ x, y, width, height };
-			auto object = std::make_unique<RectangleObject>(trigger);
-
-			objectCollection.triggers.push_back(std::move(object));
-		}
-		else if (type == POSITION)
-		{
-			auto x = std::stof(properties.at("x"));
-			auto y = std::stof(properties.at("y"));
-			auto height = std::stoi(properties.at("height"));
-			auto position = Vector2{ x, y - height };
-
-			objectCollection.locations[name] = position;
-		}
-		else if (type == OBJECT) // GameObject (Player, Bat, Skeleton...) // tile
-		{
-			auto object = ConstructObject(properties);
-			auto x = std::stof(properties.at("x"));
-			auto y = std::stof(properties.at("y"));
-			auto height = std::stoi(properties.at("height"));
-
-			object->SetPosition(x, y - height);
-			objectCollection.entities.push_back(std::move(object));
-		}
-	}
-
-	return objectCollection;
-}
-
-std::unique_ptr<GameObject> ObjectFactory::ConstructObject(ObjectProperties properties)
-{
-	auto name = properties.at("name");
-	auto type = stringToType.at(name);
-	
-	switch (type)
-	{
-		case EntityType::Player:
-			return CreatePlayer();
-
-		case EntityType::Bat:
-			return CreateBat();
-
-		case EntityType::FirePit:
-			return CreateFirePit(properties);
-
-		case EntityType::Knife:
-			return CreateKnife();
-
-		default:
-			throw std::invalid_argument("Invalid object name");
-	}
-}
-
-std::unique_ptr<Powerup> ObjectFactory::CreatePowerup(std::string name)
-{
-	auto type = stringToType.at(name);
-
-	switch (type)
-	{
-		case EntityType::Heart:
-			return CreateHeart();
-
-		case EntityType::WhipPowerup:
-			return CreateWhipPowerup();
-
-		case EntityType::KnifeItem:
-			return CreateKnifeItem();
-
-		default:
-			throw std::invalid_argument("Invalid object name");
-	}
 }
 
 std::unique_ptr<Bat> ObjectFactory::CreateBat()
 {
-	auto bat = std::unique_ptr<Bat>();
+	auto bat = std::make_unique<Bat>();
 	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*bat, "Characters/NPCs/Bat.ani.xml");
 
 	bat->Attach<IRenderingSystem>(std::move(renderingSystem));
@@ -180,12 +69,12 @@ std::unique_ptr<Player> ObjectFactory::CreateSimon()
 	return std::unique_ptr<Player>();
 }
 
-std::unique_ptr<FirePit> ObjectFactory::CreateFirePit(ObjectProperties properties)
+std::unique_ptr<FirePit> ObjectFactory::CreateFirePit(EntityType itemType)
 {
 	auto firePit = std::make_unique<FirePit>();
 
 	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*firePit, "Items/Fire_Pit.ani.xml");
-	auto item = CreatePowerup(properties.at("Item"));
+	auto item = CreatePowerup(itemType);
 	auto effect = effectManager->CreateFlameEffect();
 
 	firePit->Attach<IRenderingSystem>(std::move(renderingSystem));
@@ -247,6 +136,24 @@ std::unique_ptr<RangedWeapon> ObjectFactory::CreateKnife()
 	knife->LoadContent(content);
 
 	return knife;
+}
+
+std::unique_ptr<Powerup> ObjectFactory::CreatePowerup(EntityType type)
+{
+	switch (type)
+	{
+		case EntityType::Heart:
+			return CreateHeart();
+
+		case EntityType::WhipPowerup:
+			return CreateWhipPowerup();
+
+		case EntityType::KnifeItem:
+			return CreateKnifeItem();
+
+		default:
+			throw std::invalid_argument("Invalid powerup type");
+	}
 }
 
 std::unique_ptr<Powerup> ObjectFactory::CreateKnifeItem()

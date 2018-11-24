@@ -159,7 +159,7 @@
   <ItemGroup>
     <ClCompile Include="Castlevania\CastlevaniaGame.cpp" />
     <ClCompile Include="Castlevania\Effects\FlameEffect.cpp" />
-    <ClCompile Include="Castlevania\Factories\ObjectFactory.cpp" />
+    <ClCompile Include="Castlevania\Models\Factories\ObjectFactory.cpp" />
     <ClCompile Include="Castlevania\Hud.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Player\PlayerCollisionSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Player\PlayerRenderingSystem.cpp" />
@@ -250,8 +250,8 @@
   <ItemGroup>
     <ClInclude Include="Castlevania\CastlevaniaGame.h" />
     <ClInclude Include="Castlevania\Effects\FlameEffect.h" />
-    <ClInclude Include="Castlevania\Factories\ObjectCollection.h" />
-    <ClInclude Include="Castlevania\Factories\ObjectFactory.h" />
+    <ClInclude Include="Castlevania\Models\Factories\ObjectCollection.h" />
+    <ClInclude Include="Castlevania\Models\Factories\ObjectFactory.h" />
     <ClInclude Include="Castlevania\Hud.h" />
     <ClInclude Include="Castlevania\Models\Characters\Player\PlayerCollisionSystem.h" />
     <ClInclude Include="Castlevania\Models\Characters\Player\PlayerData.h" />

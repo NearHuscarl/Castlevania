@@ -2,7 +2,7 @@
 
 #include "../../Systems/CollisionResponse/ICollisionResponseSystem.h"
 #include "Player.h"
-#include "../../../Factories/ObjectFactory.h"
+#include "../../../Models/Factories/ObjectFactory.h"
 
 namespace Castlevania
 {

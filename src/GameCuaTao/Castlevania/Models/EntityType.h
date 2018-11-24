@@ -19,6 +19,7 @@ namespace Castlevania
 		Heart,
 		WhipPowerup,
 		KnifeItem,
+		MoneyBag,
 		
 		Unknown,
 	};

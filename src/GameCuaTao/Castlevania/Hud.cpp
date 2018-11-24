@@ -4,8 +4,15 @@
 
 using namespace Castlevania;
 
-Hud::Hud(const PlayerData &data) : data{ data }
+constexpr auto HUD_HEIGHT = 83;
+const auto defaultData = PlayerData::Default();
+
+Hud::Hud(GraphicsDevice &graphicsDevice)
 {
+	width = graphicsDevice.GetViewport().width;
+	height = HUD_HEIGHT;
+	data = &defaultData;
+
 	scoreTextPosition = Vector2{ 0, 15 };
 	timeTextPosition = Vector2{ 210, 15 };
 	stageTextPosition = Vector2{ 370, 15 };
@@ -17,6 +24,21 @@ Hud::Hud(const PlayerData &data) : data{ data }
 	heartTexturePosition = Vector2{ 340, 32 };
 	heartTextPosition = Vector2{ 355, 32 };
 	liveTextPosition = Vector2{ 340, 49 };
+}
+
+int Hud::GetWidth()
+{
+	return width;
+}
+
+int Hud::GetHeight()
+{
+	return height;
+}
+
+void Hud::Register(const PlayerData &data)
+{
+	this->data = &data;
 }
 
 void Hud::LoadContent(ContentManager &content)
@@ -57,32 +79,32 @@ void Hud::Draw(SpriteExtensions &spriteBatch)
 
 std::string Hud::GetScoreText()
 {
-	return "SCORE-" + padZero(data.score, 6);
+	return "SCORE-" + padZero(data->score, 6);
 }
 
 std::string Hud::GetTimeText()
 {
-	return "TIME " + padZero(data.timeLeft.GetCounter(), 4);
+	return "TIME " + padZero(data->timeLeft.GetCounter(), 4);
 }
 
 std::string Hud::GetStageText()
 {
-	return "STAGE " + padZero(data.stage, 2);
+	return "STAGE " + padZero(data->stage, 2);
 }
 
 std::string Hud::GetHeartCountText()
 {
-	return "-" + padZero(data.hearts, 2);
+	return "-" + padZero(data->hearts, 2);
 }
 
 std::string Hud::GetLiveCountText()
 {
-	return "P-" + padZero(data.lives, 2);
+	return "P-" + padZero(data->lives, 2);
 }
 
 std::shared_ptr<Texture> Hud::GetWeaponTexture()
 {
-	switch (data.secondaryWeapon)
+	switch (data->secondaryWeapon)
 	{
 		case EntityType::KnifeItem:
 			return knifeTexture;
@@ -109,7 +131,7 @@ void Hud::DrawHealthBars(SpriteExtensions &spriteBatch)
 {
 	for (auto i = 0; i < MAX_HEALTH; i++)
 	{
-		if (i <= data.playerHealth)
+		if (i <= data->playerHealth)
 		{
 			auto position = Vector2{ playerHealthPosition.x + i * 9, playerHealthPosition.y };
 			spriteBatch.Draw(*playerFullBlock, position, false);
@@ -120,7 +142,7 @@ void Hud::DrawHealthBars(SpriteExtensions &spriteBatch)
 			spriteBatch.Draw(*emptyBlock, position, false);
 		}
 
-		if (i <= data.bossHealth)
+		if (i <= data->bossHealth)
 		{
 			auto position = Vector2{ enemyHealthPosition.x + i * 9, enemyHealthPosition.y };
 			spriteBatch.Draw(*bossFullBlock, position, false);

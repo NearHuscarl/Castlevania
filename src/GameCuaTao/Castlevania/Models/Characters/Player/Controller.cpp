@@ -107,7 +107,7 @@ void Controller::Throw()
 	{
 		case EntityType::KnifeItem:
 		{
-			auto weapon = objectFactory.CreateKnife();
+			auto weapon = objectFactory.CreateKnife(); // TODO: put this into object collection
 			
 			player.Throw(std::move(weapon));
 			break;

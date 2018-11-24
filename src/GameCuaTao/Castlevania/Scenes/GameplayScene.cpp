@@ -7,11 +7,15 @@ GameplayScene::GameplayScene(SceneManager &sceneManager, ObjectFactory &objectFa
 	AbstractScene{ sceneManager },
 	objectFactory{ objectFactory }
 {
-	camera = std::make_unique<Camera>(sceneManager.GetGraphicsDevice());
+	auto &graphicsDevice = sceneManager.GetGraphicsDevice();
+
+	camera = std::make_unique<Camera>(graphicsDevice);
+	hud = std::make_unique<Hud>(graphicsDevice);
+	
 	stageManager = std::make_unique<StageManager>(objectFactory);
+	stageManager->SetWorldPosition(Vector2{ 0, (float)hud->GetHeight() });
 
 	player = objectFactory.CreatePlayer();
-	hud = std::make_unique<Hud>(player->GetData());
 }
 
 void GameplayScene::LoadContent()
@@ -20,6 +24,7 @@ void GameplayScene::LoadContent()
 
 	stageManager->LoadContent(content);
 	hud->LoadContent(content);
+	hud->Register(player->GetData());
 
 	map = stageManager->NextMap(Map::STAGE_01_COURTYARD);
 	camera->SetMoveArea(0, 0, map->GetWidthInPixels(), map->GetHeightInPixels());

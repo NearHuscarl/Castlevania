@@ -1,5 +1,5 @@
 #include "FirePit.h"
-#include "../../Factories/ObjectCollection.h"
+#include "../../Models/Factories/ObjectCollection.h"
 
 using namespace Castlevania;
 
@@ -18,7 +18,7 @@ void FirePit::SetHitEffect(std::unique_ptr<IEffect> effect)
 	this->hitEffect = std::move(effect);
 }
 
-void Castlevania::FirePit::Update(float deltaTime, ObjectCollection *objectCollection)
+void FirePit::Update(float deltaTime, ObjectCollection *objectCollection)
 {
 	switch (state)
 	{

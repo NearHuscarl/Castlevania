@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Animations AtlasPath="Money_Bag.atlas.xml">
+    <Animation Name="MoneyBag" DefaultTime="100" IsLooping="False">
+      <Frame SpriteID="money_bag_red" />
+      <Frame SpriteID="money_bag_blue" />
+      <Frame SpriteID="money_bag_white" />
+    </Animation>
+  </Animations>
+
+</GameContent>

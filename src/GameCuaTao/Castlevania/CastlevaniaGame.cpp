@@ -38,7 +38,7 @@ void CastlevaniaGame::Update(GameTime gameTime)
 
 void CastlevaniaGame::Draw(GameTime gameTime)
 {
-	GetGraphicsDevice().Clear(Color::LavenderBlue());
+	GetGraphicsDevice().Clear(Color::Black());
 
 	sceneManager->Draw(gameTime);
 }

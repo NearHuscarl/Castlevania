@@ -4,7 +4,7 @@
 
 using namespace Castlevania;
 
-constexpr auto JUMP_COOLDOWN = 400; // 0.4 seconds
+constexpr auto JUMP_COOLDOWN = 400; // milliseconds
 constexpr auto FLASHING_TIME = 900; // milliseconds
 
 Stopwatch jumpCooldown;

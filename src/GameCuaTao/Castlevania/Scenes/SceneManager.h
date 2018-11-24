@@ -5,7 +5,7 @@
 #include "Direct2DGame/Extensions/Sprites/SpriteExtensions.h"
 #include "AbstractScene.h"
 #include "Scene.h"
-#include "../Factories/ObjectFactory.h"
+#include "../Models/Factories/ObjectFactory.h"
 
 namespace Castlevania
 {

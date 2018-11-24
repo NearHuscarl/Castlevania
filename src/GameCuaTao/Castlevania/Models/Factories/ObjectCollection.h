@@ -2,7 +2,7 @@
 
 #include <map>
 #include <set>
-#include "../Models/RectangleObject.h"
+#include "../RectangleObject.h"
 
 namespace Castlevania
 {

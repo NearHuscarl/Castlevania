@@ -1,5 +1,5 @@
 #include "KnifeResponseSystem.h"
-#include "../../Factories/ObjectCollection.h"
+#include "../../Models/Factories/ObjectCollection.h"
 #include "../Items/FirePit.h"
 
 using namespace Castlevania;

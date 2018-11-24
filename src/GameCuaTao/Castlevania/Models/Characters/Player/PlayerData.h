@@ -26,6 +26,12 @@ namespace Castlevania
 			lives = 3;
 		}
 
+		static PlayerData Default()
+		{
+			static auto defaultData = PlayerData{};
+			return defaultData;
+		}
+
 		int score;
 		Timer timeLeft; // in seconds
 		int stage;

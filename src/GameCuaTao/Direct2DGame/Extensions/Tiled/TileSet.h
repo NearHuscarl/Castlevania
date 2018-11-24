@@ -9,7 +9,7 @@ using Tiles = std::vector<std::vector<Tile>>; // map[(row, column)] : Tile
 class TileSet
 {
 public:
-	TileSet(std::shared_ptr<Texture> texture, int tileWidth, int tileHeight, int rows, int columns);
+	TileSet(std::shared_ptr<Texture> texture, int tileWidth, int tileHeight, int columns, int rows);
 
 	Tile &GetTile(int row, int column);
 

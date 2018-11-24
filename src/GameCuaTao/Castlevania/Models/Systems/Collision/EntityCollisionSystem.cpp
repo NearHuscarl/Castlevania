@@ -1,6 +1,6 @@
 #include "EntityCollisionSystem.h"
 #include "../../GameObject.h"
-#include "../../../Factories/ObjectCollection.h"
+#include "../../../Models/Factories/ObjectCollection.h"
 
 using namespace Castlevania;
 
