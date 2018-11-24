@@ -2,12 +2,19 @@
 #include "Direct2DGame/MathHelper.h"
 #include "WhipFlashingRenderingSystem.h"
 #include "Whip.h"
+#include "WhipSettings.h"
 
 using namespace Castlevania;
 
 WhipFlashingRenderingSystem::WhipFlashingRenderingSystem(Whip &parent, std::string spriteConfigPath) :
 	WhipRenderingSystem{ parent, spriteConfigPath }
 {
+}
+
+void WhipFlashingRenderingSystem::Receive(int message)
+{
+	if (message == WHIP_FACING_CHANGED)
+		OnFacingChanged();
 }
 
 void WhipFlashingRenderingSystem::LoadContent(ContentManager &content)
@@ -37,21 +44,6 @@ void WhipFlashingRenderingSystem::Update(float deltaTime)
 	UpdatePositionRelativeToPlayer();
 
 	auto facing = parent.GetFacing();
-
-	if (facing == Facing::Left)
-	{
-		sprite->SetEffect(SpriteEffects::FlipHorizontally);
-		spriteRed->SetEffect(SpriteEffects::FlipHorizontally);
-		spriteYellow->SetEffect(SpriteEffects::FlipHorizontally);
-		spriteBlue->SetEffect(SpriteEffects::FlipHorizontally);
-	}
-	else
-	{
-		sprite->SetEffect(SpriteEffects::None);
-		spriteRed->SetEffect(SpriteEffects::None);
-		spriteYellow->SetEffect(SpriteEffects::None);
-		spriteBlue->SetEffect(SpriteEffects::None);
-	}
 
 	currentColor = MathHelper::RandomBetween(1, 4, currentColor);
 }
@@ -95,5 +87,23 @@ void WhipFlashingRenderingSystem::OnEnabledChanged()
 		spriteRed->GetCurrentAnimation().Reset();
 		spriteYellow->GetCurrentAnimation().Reset();
 		spriteBlue->GetCurrentAnimation().Reset();
+	}
+}
+
+void WhipFlashingRenderingSystem::OnFacingChanged()
+{
+	if (parent.GetFacing() == Facing::Left)
+	{
+		sprite->SetEffect(SpriteEffects::FlipHorizontally);
+		spriteRed->SetEffect(SpriteEffects::FlipHorizontally);
+		spriteYellow->SetEffect(SpriteEffects::FlipHorizontally);
+		spriteBlue->SetEffect(SpriteEffects::FlipHorizontally);
+	}
+	else
+	{
+		sprite->SetEffect(SpriteEffects::None);
+		spriteRed->SetEffect(SpriteEffects::None);
+		spriteYellow->SetEffect(SpriteEffects::None);
+		spriteBlue->SetEffect(SpriteEffects::None);
 	}
 }

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../Base/Vector2.h"
-#include "../Base/Rect.h"
+#include "../Extensions/RectF.h"
 
 struct Viewport
 {
@@ -27,8 +27,8 @@ struct Viewport
 		return Vector2{ source.x + x, source.y + y };
 	}
 
-	Rect Bounds()
+	RectF Bounds()
 	{
-		return Rect((int)x, (int)y, width, height);
+		return RectF{ x, y, (float)width, (float)height };
 	}
 };

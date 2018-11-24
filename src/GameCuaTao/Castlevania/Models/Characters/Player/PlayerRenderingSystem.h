@@ -8,7 +8,7 @@ namespace Castlevania
 	class PlayerRenderingSystem : public IRenderingSystem
 	{
 	public:
-		PlayerRenderingSystem(Player &parent, std::string spriteConfigPath);
+		PlayerRenderingSystem(Player &parent, std::string animationPath, std::string flashingAnimationPath);
 
 		RectF GetBoundingBox() override;
 		Sprite &GetSprite() override;
@@ -22,9 +22,15 @@ namespace Castlevania
 	private:
 		Player &parent;
 		std::unique_ptr<AnimatedSprite> sprite;
-		std::string spriteConfigPath;
+		std::unique_ptr<AnimatedSprite> flashingSprite;
+		
+		MoveState lastMoveState;
+
+		std::string animationPath;
+		std::string flashingAnimationPath;
 
 		void OnMoveStateChanged();
 		void OnAttackStateChanged();
+		void OnFacingChanged();
 	};
 }

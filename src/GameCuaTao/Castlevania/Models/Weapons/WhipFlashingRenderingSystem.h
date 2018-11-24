@@ -11,6 +11,8 @@ namespace Castlevania
 	public:
 		WhipFlashingRenderingSystem(Whip &parent, std::string spriteConfigPath);
 
+		void Receive(int message) override;
+
 		void LoadContent(ContentManager &content) override;
 		void Update(float deltaTime) override;
 		void Draw(SpriteExtensions &spriteBatch) override;
@@ -23,5 +25,6 @@ namespace Castlevania
 		std::unique_ptr<AnimatedSprite> spriteBlue;
 
 		void OnEnabledChanged() override;
+		void OnFacingChanged();
 	};
 }

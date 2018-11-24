@@ -21,12 +21,12 @@ Animation &AnimatedSprite::GetCurrentAnimation()
 
 bool AnimatedSprite::AnimateComplete()
 {
-	return currentAnimation.IsComplete();
+	return !currentAnimation.IsPlaying();
 }
 
 void AnimatedSprite::Play(std::string name)
 {
-	if (currentAnimation.GetName() != name || currentAnimation.IsComplete())
+	if (currentAnimation.GetName() != name || !currentAnimation.IsPlaying())
 	{
 		if (name == "")
 			currentAnimation = animationFactory->Create(); // Play the default animation
@@ -37,7 +37,7 @@ void AnimatedSprite::Play(std::string name)
 
 void AnimatedSprite::Update()
 {
-	if (!currentAnimation.IsComplete())
+	if (currentAnimation.IsPlaying())
 	{
 		currentAnimation.Update();
 		SetTextureRegion(currentAnimation.GetCurrentFrame().GetTextureRegion());

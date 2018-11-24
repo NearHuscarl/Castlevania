@@ -4,6 +4,7 @@
 #include "Direct2DGame/Extensions/Tiled/TiledMap.h"
 #include "Direct2DGame/Extensions/Camera.h"
 #include "../Utilities/StageManager.h"
+#include "../Hud.h"
 
 namespace Castlevania
 {
@@ -24,6 +25,7 @@ namespace Castlevania
 		std::shared_ptr<TiledMap> map;
 		std::unique_ptr<Camera> camera;
 		std::unique_ptr<Player> player; // Our player need special attention
+		std::unique_ptr<Hud> hud;
 
 		ObjectCollection objectCollection; // TODO: move to Grid class (implement spatial partition)
 	};

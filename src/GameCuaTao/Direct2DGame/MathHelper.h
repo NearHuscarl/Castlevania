@@ -18,7 +18,7 @@ public:
 	static Vector2 Degrees2Vector(float degrees);
 
 	static int RandomBetween(int min, int max);
-	// Like RandomBetween(int, int) but dont repeat oldValue
+	// Like RandomBetween(int, int) but do not repeat oldValue
 	static int RandomBetween(int min, int max, int oldValue);
 
 private:

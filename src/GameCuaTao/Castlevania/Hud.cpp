@@ -131,7 +131,7 @@ void Hud::DrawHealthBars(SpriteExtensions &spriteBatch)
 {
 	for (auto i = 0; i < MAX_HEALTH; i++)
 	{
-		if (i <= data->playerHealth)
+		if (i + 1 <= data->playerHealth)
 		{
 			auto position = Vector2{ playerHealthPosition.x + i * 9, playerHealthPosition.y };
 			spriteBatch.Draw(*playerFullBlock, position, false);
@@ -142,7 +142,7 @@ void Hud::DrawHealthBars(SpriteExtensions &spriteBatch)
 			spriteBatch.Draw(*emptyBlock, position, false);
 		}
 
-		if (i <= data->bossHealth)
+		if (i + 1 <= data->bossHealth)
 		{
 			auto position = Vector2{ enemyHealthPosition.x + i * 9, enemyHealthPosition.y };
 			spriteBatch.Draw(*bossFullBlock, position, false);

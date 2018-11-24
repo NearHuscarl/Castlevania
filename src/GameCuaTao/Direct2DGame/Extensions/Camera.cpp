@@ -16,7 +16,7 @@ void Camera::SetMoveArea(Rect moveArea)
 	this->moveArea = moveArea;
 }
 
-Rect Camera::GetBounds()
+RectF Camera::GetBounds()
 {
 	return viewport.Bounds();
 }

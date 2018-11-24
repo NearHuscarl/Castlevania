@@ -12,18 +12,22 @@ public:
 	std::string GetName();
 	AnimationFrame GetCurrentFrame();
 	int GetCurrentFrameIndex();
+	
+	void Stop();
+	void Continue();
 
-	bool IsComplete();
-
+	bool IsPlaying();
 	void Add(TextureRegion textureRegion, int time = 0);
 	void Update();
 	void Reset();
 
 private:
 	bool isLooping;
+	bool isPaused;
 	bool isComplete;
 
 	int lastFrameTime;
+	int elaspedFrameTime;
 	int defaultTime;
 	int currentFrame;
 

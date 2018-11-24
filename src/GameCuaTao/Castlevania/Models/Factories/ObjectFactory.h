@@ -15,18 +15,18 @@ namespace Castlevania
 	public:
 		ObjectFactory(ContentManager &content);
 
-		std::unique_ptr<Bat> CreateBat();
-		std::unique_ptr<Player> CreatePlayer();
-		std::unique_ptr<Player> CreateSimon();
-		std::unique_ptr<FirePit> CreateFirePit(EntityType itemType);
+		std::unique_ptr<Bat> CreateBat(Vector2 position = Vector2::Zero());
+		std::unique_ptr<Player> CreatePlayer(Vector2 position = Vector2::Zero());
+		std::unique_ptr<Player> CreateSimon(Vector2 position = Vector2::Zero());
+		std::unique_ptr<FirePit> CreateFirePit(EntityType itemType, Vector2 position = Vector2::Zero());
 		std::unique_ptr<Whip> CreateWhip(GameObject &gameObject);
 		std::unique_ptr<Whip> CreateFlashingWhip(GameObject &gameObject);
-		std::unique_ptr<RangedWeapon> CreateKnife();
+		std::unique_ptr<RangedWeapon> CreateKnife(Vector2 position = Vector2::Zero());
 		
-		std::unique_ptr<Powerup> CreatePowerup(EntityType type);
-		std::unique_ptr<Powerup> CreateKnifeItem();
-		std::unique_ptr<Powerup> CreateHeart();
-		std::unique_ptr<Powerup> CreateWhipPowerup();
+		std::unique_ptr<Powerup> CreatePowerup(EntityType type, Vector2 position = Vector2::Zero());
+		std::unique_ptr<Powerup> CreateKnifeItem(Vector2 position = Vector2::Zero());
+		std::unique_ptr<Powerup> CreateHeart(Vector2 position = Vector2::Zero());
+		std::unique_ptr<Powerup> CreateWhipPowerup(Vector2 position = Vector2::Zero());
 
 	private:
 		ContentManager &content;

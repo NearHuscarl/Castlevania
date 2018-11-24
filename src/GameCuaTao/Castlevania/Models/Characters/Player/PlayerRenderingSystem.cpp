@@ -7,10 +7,11 @@ using namespace Castlevania;
 constexpr auto BEND_KNEE_ON_JUMPING_Y = 330.0f;
 constexpr auto STRETCH_LEG_ON_FALLING_Y = 200.0f;
 
-PlayerRenderingSystem::PlayerRenderingSystem(Player &parent, std::string spriteConfigPath) :
+PlayerRenderingSystem::PlayerRenderingSystem(Player &parent, std::string animationPath, std::string flashingAnimationPath) :
 	parent{ parent }
 {
-	this->spriteConfigPath = spriteConfigPath;
+	this->animationPath = animationPath;
+	this->flashingAnimationPath = flashingAnimationPath;
 }
 
 RectF PlayerRenderingSystem::GetBoundingBox()
@@ -25,20 +26,29 @@ Sprite &PlayerRenderingSystem::GetSprite()
 
 void PlayerRenderingSystem::Receive(int message)
 {
-	if (message == MOVE_STATE_CHANGED)
+	switch (message)
 	{
-		OnMoveStateChanged();
-	}
-	else if (message == ATTACK_STATE_CHANGED)
-	{
-		OnAttackStateChanged();
+		case MOVE_STATE_CHANGED:
+			OnMoveStateChanged();
+			break;
+
+		case ATTACK_STATE_CHANGED:
+			OnAttackStateChanged();
+			break;
+
+		case FACING_CHANGED:
+			OnFacingChanged();
+			break;
 	}
 }
 
 void PlayerRenderingSystem::LoadContent(ContentManager &content)
 {
-	auto animationFactory = content.Load<AnimationFactory>(spriteConfigPath);
-	sprite = std::make_unique<AnimatedSprite>(animationFactory);
+	auto animations = content.Load<AnimationFactory>(animationPath);
+	auto flashingAnimations = content.Load<AnimationFactory>(flashingAnimationPath);
+
+	sprite = std::make_unique<AnimatedSprite>(animations);
+	flashingSprite = std::make_unique<AnimatedSprite>(flashingAnimations);
 }
 
 void PlayerRenderingSystem::Update(float deltaTime)
@@ -96,15 +106,34 @@ void PlayerRenderingSystem::Update(float deltaTime)
 	}
 
 	sprite->Update();
+	flashingSprite->Update();
 }
 
 void PlayerRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 {
-	spriteBatch.Draw(*sprite, parent.GetPosition());
+	switch (parent.moveState)
+	{
+		case MoveState::FLASHING:
+			spriteBatch.Draw(*flashingSprite, parent.GetPosition());
+			break;
+
+		default:
+			spriteBatch.Draw(*sprite, parent.GetPosition());
+			break;
+	}
 }
 
 void PlayerRenderingSystem::OnMoveStateChanged()
 {
+	// previous moveState is FLASHING, presume the last moving animation
+	if (lastMoveState == MoveState::FLASHING)
+	{
+		sprite->GetCurrentAnimation().Continue();
+		lastMoveState = parent.GetMoveState();
+		return;
+	}
+	lastMoveState = parent.GetMoveState();
+
 	switch (parent.moveState)
 	{
 		case MoveState::IDLE:
@@ -126,21 +155,22 @@ void PlayerRenderingSystem::OnMoveStateChanged()
 
 		case MoveState::FLASHING:
 		{
+			sprite->GetCurrentAnimation().Stop();
 			auto currentFrameIndex = sprite->GetCurrentAnimation().GetCurrentFrameIndex();
 
 			switch (currentFrameIndex)
 			{
 				case 0:
-					sprite->Play(FLASH_01_ANIMATION);
+					flashingSprite->Play(FLASH_01_ANIMATION);
 					break;
 				case 1:
-					sprite->Play(FLASH_02_ANIMATION);
+					flashingSprite->Play(FLASH_02_ANIMATION);
 					break;
 				case 2:
-					sprite->Play(FLASH_03_ANIMATION);
+					flashingSprite->Play(FLASH_03_ANIMATION);
 					break;
 				case 3:
-					sprite->Play(FLASH_04_ANIMATION);
+					flashingSprite->Play(FLASH_04_ANIMATION);
 					break;
 			}
 			break;
@@ -178,4 +208,13 @@ void PlayerRenderingSystem::OnAttackStateChanged()
 				break;
 		}
 	}
+}
+
+void PlayerRenderingSystem::OnFacingChanged()
+{
+	// Only sprite's SpriteEffects is set by default, make sure to set this too
+	if (parent.GetFacing() == Facing::Left)
+		flashingSprite->SetEffect(SpriteEffects::FlipHorizontally);
+	else
+		flashingSprite->SetEffect(SpriteEffects::None);
 }

@@ -7,9 +7,6 @@ using namespace Castlevania;
 constexpr auto JUMP_COOLDOWN = 400; // milliseconds
 constexpr auto FLASHING_TIME = 900; // milliseconds
 
-Stopwatch jumpCooldown;
-Stopwatch flashTimer;
-
 Player::Player() : GameObject(EntityType::Player)
 {
 	this->whip = std::make_unique<Whip>(*this);
@@ -19,6 +16,7 @@ void Player::SetFacing(Facing facing)
 {
 	GameObject::SetFacing(facing);
 	whip->SetFacing(facing);
+	SendMessageToSystems(FACING_CHANGED);
 }
 
 void Player::SetMoveState(MoveState moveState)
@@ -104,10 +102,10 @@ void Player::UpdateStates(float deltaTime)
 			break;
 
 		case MoveState::LANDING_HARD:
-			if (jumpCooldown.ElapsedMilliseconds() >= JUMP_COOLDOWN)
+			if (landingTimer.ElapsedMilliseconds() >= JUMP_COOLDOWN)
 			{
 				Idle();
-				jumpCooldown.Reset();
+				landingTimer.Reset();
 			}
 			break;
 
@@ -249,7 +247,7 @@ void Player::Land()
 	{
 		SetMoveState(MoveState::LANDING_HARD);
 		velocity = Vector2::Zero();
-		jumpCooldown.Start();
+		landingTimer.Start();
 	}
 	else
 	{

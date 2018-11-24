@@ -29,6 +29,12 @@ GameObject &Whip::GetOwner()
 	return owner;
 }
 
+void Whip::SetFacing(Facing facing)
+{
+	GameObject::SetFacing(facing);
+	SendMessageToSystems(WHIP_FACING_CHANGED);
+}
+
 void Whip::LoadContent(ContentManager &content)
 {
 	GameObject::LoadContent(content);

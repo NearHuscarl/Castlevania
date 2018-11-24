@@ -14,6 +14,7 @@ namespace Castlevania
 
 		int GetLevel();
 		GameObject &GetOwner();
+		void SetFacing(Facing facing) override;
 
 		void LoadContent(ContentManager &content) override;
 

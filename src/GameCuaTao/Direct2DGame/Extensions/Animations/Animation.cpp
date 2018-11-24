@@ -32,9 +32,25 @@ int Animation::GetCurrentFrameIndex()
 	return frameNow;
 }
 
-bool Animation::IsComplete()
+void Animation::Stop()
 {
-	return isComplete;
+	auto now = Stopwatch::GetTimeStamp();
+	
+	elaspedFrameTime = now - lastFrameTime;
+	isPaused = true;
+}
+
+void Animation::Continue()
+{
+	auto now = Stopwatch::GetTimeStamp();
+
+	lastFrameTime = now - elaspedFrameTime;
+	isPaused = false;
+}
+
+bool Animation::IsPlaying()
+{
+	return !isPaused && !isComplete;
 }
 
 void Animation::Add(TextureRegion textureRegion, int time)
