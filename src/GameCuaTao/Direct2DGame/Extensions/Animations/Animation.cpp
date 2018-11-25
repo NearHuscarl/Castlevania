@@ -32,6 +32,15 @@ int Animation::GetCurrentFrameIndex()
 	return frameNow;
 }
 
+void Animation::SetElapsedTime(float elapsed)
+{
+	auto frameTime = frames[GetCurrentFrameIndex()].GetTime();
+	auto elaspedTime =  frameTime * elapsed;
+	auto now = Stopwatch::GetTimeStamp();
+	
+	lastFrameTime = now - (int)elaspedTime;
+}
+
 void Animation::Stop()
 {
 	auto now = Stopwatch::GetTimeStamp();
@@ -42,6 +51,9 @@ void Animation::Stop()
 
 void Animation::Continue()
 {
+	if (!isPaused)
+		return;
+
 	auto now = Stopwatch::GetTimeStamp();
 
 	lastFrameTime = now - elaspedFrameTime;
@@ -51,6 +63,11 @@ void Animation::Continue()
 bool Animation::IsPlaying()
 {
 	return !isPaused && !isComplete;
+}
+
+bool Animation::IsComplete()
+{
+	return isComplete;
 }
 
 void Animation::Add(TextureRegion textureRegion, int time)
@@ -72,13 +89,14 @@ void Animation::Update()
 	if (currentFrame == -1)
 	{
 		currentFrame = 0;
-		lastFrameTime = now;
+		if (lastFrameTime == 0) // Set to time now unless is set by SetElapsedTime() before that
+			lastFrameTime = now;
 		return;
 	}
 
-	auto frameTimeout = frames[currentFrame].GetTime();
+	auto frameTime = frames[currentFrame].GetTime();
 	
-	if (now - lastFrameTime > frameTimeout)
+	if (now - lastFrameTime > frameTime)
 	{
 		currentFrame++;
 		lastFrameTime = now;

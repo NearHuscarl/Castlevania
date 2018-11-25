@@ -21,17 +21,22 @@ Animation &AnimatedSprite::GetCurrentAnimation()
 
 bool AnimatedSprite::AnimateComplete()
 {
-	return !currentAnimation.IsPlaying();
+	return currentAnimation.IsComplete();
+}
+
+void AnimatedSprite::Play()
+{
+	if (currentAnimation.IsComplete())
+	{
+		currentAnimation = animationFactory->Create(); // Play the default animation
+	}
 }
 
 void AnimatedSprite::Play(std::string name)
 {
-	if (currentAnimation.GetName() != name || !currentAnimation.IsPlaying())
+	if (currentAnimation.GetName() != name || currentAnimation.IsComplete())
 	{
-		if (name == "")
-			currentAnimation = animationFactory->Create(); // Play the default animation
-		else
-			currentAnimation = animationFactory->Create(name);
+		currentAnimation = animationFactory->Create(name);
 	}
 }
 

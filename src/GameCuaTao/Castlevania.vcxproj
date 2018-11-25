@@ -261,6 +261,7 @@
     <ClInclude Include="Castlevania\Models\RectangleObject.h" />
     <ClInclude Include="Castlevania\Models\Systems\Collision\EntityCollisionSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Collision\StandardCollisionSystem.h" />
+    <ClInclude Include="Castlevania\Models\Systems\Control\IControlSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\IReceiver.h" />
     <ClInclude Include="Castlevania\Models\Systems\Rendering\IRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Rendering\AnimationRenderingSystem.h" />

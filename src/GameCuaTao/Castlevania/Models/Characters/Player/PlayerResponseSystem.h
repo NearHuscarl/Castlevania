@@ -18,10 +18,13 @@ namespace Castlevania
 		Player &parent;
 		ObjectFactory &objectFactory;
 
+		bool isOnGround;
+		void SetIsOnGround(bool isOnGround);
+
 		void ClampDistance_X(CollisionData collisionData);
 		void ClampDistance_Y(CollisionData collisionData);
 		
-		void OnCollideWithBoundary(CollisionResult &result);
+		void OnCollideWithBoundary(CollisionResult &result, bool &isOnGround);
 		void OnCollideWithHeart(CollisionResult &result);
 		void OnCollideWithWhipPowerup(CollisionResult &result);
 		void OnCollideWithKnifeItem(CollisionResult &result, ObjectCollection &objectCollection);

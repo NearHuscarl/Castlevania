@@ -6,6 +6,7 @@ using namespace Castlevania;
 
 constexpr auto BEND_KNEE_ON_JUMPING_Y = 330.0f;
 constexpr auto STRETCH_LEG_ON_FALLING_Y = 200.0f;
+constexpr auto FLASHING_TIME = 900; // milliseconds
 
 PlayerRenderingSystem::PlayerRenderingSystem(Player &parent, std::string animationPath, std::string flashingAnimationPath) :
 	parent{ parent }
@@ -72,6 +73,16 @@ void PlayerRenderingSystem::Update(float deltaTime)
 					if (velocity.y > STRETCH_LEG_ON_FALLING_Y)
 						sprite->Play(IDLE_ANIMATION);
 					break;
+
+				case MoveState::FLASHING:
+					if (flashTimer.ElapsedMilliseconds() >= FLASHING_TIME)
+					{
+						flashTimer.Reset();
+
+						sprite->GetCurrentAnimation().Continue(); // TODO: make this command actually working
+						parent.Idle();
+					}
+					break;
 			}
 			break;
 
@@ -125,15 +136,6 @@ void PlayerRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 
 void PlayerRenderingSystem::OnMoveStateChanged()
 {
-	// previous moveState is FLASHING, presume the last moving animation
-	if (lastMoveState == MoveState::FLASHING)
-	{
-		sprite->GetCurrentAnimation().Continue();
-		lastMoveState = parent.GetMoveState();
-		return;
-	}
-	lastMoveState = parent.GetMoveState();
-
 	switch (parent.moveState)
 	{
 		case MoveState::IDLE:
@@ -142,6 +144,17 @@ void PlayerRenderingSystem::OnMoveStateChanged()
 
 		case MoveState::WALKING:
 			sprite->Play(WALK_ANIMATION);
+			// The first frame of WALK_ANIMATION is simon in standing stance, since simon is
+			// already standing, if we play 100% of the frame time, it will just sliding at the
+			// very first time the simon start to move, we only need to play like 10% once for
+			// the standing frame to bootstrap walking animation
+			
+			// FAQ: Why not just play the second frame?
+			//  Because the original game (Castlevania NES) animation seem to work that way
+			//  besides of that, if we just barely play the standing frame before actually playing
+			//  the walking animation, the transition when simon changes her direction (left|right)
+			//  will be smoother (in my personal observation)
+			sprite->GetCurrentAnimation().SetElapsedTime(0.9f);
 			break;
 
 		case MoveState::DUCKING:
@@ -156,6 +169,7 @@ void PlayerRenderingSystem::OnMoveStateChanged()
 		case MoveState::FLASHING:
 		{
 			sprite->GetCurrentAnimation().Stop();
+			flashTimer.Start();
 			auto currentFrameIndex = sprite->GetCurrentAnimation().GetCurrentFrameIndex();
 
 			switch (currentFrameIndex)
@@ -184,29 +198,28 @@ void PlayerRenderingSystem::OnMoveStateChanged()
 
 void PlayerRenderingSystem::OnAttackStateChanged()
 {
-	if (parent.attackState == AttackState::WHIPPING
-		|| parent.attackState == AttackState::THROWING)
+	if (parent.attackState == AttackState::INACTIVE)
+		return;
+
+	switch (parent.moveState)
 	{
-		switch (parent.moveState)
-		{
-			case MoveState::WALKING:
-				sprite->Play(ATTACK_ANIMATION);
-				break;
+		case MoveState::WALKING:
+			sprite->Play(ATTACK_ANIMATION);
+			break;
 
-			case MoveState::IDLE:
-				sprite->Play(ATTACK_ANIMATION);
-				break;
+		case MoveState::IDLE:
+			sprite->Play(ATTACK_ANIMATION);
+			break;
 
-			case MoveState::JUMPING:
-			case MoveState::LANDING:
-			case MoveState::FALLING:
-				sprite->Play(JUMP_ATTACK_ANIMATION);
-				break;
+		case MoveState::JUMPING:
+		case MoveState::LANDING:
+		case MoveState::FALLING:
+			sprite->Play(JUMP_ATTACK_ANIMATION);
+			break;
 
-			case MoveState::DUCKING:
-				sprite->Play(DUCK_ATTACK_ANIMATION);
-				break;
-		}
+		case MoveState::DUCKING:
+			sprite->Play(DUCK_ATTACK_ANIMATION);
+			break;
 	}
 }
 

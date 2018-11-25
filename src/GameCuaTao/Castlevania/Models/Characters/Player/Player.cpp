@@ -5,7 +5,6 @@
 using namespace Castlevania;
 
 constexpr auto JUMP_COOLDOWN = 400; // milliseconds
-constexpr auto FLASHING_TIME = 900; // milliseconds
 
 Player::Player() : GameObject(EntityType::Player)
 {
@@ -106,14 +105,6 @@ void Player::UpdateStates(float deltaTime)
 			{
 				Idle();
 				landingTimer.Reset();
-			}
-			break;
-
-		case MoveState::FLASHING:
-			if (flashTimer.ElapsedMilliseconds() >= FLASHING_TIME)
-			{
-				Idle();
-				flashTimer.Reset();
 			}
 			break;
 	}
@@ -266,7 +257,6 @@ void Player::Flash()
 {
 	SetMoveState(MoveState::FLASHING);
 	velocity = Vector2::Zero();
-	flashTimer.Start();
 }
 
 #pragma endregion

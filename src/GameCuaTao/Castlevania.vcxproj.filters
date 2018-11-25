@@ -674,6 +674,9 @@
     <ClInclude Include="Castlevania\Models\Factories\ObjectCollection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Castlevania\Models\Systems\Control\IControlSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

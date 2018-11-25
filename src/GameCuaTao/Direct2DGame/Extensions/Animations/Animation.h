@@ -13,10 +13,16 @@ public:
 	AnimationFrame GetCurrentFrame();
 	int GetCurrentFrameIndex();
 	
+	// Set elapsed time in percent for current frame. For example:
+	//  0.5f - play that frame half of the time
+	//  0.9f - play that frame 10% of the time
+	void SetElapsedTime(float elapsed);
 	void Stop();
 	void Continue();
 
 	bool IsPlaying();
+	bool IsComplete();
+
 	void Add(TextureRegion textureRegion, int time = 0);
 	void Update();
 	void Reset();

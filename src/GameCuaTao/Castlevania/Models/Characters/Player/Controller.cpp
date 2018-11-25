@@ -13,37 +13,6 @@ Controller::Controller(Player &player, ObjectFactory &objectFactory) :
 void Controller::OnKeyStateChanged(KeyboardState &keyboardState)
 {
 	this->keyboardState = keyboardState;
-
-	auto attackState = player.GetAttackState();
-
-	if (attackState == AttackState::WHIPPING ||
-		attackState == AttackState::THROWING)
-		return;
-
-	switch (player.GetMoveState())
-	{
-		case MoveState::IDLE:
-			if (keyboardState.IsKeyDown(Button::WalkLeft) && keyboardState.IsKeyDown(Button::WalkRight))
-				break;
-			else if (keyboardState.IsKeyDown(Button::WalkLeft))
-				player.WalkLeft();
-			else if (keyboardState.IsKeyDown(Button::WalkRight))
-				player.WalkRight();
-			else if (keyboardState.IsKeyDown(Button::Duck))
-				player.Duck();
-			break;
-
-		case MoveState::WALKING:
-			if (keyboardState.IsKeyUp(Button::WalkLeft) && player.GetFacing() == Facing::Left
-				|| keyboardState.IsKeyUp(Button::WalkRight) && player.GetFacing() == Facing::Right)
-				player.Idle();
-			break;
-
-		case MoveState::DUCKING:
-			if (keyboardState.IsKeyUp(Button::Duck))
-				player.Idle();
-			break;
-	}
 }
 
 void Controller::OnKeyDown(int keyCode)
@@ -99,6 +68,40 @@ void Controller::OnKeyUp(int keyCode)
 		return;
 }
 
+void Controller::Update()
+{
+	auto attackState = player.GetAttackState();
+
+	if (attackState == AttackState::WHIPPING ||
+		attackState == AttackState::THROWING)
+		return;
+
+	switch (player.GetMoveState())
+	{
+		case MoveState::IDLE:
+			if (keyboardState.IsKeyDown(Button::WalkLeft) && keyboardState.IsKeyDown(Button::WalkRight))
+				break;
+			else if (keyboardState.IsKeyDown(Button::WalkLeft))
+				player.WalkLeft();
+			else if (keyboardState.IsKeyDown(Button::WalkRight))
+				player.WalkRight();
+			else if (keyboardState.IsKeyDown(Button::Duck))
+				player.Duck();
+			break;
+
+		case MoveState::WALKING:
+			if (keyboardState.IsKeyUp(Button::WalkLeft) && player.GetFacing() == Facing::Left
+				|| keyboardState.IsKeyUp(Button::WalkRight) && player.GetFacing() == Facing::Right)
+				player.Idle();
+			break;
+
+		case MoveState::DUCKING:
+			if (keyboardState.IsKeyUp(Button::Duck))
+				player.Idle();
+			break;
+	}
+}
+
 void Controller::Throw()
 {
 	auto weaponItem = player.GetSecondaryWeapon();
@@ -113,5 +116,4 @@ void Controller::Throw()
 			break;
 		}
 	}
-
 }

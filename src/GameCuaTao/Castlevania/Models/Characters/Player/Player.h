@@ -101,9 +101,8 @@ namespace Castlevania
 		friend class PlayerRenderingSystem;
 
 		Stopwatch landingTimer;
-		Stopwatch flashTimer;
 
 		// Component-related flags
-		bool isOnGround;
+		bool isWalking;
 	};
 }

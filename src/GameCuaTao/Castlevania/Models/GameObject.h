@@ -3,11 +3,11 @@
 #include "Direct2DGame/Content/ContentManager.h"
 #include "Direct2DGame/Extensions/Collisions/Body/Body.h"
 #include "Direct2DGame/Extensions/Sprites/SpriteExtensions.h"
-#include "Direct2DGame/Input/IController.h"
 #include "Systems/Movement/IMovementSystem.h"
 #include "Systems/Collision/ICollisionSystem.h"
-#include "Systems/Rendering/IRenderingSystem.h"
 #include "Systems/CollisionResponse/ICollisionResponseSystem.h"
+#include "Systems/Control/IControlSystem.h"
+#include "Systems/Rendering/IRenderingSystem.h"
 #include "IGameObject.h"
 #include "EntityType.h"
 
@@ -57,8 +57,6 @@ namespace Castlevania
 		void Destroy();
 		bool IsDestroyed();
 
-		IController *GetController();
-
 		void Move(Vector2 direction);
 
 		template<typename T>
@@ -82,7 +80,7 @@ namespace Castlevania
 
 		std::vector<IReceiver*> components;
 
-		std::unique_ptr<IController> controller;
+		std::unique_ptr<IControlSystem> controlSystem;
 		std::unique_ptr<IMovementSystem> movementSystem;
 		std::unique_ptr<ICollisionSystem> collisionSystem;
 		std::unique_ptr<ICollisionResponseSystem> collisionResponseSystem;

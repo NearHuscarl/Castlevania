@@ -12,7 +12,9 @@ public:
 	Animation &GetCurrentAnimation();
 	bool AnimateComplete();
 
-	void Play(std::string name = "");
+	void Play();
+	void Play(std::string name);
+	
 	void Update();
 
 private:

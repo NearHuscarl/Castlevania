@@ -147,21 +147,16 @@ bool GameObject::IsDestroyed()
 	return isDestroyed;
 }
 
-IController *GameObject::GetController()
-{
-	return controller.get();
-}
-
 void GameObject::Move(Vector2 direction)
 {
 	position += direction;
 }
 
 template<>
-void GameObject::Attach(std::unique_ptr<IController> system)
+void GameObject::Attach(std::unique_ptr<IControlSystem> system)
 {
-	this->controller = std::move(system);
-	Keyboard::Register(controller.get()); // TODO: this should not be here
+	components.push_back(system.get());
+	this->controlSystem = std::move(system);
 }
 
 template<>
@@ -201,6 +196,9 @@ void GameObject::LoadContent(ContentManager &content)
 
 void GameObject::Update(float deltaTime, ObjectCollection *objectCollection)
 {
+	if (controlSystem != nullptr)
+		controlSystem->Update();
+
 	if (movementSystem != nullptr)
 		movementSystem->Update(deltaTime);
 

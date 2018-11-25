@@ -17,7 +17,7 @@ namespace Castlevania
 
 		std::unique_ptr<Bat> CreateBat(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Player> CreatePlayer(Vector2 position = Vector2::Zero());
-		std::unique_ptr<Player> CreateSimon(Vector2 position = Vector2::Zero());
+		std::unique_ptr<Player> CreateIntroSimon(Vector2 position = Vector2::Zero());
 		std::unique_ptr<FirePit> CreateFirePit(EntityType itemType, Vector2 position = Vector2::Zero());
 		std::unique_ptr<Whip> CreateWhip(GameObject &gameObject);
 		std::unique_ptr<Whip> CreateFlashingWhip(GameObject &gameObject);

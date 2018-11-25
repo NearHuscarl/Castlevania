@@ -24,7 +24,7 @@ namespace Castlevania
 		std::unique_ptr<AnimatedSprite> sprite;
 		std::unique_ptr<AnimatedSprite> flashingSprite;
 		
-		MoveState lastMoveState;
+		Stopwatch flashTimer;
 
 		std::string animationPath;
 		std::string flashingAnimationPath;

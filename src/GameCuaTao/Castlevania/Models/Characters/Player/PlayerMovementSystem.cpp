@@ -1,4 +1,6 @@
+#include "Direct2DGame/MathHelper.h"
 #include "PlayerMovementSystem.h"
+#include "PlayerSettings.h"
 #include "../../GameObject.h"
 
 using namespace Castlevania;
@@ -19,24 +21,24 @@ void PlayerMovementSystem::SetDistance(Vector2 distance)
 	this->distance = distance;
 }
 
+void PlayerMovementSystem::Receive(int message)
+{
+	if (message == START_FALLING)
+	{
+		auto moveState = parent.GetMoveState();
+
+		if (moveState == MoveState::WALKING
+			|| moveState == MoveState::IDLE)
+			parent.moveState = MoveState::FALLING_HARD;
+	}
+}
+
 void PlayerMovementSystem::Update(float deltaTime)
 {
 	auto velocity = parent.GetVelocity();
 	auto moveState = parent.GetMoveState();
 
-	if (moveState == MoveState::JUMPING
-		|| moveState == MoveState::LANDING
-		|| moveState == MoveState::FALLING)
-	{
-		velocity.y += GRAVITY;
-	}
-	else
-	{
-		if (!parent.isOnGround)
-			parent.moveState = MoveState::FALLING_HARD;
-
-		velocity.y = FALL_SPEED;
-	}
+	velocity.y = MathHelper::Min(velocity.y + GRAVITY, FALL_SPEED);
 	parent.SetVelocity(velocity);
 
 	distance = velocity * deltaTime;

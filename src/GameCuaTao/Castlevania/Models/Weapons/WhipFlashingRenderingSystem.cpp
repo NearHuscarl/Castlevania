@@ -13,6 +13,8 @@ WhipFlashingRenderingSystem::WhipFlashingRenderingSystem(Whip &parent, std::stri
 
 void WhipFlashingRenderingSystem::Receive(int message)
 {
+	WhipRenderingSystem::Receive(message);
+
 	if (message == WHIP_FACING_CHANGED)
 		OnFacingChanged();
 }

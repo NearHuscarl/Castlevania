@@ -4,7 +4,7 @@
 
   <Animations AtlasPath="Simon.atlas.xml">
     <Animation Name="idle" DefaultTime="100" IsLooping="False">
-      <Frame SpriteID="walk_04" />
+      <Frame SpriteID="walk_01" />
     </Animation>
 
     <Animation Name="attack" DefaultTime="100" IsLooping="False">

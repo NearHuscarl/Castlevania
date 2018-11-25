@@ -1,4 +1,5 @@
 #include "PlayerResponseSystem.h"
+#include "PlayerSettings.h"
 #include "../../../Models/Factories/ObjectCollection.h"
 
 using namespace Castlevania;
@@ -12,11 +13,7 @@ PlayerResponseSystem::PlayerResponseSystem(Player &parent, ObjectFactory &object
 void PlayerResponseSystem::Update(ObjectCollection &objectCollection)
 {
 	auto collisionData = parent.GetBody().GetCollisionData();
-
-	parent.isOnGround = false;
-
-	if (collisionData.collisionResults.size() == 0)
-		return;
+	auto isOnGround = false;
 
 	for (auto result : collisionData.collisionResults)
 	{
@@ -26,7 +23,7 @@ void PlayerResponseSystem::Update(ObjectCollection &objectCollection)
 		switch (type)
 		{
 			case EntityType::Boundary:
-				OnCollideWithBoundary(result);
+				OnCollideWithBoundary(result, isOnGround);
 				break;
 
 			case EntityType::Heart:
@@ -42,6 +39,18 @@ void PlayerResponseSystem::Update(ObjectCollection &objectCollection)
 				break;
 		}
 	}
+
+	SetIsOnGround(isOnGround);
+}
+
+void PlayerResponseSystem::SetIsOnGround(bool value)
+{
+	if (isOnGround != value && isOnGround)
+	{
+		parent.SendMessageToSystems(START_FALLING);
+	}
+	
+	isOnGround = value;
 }
 
 void PlayerResponseSystem::ClampDistance_X(CollisionData collisionData)
@@ -65,7 +74,7 @@ void PlayerResponseSystem::ClampDistance_Y(CollisionData collisionData)
 	parent.SetDistance(distance);
 }
 
-void PlayerResponseSystem::OnCollideWithBoundary(CollisionResult &result)
+void PlayerResponseSystem::OnCollideWithBoundary(CollisionResult &result, bool &isOnGround)
 {
 	auto distance = parent.GetDistance();
 	auto collisionData = parent.GetBody().GetCollisionData();
@@ -75,7 +84,7 @@ void PlayerResponseSystem::OnCollideWithBoundary(CollisionResult &result)
 		case Direction::Top: // Touch ground
 			ClampDistance_Y(collisionData);
 
-			parent.isOnGround = true;
+			isOnGround = true;
 
 			if (parent.GetMoveState() == MoveState::FALLING
 				|| parent.GetMoveState() == MoveState::LANDING

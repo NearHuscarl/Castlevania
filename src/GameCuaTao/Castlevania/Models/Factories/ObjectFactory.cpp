@@ -1,3 +1,4 @@
+#include "Direct2DGame/Input/Keyboard.h"
 #include "ObjectFactory.h"
 #include "../EntityType.h"
 #include "../RectangleObject.h"
@@ -52,8 +53,10 @@ std::unique_ptr<Player> ObjectFactory::CreatePlayer(Vector2 position)
 		"Characters/Players/Simon.ani.xml",
 		"Characters/Players/Simon_Flashing.ani.xml");
 
+	Keyboard::Register(controller.get());
+
 	player->SetPosition(position);
-	player->Attach<IController>(std::move(controller));
+	player->Attach<IControlSystem>(std::move(controller));
 	player->Attach<IMovementSystem>(std::move(movementSystem));
 	player->Attach<ICollisionSystem>(std::move(collisionSystem));
 	player->Attach<ICollisionResponseSystem>(std::move(responseSystem));
@@ -65,10 +68,9 @@ std::unique_ptr<Player> ObjectFactory::CreatePlayer(Vector2 position)
 	player->LoadContent(content);
 
 	return player;
-
 }
 
-std::unique_ptr<Player> ObjectFactory::CreateSimon(Vector2 position)
+std::unique_ptr<Player> ObjectFactory::CreateIntroSimon(Vector2 position)
 {
 	return std::unique_ptr<Player>();
 }
