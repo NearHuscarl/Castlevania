@@ -85,6 +85,7 @@ With the default configuration, Visual will toss all object files into one big f
 -  [Smart pointers need careful programmers]
 -  [UIT-SE102-Game-Project ]
 -  [Game Programming Patterns]
+-  [Swept AABB collision detection]
 -  [Evolve Your Heirachy]
 -  [Monogame Framework]
 -  [Monogame Samples]
@@ -100,6 +101,7 @@ With the default configuration, Visual will toss all object files into one big f
 [smart pointers need careful programmers]: https://yatb.giacomodrago.com/en/post/11/cpp11-smart-pointers-need-careful-programmers.html
 [uit-se102-game-project ]: https://github.com/danhph/UIT-SE102-Game-Project
 [game programming patterns]: http://gameprogrammingpatterns.com/contents.html
+[Swept AABB collision detection]: https://luuthevinh.me/2016/11/xet-va-xu-ly-va-cham-bang-swept-aabb
 [evolve your heirachy]: http://cowboyprogramming.com/2007/01/05/evolve-your-heirachy/
 [monogame framework]: https://github.com/MonoGame/MonoGame
 [monogame samples]: https://github.com/CartBlanche/MonoGame-Samples
