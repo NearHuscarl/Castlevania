@@ -22,10 +22,10 @@
     </Animation>
 
     <Animation Name="walk" DefaultTime="150" IsLooping="True">
-      <Frame SpriteID="walk_01" />
-      <Frame SpriteID="walk_02" />
-      <Frame SpriteID="walk_03" />
-      <Frame SpriteID="walk_04" />
+      <Frame Time="100" SpriteID="walk_01" />
+      <Frame Time="140" SpriteID="walk_02" />
+      <Frame Time="100" SpriteID="walk_03" />
+      <Frame Time="140" SpriteID="walk_04" />
     </Animation>
 
     <Animation Name="go_upstairs" DefaultTime="100" IsLooping="True">
@@ -36,6 +36,14 @@
     <Animation Name="go_downstairs" DefaultTime="100" IsLooping="True">
       <Frame SpriteID="go_downstairs_01" />
       <Frame SpriteID="go_downstairs_02" />
+    </Animation>
+
+    <Animation Name="idle_upstairs" DefaultTime="100" IsLooping="False">
+      <Frame SpriteID="go_upstairs_01" />
+    </Animation>
+
+    <Animation Name="idle_downstairs" DefaultTime="100" IsLooping="False">
+      <Frame SpriteID="go_downstairs_01" />
     </Animation>
 
     <Animation Name="go_upstairs_attack" DefaultTime="100" IsLooping="False">

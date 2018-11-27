@@ -1,6 +1,7 @@
 #include "Direct2DGame/Input/InputHelper.h"
 #include "PlaygroundScene.h"
 #include "SceneManager.h"
+#include "../Utilities/SpriteHelper.h"
 
 using namespace Castlevania;
 
@@ -48,21 +49,19 @@ void PlaygroundScene::Update(float deltaTime)
 	else if (InputHelper::IsKeyDown(DIK_3))
 		player->SetPosition(objectCollection.locations["Checkpoint_03"]);
 	else if (InputHelper::IsKeyDown(DIK_4))
-		objectCollection.entities.push_back(objectFactory.CreateWhipPowerup(Vector2{110, 150}));
+		player->SetPosition(objectCollection.locations["Checkpoint_04"]);
+	else if (InputHelper::IsKeyDown(DIK_W))
+		objectCollection.entities.push_back(objectFactory.CreateWhipPowerup(Vector2{ 110, 150 }));
 
 	auto &entities = objectCollection.entities;
-	for (auto const &entity : entities)
+	auto sizeThisTurn = entities.size();
+
+	for (unsigned int i = 0; i < sizeThisTurn; i++)
 	{
-		entity->Update(deltaTime, &objectCollection);
+		entities[i]->Update(deltaTime, &objectCollection);
 	}
 
-	for (int i = entities.size() - 1; i >= 0; i--) // Remove dead objects
-	{
-		auto &entity = entities[i];
-
-		if (entity->IsDestroyed())
-			entities.erase(entities.begin() + i);
-	}
+	objectCollection.RemoveDeadObjects();
 }
 
 void PlaygroundScene::Draw(GameTime gameTime)
@@ -80,10 +79,10 @@ void PlaygroundScene::Draw(GameTime gameTime)
 		gameObject->Draw(spriteBatch);
 	}
 
-	//for (auto const &gameObject : objectCollection.boundaries)
-	//{
-	//	gameObject->DrawBoundingBox(spriteBatch);
-	//}
+	for (auto const &trigger : objectCollection.triggers)
+	{
+		SpriteHelper::DrawRectangle(spriteBatch, trigger->GetBoundingBox(), Color::Blue() * 0.75f);
+	}
 
 	player->DrawBoundingBox(spriteBatch);
 	player->Draw(spriteBatch);

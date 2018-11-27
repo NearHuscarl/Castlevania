@@ -152,6 +152,14 @@ void GameObject::Move(Vector2 direction)
 	position += direction;
 }
 
+void GameObject::SwitchFacing()
+{
+	if (facing == Facing::Left)
+		SetFacing(Facing::Right);
+	else if (facing == Facing::Right)
+		SetFacing(Facing::Left);
+}
+
 template<>
 void GameObject::Attach(std::unique_ptr<IControlSystem> system)
 {
@@ -224,23 +232,23 @@ void GameObject::DrawBoundingBox(SpriteExtensions &spriteBatch)
 	switch (type)
 	{
 		case EntityType::Boundary:
-			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::Blue());
+			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::Blue() * 0.75f);
 			break;
 
 		case EntityType::Whip:
-			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::Red());
+			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::Red() * 0.75f);
 			break;
 
 		case EntityType::FirePit:
-			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::Green());
+			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::Green() * 0.75f);
 			break;
 
 		case EntityType::Player:
-			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::LavenderBlue());
+			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::LavenderBlue() * 0.75f);
 			break;
 
 		default:
-			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::Magenta());
+			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::Magenta() * 0.75f);
 			break;
 	}
 }

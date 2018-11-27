@@ -2,7 +2,8 @@
 
 #include <map>
 #include <set>
-#include "../RectangleObject.h"
+#include "../GameObject.h"
+#include "../Trigger.h"
 
 namespace Castlevania
 {
@@ -14,8 +15,19 @@ namespace Castlevania
 	struct ObjectCollection
 	{
 		std::vector<std::unique_ptr<RectangleObject>> boundaries;
-		std::vector<std::unique_ptr<RectangleObject>> triggers;
+		std::vector<std::unique_ptr<Trigger>> triggers;
 		std::vector<std::unique_ptr<GameObject>> entities;
 		std::map<std::string, Vector2> locations;
+
+		void RemoveDeadObjects()
+		{
+			for (int i = entities.size() - 1; i >= 0; i--)
+			{
+				auto &entity = entities[i];
+
+				if (entity->IsDestroyed())
+					entities.erase(entities.begin() + i);
+			}
+		}
 	};
 }

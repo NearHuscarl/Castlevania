@@ -1,50 +1,56 @@
 #include "AnimatedSprite.h"
 
 AnimatedSprite::AnimatedSprite(std::shared_ptr<AnimationFactory> animationFactory) :
-	Sprite{ animationFactory->Create().GetCurrentFrame().GetTextureRegion() },
-	currentAnimation{ animationFactory->Create() }
+	Sprite{ animationFactory->Create().GetCurrentFrame().GetTextureRegion() }
 {
 	this->animationFactory = animationFactory;
+	this->animations = this->animationFactory->GetAnimations();
+	this->currentAnimation = &animations.begin()->second;
 }
 
 AnimatedSprite::AnimatedSprite(std::shared_ptr<AnimationFactory> animationFactory, std::vector<std::string> animations) :
-	Sprite{ animationFactory->Create().GetCurrentFrame().GetTextureRegion() },
-	currentAnimation{ animationFactory->Create() }
+	Sprite{ animationFactory->Create().GetCurrentFrame().GetTextureRegion() }
 {
-	this->animationFactory = animationFactory->CreateAnimationFactory(animations);
+	this->animationFactory = animationFactory->Clone(animations);
+	this->animations = this->animationFactory->GetAnimations();
+	this->currentAnimation = &this->animations.begin()->second;
 }
 
 Animation &AnimatedSprite::GetCurrentAnimation()
 {
-	return currentAnimation;
+	return *currentAnimation;
 }
 
 bool AnimatedSprite::AnimateComplete()
 {
-	return currentAnimation.IsComplete();
-}
-
-void AnimatedSprite::Play()
-{
-	if (currentAnimation.IsComplete())
-	{
-		currentAnimation = animationFactory->Create(); // Play the default animation
-	}
+	return currentAnimation->IsComplete();
 }
 
 void AnimatedSprite::Play(std::string name)
 {
-	if (currentAnimation.GetName() != name || currentAnimation.IsComplete())
+	if (currentAnimation->GetName() != name || currentAnimation->IsComplete())
 	{
-		currentAnimation = animationFactory->Create(name);
+		currentAnimation->Stop();
+		animations.at(name) = animationFactory->Create(name);
+		currentAnimation = &animations.at(name);
+	}
+}
+
+void AnimatedSprite::PlayCached(std::string name)
+{
+	if (currentAnimation->GetName() != name || currentAnimation->IsComplete())
+	{
+		currentAnimation->Stop();
+		currentAnimation = &animations.at(name);
+		currentAnimation->Continue();
 	}
 }
 
 void AnimatedSprite::Update()
 {
-	if (currentAnimation.IsPlaying())
+	if (currentAnimation->IsPlaying())
 	{
-		currentAnimation.Update();
-		SetTextureRegion(currentAnimation.GetCurrentFrame().GetTextureRegion());
+		currentAnimation->Update();
+		SetTextureRegion(currentAnimation->GetCurrentFrame().GetTextureRegion());
 	}
 }

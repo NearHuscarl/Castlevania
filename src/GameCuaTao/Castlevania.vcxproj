@@ -170,6 +170,7 @@
     <ClCompile Include="Castlevania\Models\Systems\Rendering\AnimationRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Rendering\SpriteRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Collision\StaticCollisionSystem.cpp" />
+    <ClCompile Include="Castlevania\Models\Trigger.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\KnifeResponseSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\RangedWeapon.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\WhipFlashingRenderingSystem.cpp" />
@@ -250,6 +251,7 @@
   <ItemGroup>
     <ClInclude Include="Castlevania\CastlevaniaGame.h" />
     <ClInclude Include="Castlevania\Effects\FlameEffect.h" />
+    <ClInclude Include="Castlevania\Models\Facing.h" />
     <ClInclude Include="Castlevania\Models\Factories\ObjectCollection.h" />
     <ClInclude Include="Castlevania\Models\Factories\ObjectFactory.h" />
     <ClInclude Include="Castlevania\Hud.h" />
@@ -267,6 +269,8 @@
     <ClInclude Include="Castlevania\Models\Systems\Rendering\AnimationRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Rendering\SpriteRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Collision\StaticCollisionSystem.h" />
+    <ClInclude Include="Castlevania\Models\Trigger.h" />
+    <ClInclude Include="Castlevania\Models\TriggerType.h" />
     <ClInclude Include="Castlevania\Models\Weapons\KnifeResponseSystem.h" />
     <ClInclude Include="Castlevania\Models\Weapons\RangedWeapon.h" />
     <ClInclude Include="Castlevania\Models\Weapons\WhipFlashingRenderingSystem.h" />
@@ -275,6 +279,7 @@
     <ClInclude Include="Castlevania\Models\Weapons\WhipSettings.h" />
     <ClInclude Include="Castlevania\Effects\EffectFactory.h" />
     <ClInclude Include="Castlevania\Effects\IEffect.h" />
+    <ClInclude Include="Castlevania\Utilities\CppExtensions.h" />
     <ClInclude Include="Castlevania\Utilities\SpriteHelper.h" />
     <ClInclude Include="Castlevania\Utilities\Timer.h" />
     <ClInclude Include="Direct2DGame\Content\SpritesheetReader.h" />

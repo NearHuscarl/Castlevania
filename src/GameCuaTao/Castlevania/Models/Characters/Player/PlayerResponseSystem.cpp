@@ -13,7 +13,7 @@ PlayerResponseSystem::PlayerResponseSystem(Player &parent, ObjectFactory &object
 void PlayerResponseSystem::Update(ObjectCollection &objectCollection)
 {
 	auto collisionData = parent.GetBody().GetCollisionData();
-	auto isOnGround = false;
+	auto responseResult = ResponseResult{};
 
 	for (auto result : collisionData.collisionResults)
 	{
@@ -23,7 +23,11 @@ void PlayerResponseSystem::Update(ObjectCollection &objectCollection)
 		switch (type)
 		{
 			case EntityType::Boundary:
-				OnCollideWithBoundary(result, isOnGround);
+				OnCollideWithBoundary(result, responseResult);
+				break;
+
+			case EntityType::Trigger:
+				OnCollideWithTrigger(result, responseResult);
 				break;
 
 			case EntityType::Heart:
@@ -40,17 +44,18 @@ void PlayerResponseSystem::Update(ObjectCollection &objectCollection)
 		}
 	}
 
-	SetIsOnGround(isOnGround);
+	PostProcess(responseResult);
 }
 
-void PlayerResponseSystem::SetIsOnGround(bool value)
+void PlayerResponseSystem::PostProcess(ResponseResult responseResult)
 {
-	if (isOnGround != value && isOnGround)
+	if (parent.isOnGround != responseResult.isOnGround && parent.isOnGround)
 	{
 		parent.SendMessageToSystems(START_FALLING);
 	}
-	
-	isOnGround = value;
+
+	parent.isOnGround = responseResult.isOnGround;
+	parent.nearbyStair = responseResult.stairTrigger;
 }
 
 void PlayerResponseSystem::ClampDistance_X(CollisionData collisionData)
@@ -74,7 +79,7 @@ void PlayerResponseSystem::ClampDistance_Y(CollisionData collisionData)
 	parent.SetDistance(distance);
 }
 
-void PlayerResponseSystem::OnCollideWithBoundary(CollisionResult &result, bool &isOnGround)
+void PlayerResponseSystem::OnCollideWithBoundary(CollisionResult &result, ResponseResult &responseResult)
 {
 	auto distance = parent.GetDistance();
 	auto collisionData = parent.GetBody().GetCollisionData();
@@ -82,28 +87,114 @@ void PlayerResponseSystem::OnCollideWithBoundary(CollisionResult &result, bool &
 	switch (result.direction)
 	{
 		case Direction::Top: // Touch ground
-			ClampDistance_Y(collisionData);
+			responseResult.isOnGround = true;
 
-			isOnGround = true;
-
-			if (parent.GetMoveState() == MoveState::FALLING
-				|| parent.GetMoveState() == MoveState::LANDING
-				|| parent.GetMoveState() == MoveState::FALLING_HARD)
+			switch (parent.GetMoveState())
 			{
-				parent.Land();
+				// We dont care if there are obstacles (such as cornered wall
+				// near the stair entry). Just move the player to the damn stair
+				case MoveState::GOING_UPSTAIRS:
+				case MoveState::GOING_DOWNSTAIRS:
+				case MoveState::IDLE_UPSTAIRS:
+				case MoveState::IDLE_DOWNSTAIRS:
+					break;
+
+				case MoveState::FALLING:
+				case MoveState::LANDING:
+				case MoveState::FALLING_HARD:
+					ClampDistance_Y(collisionData);
+					parent.Land();
+					break;
+
+				default:
+					ClampDistance_Y(collisionData);
+					break;
 			}
 			break;
 
 		case Direction::Left:
 		case Direction::Right:
-			ClampDistance_X(collisionData);
-			parent.SetVelocity_X(0);
+			switch (parent.GetMoveState())
+			{
+				case MoveState::GOING_UPSTAIRS:
+				case MoveState::GOING_DOWNSTAIRS:
+				case MoveState::IDLE_UPSTAIRS:
+				case MoveState::IDLE_DOWNSTAIRS:
+					break;
+
+				default:
+					ClampDistance_X(collisionData);
+					parent.SetVelocity_X(0);
+					break;
+			}
 			break;
 
 		case Direction::Bottom:
-			ClampDistance_Y(collisionData);
-			parent.SetVelocity_Y(0);
+			switch (parent.GetMoveState())
+			{
+				case MoveState::GOING_UPSTAIRS:
+				case MoveState::GOING_DOWNSTAIRS:
+				case MoveState::IDLE_UPSTAIRS:
+				case MoveState::IDLE_DOWNSTAIRS:
+					break;
+
+				default:
+					ClampDistance_Y(collisionData);
+					parent.SetVelocity_Y(0);
+					break;
+			}
 			break;
+	}
+}
+
+void PlayerResponseSystem::OnCollideWithTrigger(CollisionResult &result, ResponseResult &responseResult)
+{
+	auto &trigger = dynamic_cast<Trigger&>(result.collidedObject);
+	
+	switch (trigger.GetTriggerType())
+	{
+		case TriggerType::STAIR_UP:
+			{
+				responseResult.stairTrigger = &trigger;
+				auto triggerBbox = trigger.GetBoundingBox();
+
+				// -2: change to idle state when barely hit the floor to make the transition smoother
+				if (parent.GetBoundingBox().bottom >= triggerBbox.bottom - 2
+					&& (parent.moveState == MoveState::GOING_DOWNSTAIRS || parent.moveState == MoveState::IDLE_DOWNSTAIRS))
+				{
+					parent.IdleOnGround();
+
+					auto offsetBottom = parent.GetFrameRect().bottom - parent.GetBoundingBox().bottom;
+					// TODO: why 1 extra pixel?
+					parent.position.y = trigger.GetBoundingBox().bottom - parent.GetFrameRect().Height() + offsetBottom - 1;
+
+					auto distance = parent.GetDistance();
+					distance.y = 0;
+					parent.SetDistance(distance);
+				}
+				break;
+			}
+
+		case TriggerType::STAIR_DOWN:
+			{
+				responseResult.stairTrigger = &trigger;
+				auto triggerBbox = trigger.GetBoundingBox();
+
+				if (parent.GetBoundingBox().bottom <= triggerBbox.bottom
+					&& (parent.moveState == MoveState::GOING_UPSTAIRS || parent.moveState == MoveState::IDLE_UPSTAIRS))
+				{
+					parent.IdleOnGround();
+
+					auto offsetBottom = parent.GetFrameRect().bottom - parent.GetBoundingBox().bottom;
+					// TODO: why 1 extra pixel?
+					parent.position.y = trigger.GetBoundingBox().bottom - parent.GetFrameRect().Height() + offsetBottom + 1;
+
+					auto distance = parent.GetDistance();
+					distance.y = 0;
+					parent.SetDistance(distance);
+				}
+				break;
+			}
 	}
 }
 

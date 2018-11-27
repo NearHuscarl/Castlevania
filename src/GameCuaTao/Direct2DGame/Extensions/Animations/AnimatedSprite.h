@@ -12,12 +12,13 @@ public:
 	Animation &GetCurrentAnimation();
 	bool AnimateComplete();
 
-	void Play();
 	void Play(std::string name);
-	
+	void PlayCached(std::string name); // Play the animation without reset its last state
+
 	void Update();
 
 private:
 	std::shared_ptr<AnimationFactory> animationFactory;
-	Animation currentAnimation;
+	AnimationDict animations;
+	Animation *currentAnimation;
 };

@@ -41,18 +41,18 @@ void GameplayScene::Update(float deltaTime)
 	player->Update(deltaTime, &objectCollection);
 
 	auto &entities = objectCollection.entities;
-	for (auto const &entity : entities)
+
+	// Only update existing objects. Any new objects will have to wait until next turn
+	// That's way, a newly spawned object wont get a chance to act during the same frame
+	// that it was spawned, before the player has even had a chance to see it
+	auto sizeThisTurn = entities.size();
+
+	for (unsigned int i = 0; i < sizeThisTurn; i++)
 	{
-		entity->Update(deltaTime, &objectCollection);
+		entities[i]->Update(deltaTime, &objectCollection);
 	}
 
-	for (int i = entities.size() - 1; i >= 0; i--) // Remove dead objects
-	{
-		auto &entity = entities[i];
-
-		if (entity->IsDestroyed())
-			entities.erase(entities.begin() + i);
-	}
+	objectCollection.RemoveDeadObjects();
 }
 
 void GameplayScene::Draw(GameTime gameTime)

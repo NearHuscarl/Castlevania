@@ -23,7 +23,6 @@ void AnimationRenderingSystem::LoadContent(ContentManager &content)
 {
 	auto animationFactory = content.Load<AnimationFactory>(spriteConfigPath);
 	sprite = std::make_unique<AnimatedSprite>(animationFactory);
-	sprite->Play();
 }
 
 void AnimationRenderingSystem::Update(float deltaTime)

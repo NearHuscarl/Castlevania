@@ -31,7 +31,8 @@ std::shared_ptr<AnimationFactory> AnimationFactoryReader::Read(std::string fileP
 		for (auto frameNode : animationNode.children("Frame"))
 		{
 			auto name = frameNode.attribute("SpriteID").as_string();
-			animation.Add(spritesheet->at(name));
+			auto time = frameNode.attribute("Time").as_int(); // equals to 0 if Time attribute not found
+			animation.Add(spritesheet->at(name), time);
 		}
 
 		animations.emplace(name, animation);

@@ -104,7 +104,11 @@ Color Color::White()
 
 Color Color::operator*(float scale)
 {
-	return Color(R() * (int)scale, G() * (int)scale, B() * (int)scale, A() * (int)scale);
+	return Color{
+		(int)(R() * scale),
+		(int)(G() * scale),
+		(int)(B() * scale),
+		(int)(A() * scale) };
 }
 
 Color Color::FromHex(std::string hexColor)

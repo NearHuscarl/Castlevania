@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../../Systems/CollisionResponse/ICollisionResponseSystem.h"
-#include "Player.h"
 #include "../../../Models/Factories/ObjectFactory.h"
+#include "Player.h"
 
 namespace Castlevania
 {
@@ -18,13 +18,19 @@ namespace Castlevania
 		Player &parent;
 		ObjectFactory &objectFactory;
 
-		bool isOnGround;
-		void SetIsOnGround(bool isOnGround);
+		struct ResponseResult
+		{
+			bool isOnGround;
+			Trigger *stairTrigger;
+		};
+
+		void PostProcess(ResponseResult responseResult);
 
 		void ClampDistance_X(CollisionData collisionData);
 		void ClampDistance_Y(CollisionData collisionData);
 		
-		void OnCollideWithBoundary(CollisionResult &result, bool &isOnGround);
+		void OnCollideWithBoundary(CollisionResult &result, ResponseResult &responseResult);
+		void OnCollideWithTrigger(CollisionResult &result, ResponseResult &responseResult);
 		void OnCollideWithHeart(CollisionResult &result);
 		void OnCollideWithWhipPowerup(CollisionResult &result);
 		void OnCollideWithKnifeItem(CollisionResult &result, ObjectCollection &objectCollection);

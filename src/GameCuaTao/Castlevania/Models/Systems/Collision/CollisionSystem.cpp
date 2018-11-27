@@ -1,15 +1,15 @@
 #include "Direct2DGame/MathHelper.h"
 #include "CollisionSystem.h"
-#include "../../GameObject.h"
+#include "../../IGameObject.h"
 #include "../../../Models/Factories/ObjectCollection.h"
 
 using namespace Castlevania;
 
-CollisionSystem::CollisionSystem(GameObject &parent) : parent{ parent }
+CollisionSystem::CollisionSystem(IGameObject &parent) : parent{ parent }
 {
 }
 
-void CollisionSystem::CalculateCollision(GameObject &gameObject, CollisionResults &results)
+void CollisionSystem::CalculateCollision(IGameObject &gameObject, CollisionResults &results)
 {
 	if (!gameObject.GetBody().Enabled())
 		return;
@@ -22,7 +22,7 @@ void CollisionSystem::CalculateCollision(GameObject &gameObject, CollisionResult
 	}
 }
 
-bool CollisionSystem::CalculateStaticCollision(GameObject &gameObject, CollisionResults &results)
+bool CollisionSystem::CalculateStaticCollision(IGameObject &gameObject, CollisionResults &results)
 {
 	auto objectBoundingBox = gameObject.GetBoundingBox();
 
@@ -35,7 +35,7 @@ bool CollisionSystem::CalculateStaticCollision(GameObject &gameObject, Collision
 	return false;
 }
 
-bool CollisionSystem::CalculateDynamicCollision(GameObject &gameObject, CollisionResults &results)
+bool CollisionSystem::CalculateDynamicCollision(IGameObject &gameObject, CollisionResults &results)
 {
 	auto result = parent.GetBody().PredictCollision(gameObject);
 

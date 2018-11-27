@@ -50,22 +50,22 @@
 
     <Sprite ID="go_upstairs_01">
       <SpriteFrame Left="60" Top="66" Width="60" Height="66" />
-      <SpriteBoundary Left="74" Top="68" Width="24" Height="62" />
+      <SpriteBoundary Left="71" Top="68" Width="30" Height="62" />
     </Sprite>
 
     <Sprite ID="go_upstairs_02">
       <SpriteFrame Left="120" Top="66" Width="60" Height="66" />
-      <SpriteBoundary Left="131" Top="68" Width="30" Height="62" />
+      <SpriteBoundary Left="134" Top="68" Width="24" Height="62" />
     </Sprite>
 
     <Sprite ID="go_downstairs_01">
       <SpriteFrame Left="180" Top="66" Width="60" Height="66" />
-      <SpriteBoundary Left="206" Top="68" Width="24" Height="62" />
+      <SpriteBoundary Left="198" Top="68" Width="32" Height="62" />
     </Sprite>
 
     <Sprite ID="go_downstairs_02">
       <SpriteFrame Left="240" Top="66" Width="60" Height="66" />
-      <SpriteBoundary Left="258" Top="68" Width="32" Height="62" />
+      <SpriteBoundary Left="266" Top="68" Width="24" Height="62" />
     </Sprite>
 
     <Sprite ID="go_upstairs_attack_01">

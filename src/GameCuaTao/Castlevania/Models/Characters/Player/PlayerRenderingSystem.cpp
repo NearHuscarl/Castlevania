@@ -63,6 +63,22 @@ void PlayerRenderingSystem::Update(float deltaTime)
 		case AttackState::INACTIVE:
 			switch (moveState)
 			{
+				case MoveState::IDLE_UPSTAIRS:
+					if (sprite->AnimateComplete()) // finish up the rest of climbing animation
+					{
+						parent.OnStopClimbingStair();
+						sprite->Play(IDLE_UPSTAIRS_ANIMATION);
+					}
+					break;
+
+				case MoveState::IDLE_DOWNSTAIRS:
+					if (sprite->AnimateComplete())
+					{
+						parent.OnStopClimbingStair();
+						sprite->Play(IDLE_DOWNSTAIRS_ANIMATION);
+					}
+					break;
+
 				case MoveState::JUMPING:
 					if (velocity.y > -BEND_KNEE_ON_JUMPING_Y)
 						sprite->Play(JUMP_ANIMATION);
@@ -79,7 +95,7 @@ void PlayerRenderingSystem::Update(float deltaTime)
 					{
 						flashTimer.Reset();
 
-						sprite->GetCurrentAnimation().Continue(); // TODO: make this command actually working
+						//sprite->GetCurrentAnimation().Continue(); // TODO: make this command actually working
 						parent.Idle();
 					}
 					break;
@@ -143,18 +159,32 @@ void PlayerRenderingSystem::OnMoveStateChanged()
 			break;
 
 		case MoveState::WALKING:
-			sprite->Play(WALK_ANIMATION);
-			// The first frame of WALK_ANIMATION is simon in standing stance, since simon is
-			// already standing, if we play 100% of the frame time, it will just sliding at the
-			// very first time the simon start to move, we only need to play like 10% once for
-			// the standing frame to bootstrap walking animation
-			
-			// FAQ: Why not just play the second frame?
-			//  Because the original game (Castlevania NES) animation seem to work that way
-			//  besides of that, if we just barely play the standing frame before actually playing
-			//  the walking animation, the transition when simon changes her direction (left|right)
-			//  will be smoother (in my personal observation)
-			sprite->GetCurrentAnimation().SetElapsedTime(0.9f);
+		case MoveState::WALKING_TO_STAIRS:
+			sprite->PlayCached(WALK_ANIMATION);
+			break;
+
+		case MoveState::GOING_UPSTAIRS:
+			// Handle an edge case where simon is in idle state, but is playing
+			// the last walking animation loop before changing to idle animation,
+			// and now moves again so the animation need to reset back to infinite
+			// loop instead of creating new animation
+			if (sprite->GetCurrentAnimation().GetName() == GO_UPSTAIRS_ANIMATION)
+				sprite->GetCurrentAnimation().SetLoop(true);
+			else
+				sprite->Play(GO_UPSTAIRS_ANIMATION);
+			break;
+
+		case MoveState::GOING_DOWNSTAIRS:
+			if (sprite->GetCurrentAnimation().GetName() == GO_DOWNSTAIRS_ANIMATION)
+				sprite->GetCurrentAnimation().SetLoop(true);
+			else
+				sprite->Play(GO_DOWNSTAIRS_ANIMATION);
+			break;
+
+		// allow to move up|down stair one more step before actually stopping
+		case MoveState::IDLE_UPSTAIRS:
+		case MoveState::IDLE_DOWNSTAIRS:
+			sprite->GetCurrentAnimation().SetLoop(false);
 			break;
 
 		case MoveState::DUCKING:

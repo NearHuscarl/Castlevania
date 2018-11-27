@@ -1,8 +1,9 @@
 #include "StageManager.h"
+#include "../Utilities/CppExtensions.h"
 
 using namespace Castlevania;
 
-const auto stringToType = std::unordered_map<std::string, EntityType>
+const auto string2EntityType = std::unordered_map<std::string, EntityType>
 {
 	{ "Player", EntityType::Player },
 	{ "Bat", EntityType::Bat },
@@ -13,6 +14,21 @@ const auto stringToType = std::unordered_map<std::string, EntityType>
 	{ "Heart", EntityType::Heart },
 	{ "WhipPowerup", EntityType::WhipPowerup },
 	{ "MoneyBag", EntityType::MoneyBag },
+};
+
+const auto string2TriggerType = std::unordered_map<std::string, TriggerType>
+{
+	{ "NextMap", TriggerType::NEXT_MAP },
+	{ "MoneyBagTrigger", TriggerType::MONEY_BAG_EASTER_EGG },
+	{ "StairUp", TriggerType::STAIR_UP },
+	{ "StairDown", TriggerType::STAIR_DOWN },
+};
+
+const auto string2Facing = std::unordered_map<std::string, Facing>
+{
+	{ "Left", Facing::Left },
+	{ "Right", Facing::Right },
+	{ "None", Facing::None },
 };
 
 StageManager::StageManager(ObjectFactory &objectFactory) : objectFactory{ objectFactory }
@@ -65,8 +81,8 @@ ObjectCollection StageManager::CreateObjectCollection(ObjectsProperties objectsP
 		{
 			auto width = std::stof(properties.at("width"));
 			auto height = std::stof(properties.at("height"));
-			auto boundary = RectF{ x, y, width, height };
-			auto object = std::make_unique<RectangleObject>(boundary);
+			auto bbox = RectF{ x, y, width, height };
+			auto object = std::make_unique<RectangleObject>(bbox);
 
 			objectCollection.boundaries.push_back(std::move(object));
 		}
@@ -74,9 +90,12 @@ ObjectCollection StageManager::CreateObjectCollection(ObjectsProperties objectsP
 		{
 			auto width = std::stof(properties.at("width"));
 			auto height = std::stof(properties.at("height"));
-			auto trigger = RectF{ x, y, width, height };
-			auto object = std::make_unique<RectangleObject>(trigger);
-
+			auto bbox = RectF{ x, y, width, height };
+			auto facing = string2Facing.at(GetValueOrDefault(properties, "Facing", "None"));
+			auto triggerType = string2TriggerType.at(name);
+			auto object = std::make_unique<Trigger>(bbox, triggerType);
+			
+			object->SetFacing(facing);
 			objectCollection.triggers.push_back(std::move(object));
 		}
 		else if (type == POSITION)
@@ -102,7 +121,7 @@ ObjectCollection StageManager::CreateObjectCollection(ObjectsProperties objectsP
 std::unique_ptr<GameObject> StageManager::ConstructObject(ObjectProperties properties)
 {
 	auto name = properties.at("name");
-	auto type = stringToType.at(name);
+	auto type = string2EntityType.at(name);
 
 	switch (type)
 	{
@@ -114,7 +133,7 @@ std::unique_ptr<GameObject> StageManager::ConstructObject(ObjectProperties prope
 
 		case EntityType::FirePit:
 		{
-			auto itemType = stringToType.at(properties.at("Item"));
+			auto itemType = string2EntityType.at(properties.at("Item"));
 			return objectFactory.CreateFirePit(itemType);
 		}
 

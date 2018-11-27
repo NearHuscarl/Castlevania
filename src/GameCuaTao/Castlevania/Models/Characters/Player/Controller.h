@@ -25,6 +25,10 @@ namespace Castlevania
 		KeyboardState keyboardState;
 		ObjectFactory &objectFactory;
 
+		// Return true if holding both left and right key
+		bool HoldLeftAndRight();
+		bool HoldUpAndDown();
+
 		void Throw();
 	};
 }

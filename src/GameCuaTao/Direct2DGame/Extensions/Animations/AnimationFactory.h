@@ -15,7 +15,9 @@ public:
 	Animation Create(std::string name);
 
 	// Create a new animation factory from a subset animation of this factory
-	std::shared_ptr<AnimationFactory> CreateAnimationFactory(std::vector<std::string> animationNames);
+	std::shared_ptr<AnimationFactory> Clone(std::vector<std::string> animationNames);
+
+	AnimationDict GetAnimations();
 
 private:
 	AnimationDict animations;

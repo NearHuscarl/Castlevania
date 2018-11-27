@@ -10,17 +10,11 @@
 #include "Systems/Rendering/IRenderingSystem.h"
 #include "IGameObject.h"
 #include "EntityType.h"
+#include "Facing.h"
 
 namespace Castlevania
 {
 	struct ObjectCollection;
-
-	enum class Facing
-	{
-		Right,
-		Left,
-		None,
-	};
 
 	class GameObject : public IGameObject
 	{
@@ -58,6 +52,7 @@ namespace Castlevania
 		bool IsDestroyed();
 
 		void Move(Vector2 direction);
+		void SwitchFacing();
 
 		template<typename T>
 		void Attach(std::unique_ptr<T> system);

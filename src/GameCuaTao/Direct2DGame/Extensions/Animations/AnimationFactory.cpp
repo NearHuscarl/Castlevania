@@ -18,7 +18,7 @@ Animation AnimationFactory::Create(std::string name)
 	return animations.at(name);
 }
 
-std::shared_ptr<AnimationFactory> AnimationFactory::CreateAnimationFactory(std::vector<std::string> animationNames)
+std::shared_ptr<AnimationFactory> AnimationFactory::Clone(std::vector<std::string> animationNames)
 {
 	auto newAnimations = AnimationDict{};
 
@@ -30,5 +30,10 @@ std::shared_ptr<AnimationFactory> AnimationFactory::CreateAnimationFactory(std::
 			newAnimations.emplace(animationName, animations.at(animationName));
 	}
 
-	return std::make_shared<AnimationFactory>(newAnimations);
+	return std::make_unique<AnimationFactory>(newAnimations);
+}
+
+AnimationDict AnimationFactory::GetAnimations()
+{
+	return animations;
 }

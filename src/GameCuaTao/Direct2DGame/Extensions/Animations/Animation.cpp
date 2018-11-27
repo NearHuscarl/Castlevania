@@ -32,13 +32,18 @@ int Animation::GetCurrentFrameIndex()
 	return frameNow;
 }
 
-void Animation::SetElapsedTime(float elapsed)
+void Animation::SetLoop(bool value)
 {
-	auto frameTime = frames[GetCurrentFrameIndex()].GetTime();
-	auto elaspedTime =  frameTime * elapsed;
-	auto now = Stopwatch::GetTimeStamp();
-	
-	lastFrameTime = now - (int)elaspedTime;
+	isLooping = value;
+
+	// Handle edge cases
+	if (isLooping)
+	{
+		isComplete = false;
+
+		if (currentFrame = frames.size())
+			currentFrame = 0;
+	}
 }
 
 void Animation::Stop()
@@ -89,8 +94,7 @@ void Animation::Update()
 	if (currentFrame == -1)
 	{
 		currentFrame = 0;
-		if (lastFrameTime == 0) // Set to time now unless is set by SetElapsedTime() before that
-			lastFrameTime = now;
+		lastFrameTime = now;
 		return;
 	}
 
@@ -114,7 +118,9 @@ void Animation::Update()
 void Animation::Reset()
 {
 	isComplete = false;
+	isPaused = false;
 
 	lastFrameTime = 0;
+	elaspedFrameTime = 0;
 	currentFrame = -1;
 }

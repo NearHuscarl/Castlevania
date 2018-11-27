@@ -1,7 +1,6 @@
 #include "Direct2DGame/Input/Keyboard.h"
 #include "ObjectFactory.h"
 #include "../EntityType.h"
-#include "../RectangleObject.h"
 #include "../Systems/Movement/MovementSystem.h"
 #include "../Systems/Collision/CollisionSystem.h"
 #include "../Systems/Collision/EntityCollisionSystem.h"

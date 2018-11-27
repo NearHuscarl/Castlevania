@@ -38,7 +38,12 @@ void PlayerMovementSystem::Update(float deltaTime)
 	auto velocity = parent.GetVelocity();
 	auto moveState = parent.GetMoveState();
 
-	velocity.y = MathHelper::Min(velocity.y + GRAVITY, FALL_SPEED);
+	if (moveState != MoveState::GOING_UPSTAIRS
+		&& moveState != MoveState::GOING_DOWNSTAIRS
+		&& moveState != MoveState::IDLE_UPSTAIRS
+		&& moveState != MoveState::IDLE_DOWNSTAIRS)
+		velocity.y = MathHelper::Min(velocity.y + GRAVITY, FALL_SPEED);
+	
 	parent.SetVelocity(velocity);
 
 	distance = velocity * deltaTime;

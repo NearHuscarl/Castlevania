@@ -6,7 +6,9 @@ namespace Castlevania
 	{
 		Boundary,
 		Position,
+		Trigger,
 		Player,
+
 		Bat,
 		Cloud,
 		FirePit,

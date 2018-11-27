@@ -4,6 +4,7 @@
 #include "PlayerData.h"
 #include "../../Weapons/Whip.h"
 #include "../../Weapons/RangedWeapon.h"
+#include "../../Trigger.h"
 
 namespace Castlevania
 {
@@ -11,6 +12,12 @@ namespace Castlevania
 	{
 		IDLE,
 		WALKING,
+
+		WALKING_TO_STAIRS,
+		GOING_UPSTAIRS,
+		GOING_DOWNSTAIRS,
+		IDLE_UPSTAIRS,
+		IDLE_DOWNSTAIRS,
 
 		// From initial jump to when simon reaching max height
 		JUMPING,
@@ -70,11 +77,17 @@ namespace Castlevania
 		void Idle();
 		void WalkLeft();
 		void WalkRight();
+		void WalkToStairs();
+		void GoUpstairs();
+		void GoDownstairs();
 		void Jump();
 		void Duck();
 		void Attack();
 		void Throw(std::unique_ptr<RangedWeapon> weapon); // Throw secondary weapon (knife, axe, boomerang)
 		void TurnBackward();
+
+		bool CanGoUpstairs();
+		bool CanGoDownstairs();
 
 	private:
 		PlayerData data;
@@ -89,12 +102,15 @@ namespace Castlevania
 		void SetMoveState(MoveState moveState);
 		void SetAttackState(AttackState attackState);
 
+		void IdleOnGround();
 		void DoThrow(); // finish throwing maneuver, weapon is now launching
 		void Land();
 		void Flash(); // simon flashing when received whip-upgrade powerup
 
 		void UpdateStates(float deltaTime);
 		void OnAttackComplete();
+		void OnHitStairEntry();
+		void OnStopClimbingStair();
 
 		friend class PlayerResponseSystem;
 		friend class PlayerMovementSystem;
@@ -103,6 +119,7 @@ namespace Castlevania
 		Stopwatch landingTimer;
 
 		// Component-related flags
-		bool isWalking;
+		bool isOnGround;
+		Trigger *nearbyStair;
 	};
 }

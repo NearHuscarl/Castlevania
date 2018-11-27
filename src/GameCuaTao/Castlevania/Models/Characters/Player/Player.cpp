@@ -95,6 +95,16 @@ void Player::UpdateStates(float deltaTime)
 {
 	switch (moveState)
 	{
+		case MoveState::WALKING_TO_STAIRS:
+		{
+			auto playerCenter_x = GetOriginPosition().x;
+			auto stairCenter_x = nearbyStair->Center().x;
+
+			if (playerCenter_x >= stairCenter_x && facing == Facing::Right
+				|| playerCenter_x <= stairCenter_x && facing == Facing::Left)
+				OnHitStairEntry();
+			break;
+		}
 		case MoveState::JUMPING:
 			if (velocity.y >= 0)
 				SetMoveState(MoveState::FALLING);
@@ -141,6 +151,24 @@ void Player::OnAttackComplete()
 	SetAttackState(AttackState::INACTIVE);
 }
 
+void Player::OnHitStairEntry()
+{
+	auto triggerType = nearbyStair->GetTriggerType();
+	auto stairFacing = nearbyStair->GetFacing();
+
+	SetFacing(stairFacing);
+
+	if (triggerType == TriggerType::STAIR_UP)
+		GoUpstairs();
+	else if (triggerType == TriggerType::STAIR_DOWN)
+		GoDownstairs();
+}
+
+void Player::OnStopClimbingStair()
+{
+	velocity = Vector2::Zero();
+}
+
 void Player::Draw(SpriteExtensions &spriteBatch)
 {
 	GameObject::Draw(spriteBatch);
@@ -161,8 +189,20 @@ void Player::DrawBoundingBox(SpriteExtensions &spriteBatch)
 
 void Player::Idle()
 {
-	SetMoveState(MoveState::IDLE);
-	velocity.x = 0.0f;
+	switch (moveState)
+	{
+		case MoveState::GOING_UPSTAIRS:
+			SetMoveState(MoveState::IDLE_UPSTAIRS);
+			break;
+
+		case MoveState::GOING_DOWNSTAIRS:
+			SetMoveState(MoveState::IDLE_DOWNSTAIRS);
+			break;
+
+		default:
+			IdleOnGround();
+			break;
+	}
 }
 
 void Player::WalkLeft()
@@ -177,6 +217,56 @@ void Player::WalkRight()
 	SetMoveState(MoveState::WALKING);
 	SetFacing(Facing::Right);
 	velocity.x = speed;
+}
+
+void Player::WalkToStairs()
+{
+	if (nearbyStair == nullptr)
+		return;
+
+	auto playerCenter_x = GetOriginPosition().x;
+	auto stairCenter_x = nearbyStair->Center().x;
+	
+	if (playerCenter_x < stairCenter_x)
+	{
+		SetFacing(Facing::Right);
+		velocity.x = speed;
+		SetMoveState(MoveState::WALKING_TO_STAIRS);
+	}
+	else // (playerCenter_x >= stairCenter_x)
+	{
+		SetFacing(Facing::Left);
+		velocity.x = -speed;
+		SetMoveState(MoveState::WALKING_TO_STAIRS);
+	}
+}
+
+void Player::GoUpstairs()
+{
+	if (moveState == MoveState::IDLE_DOWNSTAIRS) // TODO: add MOVING_DOWNSTAIR?
+		SwitchFacing();
+	
+	SetMoveState(MoveState::GOING_UPSTAIRS);
+
+	if (facing == Facing::Left)
+		velocity.x = -speed / 2;
+	else
+		velocity.x = speed / 2;
+	velocity.y = -speed / 2;
+}
+
+void Player::GoDownstairs()
+{
+	if (moveState == MoveState::IDLE_UPSTAIRS)
+		SwitchFacing();
+	
+	SetMoveState(MoveState::GOING_DOWNSTAIRS);
+
+	if (facing == Facing::Left)
+		velocity.x = -speed / 2;
+	else
+		velocity.x = speed / 2;
+	velocity.y = speed / 2;
 }
 
 void Player::Jump()
@@ -221,6 +311,28 @@ void Player::TurnBackward()
 {
 	SetMoveState(MoveState::TURNING_BACKWARD);
 	velocity = Vector2::Zero();
+}
+
+bool Player::CanGoUpstairs()
+{
+	if (nearbyStair == nullptr)
+		return false;
+	
+	return nearbyStair->GetTriggerType() == TriggerType::STAIR_UP;
+}
+
+bool Player::CanGoDownstairs()
+{
+	if (nearbyStair == nullptr)
+		return false;
+
+	return nearbyStair->GetTriggerType() == TriggerType::STAIR_DOWN;
+}
+
+void Player::IdleOnGround()
+{
+	SetMoveState(MoveState::IDLE);
+	velocity.x = 0.0f;
 }
 
 void Player::DoThrow()

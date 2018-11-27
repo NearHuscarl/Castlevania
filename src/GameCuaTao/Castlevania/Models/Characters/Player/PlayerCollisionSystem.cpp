@@ -20,15 +20,18 @@ void PlayerCollisionSystem::Update(ObjectCollection &objectCollection)
 	}
 
 	auto results = std::vector<CollisionResult>{};
-	auto &boundaries = objectCollection.boundaries;
-	auto &entities = objectCollection.entities;
 
-	for (auto &boundary : boundaries)
+	for (auto &boundary : objectCollection.boundaries)
 	{
 		CalculateCollision(*boundary, results);
 	}
 
-	for (auto &entity : entities)
+	for (auto &trigger : objectCollection.triggers)
+	{
+		CalculateCollision(*trigger, results);
+	}
+
+	for (auto &entity : objectCollection.entities)
 	{
 		CalculateCollision(*entity, results);
 	}
