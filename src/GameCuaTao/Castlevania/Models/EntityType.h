@@ -7,6 +7,7 @@ namespace Castlevania
 		Boundary,
 		Position,
 		Trigger,
+		SpawnArea,
 		Player,
 
 		Bat,
@@ -22,7 +23,11 @@ namespace Castlevania
 		WhipPowerup,
 		KnifeItem,
 		MoneyBag,
-		
+
+		// Misc
+		Castle,
+		DirtBlock,
+
 		Unknown,
 	};
 }

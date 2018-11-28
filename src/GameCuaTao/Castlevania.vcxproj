@@ -165,6 +165,7 @@
     <ClCompile Include="Castlevania\Models\Characters\Player\PlayerRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Items\Powerup.cpp" />
     <ClCompile Include="Castlevania\Models\RectangleObject.cpp" />
+    <ClCompile Include="Castlevania\Models\SpawnArea.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Collision\EntityCollisionSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Collision\StandardCollisionSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Rendering\AnimationRenderingSystem.cpp" />
@@ -189,9 +190,8 @@
     <ClCompile Include="Castlevania\Models\Systems\Movement\MovementSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Player\PlayerResponseSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\Whip.cpp" />
-    <ClCompile Include="Castlevania\Scenes\PlaygroundScene.cpp" />
     <ClCompile Include="Castlevania\Settings\Button.cpp" />
-    <ClCompile Include="Castlevania\Utilities\StageManager.cpp" />
+    <ClCompile Include="Castlevania\Utilities\MapManager.cpp" />
     <ClCompile Include="Direct2DGame\Base\Color.cpp" />
     <ClCompile Include="Direct2DGame\Base\Rect.cpp" />
     <ClCompile Include="Direct2DGame\Content\TiledMapReader.cpp" />
@@ -261,6 +261,7 @@
     <ClInclude Include="Castlevania\Models\Characters\Player\PlayerSettings.h" />
     <ClInclude Include="Castlevania\Models\Items\Powerup.h" />
     <ClInclude Include="Castlevania\Models\RectangleObject.h" />
+    <ClInclude Include="Castlevania\Models\SpawnArea.h" />
     <ClInclude Include="Castlevania\Models\Systems\Collision\EntityCollisionSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Collision\StandardCollisionSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Control\IControlSystem.h" />
@@ -271,6 +272,7 @@
     <ClInclude Include="Castlevania\Models\Systems\Collision\StaticCollisionSystem.h" />
     <ClInclude Include="Castlevania\Models\Trigger.h" />
     <ClInclude Include="Castlevania\Models\TriggerType.h" />
+    <ClInclude Include="Castlevania\Models\UpdateData.h" />
     <ClInclude Include="Castlevania\Models\Weapons\KnifeResponseSystem.h" />
     <ClInclude Include="Castlevania\Models\Weapons\RangedWeapon.h" />
     <ClInclude Include="Castlevania\Models\Weapons\WhipFlashingRenderingSystem.h" />
@@ -302,9 +304,8 @@
     <ClInclude Include="Castlevania\Models\Systems\Movement\MovementSystem.h" />
     <ClInclude Include="Castlevania\Models\Characters\Player\PlayerResponseSystem.h" />
     <ClInclude Include="Castlevania\Models\Weapons\Whip.h" />
-    <ClInclude Include="Castlevania\Scenes\PlaygroundScene.h" />
     <ClInclude Include="Castlevania\Settings\Button.h" />
-    <ClInclude Include="Castlevania\Utilities\StageManager.h" />
+    <ClInclude Include="Castlevania\Utilities\MapManager.h" />
     <ClInclude Include="Direct2DGame\Content\TiledMapReader.h" />
     <ClInclude Include="Direct2DGame\Extensions\Animations\AnimatedSprite.h" />
     <ClInclude Include="Direct2DGame\Extensions\Animations\AnimationFactory.h" />
@@ -345,6 +346,7 @@
     <ClInclude Include="Direct2DGame\Input\IController.h" />
     <ClInclude Include="Direct2DGame\Input\InputHelper.h" />
     <ClInclude Include="Direct2DGame\Input\KeyboardState.h" />
+    <ClInclude Include="Direct2DGame\IUpdateable.h" />
     <ClInclude Include="Direct2DGame\MathHelper.h" />
     <ClInclude Include="Direct2DGame\Extensions\Sprites\SpriteExtensions.h" />
     <ClInclude Include="Direct2DGame\Utilities\Stopwatch.h" />
@@ -387,9 +389,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="cpplint.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

@@ -48,9 +48,7 @@ std::unique_ptr<Player> ObjectFactory::CreatePlayer(Vector2 position)
 	auto movementSystem = std::make_unique<PlayerMovementSystem>(*player);
 	auto collisionSystem = std::make_unique<PlayerCollisionSystem>(*player);
 	auto responseSystem = std::make_unique<PlayerResponseSystem>(*player, *this);
-	auto renderingSystem = std::make_unique<PlayerRenderingSystem>(*player,
-		"Characters/Players/Simon.ani.xml",
-		"Characters/Players/Simon_Flashing.ani.xml");
+	auto renderingSystem = std::make_unique<PlayerRenderingSystem>(*player, "Characters/Players/Simon.ani.xml");
 
 	Keyboard::Register(controller.get());
 
@@ -224,4 +222,28 @@ std::unique_ptr<Powerup> ObjectFactory::CreateWhipPowerup(Vector2 position)
 	whipPowerup->SetVelocity_Y(ITEM_FALL_SPEED); // Fall down
 
 	return whipPowerup;
+}
+
+std::unique_ptr<GameObject> ObjectFactory::CreateCastle(Vector2 position)
+{
+	auto castle = std::make_unique<GameObject>(EntityType::Castle);
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*castle, "TiledMaps/Stage_01/Castle.png");
+
+	castle->SetPosition(position);
+	castle->Attach<IRenderingSystem>(std::move(renderingSystem));
+	castle->LoadContent(content);
+
+	return castle;
+}
+
+std::unique_ptr<GameObject> ObjectFactory::CreateDirtBlock(Vector2 position)
+{
+	auto dirtBlock = std::make_unique<GameObject>(EntityType::DirtBlock);
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*dirtBlock, "Textures/Dirt_Block.png");
+
+	dirtBlock->SetPosition(position);
+	dirtBlock->Attach<IRenderingSystem>(std::move(renderingSystem));
+	dirtBlock->LoadContent(content);
+
+	return dirtBlock;
 }

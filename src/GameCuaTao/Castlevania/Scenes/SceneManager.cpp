@@ -2,7 +2,6 @@
 #include "MenuScene.h"
 #include "IntroScene.h"
 #include "GameplayScene.h"
-#include "PlaygroundScene.h"
 #include "../Utilities/SpriteHelper.h"
 
 using namespace Castlevania;
@@ -35,7 +34,7 @@ SpriteExtensions &SceneManager::GetSpriteBatch()
 
 #pragma endregion
 
-void SceneManager::Update(float deltaTime)
+void SceneManager::Update(GameTime gameTime)
 {
 	if (nextScene != nullptr)
 	{
@@ -43,7 +42,7 @@ void SceneManager::Update(float deltaTime)
 		// and its memory deallocated automatically :)
 		currentScene = std::move(nextScene);
 	}
-	currentScene->Update(deltaTime);
+	currentScene->Update(gameTime);
 }
 
 void SceneManager::Draw(GameTime gameTime)
@@ -69,9 +68,6 @@ std::unique_ptr<AbstractScene> SceneManager::ConstructScene(Scene scene)
 		
 		case Scene::GAMEPLAY:
 			return std::make_unique<GameplayScene>(*this, *objectFactory);
-
-		case Scene::PLAYGROUND:
-			return std::make_unique<PlaygroundScene>(*this, *objectFactory);
 
 		default:
 			throw std::invalid_argument("Bad scene choice");

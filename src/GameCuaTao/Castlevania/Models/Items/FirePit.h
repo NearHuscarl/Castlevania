@@ -13,7 +13,7 @@ namespace Castlevania
 		void SetSpawnedItem(std::unique_ptr<Powerup> item);
 		void SetHitEffect(std::unique_ptr<IEffect> effect);
 
-		void Update(float deltaTime, ObjectCollection *objectCollection) override;
+		void Update(GameTime gameTime, UpdateData &updateData) override;
 		void Draw(SpriteExtensions &spriteBatch) override;
 
 		void OnBeingHit();

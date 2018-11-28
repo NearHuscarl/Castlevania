@@ -48,6 +48,9 @@ void Animation::SetLoop(bool value)
 
 void Animation::Stop()
 {
+	if (isPaused)
+		return;
+
 	auto now = Stopwatch::GetTimeStamp();
 	
 	elaspedFrameTime = now - lastFrameTime;

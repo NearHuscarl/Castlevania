@@ -17,9 +17,10 @@ void MovementSystem::SetDistance(Vector2 distance)
 	this->distance = distance;
 }
 
-void MovementSystem::Update(float deltaTime)
+void MovementSystem::Update(GameTime gameTime)
 {
 	auto velocity = parent.GetVelocity();
+	auto deltaTime = (float)gameTime.ElapsedGameTime.Seconds();
 
 	distance = velocity * deltaTime;
 }

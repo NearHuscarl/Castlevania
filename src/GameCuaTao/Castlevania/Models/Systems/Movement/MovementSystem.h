@@ -17,11 +17,10 @@ namespace Castlevania
 
 		virtual void Receive(int message) override {};
 
-		void Update(float deltaTime) override;
+		void Update(GameTime gameTime) override;
 
 	private:
 		GameObject &parent;
-		float deltaTime;
 		Vector2 distance; // estimated distance to move
 	};
 }

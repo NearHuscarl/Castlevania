@@ -21,7 +21,7 @@ void MenuScene::LoadContent()
 	startGameTextPosition.y = (viewport.height - startGameTextSize.y) / 2 + 35;
 }
 
-void MenuScene::Update(float deltaTime)
+void MenuScene::Update(GameTime gameTime)
 {
 	if (InputHelper::IsKeyPressed(DIK_RETURN))
 	{
@@ -30,10 +30,6 @@ void MenuScene::Update(float deltaTime)
 	else if (InputHelper::IsKeyPressed(DIK_HOME))
 	{
 		sceneManager.SetNextScene(Scene::GAMEPLAY);
-	}
-	else if (InputHelper::IsKeyPressed(DIK_END))
-	{
-		sceneManager.SetNextScene(Scene::PLAYGROUND);
 	}
 
 	if (transitionTimer.ElapsedMilliseconds() >= 800)

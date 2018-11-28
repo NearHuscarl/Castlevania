@@ -1,3 +1,4 @@
+#include "Direct2DGame/Input/InputHelper.h"
 #include "GameplayScene.h"
 #include "SceneManager.h"
 
@@ -12,8 +13,8 @@ GameplayScene::GameplayScene(SceneManager &sceneManager, ObjectFactory &objectFa
 	camera = std::make_unique<Camera>(graphicsDevice);
 	hud = std::make_unique<Hud>(graphicsDevice);
 	
-	stageManager = std::make_unique<StageManager>(objectFactory);
-	stageManager->SetWorldPosition(Vector2{ 0, (float)hud->GetHeight() });
+	mapManager = std::make_unique<MapManager>(objectFactory);
+	mapManager->SetWorldPosition(Vector2{ 0, (float)hud->GetHeight() });
 
 	player = objectFactory.CreatePlayer();
 }
@@ -22,37 +23,33 @@ void GameplayScene::LoadContent()
 {
 	auto &content = sceneManager.GetContent();
 
-	stageManager->LoadContent(content);
+	mapManager->LoadContent(content);
 	hud->LoadContent(content);
 	hud->Register(player->GetData());
 
-	map = stageManager->NextMap(Map::STAGE_01_COURTYARD);
-	camera->SetMoveArea(0, 0, map->GetWidthInPixels(), map->GetHeightInPixels());
-	
-	objectCollection = stageManager->LoadGameObjects();
-	
-	player->SetPosition(objectCollection.locations["Checkpoint"]);
+	LoadMap(Map::STAGE_01_COURTYARD);
 }
 
-void GameplayScene::Update(float deltaTime)
+void GameplayScene::Update(GameTime gameTime)
 {
-	camera->LookAt(player->GetOriginPosition(), Scrolling::Horizontally);
+	UpdateInput();
 
-	player->Update(deltaTime, &objectCollection);
-
-	auto &entities = objectCollection.entities;
-
-	// Only update existing objects. Any new objects will have to wait until next turn
-	// That's way, a newly spawned object wont get a chance to act during the same frame
-	// that it was spawned, before the player has even had a chance to see it
-	auto sizeThisTurn = entities.size();
-
-	for (unsigned int i = 0; i < sizeThisTurn; i++)
+	switch (gameState)
 	{
-		entities[i]->Update(deltaTime, &objectCollection);
-	}
+		case GameState::PLAYING:
+			UpdateGameplay(gameTime);
+			break;
 
-	objectCollection.RemoveDeadObjects();
+		case GameState::NEXT_ROOM_TRANSITION:
+			// - Simon go to door
+			//	- Viewport move to middle
+			//	- Door open
+			//	- Simon go through door
+			//	- Door close
+			//	- Viewport move to right
+			//player->GetData().stage++;
+			break;
+	}
 }
 
 void GameplayScene::Draw(GameTime gameTime)
@@ -70,8 +67,73 @@ void GameplayScene::Draw(GameTime gameTime)
 		entity->Draw(spriteBatch);
 	}
 
+	for (auto const &trigger : objectCollection.triggers)
+	{
+		trigger->Draw(spriteBatch);
+	}
+
 	player->DrawBoundingBox(spriteBatch); // NOTE: remove
 	player->Draw(spriteBatch);
 
 	spriteBatch.End();
+}
+
+void GameplayScene::LoadMap(Map mapName)
+{
+	map = mapManager->NextMap(mapName);
+	camera->SetMoveArea(0, 0, map->GetWidthInPixels(), map->GetHeightInPixels());
+
+	objectCollection = mapManager->LoadGameObjects();
+
+	player->SetPosition(objectCollection.locations["Checkpoint"]);
+
+	updateData = UpdateData{
+		sceneManager.GetGraphicsDevice().GetViewport(),
+		&objectCollection,
+	};
+}
+
+void GameplayScene::UpdateInput()
+{
+	if (mapManager->GetCurrentMap() == Map::PLAYGROUND)
+	{
+		if (InputHelper::IsKeyDown(DIK_HOME))
+			LoadMap(Map::STAGE_01_COURTYARD);
+		else if (InputHelper::IsKeyDown(DIK_1))
+			player->SetPosition(objectCollection.locations["Checkpoint"]);
+		else if (InputHelper::IsKeyDown(DIK_2))
+			player->SetPosition(objectCollection.locations["Checkpoint_02"]);
+		else if (InputHelper::IsKeyDown(DIK_3))
+			player->SetPosition(objectCollection.locations["Checkpoint_03"]);
+		else if (InputHelper::IsKeyDown(DIK_4))
+			player->SetPosition(objectCollection.locations["Checkpoint_04"]);
+		else if (InputHelper::IsKeyDown(DIK_W))
+			objectCollection.entities.push_back(objectFactory.CreateWhipPowerup(Vector2{ 110, 150 }));
+	}
+	else
+	{
+		if (InputHelper::IsKeyDown(DIK_HOME))
+			LoadMap(Map::PLAYGROUND);
+	}
+}
+
+void GameplayScene::UpdateGameplay(GameTime gameTime)
+{
+	camera->LookAt(player->GetOriginPosition(), Scrolling::Horizontally);
+
+	player->Update(gameTime, updateData);
+
+	auto &entities = objectCollection.entities;
+
+	// Only update existing objects. Any new objects will have to wait until next turn
+	// That's way, a newly spawned object wont get a chance to act during the same frame
+	// that it was spawned, before the player has even had a chance to see it
+	auto sizeThisTurn = entities.size();
+
+	for (unsigned int i = 0; i < sizeThisTurn; i++)
+	{
+		entities[i]->Update(gameTime, updateData);
+	}
+
+	objectCollection.RemoveDeadObjects();
 }

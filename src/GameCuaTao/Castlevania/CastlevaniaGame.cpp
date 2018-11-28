@@ -20,7 +20,7 @@ void CastlevaniaGame::Initialize()
 	InputHelper::Initialize(keyboard.get());
 
 	sceneManager = std::make_unique<SceneManager>(*this);
-	sceneManager->SetNextScene(Scene::PLAYGROUND); // TODO: change back to MENU
+	sceneManager->SetNextScene(Scene::GAMEPLAY); // TODO: change back to MENU
 }
 
 void CastlevaniaGame::LoadContent()
@@ -30,10 +30,8 @@ void CastlevaniaGame::LoadContent()
 
 void CastlevaniaGame::Update(GameTime gameTime)
 {
-	auto deltaTime = (float)gameTime.ElapsedGameTime.Seconds();
-
 	InputHelper::Update();
-	sceneManager->Update(deltaTime);
+	sceneManager->Update(gameTime);
 }
 
 void CastlevaniaGame::Draw(GameTime gameTime)

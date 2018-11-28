@@ -1,4 +1,4 @@
-#include "StageManager.h"
+#include "MapManager.h"
 #include "../Utilities/CppExtensions.h"
 
 using namespace Castlevania;
@@ -14,6 +14,8 @@ const auto string2EntityType = std::unordered_map<std::string, EntityType>
 	{ "Heart", EntityType::Heart },
 	{ "WhipPowerup", EntityType::WhipPowerup },
 	{ "MoneyBag", EntityType::MoneyBag },
+	{ "Castle", EntityType::Castle },
+	{ "DirtBlock", EntityType::DirtBlock },
 };
 
 const auto string2TriggerType = std::unordered_map<std::string, TriggerType>
@@ -22,6 +24,7 @@ const auto string2TriggerType = std::unordered_map<std::string, TriggerType>
 	{ "MoneyBagTrigger", TriggerType::MONEY_BAG_EASTER_EGG },
 	{ "StairUp", TriggerType::STAIR_UP },
 	{ "StairDown", TriggerType::STAIR_DOWN },
+	{ "EnterCastle", TriggerType::ENTER_CASTLE },
 };
 
 const auto string2Facing = std::unordered_map<std::string, Facing>
@@ -31,17 +34,22 @@ const auto string2Facing = std::unordered_map<std::string, Facing>
 	{ "None", Facing::None },
 };
 
-StageManager::StageManager(ObjectFactory &objectFactory) : objectFactory{ objectFactory }
+MapManager::MapManager(ObjectFactory &objectFactory) : objectFactory{ objectFactory }
 {
 	worldPosition = Vector2::Zero();
 }
 
-void StageManager::SetWorldPosition(Vector2 position)
+Map MapManager::GetCurrentMap()
+{
+	return currentMap;
+}
+
+void MapManager::SetWorldPosition(Vector2 position)
 {
 	worldPosition = position;
 }
 
-void StageManager::LoadContent(ContentManager &content)
+void MapManager::LoadContent(ContentManager &content)
 {
 	//maps[Map::INTRO] = content.Load<TiledMap>("TiledMaps/Intro.tmx");
 	maps[Map::STAGE_01_COURTYARD] = content.Load<TiledMap>("TiledMaps/Stage_01/Courtyard.tmx");
@@ -50,22 +58,23 @@ void StageManager::LoadContent(ContentManager &content)
 	maps[Map::PLAYGROUND] = content.Load<TiledMap>("TiledMaps/Playground/Playground.tmx");
 }
 
-std::shared_ptr<TiledMap> StageManager::NextMap(Map name)
+std::shared_ptr<TiledMap> MapManager::NextMap(Map name)
 {
-	currentMap = maps.at(name);
-	currentMap->SetPosition(worldPosition);
+	currentMap = name;
 
-	return currentMap;
+	auto map = maps.at(currentMap);
+	map->SetPosition(worldPosition);
+	return map;
 }
 
-ObjectCollection StageManager::LoadGameObjects()
+ObjectCollection MapManager::LoadGameObjects()
 {
-	auto mapObjects = currentMap->GetMapObjects();
+	auto mapObjects = maps.at(currentMap)->GetMapObjects();
 
 	return CreateObjectCollection(mapObjects);
 }
 
-ObjectCollection StageManager::CreateObjectCollection(ObjectsProperties objectsProperties)
+ObjectCollection MapManager::CreateObjectCollection(ObjectsProperties objectsProperties)
 {
 	auto objectCollection = ObjectCollection{};
 
@@ -118,7 +127,7 @@ ObjectCollection StageManager::CreateObjectCollection(ObjectsProperties objectsP
 	return objectCollection;
 }
 
-std::unique_ptr<GameObject> StageManager::ConstructObject(ObjectProperties properties)
+std::unique_ptr<GameObject> MapManager::ConstructObject(ObjectProperties properties)
 {
 	auto name = properties.at("name");
 	auto type = string2EntityType.at(name);
@@ -142,6 +151,12 @@ std::unique_ptr<GameObject> StageManager::ConstructObject(ObjectProperties prope
 
 		case EntityType::MoneyBag:
 			return objectFactory.CreateBat();
+
+		case EntityType::Castle:
+			return objectFactory.CreateCastle();
+
+		case EntityType::DirtBlock:
+			return objectFactory.CreateDirtBlock();
 
 		default:
 			throw std::invalid_argument("Invalid object name");

@@ -7,6 +7,5 @@ namespace Castlevania
 		MENU,
 		INTRO,
 		GAMEPLAY,
-		PLAYGROUND,
 	};
 }

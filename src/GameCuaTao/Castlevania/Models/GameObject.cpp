@@ -202,13 +202,15 @@ void GameObject::LoadContent(ContentManager &content)
 	renderingSystem->LoadContent(content);
 }
 
-void GameObject::Update(float deltaTime, ObjectCollection *objectCollection)
+void GameObject::Update(GameTime gameTime, UpdateData &updateData)
 {
+	auto objectCollection = updateData.objectCollection;
+
 	if (controlSystem != nullptr)
 		controlSystem->Update();
 
 	if (movementSystem != nullptr)
-		movementSystem->Update(deltaTime);
+		movementSystem->Update(gameTime);
 
 	if (collisionSystem != nullptr && objectCollection != nullptr)
 		collisionSystem->Update(*objectCollection);
@@ -217,7 +219,7 @@ void GameObject::Update(float deltaTime, ObjectCollection *objectCollection)
 		collisionResponseSystem->Update(*objectCollection);
 
 	if (renderingSystem != nullptr)
-		renderingSystem->Update(deltaTime);
+		renderingSystem->Update(gameTime);
 
 	Move(GetDistance()); // Can move properly now after handling potential collisions with other objects
 }
@@ -231,10 +233,6 @@ void GameObject::DrawBoundingBox(SpriteExtensions &spriteBatch)
 {
 	switch (type)
 	{
-		case EntityType::Boundary:
-			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::Blue() * 0.75f);
-			break;
-
 		case EntityType::Whip:
 			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::Red() * 0.75f);
 			break;

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Direct2DGame/Extensions/Sprites/SpriteExtensions.h"
 #include "IGameObject.h"
 #include "EntityType.h"
 #include "Facing.h"
@@ -19,6 +20,8 @@ namespace Castlevania
 		Facing GetFacing();
 		void SetFacing(Facing facing);
 		Body &GetBody() override;
+
+		void Draw(SpriteExtensions &spriteBatch);
 
 	private:
 		EntityType identifier;

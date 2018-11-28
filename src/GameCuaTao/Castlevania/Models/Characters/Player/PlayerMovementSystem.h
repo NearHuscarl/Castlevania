@@ -15,7 +15,7 @@ namespace Castlevania
 
 		virtual void Receive(int message) override;
 
-		void Update(float deltaTime) override;
+		void Update(GameTime gameTime) override;
 
 	private:
 		Player &parent;

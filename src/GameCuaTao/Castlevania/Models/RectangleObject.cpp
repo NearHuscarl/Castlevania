@@ -1,4 +1,5 @@
 #include "RectangleObject.h"
+#include "../Utilities/SpriteHelper.h"
 
 using namespace Castlevania;
 
@@ -43,4 +44,22 @@ void RectangleObject::SetFacing(Facing facing)
 Body &RectangleObject::GetBody()
 {
 	return body;
+}
+
+void RectangleObject::Draw(SpriteExtensions &spriteBatch)
+{
+	switch (identifier)
+	{
+		case EntityType::Boundary:
+			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::Blue() * 0.75f);
+			break;
+
+		case EntityType::SpawnArea:
+			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::Red() * 0.75f);
+			break;
+
+		default:
+			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::Magenta() * 0.75f);
+			break;
+	}
 }

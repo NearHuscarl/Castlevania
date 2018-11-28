@@ -25,7 +25,7 @@ void AnimationRenderingSystem::LoadContent(ContentManager &content)
 	sprite = std::make_unique<AnimatedSprite>(animationFactory);
 }
 
-void AnimationRenderingSystem::Update(float deltaTime)
+void AnimationRenderingSystem::Update(GameTime gameTime)
 {
 	sprite->Update();
 }

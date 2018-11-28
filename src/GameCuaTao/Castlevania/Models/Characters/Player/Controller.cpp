@@ -35,7 +35,7 @@ void Controller::OnKeyDown(int keyCode)
 			break;
 
 		case MoveState::WALKING:
-			if (HoldLeftAndRight())
+			if (IsHoldingLeftAndRight())
 				player.Idle();
 			else if (keyCode == Button::Jump)
 				player.Jump();
@@ -49,7 +49,7 @@ void Controller::OnKeyDown(int keyCode)
 
 		case MoveState::GOING_UPSTAIRS:
 		case MoveState::GOING_DOWNSTAIRS:
-			if (HoldUpAndDown())
+			if (IsHoldingUpAndDown())
 				player.Idle();
 			break;
 
@@ -85,7 +85,7 @@ void Controller::Update()
 	switch (player.GetMoveState())
 	{
 		case MoveState::IDLE:
-			if (HoldLeftAndRight() || HoldUpAndDown())
+			if (IsHoldingLeftAndRight() || IsHoldingUpAndDown())
 				break;
 			else if (keyboardState.IsKeyDown(Button::WalkLeft))
 				player.WalkLeft();
@@ -101,7 +101,7 @@ void Controller::Update()
 
 		case MoveState::IDLE_UPSTAIRS:
 		case MoveState::IDLE_DOWNSTAIRS:
-			if (HoldUpAndDown())
+			if (IsHoldingUpAndDown())
 				break;
 			else if (keyboardState.IsKeyDown(Button::GoUpstair))
 				player.GoUpstairs();
@@ -129,18 +129,18 @@ void Controller::Update()
 		case MoveState::DUCKING:
 			if (keyboardState.IsKeyUp(Button::Duck))
 				player.Idle();
-			if (HoldUpAndDown())
+			if (IsHoldingUpAndDown())
 				player.Idle();
 			break;
 	}
 }
 
-bool Controller::HoldLeftAndRight()
+bool Controller::IsHoldingLeftAndRight()
 {
 	return keyboardState.IsKeyDown(Button::WalkLeft) && keyboardState.IsKeyDown(Button::WalkRight);
 }
 
-bool Controller::HoldUpAndDown()
+bool Controller::IsHoldingUpAndDown()
 {
 	return keyboardState.IsKeyDown(Button::Duck) && keyboardState.IsKeyDown(Button::GoUpstair);
 }

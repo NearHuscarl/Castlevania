@@ -26,8 +26,8 @@ namespace Castlevania
 		ObjectFactory &objectFactory;
 
 		// Return true if holding both left and right key
-		bool HoldLeftAndRight();
-		bool HoldUpAndDown();
+		bool IsHoldingLeftAndRight();
+		bool IsHoldingUpAndDown();
 
 		void Throw();
 	};

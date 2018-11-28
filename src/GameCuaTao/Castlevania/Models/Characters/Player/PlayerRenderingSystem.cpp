@@ -8,11 +8,10 @@ constexpr auto BEND_KNEE_ON_JUMPING_Y = 330.0f;
 constexpr auto STRETCH_LEG_ON_FALLING_Y = 200.0f;
 constexpr auto FLASHING_TIME = 900; // milliseconds
 
-PlayerRenderingSystem::PlayerRenderingSystem(Player &parent, std::string animationPath, std::string flashingAnimationPath) :
+PlayerRenderingSystem::PlayerRenderingSystem(Player &parent, std::string animationPath) :
 	parent{ parent }
 {
 	this->animationPath = animationPath;
-	this->flashingAnimationPath = flashingAnimationPath;
 }
 
 RectF PlayerRenderingSystem::GetBoundingBox()
@@ -36,23 +35,16 @@ void PlayerRenderingSystem::Receive(int message)
 		case ATTACK_STATE_CHANGED:
 			OnAttackStateChanged();
 			break;
-
-		case FACING_CHANGED:
-			OnFacingChanged();
-			break;
 	}
 }
 
 void PlayerRenderingSystem::LoadContent(ContentManager &content)
 {
 	auto animations = content.Load<AnimationFactory>(animationPath);
-	auto flashingAnimations = content.Load<AnimationFactory>(flashingAnimationPath);
-
 	sprite = std::make_unique<AnimatedSprite>(animations);
-	flashingSprite = std::make_unique<AnimatedSprite>(flashingAnimations);
 }
 
-void PlayerRenderingSystem::Update(float deltaTime)
+void PlayerRenderingSystem::Update(GameTime gameTime)
 {
 	auto moveState = parent.GetMoveState();
 	auto attackState = parent.GetAttackState();
@@ -85,7 +77,6 @@ void PlayerRenderingSystem::Update(float deltaTime)
 					break;
 
 				case MoveState::FALLING:
-				case MoveState::LANDING:
 					if (velocity.y > STRETCH_LEG_ON_FALLING_Y)
 						sprite->Play(IDLE_ANIMATION);
 					break;
@@ -94,8 +85,6 @@ void PlayerRenderingSystem::Update(float deltaTime)
 					if (flashTimer.ElapsedMilliseconds() >= FLASHING_TIME)
 					{
 						flashTimer.Reset();
-
-						//sprite->GetCurrentAnimation().Continue(); // TODO: make this command actually working
 						parent.Idle();
 					}
 					break;
@@ -133,21 +122,11 @@ void PlayerRenderingSystem::Update(float deltaTime)
 	}
 
 	sprite->Update();
-	flashingSprite->Update();
 }
 
 void PlayerRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 {
-	switch (parent.moveState)
-	{
-		case MoveState::FLASHING:
-			spriteBatch.Draw(*flashingSprite, parent.GetPosition());
-			break;
-
-		default:
-			spriteBatch.Draw(*sprite, parent.GetPosition());
-			break;
-	}
+	spriteBatch.Draw(*sprite, parent.GetPosition());
 }
 
 void PlayerRenderingSystem::OnMoveStateChanged()
@@ -198,23 +177,22 @@ void PlayerRenderingSystem::OnMoveStateChanged()
 
 		case MoveState::FLASHING:
 		{
-			sprite->GetCurrentAnimation().Stop();
 			flashTimer.Start();
 			auto currentFrameIndex = sprite->GetCurrentAnimation().GetCurrentFrameIndex();
 
 			switch (currentFrameIndex)
 			{
 				case 0:
-					flashingSprite->Play(FLASH_01_ANIMATION);
+					sprite->Play(FLASH_01_ANIMATION);
 					break;
 				case 1:
-					flashingSprite->Play(FLASH_02_ANIMATION);
+					sprite->Play(FLASH_02_ANIMATION);
 					break;
 				case 2:
-					flashingSprite->Play(FLASH_03_ANIMATION);
+					sprite->Play(FLASH_03_ANIMATION);
 					break;
 				case 3:
-					flashingSprite->Play(FLASH_04_ANIMATION);
+					sprite->Play(FLASH_04_ANIMATION);
 					break;
 			}
 			break;
@@ -251,13 +229,4 @@ void PlayerRenderingSystem::OnAttackStateChanged()
 			sprite->Play(DUCK_ATTACK_ANIMATION);
 			break;
 	}
-}
-
-void PlayerRenderingSystem::OnFacingChanged()
-{
-	// Only sprite's SpriteEffects is set by default, make sure to set this too
-	if (parent.GetFacing() == Facing::Left)
-		flashingSprite->SetEffect(SpriteEffects::FlipHorizontally);
-	else
-		flashingSprite->SetEffect(SpriteEffects::None);
 }

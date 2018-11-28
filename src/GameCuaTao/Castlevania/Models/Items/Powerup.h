@@ -11,7 +11,7 @@ namespace Castlevania
 		Powerup(EntityType type);
 
 		void Spawn();
-		void Update(float deltaTime, ObjectCollection *objectCollection = nullptr) override;
+		void Update(GameTime gameTime, UpdateData &updateData) override;
 
 	private:
 		Stopwatch lifespanTimer;

@@ -15,7 +15,6 @@ void Player::SetFacing(Facing facing)
 {
 	GameObject::SetFacing(facing);
 	whip->SetFacing(facing);
-	SendMessageToSystems(FACING_CHANGED);
 }
 
 void Player::SetMoveState(MoveState moveState)
@@ -75,23 +74,23 @@ void Player::LoadContent(ContentManager &content)
 	Idle();
 }
 
-void Player::Update(float deltaTime, ObjectCollection *objectCollection)
+void Player::Update(GameTime gameTime, UpdateData &updateData)
 {
 	if (InputHelper::IsKeyDown(DIK_9)) // NOTE: remove debugging code
 		data.hearts += 20;
 	else if (InputHelper::IsKeyDown(DIK_0))
 		data.playerHealth = MAX_HEALTH;
 
-	GameObject::Update(deltaTime, objectCollection);
-	UpdateStates(deltaTime);
+	GameObject::Update(gameTime, updateData);
+	UpdateStates();
 
-	whip->Update(deltaTime, objectCollection);
+	whip->Update(gameTime, updateData);
 
 	for (auto &weapon : secondaryWeapons)
-		weapon->Update(deltaTime, objectCollection);
+		weapon->Update(gameTime, updateData);
 }
 
-void Player::UpdateStates(float deltaTime)
+void Player::UpdateStates()
 {
 	switch (moveState)
 	{

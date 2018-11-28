@@ -21,11 +21,12 @@ namespace Castlevania
 	using ObjectProperties = std::map<std::string, std::string>;
 	using ObjectsProperties = std::vector<ObjectProperties>;
 
-	class StageManager
+	class MapManager
 	{
 	public:
-		StageManager(ObjectFactory &objectFactory);
+		MapManager(ObjectFactory &objectFactory);
 
+		Map GetCurrentMap();
 		void SetWorldPosition(Vector2 position);
 
 		void LoadContent(ContentManager &content);
@@ -34,7 +35,8 @@ namespace Castlevania
 
 	private:
 		Maps maps;
-		std::shared_ptr<TiledMap> currentMap;
+		Map currentMap;
+
 		Vector2 worldPosition; // absolute position of map and map objects to the world
 		ObjectFactory &objectFactory;
 

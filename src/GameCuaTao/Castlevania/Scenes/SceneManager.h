@@ -20,7 +20,7 @@ namespace Castlevania
 
 		void SetNextScene(Scene scene);
 
-		void Update(float deltaTime);
+		void Update(GameTime gameTime);
 		void Draw(GameTime gameTime);
 
 	private:

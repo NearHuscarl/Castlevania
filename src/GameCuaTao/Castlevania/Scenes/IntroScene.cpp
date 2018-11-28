@@ -37,7 +37,7 @@ void IntroScene::LoadContent()
 	AudioManager::Play(GAME_START_PROLOGUE);
 }
 
-void IntroScene::Update(float deltaTime)
+void IntroScene::Update(GameTime gameTime)
 {
 	if (player->GetOriginPosition().x >= gatePosition.x)
 	{
@@ -54,10 +54,10 @@ void IntroScene::Update(float deltaTime)
 		sceneManager.SetNextScene(Scene::GAMEPLAY);
 	}
 
-	bat1->Update(deltaTime);
-	bat2->Update(deltaTime);
+	bat1->Update(gameTime, UpdateData::Empty());
+	bat2->Update(gameTime, UpdateData::Empty());
 
-	player->Update(deltaTime);
+	player->Update(gameTime, UpdateData::Empty());
 }
 
 void IntroScene::Draw(GameTime gameTime)

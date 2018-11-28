@@ -192,9 +192,6 @@
     <ClCompile Include="Direct2DGame\Extensions\RectF.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Castlevania\Scenes\PlaygroundScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Direct2DGame\Extensions\Collisions\Body\Body.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -267,9 +264,6 @@
     <ClCompile Include="Castlevania\Models\Items\Powerup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Castlevania\Utilities\StageManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Castlevania\Effects\FlameEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -283,6 +277,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Castlevania\Models\RectangleObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Utilities\MapManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Models\SpawnArea.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -539,9 +539,6 @@
     <ClInclude Include="Direct2DGame\Extensions\RectF.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Castlevania\Scenes\PlaygroundScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Direct2DGame\Extensions\Collisions\Body\Body.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -656,9 +653,6 @@
     <ClInclude Include="Direct2DGame\Extensions\Sprites\IDrawable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Castlevania\Utilities\StageManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Castlevania\Effects\IEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -692,11 +686,20 @@
     <ClInclude Include="Castlevania\Utilities\CppExtensions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Castlevania\Models\UpdateData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DGame\IUpdateable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Utilities\MapManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\SpawnArea.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="cpplint.txt" />
   </ItemGroup>
 </Project>

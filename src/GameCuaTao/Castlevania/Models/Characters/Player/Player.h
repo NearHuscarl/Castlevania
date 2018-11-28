@@ -70,7 +70,7 @@ namespace Castlevania
 		void SetSecondaryWeapon(EntityType weapon);
 
 		void LoadContent(ContentManager &content) override;
-		void Update(float deltaTime, ObjectCollection *objectCollection = nullptr) override;
+		void Update(GameTime gameTime, UpdateData &updateData) override;
 		void Draw(SpriteExtensions &spriteBatch) override;
 		void DrawBoundingBox(SpriteExtensions &spriteBatch) override;
 
@@ -107,7 +107,7 @@ namespace Castlevania
 		void Land();
 		void Flash(); // simon flashing when received whip-upgrade powerup
 
-		void UpdateStates(float deltaTime);
+		void UpdateStates();
 		void OnAttackComplete();
 		void OnHitStairEntry();
 		void OnStopClimbingStair();

@@ -33,9 +33,10 @@ void PlayerMovementSystem::Receive(int message)
 	}
 }
 
-void PlayerMovementSystem::Update(float deltaTime)
+void PlayerMovementSystem::Update(GameTime gameTime)
 {
 	auto velocity = parent.GetVelocity();
+	auto deltaTime = (float)gameTime.ElapsedGameTime.Seconds();
 	auto moveState = parent.GetMoveState();
 
 	if (moveState != MoveState::GOING_UPSTAIRS

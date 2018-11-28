@@ -34,7 +34,7 @@ void WhipFlashingRenderingSystem::LoadContent(ContentManager &content)
 	spriteBlue = std::make_unique<AnimatedSprite>(animationFactory, animations_blue);
 }
 
-void WhipFlashingRenderingSystem::Update(float deltaTime)
+void WhipFlashingRenderingSystem::Update(GameTime gameTime)
 {
 	if (!parent.GetBody().Enabled())
 		return;

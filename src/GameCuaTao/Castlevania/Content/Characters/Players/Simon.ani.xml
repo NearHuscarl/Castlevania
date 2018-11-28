@@ -82,6 +82,35 @@
       <Frame SpriteID="is_hit_01" />
     </Animation>
 
+    <!-- Flashing animation for frame 01 in walk animation -->
+    <Animation Name="flash_walk_01" DefaultTime="30" IsLooping="True">
+      <Frame SpriteID="walk_flash_red_01" />
+      <Frame SpriteID="walk_flash_blue_01" />
+      <Frame SpriteID="walk_flash_magenta_01" />
+      <Frame SpriteID="walk_01" /> <!-- yellow -->
+    </Animation>
+
+    <Animation Name="flash_walk_02" DefaultTime="30" IsLooping="True">
+      <Frame SpriteID="walk_flash_red_02" />
+      <Frame SpriteID="walk_flash_blue_02" />
+      <Frame SpriteID="walk_flash_magenta_02" />
+      <Frame SpriteID="walk_02" /> <!-- yellow -->
+    </Animation>
+
+    <Animation Name="flash_walk_03" DefaultTime="30" IsLooping="True">
+      <Frame SpriteID="walk_flash_red_03" />
+      <Frame SpriteID="walk_flash_blue_03" />
+      <Frame SpriteID="walk_flash_magenta_03" />
+      <Frame SpriteID="walk_03" /> <!-- yellow -->
+    </Animation>
+
+    <Animation Name="flash_walk_04" DefaultTime="30" IsLooping="True">
+      <Frame SpriteID="walk_flash_red_04" />
+      <Frame SpriteID="walk_flash_blue_04" />
+      <Frame SpriteID="walk_flash_magenta_04" />
+      <Frame SpriteID="walk_04" /> <!-- yellow -->
+    </Animation>
+
   </Animations>
 
 </GameContent>

@@ -18,19 +18,19 @@ void FirePit::SetHitEffect(std::unique_ptr<IEffect> effect)
 	this->hitEffect = std::move(effect);
 }
 
-void FirePit::Update(float deltaTime, ObjectCollection *objectCollection)
+void FirePit::Update(GameTime gameTime, UpdateData &updateData)
 {
 	switch (state)
 	{
 		case FirePitState::Normal:
-			GameObject::Update(deltaTime, objectCollection);
+			GameObject::Update(gameTime, updateData);
 			break;
 
 		case FirePitState::Spawning:
 			if (hitEffect->IsFinished())
 			{
 				isDestroyed = true;
-				objectCollection->entities.push_back(SpawnItem());
+				updateData.objectCollection->entities.push_back(SpawnItem());
 			}
 			break;
 	}

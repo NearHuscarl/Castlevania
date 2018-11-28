@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Direct2DGame/GameTime.h"
 #include "Direct2DGame/Content/ContentManager.h"
 #include "Direct2DGame/Extensions/Collisions/Body/Body.h"
 #include "Direct2DGame/Extensions/Sprites/SpriteExtensions.h"
@@ -11,6 +12,7 @@
 #include "IGameObject.h"
 #include "EntityType.h"
 #include "Facing.h"
+#include "UpdateData.h"
 
 namespace Castlevania
 {
@@ -30,7 +32,7 @@ namespace Castlevania
 		Vector2 GetDistance();
 		void SetDistance(Vector2 distance);
 
-		Vector2 GetOriginPosition(); // Get the center of the object's bounding box to the world
+		Vector2 GetOriginPosition(); // Get the center of the object's rectangle
 		void SetOriginPosition(Vector2 position);
 		
 		Vector2 GetVelocity();
@@ -58,7 +60,7 @@ namespace Castlevania
 		void Attach(std::unique_ptr<T> system);
 
 		virtual void LoadContent(ContentManager &content);
-		virtual void Update(float deltaTime, ObjectCollection *objectCollection = nullptr);
+		virtual void Update(GameTime gameTime, UpdateData &updateData);
 		virtual void Draw(SpriteExtensions &spriteBatch);
 		virtual void DrawBoundingBox(SpriteExtensions &spriteBatch); // For debugging purpose
 

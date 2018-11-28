@@ -16,7 +16,7 @@ namespace Castlevania
 		IntroScene(SceneManager &sceneManager, ObjectFactory &objectFactory);
 
 		void LoadContent() override;
-		void Update(float deltaTime) override;
+		void Update(GameTime gameTime) override;
 		void Draw(GameTime gameTime) override;
 
 	private:

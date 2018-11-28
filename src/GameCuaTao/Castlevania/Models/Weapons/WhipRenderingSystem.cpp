@@ -36,7 +36,7 @@ void WhipRenderingSystem::LoadContent(ContentManager &content)
 	sprite = std::make_unique<AnimatedSprite>(animationFactory, animations_12);
 }
 
-void WhipRenderingSystem::Update(float deltaTime)
+void WhipRenderingSystem::Update(GameTime gameTime)
 {
 	if (!parent.GetBody().Enabled())
 		return;
