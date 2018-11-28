@@ -25,14 +25,14 @@
   <object id="54" name="Platform" type="Boundary" x="64" y="320" width="64" height="32"/>
  </objectgroup>
  <objectgroup id="4" name="Game">
-  <object id="15" name="FirePit" type="Object" gid="41" x="397" y="287" width="32" height="64">
+  <object id="15" name="Brazier" type="Object" gid="41" x="397" y="287" width="32" height="64">
    <properties>
-    <property name="Item" value="KnifeItem"/>
+    <property name="Item" value="DaggerItem"/>
    </properties>
   </object>
-  <object id="16" name="FirePit" type="Object" gid="41" x="584" y="287" width="32" height="64">
+  <object id="16" name="Brazier" type="Object" gid="41" x="584" y="287" width="32" height="64">
    <properties>
-    <property name="Item" value="Heart"/>
+    <property name="Item" value="LargeHeart"/>
    </properties>
   </object>
  </objectgroup>

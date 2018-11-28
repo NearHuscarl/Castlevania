@@ -53,7 +53,7 @@ void Hud::LoadContent(ContentManager &content)
 	bossFullBlock = std::make_unique<Sprite>(hpBlockAtlas->at("boss_full"));
 	emptyBlock = std::make_unique<Sprite>(hpBlockAtlas->at("empty"));
 
-	knifeTexture = content.Load<Texture>("Hud/Knife.png");
+	daggerTexture = content.Load<Texture>("Hud/Dagger.png");
 }
 
 void Hud::Draw(SpriteExtensions &spriteBatch)
@@ -104,10 +104,10 @@ std::string Hud::GetLiveCountText()
 
 std::shared_ptr<Texture> Hud::GetWeaponTexture()
 {
-	switch (data->secondaryWeapon)
+	switch (data->subWeapon)
 	{
-		case EntityType::KnifeItem:
-			return knifeTexture;
+		case EntityType::DaggerItem:
+			return daggerTexture;
 
 		default:
 			return nullptr;

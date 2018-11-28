@@ -16,29 +16,29 @@
   <image source="Courtyard.png" width="1536" height="365"/>
  </imagelayer>
  <objectgroup id="4" name="Entities">
-  <object id="15" name="FirePit" type="Object" gid="41" x="175" y="290" width="32" height="64">
+  <object id="15" name="Brazier" type="Object" gid="41" x="175" y="290" width="32" height="64">
    <properties>
-    <property name="Item" value="Heart"/>
+    <property name="Item" value="LargeHeart"/>
    </properties>
   </object>
-  <object id="16" name="FirePit" type="Object" gid="41" x="434" y="290" width="32" height="64">
+  <object id="16" name="Brazier" type="Object" gid="41" x="434" y="290" width="32" height="64">
    <properties>
     <property name="Item" value="WhipPowerup"/>
    </properties>
   </object>
-  <object id="17" name="FirePit" type="Object" gid="41" x="685" y="290" width="32" height="64">
+  <object id="17" name="Brazier" type="Object" gid="41" x="685" y="290" width="32" height="64">
    <properties>
     <property name="Item" value="WhipPowerup"/>
    </properties>
   </object>
-  <object id="18" name="FirePit" type="Object" gid="41" x="942" y="290" width="32" height="64">
+  <object id="18" name="Brazier" type="Object" gid="41" x="942" y="290" width="32" height="64">
    <properties>
-    <property name="Item" value="Heart"/>
+    <property name="Item" value="LargeHeart"/>
    </properties>
   </object>
-  <object id="19" name="FirePit" type="Object" gid="41" x="1199" y="290" width="32" height="64">
+  <object id="19" name="Brazier" type="Object" gid="41" x="1199" y="290" width="32" height="64">
    <properties>
-    <property name="Item" value="KnifeItem"/>
+    <property name="Item" value="DaggerItem"/>
    </properties>
   </object>
   <object id="38" name="MoneyBag" type="Object" gid="45" x="1250" y="317" width="30" height="30"/>
@@ -57,7 +57,7 @@
  </objectgroup>
  <objectgroup id="9" name="Triggers">
   <object id="37" name="MoneyBagTrigger" type="Trigger" x="1424" y="278" width="32" height="10"/>
-  <object id="21" name="EnterCastle" type="Trigger" x="1376" y="256" width="32" height="32"/>
+  <object id="21" name="CastleEntrance" type="Trigger" x="1376" y="256" width="32" height="32"/>
   <object id="42" name="NextMap" type="Trigger" x="1472" y="256" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="8" name="Locations">

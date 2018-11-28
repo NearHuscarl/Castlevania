@@ -10,7 +10,7 @@ namespace Castlevania
 		Flying,
 	};
 
-	// Throwable weapon like Knife, Axe, Boomerang,...
+	// Throwable weapon like Dagger, Axe, Boomerang,...
 	class RangedWeapon : public GameObject
 	{
 	public:

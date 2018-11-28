@@ -5,10 +5,10 @@
 
 namespace Castlevania
 {
-	class FirePit : public GameObject
+	class Brazier : public GameObject
 	{
 	public:
-		FirePit();
+		Brazier();
 
 		void SetSpawnedItem(std::unique_ptr<Powerup> item);
 		void SetHitEffect(std::unique_ptr<IEffect> effect);
@@ -21,7 +21,7 @@ namespace Castlevania
 		std::unique_ptr<GameObject> SpawnItem();
 
 	private:
-		enum class FirePitState
+		enum class BrazierState
 		{
 			Normal,
 			Spawning,
@@ -30,7 +30,7 @@ namespace Castlevania
 		std::unique_ptr<Powerup> item;
 		std::unique_ptr<IEffect> hitEffect;
 		
-		FirePitState state;
+		BrazierState state;
 		bool isHit;
 	};
 }

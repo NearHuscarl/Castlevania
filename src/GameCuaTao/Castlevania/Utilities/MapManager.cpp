@@ -8,10 +8,10 @@ const auto string2EntityType = std::unordered_map<std::string, EntityType>
 	{ "Player", EntityType::Player },
 	{ "Bat", EntityType::Bat },
 	{ "Cloud", EntityType::Cloud },
-	{ "FirePit", EntityType::FirePit },
+	{ "Brazier", EntityType::Brazier },
 	{ "Whip", EntityType::Whip },
-	{ "KnifeItem", EntityType::KnifeItem },
-	{ "Heart", EntityType::Heart },
+	{ "DaggerItem", EntityType::DaggerItem },
+	{ "LargeHeart", EntityType::LargeHeart },
 	{ "WhipPowerup", EntityType::WhipPowerup },
 	{ "MoneyBag", EntityType::MoneyBag },
 	{ "Castle", EntityType::Castle },
@@ -24,7 +24,7 @@ const auto string2TriggerType = std::unordered_map<std::string, TriggerType>
 	{ "MoneyBagTrigger", TriggerType::MONEY_BAG_EASTER_EGG },
 	{ "StairUp", TriggerType::STAIR_UP },
 	{ "StairDown", TriggerType::STAIR_DOWN },
-	{ "EnterCastle", TriggerType::ENTER_CASTLE },
+	{ "CastleEntrance", TriggerType::CASTLE_ENTRANCE },
 };
 
 const auto string2Facing = std::unordered_map<std::string, Facing>
@@ -52,7 +52,7 @@ void MapManager::SetWorldPosition(Vector2 position)
 void MapManager::LoadContent(ContentManager &content)
 {
 	//maps[Map::INTRO] = content.Load<TiledMap>("TiledMaps/Intro.tmx");
-	maps[Map::STAGE_01_COURTYARD] = content.Load<TiledMap>("TiledMaps/Stage_01/Courtyard.tmx");
+	maps[Map::COURTYARD] = content.Load<TiledMap>("TiledMaps/Stage_01/Courtyard.tmx");
 	//maps[Map::STAGE_01_GREAT_HALL] = content.Load<TiledMap>("TiledMaps/Stage_01/Great_Hall.tmx");
 	//maps[Map::STAGE_01_UNDERGROUND] = content.Load<TiledMap>("TiledMaps/Stage_01/Underground.tmx");
 	maps[Map::PLAYGROUND] = content.Load<TiledMap>("TiledMaps/Playground/Playground.tmx");
@@ -140,14 +140,14 @@ std::unique_ptr<GameObject> MapManager::ConstructObject(ObjectProperties propert
 		case EntityType::Bat:
 			return objectFactory.CreateBat();
 
-		case EntityType::FirePit:
+		case EntityType::Brazier:
 		{
 			auto itemType = string2EntityType.at(properties.at("Item"));
-			return objectFactory.CreateFirePit(itemType);
+			return objectFactory.CreateBrazier(itemType);
 		}
 
-		case EntityType::Knife:
-			return objectFactory.CreateKnife();
+		case EntityType::Dagger:
+			return objectFactory.CreateDagger();
 
 		case EntityType::MoneyBag:
 			return objectFactory.CreateBat();

@@ -159,9 +159,6 @@
     <ClCompile Include="Castlevania\Models\Characters\Bat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Castlevania\Models\Items\FirePit.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Direct2DGame\Base\Rect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -243,9 +240,6 @@
     <ClCompile Include="Castlevania\Models\Systems\Collision\EntityCollisionSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Castlevania\Models\Weapons\KnifeResponseSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Castlevania\Models\Systems\Collision\StandardCollisionSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -283,6 +277,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Castlevania\Models\SpawnArea.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Models\Weapons\DaggerResponseSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Models\Items\Brazier.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -506,9 +506,6 @@
     <ClInclude Include="Castlevania\Models\Characters\Bat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Castlevania\Models\Items\FirePit.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Castlevania\Settings\Button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -623,9 +620,6 @@
     <ClInclude Include="Castlevania\Models\Systems\Collision\EntityCollisionSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Castlevania\Models\Weapons\KnifeResponseSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Castlevania\Models\Systems\Collision\StandardCollisionSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -696,6 +690,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Castlevania\Models\SpawnArea.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Weapons\DaggerResponseSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Items\Brazier.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

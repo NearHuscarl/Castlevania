@@ -60,7 +60,7 @@ namespace Castlevania
 		void Attach(std::unique_ptr<T> system);
 
 		virtual void LoadContent(ContentManager &content);
-		virtual void Update(GameTime gameTime, UpdateData &updateData);
+		virtual void Update(GameTime gameTime, UpdateData &updateData = UpdateData::Empty());
 		virtual void Draw(SpriteExtensions &spriteBatch);
 		virtual void DrawBoundingBox(SpriteExtensions &spriteBatch); // For debugging purpose
 

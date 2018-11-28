@@ -6,13 +6,12 @@
 
 namespace Castlevania
 {
-	// https://www.castle.lv/castles4/hroniki/glossary.html
 	enum class Map
 	{
 		INTRO,
-		STAGE_01_COURTYARD,
-		STAGE_01_GREAT_HALL,
-		STAGE_01_UNDERGROUND,
+		COURTYARD,
+		GREAT_HALL,
+		UNDERGROUND,
 		PLAYGROUND,
 	};
 

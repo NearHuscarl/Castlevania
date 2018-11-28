@@ -52,15 +52,15 @@ AttackState Player::GetAttackState()
 	return attackState;
 }
 
-EntityType Player::GetSecondaryWeapon()
+EntityType Player::GetSubWeapon()
 {
-	return data.secondaryWeapon;
+	return data.subWeapon;
 }
 
-void Player::SetSecondaryWeapon(EntityType weapon)
+void Player::SetSubWeapon(EntityType weapon)
 {
-	//secondaryWeapon->GetBody().Enabled(false);
-	data.secondaryWeapon = weapon;
+	//subWeapon->GetBody().Enabled(false);
+	data.subWeapon = weapon;
 }
 
 void Player::LoadContent(ContentManager &content)
@@ -86,7 +86,7 @@ void Player::Update(GameTime gameTime, UpdateData &updateData)
 
 	whip->Update(gameTime, updateData);
 
-	for (auto &weapon : secondaryWeapons)
+	for (auto &weapon : subWeapons)
 		weapon->Update(gameTime, updateData);
 }
 
@@ -174,7 +174,7 @@ void Player::Draw(SpriteExtensions &spriteBatch)
 	
 	whip->Draw(spriteBatch);
 	
-	for (auto &weapon : secondaryWeapons)
+	for (auto &weapon : subWeapons)
 		weapon->Draw(spriteBatch);
 }
 
@@ -296,13 +296,13 @@ void Player::Throw(std::unique_ptr<RangedWeapon> weapon)
 	weapon->SetVisibility(false);
 
 	SetAttackState(AttackState::THROWING);
-	secondaryWeapons.push_back(std::move(weapon));
+	subWeapons.push_back(std::move(weapon));
 
 	data.hearts--;
 
 	if (data.hearts == 0)
 	{
-		data.secondaryWeapon = EntityType::Unknown;
+		data.subWeapon = EntityType::Unknown;
 	}
 }
 
@@ -337,7 +337,7 @@ void Player::IdleOnGround()
 void Player::DoThrow()
 {
 	// Launch the most recently added weapon
-	auto &weapon = secondaryWeapons.back();
+	auto &weapon = subWeapons.back();
 
 	if (weapon->GetState() == RangedWeaponState::Sheathed)
 		weapon->Throw();

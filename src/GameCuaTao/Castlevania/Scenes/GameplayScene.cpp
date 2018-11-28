@@ -27,7 +27,7 @@ void GameplayScene::LoadContent()
 	hud->LoadContent(content);
 	hud->Register(player->GetData());
 
-	LoadMap(Map::STAGE_01_COURTYARD);
+	LoadMap(Map::COURTYARD);
 }
 
 void GameplayScene::Update(GameTime gameTime)
@@ -98,7 +98,7 @@ void GameplayScene::UpdateInput()
 	if (mapManager->GetCurrentMap() == Map::PLAYGROUND)
 	{
 		if (InputHelper::IsKeyDown(DIK_HOME))
-			LoadMap(Map::STAGE_01_COURTYARD);
+			LoadMap(Map::COURTYARD);
 		else if (InputHelper::IsKeyDown(DIK_1))
 			player->SetPosition(objectCollection.locations["Checkpoint"]);
 		else if (InputHelper::IsKeyDown(DIK_2))

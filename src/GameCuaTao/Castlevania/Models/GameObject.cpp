@@ -237,7 +237,7 @@ void GameObject::DrawBoundingBox(SpriteExtensions &spriteBatch)
 			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::Red() * 0.75f);
 			break;
 
-		case EntityType::FirePit:
+		case EntityType::Brazier:
 			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::Green() * 0.75f);
 			break;
 

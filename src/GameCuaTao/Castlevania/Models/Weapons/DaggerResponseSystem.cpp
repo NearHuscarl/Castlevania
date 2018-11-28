@@ -1,14 +1,14 @@
-#include "WhipResponseSystem.h"
+#include "DaggerResponseSystem.h"
 #include "../../Models/Factories/ObjectCollection.h"
 #include "../Items/Brazier.h"
 
 using namespace Castlevania;
 
-WhipResponseSystem::WhipResponseSystem(Whip &parent) : parent{ parent }
+DaggerResponseSystem::DaggerResponseSystem(GameObject &parent) : parent{ parent }
 {
 }
 
-void WhipResponseSystem::Update(ObjectCollection &objectCollection)
+void DaggerResponseSystem::Update(ObjectCollection &objectCollection)
 {
 	auto collisionData = parent.GetBody().GetCollisionData();
 
@@ -28,9 +28,13 @@ void WhipResponseSystem::Update(ObjectCollection &objectCollection)
 	}
 }
 
-void WhipResponseSystem::OnCollideWithBrazier(CollisionResult &result, ObjectCollection &objectCollection)
+void DaggerResponseSystem::OnCollideWithBrazier(CollisionResult &result, ObjectCollection &objectCollection)
 {
 	auto &brazier = dynamic_cast<Brazier&>(result.collidedObject);
+	auto item = brazier.SpawnItem();
 
-	brazier.OnBeingHit();
+	item->SetOriginPosition(brazier.GetOriginPosition());
+	brazier.Destroy();
+
+	objectCollection.entities.push_back(std::move(item));
 }

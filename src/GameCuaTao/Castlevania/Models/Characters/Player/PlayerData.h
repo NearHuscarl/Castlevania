@@ -20,7 +20,7 @@ namespace Castlevania
 			playerHealth = MAX_HEALTH;
 			bossHealth = MAX_HEALTH;
 
-			secondaryWeapon = EntityType::Unknown;
+			subWeapon = EntityType::Unknown;
 
 			hearts = 5;
 			lives = 3;
@@ -39,7 +39,7 @@ namespace Castlevania
 		int playerHealth;
 		int bossHealth;
 
-		EntityType secondaryWeapon;
+		EntityType subWeapon;
 
 		int hearts;
 		int lives;

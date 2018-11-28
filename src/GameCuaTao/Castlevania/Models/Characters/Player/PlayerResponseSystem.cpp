@@ -30,7 +30,7 @@ void PlayerResponseSystem::Update(ObjectCollection &objectCollection)
 				OnCollideWithTrigger(result, responseResult);
 				break;
 
-			case EntityType::Heart:
+			case EntityType::LargeHeart:
 				OnCollideWithHeart(result);
 				break;
 
@@ -38,8 +38,8 @@ void PlayerResponseSystem::Update(ObjectCollection &objectCollection)
 				OnCollideWithWhipPowerup(result);
 				break;
 
-			case EntityType::KnifeItem:
-				OnCollideWithKnifeItem(result, objectCollection);
+			case EntityType::DaggerItem:
+				OnCollideWithDaggerItem(result, objectCollection);
 				break;
 		}
 	}
@@ -200,10 +200,10 @@ void PlayerResponseSystem::OnCollideWithTrigger(CollisionResult &result, Respons
 
 void PlayerResponseSystem::OnCollideWithHeart(CollisionResult &result)
 {
-	auto &heart = dynamic_cast<GameObject&>(result.collidedObject);
+	auto &largeHeart = dynamic_cast<GameObject&>(result.collidedObject);
 
 	parent.data.hearts += 5;
-	heart.Destroy();
+	largeHeart.Destroy();
 }
 
 void PlayerResponseSystem::OnCollideWithWhipPowerup(CollisionResult &result)
@@ -229,11 +229,11 @@ void PlayerResponseSystem::OnCollideWithWhipPowerup(CollisionResult &result)
 	whipPowerup.Destroy();
 }
 
-void PlayerResponseSystem::OnCollideWithKnifeItem(CollisionResult &result, ObjectCollection &objectCollection)
+void PlayerResponseSystem::OnCollideWithDaggerItem(CollisionResult &result, ObjectCollection &objectCollection)
 {
-	auto &knifeItem = dynamic_cast<GameObject&>(result.collidedObject);
-	auto itemType = (EntityType)knifeItem.GetType();
+	auto &daggerItem = dynamic_cast<GameObject&>(result.collidedObject);
+	auto itemType = (EntityType)daggerItem.GetType();
 	
-	knifeItem.Destroy();
-	parent.SetSecondaryWeapon(itemType);
+	daggerItem.Destroy();
+	parent.SetSubWeapon(itemType);
 }

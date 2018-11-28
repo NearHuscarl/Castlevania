@@ -1,32 +1,32 @@
-#include "FirePit.h"
+#include "Brazier.h"
 #include "../../Models/Factories/ObjectCollection.h"
 
 using namespace Castlevania;
 
-FirePit::FirePit() : GameObject(EntityType::FirePit)
+Brazier::Brazier() : GameObject(EntityType::Brazier)
 {
 	isHit = false;
 }
 
-void FirePit::SetSpawnedItem(std::unique_ptr<Powerup> item)
+void Brazier::SetSpawnedItem(std::unique_ptr<Powerup> item)
 {
 	this->item = std::move(item);
 }
 
-void FirePit::SetHitEffect(std::unique_ptr<IEffect> effect)
+void Brazier::SetHitEffect(std::unique_ptr<IEffect> effect)
 {
 	this->hitEffect = std::move(effect);
 }
 
-void FirePit::Update(GameTime gameTime, UpdateData &updateData)
+void Brazier::Update(GameTime gameTime, UpdateData &updateData)
 {
 	switch (state)
 	{
-		case FirePitState::Normal:
+		case BrazierState::Normal:
 			GameObject::Update(gameTime, updateData);
 			break;
 
-		case FirePitState::Spawning:
+		case BrazierState::Spawning:
 			if (hitEffect->IsFinished())
 			{
 				isDestroyed = true;
@@ -36,28 +36,28 @@ void FirePit::Update(GameTime gameTime, UpdateData &updateData)
 	}
 }
 
-void FirePit::Draw(SpriteExtensions &spriteBatch)
+void Brazier::Draw(SpriteExtensions &spriteBatch)
 {
 	switch (state)
 	{
-		case FirePitState::Normal:
+		case BrazierState::Normal:
 			GameObject::Draw(spriteBatch);
 			break;
 
-		case FirePitState::Spawning:
+		case BrazierState::Spawning:
 			hitEffect->Draw(spriteBatch);
 			break;
 	}
 }
 
-void FirePit::OnBeingHit()
+void Brazier::OnBeingHit()
 {
-	state = FirePitState::Spawning;
+	state = BrazierState::Spawning;
 	body.Enabled(false);
 	hitEffect->Show(GetOriginPosition());
 }
 
-std::unique_ptr<GameObject> FirePit::SpawnItem()
+std::unique_ptr<GameObject> Brazier::SpawnItem()
 {
 	item->Spawn();
 	item->SetOriginPosition(GetOriginPosition());

@@ -66,8 +66,8 @@ namespace Castlevania
 		void SetWhip(std::unique_ptr<Whip> whip);
 		MoveState GetMoveState();
 		AttackState GetAttackState();
-		EntityType GetSecondaryWeapon();
-		void SetSecondaryWeapon(EntityType weapon);
+		EntityType GetSubWeapon();
+		void SetSubWeapon(EntityType weapon);
 
 		void LoadContent(ContentManager &content) override;
 		void Update(GameTime gameTime, UpdateData &updateData) override;
@@ -83,7 +83,7 @@ namespace Castlevania
 		void Jump();
 		void Duck();
 		void Attack();
-		void Throw(std::unique_ptr<RangedWeapon> weapon); // Throw secondary weapon (knife, axe, boomerang)
+		void Throw(std::unique_ptr<RangedWeapon> weapon); // Throw secondary weapon (dagger, axe, boomerang)
 		void TurnBackward();
 
 		bool CanGoUpstairs();
@@ -96,7 +96,7 @@ namespace Castlevania
 		float jumpSpeed;
 
 		std::unique_ptr<Whip> whip;
-		std::vector<std::unique_ptr<RangedWeapon>> secondaryWeapons;
+		std::vector<std::unique_ptr<RangedWeapon>> subWeapons;
 
 		void SetFacing(Facing facing) override;
 		void SetMoveState(MoveState moveState);

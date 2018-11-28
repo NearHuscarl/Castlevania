@@ -147,13 +147,13 @@ bool Controller::IsHoldingUpAndDown()
 
 void Controller::Throw()
 {
-	auto weaponItem = player.GetSecondaryWeapon();
+	auto weaponItem = player.GetSubWeapon();
 
 	switch (weaponItem)
 	{
-		case EntityType::KnifeItem:
+		case EntityType::DaggerItem:
 		{
-			auto weapon = objectFactory.CreateKnife(); // TODO: put this into object collection
+			auto weapon = objectFactory.CreateDagger(); // TODO: put this into object collection
 			
 			player.Throw(std::move(weapon));
 			break;

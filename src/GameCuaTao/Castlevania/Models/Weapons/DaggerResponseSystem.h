@@ -5,10 +5,10 @@
 
 namespace Castlevania
 {
-	class KnifeResponseSystem : public ICollisionResponseSystem
+	class DaggerResponseSystem : public ICollisionResponseSystem
 	{
 	public:
-		KnifeResponseSystem(GameObject &parent);
+		DaggerResponseSystem(GameObject &parent);
 
 		virtual void Receive(int message) override {};
 		void Update(ObjectCollection &objectCollection);
@@ -16,6 +16,6 @@ namespace Castlevania
 	private:
 		GameObject &parent;
 
-		void OnCollideWithFirePit(CollisionResult &result, ObjectCollection &objectCollection);
+		void OnCollideWithBrazier(CollisionResult &result, ObjectCollection &objectCollection);
 	};
 }

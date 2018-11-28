@@ -29,7 +29,7 @@ namespace Castlevania
 		std::shared_ptr<SpriteFont> hudFont;
 		std::shared_ptr<Texture> borderTexture;
 		std::shared_ptr<Texture> heartTexture;
-		std::shared_ptr<Texture> knifeTexture;
+		std::shared_ptr<Texture> daggerTexture;
 
 		std::unique_ptr<Sprite> playerFullBlock;
 		std::unique_ptr<Sprite> bossFullBlock;

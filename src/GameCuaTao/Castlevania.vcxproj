@@ -172,7 +172,7 @@
     <ClCompile Include="Castlevania\Models\Systems\Rendering\SpriteRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Collision\StaticCollisionSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Trigger.cpp" />
-    <ClCompile Include="Castlevania\Models\Weapons\KnifeResponseSystem.cpp" />
+    <ClCompile Include="Castlevania\Models\Weapons\DaggerResponseSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\RangedWeapon.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\WhipFlashingRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\WhipRenderingSystem.cpp" />
@@ -183,7 +183,7 @@
     <ClCompile Include="Direct2DGame\Content\SpritesheetReader.cpp" />
     <ClCompile Include="Direct2DGame\Extensions\Collisions\Body\Body.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Player\Controller.cpp" />
-    <ClCompile Include="Castlevania\Models\Items\FirePit.cpp" />
+    <ClCompile Include="Castlevania\Models\Items\Brazier.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\CollisionResponse\StaticResponseSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Collision\CollisionSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Player\PlayerMovementSystem.cpp" />
@@ -273,7 +273,7 @@
     <ClInclude Include="Castlevania\Models\Trigger.h" />
     <ClInclude Include="Castlevania\Models\TriggerType.h" />
     <ClInclude Include="Castlevania\Models\UpdateData.h" />
-    <ClInclude Include="Castlevania\Models\Weapons\KnifeResponseSystem.h" />
+    <ClInclude Include="Castlevania\Models\Weapons\DaggerResponseSystem.h" />
     <ClInclude Include="Castlevania\Models\Weapons\RangedWeapon.h" />
     <ClInclude Include="Castlevania\Models\Weapons\WhipFlashingRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Weapons\WhipRenderingSystem.h" />
@@ -294,7 +294,7 @@
     <ClInclude Include="Castlevania\Models\Characters\Player\Controller.h" />
     <ClInclude Include="Castlevania\Models\EntityType.h" />
     <ClInclude Include="Castlevania\Models\IGameObject.h" />
-    <ClInclude Include="Castlevania\Models\Items\FirePit.h" />
+    <ClInclude Include="Castlevania\Models\Items\Brazier.h" />
     <ClInclude Include="Castlevania\Models\Systems\CollisionResponse\StaticResponseSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Collision\CollisionSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\CollisionResponse\ICollisionResponseSystem.h" />

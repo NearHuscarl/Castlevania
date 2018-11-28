@@ -17,7 +17,7 @@
 #include "../Weapons/WhipRenderingSystem.h"
 #include "../Weapons/WhipFlashingRenderingSystem.h"
 #include "../Weapons/WhipResponseSystem.h"
-#include "../Weapons/KnifeResponseSystem.h"
+#include "../Weapons/DaggerResponseSystem.h"
 
 using namespace Castlevania;
 
@@ -30,41 +30,41 @@ ObjectFactory::ObjectFactory(ContentManager &content) : content{ content }
 
 std::unique_ptr<Bat> ObjectFactory::CreateBat(Vector2 position)
 {
-	auto bat = std::make_unique<Bat>();
-	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*bat, "Characters/NPCs/Bat.ani.xml");
+	auto object = std::make_unique<Bat>();
+	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*object, "Characters/NPCs/Bat.ani.xml");
 
-	bat->SetPosition(position);
-	bat->Attach<IRenderingSystem>(std::move(renderingSystem));
-	bat->LoadContent(content);
+	object->SetPosition(position);
+	object->Attach<IRenderingSystem>(std::move(renderingSystem));
+	object->LoadContent(content);
 
-	return bat;
+	return object;
 }
 
 std::unique_ptr<Player> ObjectFactory::CreatePlayer(Vector2 position)
 {
-	auto player = std::make_unique<Player>();
+	auto object = std::make_unique<Player>();
 
-	auto controller = std::make_unique<Controller>(*player, *this);
-	auto movementSystem = std::make_unique<PlayerMovementSystem>(*player);
-	auto collisionSystem = std::make_unique<PlayerCollisionSystem>(*player);
-	auto responseSystem = std::make_unique<PlayerResponseSystem>(*player, *this);
-	auto renderingSystem = std::make_unique<PlayerRenderingSystem>(*player, "Characters/Players/Simon.ani.xml");
+	auto controller = std::make_unique<Controller>(*object, *this);
+	auto movementSystem = std::make_unique<PlayerMovementSystem>(*object);
+	auto collisionSystem = std::make_unique<PlayerCollisionSystem>(*object);
+	auto responseSystem = std::make_unique<PlayerResponseSystem>(*object, *this);
+	auto renderingSystem = std::make_unique<PlayerRenderingSystem>(*object, "Characters/Players/Simon.ani.xml");
 
 	Keyboard::Register(controller.get());
 
-	player->SetPosition(position);
-	player->Attach<IControlSystem>(std::move(controller));
-	player->Attach<IMovementSystem>(std::move(movementSystem));
-	player->Attach<ICollisionSystem>(std::move(collisionSystem));
-	player->Attach<ICollisionResponseSystem>(std::move(responseSystem));
-	player->Attach<IRenderingSystem>(std::move(renderingSystem));
+	object->SetPosition(position);
+	object->Attach<IControlSystem>(std::move(controller));
+	object->Attach<IMovementSystem>(std::move(movementSystem));
+	object->Attach<ICollisionSystem>(std::move(collisionSystem));
+	object->Attach<ICollisionResponseSystem>(std::move(responseSystem));
+	object->Attach<IRenderingSystem>(std::move(renderingSystem));
 
-	auto whip = CreateWhip(*player);
+	auto whip = CreateWhip(*object);
 	
-	player->SetWhip(std::move(whip));
-	player->LoadContent(content);
+	object->SetWhip(std::move(whip));
+	object->LoadContent(content);
 
-	return player;
+	return object;
 }
 
 std::unique_ptr<Player> ObjectFactory::CreateIntroSimon(Vector2 position)
@@ -72,178 +72,198 @@ std::unique_ptr<Player> ObjectFactory::CreateIntroSimon(Vector2 position)
 	return std::unique_ptr<Player>();
 }
 
-std::unique_ptr<FirePit> ObjectFactory::CreateFirePit(EntityType itemType, Vector2 position)
+std::unique_ptr<Brazier> ObjectFactory::CreateBrazier(EntityType itemType, Vector2 position)
 {
-	auto firePit = std::make_unique<FirePit>();
+	auto object = std::make_unique<Brazier>();
 
-	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*firePit, "Items/Fire_Pit.ani.xml");
+	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*object, "Items/Fire_Pit.ani.xml");
 	auto item = CreatePowerup(itemType);
 	auto effect = effectManager->CreateFlameEffect();
 
-	firePit->SetPosition(position);
-	firePit->Attach<IRenderingSystem>(std::move(renderingSystem));
-	firePit->SetSpawnedItem(std::move(item));
-	firePit->SetHitEffect(std::move(effect));
-	firePit->LoadContent(content);
+	object->SetPosition(position);
+	object->Attach<IRenderingSystem>(std::move(renderingSystem));
+	object->SetSpawnedItem(std::move(item));
+	object->SetHitEffect(std::move(effect));
+	object->LoadContent(content);
 	
-	return firePit;
+	return object;
+}
+
+std::unique_ptr<GameObject> ObjectFactory::CreateZombie(Vector2 position)
+{
+	auto object = std::make_unique<GameObject>(EntityType::Zombie);
+
+	auto movementSystem = std::make_unique<MovementSystem>(*object);
+	auto collisionSystem = std::make_unique<EntityCollisionSystem>(*object);
+	auto responseSystem = std::make_unique<DaggerResponseSystem>(*object);
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Characters/Enemies/Zombie.png");
+
+	object->SetPosition(position);
+	object->Attach<IMovementSystem>(std::move(movementSystem));
+	object->Attach<ICollisionSystem>(std::move(collisionSystem));
+	object->Attach<ICollisionResponseSystem>(std::move(responseSystem));
+	object->Attach<IRenderingSystem>(std::move(renderingSystem));
+
+	object->LoadContent(content);
+
+	return object;
 }
 
 std::unique_ptr<Whip> ObjectFactory::CreateWhip(GameObject &gameObject)
 {
-	auto whip = std::make_unique<Whip>(gameObject);
+	auto object = std::make_unique<Whip>(gameObject);
 
-	auto collisionSystem = std::make_unique<EntityCollisionSystem>(*whip);
-	auto responseSystem = std::make_unique<WhipResponseSystem>(*whip);
-	auto renderingSystem = std::make_unique<WhipRenderingSystem>(*whip, "Items/Whip.ani.xml");
+	auto collisionSystem = std::make_unique<EntityCollisionSystem>(*object);
+	auto responseSystem = std::make_unique<WhipResponseSystem>(*object);
+	auto renderingSystem = std::make_unique<WhipRenderingSystem>(*object, "Items/Whip.ani.xml");
 
-	whip->Attach<ICollisionSystem>(std::move(collisionSystem));
-	whip->Attach<ICollisionResponseSystem>(std::move(responseSystem));
-	whip->Attach<IRenderingSystem>(std::move(renderingSystem));
+	object->Attach<ICollisionSystem>(std::move(collisionSystem));
+	object->Attach<ICollisionResponseSystem>(std::move(responseSystem));
+	object->Attach<IRenderingSystem>(std::move(renderingSystem));
 
-	whip->LoadContent(content);
+	object->LoadContent(content);
 
-	return whip;
+	return object;
 }
 
 std::unique_ptr<Whip> ObjectFactory::CreateFlashingWhip(GameObject &gameObject)
 {
-	auto whip = std::make_unique<Whip>(gameObject);
+	auto object = std::make_unique<Whip>(gameObject);
 
-	auto collisionSystem = std::make_unique<EntityCollisionSystem>(*whip);
-	auto responseSystem = std::make_unique<WhipResponseSystem>(*whip);
-	auto renderingSystem = std::make_unique<WhipFlashingRenderingSystem>(*whip, "Items/Whip.ani.xml");
+	auto collisionSystem = std::make_unique<EntityCollisionSystem>(*object);
+	auto responseSystem = std::make_unique<WhipResponseSystem>(*object);
+	auto renderingSystem = std::make_unique<WhipFlashingRenderingSystem>(*object, "Items/Whip.ani.xml");
 
-	whip->Attach<ICollisionSystem>(std::move(collisionSystem));
-	whip->Attach<ICollisionResponseSystem>(std::move(responseSystem));
-	whip->Attach<IRenderingSystem>(std::move(renderingSystem));
+	object->Attach<ICollisionSystem>(std::move(collisionSystem));
+	object->Attach<ICollisionResponseSystem>(std::move(responseSystem));
+	object->Attach<IRenderingSystem>(std::move(renderingSystem));
 
-	whip->LoadContent(content);
+	object->LoadContent(content);
 
-	return whip;
+	return object;
 }
 
-std::unique_ptr<RangedWeapon> ObjectFactory::CreateKnife(Vector2 position)
+std::unique_ptr<RangedWeapon> ObjectFactory::CreateDagger(Vector2 position)
 {
-	auto knife = std::make_unique<RangedWeapon>(EntityType::Knife);
+	auto object = std::make_unique<RangedWeapon>(EntityType::Dagger);
 
-	auto movementSystem = std::make_unique<MovementSystem>(*knife);
-	auto collisionSystem = std::make_unique<EntityCollisionSystem>(*knife);
-	auto responseSystem = std::make_unique<KnifeResponseSystem>(*knife);
-	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*knife, "Items/Knife.png");
+	auto movementSystem = std::make_unique<MovementSystem>(*object);
+	auto collisionSystem = std::make_unique<EntityCollisionSystem>(*object);
+	auto responseSystem = std::make_unique<DaggerResponseSystem>(*object);
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Dagger.png");
 
-	knife->SetPosition(position);
-	knife->Attach<IMovementSystem>(std::move(movementSystem));
-	knife->Attach<ICollisionSystem>(std::move(collisionSystem));
-	knife->Attach<ICollisionResponseSystem>(std::move(responseSystem));
-	knife->Attach<IRenderingSystem>(std::move(renderingSystem));
+	object->SetPosition(position);
+	object->Attach<IMovementSystem>(std::move(movementSystem));
+	object->Attach<ICollisionSystem>(std::move(collisionSystem));
+	object->Attach<ICollisionResponseSystem>(std::move(responseSystem));
+	object->Attach<IRenderingSystem>(std::move(renderingSystem));
 
-	knife->LoadContent(content);
+	object->LoadContent(content);
 
-	return knife;
+	return object;
 }
 
 std::unique_ptr<Powerup> ObjectFactory::CreatePowerup(EntityType type, Vector2 position)
 {
 	switch (type)
 	{
-		case EntityType::Heart:
-			return CreateHeart(position);
+		case EntityType::LargeHeart:
+			return CreateLargeHeart(position);
 
 		case EntityType::WhipPowerup:
 			return CreateWhipPowerup(position);
 
-		case EntityType::KnifeItem:
-			return CreateKnifeItem(position);
+		case EntityType::DaggerItem:
+			return CreateDaggerItem(position);
 
 		default:
 			throw std::invalid_argument("Invalid powerup type");
 	}
 }
 
-std::unique_ptr<Powerup> ObjectFactory::CreateKnifeItem(Vector2 position)
+std::unique_ptr<Powerup> ObjectFactory::CreateDaggerItem(Vector2 position)
 {
-	auto knifeItem = std::make_unique<Powerup>(EntityType::KnifeItem);
+	auto object = std::make_unique<Powerup>(EntityType::DaggerItem);
 
-	auto movementSystem = std::make_unique<MovementSystem>(*knifeItem);
-	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*knifeItem);
-	auto responseSystem = std::make_unique<StaticResponseSystem>(*knifeItem);
-	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*knifeItem, "Items/Knife.png");
+	auto movementSystem = std::make_unique<MovementSystem>(*object);
+	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
+	auto responseSystem = std::make_unique<StaticResponseSystem>(*object);
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Dagger.png");
 
-	knifeItem->SetPosition(position);
-	knifeItem->Attach<IMovementSystem>(std::move(movementSystem));
-	knifeItem->Attach<ICollisionSystem>(std::move(collisionSystem));
-	knifeItem->Attach<ICollisionResponseSystem>(std::move(responseSystem));
-	knifeItem->Attach<IRenderingSystem>(std::move(renderingSystem));
+	object->SetPosition(position);
+	object->Attach<IMovementSystem>(std::move(movementSystem));
+	object->Attach<ICollisionSystem>(std::move(collisionSystem));
+	object->Attach<ICollisionResponseSystem>(std::move(responseSystem));
+	object->Attach<IRenderingSystem>(std::move(renderingSystem));
 
-	knifeItem->LoadContent(content);
-	knifeItem->SetVelocity_Y(ITEM_FALL_SPEED); // Fall down
+	object->LoadContent(content);
+	object->SetVelocity_Y(ITEM_FALL_SPEED); // Fall down
 
-	return knifeItem;
+	return object;
 }
 
-std::unique_ptr<Powerup> ObjectFactory::CreateHeart(Vector2 position)
+std::unique_ptr<Powerup> ObjectFactory::CreateLargeHeart(Vector2 position)
 {
-	auto heart = std::make_unique<Powerup>(EntityType::Heart);
+	auto object = std::make_unique<Powerup>(EntityType::LargeHeart);
 
-	auto movementSystem = std::make_unique<MovementSystem>(*heart);
-	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*heart);
-	auto responseSystem = std::make_unique<StaticResponseSystem>(*heart);
-	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*heart, "Items/Heart.png");
+	auto movementSystem = std::make_unique<MovementSystem>(*object);
+	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
+	auto responseSystem = std::make_unique<StaticResponseSystem>(*object);
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Large_Heart.png");
 	
-	heart->SetPosition(position);
-	heart->Attach<IMovementSystem>(std::move(movementSystem));
-	heart->Attach<ICollisionSystem>(std::move(collisionSystem));
-	heart->Attach<ICollisionResponseSystem>(std::move(responseSystem));
-	heart->Attach<IRenderingSystem>(std::move(renderingSystem));
+	object->SetPosition(position);
+	object->Attach<IMovementSystem>(std::move(movementSystem));
+	object->Attach<ICollisionSystem>(std::move(collisionSystem));
+	object->Attach<ICollisionResponseSystem>(std::move(responseSystem));
+	object->Attach<IRenderingSystem>(std::move(renderingSystem));
 	
-	heart->LoadContent(content);
-	heart->SetVelocity_Y(ITEM_FALL_SPEED); // Fall down
+	object->LoadContent(content);
+	object->SetVelocity_Y(ITEM_FALL_SPEED); // Fall down
 
-	return heart;
+	return object;
 }
 
 std::unique_ptr<Powerup> ObjectFactory::CreateWhipPowerup(Vector2 position)
 {
-	auto whipPowerup = std::make_unique<Powerup>(EntityType::WhipPowerup);
+	auto object = std::make_unique<Powerup>(EntityType::WhipPowerup);
 
-	auto movementSystem = std::make_unique<MovementSystem>(*whipPowerup);
-	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*whipPowerup);
-	auto responseSystem = std::make_unique<StaticResponseSystem>(*whipPowerup);
-	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*whipPowerup, "Items/Whip_Powerup.png");
+	auto movementSystem = std::make_unique<MovementSystem>(*object);
+	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
+	auto responseSystem = std::make_unique<StaticResponseSystem>(*object);
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Whip_Powerup.png");
 
-	whipPowerup->SetPosition(position);
-	whipPowerup->Attach<IMovementSystem>(std::move(movementSystem));
-	whipPowerup->Attach<ICollisionSystem>(std::move(collisionSystem));
-	whipPowerup->Attach<ICollisionResponseSystem>(std::move(responseSystem));
-	whipPowerup->Attach<IRenderingSystem>(std::move(renderingSystem));
+	object->SetPosition(position);
+	object->Attach<IMovementSystem>(std::move(movementSystem));
+	object->Attach<ICollisionSystem>(std::move(collisionSystem));
+	object->Attach<ICollisionResponseSystem>(std::move(responseSystem));
+	object->Attach<IRenderingSystem>(std::move(renderingSystem));
 	
-	whipPowerup->LoadContent(content);
-	whipPowerup->SetVelocity_Y(ITEM_FALL_SPEED); // Fall down
+	object->LoadContent(content);
+	object->SetVelocity_Y(ITEM_FALL_SPEED); // Fall down
 
-	return whipPowerup;
+	return object;
 }
 
 std::unique_ptr<GameObject> ObjectFactory::CreateCastle(Vector2 position)
 {
-	auto castle = std::make_unique<GameObject>(EntityType::Castle);
-	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*castle, "TiledMaps/Stage_01/Castle.png");
+	auto object = std::make_unique<GameObject>(EntityType::Castle);
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "TiledMaps/Stage_01/Castle.png");
 
-	castle->SetPosition(position);
-	castle->Attach<IRenderingSystem>(std::move(renderingSystem));
-	castle->LoadContent(content);
+	object->SetPosition(position);
+	object->Attach<IRenderingSystem>(std::move(renderingSystem));
+	object->LoadContent(content);
 
-	return castle;
+	return object;
 }
 
 std::unique_ptr<GameObject> ObjectFactory::CreateDirtBlock(Vector2 position)
 {
-	auto dirtBlock = std::make_unique<GameObject>(EntityType::DirtBlock);
-	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*dirtBlock, "Textures/Dirt_Block.png");
+	auto object = std::make_unique<GameObject>(EntityType::DirtBlock);
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Textures/Dirt_Block.png");
 
-	dirtBlock->SetPosition(position);
-	dirtBlock->Attach<IRenderingSystem>(std::move(renderingSystem));
-	dirtBlock->LoadContent(content);
+	object->SetPosition(position);
+	object->Attach<IRenderingSystem>(std::move(renderingSystem));
+	object->LoadContent(content);
 
-	return dirtBlock;
+	return object;
 }
