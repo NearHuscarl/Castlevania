@@ -78,6 +78,14 @@ void GameplayScene::Draw(GameTime gameTime)
 	spriteBatch.End();
 }
 
+UpdateData GameplayScene::GetUpdateData()
+{
+	return UpdateData{
+		sceneManager.GetGraphicsDevice().GetViewport(),
+		&objectCollection,
+	};
+}
+
 void GameplayScene::LoadMap(Map mapName)
 {
 	map = mapManager->NextMap(mapName);
@@ -89,11 +97,6 @@ void GameplayScene::LoadMap(Map mapName)
 	objectCollection = mapManager->LoadGameObjects();
 
 	player->SetPosition(objectCollection.locations["Checkpoint"]);
-
-	updateData = UpdateData{
-		sceneManager.GetGraphicsDevice().GetViewport(),
-		&objectCollection,
-	};
 }
 
 void GameplayScene::UpdateInput()
@@ -145,7 +148,7 @@ void GameplayScene::UpdateGameplay(GameTime gameTime)
 {
 	camera->LookAt(player->GetOriginPosition(), Scrolling::Horizontally);
 
-	player->Update(gameTime, updateData);
+	player->Update(gameTime, GetUpdateData());
 
 	auto &entities = objectCollection.entities;
 
@@ -156,7 +159,7 @@ void GameplayScene::UpdateGameplay(GameTime gameTime)
 
 	for (unsigned int i = 0; i < sizeThisTurn; i++)
 	{
-		entities[i]->Update(gameTime, updateData);
+		entities[i]->Update(gameTime, GetUpdateData());
 	}
 
 	objectCollection.RemoveDeadObjects();

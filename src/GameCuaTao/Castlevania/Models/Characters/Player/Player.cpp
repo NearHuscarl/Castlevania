@@ -1,6 +1,7 @@
 #include "Direct2DGame/Input/InputHelper.h"
 #include "Player.h"
 #include "PlayerSettings.h"
+#include "../../Factories/ObjectCollection.h"
 
 using namespace Castlevania;
 
@@ -86,11 +87,9 @@ void Player::Update(GameTime gameTime, UpdateData &updateData)
 
 	GameObject::Update(gameTime, updateData);
 	UpdateStates();
+	UpdateSubWeapons(updateData);
 
 	whip->Update(gameTime, updateData);
-
-	for (auto &weapon : subWeapons)
-		weapon->Update(gameTime, updateData);
 }
 
 void Player::UpdateStates()
@@ -136,6 +135,17 @@ void Player::UpdateStates()
 		untouchableTimer.Reset();
 		SendMessageToSystems(UNTOUCHABLE_ENDED);
 	}
+}
+
+void Player::UpdateSubWeapons(UpdateData &updateData)
+{
+	auto objectCollection = updateData.objectCollection;
+
+	if (objectCollection == nullptr || subWeapon == nullptr)
+		return;
+
+	if (subWeapon->GetState() == RangedWeaponState::Flying)
+		objectCollection->entities.push_back(std::move(subWeapon));
 }
 
 void Player::OnAttackComplete()
@@ -190,9 +200,6 @@ void Player::Draw(SpriteExtensions &spriteBatch)
 	GameObject::Draw(spriteBatch);
 	
 	whip->Draw(spriteBatch);
-	
-	for (auto &weapon : subWeapons)
-		weapon->Draw(spriteBatch);
 }
 
 void Player::DrawBoundingBox(SpriteExtensions &spriteBatch)
@@ -308,12 +315,12 @@ void Player::Throw(std::unique_ptr<RangedWeapon> weapon)
 	if (data.hearts == 0)
 		return;
 
-	weapon->SetOwner(this);
-	weapon->GetBody().Enabled(false);
-	weapon->SetVisibility(false);
+	subWeapon = std::move(weapon);
+	subWeapon->SetOwner(this);
+	subWeapon->GetBody().Enabled(false);
+	subWeapon->SetVisibility(false);
 
 	SetAttackState(AttackState::THROWING);
-	subWeapons.push_back(std::move(weapon));
 
 	data.hearts--;
 
@@ -358,11 +365,10 @@ void Player::IdleOnGround()
 
 void Player::DoThrow()
 {
-	// Launch the most recently added weapon
-	auto &weapon = subWeapons.back();
+	if (subWeapon == nullptr)
+		return;
 
-	if (weapon->GetState() == RangedWeaponState::Sheathed)
-		weapon->Throw();
+	subWeapon->Throw();
 }
 
 void Player::Land()

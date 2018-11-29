@@ -166,9 +166,9 @@ std::unique_ptr<Whip> ObjectFactory::CreateFlashingWhip(GameObject &gameObject)
 	return object;
 }
 
-std::unique_ptr<RangedWeapon> ObjectFactory::CreateDagger(Vector2 position)
+std::unique_ptr<Dagger> ObjectFactory::CreateDagger(Vector2 position)
 {
-	auto object = std::make_unique<RangedWeapon>(EntityType::Dagger);
+	auto object = std::make_unique<Dagger>();
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
 	auto collisionSystem = std::make_unique<EntityCollisionSystem>(*object);

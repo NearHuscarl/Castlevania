@@ -36,7 +36,7 @@ namespace Castlevania
 
 		ObjectCollection objectCollection; // TODO: move to Grid class (implement spatial partition)
 
-		UpdateData updateData;
+		UpdateData GetUpdateData();
 
 		void LoadMap(Map mapName);
 		void UpdateInput();

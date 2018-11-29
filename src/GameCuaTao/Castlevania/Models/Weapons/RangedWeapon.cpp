@@ -21,6 +21,9 @@ void RangedWeapon::SetOwner(GameObject *owner)
 
 void RangedWeapon::Throw()
 {
+	if (owner == nullptr)
+		return;
+
 	body.Enabled(true);
 	SetVisibility(true);
 	SetFacing(owner->GetFacing());
@@ -38,12 +41,4 @@ void RangedWeapon::Throw()
 		velocity.x = -THROW_SPEED;
 
 	state = RangedWeaponState::Flying;
-}
-
-void RangedWeapon::Draw(SpriteExtensions &spriteBatch)
-{
-	if (!body.Enabled())
-		return;
-
-	GameObject::Draw(spriteBatch);
 }

@@ -31,10 +31,7 @@ void DaggerResponseSystem::Update(ObjectCollection &objectCollection)
 void DaggerResponseSystem::OnCollideWithBrazier(CollisionResult &result, ObjectCollection &objectCollection)
 {
 	auto &brazier = dynamic_cast<Brazier&>(result.collidedObject);
-	auto item = brazier.SpawnItem();
 
-	item->SetOriginPosition(brazier.GetOriginPosition());
-	brazier.Destroy();
-
-	objectCollection.entities.push_back(std::move(item));
+	brazier.OnBeingHit();
+	parent.Destroy();
 }

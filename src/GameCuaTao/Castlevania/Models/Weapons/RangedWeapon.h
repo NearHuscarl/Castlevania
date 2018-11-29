@@ -20,8 +20,6 @@ namespace Castlevania
 		void SetOwner(GameObject *owner);
 		void Throw();
 
-		void Draw(SpriteExtensions &spriteBatch);
-
 	private:
 		GameObject *owner;
 		RangedWeaponState state;

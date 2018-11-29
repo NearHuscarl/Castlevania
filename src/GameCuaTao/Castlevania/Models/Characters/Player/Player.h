@@ -100,7 +100,7 @@ namespace Castlevania
 		float jumpSpeed;
 
 		std::unique_ptr<Whip> whip;
-		std::vector<std::unique_ptr<RangedWeapon>> subWeapons;
+		std::unique_ptr<RangedWeapon> subWeapon;
 
 		void SetFacing(Facing facing) override;
 		void SetMoveState(MoveState moveState);
@@ -113,6 +113,7 @@ namespace Castlevania
 		void TakeDamage(int damage, Direction direction);
 
 		void UpdateStates();
+		void UpdateSubWeapons(UpdateData &updateData);
 		void OnAttackComplete();
 		void OnHitStairEntry();
 		void OnStopClimbingStair();

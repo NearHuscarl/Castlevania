@@ -5,6 +5,7 @@
 #include "../Characters/Enemies/Zombie.h"
 #include "../Items/Brazier.h"
 #include "../Weapons/Whip.h"
+#include "../Weapons/Dagger.h"
 #include "../Items/Powerup.h"
 #include "../../Effects/EffectFactory.h"
 
@@ -24,7 +25,7 @@ namespace Castlevania
 
 		std::unique_ptr<Whip> CreateWhip(GameObject &gameObject);
 		std::unique_ptr<Whip> CreateFlashingWhip(GameObject &gameObject);
-		std::unique_ptr<RangedWeapon> CreateDagger(Vector2 position = Vector2::Zero());
+		std::unique_ptr<Dagger> CreateDagger(Vector2 position = Vector2::Zero());
 		
 		std::unique_ptr<Powerup> CreatePowerup(EntityType type, Vector2 position = Vector2::Zero());
 		std::unique_ptr<Powerup> CreateDaggerItem(Vector2 position = Vector2::Zero());
