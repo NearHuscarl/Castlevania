@@ -81,7 +81,7 @@ Color Sprite::GetColor()
 	return color;
 }
 
-void Sprite::SetIsVisible(bool isVisible)
+void Sprite::SetVisibility(bool isVisible)
 {
 	this->isVisible = isVisible;
 }

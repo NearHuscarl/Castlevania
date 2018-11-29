@@ -6,7 +6,6 @@ using namespace Castlevania;
 
 constexpr auto BEND_KNEE_ON_JUMPING_Y = 330.0f;
 constexpr auto STRETCH_LEG_ON_FALLING_Y = 200.0f;
-constexpr auto FLASHING_TIME = 900; // milliseconds
 
 PlayerRenderingSystem::PlayerRenderingSystem(Player &parent, std::string animationPath) :
 	parent{ parent }
@@ -34,6 +33,10 @@ void PlayerRenderingSystem::Receive(int message)
 
 		case ATTACK_STATE_CHANGED:
 			OnAttackStateChanged();
+			break;
+
+		case UNTOUCHABLE_ENDED:
+			OnUntouchableFinish();
 			break;
 	}
 }
@@ -80,14 +83,6 @@ void PlayerRenderingSystem::Update(GameTime gameTime)
 					if (velocity.y > STRETCH_LEG_ON_FALLING_Y)
 						sprite->Play(IDLE_ANIMATION);
 					break;
-
-				case MoveState::FLASHING:
-					if (flashTimer.ElapsedMilliseconds() >= FLASHING_TIME)
-					{
-						flashTimer.Reset();
-						parent.Idle();
-					}
-					break;
 			}
 			break;
 
@@ -121,6 +116,12 @@ void PlayerRenderingSystem::Update(GameTime gameTime)
 			break;
 	}
 
+	if (parent.untouchableTimer.IsRunning())
+	{
+		if (parent.moveState != MoveState::TAKING_DAMAGE)
+			sprite->SetVisibility(Stopwatch::Every(6) ? true : false);
+	}
+
 	sprite->Update();
 }
 
@@ -145,8 +146,8 @@ void PlayerRenderingSystem::OnMoveStateChanged()
 		case MoveState::GOING_UPSTAIRS:
 			// Handle an edge case where simon is in idle state, but is playing
 			// the last walking animation loop before changing to idle animation,
-			// and now moves again so the animation need to reset back to infinite
-			// loop instead of creating new animation
+			// and suddenly moves again so the animation need to reset back to
+			// infinite loop instead of creating new animation
 			if (sprite->GetCurrentAnimation().GetName() == GO_UPSTAIRS_ANIMATION)
 				sprite->GetCurrentAnimation().SetLoop(true);
 			else
@@ -177,7 +178,6 @@ void PlayerRenderingSystem::OnMoveStateChanged()
 
 		case MoveState::FLASHING:
 		{
-			flashTimer.Start();
 			auto currentFrameIndex = sprite->GetCurrentAnimation().GetCurrentFrameIndex();
 
 			switch (currentFrameIndex)
@@ -200,6 +200,10 @@ void PlayerRenderingSystem::OnMoveStateChanged()
 
 		case MoveState::TURNING_BACKWARD:
 			sprite->Play(TURN_BACKWARD_ANIMATION);
+			break;
+
+		case MoveState::TAKING_DAMAGE:
+			sprite->Play(TAKE_DAMAGE_ANIMATION);
 			break;
 	}
 }
@@ -229,4 +233,9 @@ void PlayerRenderingSystem::OnAttackStateChanged()
 			sprite->Play(DUCK_ATTACK_ANIMATION);
 			break;
 	}
+}
+
+void PlayerRenderingSystem::OnUntouchableFinish()
+{
+	sprite->SetVisibility(true);
 }

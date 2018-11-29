@@ -1,7 +1,7 @@
 #include "Direct2DGame/Input/Keyboard.h"
 #include "ObjectFactory.h"
 #include "../EntityType.h"
-#include "../Systems/Movement/MovementSystem.h"
+#include "../Systems/Movement/SimpleMovementSystem.h"
 #include "../Systems/Collision/CollisionSystem.h"
 #include "../Systems/Collision/EntityCollisionSystem.h"
 #include "../Systems/Collision/StaticCollisionSystem.h"
@@ -14,6 +14,7 @@
 #include "../Characters/Player/PlayerCollisionSystem.h"
 #include "../Characters/Player/PlayerResponseSystem.h"
 #include "../Characters/Player/PlayerRenderingSystem.h"
+#include "../Characters/Enemies/ZombieMovementSystem.h"
 #include "../Weapons/WhipRenderingSystem.h"
 #include "../Weapons/WhipFlashingRenderingSystem.h"
 #include "../Weapons/WhipResponseSystem.h"
@@ -28,9 +29,13 @@ ObjectFactory::ObjectFactory(ContentManager &content) : content{ content }
 	effectManager = std::make_unique<EffectFactory>(content);
 }
 
-std::unique_ptr<Bat> ObjectFactory::CreateBat(Vector2 position)
+std::unique_ptr<GameObject> ObjectFactory::CreateBat(Vector2 position)
 {
-	auto object = std::make_unique<Bat>();
+	auto object = std::make_unique<GameObject>(EntityType::Bat);
+	auto stats = content.Load<Dictionary>("CharacterStats/Bat.xml");
+
+	object->SetLinearVelocity(std::stof(stats->at("Speed")));
+
 	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*object, "Characters/NPCs/Bat.ani.xml");
 
 	object->SetPosition(position);
@@ -43,6 +48,10 @@ std::unique_ptr<Bat> ObjectFactory::CreateBat(Vector2 position)
 std::unique_ptr<Player> ObjectFactory::CreatePlayer(Vector2 position)
 {
 	auto object = std::make_unique<Player>();
+	auto stats = content.Load<Dictionary>("CharacterStats/Simon.xml");
+	
+	object->SetSpeed(std::stof(stats->at("Speed")));
+	object->SetJumpSpeed(std::stof(stats->at("JumpSpeed")));
 
 	auto controller = std::make_unique<Controller>(*object, *this);
 	auto movementSystem = std::make_unique<PlayerMovementSystem>(*object);
@@ -69,7 +78,23 @@ std::unique_ptr<Player> ObjectFactory::CreatePlayer(Vector2 position)
 
 std::unique_ptr<Player> ObjectFactory::CreateIntroSimon(Vector2 position)
 {
-	return std::unique_ptr<Player>();
+	auto object = std::make_unique<Player>();
+	auto stats = content.Load<Dictionary>("CharacterStats/Simon.xml");
+
+	object->SetSpeed(std::stof(stats->at("Speed")));
+
+	auto controller = std::make_unique<Controller>(*object, *this); // TODO: make intro controller
+	auto movementSystem = std::make_unique<PlayerMovementSystem>(*object);
+	auto renderingSystem = std::make_unique<PlayerRenderingSystem>(*object, "Characters/Players/Simon.ani.xml");
+
+	object->SetPosition(position);
+	object->Attach<IControlSystem>(std::move(controller));
+	object->Attach<IMovementSystem>(std::move(movementSystem));
+	object->Attach<IRenderingSystem>(std::move(renderingSystem));
+
+	object->LoadContent(content);
+
+	return object;
 }
 
 std::unique_ptr<Brazier> ObjectFactory::CreateBrazier(EntityType itemType, Vector2 position)
@@ -89,19 +114,17 @@ std::unique_ptr<Brazier> ObjectFactory::CreateBrazier(EntityType itemType, Vecto
 	return object;
 }
 
-std::unique_ptr<GameObject> ObjectFactory::CreateZombie(Vector2 position)
+std::unique_ptr<Zombie> ObjectFactory::CreateZombie(Vector2 position)
 {
-	auto object = std::make_unique<GameObject>(EntityType::Zombie);
+	auto object = std::make_unique<Zombie>();
 
-	auto movementSystem = std::make_unique<MovementSystem>(*object);
-	auto collisionSystem = std::make_unique<EntityCollisionSystem>(*object);
-	auto responseSystem = std::make_unique<DaggerResponseSystem>(*object);
-	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Characters/Enemies/Zombie.png");
+	ReadEnemyConfig(*object.get(), "CharacterStats/Zombie.xml");
+
+	auto movementSystem = std::make_unique<ZombieMovementSystem>(*object);
+	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*object, "Characters/Enemies/Zombie.ani.xml");
 
 	object->SetPosition(position);
 	object->Attach<IMovementSystem>(std::move(movementSystem));
-	object->Attach<ICollisionSystem>(std::move(collisionSystem));
-	object->Attach<ICollisionResponseSystem>(std::move(responseSystem));
 	object->Attach<IRenderingSystem>(std::move(renderingSystem));
 
 	object->LoadContent(content);
@@ -147,7 +170,7 @@ std::unique_ptr<RangedWeapon> ObjectFactory::CreateDagger(Vector2 position)
 {
 	auto object = std::make_unique<RangedWeapon>(EntityType::Dagger);
 
-	auto movementSystem = std::make_unique<MovementSystem>(*object);
+	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
 	auto collisionSystem = std::make_unique<EntityCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<DaggerResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Dagger.png");
@@ -185,7 +208,7 @@ std::unique_ptr<Powerup> ObjectFactory::CreateDaggerItem(Vector2 position)
 {
 	auto object = std::make_unique<Powerup>(EntityType::DaggerItem);
 
-	auto movementSystem = std::make_unique<MovementSystem>(*object);
+	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
 	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<StaticResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Dagger.png");
@@ -206,7 +229,7 @@ std::unique_ptr<Powerup> ObjectFactory::CreateLargeHeart(Vector2 position)
 {
 	auto object = std::make_unique<Powerup>(EntityType::LargeHeart);
 
-	auto movementSystem = std::make_unique<MovementSystem>(*object);
+	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
 	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<StaticResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Large_Heart.png");
@@ -227,7 +250,7 @@ std::unique_ptr<Powerup> ObjectFactory::CreateWhipPowerup(Vector2 position)
 {
 	auto object = std::make_unique<Powerup>(EntityType::WhipPowerup);
 
-	auto movementSystem = std::make_unique<MovementSystem>(*object);
+	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
 	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<StaticResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Whip_Powerup.png");
@@ -266,4 +289,14 @@ std::unique_ptr<GameObject> ObjectFactory::CreateDirtBlock(Vector2 position)
 	object->LoadContent(content);
 
 	return object;
+}
+
+void ObjectFactory::ReadEnemyConfig(Enemy &enemy, std::string configPath)
+{
+	auto stats = content.Load<Dictionary>(configPath);
+
+	enemy.SetSpeed(std::stof(stats->at("Speed")));
+	enemy.SetHealth(std::stoi(stats->at("Health")));
+	enemy.SetAttack(std::stoi(stats->at("Attack")));
+	enemy.SetExp(std::stoi(stats->at("Exp")));
 }

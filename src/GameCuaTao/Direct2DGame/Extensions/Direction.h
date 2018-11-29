@@ -8,3 +8,5 @@ enum class Direction
 	Bottom,
 	None,
 };
+
+Direction Opposite(Direction input);

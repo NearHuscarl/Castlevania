@@ -17,10 +17,7 @@ void Controller::OnKeyStateChanged(KeyboardState &keyboardState)
 
 void Controller::OnKeyDown(int keyCode)
 {
-	auto attackState = player.GetAttackState();
-
-	if (attackState == AttackState::WHIPPING ||
-		attackState == AttackState::THROWING)
+	if (player.IsAttacking())
 		return;
 
 	switch (player.GetMoveState())
@@ -67,19 +64,13 @@ void Controller::OnKeyDown(int keyCode)
 
 void Controller::OnKeyUp(int keyCode)
 {
-	auto attackState = player.GetAttackState();
-
-	if (attackState == AttackState::WHIPPING ||
-		attackState == AttackState::THROWING)
+	if (player.IsAttacking())
 		return;
 }
 
 void Controller::Update()
 {
-	auto attackState = player.GetAttackState();
-
-	if (attackState == AttackState::WHIPPING ||
-		attackState == AttackState::THROWING)
+	if (player.IsAttacking())
 		return;
 
 	switch (player.GetMoveState())

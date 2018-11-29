@@ -10,17 +10,13 @@ namespace Castlevania
 	class MovementSystem : public IMovementSystem
 	{
 	public:
-		MovementSystem(GameObject &parent);
-
 		Vector2 GetDistance() override;
 		void SetDistance(Vector2 distance) override;
 
 		virtual void Receive(int message) override {};
+		virtual void Update(GameTime gameTime) override = 0;
 
-		void Update(GameTime gameTime) override;
-
-	private:
-		GameObject &parent;
+	protected:
 		Vector2 distance; // estimated distance to move
 	};
 }

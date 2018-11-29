@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Animations AtlasPath="Zombie.atlas.xml">
+    <Animation Name="walk" DefaultTime="350" IsLooping="True">
+      <Frame SpriteID="walk_01" />
+      <Frame SpriteID="walk_02" />
+    </Animation>
+  </Animations>
+
+</GameContent>

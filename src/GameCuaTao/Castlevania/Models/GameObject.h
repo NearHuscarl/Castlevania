@@ -31,6 +31,8 @@ namespace Castlevania
 
 		Vector2 GetDistance();
 		void SetDistance(Vector2 distance);
+		void SetDistance_X(float value);
+		void SetDistance_Y(float value);
 
 		Vector2 GetOriginPosition(); // Get the center of the object's rectangle
 		void SetOriginPosition(Vector2 position);
@@ -40,7 +42,8 @@ namespace Castlevania
 		void SetVelocity_X(float x);
 		void SetVelocity_Y(float y);
 		void SetLinearVelocity(float speed, float angle = 0.0f); // angle in degree
-		
+		void SetSpeed(float speed);
+
 		virtual RectF GetFrameRect();
 		virtual RectF GetBoundingBox();
 

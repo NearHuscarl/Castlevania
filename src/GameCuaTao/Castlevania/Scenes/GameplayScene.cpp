@@ -27,7 +27,7 @@ void GameplayScene::LoadContent()
 	hud->LoadContent(content);
 	hud->Register(player->GetData());
 
-	LoadMap(Map::COURTYARD);
+	LoadMap(Map::PLAYGROUND); // TODO: Change back to Map::COURTYARD
 }
 
 void GameplayScene::Update(GameTime gameTime)
@@ -81,7 +81,10 @@ void GameplayScene::Draw(GameTime gameTime)
 void GameplayScene::LoadMap(Map mapName)
 {
 	map = mapManager->NextMap(mapName);
-	camera->SetMoveArea(0, 0, map->GetWidthInPixels(), map->GetHeightInPixels());
+
+	camera->SetMoveArea(0, 0,
+		map->GetWidthInPixels(),
+		map->GetHeightInPixels() + hud->GetHeight());
 
 	objectCollection = mapManager->LoadGameObjects();
 
@@ -97,18 +100,39 @@ void GameplayScene::UpdateInput()
 {
 	if (mapManager->GetCurrentMap() == Map::PLAYGROUND)
 	{
+		auto locations = objectCollection.locations;
+
 		if (InputHelper::IsKeyDown(DIK_HOME))
 			LoadMap(Map::COURTYARD);
 		else if (InputHelper::IsKeyDown(DIK_1))
-			player->SetPosition(objectCollection.locations["Checkpoint"]);
+			player->SetPosition(locations["Checkpoint"]);
 		else if (InputHelper::IsKeyDown(DIK_2))
-			player->SetPosition(objectCollection.locations["Checkpoint_02"]);
+			player->SetPosition(locations["Checkpoint_02"]);
 		else if (InputHelper::IsKeyDown(DIK_3))
-			player->SetPosition(objectCollection.locations["Checkpoint_03"]);
+			player->SetPosition(locations["Checkpoint_03"]);
 		else if (InputHelper::IsKeyDown(DIK_4))
-			player->SetPosition(objectCollection.locations["Checkpoint_04"]);
+			player->SetPosition(locations["Checkpoint_04"]);
+		else if (InputHelper::IsKeyDown(DIK_5))
+			player->SetPosition(locations["Checkpoint_05"]);
+		else if (InputHelper::IsKeyDown(DIK_NUMPAD1))
+		{
+			auto object = objectFactory.CreateZombie(locations["Checkpoint_06"]);
+			object->WalkRight();
+			objectCollection.entities.push_back(std::move(object));
+		}
 		else if (InputHelper::IsKeyDown(DIK_W))
-			objectCollection.entities.push_back(objectFactory.CreateWhipPowerup(Vector2{ 110, 150 }));
+		{
+			auto playerLocation = player->GetPosition();
+			auto spawnLocation = Vector2{ playerLocation.x + 60, playerLocation.y - 100 };
+			objectCollection.entities.push_back(objectFactory.CreateWhipPowerup(spawnLocation));
+		}
+
+		auto &viewport = sceneManager.GetGraphicsDevice().GetViewport();
+
+		if (!camera->GetBounds().Intersects(player->GetFrameRect())) // player outside of viewport, update viewport postiion
+		{
+			camera->LookAt(player->GetPosition());
+		}
 	}
 	else
 	{

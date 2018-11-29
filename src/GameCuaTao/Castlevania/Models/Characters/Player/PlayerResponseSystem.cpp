@@ -30,6 +30,10 @@ void PlayerResponseSystem::Update(ObjectCollection &objectCollection)
 				OnCollideWithTrigger(result, responseResult);
 				break;
 
+			case EntityType::Zombie:
+				OnCollideWithZombie(result);
+				break;
+
 			case EntityType::LargeHeart:
 				OnCollideWithHeart(result);
 				break;
@@ -106,6 +110,14 @@ void PlayerResponseSystem::OnCollideWithBoundary(CollisionResult &result, Respon
 					parent.Land();
 					break;
 
+				case MoveState::TAKING_DAMAGE:
+					if (parent.velocity.y > 0)
+					{
+						ClampDistance_Y(collisionData);
+						parent.Land();
+					}
+					break;
+
 				default:
 					ClampDistance_Y(collisionData);
 					break;
@@ -167,10 +179,7 @@ void PlayerResponseSystem::OnCollideWithTrigger(CollisionResult &result, Respons
 					auto offsetBottom = parent.GetFrameRect().bottom - parent.GetBoundingBox().bottom;
 					// TODO: why 1 extra pixel?
 					parent.position.y = trigger.GetBoundingBox().bottom - parent.GetFrameRect().Height() + offsetBottom - 1;
-
-					auto distance = parent.GetDistance();
-					distance.y = 0;
-					parent.SetDistance(distance);
+					parent.SetDistance_Y(0);
 				}
 				break;
 			}
@@ -188,14 +197,18 @@ void PlayerResponseSystem::OnCollideWithTrigger(CollisionResult &result, Respons
 					auto offsetBottom = parent.GetFrameRect().bottom - parent.GetBoundingBox().bottom;
 					// TODO: why 1 extra pixel?
 					parent.position.y = trigger.GetBoundingBox().bottom - parent.GetFrameRect().Height() + offsetBottom + 1;
-
-					auto distance = parent.GetDistance();
-					distance.y = 0;
-					parent.SetDistance(distance);
+					parent.SetDistance_Y(0);
 				}
 				break;
 			}
 	}
+}
+
+void PlayerResponseSystem::OnCollideWithZombie(CollisionResult &result)
+{
+	auto &zombie = dynamic_cast<Zombie&>(result.collidedObject);
+
+	parent.TakeDamage(zombie.GetAttack(), Opposite(result.direction));
 }
 
 void PlayerResponseSystem::OnCollideWithHeart(CollisionResult &result)

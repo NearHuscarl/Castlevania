@@ -74,12 +74,8 @@
       <Frame SpriteID="turn_backward_01" />
     </Animation>
 
-    <Animation Name="is_hit" DefaultTime="100" IsLooping="False">
-      <Frame SpriteID="is_hit_01" />
-    </Animation>
-
-    <Animation Name="is_hit" DefaultTime="100" IsLooping="False">
-      <Frame SpriteID="is_hit_01" />
+    <Animation Name="take_damage" DefaultTime="100" IsLooping="False">
+      <Frame SpriteID="take_damage_01" />
     </Animation>
 
     <!-- Flashing animation for frame 01 in walk animation -->

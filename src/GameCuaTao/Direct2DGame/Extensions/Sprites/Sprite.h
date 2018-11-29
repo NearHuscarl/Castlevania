@@ -24,7 +24,7 @@ public:
 	void SetColor(Color color);
 	Color GetColor();
 	
-	void SetIsVisible(bool isVisible);
+	void SetVisibility(bool isVisible);
 	bool IsVisible();
 	
 	void SetEffect(SpriteEffects effect);

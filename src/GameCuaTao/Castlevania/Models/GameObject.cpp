@@ -47,6 +47,16 @@ void GameObject::SetDistance(Vector2 distance)
 		return movementSystem->SetDistance(distance);
 }
 
+void GameObject::SetDistance_X(float value)
+{
+	SetDistance(Vector2{ value, GetDistance().y });
+}
+
+void GameObject::SetDistance_Y(float value)
+{
+	SetDistance(Vector2{ GetDistance().x, value });
+}
+
 Vector2 GameObject::GetOriginPosition()
 {
 	return Vector2{
@@ -91,6 +101,11 @@ void GameObject::SetLinearVelocity(float speed, float angle)
 	velocity = direction * speed;
 }
 
+void GameObject::SetSpeed(float speed)
+{
+	this->speed = speed;
+}
+
 RectF GameObject::GetFrameRect()
 {
 	return GetSprite().GetFrameRectangle(position);
@@ -116,9 +131,6 @@ Facing GameObject::GetFacing()
 
 void GameObject::SetFacing(Facing facing)
 {
-	if (this->facing == facing)
-		return;
-
 	this->facing = facing;
 
 	if (facing == Facing::Left)
@@ -129,7 +141,7 @@ void GameObject::SetFacing(Facing facing)
 
 void GameObject::SetVisibility(bool value)
 {
-	GetSprite().SetIsVisible(value);
+	GetSprite().SetVisibility(value);
 }
 
 Body &Castlevania::GameObject::GetBody()

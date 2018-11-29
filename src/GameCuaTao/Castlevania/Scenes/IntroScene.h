@@ -6,7 +6,6 @@
 #include "AbstractScene.h"
 #include "../Models/Factories/ObjectFactory.h"
 #include "../Models/Characters/Player/Player.h"
-#include "../Models/Characters/Bat.h"
 
 namespace Castlevania
 {
@@ -25,8 +24,8 @@ namespace Castlevania
 		ObjectFactory &objectFactory;
 
 		std::unique_ptr<Player> player;
-		std::unique_ptr<Bat> bat1; // left-side bat
-		std::unique_ptr<Bat> bat2; // right-side bat
+		std::unique_ptr<GameObject> bat1; // left-side bat
+		std::unique_ptr<GameObject> bat2; // right-side bat
 
 		Vector2 startPosition;
 		Vector2 gatePosition;

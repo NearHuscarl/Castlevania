@@ -4,9 +4,12 @@
 
 using namespace Castlevania;
 
-constexpr auto JUMP_COOLDOWN = 400; // milliseconds
+constexpr auto LANDING_TIME = 400; // milliseconds
+constexpr auto FLASHING_TIME = 900; // milliseconds
+constexpr auto UNTOUCHABLE_TIME = 2000; // milliseconds
+constexpr auto BOUNCE_BACK_HEIGHT = 360.0f; // Simon bounce back's max height (when taking damage)
 
-Player::Player() : GameObject(EntityType::Player)
+Player::Player() : GameObject{ EntityType::Player }
 {
 	this->whip = std::make_unique<Whip>(*this);
 }
@@ -37,11 +40,6 @@ const PlayerData &Player::GetData()
 	return data;
 }
 
-void Player::SetWhip(std::unique_ptr<Whip> whip)
-{
-	this->whip = std::move(whip);
-}
-
 MoveState Player::GetMoveState()
 {
 	return moveState;
@@ -50,6 +48,16 @@ MoveState Player::GetMoveState()
 AttackState Player::GetAttackState()
 {
 	return attackState;
+}
+
+void Player::SetJumpSpeed(float jumpSpeed)
+{
+	this->jumpSpeed = jumpSpeed;
+}
+
+void Player::SetWhip(std::unique_ptr<Whip> whip)
+{
+	this->whip = std::move(whip);
 }
 
 EntityType Player::GetSubWeapon()
@@ -66,11 +74,6 @@ void Player::SetSubWeapon(EntityType weapon)
 void Player::LoadContent(ContentManager &content)
 {
 	GameObject::LoadContent(content);
-
-	auto stats = content.Load<Dictionary>("CharacterStats/Simon.xml");
-	speed = std::stof(stats->at("WalkSpeed"));
-	jumpSpeed = std::stof(stats->at("JumpSpeed"));
-
 	Idle();
 }
 
@@ -110,15 +113,29 @@ void Player::UpdateStates()
 			break;
 
 		case MoveState::LANDING_HARD:
-			if (landingTimer.ElapsedMilliseconds() >= JUMP_COOLDOWN)
+			if (landingTimer.ElapsedMilliseconds() >= LANDING_TIME)
 			{
-				Idle();
 				landingTimer.Reset();
+				Idle();
+			}
+			break;
+
+		case MoveState::FLASHING:
+			if (flashingTimer.ElapsedMilliseconds() >= FLASHING_TIME)
+			{
+				flashingTimer.Reset();
+				Idle();
 			}
 			break;
 	}
 
 	data.timeLeft.CountDown();
+
+	if (untouchableTimer.ElapsedMilliseconds() > UNTOUCHABLE_TIME)
+	{
+		untouchableTimer.Reset();
+		SendMessageToSystems(UNTOUCHABLE_ENDED);
+	}
 }
 
 void Player::OnAttackComplete()
@@ -312,6 +329,11 @@ void Player::TurnBackward()
 	velocity = Vector2::Zero();
 }
 
+bool Player::IsAttacking()
+{
+	return attackState == AttackState::WHIPPING || attackState == AttackState::THROWING;
+}
+
 bool Player::CanGoUpstairs()
 {
 	if (nearbyStair == nullptr)
@@ -345,6 +367,13 @@ void Player::DoThrow()
 
 void Player::Land()
 {
+	if (IsAttacking())
+	{
+		velocity.x = 0; // Still keep attacking on the ground but not moving anymore
+		moveState = MoveState::IDLE; // Set moveState so the character know what to do when finish attacking
+		return;
+	}
+
 	if (velocity.y > 600.0f) // Falling down very fast, do a superhero landing
 	{
 		SetMoveState(MoveState::LANDING_HARD);
@@ -353,14 +382,7 @@ void Player::Land()
 	}
 	else
 	{
-		if (attackState == AttackState::WHIPPING
-			|| attackState == AttackState::THROWING)
-		{
-			velocity.x = 0; // Still keep attacking on the ground but not moving anymore
-			moveState = MoveState::IDLE; // Set moveState so the character know what to do when finish attacking
-		}
-		else
-			Idle();
+		Idle();
 	}
 }
 
@@ -368,6 +390,30 @@ void Player::Flash()
 {
 	SetMoveState(MoveState::FLASHING);
 	velocity = Vector2::Zero();
+	flashingTimer.Start();
+}
+
+void Player::TakeDamage(int damage, Direction direction)
+{
+	if (untouchableTimer.IsRunning())
+		return;
+
+	if (direction == Direction::Left)
+	{
+		SetFacing(Facing::Left);
+		velocity.x = speed;
+	}
+	else if (direction == Direction::Right)
+	{
+		SetFacing(Facing::Right);
+		velocity.x = -speed;
+	}
+
+	velocity.y = -BOUNCE_BACK_HEIGHT;
+
+	SetMoveState(MoveState::TAKING_DAMAGE);
+	data.playerHealth -= damage;
+	untouchableTimer.Start();
 }
 
 #pragma endregion

@@ -23,10 +23,9 @@ namespace Castlevania
 		Player &parent;
 		std::unique_ptr<AnimatedSprite> sprite;
 		std::string animationPath;
-		
-		Stopwatch flashTimer;
 
 		void OnMoveStateChanged();
 		void OnAttackStateChanged();
+		void OnUntouchableFinish();
 	};
 }

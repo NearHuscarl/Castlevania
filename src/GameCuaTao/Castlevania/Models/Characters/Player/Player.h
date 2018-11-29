@@ -48,6 +48,7 @@ namespace Castlevania
 
 		DUCKING,
 		TURNING_BACKWARD,
+		TAKING_DAMAGE
 	};
 
 	enum class AttackState
@@ -63,9 +64,11 @@ namespace Castlevania
 		Player();
 
 		const PlayerData &GetData();
-		void SetWhip(std::unique_ptr<Whip> whip);
 		MoveState GetMoveState();
 		AttackState GetAttackState();
+		void SetJumpSpeed(float jumpSpeed);
+		
+		void SetWhip(std::unique_ptr<Whip> whip);
 		EntityType GetSubWeapon();
 		void SetSubWeapon(EntityType weapon);
 
@@ -86,6 +89,7 @@ namespace Castlevania
 		void Throw(std::unique_ptr<RangedWeapon> weapon); // Throw secondary weapon (dagger, axe, boomerang)
 		void TurnBackward();
 
+		bool IsAttacking();
 		bool CanGoUpstairs();
 		bool CanGoDownstairs();
 
@@ -106,6 +110,7 @@ namespace Castlevania
 		void DoThrow(); // finish throwing maneuver, weapon is now launching
 		void Land();
 		void Flash(); // simon flashing when received whip-upgrade powerup
+		void TakeDamage(int damage, Direction direction);
 
 		void UpdateStates();
 		void OnAttackComplete();
@@ -117,6 +122,8 @@ namespace Castlevania
 		friend class PlayerRenderingSystem;
 
 		Stopwatch landingTimer;
+		Stopwatch flashingTimer;
+		Stopwatch untouchableTimer; // cooldown time after taking damage
 
 		// Component-related flags
 		bool isOnGround;

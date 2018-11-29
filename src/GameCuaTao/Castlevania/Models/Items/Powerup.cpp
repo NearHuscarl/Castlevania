@@ -4,7 +4,7 @@ using namespace Castlevania;
 
 constexpr auto LIFESPAN = 4000; // in milliseconds
 
-Powerup::Powerup(EntityType type) : GameObject(type)
+Powerup::Powerup(EntityType type) : GameObject{ type }
 {
 }
 

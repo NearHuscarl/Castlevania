@@ -2,7 +2,7 @@
 
 #include "../GameObject.h"
 #include "../Characters/Player/Player.h"
-#include "../Characters/Bat.h"
+#include "../Characters/Enemies/Zombie.h"
 #include "../Items/Brazier.h"
 #include "../Weapons/Whip.h"
 #include "../Items/Powerup.h"
@@ -15,12 +15,12 @@ namespace Castlevania
 	public:
 		ObjectFactory(ContentManager &content);
 
-		std::unique_ptr<Bat> CreateBat(Vector2 position = Vector2::Zero());
+		std::unique_ptr<GameObject> CreateBat(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Player> CreatePlayer(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Player> CreateIntroSimon(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Brazier> CreateBrazier(EntityType itemType, Vector2 position = Vector2::Zero());
 
-		std::unique_ptr<GameObject> CreateZombie(Vector2 position = Vector2::Zero());
+		std::unique_ptr<Zombie> CreateZombie(Vector2 position = Vector2::Zero());
 
 		std::unique_ptr<Whip> CreateWhip(GameObject &gameObject);
 		std::unique_ptr<Whip> CreateFlashingWhip(GameObject &gameObject);
@@ -37,5 +37,7 @@ namespace Castlevania
 	private:
 		ContentManager &content;
 		std::unique_ptr<EffectFactory> effectManager;
+
+		void ReadEnemyConfig(Enemy &enemy, std::string configPath);
 	};
 }

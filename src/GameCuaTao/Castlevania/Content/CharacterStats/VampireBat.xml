@@ -3,9 +3,11 @@
 <GameContent>
 
   <Dictionary
-    Name="Simon"
-    Speed="125.0"
-    JumpSpeed="470.0">
+    Name="VampireBat"
+    Speed="135.0"
+    Health="1"
+    Attack="2"
+    Exp="200">
   </Dictionary>
 
 </GameContent>

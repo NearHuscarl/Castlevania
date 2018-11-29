@@ -27,6 +27,7 @@ namespace Castlevania
 		int height;
 
 		std::shared_ptr<SpriteFont> hudFont;
+		std::shared_ptr<Texture> backgroundTexture;
 		std::shared_ptr<Texture> borderTexture;
 		std::shared_ptr<Texture> heartTexture;
 		std::shared_ptr<Texture> daggerTexture;

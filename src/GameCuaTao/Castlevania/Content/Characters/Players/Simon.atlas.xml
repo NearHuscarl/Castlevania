@@ -133,9 +133,9 @@
       <SpriteBoundary Left="8" Top="66" Width="32" Height="64" />
     </Sprite>
 
-    <Sprite ID="is_hit_01">
+    <Sprite ID="take_damage_01">
       <SpriteFrame Left="0" Top="132" Width="60" Height="66" />
-      <SpriteBoundary Left="18" Top="138" Width="32" Height="58" />
+      <SpriteBoundary Left="10" Top="138" Width="32" Height="58" />
     </Sprite>
 
     <Sprite ID="walk_flash_red_01">

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Dictionary
+    Name="GiantBat"
+    Speed="75.0"
+    LaunchSpeed="200.0"
+    Health="16"
+    Attack="2"
+    Exp="3000">
+  </Dictionary>
+
+</GameContent>

@@ -3,9 +3,11 @@
 <GameContent>
 
   <Dictionary
-    Name="Simon"
-    Speed="125.0"
-    JumpSpeed="470.0">
+    Name="Fishman"
+    Speed="75.0"
+    Health="1"
+    Attack="2"
+    Exp="300">
   </Dictionary>
 
 </GameContent>

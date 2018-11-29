@@ -3,7 +3,7 @@
 
 using namespace Castlevania;
 
-Brazier::Brazier() : GameObject(EntityType::Brazier)
+Brazier::Brazier() : GameObject{ EntityType::Brazier }
 {
 	isHit = false;
 }

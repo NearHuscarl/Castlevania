@@ -5,20 +5,11 @@
 
 using namespace Castlevania;
 
+constexpr auto WEIGHT = 23.0f;
 constexpr auto FALL_SPEED = 1000.0f; // TODO: put in xml
 
 PlayerMovementSystem::PlayerMovementSystem(Player &parent) : parent{ parent }
 {
-}
-
-Vector2 PlayerMovementSystem::GetDistance()
-{
-	return distance;
-}
-
-void PlayerMovementSystem::SetDistance(Vector2 distance)
-{
-	this->distance = distance;
 }
 
 void PlayerMovementSystem::Receive(int message)
@@ -43,7 +34,7 @@ void PlayerMovementSystem::Update(GameTime gameTime)
 		&& moveState != MoveState::GOING_DOWNSTAIRS
 		&& moveState != MoveState::IDLE_UPSTAIRS
 		&& moveState != MoveState::IDLE_DOWNSTAIRS)
-		velocity.y = MathHelper::Min(velocity.y + GRAVITY, FALL_SPEED);
+		velocity.y = MathHelper::Min(velocity.y + WEIGHT, FALL_SPEED);
 	
 	parent.SetVelocity(velocity);
 

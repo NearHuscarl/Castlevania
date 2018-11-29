@@ -6,8 +6,6 @@
 
 namespace Castlevania
 {
-	constexpr auto GRAVITY = 18.0f;
-	
 	class IMovementSystem : public IReceiver
 	{
 	public:
