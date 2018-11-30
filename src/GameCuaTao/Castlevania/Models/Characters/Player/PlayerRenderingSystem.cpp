@@ -1,5 +1,5 @@
 #include "PlayerRenderingSystem.h"
-#include "PlayerSettings.h"
+#include "../../Settings.h"
 #include "../../../Settings/Animations.h"
 
 using namespace Castlevania;
@@ -119,7 +119,7 @@ void PlayerRenderingSystem::Update(GameTime gameTime)
 	if (parent.untouchableTimer.IsRunning())
 	{
 		if (parent.moveState != MoveState::TAKING_DAMAGE)
-			sprite->SetVisibility(Stopwatch::Every(6) ? true : false);
+			sprite->SetVisibility(Stopwatch::Every(1) ? true : false);
 	}
 
 	sprite->Update();

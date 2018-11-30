@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="24" height="6" tilewidth="64" tileheight="64" infinite="0" backgroundcolor="#3c3c3c" nextlayerid="13" nextobjectid="44">
  <tileset firstgid="1" source="../Simon.tsx"/>
- <tileset firstgid="41" source="../Fire_Pit.tsx"/>
+ <tileset firstgid="41" source="../Brazier.tsx"/>
  <tileset firstgid="43" source="../Money_Bag.tsx"/>
  <tileset firstgid="46" name="Castle" tilewidth="129" tileheight="288" tilecount="1" columns="1">
   <image source="Castle.png" width="129" height="288"/>

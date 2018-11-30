@@ -43,7 +43,7 @@ namespace Castlevania
 		// IDLE state after touching the ground
 		LANDING_HARD,
 		
-		// Simon freezes and starts flashing when consumes whip-upgrade powerup
+		// Simon freezes and starts flashing after consuming whip-upgrade powerup
 		FLASHING,
 
 		DUCKING,
@@ -86,7 +86,7 @@ namespace Castlevania
 		void Jump();
 		void Duck();
 		void Attack();
-		void Throw(std::unique_ptr<RangedWeapon> weapon); // Throw secondary weapon (dagger, axe, boomerang)
+		void Throw(std::unique_ptr<RangedWeapon> weapon); // Throw secondary weapon (e.g. dagger, axe, boomerang)
 		void TurnBackward();
 
 		bool IsAttacking();
@@ -109,7 +109,7 @@ namespace Castlevania
 		void IdleOnGround();
 		void DoThrow(); // finish throwing maneuver, weapon is now launching
 		void Land();
-		void Flash(); // simon flashing when received whip-upgrade powerup
+		void Flash(); // simon flashing when getting whip-upgrade powerup
 		void TakeDamage(int damage, Direction direction);
 
 		void UpdateStates();
@@ -127,7 +127,6 @@ namespace Castlevania
 		Stopwatch untouchableTimer; // cooldown time after taking damage
 
 		// Component-related flags
-		bool isOnGround;
 		Trigger *nearbyStair;
 	};
 }

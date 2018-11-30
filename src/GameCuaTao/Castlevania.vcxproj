@@ -184,6 +184,7 @@
     <ClCompile Include="Castlevania\Models\Weapons\WhipResponseSystem.cpp" />
     <ClCompile Include="Castlevania\Effects\EffectFactory.cpp" />
     <ClCompile Include="Castlevania\Utilities\SpriteHelper.cpp" />
+    <ClCompile Include="Castlevania\Utilities\Subject.cpp" />
     <ClCompile Include="Castlevania\Utilities\Timer.cpp" />
     <ClCompile Include="Direct2DGame\Content\SpritesheetReader.cpp" />
     <ClCompile Include="Direct2DGame\Extensions\Collisions\Body\Body.cpp" />
@@ -267,7 +268,7 @@
     <ClInclude Include="Castlevania\Models\Characters\Player\PlayerCollisionSystem.h" />
     <ClInclude Include="Castlevania\Models\Characters\Player\PlayerData.h" />
     <ClInclude Include="Castlevania\Models\Characters\Player\PlayerRenderingSystem.h" />
-    <ClInclude Include="Castlevania\Models\Characters\Player\PlayerSettings.h" />
+    <ClInclude Include="Castlevania\Models\Settings.h" />
     <ClInclude Include="Castlevania\Models\Items\Powerup.h" />
     <ClInclude Include="Castlevania\Models\RectangleObject.h" />
     <ClInclude Include="Castlevania\Models\SpawnArea.h" />
@@ -292,8 +293,11 @@
     <ClInclude Include="Castlevania\Models\Weapons\WhipSettings.h" />
     <ClInclude Include="Castlevania\Effects\EffectFactory.h" />
     <ClInclude Include="Castlevania\Effects\IEffect.h" />
+    <ClInclude Include="Castlevania\Scenes\SceneEvent.h" />
     <ClInclude Include="Castlevania\Utilities\CppExtensions.h" />
+    <ClInclude Include="Castlevania\Utilities\IObserver.h" />
     <ClInclude Include="Castlevania\Utilities\SpriteHelper.h" />
+    <ClInclude Include="Castlevania\Utilities\Subject.h" />
     <ClInclude Include="Castlevania\Utilities\Timer.h" />
     <ClInclude Include="Direct2DGame\Content\SpritesheetReader.h" />
     <ClInclude Include="Direct2DGame\Extensions\Collisions\Body\Body.h" />

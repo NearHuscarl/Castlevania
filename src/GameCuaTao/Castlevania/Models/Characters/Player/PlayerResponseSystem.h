@@ -17,6 +17,7 @@ namespace Castlevania
 	private:
 		Player &parent;
 		ObjectFactory &objectFactory;
+		bool wasOnGround;
 
 		struct ResponseResult
 		{
@@ -35,5 +36,9 @@ namespace Castlevania
 		void OnCollideWithHeart(CollisionResult &result);
 		void OnCollideWithWhipPowerup(CollisionResult &result);
 		void OnCollideWithDaggerItem(CollisionResult &result, ObjectCollection &objectCollection);
+
+		void OnCollideWithStairUpTrigger(Trigger &trigger, ResponseResult &responseResult);
+		void OnCollideWithStairDownTrigger(Trigger &trigger, ResponseResult &responseResult);
+		void OnCollideWithCastleEntranceTrigger();
 	};
 }

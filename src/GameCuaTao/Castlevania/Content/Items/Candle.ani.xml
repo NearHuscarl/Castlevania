@@ -2,10 +2,10 @@
 
 <GameContent>
 
-  <Animations AtlasPath="Fire_Pit.atlas.xml">
+  <Animations AtlasPath="Candle.atlas.xml">
     <Animation Name="Fire" DefaultTime="200" IsLooping="True">
-      <Frame SpriteID="fire_pit_01" />
-      <Frame SpriteID="fire_pit_02" />
+      <Frame SpriteID="candle_01" />
+      <Frame SpriteID="candle_02" />
     </Animation>
   </Animations>
 

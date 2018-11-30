@@ -1,12 +1,11 @@
 #include "Direct2DGame/MathHelper.h"
 #include "PlayerMovementSystem.h"
-#include "PlayerSettings.h"
+#include "../../Settings.h"
 #include "../../GameObject.h"
 
 using namespace Castlevania;
 
-constexpr auto WEIGHT = 23.0f;
-constexpr auto FALL_SPEED = 1000.0f; // TODO: put in xml
+constexpr auto WEIGHT = 1000.0f;
 
 PlayerMovementSystem::PlayerMovementSystem(Player &parent) : parent{ parent }
 {
@@ -34,8 +33,8 @@ void PlayerMovementSystem::Update(GameTime gameTime)
 		&& moveState != MoveState::GOING_DOWNSTAIRS
 		&& moveState != MoveState::IDLE_UPSTAIRS
 		&& moveState != MoveState::IDLE_DOWNSTAIRS)
-		velocity.y = MathHelper::Min(velocity.y + WEIGHT, FALL_SPEED);
-	
+		velocity.y = MathHelper::Min(velocity.y + GRAVITY, WEIGHT);
+
 	parent.SetVelocity(velocity);
 
 	distance = velocity * deltaTime;

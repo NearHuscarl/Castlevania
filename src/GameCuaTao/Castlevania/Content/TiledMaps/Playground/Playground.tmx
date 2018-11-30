@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="24" height="12" tilewidth="64" tileheight="64" infinite="0" backgroundcolor="#3c3c3c" nextlayerid="9" nextobjectid="71">
  <tileset firstgid="1" source="../Simon.tsx"/>
- <tileset firstgid="41" source="../Fire_Pit.tsx"/>
+ <tileset firstgid="41" source="../Brazier.tsx"/>
  <imagelayer id="2" name="Background">
   <image source="Playground.png" width="1546" height="768"/>
  </imagelayer>
@@ -45,7 +45,7 @@
   <object id="65" name="Checkpoint_02" type="Position" gid="4" x="273.394" y="159.303" width="60" height="66"/>
   <object id="14" name="Checkpoint_04" type="Position" gid="4" x="332" y="285" width="60" height="66"/>
   <object id="69" name="Checkpoint_05" type="Position" gid="4" x="579" y="607" width="60" height="66"/>
-  <object id="70" name="Checkpoint_06" type="Position" gid="4" x="386" y="699" width="60" height="66"/>
+  <object id="70" name="Checkpoint_06" type="Position" gid="4" x="481" y="699" width="60" height="66"/>
  </objectgroup>
  <objectgroup id="7" name="Triggers">
   <object id="56" name="StairUp" type="Trigger" x="112" y="256" width="32" height="32">

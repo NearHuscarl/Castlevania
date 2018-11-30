@@ -300,6 +300,9 @@
     <ClCompile Include="Castlevania\Models\Weapons\Dagger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Castlevania\Utilities\Subject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\pugixml.hpp">
@@ -638,9 +641,6 @@
     <ClInclude Include="Castlevania\Models\Systems\IReceiver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Castlevania\Models\Characters\Player\PlayerSettings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Castlevania\Models\Weapons\WhipSettings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -726,6 +726,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Castlevania\Models\Weapons\Dagger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Utilities\IObserver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Utilities\Subject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Scenes\SceneEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Settings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

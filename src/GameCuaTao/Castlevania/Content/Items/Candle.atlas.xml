@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Spritesheet TexturePath="Candle.png">
+    <Sprite ID="candle_01">
+      <SpriteFrame Left="0" Top="0" Width="16" Height="32" />
+    </Sprite>
+
+    <Sprite ID="candle_02">
+      <SpriteFrame Left="17" Top="0" Width="16" Height="32" />
+    </Sprite>
+  </Spritesheet>
+
+</GameContent>

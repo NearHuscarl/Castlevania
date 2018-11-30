@@ -4,6 +4,7 @@
 #include "Direct2DGame/Extensions/Tiled/TiledMap.h"
 #include "Direct2DGame/Extensions/Camera.h"
 #include "../Utilities/MapManager.h"
+#include "../Utilities/IObserver.h"
 #include "../Hud.h"
 
 namespace Castlevania
@@ -15,17 +16,21 @@ namespace Castlevania
 		GO_TO_CASTLE_TRANSITION,
 	};
 
-	class GameplayScene : public AbstractScene
+	class GameplayScene : public AbstractScene, public IObserver
 	{
 	public:
 		GameplayScene(SceneManager &sceneManager, ObjectFactory &objectFactory);
+
+		void OnNotify(Subject &subject, int event) override;
 
 		void LoadContent() override;
 		void Update(GameTime gameTime) override;
 		void Draw(GameTime gameTime) override;
 
+		~GameplayScene();
+
 	private:
-		GameState gameState;
+		GameState currentState;
 		ObjectFactory &objectFactory;
 
 		std::unique_ptr<MapManager> mapManager;
@@ -41,5 +46,6 @@ namespace Castlevania
 		void LoadMap(Map mapName);
 		void UpdateInput();
 		void UpdateGameplay(GameTime gameTime);
+		void UpdateGoToCastleTransition();
 	};
 }

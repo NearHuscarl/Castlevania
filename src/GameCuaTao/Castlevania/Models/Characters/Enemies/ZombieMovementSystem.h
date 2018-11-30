@@ -9,6 +9,8 @@ namespace Castlevania
 	{
 	public:
 		ZombieMovementSystem(Zombie &parent);
+
+		void Receive(int message) override;
 		void Update(GameTime gameTime) override;
 
 	private:

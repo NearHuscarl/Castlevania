@@ -17,5 +17,6 @@ namespace Castlevania
 
 	private:
 		GameObject &parent;
+		bool wasOnGround;
 	};
 }

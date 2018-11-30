@@ -1,14 +1,17 @@
 #include "Direct2DGame/Input/InputHelper.h"
 #include "Player.h"
-#include "PlayerSettings.h"
+#include "../../Settings.h"
 #include "../../Factories/ObjectCollection.h"
 
 using namespace Castlevania;
 
-constexpr auto LANDING_TIME = 400; // milliseconds
-constexpr auto FLASHING_TIME = 900; // milliseconds
-constexpr auto UNTOUCHABLE_TIME = 2000; // milliseconds
-constexpr auto BOUNCE_BACK_HEIGHT = 360.0f; // Simon bounce back's max height (when taking damage)
+// in milliseconds
+constexpr auto LANDING_TIME = 400;
+constexpr auto FLASHING_TIME = 900;
+constexpr auto UNTOUCHABLE_TIME = 2000;
+
+// Simon bounce back's max height (when taking damage)
+constexpr auto BOUNCE_BACK_HEIGHT = 360.0f;
 
 Player::Player() : GameObject{ EntityType::Player }
 {
@@ -141,7 +144,7 @@ void Player::UpdateSubWeapons(UpdateData &updateData)
 {
 	auto objectCollection = updateData.objectCollection;
 
-	if (objectCollection == nullptr || subWeapon == nullptr)
+	if (subWeapon == nullptr || objectCollection == nullptr)
 		return;
 
 	if (subWeapon->GetState() == RangedWeaponState::Flying)
@@ -360,7 +363,7 @@ bool Player::CanGoDownstairs()
 void Player::IdleOnGround()
 {
 	SetMoveState(MoveState::IDLE);
-	velocity.x = 0.0f;
+	velocity.x = 0;
 }
 
 void Player::DoThrow()

@@ -101,7 +101,7 @@ std::unique_ptr<Brazier> ObjectFactory::CreateBrazier(EntityType itemType, Vecto
 {
 	auto object = std::make_unique<Brazier>();
 
-	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*object, "Items/Fire_Pit.ani.xml");
+	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*object, "Items/Brazier.ani.xml");
 	auto item = CreatePowerup(itemType);
 	auto effect = effectManager->CreateFlameEffect();
 
@@ -121,10 +121,14 @@ std::unique_ptr<Zombie> ObjectFactory::CreateZombie(Vector2 position)
 	ReadEnemyConfig(*object.get(), "CharacterStats/Zombie.xml");
 
 	auto movementSystem = std::make_unique<ZombieMovementSystem>(*object);
+	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
+	auto responseSystem = std::make_unique<StaticResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*object, "Characters/Enemies/Zombie.ani.xml");
 
 	object->SetPosition(position);
 	object->Attach<IMovementSystem>(std::move(movementSystem));
+	object->Attach<ICollisionSystem>(std::move(collisionSystem));
+	object->Attach<ICollisionResponseSystem>(std::move(responseSystem));
 	object->Attach<IRenderingSystem>(std::move(renderingSystem));
 
 	object->LoadContent(content);

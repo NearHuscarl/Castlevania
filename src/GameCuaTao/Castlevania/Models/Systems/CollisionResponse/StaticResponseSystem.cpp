@@ -1,20 +1,18 @@
 #include "StaticResponseSystem.h"
 #include "../../GameObject.h"
+#include "../../Settings.h"
 
 using namespace Castlevania;
 
 StaticResponseSystem::StaticResponseSystem(GameObject &parent) : parent{ parent }
 {
+	wasOnGround = false;
 }
 
 void StaticResponseSystem::Update(ObjectCollection &objectCollection)
 {
 	auto collisionData = parent.GetBody().GetCollisionData();
-
-	if (collisionData.collisionResults.size() == 0)
-	{
-		return;
-	}
+	auto isOnGround = false;
 
 	for (auto result : collisionData.collisionResults)
 	{
@@ -23,6 +21,7 @@ void StaticResponseSystem::Update(ObjectCollection &objectCollection)
 		switch (type)
 		{
 			case EntityType::Boundary:
+			{
 				auto distance = parent.GetDistance();
 				auto time = collisionData.minTime;
 				auto normal = collisionData.minNormal;
@@ -31,15 +30,20 @@ void StaticResponseSystem::Update(ObjectCollection &objectCollection)
 				distance = distance * time + normal * 0.4f;
 				parent.SetDistance(distance);
 
-				auto velocity = parent.GetVelocity();
-
-				if (normal.x != 0)
-					velocity.x = 0;
-				if (normal.y != 0)
-					velocity.y = 0;
-
-				parent.SetVelocity(velocity);
+				if (result.direction == Direction::Top)
+					isOnGround = true;
 				break;
+			}
 		}
+	}
+
+	if (wasOnGround != isOnGround)
+	{
+		if (wasOnGround)
+			parent.SendMessageToSystems(START_FALLING);
+		else
+			parent.SendMessageToSystems(START_LANDING);
+
+		wasOnGround = isOnGround;
 	}
 }

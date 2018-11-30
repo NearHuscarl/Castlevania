@@ -13,12 +13,13 @@
 #include "EntityType.h"
 #include "Facing.h"
 #include "UpdateData.h"
+#include "../Utilities/Subject.h"
 
 namespace Castlevania
 {
 	struct ObjectCollection;
 
-	class GameObject : public IGameObject
+	class GameObject : public Subject, public IGameObject
 	{
 	public:
 		GameObject(EntityType type);
@@ -67,6 +68,8 @@ namespace Castlevania
 		virtual void Draw(SpriteExtensions &spriteBatch);
 		virtual void DrawBoundingBox(SpriteExtensions &spriteBatch); // For debugging purpose
 
+		void SendMessageToSystems(int message);
+
 		virtual ~GameObject();
 
 	protected:
@@ -85,7 +88,5 @@ namespace Castlevania
 		std::unique_ptr<ICollisionSystem> collisionSystem;
 		std::unique_ptr<ICollisionResponseSystem> collisionResponseSystem;
 		std::unique_ptr<IRenderingSystem> renderingSystem;
-
-		void SendMessageToSystems(int message);
 	};
 }

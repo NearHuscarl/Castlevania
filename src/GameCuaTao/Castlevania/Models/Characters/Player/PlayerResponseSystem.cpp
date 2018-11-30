@@ -1,6 +1,7 @@
 #include "PlayerResponseSystem.h"
-#include "PlayerSettings.h"
+#include "../../Settings.h"
 #include "../../../Models/Factories/ObjectCollection.h"
+#include "../../../Scenes/SceneEvent.h"
 
 using namespace Castlevania;
 
@@ -53,12 +54,14 @@ void PlayerResponseSystem::Update(ObjectCollection &objectCollection)
 
 void PlayerResponseSystem::PostProcess(ResponseResult responseResult)
 {
-	if (parent.isOnGround != responseResult.isOnGround && parent.isOnGround)
+	if (wasOnGround != responseResult.isOnGround)
 	{
-		parent.SendMessageToSystems(START_FALLING);
+		if (wasOnGround)
+			parent.SendMessageToSystems(START_FALLING);
+		
+		wasOnGround = responseResult.isOnGround;
 	}
 
-	parent.isOnGround = responseResult.isOnGround;
 	parent.nearbyStair = responseResult.stairTrigger;
 }
 
@@ -140,22 +143,6 @@ void PlayerResponseSystem::OnCollideWithBoundary(CollisionResult &result, Respon
 					break;
 			}
 			break;
-
-		case Direction::Bottom:
-			switch (parent.GetMoveState())
-			{
-				case MoveState::GOING_UPSTAIRS:
-				case MoveState::GOING_DOWNSTAIRS:
-				case MoveState::IDLE_UPSTAIRS:
-				case MoveState::IDLE_DOWNSTAIRS:
-					break;
-
-				default:
-					ClampDistance_Y(collisionData);
-					parent.SetVelocity_Y(0);
-					break;
-			}
-			break;
 	}
 }
 
@@ -166,41 +153,16 @@ void PlayerResponseSystem::OnCollideWithTrigger(CollisionResult &result, Respons
 	switch (trigger.GetTriggerType())
 	{
 		case TriggerType::STAIR_UP:
-			{
-				responseResult.stairTrigger = &trigger;
-				auto triggerBbox = trigger.GetBoundingBox();
-
-				// -2: change to idle state when barely hit the floor to make the transition smoother
-				if (parent.GetBoundingBox().bottom >= triggerBbox.bottom - 2
-					&& (parent.moveState == MoveState::GOING_DOWNSTAIRS || parent.moveState == MoveState::IDLE_DOWNSTAIRS))
-				{
-					parent.IdleOnGround();
-
-					auto offsetBottom = parent.GetFrameRect().bottom - parent.GetBoundingBox().bottom;
-					// TODO: why 1 extra pixel?
-					parent.position.y = trigger.GetBoundingBox().bottom - parent.GetFrameRect().Height() + offsetBottom - 1;
-					parent.SetDistance_Y(0);
-				}
-				break;
-			}
+			OnCollideWithStairUpTrigger(trigger, responseResult);
+			break;
 
 		case TriggerType::STAIR_DOWN:
-			{
-				responseResult.stairTrigger = &trigger;
-				auto triggerBbox = trigger.GetBoundingBox();
+			OnCollideWithStairDownTrigger(trigger, responseResult);
+			break;
 
-				if (parent.GetBoundingBox().bottom <= triggerBbox.bottom
-					&& (parent.moveState == MoveState::GOING_UPSTAIRS || parent.moveState == MoveState::IDLE_UPSTAIRS))
-				{
-					parent.IdleOnGround();
-
-					auto offsetBottom = parent.GetFrameRect().bottom - parent.GetBoundingBox().bottom;
-					// TODO: why 1 extra pixel?
-					parent.position.y = trigger.GetBoundingBox().bottom - parent.GetFrameRect().Height() + offsetBottom + 1;
-					parent.SetDistance_Y(0);
-				}
-				break;
-			}
+		case TriggerType::CASTLE_ENTRANCE:
+			OnCollideWithCastleEntranceTrigger();
+			break;
 	}
 }
 
@@ -249,4 +211,44 @@ void PlayerResponseSystem::OnCollideWithDaggerItem(CollisionResult &result, Obje
 	
 	daggerItem.Destroy();
 	parent.SetSubWeapon(itemType);
+}
+
+void PlayerResponseSystem::OnCollideWithStairUpTrigger(Trigger &trigger, ResponseResult &responseResult)
+{
+	responseResult.stairTrigger = &trigger;
+	auto triggerBbox = trigger.GetBoundingBox();
+
+	// -2: change to idle state when barely hit the floor to make the transition smoother
+	if (parent.GetBoundingBox().bottom >= triggerBbox.bottom - 2
+		&& (parent.moveState == MoveState::GOING_DOWNSTAIRS || parent.moveState == MoveState::IDLE_DOWNSTAIRS))
+	{
+		parent.IdleOnGround();
+
+		auto offsetBottom = parent.GetFrameRect().bottom - parent.GetBoundingBox().bottom;
+		// TODO: why 1 extra pixel?
+		parent.position.y = trigger.GetBoundingBox().bottom - parent.GetFrameRect().Height() + offsetBottom - 1;
+		parent.SetDistance_Y(0);
+	}
+}
+
+void PlayerResponseSystem::OnCollideWithStairDownTrigger(Trigger &trigger, ResponseResult &responseResult)
+{
+	responseResult.stairTrigger = &trigger;
+	auto triggerBbox = trigger.GetBoundingBox();
+
+	if (parent.GetBoundingBox().bottom <= triggerBbox.bottom
+		&& (parent.moveState == MoveState::GOING_UPSTAIRS || parent.moveState == MoveState::IDLE_UPSTAIRS))
+	{
+		parent.IdleOnGround();
+
+		auto offsetBottom = parent.GetFrameRect().bottom - parent.GetBoundingBox().bottom;
+		// TODO: why 1 extra pixel?
+		parent.position.y = trigger.GetBoundingBox().bottom - parent.GetFrameRect().Height() + offsetBottom;
+		parent.SetDistance_Y(0);
+	}
+}
+
+void PlayerResponseSystem::OnCollideWithCastleEntranceTrigger()
+{
+	parent.Notify(GO_TO_CASTLE);
 }

@@ -2,12 +2,12 @@
 
 <GameContent>
 
-  <Spritesheet TexturePath="Fire_Pit.png">
-    <Sprite ID="fire_pit_01">
+  <Spritesheet TexturePath="Brazier.png">
+    <Sprite ID="brazier_01">
       <SpriteFrame Left="0" Top="0" Width="32" Height="64" />
     </Sprite>
 
-    <Sprite ID="fire_pit_02">
+    <Sprite ID="brazier_02">
       <SpriteFrame Left="32" Top="0" Width="32" Height="64" />
     </Sprite>
   </Spritesheet>

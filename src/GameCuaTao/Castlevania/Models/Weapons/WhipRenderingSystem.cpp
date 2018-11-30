@@ -74,9 +74,9 @@ void WhipRenderingSystem::OnEnabledChanged()
 void WhipRenderingSystem::UpdatePositionRelativeToPlayer()
 {
 	auto &player = parent.GetOwner();
-	auto currentFrameIndex = GetSprite().GetCurrentAnimation().GetCurrentFrameIndex();
 	auto playerBbox = player.GetBoundingBox();
 	auto whipBbox = this->GetBoundingBox();
+	auto currentFrameIndex = GetSprite().GetCurrentAnimation().GetCurrentFrameIndex();
 	auto newPosition = Vector2{};
 
 	if (parent.GetFacing() == Facing::Right)

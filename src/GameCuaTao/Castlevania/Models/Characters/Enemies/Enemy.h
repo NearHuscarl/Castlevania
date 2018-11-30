@@ -14,6 +14,8 @@ namespace Castlevania
 		void SetAttack(int attack);
 		void SetExp(int exp);
 
+		void Update(GameTime gameTime, UpdateData &updateData);
+
 	private:
 		int health;
 		int attack;

@@ -1,6 +1,7 @@
 #include "Direct2DGame/Input/InputHelper.h"
 #include "GameplayScene.h"
 #include "SceneManager.h"
+#include "SceneEvent.h"
 
 using namespace Castlevania;
 
@@ -17,6 +18,25 @@ GameplayScene::GameplayScene(SceneManager &sceneManager, ObjectFactory &objectFa
 	mapManager->SetWorldPosition(Vector2{ 0, (float)hud->GetHeight() });
 
 	player = objectFactory.CreatePlayer();
+	player->AddObserver(*this);
+}
+
+void GameplayScene::OnNotify(Subject &subject, int event)
+{
+	switch (event)
+	{
+		case GO_TO_CASTLE:
+			currentState = GameState::GO_TO_CASTLE_TRANSITION;
+			break;
+
+		case NEXT_ROOM:
+			currentState = GameState::NEXT_ROOM_TRANSITION;
+			break;
+
+		case TRANSITION_COMPLETED:
+			currentState = GameState::PLAYING;
+			break;
+	}
 }
 
 void GameplayScene::LoadContent()
@@ -34,20 +54,25 @@ void GameplayScene::Update(GameTime gameTime)
 {
 	UpdateInput();
 
-	switch (gameState)
+	switch (currentState)
 	{
 		case GameState::PLAYING:
 			UpdateGameplay(gameTime);
 			break;
 
+		case GameState::GO_TO_CASTLE_TRANSITION:
+			UpdateGoToCastleTransition();
+			break;
+
 		case GameState::NEXT_ROOM_TRANSITION:
-			// - Simon go to door
-			//	- Viewport move to middle
-			//	- Door open
-			//	- Simon go through door
-			//	- Door close
-			//	- Viewport move to right
-			//player->GetData().stage++;
+			// - Viewport stays still
+			// - Simon goes next to the door
+			//	- Viewport moves to the middle
+			//	- Door opens
+			//	- Simon goes through door
+			//	- Door closes
+			//	- Viewport moves to the right
+			// - stage++
 			break;
 	}
 }
@@ -63,8 +88,8 @@ void GameplayScene::Draw(GameTime gameTime)
 
 	for (auto const &entity : objectCollection.entities)
 	{
-		entity->DrawBoundingBox(spriteBatch); // NOTE: remove
 		entity->Draw(spriteBatch);
+		entity->DrawBoundingBox(spriteBatch); // NOTE: remove
 	}
 
 	for (auto const &trigger : objectCollection.triggers)
@@ -72,8 +97,8 @@ void GameplayScene::Draw(GameTime gameTime)
 		trigger->Draw(spriteBatch);
 	}
 
-	player->DrawBoundingBox(spriteBatch); // NOTE: remove
 	player->Draw(spriteBatch);
+	player->DrawBoundingBox(spriteBatch); // NOTE: remove
 
 	spriteBatch.End();
 }
@@ -117,9 +142,11 @@ void GameplayScene::UpdateInput()
 			player->SetPosition(locations["Checkpoint_04"]);
 		else if (InputHelper::IsKeyDown(DIK_5))
 			player->SetPosition(locations["Checkpoint_05"]);
+		else if (InputHelper::IsKeyDown(DIK_6))
+			player->SetPosition(locations["Checkpoint_06"]);
 		else if (InputHelper::IsKeyDown(DIK_NUMPAD1))
 		{
-			auto object = objectFactory.CreateZombie(locations["Checkpoint_06"]);
+			auto object = objectFactory.CreateZombie(locations["Checkpoint_05"]);
 			object->WalkRight();
 			objectCollection.entities.push_back(std::move(object));
 		}
@@ -163,4 +190,15 @@ void GameplayScene::UpdateGameplay(GameTime gameTime)
 	}
 
 	objectCollection.RemoveDeadObjects();
+}
+
+void GameplayScene::UpdateGoToCastleTransition()
+{
+	//auto originalSpeed = player->Get
+	//player->SetSpeed();
+}
+
+GameplayScene::~GameplayScene()
+{
+	player->RemoveObserver(*this);
 }

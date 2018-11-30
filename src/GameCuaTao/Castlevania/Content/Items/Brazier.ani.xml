@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Animations AtlasPath="Brazier.atlas.xml">
+    <Animation Name="Fire" DefaultTime="200" IsLooping="True">
+      <Frame SpriteID="brazier_01" />
+      <Frame SpriteID="brazier_02" />
+    </Animation>
+  </Animations>
+
+</GameContent>
