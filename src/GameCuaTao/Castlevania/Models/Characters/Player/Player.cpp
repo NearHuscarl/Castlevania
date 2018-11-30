@@ -147,7 +147,7 @@ void Player::UpdateSubWeapons(UpdateData &updateData)
 	if (subWeapon == nullptr || objectCollection == nullptr)
 		return;
 
-	if (subWeapon->GetState() == RangedWeaponState::Flying)
+	if (subWeapon->GetBody().Enabled()) // weapon is flying and active
 		objectCollection->entities.push_back(std::move(subWeapon));
 }
 

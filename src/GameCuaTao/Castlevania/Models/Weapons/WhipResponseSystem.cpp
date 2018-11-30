@@ -1,6 +1,7 @@
 #include "WhipResponseSystem.h"
 #include "../../Models/Factories/ObjectCollection.h"
 #include "../Items/Brazier.h"
+#include "../Characters/Enemies/Zombie.h"
 
 using namespace Castlevania;
 
@@ -24,6 +25,10 @@ void WhipResponseSystem::Update(ObjectCollection &objectCollection)
 			case EntityType::Brazier:
 				OnCollideWithBrazier(result, objectCollection);
 				break;
+
+			case EntityType::Zombie:
+				OnCollideWithZombie(result);
+				break;
 		}
 	}
 }
@@ -32,5 +37,13 @@ void WhipResponseSystem::OnCollideWithBrazier(CollisionResult &result, ObjectCol
 {
 	auto &brazier = dynamic_cast<Brazier&>(result.collidedObject);
 
+	objectCollection.entities.push_back(brazier.SpawnItem());
 	brazier.OnBeingHit();
+}
+
+void WhipResponseSystem::OnCollideWithZombie(CollisionResult &result)
+{
+	auto &zombie = dynamic_cast<Zombie&>(result.collidedObject);
+
+	zombie.TakeDamage(parent.GetAttack());
 }

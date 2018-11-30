@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../GameObject.h"
+#include "../../../Effects/IEffect.h"
 
 namespace Castlevania
 {
@@ -14,7 +15,8 @@ namespace Castlevania
 		void SetAttack(int attack);
 		void SetExp(int exp);
 
-		void Update(GameTime gameTime, UpdateData &updateData);
+		void Update(GameTime gameTime, UpdateData &updateData) override;
+		void TakeDamage(int damage);
 
 	private:
 		int health;

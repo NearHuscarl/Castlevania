@@ -33,5 +33,16 @@ void Enemy::Update(GameTime gameTime, UpdateData &updateData)
 	auto viewport = updateData.viewport;
 
 	if (!viewport.Bounds().TouchesOrIntersects(GetFrameRect()))
-		isDestroyed = true;
+		state = ObjectState::DEAD;
+}
+
+void Enemy::TakeDamage(int damage)
+{
+	health -= damage;
+
+	if (health <= 0)
+	{
+		SetState(ObjectState::DYING);
+		body.Enabled(false);
+	}
 }

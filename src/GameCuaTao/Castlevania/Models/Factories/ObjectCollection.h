@@ -25,7 +25,7 @@ namespace Castlevania
 			{
 				auto &entity = entities[i];
 
-				if (entity->IsDestroyed())
+				if (entity->GetState() == ObjectState::DEAD)
 					entities.erase(entities.begin() + i);
 			}
 		}

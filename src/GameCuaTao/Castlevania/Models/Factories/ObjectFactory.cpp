@@ -4,11 +4,13 @@
 #include "../Systems/Movement/SimpleMovementSystem.h"
 #include "../Systems/Collision/CollisionSystem.h"
 #include "../Systems/Collision/EntityCollisionSystem.h"
+#include "../Systems/Collision/SimpleCollisionSystem.h"
 #include "../Systems/Collision/StaticCollisionSystem.h"
 #include "../Systems/Collision/StandardCollisionSystem.h"
 #include "../Systems/CollisionResponse/StaticResponseSystem.h"
 #include "../Systems/Rendering/SpriteRenderingSystem.h"
 #include "../Systems/Rendering/AnimationRenderingSystem.h"
+#include "../Systems/Rendering/EntityRenderingSystem.h"
 #include "../Characters/Player/Controller.h"
 #include "../Characters/Player/PlayerMovementSystem.h"
 #include "../Characters/Player/PlayerCollisionSystem.h"
@@ -101,14 +103,14 @@ std::unique_ptr<Brazier> ObjectFactory::CreateBrazier(EntityType itemType, Vecto
 {
 	auto object = std::make_unique<Brazier>();
 
-	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*object, "Items/Brazier.ani.xml");
+	auto renderingSystem = std::make_unique<EntityRenderingSystem>(
+		*object, "Items/Brazier.ani.xml", effectManager->CreateFlameEffect());
 	auto item = CreatePowerup(itemType);
 	auto effect = effectManager->CreateFlameEffect();
 
 	object->SetPosition(position);
 	object->Attach<IRenderingSystem>(std::move(renderingSystem));
 	object->SetSpawnedItem(std::move(item));
-	object->SetHitEffect(std::move(effect));
 	object->LoadContent(content);
 	
 	return object;
@@ -123,7 +125,8 @@ std::unique_ptr<Zombie> ObjectFactory::CreateZombie(Vector2 position)
 	auto movementSystem = std::make_unique<ZombieMovementSystem>(*object);
 	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<StaticResponseSystem>(*object);
-	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*object, "Characters/Enemies/Zombie.ani.xml");
+	auto renderingSystem = std::make_unique<EntityRenderingSystem>(
+		*object, "Characters/Enemies/Zombie.ani.xml", effectManager->CreateFlameEffect());
 
 	object->SetPosition(position);
 	object->Attach<IMovementSystem>(std::move(movementSystem));
@@ -140,7 +143,7 @@ std::unique_ptr<Whip> ObjectFactory::CreateWhip(GameObject &gameObject)
 {
 	auto object = std::make_unique<Whip>(gameObject);
 
-	auto collisionSystem = std::make_unique<EntityCollisionSystem>(*object);
+	auto collisionSystem = std::make_unique<SimpleCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<WhipResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<WhipRenderingSystem>(*object, "Items/Whip.ani.xml");
 
@@ -157,7 +160,7 @@ std::unique_ptr<Whip> ObjectFactory::CreateFlashingWhip(GameObject &gameObject)
 {
 	auto object = std::make_unique<Whip>(gameObject);
 
-	auto collisionSystem = std::make_unique<EntityCollisionSystem>(*object);
+	auto collisionSystem = std::make_unique<SimpleCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<WhipResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<WhipFlashingRenderingSystem>(*object, "Items/Whip.ani.xml");
 

@@ -57,6 +57,8 @@ void WhipRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 
 void WhipRenderingSystem::OnEnabledChanged()
 {
+	UpdatePositionRelativeToPlayer();
+
 	auto enabled = parent.GetBody().Enabled();
 	auto level = MathHelper::Min(parent.GetLevel(), 2);
 
@@ -66,9 +68,7 @@ void WhipRenderingSystem::OnEnabledChanged()
 		sprite->Play("Whip_level_0" + std::to_string(level));
 	}
 	else
-	{
 		sprite->GetCurrentAnimation().Reset();
-	}
 }
 
 void WhipRenderingSystem::UpdatePositionRelativeToPlayer()

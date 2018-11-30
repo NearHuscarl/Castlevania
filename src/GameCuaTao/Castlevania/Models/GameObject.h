@@ -19,12 +19,22 @@ namespace Castlevania
 {
 	struct ObjectCollection;
 
+	enum class ObjectState
+	{
+		NORMAL,
+		DYING,
+		DEAD,
+	};
+
 	class GameObject : public Subject, public IGameObject
 	{
 	public:
 		GameObject(EntityType type);
 
 		int GetType() override;
+
+		void SetState(ObjectState state);
+		ObjectState GetState();
 
 		Vector2 GetPosition();
 		void SetPosition(float x, float y);
@@ -48,14 +58,13 @@ namespace Castlevania
 		virtual RectF GetFrameRect();
 		virtual RectF GetBoundingBox();
 
-		Sprite &GetSprite();
+		Sprite *GetSprite();
 		Facing GetFacing();
 		virtual void SetFacing(Facing facing);
 		virtual void SetVisibility(bool value);
 
 		Body &GetBody() override;
 		void Destroy();
-		bool IsDestroyed();
 
 		void Move(Vector2 direction);
 		void SwitchFacing();
@@ -74,12 +83,12 @@ namespace Castlevania
 
 	protected:
 		EntityType type;
+		ObjectState state;
 		Vector2 position;
 		Vector2 velocity;
 		float speed;
 		Facing facing;
 		Body body;
-		bool isDestroyed;
 
 		std::vector<IReceiver*> components;
 

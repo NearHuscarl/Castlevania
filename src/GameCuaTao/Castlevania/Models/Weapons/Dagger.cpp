@@ -13,5 +13,5 @@ void Dagger::Update(GameTime gameTime, UpdateData &updateData)
 	auto viewport = updateData.viewport;
 
 	if (!viewport.Bounds().TouchesOrIntersects(GetFrameRect()))
-		isDestroyed = true;
+		state = ObjectState::DEAD;
 }

@@ -1,7 +1,8 @@
 ﻿#include "Direct2DGame/MathHelper.h"
 #include "Direct2DGame/Input/Keyboard.h"
-#include "../Utilities/SpriteHelper.h"
 #include "GameObject.h"
+#include "Settings.h"
+#include "../Utilities/SpriteHelper.h"
 
 using namespace Castlevania;
 
@@ -15,6 +16,17 @@ GameObject::GameObject(EntityType type) : body{ *this }
 int GameObject::GetType()
 {
 	return (int)type;
+}
+
+void GameObject::SetState(ObjectState state)
+{
+	this->state = state;
+	SendMessageToSystems(STATE_CHANGED);
+}
+
+ObjectState GameObject::GetState()
+{
+	return state;
 }
 
 Vector2 GameObject::GetPosition()
@@ -108,20 +120,23 @@ void GameObject::SetSpeed(float speed)
 
 RectF GameObject::GetFrameRect()
 {
-	return GetSprite().GetFrameRectangle(position);
+	if (GetSprite() == nullptr)
+		return RectF::Empty();
+
+	return GetSprite()->GetFrameRectangle(position);
 }
 
 RectF GameObject::GetBoundingBox()
 {
-	if (!body.Enabled())
+	if (!body.Enabled() || GetSprite() == nullptr)
 		return RectF::Empty();
 
-	return GetSprite().GetBoundingRectangle(position);
+	return GetSprite()->GetBoundingRectangle(position);
 }
 
-Sprite &GameObject::GetSprite()
+Sprite *GameObject::GetSprite()
 {
-	return renderingSystem->GetSprite();
+	return &renderingSystem->GetSprite();
 }
 
 Facing GameObject::GetFacing()
@@ -133,15 +148,21 @@ void GameObject::SetFacing(Facing facing)
 {
 	this->facing = facing;
 
+	if (GetSprite() == nullptr)
+		return;
+
 	if (facing == Facing::Left)
-		GetSprite().SetEffect(SpriteEffects::FlipHorizontally);
+		GetSprite()->SetEffect(SpriteEffects::FlipHorizontally);
 	else
-		GetSprite().SetEffect(SpriteEffects::None);
+		GetSprite()->SetEffect(SpriteEffects::None);
 }
 
 void GameObject::SetVisibility(bool value)
 {
-	GetSprite().SetVisibility(value);
+	if (GetSprite() == nullptr)
+		return;
+
+	GetSprite()->SetVisibility(value);
 }
 
 Body &Castlevania::GameObject::GetBody()
@@ -151,12 +172,7 @@ Body &Castlevania::GameObject::GetBody()
 
 void GameObject::Destroy()
 {
-	isDestroyed = true;
-}
-
-bool GameObject::IsDestroyed()
-{
-	return isDestroyed;
+	state = ObjectState::DEAD;
 }
 
 void GameObject::Move(Vector2 direction)

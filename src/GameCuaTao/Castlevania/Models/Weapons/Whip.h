@@ -13,6 +13,7 @@ namespace Castlevania
 		Whip(GameObject &owner);
 
 		int GetLevel();
+		int GetAttack();
 		GameObject &GetOwner();
 		void SetFacing(Facing facing) override;
 
@@ -24,7 +25,6 @@ namespace Castlevania
 
 	private:
 		GameObject &owner;
-		int level; // 1, 2, 3
-		int hitPoint;
+		int level; // lvl 1-3
 	};
 }

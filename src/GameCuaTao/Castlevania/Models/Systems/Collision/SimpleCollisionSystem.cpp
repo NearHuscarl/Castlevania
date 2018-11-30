@@ -1,10 +1,10 @@
 #include "SimpleCollisionSystem.h"
 #include "../../GameObject.h"
-#include "../../../Factories/ObjectCollection.h"
+#include "../../../Models/Factories/ObjectCollection.h"
 
 using namespace Castlevania;
 
-SimpleCollisionSystem::SimpleCollisionSystem(GameObject &parent) : parent{ parent }
+SimpleCollisionSystem::SimpleCollisionSystem(GameObject &parent) : CollisionSystem{ parent }
 {
 }
 
@@ -18,36 +18,20 @@ void SimpleCollisionSystem::Update(ObjectCollection &objectCollection)
 		return;
 	}
 
-	auto results = CollisionResults{};
+	auto results = std::vector<CollisionResult>{};
 	auto &boundaries = objectCollection.boundaries;
 	auto &entities = objectCollection.entities;
 
 	for (auto &boundary : boundaries)
 	{
-		CalculateCollision(*boundary, results);
+		CalculateStaticCollision(*boundary, results);
 	}
 
 	for (auto &entity : entities)
 	{
-		CalculateCollision(*entity, results);
+		CalculateStaticCollision(*entity, results);
 	}
 
-	auto collisionData = CollisionData{ results };
-
-	body.SetCollisionData(collisionData);
-}
-
-void SimpleCollisionSystem::CalculateCollision(GameObject &gameObject, CollisionResults &results)
-{
-	auto body = gameObject.GetBody();
-
-	if (!body.Enabled())
-		return;
-
-	auto objectBoundingBox = gameObject.GetBoundingBox();
-
-	if (parent.GetBoundingBox().TouchesOrIntersects(objectBoundingBox))
-	{
-		results.push_back(CollisionResult{ 0, Direction::None, gameObject });
-	}
+	// TODO: do we need to sort?
+	body.SetCollisionData(FilterCollision(results));
 }

@@ -5,11 +5,11 @@
 
 using namespace Castlevania;
 
-const auto HITPOINTS = std::map<int, int> // TODO: do we need hitpoint?
+const auto HITPOINTS = std::map<int, int>
 {
-	{ 1, 100 },
-	{ 2, 200 },
-	{ 3, 300 },
+	{ 1, 1 },
+	{ 2, 2 },
+	{ 3, 2 },
 };
 
 Whip::Whip(GameObject &owner) :
@@ -22,6 +22,11 @@ Whip::Whip(GameObject &owner) :
 int Whip::GetLevel()
 {
 	return level;
+}
+
+int Whip::GetAttack()
+{
+	return HITPOINTS.at(level);
 }
 
 GameObject &Whip::GetOwner()

@@ -1,4 +1,3 @@
-#include "Direct2DGame/MathHelper.h"
 #include "CollisionSystem.h"
 #include "../../IGameObject.h"
 #include "../../../Models/Factories/ObjectCollection.h"

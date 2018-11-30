@@ -17,5 +17,6 @@ namespace Castlevania
 		Whip &parent;
 
 		void OnCollideWithBrazier(CollisionResult &result, ObjectCollection &objectCollection);
+		void OnCollideWithZombie(CollisionResult &result);
 	};
 }
