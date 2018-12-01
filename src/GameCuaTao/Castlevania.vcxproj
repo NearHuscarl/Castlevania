@@ -187,6 +187,7 @@
     <ClCompile Include="Castlevania\Models\Weapons\WhipRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\WhipResponseSystem.cpp" />
     <ClCompile Include="Castlevania\Effects\EffectFactory.cpp" />
+    <ClCompile Include="Castlevania\Scenes\Stages\GreatHallStage.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\PlaygroundStage.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\Stage.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\CourtyardStage.cpp" />
@@ -303,6 +304,7 @@
     <ClInclude Include="Castlevania\Models\Weapons\WhipSettings.h" />
     <ClInclude Include="Castlevania\Effects\EffectFactory.h" />
     <ClInclude Include="Castlevania\Effects\IEffect.h" />
+    <ClInclude Include="Castlevania\Scenes\Stages\GreatHallStage.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\StageEvent.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\PlaygroundStage.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\Stage.h" />
@@ -313,6 +315,7 @@
     <ClInclude Include="Castlevania\Utilities\SpriteHelper.h" />
     <ClInclude Include="Castlevania\Utilities\Subject.h" />
     <ClInclude Include="Castlevania\Utilities\Timer.h" />
+    <ClInclude Include="Castlevania\Utilities\TypeConverter.h" />
     <ClInclude Include="Direct2DGame\Content\SpritesheetReader.h" />
     <ClInclude Include="Direct2DGame\Extensions\Collisions\Body\Body.h" />
     <ClInclude Include="Direct2DGame\Extensions\Collisions\Body\CollisionData.h" />

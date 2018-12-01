@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="88" height="6" tilewidth="64" tileheight="64" infinite="0" nextlayerid="5" nextobjectid="8">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="88" height="6" tilewidth="64" tileheight="64" infinite="0" nextlayerid="5" nextobjectid="9">
+ <tileset firstgid="1" source="../Simon.tsx"/>
  <imagelayer id="2" name="Background">
   <image source="Great_Hall.png" width="5632" height="365"/>
  </imagelayer>
@@ -11,6 +12,7 @@
   <object id="5" name="Platform" type="Boundary" x="2784" y="128" width="544" height="32"/>
   <object id="6" name="Platform" type="Boundary" x="3328" y="192" width="96" height="32"/>
   <object id="7" name="Platform" type="Boundary" x="3200" y="320" width="384" height="32"/>
+  <object id="8" name="Checkpoint" type="Position" gid="4" x="14" y="319.667" width="60" height="66"/>
  </objectgroup>
  <objectgroup id="4" name="Entites"/>
  <layer id="1" name="TileLayer01" width="88" height="6">

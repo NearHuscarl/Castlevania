@@ -44,6 +44,7 @@
   <object id="44" name="Castle" type="Object" gid="47" x="1408" y="288" width="96" height="288">
    <properties>
     <property name="Foreground" value="True"/>
+    <property name="Visibility" value="False"/>
    </properties>
   </object>
   <object id="45" name="DirtBlock" type="Object" gid="46" x="1248" y="320" width="32" height="32">
@@ -63,7 +64,11 @@
  <objectgroup id="9" name="Triggers">
   <object id="37" name="MoneyBagTrigger" type="Trigger" x="1424" y="278" width="32" height="10"/>
   <object id="21" name="CastleEntrance" type="Trigger" x="1376" y="278" width="32" height="10"/>
-  <object id="42" name="NextMap" type="Trigger" x="1472" y="256" width="32" height="32"/>
+  <object id="42" name="NextMap" type="Trigger" x="1472" y="256" width="32" height="32">
+   <properties>
+    <property name="Map" value="GreatHall"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="8" name="Locations">
   <object id="14" name="Checkpoint" type="Position" gid="4" x="1200" y="288" width="60" height="66"/>

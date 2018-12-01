@@ -14,21 +14,34 @@ void CourtyardStage::OnNotify(Subject &subject, int event)
 {
 	switch (event)
 	{
-		//case NEXT_ROOM:
-		//	currentState = CourtyardState::NEXT_ROOM_TRANSITION;
-		//	break;
-
-		//case NEXT_MAP:
-		//	currentState = CourtyardStage::NEXT_ROOM_TRANSITION;
-		//	break;
-
-		case TRANSITION_COMPLETED:
-			currentState = GameState::PLAYING;
+		case NEXT_MAP_CUTSCENE_STARTED:
+			SetupNextMapCutscene();
 			break;
 
-		case GO_TO_CASTLE:
-			SetupGoToCastleTransition();
+		case NEXT_MAP_CUTSCENE_ENDED:
+			player->SetSpeed(playerOriginalSpeed);
 			break;
+
+		case GO_TO_CASTLE_CUTSCENE_STARTED:
+			SetupGoToCastleCutscene();
+			break;
+	}
+}
+
+void CourtyardStage::Initialize()
+{
+	Stage::Initialize();
+
+	for (auto &object : objectCollection.triggers)
+	{
+		if (object->GetTriggerType() == TriggerType::CASTLE_ENTRANCE)
+			entranceTrigger = object.get();
+	}
+
+	for (auto &object : objectCollection.foregroundObjects)
+	{
+		if ((EntityType)object->GetType() == EntityType::Castle)
+			castle = object.get();
 	}
 }
 
@@ -42,35 +55,43 @@ void CourtyardStage::Update(GameTime gameTime)
 			UpdateGameplay(gameTime);
 			break;
 
-		//case CourtyardStage::NEXT_ROOM_CUTSCENE:
-		//	// - Viewport stays still
-		//	// - Simon goes next to the door
-		//	//	- Viewport moves to the middle
-		//	//	- Door opens
-		//	//	- Simon goes through door
-		//	//	- Door closes
-		//	//	- Viewport moves to the right
-		//	// - stage++
-		//	break;
+		case GameState::NEXT_MAP_CUTSCENE:
+			UpdateNextMapCutscene(gameTime);
+			break;
 
 		case GameState::GO_TO_CASTLE_CUTSCENE:
 			// Simon go to castle in courtyard map
-			UpdateGoToCastleTransition(gameTime);
+			UpdateGoToCastleCutscene(gameTime);
 			break;
 	}
 }
 
-void CourtyardStage::UpdateGoToCastleTransition(GameTime gameTime)
+void CourtyardStage::UpdateGoToCastleCutscene(GameTime gameTime)
 {
 	UpdateGameObjects(gameTime);
+
+	auto aLittleBit = 5.0f;
+
+	if (player->GetBoundingBox().right <= entranceTrigger->GetBoundingBox().right - aLittleBit)
+	{
+		if (player->GetFacing() == Facing::Left)
+			player->WalkRight();
+		
+		castle->SetVisibility(true);
+	}
 }
 
-void CourtyardStage::SetupGoToCastleTransition()
+void CourtyardStage::SetupGoToCastleCutscene()
 {
 	playerOriginalSpeed = player->GetSpeed();
-	player->SetSpeed(playerOriginalSpeed / 2);
+
+	player->SetSpeed(playerOriginalSpeed / 3);
 	player->EnableControl(false);
-	player->WalkRight();
+
+	if (player->GetBoundingBox().right <= entranceTrigger->GetBoundingBox().right)
+		player->WalkRight();
+	else
+		player->WalkLeft();
 
 	currentState = GameState::GO_TO_CASTLE_CUTSCENE;
 }

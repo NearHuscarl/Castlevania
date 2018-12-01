@@ -1,6 +1,7 @@
 #include "GameplayScene.h"
 #include "SceneManager.h"
 #include "Stages/CourtyardStage.h"
+#include "Stages/GreatHallStage.h"
 #include "Stages/PlaygroundStage.h"
 
 using namespace Castlevania;
@@ -27,6 +28,11 @@ MapManager &GameplayScene::GetMapManager()
 	return *mapManager;
 }
 
+Sprite &GameplayScene::GetCutsceneBackground()
+{
+	return *cutsceneBackground;
+}
+
 std::shared_ptr<Player> GameplayScene::GetPlayer()
 {
 	return player;
@@ -48,6 +54,9 @@ void GameplayScene::LoadContent()
 
 	mapManager->LoadContent(content);
 	hud->LoadContent(content);
+
+	auto cutsceneBgTexture = content.Load<Texture>("Textures/Cutscene_Background.png");
+	cutsceneBackground = std::make_unique<Sprite>(cutsceneBgTexture);
 
 	currentStage = ConstructStage(Map::COURTYARD);
 	currentStage->Initialize();
@@ -77,6 +86,9 @@ std::unique_ptr<Stage> GameplayScene::ConstructStage(Map map)
 	{
 		case Map::COURTYARD:
 			return std::make_unique<CourtyardStage>(*this);
+
+		case Map::GREAT_HALL:
+			return std::make_unique<GreatHallStage>(*this);
 
 		case Map::PLAYGROUND:
 			return std::make_unique<PlaygroundStage>(*this);

@@ -13,6 +13,14 @@ namespace Castlevania
 {
 	class GameplayScene;
 
+	enum class GameState
+	{
+		PLAYING,
+		NEXT_MAP_CUTSCENE,
+		NEXT_ROOM_CUTSCENE,
+		GO_TO_CASTLE_CUTSCENE,
+	};
+
 	class Stage : public IObserver
 	{
 	public:
@@ -22,7 +30,7 @@ namespace Castlevania
 
 		UpdateData GetUpdateData();
 
-		void Initialize();
+		virtual void Initialize();
 		virtual void Update(GameTime gameTime);
 		virtual void Draw(SpriteExtensions &spriteBatch);
 
@@ -31,7 +39,8 @@ namespace Castlevania
 	protected:
 		GameplayScene &gameplayScene;
 		ObjectFactory &objectFactory;
-		Map mapName;
+		GameState currentState;
+		Map currentMap;
 
 		std::shared_ptr<TiledMap> map;
 		std::unique_ptr<Camera> camera;
@@ -44,5 +53,16 @@ namespace Castlevania
 		virtual void UpdateInput();
 		void UpdateGameObjects(GameTime gameTime);
 		void UpdateGameplay(GameTime gameTime);
+
+		void DrawGameplay(SpriteExtensions &spriteBatch);
+		void DrawNextMapCutscene(SpriteExtensions &spriteBatch);
+		void DrawCutscene(SpriteExtensions &spriteBatch);
+
+		// Common cutscenes setup and update methods
+		void SetupNextMapCutscene();
+		void UpdateNextMapCutscene(GameTime gameTime);
+
+	private:
+		Stopwatch nextMapTimer;
 	};
 }

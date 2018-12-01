@@ -256,7 +256,7 @@ void PlayerResponseSystem::OnCollideWithNextMapTrigger(Trigger &trigger)
 {
 	if (trigger.Enabled())
 	{
-		parent.Notify(NEXT_MAP);
+		parent.Notify(NEXT_MAP_CUTSCENE_STARTED);
 		trigger.Enabled(false);
 	}
 }
@@ -265,7 +265,7 @@ void PlayerResponseSystem::OnCollideWithCastleEntranceTrigger(Trigger &trigger)
 {
 	if (trigger.Enabled())
 	{
-		parent.Notify(GO_TO_CASTLE);
+		parent.Notify(GO_TO_CASTLE_CUTSCENE_STARTED);
 		trigger.Enabled(false);
 	}
 }

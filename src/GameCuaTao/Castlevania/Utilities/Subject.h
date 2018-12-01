@@ -11,6 +11,8 @@ namespace Castlevania
 		void AddObserver(IObserver &observer);
 		void RemoveObserver(IObserver &observer);
 
+		static Subject Empty();
+
 	protected:
 		void Notify(int event);
 

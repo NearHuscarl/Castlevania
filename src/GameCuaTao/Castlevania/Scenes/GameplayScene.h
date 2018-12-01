@@ -13,6 +13,8 @@ namespace Castlevania
 
 		SceneManager &GetSceneManager();
 		MapManager &GetMapManager();
+		Sprite &GetCutsceneBackground();
+
 		std::shared_ptr<Player> GetPlayer();
 		std::shared_ptr<Hud> GetHud();
 
@@ -27,6 +29,7 @@ namespace Castlevania
 		std::unique_ptr<Stage> nextStage;
 		std::unique_ptr<MapManager> mapManager;
 
+		std::unique_ptr<Sprite> cutsceneBackground;
 		std::shared_ptr<Player> player; // Our player need special attention
 		std::shared_ptr<Hud> hud;
 

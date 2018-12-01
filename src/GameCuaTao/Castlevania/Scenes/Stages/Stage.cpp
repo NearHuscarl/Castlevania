@@ -1,15 +1,19 @@
 #include "Direct2DGame/Input/InputHelper.h"
 #include "Stage.h"
+#include "StageEvent.h"
 #include "../GameplayScene.h"
 #include "../SceneManager.h"
+#include "../../Utilities/TypeConverter.h"
 
 using namespace Castlevania;
+
+constexpr auto NEXT_MAP_TRANSITION_TIME = 400; // in milliseconds
 
 Stage::Stage(GameplayScene &gameplayScene, Map map) :
 	gameplayScene{ gameplayScene },
 	objectFactory{ gameplayScene.GetSceneManager().GetFactory() }
 {
-	mapName = map;
+	currentMap = map;
 }
 
 UpdateData Stage::GetUpdateData()
@@ -33,7 +37,7 @@ void Stage::Initialize()
 	mapManager.SetWorldPosition(Vector2{ 0, (float)hud->GetHeight() });
 	camera = std::make_unique<Camera>(graphicsDevice);
 
-	LoadMap(mapName);
+	LoadMap(currentMap);
 }
 
 void Stage::Update(GameTime gameTime)
@@ -42,32 +46,22 @@ void Stage::Update(GameTime gameTime)
 
 void Stage::Draw(SpriteExtensions &spriteBatch)
 {
-	spriteBatch.Begin(D3DXSPRITE_ALPHABLEND);
-
-	map->Draw(spriteBatch);
-	hud->Draw(spriteBatch);
-
-	for (auto const &entity : objectCollection.entities)
+	switch (currentState)
 	{
-		entity->Draw(spriteBatch);
-		entity->DrawBoundingBox(spriteBatch); // NOTE: remove
+		case GameState::PLAYING:
+			DrawGameplay(spriteBatch);
+			break;
+
+		case GameState::NEXT_MAP_CUTSCENE:
+			DrawNextMapCutscene(spriteBatch);
+			break;
+
+		// In the original game, when change to cutscene, all in-game objects
+		// except tiled map, simon and the door is invisible on the screen
+		default: // Handle other cutscenes
+			DrawCutscene(spriteBatch);
+			break;
 	}
-
-	for (auto const &trigger : objectCollection.triggers)
-	{
-		trigger->Draw(spriteBatch);
-	}
-
-	player->Draw(spriteBatch);
-
-	for (auto const &fgObject : objectCollection.foregroundObjects)
-	{
-		fgObject->Draw(spriteBatch);
-	}
-
-	player->DrawBoundingBox(spriteBatch); // NOTE: remove
-
-	spriteBatch.End();
 }
 
 void Stage::LoadMap(Map mapName)
@@ -116,6 +110,81 @@ void Stage::UpdateGameplay(GameTime gameTime)
 {
 	camera->LookAt(player->GetOriginPosition(), Scrolling::Horizontally);
 	UpdateGameObjects(gameTime);
+}
+
+void Stage::DrawGameplay(SpriteExtensions &spriteBatch)
+{
+	spriteBatch.Begin(D3DXSPRITE_ALPHABLEND);
+
+	map->Draw(spriteBatch);
+	hud->Draw(spriteBatch);
+
+	for (auto const &entity : objectCollection.entities)
+	{
+		entity->Draw(spriteBatch);
+		entity->DrawBoundingBox(spriteBatch); // NOTE: remove
+	}
+
+	for (auto const &trigger : objectCollection.triggers)
+	{
+		trigger->Draw(spriteBatch);
+	}
+
+	player->Draw(spriteBatch);
+
+	for (auto const &fgObject : objectCollection.foregroundObjects)
+	{
+		fgObject->Draw(spriteBatch);
+	}
+
+	player->DrawBoundingBox(spriteBatch); // NOTE: remove
+
+	spriteBatch.End();
+}
+
+void Stage::DrawNextMapCutscene(SpriteExtensions &spriteBatch)
+{
+	spriteBatch.Draw(gameplayScene.GetCutsceneBackground(), Vector2::Zero());
+}
+
+void Stage::DrawCutscene(SpriteExtensions &spriteBatch)
+{
+	spriteBatch.Begin(D3DXSPRITE_ALPHABLEND);
+
+	map->Draw(spriteBatch);
+	hud->Draw(spriteBatch);
+
+	player->Draw(spriteBatch);
+
+	for (auto const &fgObject : objectCollection.foregroundObjects)
+	{
+		fgObject->Draw(spriteBatch);
+	}
+
+	player->DrawBoundingBox(spriteBatch); // NOTE: remove
+
+	spriteBatch.End();
+}
+
+void Stage::SetupNextMapCutscene()
+{
+	nextMapTimer.Start();
+	currentState = GameState::NEXT_MAP_CUTSCENE;
+}
+
+void Stage::UpdateNextMapCutscene(GameTime gameTime)
+{
+	if (nextMapTimer.ElapsedMilliseconds() >= NEXT_MAP_TRANSITION_TIME)
+	{
+		for (auto &trigger : objectCollection.triggers)
+			if (trigger->GetTriggerType() == TriggerType::NEXT_MAP)
+			{
+				auto nextMap = trigger->Property("Map");
+				player->EnableControl(true); // quit player auto mode
+				gameplayScene.NextStage(string2Map.at(nextMap));
+				OnNotify(Subject::Empty(), NEXT_MAP_CUTSCENE_ENDED);
+			}
+	}
 }
 
 Stage::~Stage()

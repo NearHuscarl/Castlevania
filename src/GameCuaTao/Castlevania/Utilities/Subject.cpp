@@ -17,6 +17,12 @@ void Subject::RemoveObserver(IObserver &observer)
 	}
 }
 
+Subject Subject::Empty()
+{
+	static auto emptySubject = Subject{};
+	return emptySubject;
+}
+
 void Subject::Notify(int event)
 {
 	for (auto &observer : observers)

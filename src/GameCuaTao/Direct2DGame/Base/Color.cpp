@@ -2,7 +2,7 @@
 #include "../Direct3D9.h"
 #include "Color.h"
 
-Color::Color(int r, int g, int b) : Color(r, g, b, 255)
+Color::Color(int r, int g, int b) : Color{ r, g, b, 255 }
 {
 }
 
@@ -113,6 +113,9 @@ Color Color::operator*(float scale)
 
 Color Color::FromHex(std::string hexColor)
 {
+	if (hexColor.empty())
+		return Color{ 0, 0, 0 };
+
 	if (hexColor[0] == '#')
 		hexColor.erase(0, 1);
 
@@ -124,5 +127,5 @@ Color Color::FromHex(std::string hexColor)
 	if (hexColor.length() == 8)
 		a = std::stoi(hexColor.substr(6, 2), nullptr, 16);
 
-	return Color(r, g, b, a);
+	return Color{ r, g, b, a };
 }

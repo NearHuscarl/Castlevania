@@ -1,38 +1,8 @@
 #include "MapManager.h"
-#include "../Utilities/CppExtensions.h"
+#include "TypeConverter.h"
+#include "CppExtensions.h"
 
 using namespace Castlevania;
-
-const auto string2EntityType = std::unordered_map<std::string, EntityType>
-{
-	{ "Player", EntityType::Player },
-	{ "Bat", EntityType::Bat },
-	{ "Cloud", EntityType::Cloud },
-	{ "Brazier", EntityType::Brazier },
-	{ "Whip", EntityType::Whip },
-	{ "DaggerItem", EntityType::DaggerItem },
-	{ "LargeHeart", EntityType::LargeHeart },
-	{ "WhipPowerup", EntityType::WhipPowerup },
-	{ "MoneyBag", EntityType::MoneyBag },
-	{ "Castle", EntityType::Castle },
-	{ "DirtBlock", EntityType::DirtBlock },
-};
-
-const auto string2TriggerType = std::unordered_map<std::string, TriggerType>
-{
-	{ "NextMap", TriggerType::NEXT_MAP },
-	{ "MoneyBagTrigger", TriggerType::MONEY_BAG_EASTER_EGG },
-	{ "StairUp", TriggerType::STAIR_UP },
-	{ "StairDown", TriggerType::STAIR_DOWN },
-	{ "CastleEntrance", TriggerType::CASTLE_ENTRANCE },
-};
-
-const auto string2Facing = std::unordered_map<std::string, Facing>
-{
-	{ "Left", Facing::Left },
-	{ "Right", Facing::Right },
-	{ "None", Facing::None },
-};
 
 MapManager::MapManager(ObjectFactory &objectFactory) : objectFactory{ objectFactory }
 {
@@ -48,8 +18,8 @@ void MapManager::LoadContent(ContentManager &content)
 {
 	//maps[Map::INTRO] = content.Load<TiledMap>("TiledMaps/Intro.tmx");
 	maps[Map::COURTYARD] = content.Load<TiledMap>("TiledMaps/Stage_01/Courtyard.tmx");
-	//maps[Map::STAGE_01_GREAT_HALL] = content.Load<TiledMap>("TiledMaps/Stage_01/Great_Hall.tmx");
-	//maps[Map::STAGE_01_UNDERGROUND] = content.Load<TiledMap>("TiledMaps/Stage_01/Underground.tmx");
+	maps[Map::GREAT_HALL] = content.Load<TiledMap>("TiledMaps/Stage_01/Great_Hall.tmx");
+	//maps[Map::UNDERGROUND] = content.Load<TiledMap>("TiledMaps/Stage_01/Underground.tmx");
 	maps[Map::PLAYGROUND] = content.Load<TiledMap>("TiledMaps/Playground/Playground.tmx");
 }
 
@@ -93,6 +63,9 @@ ObjectCollection MapManager::CreateObjectCollection(ObjectsProperties objectsPro
 			auto triggerType = string2TriggerType.at(name);
 			auto object = std::make_unique<Trigger>(bbox, triggerType);
 			
+			if (triggerType == TriggerType::NEXT_MAP)
+				object->AddProperty("Map", properties.at("Map"));
+
 			object->SetFacing(facing);
 			objectCollection.triggers.push_back(std::move(object));
 		}
@@ -108,8 +81,10 @@ ObjectCollection MapManager::CreateObjectCollection(ObjectsProperties objectsPro
 			auto object = ConstructObject(properties);
 			auto height = std::stoi(properties.at("height"));
 			auto foreground = GetValueOrDefault(properties, "Foreground", "False");
+			auto visibility = GetValueOrDefault(properties, "Visibility", "True");
 
 			object->SetPosition(x, y - height);
+			object->SetVisibility(ToBoolean(visibility));
 
 			if (ToBoolean(foreground))
 				objectCollection.foregroundObjects.push_back(std::move(object));
