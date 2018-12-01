@@ -74,6 +74,8 @@ void WhipFlashingRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 
 void WhipFlashingRenderingSystem::OnEnabledChanged()
 {
+	UpdatePositionRelativeToPlayer();
+
 	auto enabled = parent.GetBody().Enabled();
 
 	if (enabled)

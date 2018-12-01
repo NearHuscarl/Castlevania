@@ -17,6 +17,9 @@ void Controller::OnKeyStateChanged(KeyboardState &keyboardState)
 
 void Controller::OnKeyDown(int keyCode)
 {
+	if (!enabled)
+		return;
+
 	if (player.IsAttacking())
 		return;
 
@@ -64,12 +67,18 @@ void Controller::OnKeyDown(int keyCode)
 
 void Controller::OnKeyUp(int keyCode)
 {
+	if (!enabled)
+		return;
+
 	if (player.IsAttacking())
 		return;
 }
 
 void Controller::Update()
 {
+	if (!enabled)
+		return;
+
 	if (player.IsAttacking())
 		return;
 

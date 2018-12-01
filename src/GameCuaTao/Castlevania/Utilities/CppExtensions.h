@@ -1,5 +1,7 @@
 #pragma once
 
+#include <sstream>
+
 namespace Castlevania
 {
 	// Get value from key in map, if not found, return defaultValue
@@ -14,5 +16,18 @@ namespace Castlevania
 			return defaultValue;
 
 		return it->second;
+	}
+
+	// bool b = ToBoolean("tRuE");
+	bool ToBoolean(std::string str)
+	{
+		std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+
+		auto isstream = std::istringstream{ str };
+		auto result = bool{};
+
+		isstream >> std::boolalpha >> result;
+		
+		return result;
 	}
 }

@@ -3,11 +3,11 @@
 #include "Direct2DGame/Input/IController.h"
 #include "Player.h"
 #include "../../../Models/Factories/ObjectFactory.h"
-#include "../../../Models/Systems/Control/IControlSystem.h"
+#include "../../../Models/Systems/Control/ControlSystem.h"
 
 namespace Castlevania
 {
-	class Controller : public IControlSystem, public IController
+	class Controller : public ControlSystem, public IController
 	{
 	public:
 		Controller(Player &player, ObjectFactory &objectFactory);

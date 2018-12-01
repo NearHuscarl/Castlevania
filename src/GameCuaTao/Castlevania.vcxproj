@@ -172,12 +172,14 @@
     <ClCompile Include="Castlevania\Models\Systems\Collision\EntityCollisionSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Collision\SimpleCollisionSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Collision\StandardCollisionSystem.cpp" />
+    <ClCompile Include="Castlevania\Models\Systems\Control\ControlSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Movement\MovementSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Rendering\AnimationRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Rendering\EntityRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Rendering\SpriteRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Collision\StaticCollisionSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Trigger.cpp" />
+    <ClCompile Include="Castlevania\Models\UpdateData.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\Dagger.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\DaggerResponseSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\RangedWeapon.cpp" />
@@ -185,6 +187,9 @@
     <ClCompile Include="Castlevania\Models\Weapons\WhipRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\WhipResponseSystem.cpp" />
     <ClCompile Include="Castlevania\Effects\EffectFactory.cpp" />
+    <ClCompile Include="Castlevania\Scenes\Stages\PlaygroundStage.cpp" />
+    <ClCompile Include="Castlevania\Scenes\Stages\Stage.cpp" />
+    <ClCompile Include="Castlevania\Scenes\Stages\CourtyardStage.cpp" />
     <ClCompile Include="Castlevania\Utilities\SpriteHelper.cpp" />
     <ClCompile Include="Castlevania\Utilities\Subject.cpp" />
     <ClCompile Include="Castlevania\Utilities\Timer.cpp" />
@@ -277,6 +282,7 @@
     <ClInclude Include="Castlevania\Models\Systems\Collision\EntityCollisionSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Collision\SimpleCollisionSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Collision\StandardCollisionSystem.h" />
+    <ClInclude Include="Castlevania\Models\Systems\Control\ControlSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Control\IControlSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\IReceiver.h" />
     <ClInclude Include="Castlevania\Models\Systems\Movement\MovementSystem.h" />
@@ -297,9 +303,13 @@
     <ClInclude Include="Castlevania\Models\Weapons\WhipSettings.h" />
     <ClInclude Include="Castlevania\Effects\EffectFactory.h" />
     <ClInclude Include="Castlevania\Effects\IEffect.h" />
-    <ClInclude Include="Castlevania\Scenes\SceneEvent.h" />
+    <ClInclude Include="Castlevania\Scenes\Stages\StageEvent.h" />
+    <ClInclude Include="Castlevania\Scenes\Stages\PlaygroundStage.h" />
+    <ClInclude Include="Castlevania\Scenes\Stages\Stage.h" />
+    <ClInclude Include="Castlevania\Scenes\Stages\CourtyardStage.h" />
     <ClInclude Include="Castlevania\Utilities\CppExtensions.h" />
     <ClInclude Include="Castlevania\Utilities\IObserver.h" />
+    <ClInclude Include="Castlevania\Utilities\MapSettings.h" />
     <ClInclude Include="Castlevania\Utilities\SpriteHelper.h" />
     <ClInclude Include="Castlevania\Utilities\Subject.h" />
     <ClInclude Include="Castlevania\Utilities\Timer.h" />

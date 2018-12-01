@@ -7,6 +7,16 @@ Trigger::Trigger(RectF rect, TriggerType type) : RectangleObject{ rect, EntityTy
 	this->type = type;
 }
 
+bool Trigger::Enabled()
+{
+	return enabled;
+}
+
+void Trigger::Enabled(bool value)
+{
+	enabled = value;
+}
+
 TriggerType Trigger::GetTriggerType()
 {
 	return type;

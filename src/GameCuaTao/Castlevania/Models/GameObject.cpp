@@ -113,6 +113,11 @@ void GameObject::SetLinearVelocity(float speed, float angle)
 	velocity = direction * speed;
 }
 
+float GameObject::GetSpeed()
+{
+	return speed;
+}
+
 void GameObject::SetSpeed(float speed)
 {
 	this->speed = speed;
@@ -175,6 +180,12 @@ void GameObject::Destroy()
 	state = ObjectState::DEAD;
 }
 
+void GameObject::EnableControl(bool value)
+{
+	if (controlSystem != nullptr)
+		controlSystem->Enabled(value);
+}
+
 void GameObject::Move(Vector2 direction)
 {
 	position += direction;
@@ -192,35 +203,35 @@ template<>
 void GameObject::Attach(std::unique_ptr<IControlSystem> system)
 {
 	components.push_back(system.get());
-	this->controlSystem = std::move(system);
+	controlSystem = std::move(system);
 }
 
 template<>
 void GameObject::Attach(std::unique_ptr<IMovementSystem> system)
 {
 	components.push_back(system.get());
-	this->movementSystem = std::move(system);
+	movementSystem = std::move(system);
 }
 
 template<>
 void GameObject::Attach(std::unique_ptr<ICollisionSystem> system)
 {
 	components.push_back(system.get());
-	this->collisionSystem = std::move(system);
+	collisionSystem = std::move(system);
 }
 
 template<>
 void GameObject::Attach(std::unique_ptr<ICollisionResponseSystem> system)
 {
 	components.push_back(system.get());
-	this->collisionResponseSystem = std::move(system);
+	collisionResponseSystem = std::move(system);
 }
 
 template<>
 void GameObject::Attach(std::unique_ptr<IRenderingSystem> system)
 {
 	components.push_back(system.get());
-	this->renderingSystem = std::move(system);
+	renderingSystem = std::move(system);
 }
 
 #pragma endregion
@@ -271,6 +282,9 @@ void GameObject::DrawBoundingBox(SpriteExtensions &spriteBatch)
 
 		case EntityType::Player:
 			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::LavenderBlue() * 0.75f);
+			break;
+
+		case EntityType::Castle: // Just a fg image, skip drawing
 			break;
 
 		default:

@@ -27,6 +27,11 @@ ContentManager &SceneManager::GetContent()
 	return game.GetContent();
 }
 
+ObjectFactory &SceneManager::GetFactory()
+{
+	return *objectFactory;
+}
+
 SpriteExtensions &SceneManager::GetSpriteBatch()
 {
 	return *spriteBatch;
@@ -64,10 +69,10 @@ std::unique_ptr<AbstractScene> SceneManager::ConstructScene(Scene scene)
 			return std::make_unique<MenuScene>(*this);
 		
 		case Scene::INTRO:
-			return std::make_unique<IntroScene>(*this, *objectFactory);
+			return std::make_unique<IntroScene>(*this);
 		
 		case Scene::GAMEPLAY:
-			return std::make_unique<GameplayScene>(*this, *objectFactory);
+			return std::make_unique<GameplayScene>(*this);
 
 		default:
 			throw std::invalid_argument("Bad scene choice");

@@ -53,6 +53,8 @@ namespace Castlevania
 		void SetVelocity_X(float x);
 		void SetVelocity_Y(float y);
 		void SetLinearVelocity(float speed, float angle = 0.0f); // angle in degree
+
+		float GetSpeed();
 		void SetSpeed(float speed);
 
 		virtual RectF GetFrameRect();
@@ -66,6 +68,7 @@ namespace Castlevania
 		Body &GetBody() override;
 		void Destroy();
 
+		void EnableControl(bool value);
 		void Move(Vector2 direction);
 		void SwitchFacing();
 

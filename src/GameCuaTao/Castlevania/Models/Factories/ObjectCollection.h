@@ -17,6 +17,7 @@ namespace Castlevania
 		std::vector<std::unique_ptr<RectangleObject>> boundaries;
 		std::vector<std::unique_ptr<Trigger>> triggers;
 		std::vector<std::unique_ptr<GameObject>> entities;
+		std::vector<std::unique_ptr<GameObject>> foregroundObjects;
 		std::map<std::string, Vector2> locations;
 
 		void RemoveDeadObjects()

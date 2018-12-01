@@ -1,57 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="24" height="6" tilewidth="64" tileheight="64" infinite="0" backgroundcolor="#3c3c3c" nextlayerid="11" nextobjectid="40">
- <tileset firstgid="1" source="../Simon.tsx"/>
- <tileset firstgid="41" source="../Fire_Pit.tsx"/>
- <tileset firstgid="43" source="../Money_Bag.tsx"/>
- <layer id="1" name="TileLayer01" width="24" height="6">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACmNgGAWjgHwAAPMY7ENAAgAA
-  </data>
- </layer>
- <imagelayer id="7" name="Background">
-  <image source="Courtyard.png" width="1536" height="365"/>
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="88" height="6" tilewidth="64" tileheight="64" infinite="0" nextlayerid="5" nextobjectid="8">
+ <imagelayer id="2" name="Background">
+  <image source="Great_Hall.png" width="5632" height="365"/>
  </imagelayer>
  <objectgroup id="3" name="Bounds">
-  <object id="20" name="Ground" type="Boundary" x="0" y="288" width="1536" height="20"/>
-  <object id="22" name="LeftBorder" type="Boundary" x="-22" y="0" width="25" height="288"/>
-  <object id="24" name="RightBorder" type="Boundary" x="1533" y="0" width="25" height="288"/>
+  <object id="1" name="Platform" type="Boundary" x="0" y="320" width="3168" height="32"/>
+  <object id="2" name="Platform" type="Boundary" x="1376" y="192" width="96" height="32"/>
+  <object id="3" name="Platform" type="Boundary" x="1504" y="128" width="320" height="32"/>
+  <object id="4" name="Platform" type="Boundary" x="1856" y="192" width="192" height="32"/>
+  <object id="5" name="Platform" type="Boundary" x="2784" y="128" width="544" height="32"/>
+  <object id="6" name="Platform" type="Boundary" x="3328" y="192" width="96" height="32"/>
+  <object id="7" name="Platform" type="Boundary" x="3200" y="320" width="384" height="32"/>
  </objectgroup>
- <objectgroup id="9" name="Triggers">
-  <object id="37" name="MoneyBagTrigger" type="Trigger" x="1423" y="279" width="30" height="7.33333"/>
-  <object id="21" name="NextMap" type="Trigger" x="1378" y="257" width="30" height="30"/>
- </objectgroup>
- <objectgroup id="4" name="Entities">
-  <object id="15" name="FirePit" type="Object" gid="41" x="175" y="290" width="32" height="64">
-   <properties>
-    <property name="Item" value="WhipPowerup"/>
-   </properties>
-  </object>
-  <object id="16" name="FirePit" type="Object" gid="41" x="434" y="290" width="32" height="64">
-   <properties>
-    <property name="Item" value="WhipPowerup"/>
-   </properties>
-  </object>
-  <object id="17" name="FirePit" type="Object" gid="41" x="685" y="290" width="32" height="64">
-   <properties>
-    <property name="Item" value="WhipPowerup"/>
-   </properties>
-  </object>
-  <object id="18" name="FirePit" type="Object" gid="41" x="942" y="290" width="32" height="64">
-   <properties>
-    <property name="Item" value="Heart"/>
-   </properties>
-  </object>
-  <object id="19" name="FirePit" type="Object" gid="41" x="1199" y="290" width="32" height="64">
-   <properties>
-    <property name="Item" value="KnifeItem"/>
-   </properties>
-  </object>
-  <object id="38" name="MoneyBag" type="Objects" gid="45" x="1250" y="317" width="30" height="30"/>
- </objectgroup>
- <objectgroup id="8" name="Locations">
-  <object id="14" name="Checkpoint" type="Position" gid="4" x="69" y="287" width="60" height="66"/>
- </objectgroup>
- <objectgroup id="10" name="Areas">
-  <object id="39" name="ViewportArea" type="Rectangle" x="0" y="0" width="1536" height="365" visible="0"/>
- </objectgroup>
+ <objectgroup id="4" name="Entites"/>
+ <layer id="1" name="TileLayer01" width="88" height="6">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
 </map>

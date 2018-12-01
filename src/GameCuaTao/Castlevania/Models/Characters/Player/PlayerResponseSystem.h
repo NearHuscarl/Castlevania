@@ -39,6 +39,7 @@ namespace Castlevania
 
 		void OnCollideWithStairUpTrigger(Trigger &trigger, ResponseResult &responseResult);
 		void OnCollideWithStairDownTrigger(Trigger &trigger, ResponseResult &responseResult);
-		void OnCollideWithCastleEntranceTrigger();
+		void OnCollideWithNextMapTrigger(Trigger &trigger);
+		void OnCollideWithCastleEntranceTrigger(Trigger &trigger);
 	};
 }

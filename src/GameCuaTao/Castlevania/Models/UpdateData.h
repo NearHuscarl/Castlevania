@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Direct2DGame/GameTime.h"
 #include "Direct2DGame/Graphics/Viewport.h"
 
 namespace Castlevania
@@ -8,18 +9,9 @@ namespace Castlevania
 
 	struct UpdateData
 	{
-		Viewport viewport;
+		RectF viewport;
 		ObjectCollection *objectCollection;
 
-		static UpdateData Empty()
-		{
-			constexpr auto emptyData = UpdateData{};
-			return emptyData;
-		}
-
-		bool IsEmpty()
-		{
-			return false; // TODO: check object collection size
-		}
+		static UpdateData Empty();
 	};
 }

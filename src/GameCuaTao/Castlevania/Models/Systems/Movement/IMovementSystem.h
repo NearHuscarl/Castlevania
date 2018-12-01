@@ -11,6 +11,7 @@ namespace Castlevania
 	public:
 		virtual Vector2 GetDistance() = 0;
 		virtual void SetDistance(Vector2 distance) = 0;
+
 		virtual void Update(GameTime gameTime) = 0;
 		virtual ~IMovementSystem() {}
 	};

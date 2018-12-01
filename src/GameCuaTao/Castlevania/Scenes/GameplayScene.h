@@ -1,51 +1,35 @@
 #pragma once
 
 #include "AbstractScene.h"
-#include "Direct2DGame/Extensions/Tiled/TiledMap.h"
-#include "Direct2DGame/Extensions/Camera.h"
-#include "../Utilities/MapManager.h"
-#include "../Utilities/IObserver.h"
+#include "Stages/Stage.h"
 #include "../Hud.h"
 
 namespace Castlevania
 {
-	enum class GameState
-	{
-		PLAYING,
-		NEXT_ROOM_TRANSITION,
-		GO_TO_CASTLE_TRANSITION,
-	};
-
-	class GameplayScene : public AbstractScene, public IObserver
+	class GameplayScene : public AbstractScene
 	{
 	public:
-		GameplayScene(SceneManager &sceneManager, ObjectFactory &objectFactory);
+		GameplayScene(SceneManager &sceneManager);
 
-		void OnNotify(Subject &subject, int event) override;
+		SceneManager &GetSceneManager();
+		MapManager &GetMapManager();
+		std::shared_ptr<Player> GetPlayer();
+		std::shared_ptr<Hud> GetHud();
+
+		void NextStage(Map map);
 
 		void LoadContent() override;
 		void Update(GameTime gameTime) override;
 		void Draw(GameTime gameTime) override;
 
-		~GameplayScene();
-
 	private:
-		GameState currentState;
-		ObjectFactory &objectFactory;
-
+		std::unique_ptr<Stage> currentStage;
+		std::unique_ptr<Stage> nextStage;
 		std::unique_ptr<MapManager> mapManager;
-		std::shared_ptr<TiledMap> map;
-		std::unique_ptr<Camera> camera;
-		std::unique_ptr<Player> player; // Our player need special attention
-		std::unique_ptr<Hud> hud;
 
-		ObjectCollection objectCollection; // TODO: move to Grid class (implement spatial partition)
+		std::shared_ptr<Player> player; // Our player need special attention
+		std::shared_ptr<Hud> hud;
 
-		UpdateData GetUpdateData();
-
-		void LoadMap(Map mapName);
-		void UpdateInput();
-		void UpdateGameplay(GameTime gameTime);
-		void UpdateGoToCastleTransition();
+		std::unique_ptr<Stage> ConstructStage(Map map);
 	};
 }

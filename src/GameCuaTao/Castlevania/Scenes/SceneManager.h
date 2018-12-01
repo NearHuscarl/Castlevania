@@ -16,6 +16,7 @@ namespace Castlevania
 
 		GraphicsDevice &GetGraphicsDevice();
 		ContentManager &GetContent();
+		ObjectFactory &GetFactory();
 		SpriteExtensions &GetSpriteBatch();
 
 		void SetNextScene(Scene scene);

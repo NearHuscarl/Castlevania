@@ -6,8 +6,8 @@ namespace Castlevania
 	{
 		STAIR_UP,
 		STAIR_DOWN,
-		CASTLE_ENTRANCE,
 		NEXT_MAP,
+		CASTLE_ENTRANCE,
 		MONEY_BAG_EASTER_EGG,
 	};
 }

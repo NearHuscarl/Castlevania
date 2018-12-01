@@ -39,11 +39,6 @@ MapManager::MapManager(ObjectFactory &objectFactory) : objectFactory{ objectFact
 	worldPosition = Vector2::Zero();
 }
 
-Map MapManager::GetCurrentMap()
-{
-	return currentMap;
-}
-
 void MapManager::SetWorldPosition(Vector2 position)
 {
 	worldPosition = position;
@@ -58,20 +53,14 @@ void MapManager::LoadContent(ContentManager &content)
 	maps[Map::PLAYGROUND] = content.Load<TiledMap>("TiledMaps/Playground/Playground.tmx");
 }
 
-std::shared_ptr<TiledMap> MapManager::NextMap(Map name)
+MapData MapManager::LoadMap(Map name)
 {
-	currentMap = name;
-
-	auto map = maps.at(currentMap);
+	auto map = maps.at(name);
+	auto mapObjects = map->GetMapObjects();
+	
 	map->SetPosition(worldPosition);
-	return map;
-}
 
-ObjectCollection MapManager::LoadGameObjects()
-{
-	auto mapObjects = maps.at(currentMap)->GetMapObjects();
-
-	return CreateObjectCollection(mapObjects);
+	return MapData{ map, CreateObjectCollection(mapObjects) };
 }
 
 ObjectCollection MapManager::CreateObjectCollection(ObjectsProperties objectsProperties)
@@ -118,9 +107,14 @@ ObjectCollection MapManager::CreateObjectCollection(ObjectsProperties objectsPro
 		{
 			auto object = ConstructObject(properties);
 			auto height = std::stoi(properties.at("height"));
+			auto foreground = GetValueOrDefault(properties, "Foreground", "False");
 
 			object->SetPosition(x, y - height);
-			objectCollection.entities.push_back(std::move(object));
+
+			if (ToBoolean(foreground))
+				objectCollection.foregroundObjects.push_back(std::move(object));
+			else
+				objectCollection.entities.push_back(std::move(object));
 		}
 	}
 

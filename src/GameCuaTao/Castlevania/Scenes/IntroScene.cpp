@@ -8,11 +8,11 @@ using namespace Castlevania;
 
 constexpr auto GROUND_POSITION_Y = 338.f;
 
-IntroScene::IntroScene(SceneManager &sceneManager, ObjectFactory &objectFactory) :
-	AbstractScene{ sceneManager },
-	objectFactory{ objectFactory }
+IntroScene::IntroScene(SceneManager &sceneManager) : AbstractScene{ sceneManager }
 {
-	player = std::make_unique<Player>();
+	auto &objectFactory = sceneManager.GetFactory();
+
+	player = objectFactory.CreateIntroSimon();
 	bat1 = objectFactory.CreateBat();
 	bat2 = objectFactory.CreateBat();
 }

@@ -1,7 +1,7 @@
 #include "PlayerResponseSystem.h"
 #include "../../Settings.h"
 #include "../../../Models/Factories/ObjectCollection.h"
-#include "../../../Scenes/SceneEvent.h"
+#include "../../../Scenes/Stages/StageEvent.h"
 
 using namespace Castlevania;
 
@@ -160,8 +160,12 @@ void PlayerResponseSystem::OnCollideWithTrigger(CollisionResult &result, Respons
 			OnCollideWithStairDownTrigger(trigger, responseResult);
 			break;
 
+		case TriggerType::NEXT_MAP:
+			OnCollideWithNextMapTrigger(trigger);
+			break;
+
 		case TriggerType::CASTLE_ENTRANCE:
-			OnCollideWithCastleEntranceTrigger();
+			OnCollideWithCastleEntranceTrigger(trigger);
 			break;
 	}
 }
@@ -248,7 +252,20 @@ void PlayerResponseSystem::OnCollideWithStairDownTrigger(Trigger &trigger, Respo
 	}
 }
 
-void PlayerResponseSystem::OnCollideWithCastleEntranceTrigger()
+void PlayerResponseSystem::OnCollideWithNextMapTrigger(Trigger &trigger)
 {
-	parent.Notify(GO_TO_CASTLE);
+	if (trigger.Enabled())
+	{
+		parent.Notify(NEXT_MAP);
+		trigger.Enabled(false);
+	}
+}
+
+void PlayerResponseSystem::OnCollideWithCastleEntranceTrigger(Trigger &trigger)
+{
+	if (trigger.Enabled())
+	{
+		parent.Notify(GO_TO_CASTLE);
+		trigger.Enabled(false);
+	}
 }
