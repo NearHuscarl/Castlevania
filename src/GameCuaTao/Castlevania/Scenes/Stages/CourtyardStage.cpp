@@ -93,5 +93,7 @@ void CourtyardStage::SetupGoToCastleCutscene()
 	else
 		player->WalkLeft();
 
+	nextMapTrigger->Enabled(true);
+
 	currentState = GameState::GO_TO_CASTLE_CUTSCENE;
 }

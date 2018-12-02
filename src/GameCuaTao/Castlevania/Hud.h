@@ -15,6 +15,8 @@ namespace Castlevania
 		int GetWidth();
 		int GetHeight();
 
+		//template<typename T>
+		//void Register(const T &data);
 		void Register(const PlayerData &data);
 
 		void LoadContent(ContentManager &content);

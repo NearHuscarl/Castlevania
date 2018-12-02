@@ -66,6 +66,7 @@ ObjectCollection MapManager::CreateObjectCollection(ObjectsProperties objectsPro
 			if (triggerType == TriggerType::NEXT_MAP)
 				object->AddProperty("Map", properties.at("Map"));
 
+			object->Enabled(ToBoolean(properties.at("Enabled")));
 			object->SetFacing(facing);
 			objectCollection.triggers.push_back(std::move(object));
 		}

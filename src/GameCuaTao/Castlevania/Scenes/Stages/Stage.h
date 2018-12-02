@@ -48,6 +48,7 @@ namespace Castlevania
 		std::shared_ptr<Hud> hud;
 
 		ObjectCollection objectCollection; // TODO: move to Grid class (implement spatial partition)
+		Trigger *nextMapTrigger;
 
 		void LoadMap(Map mapName);
 		virtual void UpdateInput();

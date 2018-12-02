@@ -1,17 +1,18 @@
 #include <iomanip>
 #include <sstream>
 #include "Hud.h"
+#include "Models/Characters/Player/Player.h"
 
 using namespace Castlevania;
 
 constexpr auto HUD_HEIGHT = 83;
-const auto defaultData = PlayerData::Default();
+const auto DEFAULT_DATA = PlayerData::Default();
 
 Hud::Hud(GraphicsDevice &graphicsDevice)
 {
 	width = graphicsDevice.GetViewport().width;
 	height = HUD_HEIGHT;
-	data = &defaultData;
+	data = &DEFAULT_DATA;
 
 	scoreTextPosition = Vector2{ 0, 15 };
 	timeTextPosition = Vector2{ 210, 15 };
@@ -35,6 +36,11 @@ int Hud::GetHeight()
 {
 	return height;
 }
+
+//void Hud::Register(const Player &player)
+//{
+//
+//}
 
 void Hud::Register(const PlayerData &data)
 {

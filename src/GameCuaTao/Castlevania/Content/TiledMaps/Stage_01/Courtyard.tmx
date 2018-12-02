@@ -62,15 +62,24 @@
   <object id="24" name="RightBorder" type="Boundary" x="1504" y="0" width="32" height="288"/>
  </objectgroup>
  <objectgroup id="9" name="Triggers">
-  <object id="37" name="MoneyBagTrigger" type="Trigger" x="1424" y="278" width="32" height="10"/>
-  <object id="21" name="CastleEntrance" type="Trigger" x="1376" y="278" width="32" height="10"/>
+  <object id="37" name="MoneyBagTrigger" type="Trigger" x="1424" y="278" width="32" height="10">
+   <properties>
+    <property name="Enabled" value="True"/>
+   </properties>
+  </object>
+  <object id="21" name="CastleEntrance" type="Trigger" x="1376" y="278" width="32" height="10">
+   <properties>
+    <property name="Enabled" value="True"/>
+   </properties>
+  </object>
   <object id="42" name="NextMap" type="Trigger" x="1472" y="256" width="32" height="32">
    <properties>
+    <property name="Enabled" value="False"/>
     <property name="Map" value="GreatHall"/>
    </properties>
   </object>
  </objectgroup>
  <objectgroup id="8" name="Locations">
-  <object id="14" name="Checkpoint" type="Position" gid="4" x="1200" y="288" width="60" height="66"/>
+  <object id="14" name="Checkpoint" type="Position" gid="4" x="69" y="288" width="60" height="66"/>
  </objectgroup>
 </map>

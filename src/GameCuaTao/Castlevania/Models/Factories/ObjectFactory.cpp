@@ -41,7 +41,7 @@ std::unique_ptr<GameObject> ObjectFactory::CreateBat(Vector2 position)
 	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*object, "Characters/NPCs/Bat.ani.xml");
 
 	object->SetPosition(position);
-	object->Attach<IRenderingSystem>(std::move(renderingSystem));
+	object->Attach(std::move(renderingSystem));
 	object->LoadContent(content);
 
 	return object;
@@ -64,11 +64,11 @@ std::unique_ptr<Player> ObjectFactory::CreatePlayer(Vector2 position)
 	Keyboard::Register(controller.get());
 
 	object->SetPosition(position);
-	object->Attach<IControlSystem>(std::move(controller));
-	object->Attach<IMovementSystem>(std::move(movementSystem));
-	object->Attach<ICollisionSystem>(std::move(collisionSystem));
-	object->Attach<ICollisionResponseSystem>(std::move(responseSystem));
-	object->Attach<IRenderingSystem>(std::move(renderingSystem));
+	object->Attach(std::move(controller));
+	object->Attach(std::move(movementSystem));
+	object->Attach(std::move(collisionSystem));
+	object->Attach(std::move(responseSystem));
+	object->Attach(std::move(renderingSystem));
 
 	auto whip = CreateWhip(*object);
 	
@@ -90,9 +90,9 @@ std::unique_ptr<Player> ObjectFactory::CreateIntroSimon(Vector2 position)
 	auto renderingSystem = std::make_unique<PlayerRenderingSystem>(*object, "Characters/Players/Simon.ani.xml");
 
 	object->SetPosition(position);
-	object->Attach<IControlSystem>(std::move(controller));
-	object->Attach<IMovementSystem>(std::move(movementSystem));
-	object->Attach<IRenderingSystem>(std::move(renderingSystem));
+	object->Attach(std::move(controller));
+	object->Attach(std::move(movementSystem));
+	object->Attach(std::move(renderingSystem));
 
 	object->LoadContent(content);
 
@@ -109,7 +109,7 @@ std::unique_ptr<Brazier> ObjectFactory::CreateBrazier(EntityType itemType, Vecto
 	auto effect = effectManager->CreateFlameEffect();
 
 	object->SetPosition(position);
-	object->Attach<IRenderingSystem>(std::move(renderingSystem));
+	object->Attach(std::move(renderingSystem));
 	object->SetSpawnedItem(std::move(item));
 	object->LoadContent(content);
 	
@@ -129,10 +129,10 @@ std::unique_ptr<Zombie> ObjectFactory::CreateZombie(Vector2 position)
 		*object, "Characters/Enemies/Zombie.ani.xml", effectManager->CreateFlameEffect());
 
 	object->SetPosition(position);
-	object->Attach<IMovementSystem>(std::move(movementSystem));
-	object->Attach<ICollisionSystem>(std::move(collisionSystem));
-	object->Attach<ICollisionResponseSystem>(std::move(responseSystem));
-	object->Attach<IRenderingSystem>(std::move(renderingSystem));
+	object->Attach(std::move(movementSystem));
+	object->Attach(std::move(collisionSystem));
+	object->Attach(std::move(responseSystem));
+	object->Attach(std::move(renderingSystem));
 
 	object->LoadContent(content);
 
@@ -147,9 +147,9 @@ std::unique_ptr<Whip> ObjectFactory::CreateWhip(GameObject &gameObject)
 	auto responseSystem = std::make_unique<WhipResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<WhipRenderingSystem>(*object, "Items/Whip.ani.xml");
 
-	object->Attach<ICollisionSystem>(std::move(collisionSystem));
-	object->Attach<ICollisionResponseSystem>(std::move(responseSystem));
-	object->Attach<IRenderingSystem>(std::move(renderingSystem));
+	object->Attach(std::move(collisionSystem));
+	object->Attach(std::move(responseSystem));
+	object->Attach(std::move(renderingSystem));
 
 	object->LoadContent(content);
 
@@ -164,9 +164,9 @@ std::unique_ptr<Whip> ObjectFactory::CreateFlashingWhip(GameObject &gameObject)
 	auto responseSystem = std::make_unique<WhipResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<WhipFlashingRenderingSystem>(*object, "Items/Whip.ani.xml");
 
-	object->Attach<ICollisionSystem>(std::move(collisionSystem));
-	object->Attach<ICollisionResponseSystem>(std::move(responseSystem));
-	object->Attach<IRenderingSystem>(std::move(renderingSystem));
+	object->Attach(std::move(collisionSystem));
+	object->Attach(std::move(responseSystem));
+	object->Attach(std::move(renderingSystem));
 
 	object->LoadContent(content);
 
@@ -183,10 +183,10 @@ std::unique_ptr<Dagger> ObjectFactory::CreateDagger(Vector2 position)
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Dagger.png");
 
 	object->SetPosition(position);
-	object->Attach<IMovementSystem>(std::move(movementSystem));
-	object->Attach<ICollisionSystem>(std::move(collisionSystem));
-	object->Attach<ICollisionResponseSystem>(std::move(responseSystem));
-	object->Attach<IRenderingSystem>(std::move(renderingSystem));
+	object->Attach(std::move(movementSystem));
+	object->Attach(std::move(collisionSystem));
+	object->Attach(std::move(responseSystem));
+	object->Attach(std::move(renderingSystem));
 
 	object->LoadContent(content);
 
@@ -221,10 +221,10 @@ std::unique_ptr<Powerup> ObjectFactory::CreateDaggerItem(Vector2 position)
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Dagger.png");
 
 	object->SetPosition(position);
-	object->Attach<IMovementSystem>(std::move(movementSystem));
-	object->Attach<ICollisionSystem>(std::move(collisionSystem));
-	object->Attach<ICollisionResponseSystem>(std::move(responseSystem));
-	object->Attach<IRenderingSystem>(std::move(renderingSystem));
+	object->Attach(std::move(movementSystem));
+	object->Attach(std::move(collisionSystem));
+	object->Attach(std::move(responseSystem));
+	object->Attach(std::move(renderingSystem));
 
 	object->LoadContent(content);
 	object->SetVelocity_Y(ITEM_FALL_SPEED); // Fall down
@@ -242,10 +242,10 @@ std::unique_ptr<Powerup> ObjectFactory::CreateLargeHeart(Vector2 position)
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Large_Heart.png");
 	
 	object->SetPosition(position);
-	object->Attach<IMovementSystem>(std::move(movementSystem));
-	object->Attach<ICollisionSystem>(std::move(collisionSystem));
-	object->Attach<ICollisionResponseSystem>(std::move(responseSystem));
-	object->Attach<IRenderingSystem>(std::move(renderingSystem));
+	object->Attach(std::move(movementSystem));
+	object->Attach(std::move(collisionSystem));
+	object->Attach(std::move(responseSystem));
+	object->Attach(std::move(renderingSystem));
 	
 	object->LoadContent(content);
 	object->SetVelocity_Y(ITEM_FALL_SPEED); // Fall down
@@ -263,10 +263,10 @@ std::unique_ptr<Powerup> ObjectFactory::CreateWhipPowerup(Vector2 position)
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Whip_Powerup.png");
 
 	object->SetPosition(position);
-	object->Attach<IMovementSystem>(std::move(movementSystem));
-	object->Attach<ICollisionSystem>(std::move(collisionSystem));
-	object->Attach<ICollisionResponseSystem>(std::move(responseSystem));
-	object->Attach<IRenderingSystem>(std::move(renderingSystem));
+	object->Attach(std::move(movementSystem));
+	object->Attach(std::move(collisionSystem));
+	object->Attach(std::move(responseSystem));
+	object->Attach(std::move(renderingSystem));
 	
 	object->LoadContent(content);
 	object->SetVelocity_Y(ITEM_FALL_SPEED); // Fall down
@@ -280,7 +280,7 @@ std::unique_ptr<GameObject> ObjectFactory::CreateCastle(Vector2 position)
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "TiledMaps/Stage_01/Castle.png");
 
 	object->SetPosition(position);
-	object->Attach<IRenderingSystem>(std::move(renderingSystem));
+	object->Attach(std::move(renderingSystem));
 	object->LoadContent(content);
 
 	return object;
@@ -292,7 +292,7 @@ std::unique_ptr<GameObject> ObjectFactory::CreateDirtBlock(Vector2 position)
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Textures/Dirt_Block.png");
 
 	object->SetPosition(position);
-	object->Attach<IRenderingSystem>(std::move(renderingSystem));
+	object->Attach(std::move(renderingSystem));
 	object->LoadContent(content);
 
 	return object;

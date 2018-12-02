@@ -72,8 +72,11 @@ namespace Castlevania
 		void Move(Vector2 direction);
 		void SwitchFacing();
 
-		template<typename T>
-		void Attach(std::unique_ptr<T> system);
+		void Attach(std::unique_ptr<IControlSystem> system);
+		void Attach(std::unique_ptr<IMovementSystem> system);
+		void Attach(std::unique_ptr<ICollisionSystem> system);
+		void Attach(std::unique_ptr<ICollisionResponseSystem> system);
+		void Attach(std::unique_ptr<IRenderingSystem> system);
 
 		virtual void LoadContent(ContentManager &content);
 		virtual void Update(GameTime gameTime, UpdateData &updateData = UpdateData::Empty());

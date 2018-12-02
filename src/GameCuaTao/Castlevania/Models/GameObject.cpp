@@ -199,35 +199,30 @@ void GameObject::SwitchFacing()
 		SetFacing(Facing::Left);
 }
 
-template<>
 void GameObject::Attach(std::unique_ptr<IControlSystem> system)
 {
 	components.push_back(system.get());
 	controlSystem = std::move(system);
 }
 
-template<>
 void GameObject::Attach(std::unique_ptr<IMovementSystem> system)
 {
 	components.push_back(system.get());
 	movementSystem = std::move(system);
 }
 
-template<>
 void GameObject::Attach(std::unique_ptr<ICollisionSystem> system)
 {
 	components.push_back(system.get());
 	collisionSystem = std::move(system);
 }
 
-template<>
 void GameObject::Attach(std::unique_ptr<ICollisionResponseSystem> system)
 {
 	components.push_back(system.get());
 	collisionResponseSystem = std::move(system);
 }
 
-template<>
 void GameObject::Attach(std::unique_ptr<IRenderingSystem> system)
 {
 	components.push_back(system.get());

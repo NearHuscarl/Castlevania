@@ -77,6 +77,12 @@ void Stage::LoadMap(Map mapName)
 		map->GetHeightInPixels() + hud->GetHeight());
 
 	player->SetPosition(objectCollection.locations["Checkpoint"]);
+
+	for (auto &trigger : objectCollection.triggers)
+	{
+		if (trigger->GetTriggerType() == TriggerType::NEXT_MAP)
+			nextMapTrigger = trigger.get();
+	}
 }
 
 void Stage::UpdateInput()
@@ -176,14 +182,11 @@ void Stage::UpdateNextMapCutscene(GameTime gameTime)
 {
 	if (nextMapTimer.ElapsedMilliseconds() >= NEXT_MAP_TRANSITION_TIME)
 	{
-		for (auto &trigger : objectCollection.triggers)
-			if (trigger->GetTriggerType() == TriggerType::NEXT_MAP)
-			{
-				auto nextMap = trigger->Property("Map");
-				player->EnableControl(true); // quit player auto mode
-				gameplayScene.NextStage(string2Map.at(nextMap));
-				OnNotify(Subject::Empty(), NEXT_MAP_CUTSCENE_ENDED);
-			}
+		auto nextMap = nextMapTrigger->Property("Map");
+
+		player->EnableControl(true); // quit player auto mode
+		gameplayScene.NextStage(string2Map.at(nextMap));
+		OnNotify(Subject::Empty(), NEXT_MAP_CUTSCENE_ENDED);
 	}
 }
 
