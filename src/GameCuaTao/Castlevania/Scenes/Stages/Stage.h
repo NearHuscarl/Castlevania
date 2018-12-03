@@ -46,6 +46,7 @@ namespace Castlevania
 		std::unique_ptr<Camera> camera;
 		std::shared_ptr<Player> player; // Our player need special attention
 		std::shared_ptr<Hud> hud;
+		std::shared_ptr<GameplayData> data;
 
 		ObjectCollection objectCollection; // TODO: move to Grid class (implement spatial partition)
 		Trigger *nextMapTrigger;

@@ -11,6 +11,7 @@ namespace Castlevania
 		Timer(int startingTime = 0);
 
 		void SetCounter(int counter);
+		void ResetLastSecond();
 		int GetCounter() const;
 
 		void CountDown();

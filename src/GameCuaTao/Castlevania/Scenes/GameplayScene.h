@@ -2,6 +2,7 @@
 
 #include "AbstractScene.h"
 #include "Stages/Stage.h"
+#include "GameplayData.h"
 #include "../Hud.h"
 
 namespace Castlevania
@@ -17,6 +18,7 @@ namespace Castlevania
 
 		std::shared_ptr<Player> GetPlayer();
 		std::shared_ptr<Hud> GetHud();
+		std::shared_ptr<GameplayData> GetData();
 
 		void NextStage(Map map);
 
@@ -32,6 +34,7 @@ namespace Castlevania
 		std::unique_ptr<Sprite> cutsceneBackground;
 		std::shared_ptr<Player> player; // Our player need special attention
 		std::shared_ptr<Hud> hud;
+		std::shared_ptr<GameplayData> data;
 
 		std::unique_ptr<Stage> ConstructStage(Map map);
 	};

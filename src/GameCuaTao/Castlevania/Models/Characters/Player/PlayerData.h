@@ -14,33 +14,15 @@ namespace Castlevania
 		PlayerData()
 		{
 			score = 0;
-			timeLeft = Timer(300); // in seconds
-			stage = 1;
-
-			playerHealth = MAX_HEALTH;
-			bossHealth = MAX_HEALTH;
-
+			health = MAX_HEALTH;
 			subWeapon = EntityType::Unknown;
-
 			hearts = 5;
 			lives = 3;
 		}
 
-		static PlayerData Default()
-		{
-			static auto defaultData = PlayerData{};
-			return defaultData;
-		}
-
 		int score;
-		Timer timeLeft; // in seconds
-		int stage;
-
-		int playerHealth;
-		int bossHealth;
-
+		int health;
 		EntityType subWeapon;
-
 		int hearts;
 		int lives;
 	};

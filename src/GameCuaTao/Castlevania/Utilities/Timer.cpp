@@ -11,6 +11,13 @@ Timer::Timer(int startingTime)
 void Timer::SetCounter(int counter)
 {
 	this->counter = counter;
+	stopwatch.Restart();
+}
+
+// When change to the next map, the last second is reset
+void Timer::ResetLastSecond()
+{
+	SetCounter(counter);
 }
 
 int Timer::GetCounter() const

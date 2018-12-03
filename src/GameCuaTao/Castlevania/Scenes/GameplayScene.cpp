@@ -14,8 +14,11 @@ GameplayScene::GameplayScene(SceneManager &sceneManager) : AbstractScene{ sceneM
 	mapManager = std::make_unique<MapManager>(objectFactory);
 	player = std::move(objectFactory.CreatePlayer());
 
+	data = std::make_unique<GameplayData>();
+
 	hud = std::make_shared<Hud>(graphicsDevice);
 	hud->Register(player->GetData());
+	hud->Register(*data);
 }
 
 SceneManager &GameplayScene::GetSceneManager()
@@ -41,6 +44,11 @@ std::shared_ptr<Player> GameplayScene::GetPlayer()
 std::shared_ptr<Hud> GameplayScene::GetHud()
 {
 	return hud;
+}
+
+std::shared_ptr<GameplayData> GameplayScene::GetData()
+{
+	return data;
 }
 
 void GameplayScene::NextStage(Map map)

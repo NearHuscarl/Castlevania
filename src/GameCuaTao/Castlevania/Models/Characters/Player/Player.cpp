@@ -54,6 +54,12 @@ AttackState Player::GetAttackState()
 	return attackState;
 }
 
+void Player::SetSpeed(float speed)
+{
+	GameObject::SetSpeed(speed);
+	stairWalkingSpeed = speed / 2;
+}
+
 void Player::SetJumpSpeed(float jumpSpeed)
 {
 	this->jumpSpeed = jumpSpeed;
@@ -86,7 +92,7 @@ void Player::Update(GameTime gameTime, UpdateData &updateData)
 	if (InputHelper::IsKeyDown(DIK_9)) // NOTE: remove debugging code
 		data.hearts += 20;
 	else if (InputHelper::IsKeyDown(DIK_0))
-		data.playerHealth = MAX_HEALTH;
+		data.health = MAX_HEALTH;
 
 	GameObject::Update(gameTime, updateData);
 	UpdateStates();
@@ -130,8 +136,6 @@ void Player::UpdateStates()
 			}
 			break;
 	}
-
-	data.timeLeft.CountDown();
 
 	if (untouchableTimer.ElapsedMilliseconds() > UNTOUCHABLE_TIME)
 	{
@@ -275,10 +279,10 @@ void Player::GoUpstairs()
 	SetMoveState(MoveState::GOING_UPSTAIRS);
 
 	if (facing == Facing::Left)
-		velocity.x = -speed / 2;
+		velocity.x = -stairWalkingSpeed;
 	else
-		velocity.x = speed / 2;
-	velocity.y = -speed / 2;
+		velocity.x = stairWalkingSpeed;
+	velocity.y = -stairWalkingSpeed;
 }
 
 void Player::GoDownstairs()
@@ -289,10 +293,10 @@ void Player::GoDownstairs()
 	SetMoveState(MoveState::GOING_DOWNSTAIRS);
 
 	if (facing == Facing::Left)
-		velocity.x = -speed / 2;
+		velocity.x = -stairWalkingSpeed;
 	else
-		velocity.x = speed / 2;
-	velocity.y = speed / 2;
+		velocity.x = stairWalkingSpeed;
+	velocity.y = stairWalkingSpeed;
 }
 
 void Player::Jump()
@@ -421,7 +425,7 @@ void Player::TakeDamage(int damage, Direction direction)
 	velocity.y = -BOUNCE_BACK_HEIGHT;
 
 	SetMoveState(MoveState::TAKING_DAMAGE);
-	data.playerHealth -= damage;
+	data.health -= damage;
 	untouchableTimer.Start();
 }
 

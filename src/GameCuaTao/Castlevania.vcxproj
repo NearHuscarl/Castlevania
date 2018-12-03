@@ -304,6 +304,7 @@
     <ClInclude Include="Castlevania\Models\Weapons\WhipSettings.h" />
     <ClInclude Include="Castlevania\Effects\EffectFactory.h" />
     <ClInclude Include="Castlevania\Effects\IEffect.h" />
+    <ClInclude Include="Castlevania\Scenes\GameplayData.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\GreatHallStage.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\StageEvent.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\PlaygroundStage.h" />

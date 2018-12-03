@@ -66,6 +66,7 @@ namespace Castlevania
 		const PlayerData &GetData();
 		MoveState GetMoveState();
 		AttackState GetAttackState();
+		void SetSpeed(float speed) override;
 		void SetJumpSpeed(float jumpSpeed);
 		
 		void SetWhip(std::unique_ptr<Whip> whip);
@@ -97,6 +98,7 @@ namespace Castlevania
 		PlayerData data;
 		MoveState moveState;
 		AttackState attackState;
+		float stairWalkingSpeed;
 		float jumpSpeed;
 
 		std::unique_ptr<Whip> whip;

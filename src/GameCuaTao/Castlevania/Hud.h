@@ -2,6 +2,7 @@
 
 #include "Direct2DGame/Content/ContentManager.h"
 #include "Models/Characters/Player/PlayerData.h"
+#include "Scenes/GameplayData.h"
 
 namespace Castlevania
 {
@@ -15,15 +16,21 @@ namespace Castlevania
 		int GetWidth();
 		int GetHeight();
 
-		//template<typename T>
-		//void Register(const T &data);
-		void Register(const PlayerData &data);
+		void Register(const PlayerData &playerData);
+		void Register(const int &bossHealth);
+		void Register(const GameplayData &gameplayData);
 
 		void LoadContent(ContentManager &content);
 		void Draw(SpriteExtensions &spriteBatch);
 
 	private:
-		const PlayerData *data;
+		struct HudData
+		{
+			const PlayerData *playerData;
+			const int *bossHealth;
+			const GameplayData *gameplayData;
+		};
+		HudData data;
 
 		int width;
 		int height;

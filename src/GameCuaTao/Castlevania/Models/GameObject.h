@@ -55,7 +55,7 @@ namespace Castlevania
 		void SetLinearVelocity(float speed, float angle = 0.0f); // angle in degree
 
 		float GetSpeed();
-		void SetSpeed(float speed);
+		virtual void SetSpeed(float speed);
 
 		virtual RectF GetFrameRect();
 		virtual RectF GetBoundingBox();

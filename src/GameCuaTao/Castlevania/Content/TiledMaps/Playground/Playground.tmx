@@ -48,13 +48,15 @@
   <object id="70" name="Checkpoint_06" type="Position" gid="4" x="481" y="699" width="60" height="66"/>
  </objectgroup>
  <objectgroup id="7" name="Triggers">
-  <object id="56" name="StairUp" type="Trigger" x="112" y="256" width="32" height="32">
+  <object id="56" name="StairUp" type="Trigger" x="112" y="256" width="32" height="32" visible="0">
    <properties>
+    <property name="Enabled" value="True"/>
     <property name="Facing" value="Right"/>
    </properties>
   </object>
   <object id="64" name="StairDown" type="Trigger" x="240" y="128" width="32" height="32">
    <properties>
+    <property name="Enabled" value="True"/>
     <property name="Facing" value="Left"/>
    </properties>
   </object>

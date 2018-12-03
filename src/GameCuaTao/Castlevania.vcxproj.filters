@@ -791,6 +791,9 @@
     <ClInclude Include="Castlevania\Utilities\TypeConverter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Castlevania\Scenes\GameplayData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

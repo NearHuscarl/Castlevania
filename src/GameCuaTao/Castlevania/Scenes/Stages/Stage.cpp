@@ -33,6 +33,8 @@ void Stage::Initialize()
 	player->AddObserver(*this);
 
 	hud = gameplayScene.GetHud();
+	data = gameplayScene.GetData();
+	data->timeLeft.ResetLastSecond();
 
 	mapManager.SetWorldPosition(Vector2{ 0, (float)hud->GetHeight() });
 	camera = std::make_unique<Camera>(graphicsDevice);
@@ -57,7 +59,7 @@ void Stage::Draw(SpriteExtensions &spriteBatch)
 			break;
 
 		// In the original game, when change to cutscene, all in-game objects
-		// except tiled map, simon and the door is invisible on the screen
+		// except tiled map, simon and the door are invisible on the screen
 		default: // Handle other cutscenes
 			DrawCutscene(spriteBatch);
 			break;
@@ -116,6 +118,7 @@ void Stage::UpdateGameplay(GameTime gameTime)
 {
 	camera->LookAt(player->GetOriginPosition(), Scrolling::Horizontally);
 	UpdateGameObjects(gameTime);
+	data->timeLeft.CountDown();
 }
 
 void Stage::DrawGameplay(SpriteExtensions &spriteBatch)
