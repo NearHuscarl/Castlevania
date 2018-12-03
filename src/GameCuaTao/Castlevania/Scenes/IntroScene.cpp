@@ -21,7 +21,7 @@ void IntroScene::LoadContent()
 {
 	auto viewport = sceneManager.GetGraphicsDevice().GetViewport();
 
-	background = sceneManager.GetContent().Load<Texture>("Textures/Backgrounds/Intro_Scene.png");
+	background = sceneManager.GetContent().Load<Texture>("Backgrounds/Intro_Scene.png");
 	
 	startPosition = Vector2{ (float)viewport.width - player->GetBoundingBox().Width() / 2, GROUND_POSITION_Y };
 	gatePosition = Vector2{ (float)viewport.width / 2, GROUND_POSITION_Y };

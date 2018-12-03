@@ -45,7 +45,7 @@ void EntityRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 	switch (parent.GetState())
 	{
 		case ObjectState::NORMAL:
-			spriteBatch.Draw(*sprite, parent.GetPosition());
+			AnimationRenderingSystem::Draw(spriteBatch);
 			break;
 
 		case ObjectState::DYING:

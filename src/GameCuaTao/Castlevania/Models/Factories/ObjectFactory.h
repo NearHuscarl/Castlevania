@@ -16,6 +16,10 @@ namespace Castlevania
 	public:
 		ObjectFactory(ContentManager &content);
 
+		std::unique_ptr<GameObject> CreateBoundary(RectF rect);
+		std::unique_ptr<GameObject> CreateRectangleObject(EntityType type, RectF rect);
+		std::unique_ptr<Trigger> CreateTrigger(RectF rect, TriggerType triggerType);
+
 		std::unique_ptr<GameObject> CreateBat(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Player> CreatePlayer(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Player> CreateIntroSimon(Vector2 position = Vector2::Zero());

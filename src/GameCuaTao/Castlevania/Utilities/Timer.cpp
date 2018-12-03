@@ -14,7 +14,6 @@ void Timer::SetCounter(int counter)
 	stopwatch.Restart();
 }
 
-// When change to the next map, the last second is reset
 void Timer::ResetLastSecond()
 {
 	SetCounter(counter);

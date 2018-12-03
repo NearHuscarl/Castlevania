@@ -8,8 +8,9 @@
 #include "../Systems/Collision/StaticCollisionSystem.h"
 #include "../Systems/Collision/StandardCollisionSystem.h"
 #include "../Systems/CollisionResponse/StaticResponseSystem.h"
-#include "../Systems/Rendering/SpriteRenderingSystem.h"
 #include "../Systems/Rendering/AnimationRenderingSystem.h"
+#include "../Systems/Rendering/BoundingBoxRenderingSystem.h"
+#include "../Systems/Rendering/SpriteRenderingSystem.h"
 #include "../Systems/Rendering/EntityRenderingSystem.h"
 #include "../Characters/Player/Controller.h"
 #include "../Characters/Player/PlayerMovementSystem.h"
@@ -31,10 +32,39 @@ ObjectFactory::ObjectFactory(ContentManager &content) : content{ content }
 	effectManager = std::make_unique<EffectFactory>(content);
 }
 
+std::unique_ptr<GameObject> ObjectFactory::CreateBoundary(RectF rect)
+{
+	return CreateRectangleObject(EntityType::Boundary, rect);
+}
+
+std::unique_ptr<GameObject> ObjectFactory::CreateRectangleObject(EntityType type, RectF rect)
+{
+	auto object = std::make_unique<GameObject>(type);
+	auto renderingSystem = std::make_unique<BoundingBoxRenderingSystem>(*object, rect);
+
+	object->SetPosition(Vector2{ rect.left, rect.top });
+	object->Attach(std::move(renderingSystem));
+	object->LoadContent(content);
+
+	return object;
+}
+
+std::unique_ptr<Trigger> ObjectFactory::CreateTrigger(RectF rect, TriggerType triggerType)
+{
+	auto object = std::make_unique<Trigger>(triggerType);
+	auto renderingSystem = std::make_unique<BoundingBoxRenderingSystem>(*object, rect);
+
+	object->SetPosition(Vector2{ rect.left, rect.top });
+	object->Attach(std::move(renderingSystem));
+	object->LoadContent(content);
+
+	return object;
+}
+
 std::unique_ptr<GameObject> ObjectFactory::CreateBat(Vector2 position)
 {
 	auto object = std::make_unique<GameObject>(EntityType::Bat);
-	auto stats = content.Load<Dictionary>("CharacterStats/Bat.xml");
+	auto stats = content.Load<Dictionary>("GameStats/Bat.xml");
 
 	object->SetLinearVelocity(std::stof(stats->at("Speed")));
 
@@ -50,7 +80,7 @@ std::unique_ptr<GameObject> ObjectFactory::CreateBat(Vector2 position)
 std::unique_ptr<Player> ObjectFactory::CreatePlayer(Vector2 position)
 {
 	auto object = std::make_unique<Player>();
-	auto stats = content.Load<Dictionary>("CharacterStats/Simon.xml");
+	auto stats = content.Load<Dictionary>("GameStats/Simon.xml");
 	
 	object->SetSpeed(std::stof(stats->at("Speed")));
 	object->SetJumpSpeed(std::stof(stats->at("JumpSpeed")));
@@ -81,7 +111,7 @@ std::unique_ptr<Player> ObjectFactory::CreatePlayer(Vector2 position)
 std::unique_ptr<Player> ObjectFactory::CreateIntroSimon(Vector2 position)
 {
 	auto object = std::make_unique<Player>();
-	auto stats = content.Load<Dictionary>("CharacterStats/Simon.xml");
+	auto stats = content.Load<Dictionary>("GameStats/Simon.xml");
 
 	object->SetSpeed(std::stof(stats->at("Speed")));
 
@@ -120,7 +150,7 @@ std::unique_ptr<Zombie> ObjectFactory::CreateZombie(Vector2 position)
 {
 	auto object = std::make_unique<Zombie>();
 
-	ReadEnemyConfig(*object.get(), "CharacterStats/Zombie.xml");
+	ReadEnemyConfig(*object.get(), "GameStats/Zombie.xml");
 
 	auto movementSystem = std::make_unique<ZombieMovementSystem>(*object);
 	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
@@ -289,7 +319,7 @@ std::unique_ptr<GameObject> ObjectFactory::CreateCastle(Vector2 position)
 std::unique_ptr<GameObject> ObjectFactory::CreateDirtBlock(Vector2 position)
 {
 	auto object = std::make_unique<GameObject>(EntityType::DirtBlock);
-	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Textures/Dirt_Block.png");
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "TiledMaps/Stage_01/Dirt_Block.png");
 
 	object->SetPosition(position);
 	object->Attach(std::move(renderingSystem));

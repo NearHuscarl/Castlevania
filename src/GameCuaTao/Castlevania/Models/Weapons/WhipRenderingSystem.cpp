@@ -12,14 +12,14 @@ WhipRenderingSystem::WhipRenderingSystem(Whip &parent, std::string spriteConfigP
 	this->spriteConfigPath = spriteConfigPath;
 }
 
-RectF WhipRenderingSystem::GetBoundingBox()
-{
-	return sprite->GetBoundingRectangle(parent.GetPosition());
-}
-
 AnimatedSprite &WhipRenderingSystem::GetSprite()
 {
 	return *sprite;
+}
+
+GameObject &WhipRenderingSystem::GetParent()
+{
+	return parent;
 }
 
 void WhipRenderingSystem::Receive(int message)
@@ -30,9 +30,10 @@ void WhipRenderingSystem::Receive(int message)
 
 void WhipRenderingSystem::LoadContent(ContentManager &content)
 {
+	RenderingSystem::LoadContent(content);
+
 	auto animationFactory = content.Load<AnimationFactory>(spriteConfigPath);
 	auto animations_12 = std::vector<std::string> { "Whip_level_01", "Whip_level_02" }; // animation for level 1 and 2 whip
-
 	sprite = std::make_unique<AnimatedSprite>(animationFactory, animations_12);
 }
 
@@ -52,6 +53,7 @@ void WhipRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 	if (!parent.GetBody().Enabled())
 		return;
 
+	RenderingSystem::Draw(spriteBatch);
 	spriteBatch.Draw(*sprite, parent.GetPosition());
 }
 
@@ -75,7 +77,7 @@ void WhipRenderingSystem::UpdatePositionRelativeToPlayer()
 {
 	auto &player = parent.GetOwner();
 	auto playerBbox = player.GetBoundingBox();
-	auto whipBbox = this->GetBoundingBox();
+	auto whipBbox = parent.GetBoundingBox();
 	auto currentFrameIndex = GetSprite().GetCurrentAnimation().GetCurrentFrameIndex();
 	auto newPosition = Vector2{};
 

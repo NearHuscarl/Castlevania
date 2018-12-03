@@ -4,21 +4,20 @@
 #include "RenderingSystem.h"
 
 namespace Castlevania
-{	
-	class SpriteRenderingSystem : public RenderingSystem
+{
+	class BoundingBoxRenderingSystem : public RenderingSystem
 	{
 	public:
-		SpriteRenderingSystem(GameObject &parent, std::string spritePath);
+		BoundingBoxRenderingSystem(GameObject &parent, RectF boundingBox);
 
 		Sprite &GetSprite() override;
 		GameObject &GetParent() override;
 
 		void LoadContent(ContentManager &content) override;
-		void Draw(SpriteExtensions &spriteBatch) override;
 
 	protected:
 		GameObject &parent;
 		std::unique_ptr<Sprite> sprite;
-		std::string spritePath;
+		RectF boundingBox;
 	};
 }

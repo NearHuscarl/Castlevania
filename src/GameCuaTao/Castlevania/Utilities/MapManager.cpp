@@ -50,7 +50,7 @@ ObjectCollection MapManager::CreateObjectCollection(ObjectsProperties objectsPro
 			auto width = std::stof(properties.at("width"));
 			auto height = std::stof(properties.at("height"));
 			auto bbox = RectF{ x, y, width, height };
-			auto object = std::make_unique<RectangleObject>(bbox);
+			auto object = objectFactory.CreateBoundary(bbox);
 
 			objectCollection.boundaries.push_back(std::move(object));
 		}
@@ -61,8 +61,8 @@ ObjectCollection MapManager::CreateObjectCollection(ObjectsProperties objectsPro
 			auto bbox = RectF{ x, y, width, height };
 			auto facing = string2Facing.at(GetValueOrDefault(properties, "Facing", "None"));
 			auto triggerType = string2TriggerType.at(name);
-			auto object = std::make_unique<Trigger>(bbox, triggerType);
-			
+			auto object = objectFactory.CreateTrigger(bbox, triggerType);
+
 			if (triggerType == TriggerType::NEXT_MAP)
 				object->AddProperty("Map", properties.at("Map"));
 

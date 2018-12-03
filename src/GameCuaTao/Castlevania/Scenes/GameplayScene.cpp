@@ -63,7 +63,7 @@ void GameplayScene::LoadContent()
 	mapManager->LoadContent(content);
 	hud->LoadContent(content);
 
-	auto cutsceneBgTexture = content.Load<Texture>("Textures/Cutscene_Background.png");
+	auto cutsceneBgTexture = content.Load<Texture>("Backgrounds/Cutscene_Background.png");
 	cutsceneBackground = std::make_unique<Sprite>(cutsceneBgTexture);
 
 	currentStage = ConstructStage(Map::COURTYARD);
@@ -84,8 +84,10 @@ void GameplayScene::Update(GameTime gameTime)
 void GameplayScene::Draw(GameTime gameTime)
 {
 	auto &spriteBatch = sceneManager.GetSpriteBatch();
-
+	
+	spriteBatch.Begin(D3DXSPRITE_ALPHABLEND);
 	currentStage->Draw(spriteBatch);
+	spriteBatch.End();
 }
 
 std::unique_ptr<Stage> GameplayScene::ConstructStage(Map map)

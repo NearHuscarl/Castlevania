@@ -81,7 +81,6 @@ namespace Castlevania
 		virtual void LoadContent(ContentManager &content);
 		virtual void Update(GameTime gameTime, UpdateData &updateData = UpdateData::Empty());
 		virtual void Draw(SpriteExtensions &spriteBatch);
-		virtual void DrawBoundingBox(SpriteExtensions &spriteBatch); // For debugging purpose
 
 		void SendMessageToSystems(int message);
 

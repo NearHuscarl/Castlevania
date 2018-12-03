@@ -1,19 +1,19 @@
 #pragma once
 
 #include "Direct2DGame/Extensions/Animations/AnimatedSprite.h"
-#include "../Systems/Rendering/IRenderingSystem.h"
+#include "../Systems/Rendering/RenderingSystem.h"
 
 namespace Castlevania
 {
 	class Whip;
 
-	class WhipRenderingSystem : public IRenderingSystem
+	class WhipRenderingSystem : public RenderingSystem
 	{
 	public:
 		WhipRenderingSystem(Whip &parent, std::string spriteConfigPath);
 
-		RectF GetBoundingBox() override;
 		AnimatedSprite &GetSprite() override;
+		GameObject &GetParent() override;
 
 		virtual void Receive(int message) override;
 
@@ -27,7 +27,6 @@ namespace Castlevania
 		std::string spriteConfigPath;
 		
 		virtual void OnEnabledChanged();
-
 		void UpdatePositionRelativeToPlayer();
 	};
 }

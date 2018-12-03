@@ -42,20 +42,21 @@ RectF Sprite::GetBoundingRectangle(Vector2 position)
 	auto spriteBoundary = textureRegion.GetBoundingRectangle();
 	auto rect = RectF{};
 	// spriteFrame is usually larger than the spriteBoundary so we need to take account of the offset
-	auto offsetX = spriteBoundary.X() - spriteFrame.X();
-	
+	auto offset_x = spriteBoundary.X() - spriteFrame.X();
+	auto offset_y = spriteBoundary.Y() - spriteFrame.Y();
+
 	if (effect == SpriteEffects::None)
 	{
-		rect.left = position.x + offsetX;
+		rect.left = position.x + offset_x;
 		rect.right = rect.left + spriteBoundary.Width();
 	}
 	else if (effect == SpriteEffects::FlipHorizontally)
 	{
-		rect.right = position.x + spriteFrame.Width() - offsetX;
+		rect.right = position.x + spriteFrame.Width() - offset_x;
 		rect.left = rect.right - spriteBoundary.Width();
 	}
 
-	rect.top = position.y + (spriteBoundary.Y() - spriteFrame.Y());
+	rect.top = position.y + offset_y;
 	rect.bottom = rect.top + spriteBoundary.Height();
 
 	return rect;

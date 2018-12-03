@@ -2,7 +2,7 @@
 
 using namespace Castlevania;
 
-SpawnArea::SpawnArea(RectF boundingBox) : RectangleObject{ boundingBox, EntityType::SpawnArea }
+SpawnArea::SpawnArea() : GameObject{ EntityType::SpawnArea }
 {
 }
 

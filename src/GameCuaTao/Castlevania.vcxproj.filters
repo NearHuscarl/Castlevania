@@ -222,9 +222,6 @@
     <ClCompile Include="Castlevania\Utilities\Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Castlevania\Utilities\SpriteHelper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Castlevania\Models\Weapons\WhipRenderingSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -262,9 +259,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Castlevania\Models\Trigger.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Castlevania\Models\RectangleObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Castlevania\Utilities\MapManager.cpp">
@@ -325,6 +319,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Castlevania\Scenes\Stages\GreatHallStage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Models\Systems\Rendering\BoundingboxRenderingSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Models\Systems\Rendering\RenderingSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -644,9 +644,6 @@
     <ClInclude Include="Castlevania\Utilities\Timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Castlevania\Utilities\SpriteHelper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Castlevania\Models\Weapons\WhipRenderingSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -702,9 +699,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Castlevania\Models\Trigger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Castlevania\Models\RectangleObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Castlevania\Models\Facing.h">
@@ -792,6 +786,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Castlevania\Scenes\GameplayData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Systems\Rendering\BoundingboxRenderingSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Systems\Rendering\RenderingSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

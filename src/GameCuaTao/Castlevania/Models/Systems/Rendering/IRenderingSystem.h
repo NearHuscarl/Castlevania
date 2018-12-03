@@ -12,12 +12,12 @@ namespace Castlevania
 	class IRenderingSystem : public IReceiver
 	{
 	public:
-		virtual RectF GetBoundingBox() = 0;
 		virtual Sprite &GetSprite() = 0;
 		
 		virtual void LoadContent(ContentManager &content) = 0;
 		virtual void Update(GameTime gameTime) = 0;
 		virtual void Draw(SpriteExtensions &spriteBatch) = 0;
+
 		virtual ~IRenderingSystem() {}
 	};
 }

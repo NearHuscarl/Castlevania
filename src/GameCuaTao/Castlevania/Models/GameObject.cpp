@@ -2,7 +2,6 @@
 #include "Direct2DGame/Input/Keyboard.h"
 #include "GameObject.h"
 #include "Settings.h"
-#include "../Utilities/SpriteHelper.h"
 
 using namespace Castlevania;
 
@@ -261,31 +260,6 @@ void GameObject::Update(GameTime gameTime, UpdateData &updateData)
 void GameObject::Draw(SpriteExtensions &spriteBatch)
 {
 	renderingSystem->Draw(spriteBatch);
-}
-
-void GameObject::DrawBoundingBox(SpriteExtensions &spriteBatch)
-{
-	switch (type)
-	{
-		case EntityType::Whip:
-			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::Red() * 0.75f);
-			break;
-
-		case EntityType::Brazier:
-			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::Green() * 0.75f);
-			break;
-
-		case EntityType::Player:
-			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::LavenderBlue() * 0.75f);
-			break;
-
-		case EntityType::Castle: // Just a fg image, skip drawing
-			break;
-
-		default:
-			SpriteHelper::DrawRectangle(spriteBatch, GetBoundingBox(), Color::Magenta() * 0.75f);
-			break;
-	}
 }
 
 void GameObject::SendMessageToSystems(int message)

@@ -1,14 +1,14 @@
 #pragma once
 
 #include "Direct2DGame/GameTime.h"
-#include "RectangleObject.h"
+#include "GameObject.h"
 
 namespace Castlevania
 {
-	class SpawnArea : public RectangleObject
+	class SpawnArea : public GameObject
 	{
 	public:
-		SpawnArea(RectF boundingBox);
+		SpawnArea();
 
 		void SetActive(bool value);
 		void Update(GameTime gameTime);

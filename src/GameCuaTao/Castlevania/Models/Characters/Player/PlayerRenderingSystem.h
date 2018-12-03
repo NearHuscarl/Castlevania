@@ -2,16 +2,17 @@
 
 #include "Direct2DGame/Extensions/Animations/AnimatedSprite.h"
 #include "Player.h"
+#include "../../Systems/Rendering/RenderingSystem.h"
 
 namespace Castlevania
 {
-	class PlayerRenderingSystem : public IRenderingSystem
+	class PlayerRenderingSystem : public RenderingSystem
 	{
 	public:
 		PlayerRenderingSystem(Player &parent, std::string animationPath);
 
-		RectF GetBoundingBox() override;
 		Sprite &GetSprite() override;
+		GameObject &GetParent() override;
 
 		virtual void Receive(int message) override;
 

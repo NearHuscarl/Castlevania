@@ -34,7 +34,7 @@ void Stage::Initialize()
 
 	hud = gameplayScene.GetHud();
 	data = gameplayScene.GetData();
-	data->timeLeft.ResetLastSecond();
+	data->timeLeft.ResetLastSecond(); // When change to the next map, the last second is reset
 
 	mapManager.SetWorldPosition(Vector2{ 0, (float)hud->GetHeight() });
 	camera = std::make_unique<Camera>(graphicsDevice);
@@ -123,15 +123,12 @@ void Stage::UpdateGameplay(GameTime gameTime)
 
 void Stage::DrawGameplay(SpriteExtensions &spriteBatch)
 {
-	spriteBatch.Begin(D3DXSPRITE_ALPHABLEND);
-
 	map->Draw(spriteBatch);
 	hud->Draw(spriteBatch);
 
 	for (auto const &entity : objectCollection.entities)
 	{
 		entity->Draw(spriteBatch);
-		entity->DrawBoundingBox(spriteBatch); // NOTE: remove
 	}
 
 	for (auto const &trigger : objectCollection.triggers)
@@ -145,10 +142,6 @@ void Stage::DrawGameplay(SpriteExtensions &spriteBatch)
 	{
 		fgObject->Draw(spriteBatch);
 	}
-
-	player->DrawBoundingBox(spriteBatch); // NOTE: remove
-
-	spriteBatch.End();
 }
 
 void Stage::DrawNextMapCutscene(SpriteExtensions &spriteBatch)
@@ -158,8 +151,6 @@ void Stage::DrawNextMapCutscene(SpriteExtensions &spriteBatch)
 
 void Stage::DrawCutscene(SpriteExtensions &spriteBatch)
 {
-	spriteBatch.Begin(D3DXSPRITE_ALPHABLEND);
-
 	map->Draw(spriteBatch);
 	hud->Draw(spriteBatch);
 
@@ -169,10 +160,6 @@ void Stage::DrawCutscene(SpriteExtensions &spriteBatch)
 	{
 		fgObject->Draw(spriteBatch);
 	}
-
-	player->DrawBoundingBox(spriteBatch); // NOTE: remove
-
-	spriteBatch.End();
 }
 
 void Stage::SetupNextMapCutscene()

@@ -9,27 +9,26 @@ SpriteRenderingSystem::SpriteRenderingSystem(GameObject &parent, std::string spr
 	this->spritePath = spritePath;
 }
 
-RectF SpriteRenderingSystem::GetBoundingBox()
-{
-	return sprite->GetBoundingRectangle(parent.GetPosition());
-}
-
 Sprite &SpriteRenderingSystem::GetSprite()
 {
 	return *sprite;
 }
 
+GameObject &SpriteRenderingSystem::GetParent()
+{
+	return parent;
+}
+
 void SpriteRenderingSystem::LoadContent(ContentManager &content)
 {
+	RenderingSystem::LoadContent(content);
+
 	auto texture = content.Load<Texture>(spritePath);
 	sprite = std::make_unique<Sprite>(texture);
 }
 
-void SpriteRenderingSystem::Update(GameTime gameTime)
-{
-}
-
 void SpriteRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 {
+	RenderingSystem::Draw(spriteBatch);
 	spriteBatch.Draw(*sprite, parent.GetPosition());
 }

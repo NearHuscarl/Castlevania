@@ -1,15 +1,15 @@
 #pragma once
 
 #include <map>
-#include "RectangleObject.h"
+#include "GameObject.h"
 #include "TriggerType.h"
 
 namespace Castlevania
 {
-	class Trigger : public RectangleObject
+	class Trigger : public GameObject
 	{
 	public:
-		Trigger(RectF boundingBox, TriggerType type);
+		Trigger(TriggerType type);
 		
 		void AddProperty(std::string key, std::string value);
 		std::string Property(std::string key);

@@ -11,7 +11,7 @@ MenuScene::MenuScene(SceneManager &sceneManager) : AbstractScene{ sceneManager }
 void MenuScene::LoadContent()
 {
 	auto &content = sceneManager.GetContent();
-	background = content.Load<Texture>("Textures/Backgrounds/Main_Menu.png");
+	background = content.Load<Texture>("Backgrounds/Main_Menu.png");
 	menuFont = content.Load<SpriteFont>("Fonts/MainFont.font.xml");
 
 	auto viewport = sceneManager.GetGraphicsDevice().GetViewport();

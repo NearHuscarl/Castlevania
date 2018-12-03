@@ -21,6 +21,8 @@ void WhipFlashingRenderingSystem::Receive(int message)
 
 void WhipFlashingRenderingSystem::LoadContent(ContentManager &content)
 {
+	RenderingSystem::LoadContent(content);
+
 	auto animationFactory = content.Load<AnimationFactory>(spriteConfigPath);
 
 	auto animations_mangenta = std::vector<std::string>{ "Whip_level_03_magenta" };
@@ -45,8 +47,6 @@ void WhipFlashingRenderingSystem::Update(GameTime gameTime)
 	spriteBlue->Update();
 	UpdatePositionRelativeToPlayer();
 
-	auto facing = parent.GetFacing();
-
 	currentColor = MathHelper::RandomBetween(1, 4, currentColor);
 }
 
@@ -54,6 +54,8 @@ void WhipFlashingRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 {
 	if (!parent.GetBody().Enabled())
 		return;
+
+	RenderingSystem::Draw(spriteBatch);
 
 	switch (currentColor)
 	{

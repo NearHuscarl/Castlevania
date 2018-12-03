@@ -9,18 +9,19 @@ AnimationRenderingSystem::AnimationRenderingSystem(GameObject &parent, std::stri
 	this->spriteConfigPath = spriteConfigPath;
 }
 
-RectF AnimationRenderingSystem::GetBoundingBox()
-{
-	return sprite->GetBoundingRectangle(parent.GetPosition());
-}
-
 Sprite &AnimationRenderingSystem::GetSprite()
 {
 	return *sprite;
 }
 
+GameObject &AnimationRenderingSystem::GetParent()
+{
+	return parent;
+}
+
 void AnimationRenderingSystem::LoadContent(ContentManager &content)
 {
+	RenderingSystem::LoadContent(content);
 	auto animationFactory = content.Load<AnimationFactory>(spriteConfigPath);
 	sprite = std::make_unique<AnimatedSprite>(animationFactory);
 }
@@ -32,5 +33,6 @@ void AnimationRenderingSystem::Update(GameTime gameTime)
 
 void AnimationRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 {
+	RenderingSystem::Draw(spriteBatch);
 	spriteBatch.Draw(*sprite, parent.GetPosition());
 }

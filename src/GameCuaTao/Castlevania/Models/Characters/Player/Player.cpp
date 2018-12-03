@@ -108,7 +108,7 @@ void Player::UpdateStates()
 		case MoveState::WALKING_TO_STAIRS:
 		{
 			auto playerCenter_x = GetOriginPosition().x;
-			auto stairCenter_x = nearbyStair->Center().x;
+			auto stairCenter_x = nearbyStair->GetOriginPosition().x;
 
 			if (playerCenter_x >= stairCenter_x && facing == Facing::Right
 				|| playerCenter_x <= stairCenter_x && facing == Facing::Left)
@@ -209,12 +209,6 @@ void Player::Draw(SpriteExtensions &spriteBatch)
 	whip->Draw(spriteBatch);
 }
 
-void Player::DrawBoundingBox(SpriteExtensions &spriteBatch)
-{
-	GameObject::DrawBoundingBox(spriteBatch);
-	whip->DrawBoundingBox(spriteBatch);
-}
-
 #pragma region Commands
 
 void Player::Idle()
@@ -255,7 +249,7 @@ void Player::WalkToStairs()
 		return;
 
 	auto playerCenter_x = GetOriginPosition().x;
-	auto stairCenter_x = nearbyStair->Center().x;
+	auto stairCenter_x = nearbyStair->GetOriginPosition().x;
 	
 	if (playerCenter_x < stairCenter_x)
 	{

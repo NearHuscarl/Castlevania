@@ -13,14 +13,14 @@ PlayerRenderingSystem::PlayerRenderingSystem(Player &parent, std::string animati
 	this->animationPath = animationPath;
 }
 
-RectF PlayerRenderingSystem::GetBoundingBox()
-{
-	return sprite->GetBoundingRectangle(parent.GetPosition());
-}
-
 Sprite &PlayerRenderingSystem::GetSprite()
 {
 	return *sprite;
+}
+
+GameObject &PlayerRenderingSystem::GetParent()
+{
+	return parent;
 }
 
 void PlayerRenderingSystem::Receive(int message)
@@ -43,6 +43,7 @@ void PlayerRenderingSystem::Receive(int message)
 
 void PlayerRenderingSystem::LoadContent(ContentManager &content)
 {
+	RenderingSystem::LoadContent(content);
 	auto animations = content.Load<AnimationFactory>(animationPath);
 	sprite = std::make_unique<AnimatedSprite>(animations);
 }
@@ -59,7 +60,7 @@ void PlayerRenderingSystem::Update(GameTime gameTime)
 			switch (moveState)
 			{
 				case MoveState::IDLE_UPSTAIRS:
-					if (sprite->AnimateComplete()) // finish up the rest of climbing animation
+					if (sprite->AnimateComplete()) // finish the rest of climbing animation
 					{
 						parent.OnStopClimbingStair();
 						sprite->Play(IDLE_UPSTAIRS_ANIMATION);
@@ -127,6 +128,7 @@ void PlayerRenderingSystem::Update(GameTime gameTime)
 
 void PlayerRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 {
+	RenderingSystem::Draw(spriteBatch);
 	spriteBatch.Draw(*sprite, parent.GetPosition());
 }
 
@@ -215,11 +217,8 @@ void PlayerRenderingSystem::OnAttackStateChanged()
 
 	switch (parent.moveState)
 	{
-		case MoveState::WALKING:
-			sprite->Play(ATTACK_ANIMATION);
-			break;
-
 		case MoveState::IDLE:
+		case MoveState::WALKING:
 			sprite->Play(ATTACK_ANIMATION);
 			break;
 

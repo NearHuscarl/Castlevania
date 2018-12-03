@@ -14,7 +14,7 @@ namespace Castlevania
 
 	struct ObjectCollection
 	{
-		std::vector<std::unique_ptr<RectangleObject>> boundaries;
+		std::vector<std::unique_ptr<GameObject>> boundaries;
 		std::vector<std::unique_ptr<Trigger>> triggers;
 		std::vector<std::unique_ptr<GameObject>> entities;
 		std::vector<std::unique_ptr<GameObject>> foregroundObjects;

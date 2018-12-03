@@ -2,7 +2,6 @@
 #include "MenuScene.h"
 #include "IntroScene.h"
 #include "GameplayScene.h"
-#include "../Utilities/SpriteHelper.h"
 
 using namespace Castlevania;
 
@@ -11,8 +10,6 @@ SceneManager::SceneManager(Game &game) : game{ game }
 	this->nextScene = nullptr;
 	this->objectFactory = std::make_unique<ObjectFactory>(GetContent());
 	this->spriteBatch = std::make_unique<SpriteExtensions>(game.GetGraphicsDevice());
-
-	SpriteHelper::LoadContent(GetContent());
 }
 
 #pragma region Getters

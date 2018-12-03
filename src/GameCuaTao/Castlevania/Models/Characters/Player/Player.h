@@ -76,7 +76,6 @@ namespace Castlevania
 		void LoadContent(ContentManager &content) override;
 		void Update(GameTime gameTime, UpdateData &updateData) override;
 		void Draw(SpriteExtensions &spriteBatch) override;
-		void DrawBoundingBox(SpriteExtensions &spriteBatch) override;
 
 		void Idle();
 		void WalkLeft();
