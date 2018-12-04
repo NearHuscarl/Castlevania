@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Spritesheet TexturePath="Panther.png">
+    <Sprite ID="idle_01">
+      <SpriteFrame Left="0" Top="0" Width="66" Height="32" />
+      <SpriteBoundary Left="32" Top="2" Width="2" Height="30" />
+    </Sprite>
+
+    <Sprite ID="run_01">
+      <SpriteFrame Left="66" Top="0" Width="66" Height="32" />
+      <SpriteBoundary Left="93" Top="0" Width="2" Height="32" />
+    </Sprite>
+
+    <Sprite ID="run_02">
+      <SpriteFrame Left="132" Top="0" Width="66" Height="32" />
+      <SpriteBoundary Left="159" Top="0" Width="2" Height="32" />
+    </Sprite>
+
+    <Sprite ID="run_03">
+      <SpriteFrame Left="198" Top="0" Width="66" Height="32" />
+      <SpriteBoundary Left="227" Top="0" Width="2" Height="32" />
+    </Sprite>
+  </Spritesheet>
+
+</GameContent>

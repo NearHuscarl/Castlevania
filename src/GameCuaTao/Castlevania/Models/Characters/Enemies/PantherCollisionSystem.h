@@ -1,21 +1,21 @@
 #pragma once
 
-#include "CollisionSystem.h"
+#include "../../Systems/Collision/CollisionSystem.h"
 
 namespace Castlevania
 {
-	class GameObject;
+	class Panther;
 
 	// Only check for collision with static object (wall, floor, platform)
-	class StaticCollisionSystem : public CollisionSystem
+	class PantherCollisionSystem : public CollisionSystem
 	{
 	public:
-		StaticCollisionSystem(GameObject &parent);
+		PantherCollisionSystem(Panther &parent);
 
 		IGameObject &GetParent() override;
 		void Update(ObjectCollection &objectCollection) override;
 
 	private:
-		IGameObject &parent;
+		Panther &parent;
 	};
 }

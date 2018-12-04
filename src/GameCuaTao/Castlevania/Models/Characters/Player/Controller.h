@@ -12,13 +12,11 @@ namespace Castlevania
 	public:
 		Controller(Player &player, ObjectFactory &objectFactory);
 
-		void Receive(int message) {};
-
 		void OnKeyStateChanged(KeyboardState &keyboardState) override;
 		void OnKeyDown(int keyCode) override;
 		void OnKeyUp(int keyCode) override;
 
-		void Update() override;
+		void Update(UpdateData &updateData) override;
 
 	private:
 		Player &player;

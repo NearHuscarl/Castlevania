@@ -32,7 +32,8 @@ void PlayerResponseSystem::Update(ObjectCollection &objectCollection)
 				break;
 
 			case EntityType::Zombie:
-				OnCollideWithZombie(result);
+			case EntityType::Panther:
+				OnCollideWithEnemy(result);
 				break;
 
 			case EntityType::LargeHeart:
@@ -170,11 +171,11 @@ void PlayerResponseSystem::OnCollideWithTrigger(CollisionResult &result, Respons
 	}
 }
 
-void PlayerResponseSystem::OnCollideWithZombie(CollisionResult &result)
+void PlayerResponseSystem::OnCollideWithEnemy(CollisionResult &result)
 {
-	auto &zombie = dynamic_cast<Zombie&>(result.collidedObject);
+	auto &enemy = dynamic_cast<Enemy&>(result.collidedObject);
 
-	parent.TakeDamage(zombie.GetAttack(), Opposite(result.direction));
+	parent.TakeDamage(enemy.GetAttack(), Opposite(result.direction));
 }
 
 void PlayerResponseSystem::OnCollideWithHeart(CollisionResult &result)

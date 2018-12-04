@@ -160,6 +160,11 @@
     <ClCompile Include="Castlevania\CastlevaniaGame.cpp" />
     <ClCompile Include="Castlevania\Effects\FlameEffect.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Enemies\Enemy.cpp" />
+    <ClCompile Include="Castlevania\Models\Characters\Enemies\Panther.cpp" />
+    <ClCompile Include="Castlevania\Models\Characters\Enemies\PantherControlSystem.cpp" />
+    <ClCompile Include="Castlevania\Models\Characters\Enemies\PantherMovementSystem.cpp" />
+    <ClCompile Include="Castlevania\Models\Characters\Enemies\PantherRenderingSystem.cpp" />
+    <ClCompile Include="Castlevania\Models\Characters\Enemies\PantherCollisionSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Enemies\Zombie.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Enemies\ZombieMovementSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Factories\ObjectFactory.cpp" />
@@ -192,13 +197,14 @@
     <ClCompile Include="Castlevania\Scenes\Stages\PlaygroundStage.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\Stage.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\CourtyardStage.cpp" />
+    <ClCompile Include="Castlevania\Utilities\CppExtensions.cpp" />
     <ClCompile Include="Castlevania\Utilities\Subject.cpp" />
     <ClCompile Include="Castlevania\Utilities\Timer.cpp" />
     <ClCompile Include="Direct2DGame\Content\SpritesheetReader.cpp" />
     <ClCompile Include="Direct2DGame\Extensions\Collisions\Body\Body.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Player\Controller.cpp" />
     <ClCompile Include="Castlevania\Models\Items\Brazier.cpp" />
-    <ClCompile Include="Castlevania\Models\Systems\CollisionResponse\StaticResponseSystem.cpp" />
+    <ClCompile Include="Castlevania\Models\Systems\CollisionResponse\GroundResponseSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Collision\CollisionSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Player\PlayerMovementSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Movement\SimpleMovementSystem.cpp" />
@@ -266,6 +272,11 @@
     <ClInclude Include="Castlevania\CastlevaniaGame.h" />
     <ClInclude Include="Castlevania\Effects\FlameEffect.h" />
     <ClInclude Include="Castlevania\Models\Characters\Enemies\Enemy.h" />
+    <ClInclude Include="Castlevania\Models\Characters\Enemies\Panther.h" />
+    <ClInclude Include="Castlevania\Models\Characters\Enemies\PantherControlSystem.h" />
+    <ClInclude Include="Castlevania\Models\Characters\Enemies\PantherMovementSystem.h" />
+    <ClInclude Include="Castlevania\Models\Characters\Enemies\PantherRenderingSystem.h" />
+    <ClInclude Include="Castlevania\Models\Characters\Enemies\PantherCollisionSystem.h" />
     <ClInclude Include="Castlevania\Models\Characters\Enemies\Zombie.h" />
     <ClInclude Include="Castlevania\Models\Characters\Enemies\ZombieMovementSystem.h" />
     <ClInclude Include="Castlevania\Models\Characters\Enemies\ZombieSettings.h" />
@@ -319,6 +330,7 @@
     <ClInclude Include="Castlevania\Utilities\TypeConverter.h" />
     <ClInclude Include="Direct2DGame\Content\SpritesheetReader.h" />
     <ClInclude Include="Direct2DGame\Extensions\Collisions\Body\Body.h" />
+    <ClInclude Include="Direct2DGame\Extensions\Collisions\Body\BoxCollisionResult.h" />
     <ClInclude Include="Direct2DGame\Extensions\Collisions\Body\CollisionData.h" />
     <ClInclude Include="Direct2DGame\Extensions\Collisions\Body\CollisionResult.h" />
     <ClInclude Include="Direct2DGame\Extensions\Collisions\Grid\CollisionGridCell.h" />
@@ -328,7 +340,7 @@
     <ClInclude Include="Castlevania\Models\EntityType.h" />
     <ClInclude Include="Castlevania\Models\IGameObject.h" />
     <ClInclude Include="Castlevania\Models\Items\Brazier.h" />
-    <ClInclude Include="Castlevania\Models\Systems\CollisionResponse\StaticResponseSystem.h" />
+    <ClInclude Include="Castlevania\Models\Systems\CollisionResponse\GroundResponseSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Collision\CollisionSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\CollisionResponse\ICollisionResponseSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Collision\ICollisionSystem.h" />

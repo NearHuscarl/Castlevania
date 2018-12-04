@@ -4,8 +4,13 @@
 
 using namespace Castlevania;
 
-SimpleCollisionSystem::SimpleCollisionSystem(GameObject &parent) : CollisionSystem{ parent }
+SimpleCollisionSystem::SimpleCollisionSystem(GameObject &parent) : parent{ parent }
 {
+}
+
+IGameObject &SimpleCollisionSystem::GetParent()
+{
+	return parent;
 }
 
 void SimpleCollisionSystem::Update(ObjectCollection &objectCollection)

@@ -7,7 +7,7 @@
 #include "../Systems/Collision/SimpleCollisionSystem.h"
 #include "../Systems/Collision/StaticCollisionSystem.h"
 #include "../Systems/Collision/StandardCollisionSystem.h"
-#include "../Systems/CollisionResponse/StaticResponseSystem.h"
+#include "../Systems/CollisionResponse/GroundResponseSystem.h"
 #include "../Systems/Rendering/AnimationRenderingSystem.h"
 #include "../Systems/Rendering/BoundingBoxRenderingSystem.h"
 #include "../Systems/Rendering/SpriteRenderingSystem.h"
@@ -17,6 +17,10 @@
 #include "../Characters/Player/PlayerCollisionSystem.h"
 #include "../Characters/Player/PlayerResponseSystem.h"
 #include "../Characters/Player/PlayerRenderingSystem.h"
+#include "../Characters/Enemies/PantherControlSystem.h"
+#include "../Characters/Enemies/PantherCollisionSystem.h"
+#include "../Characters/Enemies/PantherMovementSystem.h"
+#include "../Characters/Enemies/PantherRenderingSystem.h"
 #include "../Characters/Enemies/ZombieMovementSystem.h"
 #include "../Weapons/WhipRenderingSystem.h"
 #include "../Weapons/WhipFlashingRenderingSystem.h"
@@ -154,11 +158,36 @@ std::unique_ptr<Zombie> ObjectFactory::CreateZombie(Vector2 position)
 
 	auto movementSystem = std::make_unique<ZombieMovementSystem>(*object);
 	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
-	auto responseSystem = std::make_unique<StaticResponseSystem>(*object);
+	auto responseSystem = std::make_unique<GroundResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<EntityRenderingSystem>(
 		*object, "Characters/Enemies/Zombie.ani.xml", effectManager->CreateFlameEffect());
 
 	object->SetPosition(position);
+	object->Attach(std::move(movementSystem));
+	object->Attach(std::move(collisionSystem));
+	object->Attach(std::move(responseSystem));
+	object->Attach(std::move(renderingSystem));
+
+	object->LoadContent(content);
+
+	return object;
+}
+
+std::unique_ptr<Panther> ObjectFactory::CreatePanther(Vector2 position)
+{
+	auto object = std::make_unique<Panther>();
+
+	ReadEnemyConfig(*object.get(), "GameStats/Panther.xml");
+
+	auto controlSystem = std::make_unique<PantherControlSystem>(*object);
+	auto movementSystem = std::make_unique<PantherMovementSystem>(*object);
+	auto collisionSystem = std::make_unique<PantherCollisionSystem>(*object);
+	auto responseSystem = std::make_unique<GroundResponseSystem>(*object);
+	auto renderingSystem = std::make_unique<PantherRenderingSystem>(
+		*object, "Characters/Enemies/Panther.ani.xml", effectManager->CreateFlameEffect());
+
+	object->SetPosition(position);
+	object->Attach(std::move(controlSystem));
 	object->Attach(std::move(movementSystem));
 	object->Attach(std::move(collisionSystem));
 	object->Attach(std::move(responseSystem));
@@ -247,7 +276,7 @@ std::unique_ptr<Powerup> ObjectFactory::CreateDaggerItem(Vector2 position)
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
 	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
-	auto responseSystem = std::make_unique<StaticResponseSystem>(*object);
+	auto responseSystem = std::make_unique<GroundResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Dagger.png");
 
 	object->SetPosition(position);
@@ -268,7 +297,7 @@ std::unique_ptr<Powerup> ObjectFactory::CreateLargeHeart(Vector2 position)
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
 	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
-	auto responseSystem = std::make_unique<StaticResponseSystem>(*object);
+	auto responseSystem = std::make_unique<GroundResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Large_Heart.png");
 	
 	object->SetPosition(position);
@@ -289,7 +318,7 @@ std::unique_ptr<Powerup> ObjectFactory::CreateWhipPowerup(Vector2 position)
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
 	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
-	auto responseSystem = std::make_unique<StaticResponseSystem>(*object);
+	auto responseSystem = std::make_unique<GroundResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Whip_Powerup.png");
 
 	object->SetPosition(position);

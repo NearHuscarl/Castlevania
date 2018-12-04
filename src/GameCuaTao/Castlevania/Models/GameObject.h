@@ -12,12 +12,11 @@
 #include "IGameObject.h"
 #include "EntityType.h"
 #include "Facing.h"
-#include "UpdateData.h"
 #include "../Utilities/Subject.h"
 
 namespace Castlevania
 {
-	struct ObjectCollection;
+	struct UpdateData;
 
 	enum class ObjectState
 	{
@@ -78,11 +77,15 @@ namespace Castlevania
 		void Attach(std::unique_ptr<ICollisionResponseSystem> system);
 		void Attach(std::unique_ptr<IRenderingSystem> system);
 
+		template<typename T>
+		void Detach();
+
 		virtual void LoadContent(ContentManager &content);
-		virtual void Update(GameTime gameTime, UpdateData &updateData = UpdateData::Empty());
+		virtual void Update(GameTime gameTime, UpdateData &updateData);
 		virtual void Draw(SpriteExtensions &spriteBatch);
 
 		void SendMessageToSystems(int message);
+		static GameObject &NullObject();
 
 		virtual ~GameObject();
 

@@ -1,6 +1,7 @@
 #include "Direct2DGame/Base/Vector2.h"
 #include "IntroScene.h"
 #include "SceneManager.h"
+#include "../Models/UpdateData.h"
 #include "../Settings/Audios.h"
 #include "../Utilities/AudioManager.h"
 

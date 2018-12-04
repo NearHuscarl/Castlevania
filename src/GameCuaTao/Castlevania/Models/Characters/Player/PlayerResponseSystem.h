@@ -32,7 +32,7 @@ namespace Castlevania
 		
 		void OnCollideWithBoundary(CollisionResult &result, ResponseResult &responseResult);
 		void OnCollideWithTrigger(CollisionResult &result, ResponseResult &responseResult);
-		void OnCollideWithZombie(CollisionResult &result);
+		void OnCollideWithEnemy(CollisionResult &result);
 		void OnCollideWithHeart(CollisionResult &result);
 		void OnCollideWithWhipPowerup(CollisionResult &result);
 		void OnCollideWithDaggerItem(CollisionResult &result, ObjectCollection &objectCollection);

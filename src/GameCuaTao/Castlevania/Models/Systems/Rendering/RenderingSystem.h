@@ -20,6 +20,7 @@ namespace Castlevania
 		virtual void LoadContent(ContentManager &content) override;
 		virtual void Update(GameTime gameTime) override;
 		virtual void Draw(SpriteExtensions &spriteBatch) override;
+		void DrawBoundingBox(SpriteExtensions &spriteBatch, RectF boundingBox, Color color);
 
 	protected:
 		std::shared_ptr<Texture> bboxTexture;

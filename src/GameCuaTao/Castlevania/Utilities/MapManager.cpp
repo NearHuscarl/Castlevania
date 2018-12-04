@@ -81,10 +81,12 @@ ObjectCollection MapManager::CreateObjectCollection(ObjectsProperties objectsPro
 		{
 			auto object = ConstructObject(properties);
 			auto height = std::stoi(properties.at("height"));
+			auto facing = string2Facing.at(GetValueOrDefault(properties, "Facing", "Right"));
 			auto foreground = GetValueOrDefault(properties, "Foreground", "False");
 			auto visibility = GetValueOrDefault(properties, "Visibility", "True");
 
 			object->SetPosition(x, y - height);
+			object->SetFacing(facing);
 			object->SetVisibility(ToBoolean(visibility));
 
 			if (ToBoolean(foreground))
@@ -115,6 +117,12 @@ std::unique_ptr<GameObject> MapManager::ConstructObject(ObjectProperties propert
 			auto itemType = string2EntityType.at(properties.at("Item"));
 			return objectFactory.CreateBrazier(itemType);
 		}
+
+		case EntityType::Zombie:
+			return objectFactory.CreateZombie();
+
+		case EntityType::Panther:
+			return objectFactory.CreatePanther();
 
 		case EntityType::Dagger:
 			return objectFactory.CreateDagger();

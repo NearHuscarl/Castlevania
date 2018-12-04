@@ -1,13 +1,29 @@
 #pragma once
 
 #include <sstream>
+#include <vector>
 
 namespace Castlevania
 {
 	// Get value from key in map, if not found, return defaultValue
 	// https://stackoverflow.com/a/26958878/9449426
 	template<typename MAP>
-	const typename MAP::mapped_type &GetValueOrDefault(const MAP &map,
+	const typename MAP::mapped_type &GetValueOrDefault(
+		const MAP &map,
+		const typename MAP::key_type &key,
+		const typename MAP::mapped_type &defaultValue);
+
+	template<typename T, typename E>
+	void RemoveByValue(std::vector<T> &list, E removeItem);
+
+	// bool b = ToBoolean("tRuE");
+	bool ToBoolean(std::string str);
+
+
+
+	template<typename MAP>
+	const typename MAP::mapped_type &GetValueOrDefault(
+		const MAP &map,
 		const typename MAP::key_type &key,
 		const typename MAP::mapped_type &defaultValue)
 	{
@@ -18,16 +34,12 @@ namespace Castlevania
 		return it->second;
 	}
 
-	// bool b = ToBoolean("tRuE");
-	bool ToBoolean(std::string str)
+	template<typename T, typename E>
+	void RemoveByValue(std::vector<T> &list, E removeItem)
 	{
-		std::transform(str.begin(), str.end(), str.begin(), ::tolower);
-
-		auto isstream = std::istringstream{ str };
-		auto result = bool{};
-
-		isstream >> std::boolalpha >> result;
+		auto it = std::find(list.begin(), list.end(), removeItem);
 		
-		return result;
+		if (it != list.end())
+			list.erase(it);
 	}
 }

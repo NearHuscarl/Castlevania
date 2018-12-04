@@ -1,4 +1,5 @@
 #include "Dagger.h"
+#include "../UpdateData.h"
 
 using namespace Castlevania;
 

@@ -3,6 +3,7 @@
 #include "StageEvent.h"
 #include "../GameplayScene.h"
 #include "../SceneManager.h"
+#include "../../Models/UpdateData.h"
 #include "../../Utilities/TypeConverter.h"
 
 using namespace Castlevania;
@@ -73,6 +74,7 @@ void Stage::LoadMap(Map mapName)
 	
 	map = mapData.map;
 	objectCollection = std::move(mapData.objects);
+	objectCollection.player = player;
 
 	camera->SetMoveArea(0, 0,
 		map->GetWidthInPixels(),
@@ -129,6 +131,11 @@ void Stage::DrawGameplay(SpriteExtensions &spriteBatch)
 	for (auto const &entity : objectCollection.entities)
 	{
 		entity->Draw(spriteBatch);
+	}
+
+	for (auto const &boundaries : objectCollection.boundaries) // TODO: remove
+	{
+		boundaries->Draw(spriteBatch);
 	}
 
 	for (auto const &trigger : objectCollection.triggers)

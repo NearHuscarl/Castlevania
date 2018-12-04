@@ -1,7 +1,7 @@
 #include "Direct2DGame/Input/InputHelper.h"
 #include "Player.h"
 #include "../../Settings.h"
-#include "../../Factories/ObjectCollection.h"
+#include "../../UpdateData.h"
 
 using namespace Castlevania;
 
@@ -420,6 +420,7 @@ void Player::TakeDamage(int damage, Direction direction)
 
 	SetMoveState(MoveState::TAKING_DAMAGE);
 	data.health -= damage;
+	whip->Withdraw();
 	untouchableTimer.Start();
 }
 

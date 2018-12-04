@@ -1,7 +1,9 @@
 ﻿#include "Direct2DGame/MathHelper.h"
 #include "Direct2DGame/Input/Keyboard.h"
 #include "GameObject.h"
+#include "UpdateData.h"
 #include "Settings.h"
+#include "../Utilities/CppExtensions.h"
 
 using namespace Castlevania;
 
@@ -228,6 +230,41 @@ void GameObject::Attach(std::unique_ptr<IRenderingSystem> system)
 	renderingSystem = std::move(system);
 }
 
+template<>
+void GameObject::Detach<IControlSystem>()
+{
+	RemoveByValue(components, controlSystem.get());
+	controlSystem = nullptr;
+}
+
+template<>
+void GameObject::Detach<IMovementSystem>()
+{
+	RemoveByValue(components, movementSystem.get());
+	movementSystem = nullptr;
+}
+
+template<>
+void GameObject::Detach<ICollisionSystem>()
+{
+	RemoveByValue(components, collisionSystem.get());
+	collisionSystem = nullptr;
+}
+
+template<>
+void GameObject::Detach<ICollisionResponseSystem>()
+{
+	RemoveByValue(components, collisionResponseSystem.get());
+	collisionResponseSystem = nullptr;
+}
+
+template<>
+void GameObject::Detach<IRenderingSystem>()
+{
+	RemoveByValue(components, renderingSystem.get());
+	renderingSystem = nullptr;
+}
+
 #pragma endregion
 
 void GameObject::LoadContent(ContentManager &content)
@@ -240,7 +277,7 @@ void GameObject::Update(GameTime gameTime, UpdateData &updateData)
 	auto objectCollection = updateData.objectCollection;
 
 	if (controlSystem != nullptr)
-		controlSystem->Update();
+		controlSystem->Update(updateData);
 
 	if (movementSystem != nullptr)
 		movementSystem->Update(gameTime);
@@ -268,6 +305,12 @@ void GameObject::SendMessageToSystems(int message)
 	{
 		component->Receive(message);
 	}
+}
+
+GameObject &GameObject::NullObject()
+{
+	static auto nullGameObject = GameObject{ EntityType::Unknown };
+	return nullGameObject;
 }
 
 GameObject::~GameObject()

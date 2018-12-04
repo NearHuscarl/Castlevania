@@ -32,6 +32,19 @@ void Body::Enabled(bool value)
 	enabled = value;
 }
 
+BoxCollisionResult Body::PredictCollision(RectF &staticRect)
+{
+	auto distance = parent.GetDistance();
+	auto movingRect = parent.GetBoundingBox();
+
+	auto sweptAABBResult = SweptAABB(movingRect, distance, staticRect);
+
+	return BoxCollisionResult{
+		sweptAABBResult.timeToCollide,
+		sweptAABBResult.direction,
+		staticRect };
+}
+
 // Extension of original SweptAABB to deal with two moving objects
 // 'moving' and 'static' prefixes in variable names refer to the moving object
 // (the one that check for collision) and the static object (the one that is

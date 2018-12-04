@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Animations AtlasPath="Panther.atlas.xml">
+
+    <Animation Name="idle" DefaultTime="350" IsLooping="False">
+      <Frame SpriteID="idle_01" />
+    </Animation>
+
+    <Animation Name="run" DefaultTime="125" IsLooping="True">
+      <Frame SpriteID="run_01" />
+      <Frame SpriteID="run_02" />
+      <Frame SpriteID="run_03" />
+    </Animation>
+
+    <Animation Name="jump" DefaultTime="350" IsLooping="False">
+      <Frame SpriteID="run_02" />
+    </Animation>
+
+  </Animations>
+
+</GameContent>

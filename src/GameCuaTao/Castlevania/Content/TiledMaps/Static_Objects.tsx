@@ -6,4 +6,10 @@
   <tile id="1">
    <image source="Stage_01/Castle.png" width="96" height="288"/>
   </tile>
+  <tile id="2">
+   <image source="Simon.png" width="60" height="66"/>
+  </tile>
+  <tile id="3">
+   <image source="Panther.png" width="66" height="32"/>
+  </tile>
 </tileset>

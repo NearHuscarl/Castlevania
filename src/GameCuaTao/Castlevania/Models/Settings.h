@@ -15,4 +15,7 @@ namespace Castlevania
 	constexpr auto MOVE_STATE_CHANGED = 3;
 	constexpr auto ATTACK_STATE_CHANGED = 4;
 	constexpr auto UNTOUCHABLE_ENDED = 5;
+
+	// Panther events
+	constexpr auto NEAR_PLAYER = 6;
 }

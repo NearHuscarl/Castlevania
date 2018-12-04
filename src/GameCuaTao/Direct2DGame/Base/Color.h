@@ -20,11 +20,16 @@ public:
 	static Color Transparent();
 	static Color Black();
 	static Color Blue();
+	static Color DimGray();
+	static Color Gold();
 	static Color Green();
 	static Color LavenderBlue();
 	static Color Magenta();
+	static Color Orange();
+	static Color Orchid();
 	static Color Red();
 	static Color White();
+	static Color YellowGreen();
 
 	Color operator*(float scale);
 

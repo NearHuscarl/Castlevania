@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CollisionData.h"
+#include "BoxCollisionResult.h"
 
 class Body
 {
@@ -14,6 +15,7 @@ public:
 	bool Enabled();
 	void Enabled(bool value);
 
+	BoxCollisionResult PredictCollision(RectF &staticRect);
 	CollisionResult PredictCollision(IColliable &staticObject);
 
 private:

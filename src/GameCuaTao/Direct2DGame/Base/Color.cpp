@@ -72,6 +72,18 @@ Color Color::Blue()
 	return blue;
 }
 
+Color Color::DimGray()
+{
+	static auto dimGray = Color{ 105, 105, 105 };
+	return dimGray;
+}
+
+Color Color::Gold()
+{
+	static auto gold = Color{ 255, 215, 0 };
+	return gold;
+}
+
 Color Color::Green()
 {
 	static auto green = Color{ 0, 128, 0 };
@@ -90,6 +102,18 @@ Color Color::Magenta()
 	return magenta;
 }
 
+Color Color::Orange()
+{
+	static auto orange = Color{ 255, 165, 0 };
+	return orange;
+}
+
+Color Color::Orchid()
+{
+	static auto orchid = Color{ 218, 112, 214 };
+	return orchid;
+}
+
 Color Color::Red()
 {
 	static auto red = Color{ 255, 0, 0 };
@@ -100,6 +124,12 @@ Color Color::White()
 {
 	static auto white = Color{ 255, 255, 255 };
 	return white;
+}
+
+Color Color::YellowGreen()
+{
+	static auto yellowGreen = Color{ 154, 205, 50 };
+	return yellowGreen;
 }
 
 Color Color::operator*(float scale)

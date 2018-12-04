@@ -1,8 +1,6 @@
 #pragma once
 
-#include <map>
-#include <set>
-#include "../GameObject.h"
+#include "../Characters/Player/Player.h"
 #include "../Trigger.h"
 
 namespace Castlevania
@@ -14,6 +12,7 @@ namespace Castlevania
 
 	struct ObjectCollection
 	{
+		std::shared_ptr<Player> player;
 		std::vector<std::unique_ptr<GameObject>> boundaries;
 		std::vector<std::unique_ptr<Trigger>> triggers;
 		std::vector<std::unique_ptr<GameObject>> entities;

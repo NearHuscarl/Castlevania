@@ -9,7 +9,8 @@ namespace Castlevania
 	public:
 		void Enabled(bool value) override;
 
-		virtual void Update() = 0;
+		virtual void Receive(int message) override {};
+		virtual void Update(UpdateData &updateData) {};
 
 	protected:
 		bool enabled;

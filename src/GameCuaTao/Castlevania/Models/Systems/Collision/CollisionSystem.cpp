@@ -4,8 +4,9 @@
 
 using namespace Castlevania;
 
-CollisionSystem::CollisionSystem(IGameObject &parent) : parent{ parent }
+IGameObject &CollisionSystem::GetParent()
 {
+	return GameObject::NullObject();
 }
 
 void CollisionSystem::CalculateCollision(IGameObject &gameObject, CollisionResults &results)
@@ -25,7 +26,7 @@ bool CollisionSystem::CalculateStaticCollision(IGameObject &gameObject, Collisio
 {
 	auto objectBoundingBox = gameObject.GetBoundingBox();
 
-	if (parent.GetBoundingBox().TouchesOrIntersects(objectBoundingBox))
+	if (GetParent().GetBoundingBox().TouchesOrIntersects(objectBoundingBox))
 	{
 		results.push_back(CollisionResult{ 0, Direction::None, gameObject });
 		return true;
@@ -36,7 +37,7 @@ bool CollisionSystem::CalculateStaticCollision(IGameObject &gameObject, Collisio
 
 bool CollisionSystem::CalculateDynamicCollision(IGameObject &gameObject, CollisionResults &results)
 {
-	auto result = parent.GetBody().PredictCollision(gameObject);
+	auto result = GetParent().GetBody().PredictCollision(gameObject);
 
 	if (result.ShouldCollide())
 	{

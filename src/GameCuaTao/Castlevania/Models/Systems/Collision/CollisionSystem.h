@@ -11,14 +11,12 @@ namespace Castlevania
 	class CollisionSystem : public ICollisionSystem
 	{
 	public:
-		CollisionSystem(IGameObject &parent);
-
+		virtual IGameObject &GetParent();
 		virtual void Receive(int message) override {};
+
 		virtual void Update(ObjectCollection &objectCollection) override = 0;
 
 	protected:
-		IGameObject &parent;
-
 		void CalculateCollision(IGameObject &gameObject, CollisionResults &results);
 		// Use simple rectangle intersect check to calculate collision between two static objects
 		bool CalculateStaticCollision(IGameObject &gameObject, CollisionResults &results);

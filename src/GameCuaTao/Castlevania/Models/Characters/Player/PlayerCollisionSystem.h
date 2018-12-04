@@ -12,6 +12,10 @@ namespace Castlevania
 	public:
 		PlayerCollisionSystem(GameObject &parent);
 
+		IGameObject &GetParent() override;
 		void Update(ObjectCollection &objectCollection) override;
+
+	private:
+		IGameObject &parent;
 	};
 }

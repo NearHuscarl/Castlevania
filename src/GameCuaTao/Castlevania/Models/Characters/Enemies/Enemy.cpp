@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "../../UpdateData.h"
 
 using namespace Castlevania;
 
@@ -44,5 +45,6 @@ void Enemy::TakeDamage(int damage)
 	{
 		SetState(ObjectState::DYING);
 		body.Enabled(false);
+		Detach<IMovementSystem>();
 	}
 }

@@ -3,8 +3,6 @@
 
 using namespace Castlevania;
 
-auto NULL_GAME_OBJECT = GameObject{ EntityType::Unknown };
-
 RenderingSystem::RenderingSystem()
 {
 	drawBoundingBox = true;
@@ -12,7 +10,7 @@ RenderingSystem::RenderingSystem()
 
 GameObject &RenderingSystem::GetParent()
 {
-	return NULL_GAME_OBJECT;
+	return GameObject::NullObject();
 }
 
 void RenderingSystem::DrawBoundingBox(bool value)
@@ -41,6 +39,13 @@ void RenderingSystem::Draw(SpriteExtensions &spriteBatch)
 	}
 }
 
+void RenderingSystem::DrawBoundingBox(SpriteExtensions &spriteBatch, RectF boundingBox, Color color)
+{
+	auto position = Vector2{ boundingBox.X(), boundingBox.Y() };
+
+	spriteBatch.Draw(*bboxTexture, position, &(Rect)boundingBox, color, 0.0f, Vector2::One(), SpriteEffects::None);
+}
+
 Color RenderingSystem::GetBoundingBoxColor()
 {
 	auto type = (EntityType)GetParent().GetType();
@@ -55,7 +60,7 @@ Color RenderingSystem::GetBoundingBoxColor()
 			return Color::Red() * bboxColorScale;
 
 		case EntityType::Player:
-			return Color::LavenderBlue() * bboxColorScale;
+			return Color::Gold() * bboxColorScale;
 
 		case EntityType::Brazier:
 			return Color::Green() * bboxColorScale;

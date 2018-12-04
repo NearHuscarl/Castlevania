@@ -6,11 +6,11 @@ namespace Castlevania
 {
 	class GameObject;
 
-	// Response to static object only (Clamp move when hitting floor or wall)
-	class StaticResponseSystem : public ICollisionResponseSystem
+	// Response to platform and ground objects (Clamp move when hitting floor, only check for top direction)
+	class GroundResponseSystem : public ICollisionResponseSystem
 	{
 	public:
-		StaticResponseSystem(GameObject &parent);
+		GroundResponseSystem(GameObject &parent);
 
 		virtual void Receive(int message) override {};
 		virtual void Update(ObjectCollection &objectCollection) override;

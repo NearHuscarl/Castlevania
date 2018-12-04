@@ -4,7 +4,7 @@
 
   <Dictionary
     Name="Panther"
-    Speed="200.0"
+    Speed="350.0"
     Health="1"
     Attack="2"
     Exp="200">

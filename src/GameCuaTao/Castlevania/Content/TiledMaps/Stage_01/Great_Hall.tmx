@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="88" height="6" tilewidth="64" tileheight="64" infinite="0" nextlayerid="5" nextobjectid="9">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="88" height="6" tilewidth="64" tileheight="64" infinite="0" nextlayerid="6" nextobjectid="15">
  <tileset firstgid="1" source="../Simon.tsx"/>
+ <tileset firstgid="41" source="../Static_Objects.tsx"/>
+ <layer id="1" name="TileLayer01" width="88" height="6">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAWjYBSMglEwCkbBKCANAADzn1fmQAgAAA==
+  </data>
+ </layer>
  <imagelayer id="2" name="Background">
   <image source="Great_Hall.png" width="5632" height="365"/>
  </imagelayer>
@@ -12,17 +18,26 @@
   <object id="5" name="Platform" type="Boundary" x="2784" y="128" width="544" height="32"/>
   <object id="6" name="Platform" type="Boundary" x="3328" y="192" width="96" height="32"/>
   <object id="7" name="Platform" type="Boundary" x="3200" y="320" width="384" height="32"/>
-  <object id="8" name="Checkpoint" type="Position" gid="4" x="14" y="319.667" width="60" height="66"/>
  </objectgroup>
- <objectgroup id="4" name="Entites"/>
- <layer id="1" name="TileLayer01" width="88" height="6">
-  <data encoding="csv">
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-</data>
- </layer>
+ <objectgroup id="4" name="Entites">
+  <object id="10" name="Panther" type="Object" gid="2147483692" x="1367" y="191" width="66" height="32">
+   <properties>
+    <property name="Facing" value="Left"/>
+   </properties>
+  </object>
+  <object id="11" name="Panther" type="Object" gid="2147483692" x="1752" y="127" width="66" height="32">
+   <properties>
+    <property name="Facing" value="Left"/>
+   </properties>
+  </object>
+  <object id="12" name="Panther" type="Object" gid="2147483692" x="1879" y="191" width="66" height="32">
+   <properties>
+    <property name="Facing" value="Left"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="5" name="Locations">
+  <object id="9" name="Checkpoint1" type="Position" gid="43" x="64" y="320" width="60" height="66"/>
+  <object id="13" name="Checkpoint" type="Position" gid="43" x="1226" y="320" width="60" height="66"/>
+ </objectgroup>
 </map>

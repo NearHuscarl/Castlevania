@@ -74,7 +74,7 @@ void Controller::OnKeyUp(int keyCode)
 		return;
 }
 
-void Controller::Update()
+void Controller::Update(UpdateData &updateData)
 {
 	if (!enabled)
 		return;
