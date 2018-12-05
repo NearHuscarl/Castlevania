@@ -1,22 +1,22 @@
 #pragma once
 
-#include "ICollisionResponseSystem.h"
+#include "ResponseSystem.h"
 
 namespace Castlevania
 {
 	class GameObject;
 
 	// Response to platform and ground objects (Clamp move when hitting floor, only check for top direction)
-	class GroundResponseSystem : public ICollisionResponseSystem
+	// for generic parent
+	class GroundResponseSystem : public ResponseSystem
 	{
 	public:
 		GroundResponseSystem(GameObject &parent);
-
-		virtual void Receive(int message) override {};
-		virtual void Update(ObjectCollection &objectCollection) override;
+		GameObject &GetParent() override;
 
 	private:
 		GameObject &parent;
-		bool wasOnGround;
+
+		void OnTouchingGround(CollisionData collisionData) override;
 	};
 }

@@ -90,6 +90,7 @@ namespace Castlevania
 		void TurnBackward();
 
 		bool IsAttacking();
+		bool IsOnStairs();
 		bool CanGoUpstairs();
 		bool CanGoDownstairs();
 

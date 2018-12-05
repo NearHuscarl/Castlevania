@@ -13,8 +13,9 @@ namespace Castlevania
 		void WalkLeft();
 
 	private:
-		friend class ZombieMovementSystem;
 		void StopWalking();
 		void Land();
+
+		friend class ZombieResponseSystem;
 	};
 }

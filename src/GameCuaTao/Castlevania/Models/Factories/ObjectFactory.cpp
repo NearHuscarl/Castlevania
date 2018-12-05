@@ -2,6 +2,7 @@
 #include "ObjectFactory.h"
 #include "../EntityType.h"
 #include "../Systems/Movement/SimpleMovementSystem.h"
+#include "../Systems/Movement/EntityMovementSystem.h"
 #include "../Systems/Collision/CollisionSystem.h"
 #include "../Systems/Collision/EntityCollisionSystem.h"
 #include "../Systems/Collision/SimpleCollisionSystem.h"
@@ -19,9 +20,9 @@
 #include "../Characters/Player/PlayerRenderingSystem.h"
 #include "../Characters/Enemies/PantherControlSystem.h"
 #include "../Characters/Enemies/PantherCollisionSystem.h"
-#include "../Characters/Enemies/PantherMovementSystem.h"
+#include "../Characters/Enemies/PantherResponseSystem.h"
 #include "../Characters/Enemies/PantherRenderingSystem.h"
-#include "../Characters/Enemies/ZombieMovementSystem.h"
+#include "../Characters/Enemies/ZombieResponseSystem.h"
 #include "../Weapons/WhipRenderingSystem.h"
 #include "../Weapons/WhipFlashingRenderingSystem.h"
 #include "../Weapons/WhipResponseSystem.h"
@@ -39,6 +40,11 @@ ObjectFactory::ObjectFactory(ContentManager &content) : content{ content }
 std::unique_ptr<GameObject> ObjectFactory::CreateBoundary(RectF rect)
 {
 	return CreateRectangleObject(EntityType::Boundary, rect);
+}
+
+std::unique_ptr<GameObject> ObjectFactory::CreateArea(RectF rect)
+{
+	return CreateRectangleObject(EntityType::Area, rect);
 }
 
 std::unique_ptr<GameObject> ObjectFactory::CreateRectangleObject(EntityType type, RectF rect)
@@ -68,7 +74,7 @@ std::unique_ptr<Trigger> ObjectFactory::CreateTrigger(RectF rect, TriggerType tr
 std::unique_ptr<GameObject> ObjectFactory::CreateBat(Vector2 position)
 {
 	auto object = std::make_unique<GameObject>(EntityType::Bat);
-	auto stats = content.Load<Dictionary>("GameStats/Bat.xml");
+	auto stats = content.Load<Dictionary>("GameStats/Characters/Bat.xml");
 
 	object->SetLinearVelocity(std::stof(stats->at("Speed")));
 
@@ -84,7 +90,7 @@ std::unique_ptr<GameObject> ObjectFactory::CreateBat(Vector2 position)
 std::unique_ptr<Player> ObjectFactory::CreatePlayer(Vector2 position)
 {
 	auto object = std::make_unique<Player>();
-	auto stats = content.Load<Dictionary>("GameStats/Simon.xml");
+	auto stats = content.Load<Dictionary>("GameStats/Characters/Simon.xml");
 	
 	object->SetSpeed(std::stof(stats->at("Speed")));
 	object->SetJumpSpeed(std::stof(stats->at("JumpSpeed")));
@@ -115,7 +121,7 @@ std::unique_ptr<Player> ObjectFactory::CreatePlayer(Vector2 position)
 std::unique_ptr<Player> ObjectFactory::CreateIntroSimon(Vector2 position)
 {
 	auto object = std::make_unique<Player>();
-	auto stats = content.Load<Dictionary>("GameStats/Simon.xml");
+	auto stats = content.Load<Dictionary>("GameStats/Characters/Simon.xml");
 
 	object->SetSpeed(std::stof(stats->at("Speed")));
 
@@ -154,11 +160,11 @@ std::unique_ptr<Zombie> ObjectFactory::CreateZombie(Vector2 position)
 {
 	auto object = std::make_unique<Zombie>();
 
-	ReadEnemyConfig(*object.get(), "GameStats/Zombie.xml");
+	ReadEnemyConfig(*object.get(), "GameStats/Characters/Zombie.xml");
 
-	auto movementSystem = std::make_unique<ZombieMovementSystem>(*object);
+	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, 1000.0f);
 	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
-	auto responseSystem = std::make_unique<GroundResponseSystem>(*object);
+	auto responseSystem = std::make_unique<ZombieResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<EntityRenderingSystem>(
 		*object, "Characters/Enemies/Zombie.ani.xml", effectManager->CreateFlameEffect());
 
@@ -177,12 +183,12 @@ std::unique_ptr<Panther> ObjectFactory::CreatePanther(Vector2 position)
 {
 	auto object = std::make_unique<Panther>();
 
-	ReadEnemyConfig(*object.get(), "GameStats/Panther.xml");
+	ReadEnemyConfig(*object.get(), "GameStats/Characters/Panther.xml");
 
 	auto controlSystem = std::make_unique<PantherControlSystem>(*object);
-	auto movementSystem = std::make_unique<PantherMovementSystem>(*object);
+	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, 1000.0f);
 	auto collisionSystem = std::make_unique<PantherCollisionSystem>(*object);
-	auto responseSystem = std::make_unique<GroundResponseSystem>(*object);
+	auto responseSystem = std::make_unique<PantherResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<PantherRenderingSystem>(
 		*object, "Characters/Enemies/Panther.ani.xml", effectManager->CreateFlameEffect());
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Dictionary
+    Name="FishmanSpawnArea"
+    Spawn="Fishman"
+    MinSpawnGroup="1"
+    MaxSpawnGroup="3"
+    SpawnTime="0.3"
+    GroupSpawnTime="3.5"
+    SpawnDirection="Bottom">
+  </Dictionary>
+
+</GameContent>

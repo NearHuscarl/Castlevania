@@ -4,6 +4,7 @@ namespace Castlevania
 {
 	enum class EntityType
 	{
+		Area,
 		Boundary,
 		Position,
 		Trigger,

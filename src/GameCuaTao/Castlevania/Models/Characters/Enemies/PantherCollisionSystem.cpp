@@ -36,7 +36,7 @@ void PantherCollisionSystem::Update(ObjectCollection &objectCollection)
 	body.SetCollisionData(FilterCollision(results));
 
 	// Check if player is inside active zone
-	if (!parent.isActive)
+	if (!parent.IsActive())
 	{
 		auto player = objectCollection.player;
 		auto activeArea = parent.GetActiveArea();

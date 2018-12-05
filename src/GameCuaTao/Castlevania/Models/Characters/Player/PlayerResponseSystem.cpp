@@ -11,6 +11,11 @@ PlayerResponseSystem::PlayerResponseSystem(Player &parent, ObjectFactory &object
 {
 }
 
+GameObject &PlayerResponseSystem::GetParent()
+{
+	return parent;
+}
+
 void PlayerResponseSystem::Update(ObjectCollection &objectCollection)
 {
 	auto collisionData = parent.GetBody().GetCollisionData();
@@ -58,7 +63,7 @@ void PlayerResponseSystem::PostProcess(ResponseResult responseResult)
 	if (wasOnGround != responseResult.isOnGround)
 	{
 		if (wasOnGround)
-			parent.SendMessageToSystems(START_FALLING);
+			OnFalling();
 		
 		wasOnGround = responseResult.isOnGround;
 	}
@@ -66,25 +71,13 @@ void PlayerResponseSystem::PostProcess(ResponseResult responseResult)
 	parent.nearbyStair = responseResult.stairTrigger;
 }
 
-void PlayerResponseSystem::ClampDistance_X(CollisionData collisionData)
+void PlayerResponseSystem::OnFalling()
 {
-	auto distance = parent.GetDistance();
-	auto time = collisionData.minTime;
-	auto normal = collisionData.minNormal;
+	auto moveState = parent.GetMoveState();
 
-	// *0.4f : need to push out a bit to avoid overlapping next frame
-	distance.x = distance.x * time.x + normal.x * 0.4f;
-	parent.SetDistance(distance);
-}
-
-void PlayerResponseSystem::ClampDistance_Y(CollisionData collisionData)
-{
-	auto distance = parent.GetDistance();
-	auto time = collisionData.minTime;
-	auto normal = collisionData.minNormal;
-
-	distance.y = distance.y * time.y + normal.y * 0.4f;
-	parent.SetDistance(distance);
+	if (moveState == MoveState::WALKING
+		|| moveState == MoveState::IDLE)
+		parent.moveState = MoveState::FALLING_HARD;
 }
 
 void PlayerResponseSystem::OnCollideWithBoundary(CollisionResult &result, ResponseResult &responseResult)
@@ -97,16 +90,13 @@ void PlayerResponseSystem::OnCollideWithBoundary(CollisionResult &result, Respon
 		case Direction::Top: // Touch ground
 			responseResult.isOnGround = true;
 
+			// We dont care if there are obstacles (such as cornered wall
+			// near the stair entry). Just move the player to the damn stair
+			if (parent.IsOnStairs())
+				break;
+
 			switch (parent.GetMoveState())
 			{
-				// We dont care if there are obstacles (such as cornered wall
-				// near the stair entry). Just move the player to the damn stair
-				case MoveState::GOING_UPSTAIRS:
-				case MoveState::GOING_DOWNSTAIRS:
-				case MoveState::IDLE_UPSTAIRS:
-				case MoveState::IDLE_DOWNSTAIRS:
-					break;
-
 				case MoveState::FALLING:
 				case MoveState::LANDING:
 				case MoveState::FALLING_HARD:
@@ -130,19 +120,11 @@ void PlayerResponseSystem::OnCollideWithBoundary(CollisionResult &result, Respon
 
 		case Direction::Left:
 		case Direction::Right:
-			switch (parent.GetMoveState())
-			{
-				case MoveState::GOING_UPSTAIRS:
-				case MoveState::GOING_DOWNSTAIRS:
-				case MoveState::IDLE_UPSTAIRS:
-				case MoveState::IDLE_DOWNSTAIRS:
-					break;
+			if (parent.IsOnStairs())
+				break;
 
-				default:
-					ClampDistance_X(collisionData);
-					parent.SetVelocity_X(0);
-					break;
-			}
+			ClampDistance_X(collisionData);
+			parent.SetVelocity_X(0);
 			break;
 	}
 }

@@ -106,6 +106,9 @@ std::unique_ptr<GameObject> MapManager::ConstructObject(ObjectProperties propert
 
 	switch (type)
 	{
+		case EntityType::SpawnArea: // TODO:
+			return objectFactory.CreateArea(RectF{ 0,0,0,0 });
+
 		case EntityType::Player:
 			return objectFactory.CreatePlayer();
 

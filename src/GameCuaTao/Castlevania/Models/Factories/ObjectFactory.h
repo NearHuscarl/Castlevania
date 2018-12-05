@@ -18,6 +18,7 @@ namespace Castlevania
 		ObjectFactory(ContentManager &content);
 
 		std::unique_ptr<GameObject> CreateBoundary(RectF rect);
+		std::unique_ptr<GameObject> CreateArea(RectF rect);
 		std::unique_ptr<GameObject> CreateRectangleObject(EntityType type, RectF rect);
 		std::unique_ptr<Trigger> CreateTrigger(RectF rect, TriggerType triggerType);
 

@@ -1,17 +1,17 @@
 #pragma once
 
-#include "../../Systems/CollisionResponse/ICollisionResponseSystem.h"
+#include "../../Systems/CollisionResponse/ResponseSystem.h"
 #include "../../../Models/Factories/ObjectFactory.h"
 #include "Player.h"
 
 namespace Castlevania
 {
-	class PlayerResponseSystem : public ICollisionResponseSystem
+	class PlayerResponseSystem : public ResponseSystem
 	{
 	public:
 		PlayerResponseSystem(Player &parent, ObjectFactory &objectFactory);
 
-		virtual void Receive(int message) override {};
+		GameObject &GetParent() override;
 		void Update(ObjectCollection &objectCollection) override;
 
 	private:
@@ -27,9 +27,8 @@ namespace Castlevania
 
 		void PostProcess(ResponseResult responseResult);
 
-		void ClampDistance_X(CollisionData collisionData);
-		void ClampDistance_Y(CollisionData collisionData);
-		
+		void OnFalling() override;
+
 		void OnCollideWithBoundary(CollisionResult &result, ResponseResult &responseResult);
 		void OnCollideWithTrigger(CollisionResult &result, ResponseResult &responseResult);
 		void OnCollideWithEnemy(CollisionResult &result);

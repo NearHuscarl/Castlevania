@@ -12,6 +12,9 @@
  <imagelayer id="7" name="Background">
   <image source="Courtyard.png" width="1536" height="365"/>
  </imagelayer>
+ <objectgroup id="10" name="Areas" visible="0">
+  <object id="39" name="ViewportArea" type="Rectangle" x="0" y="0" width="1536" height="365"/>
+ </objectgroup>
  <objectgroup id="4" name="Entities">
   <object id="15" name="Brazier" type="Object" gid="41" x="175" y="290" width="32" height="64">
    <properties>
@@ -52,9 +55,6 @@
     <property name="Foreground" value="True"/>
    </properties>
   </object>
- </objectgroup>
- <objectgroup id="10" name="Areas" visible="0">
-  <object id="39" name="ViewportArea" type="Rectangle" x="0" y="0" width="1536" height="365"/>
  </objectgroup>
  <objectgroup id="3" name="Bounds">
   <object id="20" name="Ground" type="Boundary" x="0" y="288" width="1536" height="32"/>

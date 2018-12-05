@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Dictionary
+    Name="BatSpawnArea"
+    Spawn="VampireBat"
+    MinSpawnGroup="1"
+    MaxSpawnGroup="1"
+    SpawnTime="0.3"
+    GroupSpawnTime="3.5"
+    SpawnDirection="Left|Right">
+  </Dictionary>
+
+</GameContent>

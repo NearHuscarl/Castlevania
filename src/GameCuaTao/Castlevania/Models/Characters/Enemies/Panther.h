@@ -40,7 +40,5 @@ namespace Castlevania
 		Direction playerDirection;
 
 		void SetPantherState(PantherState state);
-		
-		friend class PantherCollisionSystem;
 	};
 }

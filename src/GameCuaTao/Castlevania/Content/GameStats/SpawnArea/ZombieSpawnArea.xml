@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Dictionary
+    Name="ZombieSpawnArea"
+    Spawn="Zombie"
+    MinSpawnGroup="1"
+    MaxSpawnGroup="3"
+    SpawnTime="0.3"
+    GroupSpawnTime="3.5"
+    SpawnDirection="Left|Right">
+  </Dictionary>
+
+</GameContent>

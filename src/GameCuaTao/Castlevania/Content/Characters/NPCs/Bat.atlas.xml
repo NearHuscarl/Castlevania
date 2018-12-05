@@ -4,11 +4,11 @@
 
   <Spritesheet TexturePath="Bat.png">
     <Sprite ID="fly_01">
-      <SpriteFrame Left="1" Top="1" Width="16" Height="16" />
+      <SpriteFrame Left="0" Top="0" Width="18" Height="18" />
     </Sprite>
 
     <Sprite ID="fly_02">
-      <SpriteFrame Left="18" Top="1" Width="16" Height="16" />
+      <SpriteFrame Left="18" Top="0" Width="18" Height="18" />
     </Sprite>
   </Spritesheet>
 

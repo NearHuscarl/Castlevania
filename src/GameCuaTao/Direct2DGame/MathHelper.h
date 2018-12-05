@@ -5,6 +5,10 @@
 class MathHelper
 {
 public:
+	static const double PI;
+	static const double TWO_PI;
+	static const double PI_180;
+
 	template<typename T>
 	static T Clamp(T value, T min, T max);
 
@@ -20,9 +24,6 @@ public:
 	static int RandomBetween(int min, int max);
 	// Like RandomBetween(int, int) but do not repeat oldValue
 	static int RandomBetween(int min, int max, int oldValue);
-
-private:
-	static const double PI_180;
 };
 
 template<typename T>

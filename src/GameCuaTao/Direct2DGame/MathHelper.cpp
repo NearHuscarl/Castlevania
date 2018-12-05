@@ -1,8 +1,11 @@
 #include <cmath>
+#include <math.h>
 #include <stdlib.h> // srand, rand
 #include "MathHelper.h"
 
-double const MathHelper::PI_180 = 0.0174532925199432957;
+double const MathHelper::PI = 3.14159265358979323846;
+double const MathHelper::TWO_PI = PI * 2;
+double const MathHelper::PI_180 = PI / 180;
 
 float MathHelper::ToRadians(float degrees)
 {

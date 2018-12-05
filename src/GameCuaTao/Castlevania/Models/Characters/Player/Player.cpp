@@ -342,6 +342,14 @@ bool Player::IsAttacking()
 	return attackState == AttackState::WHIPPING || attackState == AttackState::THROWING;
 }
 
+bool Player::IsOnStairs()
+{
+	return moveState == MoveState::GOING_UPSTAIRS
+		|| moveState == MoveState::GOING_DOWNSTAIRS
+		|| moveState == MoveState::IDLE_UPSTAIRS
+		|| moveState == MoveState::IDLE_DOWNSTAIRS;
+}
+
 bool Player::CanGoUpstairs()
 {
 	if (nearbyStair == nullptr)

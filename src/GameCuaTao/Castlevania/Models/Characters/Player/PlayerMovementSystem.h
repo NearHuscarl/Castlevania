@@ -9,8 +9,6 @@ namespace Castlevania
 	{
 	public:
 		PlayerMovementSystem(Player &parent);
-
-		virtual void Receive(int message) override;
 		void Update(GameTime gameTime) override;
 
 	private:
