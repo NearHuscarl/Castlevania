@@ -17,7 +17,6 @@ CastlevaniaGame::CastlevaniaGame()
 void CastlevaniaGame::Initialize()
 {
 	Game::Initialize();
-	InputHelper::Initialize(keyboard.get());
 
 	sceneManager = std::make_unique<SceneManager>(*this);
 	sceneManager->SetNextScene(Scene::GAMEPLAY); // TODO: change back to MENU

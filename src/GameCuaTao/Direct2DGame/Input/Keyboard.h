@@ -4,25 +4,22 @@
 #include "IController.h"
 #include "KeyboardState.h"
 
-constexpr int KEYBOARD_BUFFER_SIZE = 1024;
+constexpr auto KEYBOARD_BUFFER_SIZE = 1024;
 
 class Keyboard
 {
 public:
 	Keyboard();
 
-	void Initialize(HWND handle);
+	void Initialize();
 	static void Register(IController *controller);
-	KeyboardState GetState();
+	static KeyboardState GetState();
 	void Update();
 	void Release();
 
 private:
 	static IController *controller;
-
-	Input_ input; // The DirectInput object
-	InputDevice_ inputDevice; // The keyboard device
-	DeviceInputData keyEvents[KEYBOARD_BUFFER_SIZE]; // Buffered keyboard data
+	static InputDevice_ inputDevice; // The keyboard device
 
 	void HandleEvents();
 };

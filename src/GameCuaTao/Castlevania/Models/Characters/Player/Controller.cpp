@@ -153,7 +153,7 @@ void Controller::Throw()
 	{
 		case EntityType::DaggerItem:
 		{
-			auto weapon = objectFactory.CreateDagger(); // TODO: put this into object collection
+			auto weapon = objectFactory.CreateDagger();
 			
 			player.Throw(std::move(weapon));
 			break;

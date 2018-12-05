@@ -2,27 +2,18 @@
 #include "../Utilities/FileLogger.h"
 
 IController *Keyboard::controller = nullptr;
+InputDevice_ Keyboard::inputDevice;
 
 Keyboard::Keyboard()
 {
-	input = nullptr;
 	inputDevice = nullptr;
 }
 
-void Keyboard::Initialize(HWND handle)
+void Keyboard::Initialize()
 {
-	auto result = DirectInput8Create(
-		(HINSTANCE)GetWindowLong(handle, GWL_HINSTANCE),
-		DIRECTINPUT_VERSION,
-		IID_IDirectInput8, (void**)&input, nullptr);
-
-	if (result != DI_OK)
-	{
-		FileLogger::GetInstance().Error("{}(): DirectInput8Create failed!", __FUNCTION__);
-		return;
-	}
-
-	result = input->CreateDevice(GUID_SysKeyboard, &inputDevice, nullptr);
+	auto input = DirectInput::GetInput();
+	auto handle = DirectInput::GetHandle();
+	auto result = input->CreateDevice(GUID_SysKeyboard, &inputDevice, nullptr);
 
 	// TO-DO: put in exception handling
 	if (result != DI_OK)
@@ -80,7 +71,7 @@ KeyboardState Keyboard::GetState()
 {
 	unsigned char keyStates[KEYSTATE_BUFFER_SIZE]; // DirectInput keyboard state buffer 
 
-		// Collect all key states first
+	// Collect all key states first
 	auto result = inputDevice->GetDeviceState(sizeof(keyStates), keyStates);
 
 	if (FAILED(result))
@@ -117,6 +108,7 @@ void Keyboard::Update()
 void Keyboard::HandleEvents()
 {
 	// Collect all buffered events
+	DeviceInputData keyEvents[KEYBOARD_BUFFER_SIZE]; // Buffered keyboard data
 	auto dwElements = DWORD{ KEYBOARD_BUFFER_SIZE };
 	auto result = inputDevice->GetDeviceData(sizeof(DeviceInputData), keyEvents, &dwElements, 0);
 

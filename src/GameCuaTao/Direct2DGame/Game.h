@@ -5,7 +5,7 @@
 #include "GraphicsDeviceManager.h"
 #include "Content/ContentManager.h"
 #include "ServiceProvider.h"
-#include "Input/Keyboard.h"
+#include "Input/GameInput.h"
 #include "Utilities/Stopwatch.h"
 
 class Game
@@ -22,8 +22,6 @@ public:
 
 	void Run();
 
-	virtual ~Game();
-
 protected:
 	Game();
 
@@ -33,7 +31,7 @@ protected:
 	std::unique_ptr<GraphicsDeviceManager> graphics;
 	std::unique_ptr<ContentManager> content;
 	std::shared_ptr<ServiceProvider> service;
-	std::shared_ptr<Keyboard> keyboard;
+	std::unique_ptr<GameInput> gameInput;
 
 private:
 	bool initialized = false;

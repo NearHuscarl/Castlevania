@@ -1,20 +1,20 @@
 #include "InputHelper.h"
+#include "Keyboard.h"
+#include "Mouse.h"
 
-Keyboard *InputHelper::keyboard = nullptr;
 KeyboardState InputHelper::currentKeyboardState = nullptr;
 KeyboardState InputHelper::previousKeyboardState = nullptr;
 
-void InputHelper::Initialize(Keyboard *keyboard)
-{
-	InputHelper::keyboard = keyboard;
-}
+MouseState InputHelper::currentMouseState;
+MouseState InputHelper::previousMouseState;
 
 void InputHelper::Update()
 {
-	keyboard->Update();
-
 	previousKeyboardState = currentKeyboardState;
-	currentKeyboardState = keyboard->GetState();
+	currentKeyboardState = Keyboard::GetState();
+
+	previousMouseState = currentMouseState;
+	currentMouseState = Mouse::GetState();
 }
 
 bool InputHelper::IsKeyDown(int keyCode)
@@ -30,4 +30,29 @@ bool InputHelper::IsKeyUp(int keyCode)
 bool InputHelper::IsKeyPressed(int keyCode)
 {
 	return previousKeyboardState.IsKeyDown(keyCode) && currentKeyboardState.IsKeyDown(keyCode);
+}
+
+bool InputHelper::IsMouseHold(MouseButton mouseButton)
+{
+	return previousMouseState.IsPressed(mouseButton) && currentMouseState.IsPressed(mouseButton);
+}
+
+bool InputHelper::IsMouseReleased(MouseButton mouseButton)
+{
+	return previousMouseState.IsPressed(mouseButton) && currentMouseState.IsReleased(mouseButton);
+}
+
+bool InputHelper::IsScrollingUp()
+{
+	return currentMouseState.scrollWheelValue > 0;
+}
+
+bool InputHelper::IsScrollingDown()
+{
+	return currentMouseState.scrollWheelValue < 0;
+}
+
+Vector2 InputHelper::GetMousePosition()
+{
+	return Vector2{ currentMouseState.x, currentMouseState.y };
 }

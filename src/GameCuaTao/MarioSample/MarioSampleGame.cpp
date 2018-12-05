@@ -34,7 +34,6 @@ void MarioSampleGame::Update(GameTime gameTime)
 {
 	auto deltaTime = (float)gameTime.ElapsedGameTime.Seconds();
 
-	keyboard->Update();
 	mario->Update(deltaTime);
 }
 

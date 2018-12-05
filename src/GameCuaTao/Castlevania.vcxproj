@@ -242,7 +242,12 @@
     <ClCompile Include="Direct2DGame\Extensions\Tiled\TiledMap.cpp" />
     <ClCompile Include="Direct2DGame\Extensions\Tiled\TileSet.cpp" />
     <ClCompile Include="Direct2DGame\Graphics\SpriteBatch.cpp" />
+    <ClCompile Include="Direct2DGame\Input\DirectInput.cpp" />
+    <ClCompile Include="Direct2DGame\Input\GameInput.cpp" />
     <ClCompile Include="Direct2DGame\Input\InputHelper.cpp" />
+    <ClCompile Include="Direct2DGame\Input\KeyboardState.cpp" />
+    <ClCompile Include="Direct2DGame\Input\Mouse.cpp" />
+    <ClCompile Include="Direct2DGame\Input\MouseState.cpp" />
     <ClCompile Include="Direct2DGame\MathHelper.cpp" />
     <ClCompile Include="Direct2DGame\Utilities\Stopwatch.cpp" />
     <ClCompile Include="Direct2DGame\Utilities\TimeSpan.cpp" />
@@ -393,9 +398,12 @@
     <ClInclude Include="Direct2DGame\Graphics\FontStyle.h" />
     <ClInclude Include="Direct2DGame\Graphics\SpriteBatch.h" />
     <ClInclude Include="Direct2DGame\Graphics\Viewport.h" />
+    <ClInclude Include="Direct2DGame\Input\GameInput.h" />
     <ClInclude Include="Direct2DGame\Input\IController.h" />
     <ClInclude Include="Direct2DGame\Input\InputHelper.h" />
     <ClInclude Include="Direct2DGame\Input\KeyboardState.h" />
+    <ClInclude Include="Direct2DGame\Input\Mouse.h" />
+    <ClInclude Include="Direct2DGame\Input\MouseState.h" />
     <ClInclude Include="Direct2DGame\IUpdateable.h" />
     <ClInclude Include="Direct2DGame\MathHelper.h" />
     <ClInclude Include="Direct2DGame\Extensions\Sprites\SpriteExtensions.h" />
