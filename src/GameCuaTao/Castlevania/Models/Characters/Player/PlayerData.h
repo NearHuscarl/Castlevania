@@ -2,7 +2,6 @@
 
 #include <memory>
 #include "../../EntityType.h"
-#include "../../../Utilities/Timer.h"
 
 namespace Castlevania
 {

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Direct2DGame/Base/Vector2.h"
 #include "KeyboardState.h"
 #include "MouseState.h"
 

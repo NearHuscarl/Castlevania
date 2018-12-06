@@ -91,8 +91,6 @@ void Stage::LoadMap(Map mapName)
 
 void Stage::UpdateInput()
 {
-	auto &mapManager = gameplayScene.GetMapManager();
-
 	if (InputHelper::IsKeyDown(DIK_HOME))
 		gameplayScene.NextStage(Map::PLAYGROUND);
 	else if (InputHelper::IsMouseReleased(MouseButton::Left))

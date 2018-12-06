@@ -1,6 +1,5 @@
 #pragma once
 
-#include "DirectInput.h"
 #include "Keyboard.h"
 #include "Mouse.h"
 

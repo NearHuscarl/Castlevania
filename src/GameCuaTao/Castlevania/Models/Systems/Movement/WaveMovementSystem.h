@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Direct2DGame/Utilities/Stopwatch.h"
 #include "MovementSystem.h"
 
 namespace Castlevania

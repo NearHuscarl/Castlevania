@@ -1,6 +1,5 @@
 #pragma once
 
-#include "DirectInput.h"
 #include "IController.h"
 #include "KeyboardState.h"
 

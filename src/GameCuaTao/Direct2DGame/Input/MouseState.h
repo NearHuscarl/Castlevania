@@ -1,7 +1,6 @@
 #pragma once
 
 #include "DirectInput.h"
-#include "../Base/Vector2.h"
 
 enum class MouseButton
 {

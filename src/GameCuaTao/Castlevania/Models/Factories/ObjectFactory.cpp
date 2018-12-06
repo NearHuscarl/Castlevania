@@ -11,7 +11,7 @@
 #include "../Systems/Collision/StandardCollisionSystem.h"
 #include "../Systems/CollisionResponse/GroundResponseSystem.h"
 #include "../Systems/Rendering/AnimationRenderingSystem.h"
-#include "../Systems/Rendering/BoundingBoxRenderingSystem.h"
+#include "../Systems/Rendering/BoundingboxRenderingSystem.h"
 #include "../Systems/Rendering/SpriteRenderingSystem.h"
 #include "../Systems/Rendering/EntityRenderingSystem.h"
 #include "../Characters/Player/Controller.h"

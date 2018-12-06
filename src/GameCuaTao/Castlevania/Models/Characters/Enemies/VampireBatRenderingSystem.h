@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Direct2DGame/Extensions/Animations/AnimatedSprite.h"
 #include "VampireBat.h"
 #include "../../Systems/Rendering/EffectRenderingSystem.h"
 

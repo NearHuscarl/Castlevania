@@ -4,7 +4,6 @@
 #include "Direct2DGame/Graphics/Texture.h"
 #include "Direct2DGame/Utilities/Stopwatch.h"
 #include "AbstractScene.h"
-#include "../Models/Factories/ObjectFactory.h"
 #include "../Models/Characters/Player/Player.h"
 
 namespace Castlevania

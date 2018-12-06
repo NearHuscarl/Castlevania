@@ -3,6 +3,7 @@
 #include "AbstractScene.h"
 #include "Stages/Stage.h"
 #include "GameplayData.h"
+#include "../Utilities/MapManager.h"
 #include "../Hud.h"
 
 namespace Castlevania

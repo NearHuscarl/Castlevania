@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Powerup.h"
-#include "../../Effects/IEffect.h"
 
 namespace Castlevania
 {

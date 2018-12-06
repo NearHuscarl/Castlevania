@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../../GameObject.h"
-#include "../../../Effects/IEffect.h"
 
 namespace Castlevania
 {

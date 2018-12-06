@@ -5,8 +5,9 @@
 #include "Direct2DGame/Extensions/Tiled/TiledMap.h"
 #include "Direct2DGame/Extensions/Camera.h"
 #include "../../Models/Factories/ObjectFactory.h"
+#include "../../Models/Factories/ObjectCollection.h"
 #include "../../Utilities/IObserver.h"
-#include "../../Utilities/MapManager.h"
+#include "../../Utilities/MapSettings.h"
 #include "../../Hud.h"
 
 namespace Castlevania

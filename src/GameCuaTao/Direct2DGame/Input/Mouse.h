@@ -1,6 +1,5 @@
 #pragma once
 
-#include "DirectInput.h"
 #include "MouseState.h"
 
 constexpr auto MOUSE_BUFFER_SIZE = 16;
