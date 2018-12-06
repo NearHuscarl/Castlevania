@@ -2,13 +2,13 @@
 
 <GameContent>
 
-  <Animations AtlasPath="Panther.atlas.xml">
+  <Animations AtlasPath="VampireBat.atlas.xml">
 
     <Animation Name="idle" DefaultTime="100" IsLooping="False">
       <Frame SpriteID="idle_01" />
     </Animation>
 
-    <Animation Name="fly" DefaultTime="125" IsLooping="True">
+    <Animation Name="fly" DefaultTime="140" IsLooping="True">
       <Frame SpriteID="fly_01" />
       <Frame SpriteID="fly_02" />
       <Frame SpriteID="fly_03" />

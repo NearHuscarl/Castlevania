@@ -95,6 +95,15 @@ void Stage::UpdateInput()
 
 	if (InputHelper::IsKeyDown(DIK_HOME))
 		gameplayScene.NextStage(Map::PLAYGROUND);
+	else if (InputHelper::IsMouseReleased(MouseButton::Left))
+	{
+		auto location = InputHelper::GetMousePosition();
+		location = camera->ScreenToWorld(location);
+		auto object = objectFactory.CreateVampireBat(location);
+		object->SetActive(true);
+		object->FlyRight();
+		objectCollection.entities.push_back(std::move(object));
+	}
 }
 
 void Stage::UpdateGameObjects(GameTime gameTime)

@@ -28,6 +28,7 @@ void WhipResponseSystem::Update(ObjectCollection &objectCollection)
 
 			case EntityType::Zombie:
 			case EntityType::Panther:
+			case EntityType::VampireBat:
 				OnCollideWithEnemy(result);
 				break;
 		}

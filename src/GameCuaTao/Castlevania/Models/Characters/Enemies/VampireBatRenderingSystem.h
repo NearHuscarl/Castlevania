@@ -1,23 +1,21 @@
 #pragma once
 
 #include "Direct2DGame/Extensions/Animations/AnimatedSprite.h"
-#include "Panther.h"
+#include "VampireBat.h"
 #include "../../Systems/Rendering/EffectRenderingSystem.h"
 
 namespace Castlevania
 {
-	class PantherRenderingSystem : public EffectRenderingSystem
+	class VampireBatRenderingSystem : public EffectRenderingSystem
 	{
 	public:
-		PantherRenderingSystem(Panther &parent, std::string animationPath, std::unique_ptr<IEffect> effect);
+		VampireBatRenderingSystem(VampireBat &parent, std::string animationPath, std::unique_ptr<IEffect> effect);
 
 		Sprite &GetSprite() override;
 		GameObject &GetParent() override;
 
-		void Draw(SpriteExtensions &spriteBatch) override;
-
 	private:
-		Panther &parent;
+		VampireBat &parent;
 
 		void OnMoveStateChanged() override;
 	};

@@ -38,11 +38,11 @@ void PlaygroundStage::UpdateInput()
 		object->WalkRight();
 		objectCollection.entities.push_back(std::move(object));
 	}
-	else if (InputHelper::IsKeyDown(DIK_W))
+	else if (InputHelper::IsMouseReleased(MouseButton::Left))
 	{
-		auto playerLocation = player->GetPosition();
-		auto spawnLocation = Vector2{ playerLocation.x + 60, playerLocation.y - 100 };
-		objectCollection.entities.push_back(objectFactory.CreateWhipPowerup(spawnLocation));
+		auto location = InputHelper::GetMousePosition();
+		location = camera->ScreenToWorld(location);
+		objectCollection.entities.push_back(objectFactory.CreateWhipPowerup(location));
 	}
 
 	if (!camera->GetBounds().Intersects(player->GetFrameRect())) // player outside of viewport, update viewport postiion

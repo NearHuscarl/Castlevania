@@ -4,6 +4,7 @@
 #include "../Characters/Player/Player.h"
 #include "../Characters/Enemies/Zombie.h"
 #include "../Characters/Enemies/Panther.h"
+#include "../Characters/Enemies/VampireBat.h"
 #include "../Items/Brazier.h"
 #include "../Weapons/Whip.h"
 #include "../Weapons/Dagger.h"
@@ -29,6 +30,7 @@ namespace Castlevania
 
 		std::unique_ptr<Zombie> CreateZombie(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Panther> CreatePanther(Vector2 position = Vector2::Zero());
+		std::unique_ptr<VampireBat> CreateVampireBat(Vector2 position = Vector2::Zero());
 
 		std::unique_ptr<Whip> CreateWhip(GameObject &gameObject);
 		std::unique_ptr<Whip> CreateFlashingWhip(GameObject &gameObject);

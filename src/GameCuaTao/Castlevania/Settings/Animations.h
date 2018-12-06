@@ -6,6 +6,7 @@ namespace Castlevania
 	constexpr auto IDLE_ANIMATION = "idle";
 	constexpr auto WALK_ANIMATION = "walk";
 	constexpr auto RUN_ANIMATION = "run";
+	constexpr auto FLY_ANIMATION = "fly";
 	constexpr auto JUMP_ANIMATION = "jump";
 	constexpr auto DUCK_ANIMATION = "duck";
 	constexpr auto GO_UPSTAIRS_ANIMATION = "go_upstairs";

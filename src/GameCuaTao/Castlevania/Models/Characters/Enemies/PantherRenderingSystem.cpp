@@ -9,10 +9,9 @@ PantherRenderingSystem::PantherRenderingSystem(
 	std::string animationPath,
 	std::unique_ptr<IEffect> effect)
 	:
+	EffectRenderingSystem{ animationPath, std::move(effect) },
 	parent{ parent }
 {
-	this->animationPath = animationPath;
-	hitEffect = std::move(effect);
 }
 
 Sprite &PantherRenderingSystem::GetSprite()
@@ -25,60 +24,11 @@ GameObject &PantherRenderingSystem::GetParent()
 	return parent;
 }
 
-void PantherRenderingSystem::Receive(int message)
-{
-	switch (message)
-	{
-		case MOVE_STATE_CHANGED:
-			OnMoveStateChanged();
-			break;
-
-		case STATE_CHANGED:
-			OnStateChanged();
-	}
-}
-
-void PantherRenderingSystem::LoadContent(ContentManager &content)
-{
-	RenderingSystem::LoadContent(content);
-	auto animations = content.Load<AnimationFactory>(animationPath);
-	sprite = std::make_unique<AnimatedSprite>(animations);
-}
-
-void PantherRenderingSystem::Update(GameTime gameTime)
-{
-	auto pantherState = parent.GetPantherState();
-	auto velocity = parent.GetVelocity();
-
-	switch (parent.GetState())
-	{
-		case ObjectState::NORMAL:
-			sprite->Update();
-			break;
-
-		case ObjectState::DYING:
-			if (hitEffect->IsFinished())
-				parent.Destroy();
-			break;
-	}
-}
-
 void PantherRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 {
-	RenderingSystem::Draw(spriteBatch);
-
 	DrawBoundingBox(spriteBatch, parent.GetActiveArea(), Color::LavenderBlue() * 0.4f); // TODO: remove debugging code
 
-	switch (parent.GetState())
-	{
-		case ObjectState::NORMAL:
-			spriteBatch.Draw(*sprite, parent.GetPosition());
-			break;
-
-		case ObjectState::DYING:
-			hitEffect->Draw(spriteBatch);
-			break;
-	}
+	EffectRenderingSystem::Draw(spriteBatch);
 }
 
 void PantherRenderingSystem::OnMoveStateChanged()
@@ -97,10 +47,4 @@ void PantherRenderingSystem::OnMoveStateChanged()
 			sprite->Play(JUMP_ANIMATION);
 			break;
 	}
-}
-
-void PantherRenderingSystem::OnStateChanged()
-{
-	if (parent.GetState() == ObjectState::DYING)
-		hitEffect->Show(parent.GetOriginPosition());
 }

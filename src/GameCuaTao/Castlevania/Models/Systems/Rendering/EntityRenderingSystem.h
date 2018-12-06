@@ -1,22 +1,18 @@
 #pragma once
 
-#include "AnimationRenderingSystem.h"
-#include "../../../Effects/IEffect.h"
+#include "EffectRenderingSystem.h"
 
 namespace Castlevania
 {
 	// Rendering system for interactive objects that spawns effect when being hit (candle, enemies)
-	class EntityRenderingSystem : public AnimationRenderingSystem
+	class EntityRenderingSystem : public EffectRenderingSystem
 	{
 	public:
 		EntityRenderingSystem(GameObject &parent, std::string spriteConfigPath, std::unique_ptr<IEffect> effect);
 
-		void Receive(int message) override;
-
-		void Update(GameTime gameTime) override;
-		void Draw(SpriteExtensions &spriteBatch) override;
+		GameObject &GetParent() override;
 
 	private:
-		std::unique_ptr<IEffect> hitEffect;
+		GameObject &parent;
 	};
 }

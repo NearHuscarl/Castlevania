@@ -1,6 +1,6 @@
 #include "Direct2DGame/MathHelper.h"
 #include "Whip.h"
-#include "WhipSettings.h"
+#include "../Settings.h"
 #include "WhipFlashingRenderingSystem.h"
 
 using namespace Castlevania;
@@ -37,7 +37,7 @@ GameObject &Whip::GetOwner()
 void Whip::SetFacing(Facing facing)
 {
 	GameObject::SetFacing(facing);
-	SendMessageToSystems(WHIP_FACING_CHANGED);
+	SendMessageToSystems(FACING_CHANGED);
 }
 
 void Whip::LoadContent(ContentManager &content)
@@ -49,13 +49,13 @@ void Whip::LoadContent(ContentManager &content)
 void Whip::Unleash()
 {
 	body.Enabled(true);
-	SendMessageToSystems(WHIP_ENABLED_CHANGED);
+	SendMessageToSystems(ENABLED_CHANGED);
 }
 
 void Whip::Withdraw()
 {
 	body.Enabled(false);
-	SendMessageToSystems(WHIP_ENABLED_CHANGED);
+	SendMessageToSystems(ENABLED_CHANGED);
 }
 
 void Whip::Upgrade()

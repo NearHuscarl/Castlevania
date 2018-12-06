@@ -165,6 +165,8 @@
     <ClCompile Include="Castlevania\Models\Characters\Enemies\PantherRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Enemies\PantherCollisionSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Enemies\PantherResponseSystem.cpp" />
+    <ClCompile Include="Castlevania\Models\Characters\Enemies\VampireBat.cpp" />
+    <ClCompile Include="Castlevania\Models\Characters\Enemies\VampireBatRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Enemies\Zombie.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Enemies\ZombieResponseSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Factories\ObjectFactory.cpp" />
@@ -183,6 +185,7 @@
     <ClCompile Include="Castlevania\Models\Systems\Movement\WaveMovementSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Rendering\AnimationRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Rendering\BoundingboxRenderingSystem.cpp" />
+    <ClCompile Include="Castlevania\Models\Systems\Rendering\EffectRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Rendering\EntityRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Rendering\RenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Rendering\SpriteRenderingSystem.cpp" />
@@ -249,6 +252,7 @@
     <ClCompile Include="Direct2DGame\Input\Mouse.cpp" />
     <ClCompile Include="Direct2DGame\Input\MouseState.cpp" />
     <ClCompile Include="Direct2DGame\MathHelper.cpp" />
+    <ClCompile Include="Direct2DGame\Utilities\DevTool.cpp" />
     <ClCompile Include="Direct2DGame\Utilities\Stopwatch.cpp" />
     <ClCompile Include="Direct2DGame\Utilities\TimeSpan.cpp" />
     <ClCompile Include="MarioSample\Models\MarioController.cpp" />
@@ -286,6 +290,7 @@
     <ClInclude Include="Castlevania\Models\Characters\Enemies\PantherCollisionSystem.h" />
     <ClInclude Include="Castlevania\Models\Characters\Enemies\PantherResponseSystem.h" />
     <ClInclude Include="Castlevania\Models\Characters\Enemies\VampireBat.h" />
+    <ClInclude Include="Castlevania\Models\Characters\Enemies\VampireBatRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Characters\Enemies\Zombie.h" />
     <ClInclude Include="Castlevania\Models\Characters\Enemies\ZombieResponseSystem.h" />
     <ClInclude Include="Castlevania\Models\Facing.h" />
@@ -309,6 +314,7 @@
     <ClInclude Include="Castlevania\Models\Systems\Movement\MovementSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Movement\WaveMovementSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Rendering\BoundingboxRenderingSystem.h" />
+    <ClInclude Include="Castlevania\Models\Systems\Rendering\EffectRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Rendering\EntityRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Rendering\IRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Rendering\AnimationRenderingSystem.h" />
@@ -324,7 +330,6 @@
     <ClInclude Include="Castlevania\Models\Weapons\WhipFlashingRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Weapons\WhipRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Weapons\WhipResponseSystem.h" />
-    <ClInclude Include="Castlevania\Models\Weapons\WhipSettings.h" />
     <ClInclude Include="Castlevania\Effects\EffectFactory.h" />
     <ClInclude Include="Castlevania\Effects\IEffect.h" />
     <ClInclude Include="Castlevania\Scenes\GameplayData.h" />
@@ -407,6 +412,7 @@
     <ClInclude Include="Direct2DGame\IUpdateable.h" />
     <ClInclude Include="Direct2DGame\MathHelper.h" />
     <ClInclude Include="Direct2DGame\Extensions\Sprites\SpriteExtensions.h" />
+    <ClInclude Include="Direct2DGame\Utilities\DevTool.h" />
     <ClInclude Include="Direct2DGame\Utilities\Stopwatch.h" />
     <ClInclude Include="Direct2DGame\Utilities\TimeSpan.h" />
     <ClInclude Include="MarioSample\Models\MarioController.h" />

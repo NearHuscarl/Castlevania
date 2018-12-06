@@ -2,7 +2,7 @@
 #include "Direct2DGame/MathHelper.h"
 #include "WhipRenderingSystem.h"
 #include "Whip.h"
-#include "WhipSettings.h"
+#include "../Settings.h"
 
 using namespace Castlevania;
 
@@ -24,7 +24,7 @@ GameObject &WhipRenderingSystem::GetParent()
 
 void WhipRenderingSystem::Receive(int message)
 {
-	if (message == WHIP_ENABLED_CHANGED)
+	if (message == ENABLED_CHANGED)
 		OnEnabledChanged();
 }
 

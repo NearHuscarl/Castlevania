@@ -3,6 +3,7 @@
 #include "../EntityType.h"
 #include "../Systems/Movement/SimpleMovementSystem.h"
 #include "../Systems/Movement/EntityMovementSystem.h"
+#include "../Systems/Movement/WaveMovementSystem.h"
 #include "../Systems/Collision/CollisionSystem.h"
 #include "../Systems/Collision/EntityCollisionSystem.h"
 #include "../Systems/Collision/SimpleCollisionSystem.h"
@@ -22,6 +23,7 @@
 #include "../Characters/Enemies/PantherCollisionSystem.h"
 #include "../Characters/Enemies/PantherResponseSystem.h"
 #include "../Characters/Enemies/PantherRenderingSystem.h"
+#include "../Characters/Enemies/VampireBatRenderingSystem.h"
 #include "../Characters/Enemies/ZombieResponseSystem.h"
 #include "../Weapons/WhipRenderingSystem.h"
 #include "../Weapons/WhipFlashingRenderingSystem.h"
@@ -197,6 +199,25 @@ std::unique_ptr<Panther> ObjectFactory::CreatePanther(Vector2 position)
 	object->Attach(std::move(movementSystem));
 	object->Attach(std::move(collisionSystem));
 	object->Attach(std::move(responseSystem));
+	object->Attach(std::move(renderingSystem));
+
+	object->LoadContent(content);
+
+	return object;
+}
+
+std::unique_ptr<VampireBat> ObjectFactory::CreateVampireBat(Vector2 position)
+{
+	auto object = std::make_unique<VampireBat>();
+
+	ReadEnemyConfig(*object.get(), "GameStats/Characters/VampireBat.xml");
+
+	auto movementSystem = std::make_unique<WaveMovementSystem>(*object, 0.2f, 1.0f, Axis::X);
+	auto renderingSystem = std::make_unique<VampireBatRenderingSystem>(
+		*object, "Characters/Enemies/VampireBat.ani.xml", effectManager->CreateFlameEffect());
+
+	object->SetPosition(position);
+	object->Attach(std::move(movementSystem));
 	object->Attach(std::move(renderingSystem));
 
 	object->LoadContent(content);

@@ -2,7 +2,7 @@
 #include "Direct2DGame/MathHelper.h"
 #include "WhipFlashingRenderingSystem.h"
 #include "Whip.h"
-#include "WhipSettings.h"
+#include "../Settings.h"
 
 using namespace Castlevania;
 
@@ -15,7 +15,7 @@ void WhipFlashingRenderingSystem::Receive(int message)
 {
 	WhipRenderingSystem::Receive(message);
 
-	if (message == WHIP_FACING_CHANGED)
+	if (message == FACING_CHANGED)
 		OnFacingChanged();
 }
 
