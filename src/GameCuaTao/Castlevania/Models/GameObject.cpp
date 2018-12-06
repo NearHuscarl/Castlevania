@@ -153,6 +153,7 @@ Facing GameObject::GetFacing()
 void GameObject::SetFacing(Facing facing)
 {
 	this->facing = facing;
+	SendMessageToSystems(FACING_CHANGED);
 
 	if (GetSprite() == nullptr)
 		return;

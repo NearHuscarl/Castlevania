@@ -8,6 +8,7 @@
 #include "../../Models/Factories/ObjectCollection.h"
 #include "../../Utilities/IObserver.h"
 #include "../../Utilities/MapSettings.h"
+#include "../../Utilities/DevTool.h"
 #include "../../Hud.h"
 
 namespace Castlevania
@@ -48,6 +49,7 @@ namespace Castlevania
 		std::shared_ptr<Player> player; // Our player need special attention
 		std::shared_ptr<Hud> hud;
 		std::shared_ptr<GameplayData> data;
+		std::unique_ptr<DevTool> devTool;
 
 		ObjectCollection objectCollection; // TODO: move to Grid class (implement spatial partition)
 		Trigger *nextMapTrigger;

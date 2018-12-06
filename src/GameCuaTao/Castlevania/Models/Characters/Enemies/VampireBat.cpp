@@ -23,12 +23,10 @@ void VampireBat::FlyRight()
 {
 	SetFacing(Facing::Right);
 	velocity.x = speed;
-	SendMessageToSystems(FACING_CHANGED);
 }
 
 void VampireBat::FlyLeft()
 {
 	SetFacing(Facing::Left);
 	velocity.x = -speed;
-	SendMessageToSystems(FACING_CHANGED);
 }

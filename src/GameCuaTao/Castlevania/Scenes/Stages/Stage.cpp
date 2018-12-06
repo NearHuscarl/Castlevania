@@ -39,6 +39,7 @@ void Stage::Initialize()
 
 	mapManager.SetWorldPosition(Vector2{ 0, (float)hud->GetHeight() });
 	camera = std::make_unique<Camera>(graphicsDevice);
+	devTool = std::make_unique<DevTool>(objectFactory, *camera);
 
 	LoadMap(currentMap);
 }
@@ -69,6 +70,7 @@ void Stage::Draw(SpriteExtensions &spriteBatch)
 
 void Stage::LoadMap(Map mapName)
 {
+	auto &content = gameplayScene.GetSceneManager().GetContent();
 	auto &mapManager = gameplayScene.GetMapManager();
 	auto &mapData = mapManager.LoadMap(mapName);
 	
@@ -80,12 +82,17 @@ void Stage::LoadMap(Map mapName)
 		map->GetWidthInPixels(),
 		map->GetHeightInPixels() + hud->GetHeight());
 
+	devTool->LoadContent(content);
+
 	player->SetPosition(objectCollection.locations["Checkpoint"]);
 
 	for (auto &trigger : objectCollection.triggers)
 	{
 		if (trigger->GetTriggerType() == TriggerType::NEXT_MAP)
+		{
 			nextMapTrigger = trigger.get();
+			break;
+		}
 	}
 }
 
@@ -93,15 +100,6 @@ void Stage::UpdateInput()
 {
 	if (InputHelper::IsKeyDown(DIK_HOME))
 		gameplayScene.NextStage(Map::PLAYGROUND);
-	else if (InputHelper::IsMouseReleased(MouseButton::Left))
-	{
-		auto location = InputHelper::GetMousePosition();
-		location = camera->ScreenToWorld(location);
-		auto object = objectFactory.CreateVampireBat(location);
-		object->SetActive(true);
-		object->FlyRight();
-		objectCollection.entities.push_back(std::move(object));
-	}
 }
 
 void Stage::UpdateGameObjects(GameTime gameTime)
@@ -126,6 +124,7 @@ void Stage::UpdateGameObjects(GameTime gameTime)
 void Stage::UpdateGameplay(GameTime gameTime)
 {
 	camera->LookAt(player->GetOriginPosition(), Scrolling::Horizontally);
+	devTool->Update(objectCollection);
 	UpdateGameObjects(gameTime);
 	data->timeLeft.CountDown();
 }
@@ -156,6 +155,8 @@ void Stage::DrawGameplay(SpriteExtensions &spriteBatch)
 	{
 		fgObject->Draw(spriteBatch);
 	}
+
+	devTool->Draw(spriteBatch);
 }
 
 void Stage::DrawNextMapCutscene(SpriteExtensions &spriteBatch)

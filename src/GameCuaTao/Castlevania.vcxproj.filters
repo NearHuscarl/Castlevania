@@ -366,9 +366,6 @@
     <ClCompile Include="Direct2DGame\Input\KeyboardState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Direct2DGame\Utilities\DevTool.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Castlevania\Models\Characters\Enemies\VampireBat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -379,6 +376,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Castlevania\Models\Systems\Rendering\EntityRenderingSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Utilities\DevTool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -878,9 +878,6 @@
     <ClInclude Include="Direct2DGame\Input\GameInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Direct2DGame\Utilities\DevTool.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Castlevania\Models\Characters\Enemies\VampireBatRenderingSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -888,6 +885,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Castlevania\Models\Systems\Rendering\EntityRenderingSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Utilities\DevTool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

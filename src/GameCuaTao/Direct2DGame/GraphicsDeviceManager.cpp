@@ -4,7 +4,7 @@
 GraphicsDeviceManager::GraphicsDeviceManager(Game &game) : game{ game }
 {
 	// TODO: refactor
-	framePerSecond = 90;
+	framePerSecond = 120;
 	tickPerFrame = 1000 / framePerSecond;
 
 	isFullScreen = false;                       // Set to true for windowed mode, false for fullscreen mode

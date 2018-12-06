@@ -5,6 +5,8 @@
 
 namespace Castlevania
 {
+	class Player;
+
 	class WhipResponseSystem : public ICollisionResponseSystem
 	{
 	public:
@@ -17,6 +19,6 @@ namespace Castlevania
 		Whip &parent;
 
 		void OnCollideWithBrazier(CollisionResult &result, ObjectCollection &objectCollection);
-		void OnCollideWithEnemy(CollisionResult &result);
+		void OnCollideWithEnemy(CollisionResult &result, Player &player);
 	};
 }

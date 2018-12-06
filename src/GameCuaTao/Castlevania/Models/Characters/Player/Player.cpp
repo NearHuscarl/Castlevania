@@ -65,6 +65,11 @@ void Player::SetJumpSpeed(float jumpSpeed)
 	this->jumpSpeed = jumpSpeed;
 }
 
+void Player::AddExp(int amount)
+{
+	data.score += amount;
+}
+
 void Player::SetWhip(std::unique_ptr<Whip> whip)
 {
 	this->whip = std::move(whip);

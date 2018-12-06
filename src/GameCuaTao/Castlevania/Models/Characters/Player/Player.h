@@ -68,6 +68,7 @@ namespace Castlevania
 		AttackState GetAttackState();
 		void SetSpeed(float speed) override;
 		void SetJumpSpeed(float jumpSpeed);
+		void AddExp(int amount);
 		
 		void SetWhip(std::unique_ptr<Whip> whip);
 		EntityType GetSubWeapon();

@@ -27,6 +27,11 @@ void Enemy::SetExp(int exp)
 	this->exp = exp;
 }
 
+int Enemy::GetExp()
+{
+	return exp;
+}
+
 void Enemy::Update(GameTime gameTime, UpdateData &updateData)
 {
 	GameObject::Update(gameTime, updateData);

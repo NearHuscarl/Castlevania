@@ -252,7 +252,7 @@
     <ClCompile Include="Direct2DGame\Input\Mouse.cpp" />
     <ClCompile Include="Direct2DGame\Input\MouseState.cpp" />
     <ClCompile Include="Direct2DGame\MathHelper.cpp" />
-    <ClCompile Include="Direct2DGame\Utilities\DevTool.cpp" />
+    <ClCompile Include="Castlevania\Utilities\DevTool.cpp" />
     <ClCompile Include="Direct2DGame\Utilities\Stopwatch.cpp" />
     <ClCompile Include="Direct2DGame\Utilities\TimeSpan.cpp" />
     <ClCompile Include="MarioSample\Models\MarioController.cpp" />
@@ -412,7 +412,7 @@
     <ClInclude Include="Direct2DGame\IUpdateable.h" />
     <ClInclude Include="Direct2DGame\MathHelper.h" />
     <ClInclude Include="Direct2DGame\Extensions\Sprites\SpriteExtensions.h" />
-    <ClInclude Include="Direct2DGame\Utilities\DevTool.h" />
+    <ClInclude Include="Castlevania\Utilities\DevTool.h" />
     <ClInclude Include="Direct2DGame\Utilities\Stopwatch.h" />
     <ClInclude Include="Direct2DGame\Utilities\TimeSpan.h" />
     <ClInclude Include="MarioSample\Models\MarioController.h" />

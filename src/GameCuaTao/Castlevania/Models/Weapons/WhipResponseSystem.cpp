@@ -2,6 +2,7 @@
 #include "../../Models/Factories/ObjectCollection.h"
 #include "../Items/Brazier.h"
 #include "../Characters/Enemies/Enemy.h"
+#include "../Characters/Player/Player.h"
 
 using namespace Castlevania;
 
@@ -29,7 +30,7 @@ void WhipResponseSystem::Update(ObjectCollection &objectCollection)
 			case EntityType::Zombie:
 			case EntityType::Panther:
 			case EntityType::VampireBat:
-				OnCollideWithEnemy(result);
+				OnCollideWithEnemy(result, *objectCollection.player);
 				break;
 		}
 	}
@@ -43,9 +44,12 @@ void WhipResponseSystem::OnCollideWithBrazier(CollisionResult &result, ObjectCol
 	brazier.OnBeingHit();
 }
 
-void WhipResponseSystem::OnCollideWithEnemy(CollisionResult &result)
+void WhipResponseSystem::OnCollideWithEnemy(CollisionResult &result, Player &player)
 {
 	auto &enemy = dynamic_cast<Enemy&>(result.collidedObject);
 
 	enemy.TakeDamage(parent.GetAttack());
+
+	if (enemy.GetState() == ObjectState::DYING)
+		player.AddExp(enemy.GetExp());
 }
