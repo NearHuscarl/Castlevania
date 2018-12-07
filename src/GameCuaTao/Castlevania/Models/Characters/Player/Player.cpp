@@ -410,6 +410,7 @@ void Player::Flash()
 {
 	SetMoveState(MoveState::FLASHING);
 	velocity = Vector2::Zero();
+	whip->Withdraw();
 	flashingTimer.Start();
 }
 

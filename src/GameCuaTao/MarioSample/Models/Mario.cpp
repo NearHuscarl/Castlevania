@@ -22,7 +22,7 @@ IController *Mario::GetController()
 
 void Mario::LoadContent(ContentManager &content)
 {
-	auto animationFactory = content.Load<AnimationFactory>("MarioAnimationDef.xml");
+	auto animationFactory = content.Load<AnimationFactory>("MarioAnimation.xml");
 	sprite = std::make_unique<AnimatedSprite>(animationFactory);
 	SetPosition(0.0f, 100.0f);
 	Idle();
