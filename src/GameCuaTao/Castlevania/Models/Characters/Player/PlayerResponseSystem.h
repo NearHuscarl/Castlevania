@@ -12,7 +12,7 @@ namespace Castlevania
 		PlayerResponseSystem(Player &parent, ObjectFactory &objectFactory);
 
 		GameObject &GetParent() override;
-		void Update(ObjectCollection &objectCollection) override;
+		void Update(UpdateData &updateData) override;
 
 	private:
 		Player &parent;
@@ -26,12 +26,14 @@ namespace Castlevania
 		};
 
 		void PostProcess(ResponseResult responseResult);
+		Direction GetPlayerHitDirection(GameObject &object, Direction direction);
 
 		void OnFalling() override;
 
 		void OnCollideWithBoundary(CollisionResult &result, ResponseResult &responseResult);
 		void OnCollideWithTrigger(CollisionResult &result, ResponseResult &responseResult);
 		void OnCollideWithEnemy(CollisionResult &result);
+		void OnCollideWithFireball(CollisionResult &result);
 		void OnCollideWithHeart(CollisionResult &result);
 		void OnCollideWithWhipPowerup(CollisionResult &result);
 		void OnCollideWithDaggerItem(CollisionResult &result, ObjectCollection &objectCollection);

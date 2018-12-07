@@ -31,6 +31,7 @@ namespace Castlevania
 		Axe,
 		Dagger,
 		Boomerang,
+		Fireball, // from Fishman
 		Whip,
 
 		// Items

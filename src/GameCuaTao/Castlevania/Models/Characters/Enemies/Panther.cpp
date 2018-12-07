@@ -4,14 +4,20 @@
 
 using namespace Castlevania;
 
-constexpr auto ACTIVE_ZONE_WIDTH = 250;
-constexpr auto ACTIVE_ZONE_HEIGHT = 410;
-constexpr auto JUMP_SPEED = 200.0f;
-
 Panther::Panther() : Enemy{ EntityType::Panther }
 {
 	playerDirection = Direction::None;
 	Idle();
+}
+
+void Panther::SetActiveZone(Rect activeZone)
+{
+	this->activeZone = activeZone;
+}
+
+void Panther::SetJumpSpeed(float speed)
+{
+	this->jumpSpeed = speed;
 }
 
 bool Panther::IsActive()
@@ -29,10 +35,10 @@ RectF Panther::GetActiveArea()
 	auto activeArea = RectF{};
 	auto originPosition = GetOriginPosition();
 
-	activeArea.left = originPosition.x - ACTIVE_ZONE_WIDTH / 2;
-	activeArea.top = originPosition.y - ACTIVE_ZONE_HEIGHT / 2;
-	activeArea.right = activeArea.left + ACTIVE_ZONE_WIDTH;
-	activeArea.bottom = activeArea.top + ACTIVE_ZONE_HEIGHT;
+	activeArea.left = originPosition.x - activeZone.Width() / 2;
+	activeArea.top = originPosition.y - activeZone.Height() / 2;
+	activeArea.right = activeArea.left + activeZone.Width();
+	activeArea.bottom = activeArea.top + activeZone.Height();
 
 	return activeArea;
 }
@@ -53,7 +59,7 @@ void Panther::Update(GameTime gameTime, UpdateData &updateData)
 
 	auto player = updateData.objectCollection->player;
 
-	if (player->GetBoundingBox().right <= GetOriginPosition().x)
+	if (player->GetOriginPosition().x <= GetOriginPosition().x)
 		playerDirection = Direction::Left;
 	else
 		playerDirection = Direction::Right;
@@ -81,7 +87,7 @@ void Panther::RunLeft()
 
 void Panther::Jump()
 {
-	velocity.y = -JUMP_SPEED;
+	velocity.y = -jumpSpeed;
 	SetDistance_Y(0);
 	SetPantherState(PantherState::JUMPING);
 }

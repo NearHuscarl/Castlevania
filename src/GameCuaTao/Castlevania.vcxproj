@@ -160,6 +160,10 @@
     <ClCompile Include="Castlevania\CastlevaniaGame.cpp" />
     <ClCompile Include="Castlevania\Effects\FlameEffect.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Enemies\Enemy.cpp" />
+    <ClCompile Include="Castlevania\Models\Characters\Enemies\Fishman.cpp" />
+    <ClCompile Include="Castlevania\Models\Characters\Enemies\FishmanControlSystem.cpp" />
+    <ClCompile Include="Castlevania\Models\Characters\Enemies\FishmanRenderingSystem.cpp" />
+    <ClCompile Include="Castlevania\Models\Characters\Enemies\FishmanResponseSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Enemies\Panther.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Enemies\PantherControlSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Enemies\PantherRenderingSystem.cpp" />
@@ -173,6 +177,7 @@
     <ClCompile Include="Castlevania\Hud.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Player\PlayerCollisionSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Player\PlayerRenderingSystem.cpp" />
+    <ClCompile Include="Castlevania\Models\Items\Fireball.cpp" />
     <ClCompile Include="Castlevania\Models\Items\Powerup.cpp" />
     <ClCompile Include="Castlevania\Models\SpawnArea.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\CollisionResponse\ResponseSystem.cpp" />
@@ -192,7 +197,6 @@
     <ClCompile Include="Castlevania\Models\Systems\Collision\StaticCollisionSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Trigger.cpp" />
     <ClCompile Include="Castlevania\Models\UpdateData.cpp" />
-    <ClCompile Include="Castlevania\Models\Weapons\Dagger.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\DaggerResponseSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\RangedWeapon.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\WhipFlashingRenderingSystem.cpp" />
@@ -284,6 +288,10 @@
     <ClInclude Include="Castlevania\CastlevaniaGame.h" />
     <ClInclude Include="Castlevania\Effects\FlameEffect.h" />
     <ClInclude Include="Castlevania\Models\Characters\Enemies\Enemy.h" />
+    <ClInclude Include="Castlevania\Models\Characters\Enemies\Fishman.h" />
+    <ClInclude Include="Castlevania\Models\Characters\Enemies\FishmanControlSystem.h" />
+    <ClInclude Include="Castlevania\Models\Characters\Enemies\FishmanRenderingSystem.h" />
+    <ClInclude Include="Castlevania\Models\Characters\Enemies\FishmanResponseSystem.h" />
     <ClInclude Include="Castlevania\Models\Characters\Enemies\Panther.h" />
     <ClInclude Include="Castlevania\Models\Characters\Enemies\PantherControlSystem.h" />
     <ClInclude Include="Castlevania\Models\Characters\Enemies\PantherRenderingSystem.h" />
@@ -300,6 +308,8 @@
     <ClInclude Include="Castlevania\Models\Characters\Player\PlayerCollisionSystem.h" />
     <ClInclude Include="Castlevania\Models\Characters\Player\PlayerData.h" />
     <ClInclude Include="Castlevania\Models\Characters\Player\PlayerRenderingSystem.h" />
+    <ClInclude Include="Castlevania\Models\Items\Fireball.h" />
+    <ClInclude Include="Castlevania\Models\IAttackable.h" />
     <ClInclude Include="Castlevania\Models\Settings.h" />
     <ClInclude Include="Castlevania\Models\Items\Powerup.h" />
     <ClInclude Include="Castlevania\Models\SpawnArea.h" />
@@ -324,7 +334,6 @@
     <ClInclude Include="Castlevania\Models\Trigger.h" />
     <ClInclude Include="Castlevania\Models\TriggerType.h" />
     <ClInclude Include="Castlevania\Models\UpdateData.h" />
-    <ClInclude Include="Castlevania\Models\Weapons\Dagger.h" />
     <ClInclude Include="Castlevania\Models\Weapons\DaggerResponseSystem.h" />
     <ClInclude Include="Castlevania\Models\Weapons\RangedWeapon.h" />
     <ClInclude Include="Castlevania\Models\Weapons\WhipFlashingRenderingSystem.h" />

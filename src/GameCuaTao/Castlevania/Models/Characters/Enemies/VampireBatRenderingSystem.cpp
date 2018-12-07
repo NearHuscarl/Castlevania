@@ -14,11 +14,6 @@ VampireBatRenderingSystem::VampireBatRenderingSystem(
 {
 }
 
-Sprite &VampireBatRenderingSystem::GetSprite()
-{
-	return *sprite;
-}
-
 GameObject &VampireBatRenderingSystem::GetParent()
 {
 	return parent;

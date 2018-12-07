@@ -11,6 +11,7 @@ namespace Castlevania
 		RangedWeapon(EntityType type);
 
 		void SetOwner(GameObject *owner);
+		void Update(GameTime gameTime, UpdateData &updateData);
 		void Throw();
 
 	private:

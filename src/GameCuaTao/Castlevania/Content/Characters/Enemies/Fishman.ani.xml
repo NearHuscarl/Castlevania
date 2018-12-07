@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Animations AtlasPath="Fishman.atlas.xml">
+
+    <Animation Name="idle" DefaultTime="100" IsLooping="False">
+      <Frame SpriteID="walk_01" />
+    </Animation>
+
+    <Animation Name="walk" DefaultTime="500" IsLooping="True">
+      <Frame SpriteID="walk_01" />
+      <Frame SpriteID="walk_02" />
+    </Animation>
+
+    <Animation Name="shoot" DefaultTime="500" IsLooping="False">
+      <Frame SpriteID="shoot_01" />
+    </Animation>
+
+  </Animations>
+
+</GameContent>

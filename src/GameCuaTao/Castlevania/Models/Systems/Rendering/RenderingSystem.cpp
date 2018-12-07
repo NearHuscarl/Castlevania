@@ -63,7 +63,12 @@ Color RenderingSystem::GetBoundingBoxColor()
 			return Color::Gold() * bboxColorScale;
 
 		case EntityType::Brazier:
-			return Color::Green() * bboxColorScale;
+			return Color::YellowGreen() * bboxColorScale;
+
+		case EntityType::Zombie:
+		case EntityType::Panther:
+		case EntityType::Fishman:
+			return Color::Green();
 
 		case EntityType::Whip:
 			return Color::Red() * bboxColorScale;

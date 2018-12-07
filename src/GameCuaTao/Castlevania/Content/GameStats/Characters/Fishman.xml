@@ -5,6 +5,7 @@
   <Dictionary
     Name="Fishman"
     Speed="75.0"
+    LaunchSpeed="800.0"
     Health="1"
     Attack="2"
     Exp="300">

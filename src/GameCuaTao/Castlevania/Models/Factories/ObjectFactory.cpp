@@ -19,6 +19,9 @@
 #include "../Characters/Player/PlayerCollisionSystem.h"
 #include "../Characters/Player/PlayerResponseSystem.h"
 #include "../Characters/Player/PlayerRenderingSystem.h"
+#include "../Characters/Enemies/FishmanControlSystem.h"
+#include "../Characters/Enemies/FishmanResponseSystem.h"
+#include "../Characters/Enemies/FishmanRenderingSystem.h"
 #include "../Characters/Enemies/PantherControlSystem.h"
 #include "../Characters/Enemies/PantherCollisionSystem.h"
 #include "../Characters/Enemies/PantherResponseSystem.h"
@@ -161,8 +164,9 @@ std::unique_ptr<Brazier> ObjectFactory::CreateBrazier(EntityType itemType, Vecto
 std::unique_ptr<Zombie> ObjectFactory::CreateZombie(Vector2 position)
 {
 	auto object = std::make_unique<Zombie>();
+	auto stats = content.Load<Dictionary>("GameStats/Characters/Zombie.xml");
 
-	ReadEnemyConfig(*object.get(), "GameStats/Characters/Zombie.xml");
+	ReadEnemyConfig(*object.get(), *stats);
 
 	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, 1000.0f);
 	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
@@ -184,8 +188,14 @@ std::unique_ptr<Zombie> ObjectFactory::CreateZombie(Vector2 position)
 std::unique_ptr<Panther> ObjectFactory::CreatePanther(Vector2 position)
 {
 	auto object = std::make_unique<Panther>();
+	auto stats = content.Load<Dictionary>("GameStats/Characters/Panther.xml");
 
-	ReadEnemyConfig(*object.get(), "GameStats/Characters/Panther.xml");
+	ReadEnemyConfig(*object.get(), *stats);
+
+	auto zoneWidth = std::stoi(stats->at("ActiveZoneWidth"));
+	auto zoneHeight = std::stoi(stats->at("ActiveZoneHeight"));
+	object->SetActiveZone(Rect{ 0, 0, zoneWidth, zoneHeight });
+	object->SetJumpSpeed(std::stof(stats->at("JumpSpeed")));
 
 	auto controlSystem = std::make_unique<PantherControlSystem>(*object);
 	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, 1000.0f);
@@ -206,11 +216,39 @@ std::unique_ptr<Panther> ObjectFactory::CreatePanther(Vector2 position)
 	return object;
 }
 
+std::unique_ptr<Fishman> ObjectFactory::CreateFishman(Vector2 position)
+{
+	auto object = std::make_unique<Fishman>();
+	auto stats = content.Load<Dictionary>("GameStats/Characters/Fishman.xml");
+
+	ReadEnemyConfig(*object.get(), *stats);
+	object->SetLaunchSpeed(std::stof(stats->at("LaunchSpeed")));
+
+	auto controlSystem = std::make_unique<FishmanControlSystem>(*object, *this);
+	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, 1000.0f);
+	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
+	auto responseSystem = std::make_unique<FishmanResponseSystem>(*object);
+	auto renderingSystem = std::make_unique<FishmanRenderingSystem>(
+		*object, "Characters/Enemies/Fishman.ani.xml", effectManager->CreateFlameEffect());
+
+	object->SetPosition(position);
+	object->Attach(std::move(controlSystem));
+	object->Attach(std::move(movementSystem));
+	object->Attach(std::move(collisionSystem));
+	object->Attach(std::move(responseSystem));
+	object->Attach(std::move(renderingSystem));
+
+	object->LoadContent(content);
+
+	return object;
+}
+
 std::unique_ptr<VampireBat> ObjectFactory::CreateVampireBat(Vector2 position)
 {
 	auto object = std::make_unique<VampireBat>();
+	auto stats = content.Load<Dictionary>("GameStats/Characters/VampireBat.xml");
 
-	ReadEnemyConfig(*object.get(), "GameStats/Characters/VampireBat.xml");
+	ReadEnemyConfig(*object.get(), *stats);
 
 	auto movementSystem = std::make_unique<WaveMovementSystem>(*object, 0.2f, 1.0f, Axis::X);
 	auto renderingSystem = std::make_unique<VampireBatRenderingSystem>(
@@ -259,9 +297,9 @@ std::unique_ptr<Whip> ObjectFactory::CreateFlashingWhip(GameObject &gameObject)
 	return object;
 }
 
-std::unique_ptr<Dagger> ObjectFactory::CreateDagger(Vector2 position)
+std::unique_ptr<RangedWeapon> ObjectFactory::CreateDagger(Vector2 position)
 {
-	auto object = std::make_unique<Dagger>();
+	auto object = std::make_unique<RangedWeapon>(EntityType::Dagger);
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
 	auto collisionSystem = std::make_unique<EntityCollisionSystem>(*object);
@@ -272,6 +310,25 @@ std::unique_ptr<Dagger> ObjectFactory::CreateDagger(Vector2 position)
 	object->Attach(std::move(movementSystem));
 	object->Attach(std::move(collisionSystem));
 	object->Attach(std::move(responseSystem));
+	object->Attach(std::move(renderingSystem));
+
+	object->LoadContent(content);
+
+	return object;
+}
+
+std::unique_ptr<Fireball> ObjectFactory::CreateFireball(Vector2 position)
+{
+	auto object = std::make_unique<Fireball>();
+	auto stats = content.Load<Dictionary>("GameStats/Characters/Fishman.xml");
+
+	object->SetAttack(std::stoi(stats->at("Attack")));
+
+	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Fireball.png");
+
+	object->SetPosition(position);
+	object->Attach(std::move(movementSystem));
 	object->Attach(std::move(renderingSystem));
 
 	object->LoadContent(content);
@@ -384,12 +441,10 @@ std::unique_ptr<GameObject> ObjectFactory::CreateDirtBlock(Vector2 position)
 	return object;
 }
 
-void ObjectFactory::ReadEnemyConfig(Enemy &enemy, std::string configPath)
+void ObjectFactory::ReadEnemyConfig(Enemy &enemy, Dictionary stats)
 {
-	auto stats = content.Load<Dictionary>(configPath);
-
-	enemy.SetSpeed(std::stof(stats->at("Speed")));
-	enemy.SetHealth(std::stoi(stats->at("Health")));
-	enemy.SetAttack(std::stoi(stats->at("Attack")));
-	enemy.SetExp(std::stoi(stats->at("Exp")));
+	enemy.SetSpeed(std::stof(stats.at("Speed")));
+	enemy.SetHealth(std::stoi(stats.at("Health")));
+	enemy.SetAttack(std::stoi(stats.at("Attack")));
+	enemy.SetExp(std::stoi(stats.at("Exp")));
 }

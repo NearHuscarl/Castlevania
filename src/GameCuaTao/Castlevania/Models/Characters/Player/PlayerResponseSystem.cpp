@@ -1,6 +1,6 @@
 #include "PlayerResponseSystem.h"
 #include "../../Settings.h"
-#include "../../../Models/Factories/ObjectCollection.h"
+#include "../../UpdateData.h"
 #include "../../../Scenes/Stages/StageEvent.h"
 
 using namespace Castlevania;
@@ -16,8 +16,9 @@ GameObject &PlayerResponseSystem::GetParent()
 	return parent;
 }
 
-void PlayerResponseSystem::Update(ObjectCollection &objectCollection)
+void PlayerResponseSystem::Update(UpdateData &updateData)
 {
+	auto &objectCollection = *updateData.objectCollection;
 	auto collisionData = parent.GetBody().GetCollisionData();
 	auto responseResult = ResponseResult{};
 
@@ -38,8 +39,13 @@ void PlayerResponseSystem::Update(ObjectCollection &objectCollection)
 
 			case EntityType::Zombie:
 			case EntityType::Panther:
+			case EntityType::Fishman:
 			case EntityType::VampireBat:
 				OnCollideWithEnemy(result);
+				break;
+
+			case EntityType::Fireball:
+				OnCollideWithFireball(result);
 				break;
 
 			case EntityType::LargeHeart:
@@ -70,6 +76,29 @@ void PlayerResponseSystem::PostProcess(ResponseResult responseResult)
 	}
 
 	parent.nearbyStair = responseResult.stairTrigger;
+}
+
+Direction PlayerResponseSystem::GetPlayerHitDirection(GameObject &object, Direction direction)
+{
+	auto hitDirection = Direction{};
+
+	switch (direction)
+	{
+		case Direction::Left:
+		case Direction::Right:
+			hitDirection = Opposite(direction);
+			break;
+
+		case Direction::Top:
+		case Direction::Bottom:
+			if (parent.GetOriginPosition().x <= object.GetOriginPosition().x)
+				hitDirection = Direction::Left;
+			else
+				hitDirection = Direction::Right;
+			break;
+	}
+
+	return hitDirection;
 }
 
 void PlayerResponseSystem::OnFalling()
@@ -156,9 +185,18 @@ void PlayerResponseSystem::OnCollideWithTrigger(CollisionResult &result, Respons
 
 void PlayerResponseSystem::OnCollideWithEnemy(CollisionResult &result)
 {
-	auto &enemy = dynamic_cast<Enemy&>(result.collidedObject);
+	auto &object = dynamic_cast<Enemy&>(result.collidedObject);
+	auto hitDirection = GetPlayerHitDirection(object, result.direction);
 
-	parent.TakeDamage(enemy.GetAttack(), Opposite(result.direction));
+	parent.TakeDamage(object.GetAttack(), hitDirection);
+}
+
+void PlayerResponseSystem::OnCollideWithFireball(CollisionResult &result)
+{
+	auto &object = dynamic_cast<Fireball&>(result.collidedObject);
+	auto hitDirection = GetPlayerHitDirection(object, result.direction);
+
+	parent.TakeDamage(object.GetAttack(), hitDirection);
 }
 
 void PlayerResponseSystem::OnCollideWithHeart(CollisionResult &result)

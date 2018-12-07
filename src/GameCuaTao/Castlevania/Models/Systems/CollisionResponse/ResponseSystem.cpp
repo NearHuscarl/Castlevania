@@ -1,4 +1,5 @@
 #include "ResponseSystem.h"
+#include "../../UpdateData.h"
 #include "../../GameObject.h"
 #include "../../Settings.h"
 
@@ -14,8 +15,9 @@ GameObject &ResponseSystem::GetParent()
 	return GameObject::NullObject();
 }
 
-void ResponseSystem::Update(ObjectCollection &objectCollection)
+void ResponseSystem::Update(UpdateData &updateData)
 {
+	auto &objectCollection = *updateData.objectCollection;
 	auto collisionData = GetParent().GetBody().GetCollisionData();
 	auto isOnGround = false;
 

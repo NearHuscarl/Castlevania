@@ -1,17 +1,18 @@
 #pragma once
 
 #include "../../GameObject.h"
+#include "../../IAttackable.h"
 
 namespace Castlevania
 {
-	class Enemy : public GameObject
+	class Enemy : public GameObject, public IAttackable
 	{
 	public:
 		Enemy(EntityType type);
 
 		void SetHealth(int health);
-		int GetAttack();
-		void SetAttack(int attack);
+		int GetAttack() override;
+		void SetAttack(int attack) override;
 		void SetExp(int exp);
 		int GetExp();
 

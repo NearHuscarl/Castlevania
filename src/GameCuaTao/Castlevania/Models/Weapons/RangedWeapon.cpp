@@ -1,4 +1,5 @@
 #include "RangedWeapon.h"
+#include "../UpdateData.h"
 
 using namespace Castlevania;
 
@@ -12,6 +13,16 @@ RangedWeapon::RangedWeapon(EntityType type) : GameObject{ type }
 void RangedWeapon::SetOwner(GameObject *owner)
 {
 	this->owner = owner;
+}
+
+void RangedWeapon::Update(GameTime gameTime, UpdateData &updateData)
+{
+	GameObject::Update(gameTime, updateData);
+
+	auto viewport = updateData.viewport;
+
+	if (!viewport.TouchesOrIntersects(GetFrameRect()))
+		Destroy();
 }
 
 void RangedWeapon::Throw()

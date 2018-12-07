@@ -1,5 +1,5 @@
 #include "WhipResponseSystem.h"
-#include "../../Models/Factories/ObjectCollection.h"
+#include "../../Models/UpdateData.h"
 #include "../Items/Brazier.h"
 #include "../Characters/Enemies/Enemy.h"
 #include "../Characters/Player/Player.h"
@@ -10,9 +10,10 @@ WhipResponseSystem::WhipResponseSystem(Whip &parent) : parent{ parent }
 {
 }
 
-void WhipResponseSystem::Update(ObjectCollection &objectCollection)
+void WhipResponseSystem::Update(UpdateData &updateData)
 {
 	auto collisionData = parent.GetBody().GetCollisionData();
+	auto &objectCollection = *updateData.objectCollection;
 
 	if (collisionData.collisionResults.size() == 0)
 		return;
@@ -29,6 +30,7 @@ void WhipResponseSystem::Update(ObjectCollection &objectCollection)
 
 			case EntityType::Zombie:
 			case EntityType::Panther:
+			case EntityType::Fishman:
 			case EntityType::VampireBat:
 				OnCollideWithEnemy(result, *objectCollection.player);
 				break;

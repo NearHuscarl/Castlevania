@@ -14,6 +14,7 @@ namespace Castlevania
 	constexpr auto IDLE_UPSTAIRS_ANIMATION = "idle_upstairs";
 	constexpr auto IDLE_DOWNSTAIRS_ANIMATION = "idle_downstairs";
 	constexpr auto ATTACK_ANIMATION = "attack";
+	constexpr auto SHOOT_ANIMATION = "shoot";
 	constexpr auto JUMP_ATTACK_ANIMATION = "jump_attack";
 	constexpr auto DUCK_ATTACK_ANIMATION = "duck_attack";
 	constexpr auto GO_UPSTAIRS_ATTACK_ANIMATION = "go_upstairs_attack";

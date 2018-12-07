@@ -21,9 +21,11 @@ public:
 	static float ToRadians(float degrees);
 	static Vector2 Degrees2Vector(float degrees);
 
-	static int RandomBetween(int min, int max);
+	template<typename T>
+	static int RandomBetween(T min, T max);
 	// Like RandomBetween(int, int) but do not repeat oldValue
-	static int RandomBetween(int min, int max, int oldValue);
+	template<typename T>
+	static int RandomBetween(T min, T max, T oldValue);
 };
 
 template<typename T>
@@ -45,4 +47,23 @@ template<typename T>
 inline T MathHelper::Max(T value1, T value2)
 {
 	return (value1 > value2) ? value1 : value2;
+}
+
+template<typename T>
+inline int MathHelper::RandomBetween(T min, T max)
+{
+	return rand() % (max - min) + min;
+}
+
+template<typename T>
+inline int MathHelper::RandomBetween(T min, T max, T oldValue)
+{
+	auto newValue = RandomBetween(min, max);
+
+	while (newValue == oldValue)
+	{
+		newValue = RandomBetween(min, max);
+	}
+
+	return newValue;
 }

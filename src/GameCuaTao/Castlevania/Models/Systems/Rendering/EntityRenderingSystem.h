@@ -9,7 +9,6 @@ namespace Castlevania
 	{
 	public:
 		EntityRenderingSystem(GameObject &parent, std::string spriteConfigPath, std::unique_ptr<IEffect> effect);
-
 		GameObject &GetParent() override;
 
 	private:

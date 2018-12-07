@@ -287,7 +287,7 @@ void GameObject::Update(GameTime gameTime, UpdateData &updateData)
 		collisionSystem->Update(*objectCollection);
 
 	if (collisionResponseSystem != nullptr && objectCollection != nullptr)
-		collisionResponseSystem->Update(*objectCollection);
+		collisionResponseSystem->Update(updateData);
 
 	if (renderingSystem != nullptr)
 		renderingSystem->Update(gameTime);

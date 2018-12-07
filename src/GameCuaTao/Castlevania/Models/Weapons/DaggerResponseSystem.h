@@ -11,7 +11,7 @@ namespace Castlevania
 		DaggerResponseSystem(GameObject &parent);
 
 		virtual void Receive(int message) override {};
-		void Update(ObjectCollection &objectCollection);
+		void Update(UpdateData &updateData) override;
 
 	private:
 		GameObject &parent;

@@ -5,6 +5,7 @@
 
 namespace Castlevania
 {	
+	// Simple rendering system that draw the full texure
 	class SpriteRenderingSystem : public RenderingSystem
 	{
 	public:

@@ -17,6 +17,7 @@ void DevTool::LoadContent(ContentManager &content)
 
 	auto zombieSprite = content.Load<Spritesheet>("Characters/Enemies/Zombie.atlas.xml")->begin()->second;
 	auto pantherSprite = content.Load<Spritesheet>("Characters/Enemies/Panther.atlas.xml")->begin()->second;
+	auto fishmanSprite = content.Load<Spritesheet>("Characters/Enemies/Fishman.atlas.xml")->begin()->second;
 	auto vampireBatSprite = content.Load<Spritesheet>("Characters/Enemies/VampireBat.atlas.xml")->begin()->second;
 	auto daggerItemSprite = content.Load<Texture>("Items/Dagger.png");
 	auto largeHeartSprite = content.Load<Texture>("Items/Large_Heart.png");
@@ -26,6 +27,7 @@ void DevTool::LoadContent(ContentManager &content)
 	{
 		std::make_pair<std::string, Sprite>("Zombie", zombieSprite),
 		std::make_pair<std::string, Sprite>("Panther", pantherSprite),
+		std::make_pair<std::string, Sprite>("Fishman", fishmanSprite),
 		std::make_pair<std::string, Sprite>("VampireBat", vampireBatSprite),
 		std::make_pair<std::string, Sprite>("DaggerItem", daggerItemSprite),
 		std::make_pair<std::string, Sprite>("LargeHeart", largeHeartSprite),
@@ -42,7 +44,7 @@ void DevTool::Update(ObjectCollection &objectCollection)
 	}
 	else if (InputHelper::IsScrollingUp())
 	{
-		if (++currentItemIndex > items.size() - 1)
+		if (++currentItemIndex > (int)items.size() - 1)
 			currentItemIndex = 0;
 	}
 	else if (InputHelper::IsMouseReleased(MouseButton::Left))
@@ -58,6 +60,10 @@ void DevTool::Update(ObjectCollection &objectCollection)
 				break;
 			case EntityType::Panther:
 				object = objectFactory.CreatePanther(mousePosition);
+				break;
+			case EntityType::Fishman:
+				object = objectFactory.CreateFishman(mousePosition);
+				dynamic_cast<Fishman&>(*object).Launch();
 				break;
 			case EntityType::VampireBat:
 				object = objectFactory.CreateVampireBat(mousePosition);

@@ -14,11 +14,6 @@ PantherRenderingSystem::PantherRenderingSystem(
 {
 }
 
-Sprite &PantherRenderingSystem::GetSprite()
-{
-	return *sprite;
-}
-
 GameObject &PantherRenderingSystem::GetParent()
 {
 	return parent;

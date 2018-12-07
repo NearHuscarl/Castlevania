@@ -4,12 +4,12 @@
 
 namespace Castlevania
 {
-	struct ObjectCollection;
+	struct UpdateData;
 
 	class ICollisionResponseSystem : public IReceiver
 	{
 	public:
-		virtual void Update(ObjectCollection &objectCollection) = 0;
+		virtual void Update(UpdateData &updateData) = 0;
 		virtual ~ICollisionResponseSystem() {}
 	};
 }

@@ -5,9 +5,12 @@
   <Dictionary
     Name="Panther"
     Speed="350.0"
+    JumpSpeed="200.0"
     Health="1"
     Attack="2"
-    Exp="200">
+    Exp="200"
+    ActiveZoneWidth="250"
+    ActiveZoneHeight="410">
   </Dictionary>
 
 </GameContent>

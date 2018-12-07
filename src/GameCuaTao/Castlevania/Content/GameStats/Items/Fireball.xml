@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Dictionary
+    Name="Fireball"
+    Attack="2">
+  </Dictionary>
+
+</GameContent>

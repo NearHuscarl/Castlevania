@@ -69,8 +69,8 @@ void EffectRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 	switch (GetParent().GetState())
 	{
 		case ObjectState::NORMAL:
-			RenderingSystem::Draw(spriteBatch);
 			spriteBatch.Draw(*sprite, GetParent().GetPosition());
+			RenderingSystem::Draw(spriteBatch);
 			break;
 
 		case ObjectState::DYING:

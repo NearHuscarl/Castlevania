@@ -15,7 +15,7 @@ namespace Castlevania
 
 		virtual GameObject &GetParent();
 		virtual void Receive(int message) override {};
-		virtual void Update(ObjectCollection &objectCollection) override;
+		virtual void Update(UpdateData &updateData) override;
 
 	protected:
 		virtual void OnTouchingGround(CollisionData collisionData);

@@ -20,20 +20,3 @@ Vector2 MathHelper::Degrees2Vector(float degrees)
 
 	return Vector2(x, y);
 }
-
-int MathHelper::RandomBetween(int min, int max)
-{
-	return rand() % (max - min) + min;
-}
-
-int MathHelper::RandomBetween(int min, int max, int oldValue)
-{
-	auto newValue = RandomBetween(min, max);
-
-	while (newValue == oldValue)
-	{
-		newValue = RandomBetween(min, max);
-	}
-
-	return newValue;
-}

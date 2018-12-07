@@ -16,6 +16,8 @@ namespace Castlevania
 	public:
 		Panther();
 
+		void SetActiveZone(Rect activeZone);
+		void SetJumpSpeed(float speed);
 		bool IsActive();
 		void SetActive(bool value);
 
@@ -34,8 +36,9 @@ namespace Castlevania
 		void Land();
 
 	private:
+		float jumpSpeed;
 		bool isActive;
-		Rect activeArea;
+		Rect activeZone;
 		PantherState pantherState;
 		Direction playerDirection;
 
