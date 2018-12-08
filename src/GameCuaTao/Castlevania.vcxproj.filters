@@ -393,6 +393,9 @@
     <ClCompile Include="Castlevania\Models\Items\Fireball.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Castlevania\Models\Weapons\WhipCollisionSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\pugixml.hpp">
@@ -915,6 +918,8 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Castlevania\Models\Items\Fireball.h">
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Weapons\WhipCollisionSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -199,6 +199,7 @@
     <ClCompile Include="Castlevania\Models\UpdateData.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\DaggerResponseSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\RangedWeapon.cpp" />
+    <ClCompile Include="Castlevania\Models\Weapons\WhipCollisionSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\WhipFlashingRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\WhipRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\WhipResponseSystem.cpp" />
@@ -336,6 +337,7 @@
     <ClInclude Include="Castlevania\Models\UpdateData.h" />
     <ClInclude Include="Castlevania\Models\Weapons\DaggerResponseSystem.h" />
     <ClInclude Include="Castlevania\Models\Weapons\RangedWeapon.h" />
+    <ClInclude Include="Castlevania\Models\Weapons\WhipCollisionSystem.h" />
     <ClInclude Include="Castlevania\Models\Weapons\WhipFlashingRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Weapons\WhipRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Weapons\WhipResponseSystem.h" />

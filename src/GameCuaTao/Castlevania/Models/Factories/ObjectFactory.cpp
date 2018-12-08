@@ -28,6 +28,7 @@
 #include "../Characters/Enemies/PantherRenderingSystem.h"
 #include "../Characters/Enemies/VampireBatRenderingSystem.h"
 #include "../Characters/Enemies/ZombieResponseSystem.h"
+#include "../Weapons/WhipCollisionSystem.h"
 #include "../Weapons/WhipRenderingSystem.h"
 #include "../Weapons/WhipFlashingRenderingSystem.h"
 #include "../Weapons/WhipResponseSystem.h"
@@ -267,7 +268,7 @@ std::unique_ptr<Whip> ObjectFactory::CreateWhip(GameObject &gameObject)
 {
 	auto object = std::make_unique<Whip>(gameObject);
 
-	auto collisionSystem = std::make_unique<SimpleCollisionSystem>(*object);
+	auto collisionSystem = std::make_unique<WhipCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<WhipResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<WhipRenderingSystem>(*object, "Items/Whip.ani.xml");
 
@@ -284,7 +285,7 @@ std::unique_ptr<Whip> ObjectFactory::CreateFlashingWhip(GameObject &gameObject)
 {
 	auto object = std::make_unique<Whip>(gameObject);
 
-	auto collisionSystem = std::make_unique<SimpleCollisionSystem>(*object);
+	auto collisionSystem = std::make_unique<WhipCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<WhipResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<WhipFlashingRenderingSystem>(*object, "Items/Whip.ani.xml");
 
