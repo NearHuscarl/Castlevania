@@ -124,8 +124,8 @@ void Stage::UpdateGameObjects(GameTime gameTime)
 void Stage::UpdateGameplay(GameTime gameTime)
 {
 	devTool->Update(objectCollection);
-	UpdateGameObjects(gameTime);
 	camera->LookAt(player->GetOriginPosition(), Scrolling::Horizontally);
+	UpdateGameObjects(gameTime);
 	data->timeLeft.CountDown();
 }
 

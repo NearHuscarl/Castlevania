@@ -22,6 +22,8 @@ ContentManager &Game::GetContent()
 
 Game::Game()
 {
+	//Stopwatch::Initialize();
+
 	service  = std::make_shared<ServiceProvider>();
 	window   = std::make_unique<GameWindow>(*this);
 	graphics = std::make_unique<GraphicsDeviceManager>(*this);

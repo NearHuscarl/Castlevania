@@ -45,7 +45,7 @@ ObjectCollection MapManager::CreateObjectCollection(ObjectsProperties objectsPro
 		auto x = worldPosition.x + std::stof(properties.at("x"));
 		auto y = worldPosition.y + std::stof(properties.at("y"));
 
-		if (type == BOUNDARY) // rectangle
+		if (type == BOUNDARY) // Rectangle
 		{
 			auto width = std::stof(properties.at("width"));
 			auto height = std::stof(properties.at("height"));
@@ -54,7 +54,7 @@ ObjectCollection MapManager::CreateObjectCollection(ObjectsProperties objectsPro
 
 			objectCollection.boundaries.push_back(std::move(object));
 		}
-		else if (type == TRIGGER) // rectangle
+		else if (type == TRIGGER) // Rectangle
 		{
 			auto width = std::stof(properties.at("width"));
 			auto height = std::stof(properties.at("height"));
@@ -94,6 +94,16 @@ ObjectCollection MapManager::CreateObjectCollection(ObjectsProperties objectsPro
 			else
 				objectCollection.entities.push_back(std::move(object));
 		}
+		else if (type == SPAWNER) // Rectangle
+		{
+			auto width = std::stof(properties.at("width"));
+			auto height = std::stof(properties.at("height"));
+			auto bbox = RectF{ x, y, width, height };
+			auto spawnObject = string2EntityType.at(properties.at("SpawnObject"));
+			auto object = objectFactory.CreateSpawnArea(spawnObject, bbox);
+			
+			objectCollection.entities.push_back(std::move(object));
+		}
 	}
 
 	return objectCollection;
@@ -106,9 +116,6 @@ std::unique_ptr<GameObject> MapManager::ConstructObject(ObjectProperties propert
 
 	switch (type)
 	{
-		case EntityType::SpawnArea: // TODO:
-			return objectFactory.CreateArea(RectF{ 0,0,0,0 });
-
 		case EntityType::Player:
 			return objectFactory.CreatePlayer();
 

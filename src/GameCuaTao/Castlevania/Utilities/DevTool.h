@@ -20,7 +20,8 @@ namespace Castlevania
 
 	private:
 		using DevToolItems = std::vector<std::pair<std::string, Sprite>>;
-
+		
+		bool isDebugging;
 		std::shared_ptr<SpriteFont> debugFont;
 		DevToolItems items;
 		int currentItemIndex;
@@ -29,6 +30,6 @@ namespace Castlevania
 		ObjectFactory &objectFactory;
 		Camera &camera;
 
-		//std::unique_ptr<GameObject> SpawnItem(EntityType type);
+		Vector2 GetCurrentItemPosition();
 	};
 }

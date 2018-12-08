@@ -18,7 +18,7 @@ void DevTool::LoadContent(ContentManager &content)
 	auto zombieSprite = content.Load<Spritesheet>("Characters/Enemies/Zombie.atlas.xml")->begin()->second;
 	auto pantherSprite = content.Load<Spritesheet>("Characters/Enemies/Panther.atlas.xml")->begin()->second;
 	auto fishmanSprite = content.Load<Spritesheet>("Characters/Enemies/Fishman.atlas.xml")->begin()->second;
-	auto vampireBatSprite = content.Load<Spritesheet>("Characters/Enemies/VampireBat.atlas.xml")->begin()->second;
+	auto vampireBatSprite = content.Load<Spritesheet>("Characters/Enemies/VampireBat.atlas.xml")->at("fly_01");
 	auto daggerItemSprite = content.Load<Texture>("Items/Dagger.png");
 	auto largeHeartSprite = content.Load<Texture>("Items/Large_Heart.png");
 	auto whipPowerupSprite = content.Load<Texture>("Items/Whip_Powerup.png");
@@ -37,6 +37,16 @@ void DevTool::LoadContent(ContentManager &content)
 
 void DevTool::Update(ObjectCollection &objectCollection)
 {
+	// Update keyboard input
+	if (InputHelper::IsKeyDown(DIK_ESCAPE))
+	{
+		isDebugging = !isDebugging;
+	}
+
+	if (!isDebugging)
+		return;
+
+	// Update mouse input
 	if (InputHelper::IsScrollingDown())
 	{
 		if (--currentItemIndex < 0)
@@ -50,32 +60,32 @@ void DevTool::Update(ObjectCollection &objectCollection)
 	else if (InputHelper::IsMouseReleased(MouseButton::Left))
 	{
 		auto type = string2EntityType.at(items[currentItemIndex].first);
-		auto mousePosition = camera.ScreenToWorld(InputHelper::GetMousePosition());
+		auto objectPosition = GetCurrentItemPosition();
 		auto object = std::unique_ptr<GameObject>{};
 
 		switch (type)
 		{
 			case EntityType::Zombie:
-				object = objectFactory.CreateZombie(mousePosition);
+				object = objectFactory.CreateZombie(objectPosition);
 				break;
 			case EntityType::Panther:
-				object = objectFactory.CreatePanther(mousePosition);
+				object = objectFactory.CreatePanther(objectPosition);
 				break;
 			case EntityType::Fishman:
-				object = objectFactory.CreateFishman(mousePosition);
+				object = objectFactory.CreateFishman(objectPosition);
 				dynamic_cast<Fishman&>(*object).Launch();
 				break;
 			case EntityType::VampireBat:
-				object = objectFactory.CreateVampireBat(mousePosition);
+				object = objectFactory.CreateVampireBat(objectPosition);
 				break;
 			case EntityType::DaggerItem:
-				object = objectFactory.CreateDaggerItem(mousePosition);
+				object = objectFactory.CreateDaggerItem(objectPosition);
 				break;
 			case EntityType::LargeHeart:
-				object = objectFactory.CreateLargeHeart(mousePosition);
+				object = objectFactory.CreateLargeHeart(objectPosition);
 				break;
 			case EntityType::WhipPowerup:
-				object = objectFactory.CreateWhipPowerup(mousePosition);
+				object = objectFactory.CreateWhipPowerup(objectPosition);
 				break;
 		}
 		object->SetFacing(currentFacing);
@@ -92,13 +102,25 @@ void DevTool::Update(ObjectCollection &objectCollection)
 
 void DevTool::Draw(SpriteExtensions &spriteBatch)
 {
-	auto mousePosition = camera.ScreenToWorld(InputHelper::GetMousePosition());
-	auto textPosition = Vector2{ mousePosition.x, mousePosition.y - 20 };
+	if (!isDebugging)
+		return;
+
+	auto objectPosition = GetCurrentItemPosition();
+	auto textPosition = Vector2{ objectPosition.x, objectPosition.y - 20 };
 	auto effect = currentFacing == Facing::Left ? SpriteEffects::FlipHorizontally : SpriteEffects::None;
 	auto sprite = items[currentItemIndex].second;
 	
 	sprite.SetEffect(effect);
 
 	spriteBatch.DrawString(*debugFont, items[currentItemIndex].first, textPosition, Color::White());
-	spriteBatch.Draw(sprite, mousePosition);
+	spriteBatch.Draw(sprite, objectPosition);
+}
+
+Vector2 DevTool::GetCurrentItemPosition()
+{
+	auto sprite = items[currentItemIndex].second;
+	auto mousePosition = camera.ScreenToWorld(InputHelper::GetMousePosition());
+	auto position = Vector2{ mousePosition.x - sprite.GetFrameRectangle(mousePosition).Width(), mousePosition.y };
+
+	return position;
 }

@@ -33,6 +33,7 @@
 #include "../Weapons/WhipFlashingRenderingSystem.h"
 #include "../Weapons/WhipResponseSystem.h"
 #include "../Weapons/DaggerResponseSystem.h"
+#include "../Spawners/ZombieSpawnArea.h"
 
 using namespace Castlevania;
 
@@ -48,9 +49,20 @@ std::unique_ptr<GameObject> ObjectFactory::CreateBoundary(RectF rect)
 	return CreateRectangleObject(EntityType::Boundary, rect);
 }
 
-std::unique_ptr<GameObject> ObjectFactory::CreateArea(RectF rect)
+std::unique_ptr<SpawnArea> ObjectFactory::CreateSpawnArea(EntityType type, RectF rect)
 {
-	return CreateRectangleObject(EntityType::Area, rect);
+	auto object = ConstructSpawnArea(type);
+	auto stats = content.Load<Dictionary>("GameStats/SpawnArea/ZombieSpawnArea.xml");
+
+	ReadSpawnAreaConfig(*object.get(), *stats);
+
+	auto renderingSystem = std::make_unique<BoundingBoxRenderingSystem>(*object, rect);
+
+	object->SetPosition(Vector2{ rect.left, rect.top });
+	object->Attach(std::move(renderingSystem));
+	object->LoadContent(content);
+
+	return object;
 }
 
 std::unique_ptr<GameObject> ObjectFactory::CreateRectangleObject(EntityType type, RectF rect)
@@ -448,4 +460,29 @@ void ObjectFactory::ReadEnemyConfig(Enemy &enemy, Dictionary stats)
 	enemy.SetHealth(std::stoi(stats.at("Health")));
 	enemy.SetAttack(std::stoi(stats.at("Attack")));
 	enemy.SetExp(std::stoi(stats.at("Exp")));
+}
+
+void ObjectFactory::ReadSpawnAreaConfig(SpawnArea &spawnArea, Dictionary stats)
+{
+	auto minSpawnGroup = std::stoi(stats.at("MinSpawnGroup"));
+	auto maxSpawnGroup = std::stoi(stats.at("MaxSpawnGroup"));
+	auto minGroupSpawnTime = std::stoi(stats.at("MinGroupSpawnTime"));
+	auto maxGroupSpawnTime = std::stoi(stats.at("MaxGroupSpawnTime"));
+	auto spawnTime = std::stoi(stats.at("SpawnTime"));
+
+	spawnArea.SetSpawnGroupCount(minSpawnGroup, maxSpawnGroup);
+	spawnArea.SetGroupSpawnTime(minGroupSpawnTime, maxGroupSpawnTime);
+	spawnArea.SetSpawnTime(spawnTime);
+}
+
+std::unique_ptr<SpawnArea> ObjectFactory::ConstructSpawnArea(EntityType type)
+{
+	switch (type)
+	{
+		case EntityType::Zombie:
+			return std::make_unique<ZombieSpawnArea>(*this);
+
+		default:
+			throw std::runtime_error("Spawn area for this type of object is not supported");
+	}
 }

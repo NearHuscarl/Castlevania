@@ -10,6 +10,7 @@
 #include "../Items/Fireball.h"
 #include "../Weapons/Whip.h"
 #include "../Items/Powerup.h"
+#include "../Spawners/SpawnArea.h"
 #include "../../Effects/EffectFactory.h"
 
 namespace Castlevania
@@ -20,7 +21,7 @@ namespace Castlevania
 		ObjectFactory(ContentManager &content);
 
 		std::unique_ptr<GameObject> CreateBoundary(RectF rect);
-		std::unique_ptr<GameObject> CreateArea(RectF rect);
+		std::unique_ptr<SpawnArea> CreateSpawnArea(EntityType type, RectF rect);
 		std::unique_ptr<GameObject> CreateRectangleObject(EntityType type, RectF rect);
 		std::unique_ptr<Trigger> CreateTrigger(RectF rect, TriggerType triggerType);
 
@@ -52,5 +53,8 @@ namespace Castlevania
 		std::unique_ptr<EffectFactory> effectManager;
 
 		void ReadEnemyConfig(Enemy &enemy, Dictionary stats);
+		void ReadSpawnAreaConfig(SpawnArea &spawnArea, Dictionary stats);
+
+		std::unique_ptr<SpawnArea> ConstructSpawnArea(EntityType type);
 	};
 }

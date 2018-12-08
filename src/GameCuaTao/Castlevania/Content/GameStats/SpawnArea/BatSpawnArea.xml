@@ -7,9 +7,9 @@
     Spawn="VampireBat"
     MinSpawnGroup="1"
     MaxSpawnGroup="1"
-    SpawnTime="0.3"
-    GroupSpawnTime="3.5"
-    SpawnDirection="Left|Right">
+    MinGroupSpawnTime="3000"
+    MaxGroupSpawnTime="3500"
+    SpawnTime="0.3">
   </Dictionary>
 
 </GameContent>

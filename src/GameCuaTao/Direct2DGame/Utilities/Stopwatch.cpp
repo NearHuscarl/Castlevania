@@ -1,10 +1,31 @@
 #include <ctime>
 #include <Windows.h>
 #include "Stopwatch.h"
+#include "FileLogger.h"
+
+double Stopwatch::frequency;
+bool Stopwatch::useHighResolutionCounter;
 
 Stopwatch::Stopwatch()
 {
 	Reset();
+}
+
+void Stopwatch::Initialize()
+{
+	auto result = LARGE_INTEGER{};
+
+	if (!QueryPerformanceFrequency(&result))
+	{
+		FileLogger::GetInstance().Error("QueryPerformanceFrequency failed");
+		useHighResolutionCounter = false;
+		return;
+	}
+	else
+	{
+		frequency = double(result.QuadPart) / 1000.0;
+		useHighResolutionCounter = true;
+	}
 }
 
 void Stopwatch::Start()
@@ -59,7 +80,16 @@ long Stopwatch::GetTimeStamp()
 {
 	//auto currentTimeStamp = system_clock::now().time_since_epoch();
 	//return duration_cast<milliseconds>(currentTimeStamp).count();
-	return GetTickCount();
+
+	if (useHighResolutionCounter)
+	{
+		auto result = LARGE_INTEGER{};
+
+		QueryPerformanceCounter(&result);
+		return result.QuadPart / frequency;
+	}
+	else
+		return GetTickCount();
 }
 
 std::string Stopwatch::GetFomattedTimeStamp(const char *format)

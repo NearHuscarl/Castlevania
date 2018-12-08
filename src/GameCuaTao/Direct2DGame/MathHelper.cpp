@@ -20,3 +20,13 @@ Vector2 MathHelper::Degrees2Vector(float degrees)
 
 	return Vector2(x, y);
 }
+
+bool MathHelper::RandomBoolean()
+{
+	return rand() % 2 == 0 ? true : false;
+}
+
+bool MathHelper::RandomPercent(float percentValue)
+{
+	return RandomBetween(1, 100) < percentValue;
+}

@@ -21,6 +21,9 @@ public:
 	static float ToRadians(float degrees);
 	static Vector2 Degrees2Vector(float degrees);
 
+	static bool RandomBoolean();
+	static bool RandomPercent(float percentValue); // 1-100
+
 	template<typename T>
 	static int RandomBetween(T min, T max);
 	// Like RandomBetween(int, int) but do not repeat oldValue
@@ -52,7 +55,7 @@ inline T MathHelper::Max(T value1, T value2)
 template<typename T>
 inline int MathHelper::RandomBetween(T min, T max)
 {
-	return rand() % (max - min) + min;
+	return rand() % (max - min + 1) + min;
 }
 
 template<typename T>

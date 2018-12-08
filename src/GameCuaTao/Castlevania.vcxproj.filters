@@ -261,9 +261,6 @@
     <ClCompile Include="Castlevania\Utilities\MapManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Castlevania\Models\SpawnArea.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Castlevania\Models\Weapons\DaggerResponseSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -393,7 +390,13 @@
     <ClCompile Include="Castlevania\Models\Items\Fireball.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Castlevania\Models\Spawners\SpawnArea.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Castlevania\Models\Weapons\WhipCollisionSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Models\Spawners\ZombieSpawnArea.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -776,9 +779,6 @@
     <ClInclude Include="Castlevania\Utilities\MapManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Castlevania\Models\SpawnArea.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Castlevania\Models\Weapons\DaggerResponseSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -918,8 +918,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Castlevania\Models\Items\Fireball.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Spawners\SpawnArea.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Spawners\SpawnPoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Spawners\ISpawner.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Castlevania\Models\Weapons\WhipCollisionSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Spawners\ZombieSpawnArea.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

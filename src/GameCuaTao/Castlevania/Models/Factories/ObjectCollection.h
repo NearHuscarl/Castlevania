@@ -9,6 +9,7 @@ namespace Castlevania
 	constexpr auto TRIGGER = "Trigger";
 	constexpr auto POSITION = "Position";
 	constexpr auto OBJECT = "Object";
+	constexpr auto SPAWNER = "Spawner";
 
 	struct ObjectCollection
 	{

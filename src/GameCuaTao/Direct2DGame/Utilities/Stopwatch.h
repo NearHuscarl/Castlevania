@@ -8,6 +8,7 @@ class Stopwatch
 {
 public:
 	Stopwatch();
+	static void Initialize();
 
 	void Start();
 	void Stop();
@@ -26,6 +27,9 @@ public:
 	static bool Every(int interval);
 
 private:
+	static double frequency;
+	static bool useHighResolutionCounter;
+	
 	long elapsed;
 	long startTimeStamp;
 	bool isRunning;
