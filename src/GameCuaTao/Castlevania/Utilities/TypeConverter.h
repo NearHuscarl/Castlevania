@@ -12,6 +12,7 @@ namespace Castlevania
 	const auto string2EntityType = std::unordered_map<std::string, EntityType>
 	{
 		{ "SpawnArea", EntityType::SpawnArea },
+		{ "SpawnPoint", EntityType::SpawnPoint },
 		{ "Player", EntityType::Player },
 		{ "Bat", EntityType::Bat },
 		{ "Cloud", EntityType::Cloud },

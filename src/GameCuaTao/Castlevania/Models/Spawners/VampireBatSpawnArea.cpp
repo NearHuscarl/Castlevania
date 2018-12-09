@@ -1,6 +1,7 @@
 #include "Direct2DGame/MathHelper.h"
 #include "VampireBatSpawnArea.h"
 #include "../UpdateData.h"
+#include "../Factories/ObjectFactory.h"
 
 using namespace Castlevania;
 
@@ -12,7 +13,7 @@ VampireBatSpawnArea::VampireBatSpawnArea(ObjectFactory &objectFactory) :
 void VampireBatSpawnArea::SpawnObject(UpdateData &updateData)
 {
 	auto viewport = updateData.viewport;
-	auto object = Spawn();
+	auto object = objectFactory.CreateEnemy(spawnObjectType);
 	auto spawnPosition = Vector2{};
 	auto facing = Facing{};
 

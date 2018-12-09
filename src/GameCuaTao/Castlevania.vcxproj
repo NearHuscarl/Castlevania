@@ -183,6 +183,7 @@
     <ClCompile Include="Castlevania\Models\Spawners\SpawnArea.cpp" />
     <ClCompile Include="Castlevania\Models\Spawners\SpawnAreaResponseSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Spawners\SpawnerCollisionSystem.cpp" />
+    <ClCompile Include="Castlevania\Models\Spawners\SpawnPoint.cpp" />
     <ClCompile Include="Castlevania\Models\Spawners\VampireBatSpawnArea.cpp" />
     <ClCompile Include="Castlevania\Models\Spawners\ZombieSpawnArea.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\CollisionResponse\ResponseSystem.cpp" />

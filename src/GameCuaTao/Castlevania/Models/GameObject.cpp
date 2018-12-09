@@ -134,7 +134,7 @@ RectF GameObject::GetFrameRect()
 
 RectF GameObject::GetBoundingBox()
 {
-	if (!body.Enabled() || GetSprite() == nullptr)
+	if (GetSprite() == nullptr)
 		return RectF::Empty();
 
 	return GetSprite()->GetBoundingRectangle(position);

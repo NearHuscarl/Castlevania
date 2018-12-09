@@ -1,6 +1,5 @@
 #include "SpawnArea.h"
 #include "../UpdateData.h"
-#include "../Factories/ObjectFactory.h"
 
 using namespace Castlevania;
 
@@ -64,24 +63,6 @@ void SpawnArea::Update(GameTime gameTime, UpdateData &updateData)
 			if (spawnGroupCountLeft <= 0)
 				StopSpawning();
 			break;
-	}
-}
-
-std::unique_ptr<GameObject> SpawnArea::Spawn()
-{
-	switch (spawnObjectType)
-	{
-		case EntityType::Zombie:
-			return objectFactory.CreateZombie();
-		
-		case EntityType::VampireBat:
-			return objectFactory.CreateVampireBat();
-
-		case EntityType::Fishman:
-			return objectFactory.CreateFishman();
-
-		default:
-			throw std::runtime_error("Object type not supported");
 	}
 }
 

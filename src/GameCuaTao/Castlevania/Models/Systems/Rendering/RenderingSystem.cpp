@@ -57,7 +57,8 @@ Color RenderingSystem::GetBoundingBoxColor()
 			return Color::Blue() * bboxColorScale;
 
 		case EntityType::SpawnArea:
-			return Color::Red() * bboxColorScale;
+		case EntityType::SpawnPoint:
+			return Color::Red() * (bboxColorScale - 0.2f);
 
 		case EntityType::Player:
 			return Color::Gold() * bboxColorScale;
@@ -67,6 +68,7 @@ Color RenderingSystem::GetBoundingBoxColor()
 
 		case EntityType::Zombie:
 		case EntityType::Panther:
+		case EntityType::VampireBat:
 		case EntityType::Fishman:
 			return Color::Green();
 

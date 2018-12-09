@@ -38,7 +38,7 @@ void Enemy::Update(GameTime gameTime, UpdateData &updateData)
 
 	auto viewport = updateData.viewport;
 
-	if (!viewport.Contains(GetFrameRect()))
+	if (!viewport.Contains(GetBoundingBox()))
 		state = ObjectState::DEAD;
 }
 

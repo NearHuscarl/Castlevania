@@ -2,6 +2,7 @@
 #include "FishmanSpawnArea.h"
 #include "../UpdateData.h"
 #include "../Characters/Enemies/Fishman.h"
+#include "../Factories/ObjectFactory.h"
 
 using namespace Castlevania;
 
@@ -16,7 +17,7 @@ FishmanSpawnArea::FishmanSpawnArea(ObjectFactory &objectFactory) :
 void FishmanSpawnArea::SpawnObject(UpdateData &updateData)
 {
 	auto viewport = updateData.viewport;
-	auto object = Spawn();
+	auto object = objectFactory.CreateEnemy(spawnObjectType);
 	auto spawnPosition = Vector2{};
 	auto facing = Facing{};
 	auto playerBbox = updateData.objectCollection->player->GetBoundingBox();

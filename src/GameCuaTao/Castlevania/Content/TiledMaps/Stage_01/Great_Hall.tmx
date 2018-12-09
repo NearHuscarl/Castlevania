@@ -11,17 +11,17 @@
   <image source="Great_Hall.png" width="5632" height="365"/>
  </imagelayer>
  <objectgroup id="6" name="Areas">
-  <object id="15" name="ZombieSpawnArea" type="Spawner" x="0" y="0" width="804" height="320">
+  <object id="15" name="SpawnArea" type="Spawner" x="0" y="0" width="804" height="320">
    <properties>
     <property name="SpawnObject" value="Zombie"/>
    </properties>
   </object>
-  <object id="29" name="BatSpawnArea" type="Spawner" x="3072" y="0" width="1008" height="320">
+  <object id="29" name="SpawnArea" type="Spawner" x="3072" y="0" width="1008" height="320">
    <properties>
     <property name="SpawnObject" value="VampireBat"/>
    </properties>
   </object>
-  <object id="30" name="ZombieSpawnArea" type="Spawner" x="2268" y="0" width="788" height="320">
+  <object id="30" name="SpawnArea" type="Spawner" x="2268" y="0" width="788" height="320">
    <properties>
     <property name="SpawnObject" value="Zombie"/>
    </properties>
@@ -47,24 +47,27 @@
   <object id="28" name="Wall" type="Boundary" x="3584" y="160" width="128" height="192"/>
  </objectgroup>
  <objectgroup id="4" name="Entities">
-  <object id="10" name="Panther" type="Object" gid="2147483692" x="1367" y="191" width="66" height="32">
+  <object id="10" name="SpawnPoint" type="Object" gid="2147483692" x="1367" y="191" width="66" height="32">
    <properties>
     <property name="Facing" value="Left"/>
+    <property name="SpawnObject" value="Panther"/>
    </properties>
   </object>
-  <object id="11" name="Panther" type="Object" gid="2147483692" x="1752" y="127" width="66" height="32">
+  <object id="11" name="SpawnPoint" type="Object" gid="2147483692" x="1752" y="127" width="66" height="32">
    <properties>
     <property name="Facing" value="Left"/>
+    <property name="SpawnObject" value="Panther"/>
    </properties>
   </object>
-  <object id="12" name="Panther" type="Object" gid="2147483692" x="1879" y="191" width="66" height="32">
+  <object id="12" name="SpawnPoint" type="Object" gid="2147483692" x="1879" y="191" width="66" height="32">
    <properties>
     <property name="Facing" value="Left"/>
+    <property name="SpawnObject" value="Panther"/>
    </properties>
   </object>
  </objectgroup>
  <objectgroup id="5" name="Locations">
   <object id="9" name="Checkpoint1" type="Position" gid="43" x="64" y="320" width="60" height="66"/>
-  <object id="13" name="Checkpoint" type="Position" gid="43" x="3210" y="320" width="60" height="66"/>
+  <object id="13" name="Checkpoint" type="Position" gid="43" x="850" y="320" width="60" height="66"/>
  </objectgroup>
 </map>

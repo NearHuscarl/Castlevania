@@ -11,6 +11,7 @@
 #include "../Weapons/Whip.h"
 #include "../Items/Powerup.h"
 #include "../Spawners/SpawnArea.h"
+#include "../Spawners/SpawnPoint.h"
 #include "../../Effects/EffectFactory.h"
 
 namespace Castlevania
@@ -21,6 +22,7 @@ namespace Castlevania
 		ObjectFactory(ContentManager &content);
 
 		std::unique_ptr<GameObject> CreateBoundary(RectF rect);
+		std::unique_ptr<SpawnPoint> CreateSpawnPoint(EntityType type, RectF rect);
 		std::unique_ptr<SpawnArea> CreateSpawnArea(EntityType type, RectF rect);
 		std::unique_ptr<GameObject> CreateRectangleObject(EntityType type, RectF rect);
 		std::unique_ptr<Trigger> CreateTrigger(RectF rect, TriggerType triggerType);
@@ -30,6 +32,7 @@ namespace Castlevania
 		std::unique_ptr<Player> CreateIntroSimon(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Brazier> CreateBrazier(EntityType itemType, Vector2 position = Vector2::Zero());
 
+		std::unique_ptr<Enemy> CreateEnemy(EntityType type, Vector2 position = Vector2::Zero());
 		std::unique_ptr<Zombie> CreateZombie(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Panther> CreatePanther(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Fishman> CreateFishman(Vector2 position = Vector2::Zero());

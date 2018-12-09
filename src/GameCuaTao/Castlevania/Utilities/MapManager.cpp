@@ -54,6 +54,23 @@ ObjectCollection MapManager::CreateObjectCollection(ObjectsProperties objectsPro
 
 			objectCollection.boundaries.push_back(std::move(object));
 		}
+		else if (type == OBJECT) // GameObject (Player, Bat, Skeleton...) // tile
+		{
+			auto object = ConstructObject(properties);
+			auto height = std::stoi(properties.at("height"));
+			auto facing = string2Facing.at(GetValueOrDefault(properties, "Facing", "Right"));
+			auto foreground = GetValueOrDefault(properties, "Foreground", "False");
+			auto visibility = GetValueOrDefault(properties, "Visibility", "True");
+
+			object->SetPosition(x, y - height);
+			object->SetFacing(facing);
+			object->SetVisibility(ToBoolean(visibility));
+
+			if (ToBoolean(foreground))
+				objectCollection.foregroundObjects.push_back(std::move(object));
+			else
+				objectCollection.entities.push_back(std::move(object));
+		}
 		else if (type == TRIGGER) // Rectangle
 		{
 			auto width = std::stof(properties.at("width"));
@@ -73,30 +90,6 @@ ObjectCollection MapManager::CreateObjectCollection(ObjectsProperties objectsPro
 			object->SetFacing(facing);
 			objectCollection.triggers.push_back(std::move(object));
 		}
-		else if (type == POSITION)
-		{
-			auto height = std::stoi(properties.at("height"));
-			auto position = Vector2{ x, y - height };
-
-			objectCollection.locations[name] = position;
-		}
-		else if (type == OBJECT) // GameObject (Player, Bat, Skeleton...) // tile
-		{
-			auto object = ConstructObject(properties);
-			auto height = std::stoi(properties.at("height"));
-			auto facing = string2Facing.at(GetValueOrDefault(properties, "Facing", "Right"));
-			auto foreground = GetValueOrDefault(properties, "Foreground", "False");
-			auto visibility = GetValueOrDefault(properties, "Visibility", "True");
-
-			object->SetPosition(x, y - height);
-			object->SetFacing(facing);
-			object->SetVisibility(ToBoolean(visibility));
-
-			if (ToBoolean(foreground))
-				objectCollection.foregroundObjects.push_back(std::move(object));
-			else
-				objectCollection.entities.push_back(std::move(object));
-		}
 		else if (type == SPAWNER) // Rectangle
 		{
 			auto width = std::stof(properties.at("width"));
@@ -106,6 +99,13 @@ ObjectCollection MapManager::CreateObjectCollection(ObjectsProperties objectsPro
 			auto object = objectFactory.CreateSpawnArea(spawnObject, bbox);
 			
 			objectCollection.entities.push_back(std::move(object));
+		}
+		else if (type == POSITION)
+		{
+			auto height = std::stoi(properties.at("height"));
+			auto position = Vector2{ x, y - height };
+
+			objectCollection.locations[name] = position;
 		}
 	}
 
@@ -119,6 +119,16 @@ std::unique_ptr<GameObject> MapManager::ConstructObject(ObjectProperties propert
 
 	switch (type)
 	{
+		case EntityType::SpawnPoint:
+		{
+			auto width = std::stof(properties.at("width"));
+			auto height = std::stof(properties.at("height"));
+			auto bbox = RectF{ 0, 0, width, height };
+			auto spawnType = string2EntityType.at(properties.at("SpawnObject"));
+
+			return objectFactory.CreateSpawnPoint(spawnType, bbox);
+		}
+
 		case EntityType::Player:
 			return objectFactory.CreatePlayer();
 

@@ -67,7 +67,7 @@ void GameplayScene::LoadContent()
 	auto cutsceneBgTexture = content.Load<Texture>("Backgrounds/Cutscene_Background.png");
 	cutsceneBackground = std::make_unique<Sprite>(cutsceneBgTexture);
 
-	currentStage = ConstructStage(Map::UNDERGROUND); // TODO: change back to COURTYARD
+	currentStage = ConstructStage(Map::GREAT_HALL); // TODO: change back to COURTYARD
 	currentStage->Initialize();
 }
 

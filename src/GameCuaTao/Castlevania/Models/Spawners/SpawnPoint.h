@@ -6,17 +6,22 @@
 
 namespace Castlevania
 {
+	class ObjectFactory;
+
 	class SpawnPoint : public GameObject, public ISpawner
 	{
 	public:
-		SpawnPoint();
+		SpawnPoint(EntityType spawnObjectType, ObjectFactory &objectFactory);
 
-		void SetActive(bool value) override;
-		void Update(GameTime gameTime);
+		SpawnState GetSpawnState() override;
+		void Update(GameTime gameTime, UpdateData &updateData) override;
 
 	private:
-		bool isActive;
+		ObjectFactory &objectFactory;
+		EntityType spawnObjectType;
+		SpawnState spawnState;
 
-		void SpawnObject(ObjectCollection &objectCollection) override;
+		void Activate() override;
+		void Deactivate() override;
 	};
 }

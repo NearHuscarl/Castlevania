@@ -1,6 +1,7 @@
 #include "Direct2DGame/MathHelper.h"
 #include "ZombieSpawnArea.h"
 #include "../UpdateData.h"
+#include "../Factories/ObjectFactory.h"
 
 using namespace Castlevania;
 
@@ -12,7 +13,7 @@ ZombieSpawnArea::ZombieSpawnArea(ObjectFactory &objectFactory) :
 void ZombieSpawnArea::SpawnObject(UpdateData &updateData)
 {
 	auto viewport = updateData.viewport;
-	auto object = Spawn();
+	auto object = objectFactory.CreateEnemy(spawnObjectType);
 	auto spawnPosition = Vector2{};
 	auto facing = Facing{};
 

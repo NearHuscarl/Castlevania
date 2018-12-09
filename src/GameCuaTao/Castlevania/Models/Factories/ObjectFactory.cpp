@@ -53,6 +53,18 @@ std::unique_ptr<GameObject> ObjectFactory::CreateBoundary(RectF rect)
 	return CreateRectangleObject(EntityType::Boundary, rect);
 }
 
+std::unique_ptr<SpawnPoint> ObjectFactory::CreateSpawnPoint(EntityType type, RectF rect)
+{
+	auto object = std::make_unique<SpawnPoint>(type, *this);
+	auto renderingSystem = std::make_unique<BoundingBoxRenderingSystem>(*object, rect);
+
+	object->SetPosition(Vector2{ rect.left, rect.top });
+	object->Attach(std::move(renderingSystem));
+	object->LoadContent(content);
+
+	return object;
+}
+
 std::unique_ptr<SpawnArea> ObjectFactory::CreateSpawnArea(EntityType type, RectF rect)
 {
 	auto object = ConstructSpawnArea(type);
@@ -176,6 +188,27 @@ std::unique_ptr<Brazier> ObjectFactory::CreateBrazier(EntityType itemType, Vecto
 	object->LoadContent(content);
 	
 	return object;
+}
+
+std::unique_ptr<Enemy> ObjectFactory::CreateEnemy(EntityType type, Vector2 position)
+{
+	switch (type)
+	{
+		case EntityType::Zombie:
+			return CreateZombie();
+
+		case EntityType::Panther:
+			return CreatePanther();
+
+		case EntityType::VampireBat:
+			return CreateVampireBat();
+
+		case EntityType::Fishman:
+			return CreateFishman();
+
+		default:
+			throw std::runtime_error("Object type not supported");
+	}
 }
 
 std::unique_ptr<Zombie> ObjectFactory::CreateZombie(Vector2 position)
@@ -485,7 +518,7 @@ std::unique_ptr<SpawnArea> ObjectFactory::ConstructSpawnArea(EntityType type)
 		case EntityType::Zombie:
 		{
 			auto object = std::make_unique<ZombieSpawnArea>(*this);
-			auto stats = content.Load<Dictionary>("GameStats/SpawnArea/ZombieSpawnArea.xml");
+			auto stats = content.Load<Dictionary>("GameStats/SpawnAreas/ZombieSpawnArea.xml");
 
 			ReadSpawnAreaConfig(*object.get(), *stats);
 			return object;
@@ -494,7 +527,7 @@ std::unique_ptr<SpawnArea> ObjectFactory::ConstructSpawnArea(EntityType type)
 		case EntityType::VampireBat:
 		{
 			auto object = std::make_unique<VampireBatSpawnArea>(*this);
-			auto stats = content.Load<Dictionary>("GameStats/SpawnArea/BatSpawnArea.xml");
+			auto stats = content.Load<Dictionary>("GameStats/SpawnAreas/BatSpawnArea.xml");
 
 			ReadSpawnAreaConfig(*object.get(), *stats);
 			return object;
@@ -503,7 +536,7 @@ std::unique_ptr<SpawnArea> ObjectFactory::ConstructSpawnArea(EntityType type)
 		case EntityType::Fishman:
 		{
 			auto object = std::make_unique<FishmanSpawnArea>(*this);
-			auto stats = content.Load<Dictionary>("GameStats/SpawnArea/FishmanSpawnArea.xml");
+			auto stats = content.Load<Dictionary>("GameStats/SpawnAreas/FishmanSpawnArea.xml");
 
 			ReadSpawnAreaConfig(*object.get(), *stats);
 			return object;

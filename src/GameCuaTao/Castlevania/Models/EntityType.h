@@ -9,6 +9,7 @@ namespace Castlevania
 		Position,
 		Trigger,
 		SpawnArea,
+		SpawnPoint,
 		Player,
 
 		BreakableWall,

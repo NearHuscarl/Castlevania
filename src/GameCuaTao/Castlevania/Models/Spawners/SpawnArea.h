@@ -29,7 +29,6 @@ namespace Castlevania
 		EntityType spawnObjectType;
 
 		virtual void SpawnObject(UpdateData &updateData) = 0;
-		std::unique_ptr<GameObject> Spawn();
 
 	private:
 		SpawnState spawnState;
