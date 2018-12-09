@@ -76,6 +76,7 @@
    <properties>
     <property name="Enabled" value="False"/>
     <property name="Map" value="GreatHall"/>
+    <property name="SpawnPoint" value="Checkpoint"/>
    </properties>
   </object>
  </objectgroup>

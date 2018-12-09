@@ -179,7 +179,11 @@
     <ClCompile Include="Castlevania\Models\Characters\Player\PlayerRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Items\Fireball.cpp" />
     <ClCompile Include="Castlevania\Models\Items\Powerup.cpp" />
+    <ClCompile Include="Castlevania\Models\Spawners\FishmanSpawnArea.cpp" />
     <ClCompile Include="Castlevania\Models\Spawners\SpawnArea.cpp" />
+    <ClCompile Include="Castlevania\Models\Spawners\SpawnAreaResponseSystem.cpp" />
+    <ClCompile Include="Castlevania\Models\Spawners\SpawnerCollisionSystem.cpp" />
+    <ClCompile Include="Castlevania\Models\Spawners\VampireBatSpawnArea.cpp" />
     <ClCompile Include="Castlevania\Models\Spawners\ZombieSpawnArea.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\CollisionResponse\ResponseSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Collision\EntityCollisionSystem.cpp" />
@@ -209,6 +213,7 @@
     <ClCompile Include="Castlevania\Scenes\Stages\PlaygroundStage.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\Stage.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\CourtyardStage.cpp" />
+    <ClCompile Include="Castlevania\Scenes\Stages\UndergroundStage.cpp" />
     <ClCompile Include="Castlevania\Utilities\CppExtensions.cpp" />
     <ClCompile Include="Castlevania\Utilities\Subject.cpp" />
     <ClCompile Include="Castlevania\Utilities\Timer.cpp" />
@@ -314,9 +319,13 @@
     <ClInclude Include="Castlevania\Models\IAttackable.h" />
     <ClInclude Include="Castlevania\Models\Settings.h" />
     <ClInclude Include="Castlevania\Models\Items\Powerup.h" />
+    <ClInclude Include="Castlevania\Models\Spawners\FishmanSpawnArea.h" />
     <ClInclude Include="Castlevania\Models\Spawners\ISpawner.h" />
     <ClInclude Include="Castlevania\Models\Spawners\SpawnArea.h" />
+    <ClInclude Include="Castlevania\Models\Spawners\SpawnAreaResponseSystem.h" />
+    <ClInclude Include="Castlevania\Models\Spawners\SpawnerCollisionSystem.h" />
     <ClInclude Include="Castlevania\Models\Spawners\SpawnPoint.h" />
+    <ClInclude Include="Castlevania\Models\Spawners\VampireBatSpawnArea.h" />
     <ClInclude Include="Castlevania\Models\Spawners\ZombieSpawnArea.h" />
     <ClInclude Include="Castlevania\Models\Systems\CollisionResponse\ResponseSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Collision\EntityCollisionSystem.h" />
@@ -353,6 +362,7 @@
     <ClInclude Include="Castlevania\Scenes\Stages\PlaygroundStage.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\Stage.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\CourtyardStage.h" />
+    <ClInclude Include="Castlevania\Scenes\Stages\UndergroundStage.h" />
     <ClInclude Include="Castlevania\Utilities\CppExtensions.h" />
     <ClInclude Include="Castlevania\Utilities\IObserver.h" />
     <ClInclude Include="Castlevania\Utilities\MapSettings.h" />

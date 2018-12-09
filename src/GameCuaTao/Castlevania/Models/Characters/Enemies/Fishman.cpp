@@ -100,10 +100,10 @@ void Fishman::ReleaseFireball(ObjectCollection &objectCollection)
 {
 	fireball->SetFacing(facing);
 
-	auto fishmanBbox = GetBoundingBox();
+	auto fishmanRect = GetFrameRect();
 	auto position = Vector2{
-		fishmanBbox.left + 3,
-		fishmanBbox.top + 5
+		fishmanRect.left + 20,
+		fishmanRect.top + 6
 	};
 	fireball->SetPosition(position);
 

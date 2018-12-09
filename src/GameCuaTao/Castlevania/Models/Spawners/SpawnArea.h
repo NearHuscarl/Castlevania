@@ -9,48 +9,39 @@ namespace Castlevania
 {
 	class ObjectFactory;
 
-	enum class SpawnState
-	{
-		ACTIVE,
-		INACTIVE,
-		SPAWNING,
-	};
-
 	class SpawnArea : public GameObject, public ISpawner
 	{
 	public:
-		SpawnArea(ObjectFactory &objectFactory);
+		SpawnArea(EntityType spawnObjectType, ObjectFactory &objectFactory);
 
-		void SetSpawnGroupCount(int minSpawnGroup, int maxSpawnGroup = 0);
-		void SetGroupSpawnTime(int minGroupSpawnTime, int maxGroupSpawnTime);
+		SpawnState GetSpawnState() override;
+		void SetSpawnGroupCount(int spawnGroup);
+		void SetGroupSpawnTime(int groupSpawnTime);
 		void SetSpawnTime(int spawnTime);
 
 		void Activate() override;
 		void Deactivate() override;
+
 		void Update(GameTime gameTime, UpdateData &updateData) override;
 
 	protected:
 		ObjectFactory &objectFactory;
+		EntityType spawnObjectType;
 
-		virtual void SpawnObject(ObjectCollection &objectCollection, RectF viewport) = 0;
+		virtual void SpawnObject(UpdateData &updateData) = 0;
+		std::unique_ptr<GameObject> Spawn();
 
 	private:
 		SpawnState spawnState;
-		EntityType spawnedObjectType;
-
-		int minSpawnGroup;
-		int maxSpawnGroup;
-		int minGroupSpawnTime;
-		int maxGroupSpawnTime;
+		int spawnGroupCount;
+		int groupSpawnTime;
 		int spawnTime;
 
-		int groupSpawnTime;
+		int spawnGroupCountLeft;
 		Stopwatch groupSpawnTimer;
 		Stopwatch spawnTimer;
-		int groupSpawnCount;
 
 		void StartSpawning();
 		void StopSpawning();
-		void ResetGroupSpawnTimer();
 	};
 }

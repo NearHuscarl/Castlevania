@@ -19,7 +19,7 @@ void MapManager::LoadContent(ContentManager &content)
 	//maps[Map::INTRO] = content.Load<TiledMap>("TiledMaps/Intro.tmx");
 	maps[Map::COURTYARD] = content.Load<TiledMap>("TiledMaps/Stage_01/Courtyard.tmx");
 	maps[Map::GREAT_HALL] = content.Load<TiledMap>("TiledMaps/Stage_01/Great_Hall.tmx");
-	//maps[Map::UNDERGROUND] = content.Load<TiledMap>("TiledMaps/Stage_01/Underground.tmx");
+	maps[Map::UNDERGROUND] = content.Load<TiledMap>("TiledMaps/Stage_01/Underground.tmx");
 	maps[Map::PLAYGROUND] = content.Load<TiledMap>("TiledMaps/Playground/Playground.tmx");
 }
 
@@ -64,7 +64,10 @@ ObjectCollection MapManager::CreateObjectCollection(ObjectsProperties objectsPro
 			auto object = objectFactory.CreateTrigger(bbox, triggerType);
 
 			if (triggerType == TriggerType::NEXT_MAP)
+			{
 				object->AddProperty("Map", properties.at("Map"));
+				object->AddProperty("SpawnPoint", properties.at("SpawnPoint"));
+			}
 
 			object->Enabled(ToBoolean(properties.at("Enabled")));
 			object->SetFacing(facing);

@@ -17,12 +17,10 @@ IGameObject &PlayerCollisionSystem::GetParent()
 void PlayerCollisionSystem::Update(ObjectCollection &objectCollection)
 {
 	auto &body = parent.GetBody();
+	body.ClearCollisionData();
 
 	if (!body.Enabled())
-	{
-		body.ClearCollisionData();
 		return;
-	}
 
 	auto results = std::vector<CollisionResult>{};
 

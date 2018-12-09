@@ -5,11 +5,9 @@
   <Dictionary
     Name="FishmanSpawnArea"
     Spawn="Fishman"
-    MinSpawnGroup="1"
-    MaxSpawnGroup="3"
-    MinGroupSpawnTime="3000"
-    MaxGroupSpawnTime="3500"
-    SpawnTime="0.3">
+    SpawnGroup="2"
+    GroupSpawnTime="4000"
+    SpawnTime="1000">
   </Dictionary>
 
 </GameContent>

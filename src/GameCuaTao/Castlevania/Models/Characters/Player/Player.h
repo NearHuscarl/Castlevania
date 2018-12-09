@@ -19,10 +19,15 @@ namespace Castlevania
 		IDLE_UPSTAIRS,
 		IDLE_DOWNSTAIRS,
 
-		// From initial jump to when simon reaching max height
+		// From initial jump to when simon reaching HOVERING state
 		JUMPING,
 		
-		// After simon reaching max height to when simon hitting ground
+		// A middleman state between JUMPING and FALLING, simon hovering
+		// on the air a little while going to max height, then falling down
+		// a bit before changing to FALLING state
+		HOVERING,
+
+		// From HOVERING state to when simon hitting ground
 		FALLING,
 		
 		// Like FALLING but happen when simon walk and fall from a higher

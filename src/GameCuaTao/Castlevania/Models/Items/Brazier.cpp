@@ -1,6 +1,6 @@
 #include "Brazier.h"
 #include "../Settings.h"
-#include "../../Models/Factories/ObjectCollection.h"
+#include "../../Models/UpdateData.h"
 
 using namespace Castlevania;
 
@@ -25,4 +25,12 @@ std::unique_ptr<GameObject> Brazier::SpawnItem()
 	item->SetOriginPosition(GetOriginPosition());
 	
 	return std::move(item);
+}
+
+void Brazier::Update(GameTime gameTime, UpdateData &updateData)
+{
+	GameObject::Update(gameTime, updateData);
+
+	if (state == ObjectState::DEAD)
+		updateData.objectCollection->entities.push_back(SpawnItem());
 }

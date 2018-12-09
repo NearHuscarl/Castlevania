@@ -76,11 +76,11 @@ void PlayerRenderingSystem::Update(GameTime gameTime)
 					break;
 
 				case MoveState::JUMPING:
+				case MoveState::HOVERING:
+				case MoveState::FALLING:
 					if (velocity.y > -BEND_KNEE_ON_JUMPING_Y)
 						sprite->Play(JUMP_ANIMATION);
-					break;
-
-				case MoveState::FALLING:
+					
 					if (velocity.y > STRETCH_LEG_ON_FALLING_Y)
 						sprite->Play(IDLE_ANIMATION);
 					break;
@@ -94,26 +94,7 @@ void PlayerRenderingSystem::Update(GameTime gameTime)
 
 		case AttackState::WHIPPING:
 			if (sprite->AnimateComplete())
-			{
 				parent.OnAttackComplete();
-
-				switch (moveState)
-				{
-					case MoveState::WALKING:
-					case MoveState::IDLE:
-						sprite->Play(IDLE_ANIMATION);
-						break;
-
-					case MoveState::JUMPING:
-					case MoveState::FALLING:
-						sprite->Play(JUMP_ANIMATION);
-						break;
-
-					case MoveState::DUCKING:
-						sprite->Play(DUCK_ANIMATION);
-						break;
-				}
-			}
 			break;
 	}
 
@@ -223,6 +204,7 @@ void PlayerRenderingSystem::OnAttackStateChanged()
 			break;
 
 		case MoveState::JUMPING:
+		case MoveState::HOVERING:
 		case MoveState::LANDING:
 		case MoveState::FALLING:
 			sprite->Play(JUMP_ATTACK_ANIMATION);

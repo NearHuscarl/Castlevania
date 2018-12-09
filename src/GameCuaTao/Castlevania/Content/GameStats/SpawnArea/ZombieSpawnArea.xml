@@ -5,10 +5,8 @@
   <Dictionary
     Name="ZombieSpawnArea"
     Spawn="Zombie"
-    MinSpawnGroup="2"
-    MaxSpawnGroup="3"
-    MinGroupSpawnTime="3000"
-    MaxGroupSpawnTime="3500"
+    SpawnGroup="3"
+    GroupSpawnTime="3500"
     SpawnTime="550">
   </Dictionary>
 

@@ -1,6 +1,6 @@
 #include "Direct2DGame/Input/Keyboard.h"
 #include "ObjectFactory.h"
-#include "../EntityType.h"
+#include "../../Utilities/TypeConverter.h"
 #include "../Systems/Movement/SimpleMovementSystem.h"
 #include "../Systems/Movement/EntityMovementSystem.h"
 #include "../Systems/Movement/WaveMovementSystem.h"
@@ -28,12 +28,16 @@
 #include "../Characters/Enemies/PantherRenderingSystem.h"
 #include "../Characters/Enemies/VampireBatRenderingSystem.h"
 #include "../Characters/Enemies/ZombieResponseSystem.h"
+#include "../Spawners/SpawnerCollisionSystem.h"
+#include "../Spawners/SpawnAreaResponseSystem.h"
 #include "../Weapons/WhipCollisionSystem.h"
 #include "../Weapons/WhipRenderingSystem.h"
 #include "../Weapons/WhipFlashingRenderingSystem.h"
 #include "../Weapons/WhipResponseSystem.h"
 #include "../Weapons/DaggerResponseSystem.h"
 #include "../Spawners/ZombieSpawnArea.h"
+#include "../Spawners/VampireBatSpawnArea.h"
+#include "../Spawners/FishmanSpawnArea.h"
 
 using namespace Castlevania;
 
@@ -52,13 +56,13 @@ std::unique_ptr<GameObject> ObjectFactory::CreateBoundary(RectF rect)
 std::unique_ptr<SpawnArea> ObjectFactory::CreateSpawnArea(EntityType type, RectF rect)
 {
 	auto object = ConstructSpawnArea(type);
-	auto stats = content.Load<Dictionary>("GameStats/SpawnArea/ZombieSpawnArea.xml");
-
-	ReadSpawnAreaConfig(*object.get(), *stats);
-
+	auto collisionSystem = std::make_unique<SpawnerCollisionSystem>(*object);
+	auto responseSystem = std::make_unique<SpawnAreaResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<BoundingBoxRenderingSystem>(*object, rect);
 
 	object->SetPosition(Vector2{ rect.left, rect.top });
+	object->Attach(std::move(collisionSystem));
+	object->Attach(std::move(responseSystem));
 	object->Attach(std::move(renderingSystem));
 	object->LoadContent(content);
 
@@ -464,14 +468,13 @@ void ObjectFactory::ReadEnemyConfig(Enemy &enemy, Dictionary stats)
 
 void ObjectFactory::ReadSpawnAreaConfig(SpawnArea &spawnArea, Dictionary stats)
 {
-	auto minSpawnGroup = std::stoi(stats.at("MinSpawnGroup"));
-	auto maxSpawnGroup = std::stoi(stats.at("MaxSpawnGroup"));
-	auto minGroupSpawnTime = std::stoi(stats.at("MinGroupSpawnTime"));
-	auto maxGroupSpawnTime = std::stoi(stats.at("MaxGroupSpawnTime"));
+	auto spawnType = string2EntityType.at(stats.at("Spawn"));
+	auto spawnGroup = std::stoi(stats.at("SpawnGroup"));
+	auto groupSpawnTime = std::stoi(stats.at("GroupSpawnTime"));
 	auto spawnTime = std::stoi(stats.at("SpawnTime"));
 
-	spawnArea.SetSpawnGroupCount(minSpawnGroup, maxSpawnGroup);
-	spawnArea.SetGroupSpawnTime(minGroupSpawnTime, maxGroupSpawnTime);
+	spawnArea.SetSpawnGroupCount(spawnGroup);
+	spawnArea.SetGroupSpawnTime(groupSpawnTime);
 	spawnArea.SetSpawnTime(spawnTime);
 }
 
@@ -480,7 +483,31 @@ std::unique_ptr<SpawnArea> ObjectFactory::ConstructSpawnArea(EntityType type)
 	switch (type)
 	{
 		case EntityType::Zombie:
-			return std::make_unique<ZombieSpawnArea>(*this);
+		{
+			auto object = std::make_unique<ZombieSpawnArea>(*this);
+			auto stats = content.Load<Dictionary>("GameStats/SpawnArea/ZombieSpawnArea.xml");
+
+			ReadSpawnAreaConfig(*object.get(), *stats);
+			return object;
+		}
+
+		case EntityType::VampireBat:
+		{
+			auto object = std::make_unique<VampireBatSpawnArea>(*this);
+			auto stats = content.Load<Dictionary>("GameStats/SpawnArea/BatSpawnArea.xml");
+
+			ReadSpawnAreaConfig(*object.get(), *stats);
+			return object;
+		}
+
+		case EntityType::Fishman:
+		{
+			auto object = std::make_unique<FishmanSpawnArea>(*this);
+			auto stats = content.Load<Dictionary>("GameStats/SpawnArea/FishmanSpawnArea.xml");
+
+			ReadSpawnAreaConfig(*object.get(), *stats);
+			return object;
+		}
 
 		default:
 			throw std::runtime_error("Spawn area for this type of object is not supported");

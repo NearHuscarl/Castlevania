@@ -10,12 +10,10 @@ WhipCollisionSystem::WhipCollisionSystem(GameObject &parent) : parent{ parent }
 void WhipCollisionSystem::Update(ObjectCollection &objectCollection)
 {
 	auto &body = parent.GetBody();
+	body.ClearCollisionData();
 
 	if (!body.Enabled())
-	{
-		body.ClearCollisionData();
 		return;
-	}
 
 	auto results = std::vector<CollisionResult>{};
 	auto &entities = objectCollection.entities;

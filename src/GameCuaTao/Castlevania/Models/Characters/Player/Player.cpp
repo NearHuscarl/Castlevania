@@ -13,6 +13,9 @@ constexpr auto UNTOUCHABLE_TIME = 2000;
 // Simon bounce back's max height (when taking damage)
 constexpr auto BOUNCE_BACK_HEIGHT = 360.0f;
 
+// velocity to trigger hovering state
+constexpr auto HOVERING_VELOCITY = 20.0f;
+
 Player::Player() : GameObject{ EntityType::Player }
 {
 	this->whip = std::make_unique<Whip>(*this);
@@ -121,7 +124,12 @@ void Player::UpdateStates()
 			break;
 		}
 		case MoveState::JUMPING:
-			if (velocity.y >= 0)
+			if (velocity.y >= -HOVERING_VELOCITY)
+				SetMoveState(MoveState::HOVERING);
+			break;
+
+		case MoveState::HOVERING:
+			if (velocity.y >= HOVERING_VELOCITY)
 				SetMoveState(MoveState::FALLING);
 			break;
 
@@ -177,6 +185,7 @@ void Player::OnAttackComplete()
 			break;
 
 		case MoveState::JUMPING:
+		case MoveState::HOVERING:
 		case MoveState::FALLING:
 			SetMoveState(MoveState::LANDING);
 			break;

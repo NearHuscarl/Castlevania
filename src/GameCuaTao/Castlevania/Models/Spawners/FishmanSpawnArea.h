@@ -4,10 +4,10 @@
 
 namespace Castlevania
 {
-	class ZombieSpawnArea : public SpawnArea
+	class FishmanSpawnArea : public SpawnArea
 	{
 	public:
-		ZombieSpawnArea(ObjectFactory &objectFactory);
+		FishmanSpawnArea(ObjectFactory &objectFactory);
 
 	private:
 		void SpawnObject(UpdateData &updateData) override;

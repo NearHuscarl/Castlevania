@@ -5,17 +5,17 @@
   <Spritesheet TexturePath="Fishman.png">
     <Sprite ID="walk_01">
       <SpriteFrame Left="0" Top="0" Width="34" Height="66" />
-      <SpriteBoundary Left="17" Top="1" Width="2" Height="64" />
+      <SpriteBoundary Left="17" Top="20" Width="2" Height="45" />
     </Sprite>
 
     <Sprite ID="walk_02">
       <SpriteFrame Left="34" Top="0" Width="34" Height="66" />
-      <SpriteBoundary Left="51" Top="1" Width="2" Height="64" />
+      <SpriteBoundary Left="51" Top="20" Width="2" Height="45" />
     </Sprite>
 
     <Sprite ID="shoot_01">
       <SpriteFrame Left="68" Top="0" Width="34" Height="66" />
-      <SpriteBoundary Left="85" Top="1" Width="2" Height="64" />
+      <SpriteBoundary Left="85" Top="20" Width="2" Height="45" />
     </Sprite>
   </Spritesheet>
 

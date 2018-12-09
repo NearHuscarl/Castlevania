@@ -20,5 +20,6 @@ namespace Castlevania
 
 		void OnCollideWithBrazier(CollisionResult &result, ObjectCollection &objectCollection);
 		void OnCollideWithEnemy(CollisionResult &result, Player &player);
+		void OnCollideWithFireball(CollisionResult &result);
 	};
 }

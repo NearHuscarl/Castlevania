@@ -6,6 +6,7 @@
 using namespace Castlevania;
 
 constexpr auto WEIGHT = 1000.0f;
+constexpr auto SMALL_GRAVITY = GRAVITY / 6;
 
 PlayerMovementSystem::PlayerMovementSystem(Player &parent) : parent{ parent }
 {
@@ -18,7 +19,12 @@ void PlayerMovementSystem::Update(GameTime gameTime)
 	auto moveState = parent.GetMoveState();
 
 	if (!parent.IsOnStairs())
-		velocity.y = MathHelper::Min(velocity.y + GRAVITY, WEIGHT);
+	{
+		if (parent.GetMoveState() == MoveState::HOVERING)
+			velocity.y = MathHelper::Min(velocity.y + SMALL_GRAVITY, WEIGHT);
+		else
+			velocity.y = MathHelper::Min(velocity.y + GRAVITY, WEIGHT);
+	}
 
 	parent.SetVelocity(velocity);
 

@@ -1,23 +1,22 @@
 #include "Direct2DGame/MathHelper.h"
-#include "ZombieSpawnArea.h"
+#include "VampireBatSpawnArea.h"
 #include "../UpdateData.h"
 
 using namespace Castlevania;
 
-ZombieSpawnArea::ZombieSpawnArea(ObjectFactory &objectFactory) :
-	SpawnArea{ EntityType::Zombie, objectFactory }
+VampireBatSpawnArea::VampireBatSpawnArea(ObjectFactory &objectFactory) :
+	SpawnArea{ EntityType::VampireBat, objectFactory }
 {
 }
 
-void ZombieSpawnArea::SpawnObject(UpdateData &updateData)
+void VampireBatSpawnArea::SpawnObject(UpdateData &updateData)
 {
 	auto viewport = updateData.viewport;
 	auto object = Spawn();
 	auto spawnPosition = Vector2{};
 	auto facing = Facing{};
 
-	// 80% chance to spawn on the right side because that's where simon is heading to
-	if (MathHelper::RandomPercent(80))
+	if (MathHelper::RandomPercent(75))
 	{
 		spawnPosition.x = viewport.right - object->GetFrameRect().Width();
 		facing = Facing::Left;
@@ -28,8 +27,9 @@ void ZombieSpawnArea::SpawnObject(UpdateData &updateData)
 		facing = Facing::Right;
 	}
 
-	// -1: to make object barely hit the ground or it will fall through it
-	spawnPosition.y = GetBoundingBox().bottom - object->GetFrameRect().Height() - 1;
+	auto playerBbox = updateData.objectCollection->player->GetBoundingBox();
+	spawnPosition.y = playerBbox.bottom - playerBbox.Height() / 2 - object->GetFrameRect().Height() / 2;
+
 	object->SetPosition(spawnPosition);
 	object->SetFacing(facing);
 

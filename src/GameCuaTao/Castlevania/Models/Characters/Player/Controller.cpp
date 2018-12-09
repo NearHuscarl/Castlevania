@@ -54,6 +54,7 @@ void Controller::OnKeyDown(int keyCode)
 			break;
 
 		case MoveState::JUMPING:
+		case MoveState::HOVERING:
 		case MoveState::FALLING:
 		case MoveState::LANDING:
 		case MoveState::DUCKING:

@@ -5,11 +5,9 @@
   <Dictionary
     Name="BatSpawnArea"
     Spawn="VampireBat"
-    MinSpawnGroup="1"
-    MaxSpawnGroup="1"
-    MinGroupSpawnTime="3000"
-    MaxGroupSpawnTime="3500"
-    SpawnTime="0.3">
+    SpawnGroup="1"
+    GroupSpawnTime="5500"
+    SpawnTime="0">
   </Dictionary>
 
 </GameContent>

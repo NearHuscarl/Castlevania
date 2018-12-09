@@ -1,32 +1,30 @@
-#include "Direct2DGame/MathHelper.h"
 #include "SpawnArea.h"
 #include "../UpdateData.h"
 #include "../Factories/ObjectFactory.h"
 
 using namespace Castlevania;
 
-SpawnArea::SpawnArea(ObjectFactory &objectFactory) :
+SpawnArea::SpawnArea(EntityType spawnObjectType, ObjectFactory &objectFactory) :
 	objectFactory{ objectFactory },
 	GameObject{ EntityType::SpawnArea }
 {
-	this->spawnedObjectType = spawnedObjectType;
-	spawnState = SpawnState::INACTIVE;
+	this->spawnObjectType = spawnObjectType;
+	Deactivate();
 }
 
-void SpawnArea::SetSpawnGroupCount(int minSpawnGroup, int maxSpawnGroup)
+SpawnState SpawnArea::GetSpawnState()
 {
-	this->minSpawnGroup = minSpawnGroup;
-
-	if (maxSpawnGroup == 0)
-		this->maxSpawnGroup = minSpawnGroup;
-	else
-		this->maxSpawnGroup = maxSpawnGroup;
+	return spawnState;
 }
 
-void SpawnArea::SetGroupSpawnTime(int minGroupSpawnTime, int maxGroupSpawnTime)
+void SpawnArea::SetSpawnGroupCount(int spawnGroup)
 {
-	this->minGroupSpawnTime = minGroupSpawnTime;
-	this->maxGroupSpawnTime = maxGroupSpawnTime;
+	this->spawnGroupCount = spawnGroup;
+}
+
+void SpawnArea::SetGroupSpawnTime(int groupSpawnTime)
+{
+	this->groupSpawnTime = groupSpawnTime;
 }
 
 void SpawnArea::SetSpawnTime(int spawnTime)
@@ -36,67 +34,66 @@ void SpawnArea::SetSpawnTime(int spawnTime)
 
 void SpawnArea::Activate()
 {
-	ResetGroupSpawnTimer();
 	spawnState = SpawnState::ACTIVE;
 }
 
 void SpawnArea::Deactivate()
 {
 	spawnState = SpawnState::INACTIVE;
+	groupSpawnTimer.Reset();
 }
 
 void SpawnArea::Update(GameTime gameTime, UpdateData &updateData)
 {
-	auto objectCollection = updateData.objectCollection;
-	auto player = objectCollection->player;
-	auto spawnAreaBbox = GetBoundingBox();
+	GameObject::Update(gameTime, updateData);
 
 	switch (spawnState)
 	{
 		case SpawnState::ACTIVE:
-			if (!player->GetBoundingBox().TouchesOrIntersects(spawnAreaBbox))
-			{
-				Deactivate();
-				break;
-			}
-			if (groupSpawnTimer.ElapsedMilliseconds() > groupSpawnTime)
+			if (groupSpawnTimer.ElapsedMilliseconds() > groupSpawnTime || !groupSpawnTimer.IsRunning())
 				StartSpawning();
 			break;
 
 		case SpawnState::SPAWNING:
-			if (spawnTimer.ElapsedMilliseconds() > spawnTime)
+			if (spawnTimer.ElapsedMilliseconds() > spawnTime || !spawnTimer.IsRunning())
 			{
-				SpawnObject(*objectCollection, updateData.viewport);
+				SpawnObject(updateData);
 				spawnTimer.Restart();
-				groupSpawnCount--;
+				spawnGroupCountLeft--;
 			}
-			if (groupSpawnCount <= 0)
+			if (spawnGroupCountLeft <= 0)
 				StopSpawning();
 			break;
+	}
+}
 
-		case SpawnState::INACTIVE:
-			if (player->GetBoundingBox().TouchesOrIntersects(spawnAreaBbox))
-				Activate();
-			break;
+std::unique_ptr<GameObject> SpawnArea::Spawn()
+{
+	switch (spawnObjectType)
+	{
+		case EntityType::Zombie:
+			return objectFactory.CreateZombie();
+		
+		case EntityType::VampireBat:
+			return objectFactory.CreateVampireBat();
+
+		case EntityType::Fishman:
+			return objectFactory.CreateFishman();
+
+		default:
+			throw std::runtime_error("Object type not supported");
 	}
 }
 
 void SpawnArea::StartSpawning()
 {
-	groupSpawnCount = MathHelper::RandomBetween(minSpawnGroup, maxSpawnGroup);
 	spawnState = SpawnState::SPAWNING;
-	spawnTimer.Start();
+	spawnGroupCountLeft = spawnGroupCount;
 }
 
 void SpawnArea::StopSpawning()
 {
 	spawnState = SpawnState::ACTIVE;
 	spawnTimer.Reset();
-	ResetGroupSpawnTimer();
-}
-
-void SpawnArea::ResetGroupSpawnTimer()
-{
-	groupSpawnTime = MathHelper::RandomBetween(minGroupSpawnTime, maxGroupSpawnTime);
 	groupSpawnTimer.Restart();
 }

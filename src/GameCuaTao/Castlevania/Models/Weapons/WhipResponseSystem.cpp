@@ -1,6 +1,7 @@
 #include "WhipResponseSystem.h"
 #include "../../Models/UpdateData.h"
 #include "../Items/Brazier.h"
+#include "../Items/Fireball.h"
 #include "../Characters/Enemies/Enemy.h"
 #include "../Characters/Player/Player.h"
 
@@ -34,6 +35,9 @@ void WhipResponseSystem::Update(UpdateData &updateData)
 			case EntityType::VampireBat:
 				OnCollideWithEnemy(result, *objectCollection.player);
 				break;
+
+			case EntityType::Fireball:
+				OnCollideWithFireball(result);
 		}
 	}
 }
@@ -42,7 +46,6 @@ void WhipResponseSystem::OnCollideWithBrazier(CollisionResult &result, ObjectCol
 {
 	auto &brazier = dynamic_cast<Brazier&>(result.collidedObject);
 
-	objectCollection.entities.push_back(brazier.SpawnItem());
 	brazier.OnBeingHit();
 }
 
@@ -54,4 +57,12 @@ void WhipResponseSystem::OnCollideWithEnemy(CollisionResult &result, Player &pla
 
 	if (enemy.GetState() == ObjectState::DYING)
 		player.AddExp(enemy.GetExp());
+}
+
+void Castlevania::WhipResponseSystem::OnCollideWithFireball(CollisionResult &result)
+{
+	auto &fireball = dynamic_cast<Fireball&>(result.collidedObject);
+
+	fireball.SetState(ObjectState::DYING);
+	fireball.GetBody().Enabled(false);
 }

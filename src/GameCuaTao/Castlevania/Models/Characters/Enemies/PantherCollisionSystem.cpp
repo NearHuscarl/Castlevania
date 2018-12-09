@@ -17,12 +17,10 @@ IGameObject &PantherCollisionSystem::GetParent()
 void PantherCollisionSystem::Update(ObjectCollection &objectCollection)
 {
 	auto &body = parent.GetBody();
+	body.ClearCollisionData();
 
 	if (!body.Enabled())
-	{
-		body.ClearCollisionData();
 		return;
-	}
 
 	auto results = std::vector<CollisionResult>{};
 	auto &boundaries = objectCollection.boundaries;
@@ -43,7 +41,7 @@ void PantherCollisionSystem::Update(ObjectCollection &objectCollection)
 
 		// note to myself: do not use swept AABB algorithm for collision detection in this case.
 		// It wont work properly when calculating collision between a static object (in this
-		// scenario the one that check collision - ActiveArea) and  a dynamic object (Player)
+		// scenario the one that check collision - ActiveArea) and a dynamic object (Player)
 		// The reason is because since only the distance of the Player is taken into account
 		// and the fact that it is actually from the last time the game loop ran (Player has already
 		// moved that distance), it may lead to potential out-of-sync behaviour. 

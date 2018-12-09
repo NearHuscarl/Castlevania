@@ -2,6 +2,7 @@
 #include "SceneManager.h"
 #include "Stages/CourtyardStage.h"
 #include "Stages/GreatHallStage.h"
+#include "Stages/UndergroundStage.h"
 #include "Stages/PlaygroundStage.h"
 
 using namespace Castlevania;
@@ -66,7 +67,7 @@ void GameplayScene::LoadContent()
 	auto cutsceneBgTexture = content.Load<Texture>("Backgrounds/Cutscene_Background.png");
 	cutsceneBackground = std::make_unique<Sprite>(cutsceneBgTexture);
 
-	currentStage = ConstructStage(Map::GREAT_HALL); // TODO: change back to COURTYARD
+	currentStage = ConstructStage(Map::UNDERGROUND); // TODO: change back to COURTYARD
 	currentStage->Initialize();
 }
 
@@ -99,6 +100,9 @@ std::unique_ptr<Stage> GameplayScene::ConstructStage(Map map)
 
 		case Map::GREAT_HALL:
 			return std::make_unique<GreatHallStage>(*this);
+
+		case Map::UNDERGROUND:
+			return std::make_unique<UndergroundStage>(*this);
 
 		case Map::PLAYGROUND:
 			return std::make_unique<PlaygroundStage>(*this);

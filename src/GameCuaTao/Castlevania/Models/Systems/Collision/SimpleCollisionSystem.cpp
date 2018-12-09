@@ -16,12 +16,10 @@ IGameObject &SimpleCollisionSystem::GetParent()
 void SimpleCollisionSystem::Update(ObjectCollection &objectCollection)
 {
 	auto &body = parent.GetBody();
+	body.ClearCollisionData();
 
 	if (!body.Enabled())
-	{
-		body.ClearCollisionData();
 		return;
-	}
 
 	auto results = std::vector<CollisionResult>{};
 	auto &boundaries = objectCollection.boundaries;
