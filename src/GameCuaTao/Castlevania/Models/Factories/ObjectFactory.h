@@ -6,7 +6,7 @@
 #include "../Characters/Enemies/Panther.h"
 #include "../Characters/Enemies/Fishman.h"
 #include "../Characters/Enemies/VampireBat.h"
-#include "../Items/Brazier.h"
+#include "../Items/Container.h"
 #include "../Items/Fireball.h"
 #include "../Weapons/Whip.h"
 #include "../Items/Powerup.h"
@@ -30,7 +30,8 @@ namespace Castlevania
 		std::unique_ptr<GameObject> CreateBat(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Player> CreatePlayer(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Player> CreateIntroSimon(Vector2 position = Vector2::Zero());
-		std::unique_ptr<Brazier> CreateBrazier(EntityType itemType, Vector2 position = Vector2::Zero());
+		std::unique_ptr<Container> CreateBrazier(EntityType itemType, Vector2 position = Vector2::Zero());
+		std::unique_ptr<Container> CreateCandle(EntityType itemType, Vector2 position = Vector2::Zero());
 
 		std::unique_ptr<Enemy> CreateEnemy(EntityType type, Vector2 position = Vector2::Zero());
 		std::unique_ptr<Zombie> CreateZombie(Vector2 position = Vector2::Zero());

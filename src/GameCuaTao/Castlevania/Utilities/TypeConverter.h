@@ -17,6 +17,7 @@ namespace Castlevania
 		{ "Bat", EntityType::Bat },
 		{ "Cloud", EntityType::Cloud },
 		{ "Brazier", EntityType::Brazier },
+		{ "Candle", EntityType::Candle },
 		{ "Zombie", EntityType::Zombie },
 		{ "Panther", EntityType::Panther },
 		{ "Fishman", EntityType::Fishman },

@@ -1,25 +1,25 @@
-#include "Brazier.h"
+#include "Container.h"
 #include "../Settings.h"
 #include "../../Models/UpdateData.h"
 
 using namespace Castlevania;
 
-Brazier::Brazier() : GameObject{ EntityType::Brazier }
+Container::Container() : GameObject{ EntityType::Brazier }
 {
 }
 
-void Brazier::SetSpawnedItem(std::unique_ptr<Powerup> item)
+void Container::SetSpawnedItem(std::unique_ptr<Powerup> item)
 {
 	this->item = std::move(item);
 }
 
-void Brazier::OnBeingHit()
+void Container::OnBeingHit()
 {
 	SetState(ObjectState::DYING);
 	body.Enabled(false);
 }
 
-std::unique_ptr<GameObject> Brazier::SpawnItem()
+std::unique_ptr<GameObject> Container::SpawnItem()
 {
 	item->Spawn();
 	item->SetOriginPosition(GetOriginPosition());
@@ -27,7 +27,7 @@ std::unique_ptr<GameObject> Brazier::SpawnItem()
 	return std::move(item);
 }
 
-void Brazier::Update(GameTime gameTime, UpdateData &updateData)
+void Container::Update(GameTime gameTime, UpdateData &updateData)
 {
 	GameObject::Update(gameTime, updateData);
 

@@ -4,10 +4,10 @@
 
 namespace Castlevania
 {
-	class Brazier : public GameObject
+	class Container : public GameObject
 	{
 	public:
-		Brazier();
+		Container();
 
 		void SetSpawnedItem(std::unique_ptr<Powerup> item);
 		void OnBeingHit();

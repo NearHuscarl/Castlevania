@@ -18,8 +18,9 @@ namespace Castlevania
 		Bat,
 		Cloud,
 
-		// Courtyard objects
+		// Containers
 		Brazier,
+		Candle,
 
 		// Enemies
 		Zombie,

@@ -173,20 +173,35 @@ std::unique_ptr<Player> ObjectFactory::CreateIntroSimon(Vector2 position)
 	return object;
 }
 
-std::unique_ptr<Brazier> ObjectFactory::CreateBrazier(EntityType itemType, Vector2 position)
+std::unique_ptr<Container> ObjectFactory::CreateBrazier(EntityType itemType, Vector2 position)
 {
-	auto object = std::make_unique<Brazier>();
+	auto object = std::make_unique<Container>();
 
 	auto renderingSystem = std::make_unique<EntityRenderingSystem>(
 		*object, "Items/Brazier.ani.xml", effectManager->CreateFlameEffect());
 	auto item = CreatePowerup(itemType);
-	auto effect = effectManager->CreateFlameEffect();
 
 	object->SetPosition(position);
 	object->Attach(std::move(renderingSystem));
 	object->SetSpawnedItem(std::move(item));
 	object->LoadContent(content);
 	
+	return object;
+}
+
+std::unique_ptr<Container> ObjectFactory::CreateCandle(EntityType itemType, Vector2 position)
+{
+	auto object = std::make_unique<Container>();
+
+	auto renderingSystem = std::make_unique<EntityRenderingSystem>(
+		*object, "Items/Candle.ani.xml", effectManager->CreateFlameEffect());
+	auto item = CreatePowerup(itemType);
+
+	object->SetPosition(position);
+	object->Attach(std::move(renderingSystem));
+	object->SetSpawnedItem(std::move(item));
+	object->LoadContent(content);
+
 	return object;
 }
 

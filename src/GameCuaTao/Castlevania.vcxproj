@@ -221,7 +221,7 @@
     <ClCompile Include="Direct2DGame\Content\SpritesheetReader.cpp" />
     <ClCompile Include="Direct2DGame\Extensions\Collisions\Body\Body.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Player\Controller.cpp" />
-    <ClCompile Include="Castlevania\Models\Items\Brazier.cpp" />
+    <ClCompile Include="Castlevania\Models\Items\Container.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\CollisionResponse\GroundResponseSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Collision\CollisionSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Player\PlayerMovementSystem.cpp" />
@@ -381,7 +381,7 @@
     <ClInclude Include="Castlevania\Models\Characters\Player\Controller.h" />
     <ClInclude Include="Castlevania\Models\EntityType.h" />
     <ClInclude Include="Castlevania\Models\IGameObject.h" />
-    <ClInclude Include="Castlevania\Models\Items\Brazier.h" />
+    <ClInclude Include="Castlevania\Models\Items\Container.h" />
     <ClInclude Include="Castlevania\Models\Systems\CollisionResponse\GroundResponseSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Collision\CollisionSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\CollisionResponse\ICollisionResponseSystem.h" />

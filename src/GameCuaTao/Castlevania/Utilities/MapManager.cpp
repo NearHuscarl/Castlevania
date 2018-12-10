@@ -141,6 +141,12 @@ std::unique_ptr<GameObject> MapManager::ConstructObject(ObjectProperties propert
 			return objectFactory.CreateBrazier(itemType);
 		}
 
+		case EntityType::Candle:
+		{
+			auto itemType = string2EntityType.at(properties.at("Item"));
+			return objectFactory.CreateCandle(itemType);
+		}
+
 		case EntityType::Zombie:
 			return objectFactory.CreateZombie();
 

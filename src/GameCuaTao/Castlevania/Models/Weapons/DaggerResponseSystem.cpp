@@ -1,6 +1,6 @@
 #include "DaggerResponseSystem.h"
 #include "../../Models/UpdateData.h"
-#include "../Items/Brazier.h"
+#include "../Items/Container.h"
 
 using namespace Castlevania;
 
@@ -31,7 +31,7 @@ void DaggerResponseSystem::Update(UpdateData &updateData)
 
 void DaggerResponseSystem::OnCollideWithBrazier(CollisionResult &result, ObjectCollection &objectCollection)
 {
-	auto &brazier = dynamic_cast<Brazier&>(result.collidedObject);
+	auto &brazier = dynamic_cast<Container&>(result.collidedObject);
 
 	brazier.OnBeingHit();
 	parent.Destroy();

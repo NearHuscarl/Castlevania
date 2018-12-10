@@ -1,6 +1,6 @@
 #include "WhipResponseSystem.h"
 #include "../../Models/UpdateData.h"
-#include "../Items/Brazier.h"
+#include "../Items/Container.h"
 #include "../Items/Fireball.h"
 #include "../Characters/Enemies/Enemy.h"
 #include "../Characters/Player/Player.h"
@@ -44,7 +44,7 @@ void WhipResponseSystem::Update(UpdateData &updateData)
 
 void WhipResponseSystem::OnCollideWithBrazier(CollisionResult &result, ObjectCollection &objectCollection)
 {
-	auto &brazier = dynamic_cast<Brazier&>(result.collidedObject);
+	auto &brazier = dynamic_cast<Container&>(result.collidedObject);
 
 	brazier.OnBeingHit();
 }

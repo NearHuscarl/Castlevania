@@ -264,9 +264,6 @@
     <ClCompile Include="Castlevania\Models\Weapons\DaggerResponseSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Castlevania\Models\Items\Brazier.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Castlevania\Models\Characters\Enemies\Enemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -415,6 +412,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Castlevania\Models\Spawners\SpawnPoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Models\Items\Container.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -800,9 +800,6 @@
     <ClInclude Include="Castlevania\Models\Weapons\DaggerResponseSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Castlevania\Models\Items\Brazier.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Castlevania\Models\Characters\Enemies\Enemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -966,6 +963,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Castlevania\Scenes\Stages\UndergroundStage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Items\Container.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
