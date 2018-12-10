@@ -10,17 +10,17 @@
 
     <Sprite ID="fly_01">
       <SpriteFrame Left="34" Top="0" Width="34" Height="34" />
-      <SpriteBoundary Left="35" Top="1" Width="22" Height="32" />
+      <SpriteBoundary Left="55" Top="1" Width="2" Height="32" />
     </Sprite>
 
     <Sprite ID="fly_02">
       <SpriteFrame Left="68" Top="0" Width="34" Height="34" />
-      <SpriteBoundary Left="69" Top="1" Width="22" Height="32" />
+      <SpriteBoundary Left="89" Top="1" Width="2" Height="32" />
     </Sprite>
 
     <Sprite ID="fly_03">
       <SpriteFrame Left="102" Top="0" Width="34" Height="34" />
-      <SpriteBoundary Left="103" Top="1" Width="22" Height="32" />
+      <SpriteBoundary Left="123" Top="1" Width="2" Height="32" />
     </Sprite>
   </Spritesheet>
 

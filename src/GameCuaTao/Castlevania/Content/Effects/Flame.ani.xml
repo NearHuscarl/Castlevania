@@ -3,7 +3,7 @@
 <GameContent>
 
   <Animations AtlasPath="Flame.atlas.xml">
-    <Animation Name="Flame" DefaultTime="150" IsLooping="False">
+    <Animation Name="Flame" DefaultTime="80" IsLooping="False">
       <Frame SpriteID="flame_01" />
       <Frame SpriteID="flame_02" />
       <Frame SpriteID="flame_03" />

@@ -23,8 +23,9 @@ namespace Castlevania
 		
 		bool isDebugging;
 		std::shared_ptr<SpriteFont> debugFont;
-		DevToolItems items;
+		std::unordered_map<std::string, DevToolItems> items;
 		int currentItemIndex;
+		std::string category;
 		Facing currentFacing;
 
 		ObjectFactory &objectFactory;
