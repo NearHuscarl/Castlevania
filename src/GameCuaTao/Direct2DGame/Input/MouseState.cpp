@@ -3,6 +3,8 @@
 MouseState::MouseState(DIMOUSESTATE state)
 {
 	this->state = state;
+	this->dx = (float)state.lX;
+	this->dy = (float)state.lY;
 }
 
 MouseState::MouseState()

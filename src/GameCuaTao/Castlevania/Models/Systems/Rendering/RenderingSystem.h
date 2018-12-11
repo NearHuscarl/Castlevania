@@ -15,7 +15,7 @@ namespace Castlevania
 		virtual GameObject &GetParent();
 		void DrawBoundingBox(bool value);
 
-		virtual void Receive(int message) override {};
+		virtual void Receive(int message) override;
 
 		virtual void LoadContent(ContentManager &content) override;
 		virtual void Update(GameTime gameTime) override;
@@ -24,6 +24,9 @@ namespace Castlevania
 
 	protected:
 		std::shared_ptr<Texture> bboxTexture;
+
+		virtual void OnMoveStateChanged();
+		virtual void OnStateChanged();
 
 	private:
 		bool drawBoundingBox;

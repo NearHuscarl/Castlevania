@@ -6,7 +6,6 @@ using namespace Castlevania;
 
 constexpr auto SHOOTING_TIME = 600;
 constexpr auto RELEASE_FIREBALL_TIME = SHOOTING_TIME / 2;
-constexpr auto FIREBALL_SPEED = 300.0f;
 
 Fishman::Fishman() : Enemy{ EntityType::Fishman }
 {
@@ -105,12 +104,15 @@ void Fishman::ReleaseFireball(ObjectCollection &objectCollection)
 		fishmanRect.left + 20,
 		fishmanRect.top + 6
 	};
+
 	fireball->SetPosition(position);
 
+	auto fireballSpeed = fireball->GetSpeed();
+
 	if (facing == Facing::Right)
-		fireball->SetVelocity_X(FIREBALL_SPEED);
+		fireball->SetVelocity_X(fireballSpeed);
 	else
-		fireball->SetVelocity_X(-FIREBALL_SPEED);
+		fireball->SetVelocity_X(-fireballSpeed);
 
 	objectCollection.entities.push_back(std::move(fireball));
 }

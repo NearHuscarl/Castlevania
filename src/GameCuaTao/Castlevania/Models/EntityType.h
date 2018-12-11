@@ -4,15 +4,15 @@ namespace Castlevania
 {
 	enum class EntityType
 	{
-		Area,
 		Boundary,
 		Position,
 		Trigger,
-		SpawnArea,
-		SpawnPoint,
 		Player,
+		SpawnPoint,
 
-		BreakableWall,
+		// Areas
+		SpawnArea,
+		ViewportArea,
 
 		// Intro objects
 		Bat,
@@ -56,6 +56,8 @@ namespace Castlevania
 		CrystalBall,
 
 		// Misc
+		Door,
+		BreakableWall,
 		Castle,
 		DirtBlock,
 

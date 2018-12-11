@@ -41,6 +41,9 @@ void WhipFlashingRenderingSystem::Update(GameTime gameTime)
 	if (!parent.GetBody().Enabled())
 		return;
 
+	if (sprite->GetCurrentAnimation().GetCurrentFrameIndex() == 2)
+		parent.GetBody().Enabled(true);
+
 	sprite->Update();
 	spriteRed->Update();
 	spriteYellow->Update();
@@ -74,13 +77,11 @@ void WhipFlashingRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 	}
 }
 
-void WhipFlashingRenderingSystem::OnEnabledChanged()
+void WhipFlashingRenderingSystem::OnVisibilityChanged()
 {
 	UpdatePositionRelativeToPlayer();
 
-	auto enabled = parent.GetBody().Enabled();
-
-	if (enabled)
+	if (sprite->IsVisible())
 	{
 		sprite->Play("Whip_level_03_magenta");
 		spriteRed->Play("Whip_level_03_red");

@@ -19,16 +19,7 @@ public:
 	CollisionResult PredictCollision(IColliable &staticObject);
 
 private:
-	struct SweptAABBResult
-	{
-		float timeToCollide;
-		Direction direction;
-
-		static SweptAABBResult Empty()
-		{
-			return SweptAABBResult{ -1, Direction::None };
-		}
-	};
+	struct SweptAABBResult;
 
 	using BroadPhase = RectF;
 

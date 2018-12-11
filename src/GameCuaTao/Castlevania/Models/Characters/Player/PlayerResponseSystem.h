@@ -15,15 +15,11 @@ namespace Castlevania
 		void Update(UpdateData &updateData) override;
 
 	private:
+		struct ResponseResult;
+
 		Player &parent;
 		ObjectFactory &objectFactory;
 		bool wasOnGround;
-
-		struct ResponseResult
-		{
-			bool isOnGround;
-			Trigger *stairTrigger;
-		};
 
 		void PostProcess(ResponseResult responseResult);
 		Direction GetPlayerHitDirection(GameObject &object, Direction direction);
@@ -35,8 +31,10 @@ namespace Castlevania
 		void OnCollideWithEnemy(CollisionResult &result);
 		void OnCollideWithFireball(CollisionResult &result);
 		void OnCollideWithHeart(CollisionResult &result);
+		void OnCollideWithSmallHeart(CollisionResult &result);
 		void OnCollideWithWhipPowerup(CollisionResult &result);
 		void OnCollideWithDaggerItem(CollisionResult &result, ObjectCollection &objectCollection);
+		void OnCollideWithDoor(CollisionResult &result, ResponseResult &responseResult);
 
 		void OnCollideWithStairUpTrigger(Trigger &trigger, ResponseResult &responseResult);
 		void OnCollideWithStairDownTrigger(Trigger &trigger, ResponseResult &responseResult);

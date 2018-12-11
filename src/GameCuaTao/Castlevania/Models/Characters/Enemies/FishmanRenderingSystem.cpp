@@ -9,14 +9,9 @@ FishmanRenderingSystem::FishmanRenderingSystem(
 	std::string animationPath,
 	std::unique_ptr<IEffect> effect)
 	:
-	EffectRenderingSystem{ animationPath, std::move(effect) },
+	EffectRenderingSystem{ parent, animationPath, std::move(effect) },
 	parent{ parent }
 {
-}
-
-GameObject &FishmanRenderingSystem::GetParent()
-{
-	return parent;
 }
 
 void FishmanRenderingSystem::OnMoveStateChanged()

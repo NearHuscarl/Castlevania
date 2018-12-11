@@ -63,6 +63,6 @@ void Castlevania::WhipResponseSystem::OnCollideWithFireball(CollisionResult &res
 {
 	auto &fireball = dynamic_cast<Fireball&>(result.collidedObject);
 
-	fireball.SetState(ObjectState::DYING);
 	fireball.GetBody().Enabled(false);
+	fireball.SetState(ObjectState::DYING);
 }

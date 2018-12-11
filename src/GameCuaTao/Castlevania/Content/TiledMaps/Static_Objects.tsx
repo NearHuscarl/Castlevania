@@ -12,4 +12,7 @@
   <tile id="3">
    <image source="Panther.png" width="66" height="32"/>
   </tile>
+  <tile id="4">
+   <image source="Door.png" width="24" height="96"/>
+  </tile>
 </tileset>

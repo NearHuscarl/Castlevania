@@ -10,5 +10,5 @@ public:
 	std::shared_ptr<TiledMap> Read(std::string filePath, ContentManager &contentManager) override;
 
 private:
-	TiledMapObjects ReadTiledMapObjects(pugi::xml_node mapNode);
+	TiledMapObjectGroups ReadTiledMapObjects(pugi::xml_node mapNode);
 };

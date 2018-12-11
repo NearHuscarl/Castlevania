@@ -10,15 +10,22 @@ const auto DEFAULT_PLAYER_DATA = PlayerData{};
 const auto DEFAULT_BOSS_HEALTH = MAX_HEALTH;
 const auto DEFAULT_GAMEPLAY_DATA = GameplayData{};
 
+struct Hud::HudData
+{
+	const PlayerData *playerData;
+	const int *bossHealth;
+	const GameplayData *gameplayData;
+};
+
 Hud::Hud(GraphicsDevice &graphicsDevice)
 {
 	width = graphicsDevice.GetViewport().width;
 	height = HUD_HEIGHT;
-	data = Hud::HudData{
-		&DEFAULT_PLAYER_DATA,
-		&DEFAULT_BOSS_HEALTH,
-		&DEFAULT_GAMEPLAY_DATA,
-	};
+	data = std::make_unique<HudData>();
+
+	data->playerData = &DEFAULT_PLAYER_DATA;
+	data->bossHealth = &DEFAULT_BOSS_HEALTH;
+	data->gameplayData = &DEFAULT_GAMEPLAY_DATA;
 
 	scoreTextPosition = Vector2{ 0, 15 };
 	timeTextPosition = Vector2{ 210, 15 };
@@ -45,17 +52,17 @@ int Hud::GetHeight()
 
 void Hud::Register(const PlayerData &playerData)
 {
-	data.playerData = &playerData;
+	data->playerData = &playerData;
 }
 
 void Hud::Register(const int &bossHealth)
 {
-	data.bossHealth = &bossHealth;
+	data->bossHealth = &bossHealth;
 }
 
 void Hud::Register(const GameplayData &gameplayData)
 {
-	data.gameplayData = &gameplayData;
+	data->gameplayData = &gameplayData;
 }
 
 void Hud::LoadContent(ContentManager &content)
@@ -98,32 +105,32 @@ void Hud::Draw(SpriteExtensions &spriteBatch)
 
 std::string Hud::GetScoreText()
 {
-	return "SCORE-" + padZero(data.playerData->score, 6);
+	return "SCORE-" + padZero(data->playerData->score, 6);
 }
 
 std::string Hud::GetTimeText()
 {
-	return "TIME " + padZero(data.gameplayData->timeLeft.GetCounter(), 4);
+	return "TIME " + padZero(data->gameplayData->timeLeft.GetCounter(), 4);
 }
 
 std::string Hud::GetStageText()
 {
-	return "STAGE " + padZero(data.gameplayData->stage, 2);
+	return "STAGE " + padZero(data->gameplayData->stage, 2);
 }
 
 std::string Hud::GetHeartCountText()
 {
-	return "-" + padZero(data.playerData->hearts, 2);
+	return "-" + padZero(data->playerData->hearts, 2);
 }
 
 std::string Hud::GetLiveCountText()
 {
-	return "P-" + padZero(data.playerData->lives, 2);
+	return "P-" + padZero(data->playerData->lives, 2);
 }
 
 std::shared_ptr<Texture> Hud::GetWeaponTexture()
 {
-	switch (data.playerData->subWeapon)
+	switch (data->playerData->subWeapon)
 	{
 		case EntityType::DaggerItem:
 			return daggerTexture;
@@ -150,7 +157,7 @@ void Hud::DrawHealthBars(SpriteExtensions &spriteBatch)
 {
 	for (auto i = 0; i < MAX_HEALTH; i++)
 	{
-		if (i + 1 <= data.playerData->health)
+		if (i + 1 <= data->playerData->health)
 		{
 			auto position = Vector2{ playerHealthPosition.x + i * 9, playerHealthPosition.y };
 			spriteBatch.Draw(*playerFullBlock, position, false);
@@ -161,7 +168,7 @@ void Hud::DrawHealthBars(SpriteExtensions &spriteBatch)
 			spriteBatch.Draw(*emptyBlock, position, false);
 		}
 
-		if (i + 1 <= *data.bossHealth)
+		if (i + 1 <= *data->bossHealth)
 		{
 			auto position = Vector2{ enemyHealthPosition.x + i * 9, enemyHealthPosition.y };
 			spriteBatch.Draw(*bossFullBlock, position, false);
@@ -182,3 +189,5 @@ std::string Hud::padZero(int number, int paddingCount)
 
 	return sstream.str();
 }
+
+Hud::~Hud() = default;

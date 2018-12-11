@@ -13,7 +13,7 @@
 #include "../Systems/Rendering/AnimationRenderingSystem.h"
 #include "../Systems/Rendering/BoundingboxRenderingSystem.h"
 #include "../Systems/Rendering/SpriteRenderingSystem.h"
-#include "../Systems/Rendering/EntityRenderingSystem.h"
+#include "../Systems/Rendering/EffectRenderingSystem.h"
 #include "../Characters/Player/Controller.h"
 #include "../Characters/Player/PlayerMovementSystem.h"
 #include "../Characters/Player/PlayerCollisionSystem.h"
@@ -28,6 +28,9 @@
 #include "../Characters/Enemies/PantherRenderingSystem.h"
 #include "../Characters/Enemies/VampireBatRenderingSystem.h"
 #include "../Characters/Enemies/ZombieResponseSystem.h"
+#include "../Items/PowerupResponseSystem.h"
+#include "../Items/DoorRenderingSystem.h"
+#include "../Items/FireballRenderingSystem.h"
 #include "../Spawners/SpawnerCollisionSystem.h"
 #include "../Spawners/SpawnAreaResponseSystem.h"
 #include "../Weapons/WhipCollisionSystem.h"
@@ -51,6 +54,11 @@ ObjectFactory::ObjectFactory(ContentManager &content) : content{ content }
 std::unique_ptr<GameObject> ObjectFactory::CreateBoundary(RectF rect)
 {
 	return CreateRectangleObject(EntityType::Boundary, rect);
+}
+
+std::unique_ptr<GameObject> ObjectFactory::CreateViewportArea(RectF rect)
+{
+	return CreateRectangleObject(EntityType::ViewportArea, rect);
 }
 
 std::unique_ptr<SpawnPoint> ObjectFactory::CreateSpawnPoint(EntityType type, RectF rect)
@@ -112,7 +120,8 @@ std::unique_ptr<GameObject> ObjectFactory::CreateBat(Vector2 position)
 
 	object->SetLinearVelocity(std::stof(stats->at("Speed")));
 
-	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*object, "Characters/NPCs/Bat.ani.xml");
+	//auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*object, "Characters/NPCs/Bat.ani.xml");
+	auto renderingSystem = std::make_unique<BoundingBoxRenderingSystem>(*object, RectF::Empty());
 
 	object->SetPosition(position);
 	object->Attach(std::move(renderingSystem));
@@ -177,7 +186,7 @@ std::unique_ptr<Container> ObjectFactory::CreateBrazier(EntityType itemType, Vec
 {
 	auto object = std::make_unique<Container>();
 
-	auto renderingSystem = std::make_unique<EntityRenderingSystem>(
+	auto renderingSystem = std::make_unique<EffectRenderingSystem>(
 		*object, "Items/Brazier.ani.xml", effectManager->CreateFlameEffect());
 	auto item = CreatePowerup(itemType);
 
@@ -193,7 +202,7 @@ std::unique_ptr<Container> ObjectFactory::CreateCandle(EntityType itemType, Vect
 {
 	auto object = std::make_unique<Container>();
 
-	auto renderingSystem = std::make_unique<EntityRenderingSystem>(
+	auto renderingSystem = std::make_unique<EffectRenderingSystem>(
 		*object, "Items/Candle.ani.xml", effectManager->CreateFlameEffect());
 	auto item = CreatePowerup(itemType);
 
@@ -236,7 +245,7 @@ std::unique_ptr<Zombie> ObjectFactory::CreateZombie(Vector2 position)
 	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, 1000.0f);
 	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<ZombieResponseSystem>(*object);
-	auto renderingSystem = std::make_unique<EntityRenderingSystem>(
+	auto renderingSystem = std::make_unique<EffectRenderingSystem>(
 		*object, "Characters/Enemies/Zombie.ani.xml", effectManager->CreateFlameEffect());
 
 	object->SetPosition(position);
@@ -385,12 +394,14 @@ std::unique_ptr<RangedWeapon> ObjectFactory::CreateDagger(Vector2 position)
 std::unique_ptr<Fireball> ObjectFactory::CreateFireball(Vector2 position)
 {
 	auto object = std::make_unique<Fireball>();
-	auto stats = content.Load<Dictionary>("GameStats/Characters/Fishman.xml");
+	auto stats = content.Load<Dictionary>("GameStats/Items/Fireball.xml");
 
+	object->SetSpeed(std::stof(stats->at("Speed")));
 	object->SetAttack(std::stoi(stats->at("Attack")));
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
-	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Fireball.png");
+	auto renderingSystem = std::make_unique<FireballRenderingSystem>(
+		*object, "Items/Fireball.png", effectManager->CreateFlameEffect());
 
 	object->SetPosition(position);
 	object->Attach(std::move(movementSystem));
@@ -407,6 +418,9 @@ std::unique_ptr<Powerup> ObjectFactory::CreatePowerup(EntityType type, Vector2 p
 	{
 		case EntityType::LargeHeart:
 			return CreateLargeHeart(position);
+
+		case EntityType::SmallHeart:
+			return CreateSmallHeart(position);
 
 		case EntityType::WhipPowerup:
 			return CreateWhipPowerup(position);
@@ -425,7 +439,7 @@ std::unique_ptr<Powerup> ObjectFactory::CreateDaggerItem(Vector2 position)
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
 	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
-	auto responseSystem = std::make_unique<GroundResponseSystem>(*object);
+	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Dagger.png");
 
 	object->SetPosition(position);
@@ -446,7 +460,7 @@ std::unique_ptr<Powerup> ObjectFactory::CreateLargeHeart(Vector2 position)
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
 	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
-	auto responseSystem = std::make_unique<GroundResponseSystem>(*object);
+	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Large_Heart.png");
 	
 	object->SetPosition(position);
@@ -461,13 +475,34 @@ std::unique_ptr<Powerup> ObjectFactory::CreateLargeHeart(Vector2 position)
 	return object;
 }
 
+std::unique_ptr<Powerup> ObjectFactory::CreateSmallHeart(Vector2 position)
+{
+	auto object = std::make_unique<Powerup>(EntityType::SmallHeart);
+
+	auto movementSystem = std::make_unique<WaveMovementSystem>(*object, 0.5f, 1.8f, Axis::Y);
+	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
+	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Small_Heart.png");
+
+	object->SetPosition(position);
+	object->Attach(std::move(movementSystem));
+	object->Attach(std::move(collisionSystem));
+	object->Attach(std::move(responseSystem));
+	object->Attach(std::move(renderingSystem));
+
+	object->LoadContent(content);
+	object->SetSpeed(ITEM_FALL_SPEED); // Fall down
+
+	return object;
+}
+
 std::unique_ptr<Powerup> ObjectFactory::CreateWhipPowerup(Vector2 position)
 {
 	auto object = std::make_unique<Powerup>(EntityType::WhipPowerup);
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
 	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
-	auto responseSystem = std::make_unique<GroundResponseSystem>(*object);
+	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Whip_Powerup.png");
 
 	object->SetPosition(position);
@@ -478,6 +513,19 @@ std::unique_ptr<Powerup> ObjectFactory::CreateWhipPowerup(Vector2 position)
 	
 	object->LoadContent(content);
 	object->SetVelocity_Y(ITEM_FALL_SPEED); // Fall down
+
+	return object;
+}
+
+std::unique_ptr<Door> ObjectFactory::CreateDoor(Vector2 position)
+{
+	auto object = std::make_unique<Door>();
+	auto renderingSystem = std::make_unique<DoorRenderingSystem>(*object, "Items/Door.ani.xml");
+
+	object->SetPosition(position);
+	object->Attach(std::move(renderingSystem));
+	object->LoadContent(content);
+	object->Idle();
 
 	return object;
 }
@@ -528,36 +576,38 @@ void ObjectFactory::ReadSpawnAreaConfig(SpawnArea &spawnArea, Dictionary stats)
 
 std::unique_ptr<SpawnArea> ObjectFactory::ConstructSpawnArea(EntityType type)
 {
+	auto object = std::unique_ptr<SpawnArea>{};
+	auto stats = std::shared_ptr<Dictionary>{};
+
 	switch (type)
 	{
 		case EntityType::Zombie:
 		{
-			auto object = std::make_unique<ZombieSpawnArea>(*this);
-			auto stats = content.Load<Dictionary>("GameStats/SpawnAreas/ZombieSpawnArea.xml");
-
-			ReadSpawnAreaConfig(*object.get(), *stats);
-			return object;
+			object = std::make_unique<ZombieSpawnArea>(*this);
+			stats = content.Load<Dictionary>("GameStats/SpawnAreas/ZombieSpawnArea.xml");
+			break;
 		}
 
 		case EntityType::VampireBat:
 		{
-			auto object = std::make_unique<VampireBatSpawnArea>(*this);
-			auto stats = content.Load<Dictionary>("GameStats/SpawnAreas/BatSpawnArea.xml");
-
-			ReadSpawnAreaConfig(*object.get(), *stats);
-			return object;
+			object = std::make_unique<VampireBatSpawnArea>(*this);
+			stats = content.Load<Dictionary>("GameStats/SpawnAreas/BatSpawnArea.xml");
+			break;
 		}
 
 		case EntityType::Fishman:
 		{
-			auto object = std::make_unique<FishmanSpawnArea>(*this);
-			auto stats = content.Load<Dictionary>("GameStats/SpawnAreas/FishmanSpawnArea.xml");
-
-			ReadSpawnAreaConfig(*object.get(), *stats);
+			object = std::make_unique<FishmanSpawnArea>(*this);
+			stats = content.Load<Dictionary>("GameStats/SpawnAreas/FishmanSpawnArea.xml");
+			break;
 			return object;
 		}
 
 		default:
 			throw std::runtime_error("Spawn area for this type of object is not supported");
 	}
+
+	ReadSpawnAreaConfig(*object.get(), *stats);
+
+	return object;
 }

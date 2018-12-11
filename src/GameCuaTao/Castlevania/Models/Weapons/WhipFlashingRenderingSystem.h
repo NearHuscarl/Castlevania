@@ -24,7 +24,7 @@ namespace Castlevania
 		std::unique_ptr<AnimatedSprite> spriteYellow;
 		std::unique_ptr<AnimatedSprite> spriteBlue;
 
-		void OnEnabledChanged() override;
+		void OnVisibilityChanged() override;
 		void OnFacingChanged();
 	};
 }

@@ -8,8 +8,12 @@ namespace Castlevania
 	{
 	public:
 		VampireBatSpawnArea(ObjectFactory &objectFactory);
+		
+		void SetGroupSpawnTime(int groupSpawnTime) override;
 
 	private:
+		int originalGroupSpawnTime;
+
 		void SpawnObject(UpdateData &updateData) override;
 	};
 }

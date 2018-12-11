@@ -9,11 +9,9 @@ namespace Castlevania
 	{
 	public:
 		FishmanRenderingSystem(Fishman &parent, std::string animationPath, std::unique_ptr<IEffect> effect);
-		GameObject &GetParent() override;
 
 	private:
 		Fishman &parent;
-
 		void OnMoveStateChanged() override;
 	};
 }

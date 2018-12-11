@@ -26,7 +26,7 @@ namespace Castlevania
 		std::unique_ptr<AnimatedSprite> sprite;
 		std::string spriteConfigPath;
 		
-		virtual void OnEnabledChanged();
+		virtual void OnVisibilityChanged();
 		void UpdatePositionRelativeToPlayer();
 	};
 }

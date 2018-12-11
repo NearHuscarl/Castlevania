@@ -366,9 +366,6 @@
     <ClCompile Include="Castlevania\Models\Systems\Rendering\EffectRenderingSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Castlevania\Models\Systems\Rendering\EntityRenderingSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Castlevania\Utilities\DevTool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -415,6 +412,24 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Castlevania\Models\Items\Container.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Models\Facing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Models\Items\PowerupResponseSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Models\Items\Door.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Models\Items\DoorRenderingSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Models\Items\FireballRenderingSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Scenes\Stages\NextRoomCutscene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -911,9 +926,6 @@
     <ClInclude Include="Castlevania\Models\Systems\Rendering\EffectRenderingSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Castlevania\Models\Systems\Rendering\EntityRenderingSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Castlevania\Utilities\DevTool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -966,6 +978,24 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Castlevania\Models\Items\Container.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Items\PowerupResponseSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Items\Door.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Items\DoorRenderingSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Items\FireballRenderingSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Characters\Player\NearbyObjects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Scenes\Stages\NextRoomCutscene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

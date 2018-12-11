@@ -48,14 +48,16 @@ void Whip::LoadContent(ContentManager &content)
 
 void Whip::Unleash()
 {
-	body.Enabled(true);
-	SendMessageToSystems(ENABLED_CHANGED);
+	// Collision detection will be turn on when whip is on the attack frame
+	SetVisibility(true);
+	SendMessageToSystems(VISIBILITY_CHANGED);
 }
 
 void Whip::Withdraw()
 {
 	body.Enabled(false);
-	SendMessageToSystems(ENABLED_CHANGED);
+	SetVisibility(false);
+	SendMessageToSystems(VISIBILITY_CHANGED);
 }
 
 void Whip::Upgrade()

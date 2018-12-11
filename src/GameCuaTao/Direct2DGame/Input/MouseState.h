@@ -19,6 +19,8 @@ struct MouseState
 
 	float x;
 	float y;
+	float dx;
+	float dy;
 	int scrollWheelValue;
 
 private:

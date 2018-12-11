@@ -47,8 +47,6 @@ void CourtyardStage::Initialize()
 
 void CourtyardStage::Update(GameTime gameTime)
 {
-	UpdateInput();
-
 	switch (currentState)
 	{
 		case GameState::PLAYING:
@@ -70,7 +68,7 @@ void CourtyardStage::UpdateGoToCastleCutscene(GameTime gameTime)
 {
 	UpdateGameObjects(gameTime);
 
-	auto aLittleBit = 5.0f;
+	auto aLittleBit = 5.0f; // TODO: the fuck did I write?
 
 	if (player->GetBoundingBox().right <= entranceTrigger->GetBoundingBox().right - aLittleBit)
 	{

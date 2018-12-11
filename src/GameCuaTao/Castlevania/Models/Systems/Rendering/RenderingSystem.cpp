@@ -1,5 +1,6 @@
 #include "RenderingSystem.h"
 #include "../../GameObject.h"
+#include "../../Settings.h"
 
 using namespace Castlevania;
 
@@ -16,6 +17,20 @@ GameObject &RenderingSystem::GetParent()
 void RenderingSystem::DrawBoundingBox(bool value)
 {
 	drawBoundingBox = value;
+}
+
+void RenderingSystem::Receive(int message)
+{
+	switch (message)
+	{
+		case MOVE_STATE_CHANGED:
+			OnMoveStateChanged();
+			break;
+
+		case STATE_CHANGED:
+			OnStateChanged();
+			break;
+	}
 }
 
 void RenderingSystem::LoadContent(ContentManager &content)
@@ -44,6 +59,14 @@ void RenderingSystem::DrawBoundingBox(SpriteExtensions &spriteBatch, RectF bound
 	auto position = Vector2{ boundingBox.X(), boundingBox.Y() };
 
 	spriteBatch.Draw(*bboxTexture, position, &(Rect)boundingBox, color, 0.0f, Vector2::One(), SpriteEffects::None);
+}
+
+void RenderingSystem::OnMoveStateChanged()
+{
+}
+
+void RenderingSystem::OnStateChanged()
+{
 }
 
 Color RenderingSystem::GetBoundingBoxColor()
@@ -77,6 +100,7 @@ Color RenderingSystem::GetBoundingBoxColor()
 
 			// Just a fg image, skip drawing
 		case EntityType::Castle:
+		case EntityType::ViewportArea:
 			return Color::Transparent();
 
 		default:

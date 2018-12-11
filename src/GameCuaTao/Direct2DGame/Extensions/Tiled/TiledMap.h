@@ -1,13 +1,14 @@
 #pragma once
 
-#include <map>
+#include <unordered_map>
 #include <vector>
 #include "TileSet.h"
 #include "../Sprites/SpriteExtensions.h"
 #include "../Sprites/IDrawable.h"
 
-using TiledMapObjectProperties = std::map<std::string, std::string>;
+using TiledMapObjectProperties = std::unordered_map<std::string, std::string>;
 using TiledMapObjects = std::vector<TiledMapObjectProperties>;
+using TiledMapObjectGroups = std::unordered_map<std::string, TiledMapObjects>;
 
 class TiledMap : public IDrawable
 {
@@ -21,8 +22,8 @@ public:
 	int GetHeightInPixels();
 
 	void CreateTileSet(std::shared_ptr<Texture> texture);
-	void CreateMapObjects(TiledMapObjects objects);
-	TiledMapObjects GetMapObjects();
+	void CreateMapObjects(TiledMapObjectGroups objects);
+	TiledMapObjectGroups GetMapObjects();
 
 	void Draw(SpriteExtensions &spriteBatch) override;
 
@@ -37,7 +38,7 @@ private:
 	int tileHeight;
 
 	std::unique_ptr<TileSet> tileSet;
-	TiledMapObjects objects;
+	TiledMapObjectGroups objects;
 	Color backgroundColor = Color::Black();
 
 	int &columns = width; // height in tiles

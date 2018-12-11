@@ -9,14 +9,9 @@ VampireBatRenderingSystem::VampireBatRenderingSystem(
 	std::string animationPath,
 	std::unique_ptr<IEffect> effect)
 	:
-	EffectRenderingSystem{ animationPath, std::move(effect) },
+	EffectRenderingSystem{ parent, animationPath, std::move(effect) },
 	parent{ parent }
 {
-}
-
-GameObject &VampireBatRenderingSystem::GetParent()
-{
-	return parent;
 }
 
 void VampireBatRenderingSystem::OnMoveStateChanged()

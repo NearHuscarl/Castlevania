@@ -47,6 +47,11 @@ const PlayerData &Player::GetData()
 	return data;
 }
 
+const NearbyObjects Player::GetNearbyObjects()
+{
+	return nearbyObjects;
+}
+
 MoveState Player::GetMoveState()
 {
 	return moveState;
@@ -116,7 +121,7 @@ void Player::UpdateStates()
 		case MoveState::WALKING_TO_STAIRS:
 		{
 			auto playerCenter_x = GetOriginPosition().x;
-			auto stairCenter_x = nearbyStair->GetOriginPosition().x;
+			auto stairCenter_x = nearbyObjects.stair->GetOriginPosition().x;
 
 			if (playerCenter_x >= stairCenter_x && facing == Facing::Right
 				|| playerCenter_x <= stairCenter_x && facing == Facing::Left)
@@ -200,6 +205,7 @@ void Player::OnAttackComplete()
 
 void Player::OnHitStairEntry()
 {
+	auto nearbyStair = nearbyObjects.stair;
 	auto triggerType = nearbyStair->GetTriggerType();
 	auto stairFacing = nearbyStair->GetFacing();
 
@@ -259,6 +265,8 @@ void Player::WalkRight()
 
 void Player::WalkToStairs()
 {
+	auto nearbyStair = nearbyObjects.stair;
+
 	if (nearbyStair == nullptr)
 		return;
 
@@ -269,14 +277,14 @@ void Player::WalkToStairs()
 	{
 		SetFacing(Facing::Right);
 		velocity.x = speed;
-		SetMoveState(MoveState::WALKING_TO_STAIRS);
 	}
 	else // (playerCenter_x >= stairCenter_x)
 	{
 		SetFacing(Facing::Left);
 		velocity.x = -speed;
-		SetMoveState(MoveState::WALKING_TO_STAIRS);
 	}
+
+	SetMoveState(MoveState::WALKING_TO_STAIRS);
 }
 
 void Player::GoUpstairs()
@@ -366,6 +374,8 @@ bool Player::IsOnStairs()
 
 bool Player::CanGoUpstairs()
 {
+	auto nearbyStair = nearbyObjects.stair;
+
 	if (nearbyStair == nullptr)
 		return false;
 	
@@ -374,6 +384,8 @@ bool Player::CanGoUpstairs()
 
 bool Player::CanGoDownstairs()
 {
+	auto nearbyStair = nearbyObjects.stair;
+
 	if (nearbyStair == nullptr)
 		return false;
 

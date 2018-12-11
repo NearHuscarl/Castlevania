@@ -9,13 +9,10 @@ namespace Castlevania
 	{
 	public:
 		PantherRenderingSystem(Panther &parent, std::string animationPath, std::unique_ptr<IEffect> effect);
-
-		GameObject &GetParent() override;
 		void Draw(SpriteExtensions &spriteBatch) override;
 
 	private:
 		Panther &parent;
-
 		void OnMoveStateChanged() override;
 	};
 }

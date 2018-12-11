@@ -15,9 +15,9 @@ namespace Castlevania
 		SpawnArea(EntityType spawnObjectType, ObjectFactory &objectFactory);
 
 		SpawnState GetSpawnState() override;
-		void SetSpawnGroupCount(int spawnGroup);
-		void SetGroupSpawnTime(int groupSpawnTime);
-		void SetSpawnTime(int spawnTime);
+		virtual void SetSpawnGroupCount(int spawnGroup);
+		virtual void SetGroupSpawnTime(int groupSpawnTime);
+		virtual void SetSpawnTime(int spawnTime);
 
 		void Activate() override;
 		void Deactivate() override;
@@ -28,14 +28,14 @@ namespace Castlevania
 		ObjectFactory &objectFactory;
 		EntityType spawnObjectType;
 
-		virtual void SpawnObject(UpdateData &updateData) = 0;
-
-	private:
 		SpawnState spawnState;
 		int spawnGroupCount;
 		int groupSpawnTime;
 		int spawnTime;
 
+		virtual void SpawnObject(UpdateData &updateData) = 0;
+
+	private:
 		int spawnGroupCountLeft;
 		Stopwatch groupSpawnTimer;
 		Stopwatch spawnTimer;

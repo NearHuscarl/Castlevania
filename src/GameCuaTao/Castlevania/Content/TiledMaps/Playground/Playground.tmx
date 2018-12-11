@@ -28,12 +28,12 @@
   <object id="68" name="Platform" type="Boundary" x="832" y="608" width="64" height="32"/>
  </objectgroup>
  <objectgroup id="4" name="Game">
-  <object id="15" name="Brazier" type="Object" gid="41" x="397" y="287" width="32" height="64">
+  <object id="15" name="Brazier" type="Brazier" gid="41" x="397" y="287" width="32" height="64">
    <properties>
     <property name="Item" value="DaggerItem"/>
    </properties>
   </object>
-  <object id="16" name="Brazier" type="Object" gid="41" x="584" y="287" width="32" height="64">
+  <object id="16" name="Brazier" type="Brazier" gid="41" x="584" y="287" width="32" height="64">
    <properties>
     <property name="Item" value="LargeHeart"/>
    </properties>
@@ -48,7 +48,7 @@
   <object id="70" name="Checkpoint_06" type="Position" gid="4" x="481" y="699" width="60" height="66"/>
  </objectgroup>
  <objectgroup id="7" name="Triggers">
-  <object id="56" name="StairUp" type="Trigger" x="112" y="256" width="32" height="32" visible="0">
+  <object id="56" name="StairUp" type="Trigger" x="112" y="256" width="32" height="32">
    <properties>
     <property name="Enabled" value="True"/>
     <property name="Facing" value="Right"/>

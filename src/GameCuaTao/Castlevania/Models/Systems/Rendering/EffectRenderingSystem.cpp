@@ -4,7 +4,12 @@
 
 using namespace Castlevania;
 
-EffectRenderingSystem::EffectRenderingSystem(std::string spriteConfigPath, std::unique_ptr<IEffect> effect)
+EffectRenderingSystem::EffectRenderingSystem(
+	GameObject &parent,
+	std::string spriteConfigPath,
+	std::unique_ptr<IEffect> effect)
+	:
+	parent{ parent }
 {
 	this->hitEffect = std::move(effect);
 	this->spriteConfigPath = spriteConfigPath;
@@ -17,29 +22,7 @@ Sprite &EffectRenderingSystem::GetSprite()
 
 GameObject &Castlevania::EffectRenderingSystem::GetParent()
 {
-	return GameObject::NullObject();
-}
-
-void EffectRenderingSystem::Receive(int message)
-{
-	switch (message)
-	{
-		case MOVE_STATE_CHANGED:
-			OnMoveStateChanged();
-			break;
-
-		case STATE_CHANGED:
-			OnStateChanged();
-			break;
-	}
-
-	switch (message)
-	{
-		case STATE_CHANGED:
-			if (GetParent().GetState() == ObjectState::DYING)
-				hitEffect->Show(GetParent().GetOriginPosition());
-			break;
-	}
+	return parent;
 }
 
 void EffectRenderingSystem::LoadContent(ContentManager &content)
@@ -79,12 +62,10 @@ void EffectRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 	}
 }
 
-void EffectRenderingSystem::OnMoveStateChanged()
-{
-}
-
 void EffectRenderingSystem::OnStateChanged()
 {
 	if (GetParent().GetState() == ObjectState::DYING)
+	{
 		hitEffect->Show(GetParent().GetOriginPosition());
+	}
 }

@@ -8,4 +8,6 @@ namespace Castlevania
 		Left,
 		None,
 	};
+
+	Facing Opposite(Facing facing);
 }

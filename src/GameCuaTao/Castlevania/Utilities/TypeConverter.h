@@ -11,6 +11,7 @@ namespace Castlevania
 {
 	const auto string2EntityType = std::unordered_map<std::string, EntityType>
 	{
+		{ "ViewportArea", EntityType::ViewportArea },
 		{ "SpawnArea", EntityType::SpawnArea },
 		{ "SpawnPoint", EntityType::SpawnPoint },
 		{ "Player", EntityType::Player },
@@ -23,11 +24,14 @@ namespace Castlevania
 		{ "Fishman", EntityType::Fishman },
 		{ "VampireBat", EntityType::VampireBat },
 		{ "GiantBat", EntityType::GiantBat },
+		{ "Fireball", EntityType::Fireball },
 		{ "Whip", EntityType::Whip },
 		{ "DaggerItem", EntityType::DaggerItem },
 		{ "LargeHeart", EntityType::LargeHeart },
+		{ "SmallHeart", EntityType::SmallHeart },
 		{ "WhipPowerup", EntityType::WhipPowerup },
 		{ "MoneyBag", EntityType::MoneyBag },
+		{ "Door", EntityType::Door },
 		{ "Castle", EntityType::Castle },
 		{ "DirtBlock", EntityType::DirtBlock },
 	};

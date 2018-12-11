@@ -173,12 +173,17 @@
     <ClCompile Include="Castlevania\Models\Characters\Enemies\VampireBatRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Enemies\Zombie.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Enemies\ZombieResponseSystem.cpp" />
+    <ClCompile Include="Castlevania\Models\Facing.cpp" />
     <ClCompile Include="Castlevania\Models\Factories\ObjectFactory.cpp" />
     <ClCompile Include="Castlevania\Hud.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Player\PlayerCollisionSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Player\PlayerRenderingSystem.cpp" />
+    <ClCompile Include="Castlevania\Models\Items\Door.cpp" />
+    <ClCompile Include="Castlevania\Models\Items\DoorRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Items\Fireball.cpp" />
+    <ClCompile Include="Castlevania\Models\Items\FireballRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Items\Powerup.cpp" />
+    <ClCompile Include="Castlevania\Models\Items\PowerupResponseSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Spawners\FishmanSpawnArea.cpp" />
     <ClCompile Include="Castlevania\Models\Spawners\SpawnArea.cpp" />
     <ClCompile Include="Castlevania\Models\Spawners\SpawnAreaResponseSystem.cpp" />
@@ -197,7 +202,6 @@
     <ClCompile Include="Castlevania\Models\Systems\Rendering\AnimationRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Rendering\BoundingboxRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Rendering\EffectRenderingSystem.cpp" />
-    <ClCompile Include="Castlevania\Models\Systems\Rendering\EntityRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Rendering\RenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Rendering\SpriteRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Collision\StaticCollisionSystem.cpp" />
@@ -211,6 +215,7 @@
     <ClCompile Include="Castlevania\Models\Weapons\WhipResponseSystem.cpp" />
     <ClCompile Include="Castlevania\Effects\EffectFactory.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\GreatHallStage.cpp" />
+    <ClCompile Include="Castlevania\Scenes\Stages\NextRoomCutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\PlaygroundStage.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\Stage.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\CourtyardStage.cpp" />
@@ -309,6 +314,7 @@
     <ClInclude Include="Castlevania\Models\Characters\Enemies\VampireBatRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Characters\Enemies\Zombie.h" />
     <ClInclude Include="Castlevania\Models\Characters\Enemies\ZombieResponseSystem.h" />
+    <ClInclude Include="Castlevania\Models\Characters\Player\NearbyObjects.h" />
     <ClInclude Include="Castlevania\Models\Facing.h" />
     <ClInclude Include="Castlevania\Models\Factories\ObjectCollection.h" />
     <ClInclude Include="Castlevania\Models\Factories\ObjectFactory.h" />
@@ -316,8 +322,12 @@
     <ClInclude Include="Castlevania\Models\Characters\Player\PlayerCollisionSystem.h" />
     <ClInclude Include="Castlevania\Models\Characters\Player\PlayerData.h" />
     <ClInclude Include="Castlevania\Models\Characters\Player\PlayerRenderingSystem.h" />
+    <ClInclude Include="Castlevania\Models\Items\Door.h" />
+    <ClInclude Include="Castlevania\Models\Items\DoorRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Items\Fireball.h" />
     <ClInclude Include="Castlevania\Models\IAttackable.h" />
+    <ClInclude Include="Castlevania\Models\Items\FireballRenderingSystem.h" />
+    <ClInclude Include="Castlevania\Models\Items\PowerupResponseSystem.h" />
     <ClInclude Include="Castlevania\Models\Settings.h" />
     <ClInclude Include="Castlevania\Models\Items\Powerup.h" />
     <ClInclude Include="Castlevania\Models\Spawners\FishmanSpawnArea.h" />
@@ -340,7 +350,6 @@
     <ClInclude Include="Castlevania\Models\Systems\Movement\WaveMovementSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Rendering\BoundingboxRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Rendering\EffectRenderingSystem.h" />
-    <ClInclude Include="Castlevania\Models\Systems\Rendering\EntityRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Rendering\IRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Rendering\AnimationRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Rendering\RenderingSystem.h" />
@@ -359,6 +368,7 @@
     <ClInclude Include="Castlevania\Effects\IEffect.h" />
     <ClInclude Include="Castlevania\Scenes\GameplayData.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\GreatHallStage.h" />
+    <ClInclude Include="Castlevania\Scenes\Stages\NextRoomCutscene.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\StageEvent.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\PlaygroundStage.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\Stage.h" />

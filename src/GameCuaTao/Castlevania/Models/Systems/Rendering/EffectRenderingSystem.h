@@ -10,11 +10,10 @@ namespace Castlevania
 	class EffectRenderingSystem : public RenderingSystem
 	{
 	public:
-		EffectRenderingSystem(std::string spriteConfigPath, std::unique_ptr<IEffect> effect);
+		EffectRenderingSystem(GameObject &parent, std::string spriteConfigPath, std::unique_ptr<IEffect> effect);
 
 		Sprite &GetSprite() override;
 		GameObject &GetParent() override;
-		void Receive(int message) override;
 
 		void LoadContent(ContentManager &content) override;
 		void Update(GameTime gameTime) override;
@@ -24,10 +23,10 @@ namespace Castlevania
 		std::unique_ptr<AnimatedSprite> sprite;
 
 	private:
+		GameObject &parent;
 		std::string spriteConfigPath;
 		std::unique_ptr<IEffect> hitEffect;
 
-		virtual void OnMoveStateChanged();
-		virtual void OnStateChanged();
+		void OnStateChanged() override;
 	};
 }

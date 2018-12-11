@@ -7,6 +7,7 @@
 #include "../Characters/Enemies/Fishman.h"
 #include "../Characters/Enemies/VampireBat.h"
 #include "../Items/Container.h"
+#include "../Items/Door.h"
 #include "../Items/Fireball.h"
 #include "../Weapons/Whip.h"
 #include "../Items/Powerup.h"
@@ -22,6 +23,7 @@ namespace Castlevania
 		ObjectFactory(ContentManager &content);
 
 		std::unique_ptr<GameObject> CreateBoundary(RectF rect);
+		std::unique_ptr<GameObject> CreateViewportArea(RectF rect);
 		std::unique_ptr<SpawnPoint> CreateSpawnPoint(EntityType type, RectF rect);
 		std::unique_ptr<SpawnArea> CreateSpawnArea(EntityType type, RectF rect);
 		std::unique_ptr<GameObject> CreateRectangleObject(EntityType type, RectF rect);
@@ -47,8 +49,10 @@ namespace Castlevania
 		std::unique_ptr<Powerup> CreatePowerup(EntityType type, Vector2 position = Vector2::Zero());
 		std::unique_ptr<Powerup> CreateDaggerItem(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Powerup> CreateLargeHeart(Vector2 position = Vector2::Zero());
+		std::unique_ptr<Powerup> CreateSmallHeart(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Powerup> CreateWhipPowerup(Vector2 position = Vector2::Zero());
 
+		std::unique_ptr<Door> CreateDoor(Vector2 position = Vector2::Zero());
 		std::unique_ptr<GameObject> CreateCastle(Vector2 position = Vector2::Zero());
 		std::unique_ptr<GameObject> CreateDirtBlock(Vector2 position = Vector2::Zero());
 

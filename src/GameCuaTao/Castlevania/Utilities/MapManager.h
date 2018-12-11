@@ -9,7 +9,7 @@ namespace Castlevania
 {
 	using Maps = std::map<Map, std::shared_ptr<TiledMap>>;
 
-	using ObjectProperties = std::map<std::string, std::string>;
+	using ObjectProperties = std::unordered_map<std::string, std::string>;
 	using ObjectsProperties = std::vector<ObjectProperties>;
 
 	struct MapData
@@ -27,6 +27,7 @@ namespace Castlevania
 
 		void LoadContent(ContentManager &content);
 		MapData LoadMap(Map name);
+		void GetViewportAreas(Map name, std::vector<std::unique_ptr<GameObject>> &viewportAreas);
 
 	private:
 		Maps maps;
@@ -34,7 +35,10 @@ namespace Castlevania
 		Vector2 worldPosition; // absolute position of map and map objects to the world
 		ObjectFactory &objectFactory;
 
-		ObjectCollection CreateObjectCollection(ObjectsProperties properties);
+		ObjectCollection CreateObjectCollection(TiledMapObjectGroups objectGroups);
 		std::unique_ptr<GameObject> ConstructObject(ObjectProperties properties);
+		std::unique_ptr<GameObject> ConstructArea(ObjectProperties properties);
+		
+		void ReadObjectPosition(ObjectProperties properties, float &x, float &y);
 	};
 }

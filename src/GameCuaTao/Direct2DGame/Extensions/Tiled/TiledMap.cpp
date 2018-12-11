@@ -37,12 +37,12 @@ void TiledMap::CreateTileSet(std::shared_ptr<Texture> texture)
 	tileSet = std::make_unique<TileSet>(texture, tileWidth, tileHeight, columns, rows);
 }
 
-void TiledMap::CreateMapObjects(TiledMapObjects objects)
+void TiledMap::CreateMapObjects(TiledMapObjectGroups objects)
 {
 	this->objects = objects;
 }
 
-TiledMapObjects TiledMap::GetMapObjects()
+TiledMapObjectGroups TiledMap::GetMapObjects()
 {
 	return objects;
 }

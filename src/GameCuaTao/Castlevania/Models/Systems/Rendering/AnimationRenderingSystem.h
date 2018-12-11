@@ -8,17 +8,16 @@ namespace Castlevania
 	class AnimationRenderingSystem : public RenderingSystem
 	{
 	public:
-		AnimationRenderingSystem(GameObject &parent, std::string spriteConfigPath);
+		AnimationRenderingSystem(std::string spriteConfigPath);
 
 		Sprite &GetSprite() override;
-		GameObject &GetParent() override;
+		GameObject &GetParent() override = 0;
 
 		void LoadContent(ContentManager &content) override;
 		void Update(GameTime gameTime) override;
 		void Draw(SpriteExtensions &spriteBatch) override;
 
 	protected:
-		GameObject &parent;
 		std::unique_ptr<AnimatedSprite> sprite;
 		std::string spriteConfigPath;
 	};

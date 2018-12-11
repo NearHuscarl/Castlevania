@@ -39,7 +39,7 @@ void Stage::Initialize()
 
 	mapManager.SetWorldPosition(Vector2{ 0, (float)hud->GetHeight() });
 	camera = std::make_unique<Camera>(graphicsDevice);
-	devTool = std::make_unique<DevTool>(objectFactory, *camera);
+	devTool = std::make_unique<DevTool>(gameplayScene, *camera);
 
 	LoadMap(currentMap);
 }
@@ -53,6 +53,7 @@ void Stage::Draw(SpriteExtensions &spriteBatch)
 	switch (currentState)
 	{
 		case GameState::PLAYING:
+		case GameState::NEXT_ROOM_CUTSCENE:
 			DrawGameplay(spriteBatch);
 			break;
 
@@ -83,9 +84,12 @@ void Stage::LoadMap(Map mapName)
 		map->GetHeightInPixels() + hud->GetHeight());
 
 	devTool->LoadContent(content);
-
 	player->SetPosition(objectCollection.locations["Checkpoint"]);
+	LoadSpecialObjects();
+}
 
+void Stage::LoadSpecialObjects()
+{
 	for (auto &trigger : objectCollection.triggers)
 	{
 		if (trigger->GetTriggerType() == TriggerType::NEXT_MAP)
@@ -94,12 +98,24 @@ void Stage::LoadMap(Map mapName)
 			break;
 		}
 	}
-}
 
-void Stage::UpdateInput()
-{
-	if (InputHelper::IsKeyDown(DIK_HOME))
-		gameplayScene.NextStage(Map::PLAYGROUND);
+	// Set camera move area if detects camera inside a viewport area
+	for (auto &object : objectCollection.entities)
+	{
+		if ((EntityType)object->GetType() == EntityType::ViewportArea)
+		{
+			viewportAreas.push_back(object.get());
+
+			auto viewportAreaBbox = object->GetBoundingBox();
+
+			// Take account of hud height on top of the screen
+			viewportAreaBbox.top -= hud->GetHeight();
+			viewportAreaBbox.bottom += hud->GetHeight();
+
+			if (viewportAreaBbox.Contains(camera->GetBounds()))
+				camera->SetMoveArea((Rect)viewportAreaBbox);
+		}
+	}
 }
 
 void Stage::UpdateGameObjects(GameTime gameTime)
@@ -170,6 +186,12 @@ void Stage::DrawCutscene(SpriteExtensions &spriteBatch)
 	hud->Draw(spriteBatch);
 
 	player->Draw(spriteBatch);
+
+	for (auto const &entity : objectCollection.entities)
+	{
+		if ((EntityType)entity->GetType() == EntityType::Door)
+			entity->Draw(spriteBatch);
+	}
 
 	for (auto const &fgObject : objectCollection.foregroundObjects)
 	{

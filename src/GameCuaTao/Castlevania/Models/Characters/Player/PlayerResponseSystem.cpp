@@ -5,6 +5,13 @@
 
 using namespace Castlevania;
 
+struct PlayerResponseSystem::ResponseResult
+{
+	bool isOnGround;
+	Trigger *stairTrigger;
+	Door *door;
+};
+
 PlayerResponseSystem::PlayerResponseSystem(Player &parent, ObjectFactory &objectFactory) :
 	parent{ parent },
 	objectFactory{ objectFactory }
@@ -52,12 +59,20 @@ void PlayerResponseSystem::Update(UpdateData &updateData)
 				OnCollideWithHeart(result);
 				break;
 
+			case EntityType::SmallHeart:
+				OnCollideWithSmallHeart(result);
+				break;
+
 			case EntityType::WhipPowerup:
 				OnCollideWithWhipPowerup(result);
 				break;
 
 			case EntityType::DaggerItem:
 				OnCollideWithDaggerItem(result, objectCollection);
+				break;
+
+			case EntityType::Door:
+				OnCollideWithDoor(result, responseResult);
 				break;
 		}
 	}
@@ -75,7 +90,8 @@ void PlayerResponseSystem::PostProcess(ResponseResult responseResult)
 		wasOnGround = responseResult.isOnGround;
 	}
 
-	parent.nearbyStair = responseResult.stairTrigger;
+	parent.nearbyObjects.stair = responseResult.stairTrigger;
+	//parent.nearbyObjects.door = responseResult.door;
 }
 
 Direction PlayerResponseSystem::GetPlayerHitDirection(GameObject &object, Direction direction)
@@ -207,6 +223,14 @@ void PlayerResponseSystem::OnCollideWithHeart(CollisionResult &result)
 	largeHeart.Destroy();
 }
 
+void PlayerResponseSystem::OnCollideWithSmallHeart(CollisionResult &result)
+{
+	auto &smallHeart = dynamic_cast<GameObject&>(result.collidedObject);
+
+	parent.data.hearts += 1;
+	smallHeart.Destroy();
+}
+
 void PlayerResponseSystem::OnCollideWithWhipPowerup(CollisionResult &result)
 {
 	// Only consume this powerup on the ground because I only have flashing sprites on ground
@@ -239,20 +263,38 @@ void PlayerResponseSystem::OnCollideWithDaggerItem(CollisionResult &result, Obje
 	parent.SetSubWeapon(itemType);
 }
 
+void PlayerResponseSystem::OnCollideWithDoor(CollisionResult &result, ResponseResult &responseResult)
+{
+	if (parent.GetNearbyObjects().door != nullptr)
+		return;
+
+	auto &door = dynamic_cast<Door&>(result.collidedObject);
+	parent.nearbyObjects.door = &door;
+
+	if (parent.GetMoveState() == MoveState::IDLE
+		|| parent.GetMoveState() == MoveState::WALKING)
+	{
+		parent.Idle();
+		parent.Notify(NEXT_ROOM_CUTSCENE_STARTED);
+	}
+}
+
 void PlayerResponseSystem::OnCollideWithStairUpTrigger(Trigger &trigger, ResponseResult &responseResult)
 {
 	responseResult.stairTrigger = &trigger;
 	auto triggerBbox = trigger.GetBoundingBox();
+	auto parentBbox = parent.GetBoundingBox();
+	auto parentFrame = parent.GetFrameRect();
 
 	// -2: change to idle state when barely hit the floor to make the transition smoother
-	if (parent.GetBoundingBox().bottom >= triggerBbox.bottom - 2
+	if (parentBbox.bottom >= triggerBbox.bottom - 2
 		&& (parent.moveState == MoveState::GOING_DOWNSTAIRS || parent.moveState == MoveState::IDLE_DOWNSTAIRS))
 	{
 		parent.IdleOnGround();
 
-		auto offsetBottom = parent.GetFrameRect().bottom - parent.GetBoundingBox().bottom;
-		// TODO: why 1 extra pixel?
-		parent.position.y = trigger.GetBoundingBox().bottom - parent.GetFrameRect().Height() + offsetBottom - 1;
+		auto offsetBottom = parentFrame.bottom - parent.GetBoundingBox().bottom;
+		// *0.4f : the magic number which make the object pushed out a bit to avoid overlapping next frame
+		parent.position.y = triggerBbox.bottom - parentFrame.Height() + offsetBottom - 0.4f;
 		parent.SetDistance_Y(0);
 	}
 }
@@ -261,15 +303,16 @@ void PlayerResponseSystem::OnCollideWithStairDownTrigger(Trigger &trigger, Respo
 {
 	responseResult.stairTrigger = &trigger;
 	auto triggerBbox = trigger.GetBoundingBox();
+	auto parentBbox = parent.GetBoundingBox();
+	auto parentFrame = parent.GetFrameRect();
 
-	if (parent.GetBoundingBox().bottom <= triggerBbox.bottom
+	if (parentBbox.bottom <= triggerBbox.bottom
 		&& (parent.moveState == MoveState::GOING_UPSTAIRS || parent.moveState == MoveState::IDLE_UPSTAIRS))
 	{
 		parent.IdleOnGround();
 
-		auto offsetBottom = parent.GetFrameRect().bottom - parent.GetBoundingBox().bottom;
-		// TODO: why 1 extra pixel?
-		parent.position.y = trigger.GetBoundingBox().bottom - parent.GetFrameRect().Height() + offsetBottom;
+		auto offsetBottom = parentFrame.bottom - parent.GetBoundingBox().bottom;
+		parent.position.y = triggerBbox.bottom - parentFrame.Height() + offsetBottom - 0.4f;
 		parent.SetDistance_Y(0);
 	}
 }

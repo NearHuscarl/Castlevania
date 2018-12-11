@@ -142,7 +142,10 @@ RectF GameObject::GetBoundingBox()
 
 Sprite *GameObject::GetSprite()
 {
-	return &renderingSystem->GetSprite();
+	if (renderingSystem != nullptr)
+		return &renderingSystem->GetSprite();
+	else
+		return nullptr;
 }
 
 Facing GameObject::GetFacing()
@@ -270,11 +273,15 @@ void GameObject::Detach<IRenderingSystem>()
 
 void GameObject::LoadContent(ContentManager &content)
 {
-	renderingSystem->LoadContent(content);
+	if (renderingSystem != nullptr)
+		renderingSystem->LoadContent(content);
 }
 
 void GameObject::Update(GameTime gameTime, UpdateData &updateData)
 {
+	if (!updateData.viewport.TouchesOrIntersects(GetFrameRect())) // TODO: remove after using collision grid
+		return;
+
 	auto objectCollection = updateData.objectCollection;
 
 	if (controlSystem != nullptr)
@@ -297,7 +304,8 @@ void GameObject::Update(GameTime gameTime, UpdateData &updateData)
 
 void GameObject::Draw(SpriteExtensions &spriteBatch)
 {
-	renderingSystem->Draw(spriteBatch);
+	if (renderingSystem != nullptr)
+		renderingSystem->Draw(spriteBatch);
 }
 
 void GameObject::SendMessageToSystems(int message)

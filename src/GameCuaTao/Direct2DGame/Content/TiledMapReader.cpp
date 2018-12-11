@@ -36,12 +36,14 @@ std::shared_ptr<TiledMap> TiledMapReader::Read(std::string filePath, ContentMana
 	return map;
 }
 
-TiledMapObjects TiledMapReader::ReadTiledMapObjects(pugi::xml_node mapNode)
+TiledMapObjectGroups TiledMapReader::ReadTiledMapObjects(pugi::xml_node mapNode)
 {
-	auto objects = TiledMapObjects{};
+	auto objectGroups = TiledMapObjectGroups{};
 
 	for (auto objectGroupNode : mapNode.children("objectgroup"))
 	{
+		auto objects = TiledMapObjects{};
+
 		for (auto objectNode : objectGroupNode.children("object"))
 		{
 			auto objectProperties = TiledMapObjectProperties{};
@@ -62,7 +64,11 @@ TiledMapObjects TiledMapReader::ReadTiledMapObjects(pugi::xml_node mapNode)
 
 			objects.push_back(objectProperties);
 		}
+
+		auto groupName = objectGroupNode.attribute("name").as_string();
+
+		objectGroups[groupName] = objects;
 	}
 
-	return objects;
+	return objectGroups;
 }

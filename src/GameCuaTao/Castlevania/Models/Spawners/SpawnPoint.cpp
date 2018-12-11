@@ -5,7 +5,7 @@
 using namespace Castlevania;
 
 SpawnPoint::SpawnPoint(EntityType spawnObjectType, ObjectFactory &objectFactory) :
-	GameObject{ EntityType::Unknown },
+	GameObject{ EntityType::SpawnPoint },
 	objectFactory{ objectFactory }
 {
 	this->spawnObjectType = spawnObjectType;

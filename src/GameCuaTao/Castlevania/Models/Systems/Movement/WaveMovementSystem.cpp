@@ -7,12 +7,6 @@ using namespace Castlevania;
 
 WaveMovementSystem::WaveMovementSystem(GameObject &parent, float angularVelocity, float amplitude, Axis axis) : parent{ parent }
 {
-	auto speed = parent.GetSpeed();
-	if (parent.GetFacing() == Facing::Right)
-		this->linearVelocity = speed;
-	else
-		this->linearVelocity = -speed;
-
 	this->angularVelocity = angularVelocity;
 	this->angularRotation = 0.0f;
 	this->amplitude = amplitude;
@@ -24,25 +18,15 @@ void WaveMovementSystem::SetMoveAxis(Axis axis)
 	moveAxis = axis;
 }
 
-void WaveMovementSystem::Receive(int message)
-{
-	switch (message)
-	{
-		case FACING_CHANGED:
-		{
-			auto speed = parent.GetSpeed();
-			if (parent.GetFacing() == Facing::Right)
-				this->linearVelocity = speed;
-			else
-				this->linearVelocity = -speed;
-			break;
-		}
-	}
-}
-
 void WaveMovementSystem::Update(GameTime gameTime)
 {
-	auto velocity = Vector2{};
+	auto linearVelocity = float{};
+
+	if (parent.GetFacing() == Facing::Right)
+		linearVelocity = parent.GetSpeed();
+	else
+		linearVelocity = -parent.GetSpeed();
+
 	auto deltaTime = (float)gameTime.ElapsedGameTime.Seconds();
 	
 	// https://en.wikipedia.org/wiki/Amplitude

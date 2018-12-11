@@ -32,18 +32,6 @@ void PlaygroundStage::UpdateInput()
 		player->SetPosition(locations["Checkpoint_05"]);
 	else if (InputHelper::IsKeyDown(DIK_6))
 		player->SetPosition(locations["Checkpoint_06"]);
-	else if (InputHelper::IsKeyDown(DIK_NUMPAD1))
-	{
-		auto object = objectFactory.CreateZombie(locations["Checkpoint_05"]);
-		object->WalkRight();
-		objectCollection.entities.push_back(std::move(object));
-	}
-	else if (InputHelper::IsMouseReleased(MouseButton::Left))
-	{
-		auto location = InputHelper::GetMousePosition();
-		location = camera->ScreenToWorld(location);
-		objectCollection.entities.push_back(objectFactory.CreateWhipPowerup(location));
-	}
 
 	if (!camera->GetBounds().Intersects(player->GetFrameRect())) // player outside of viewport, update viewport postiion
 	{

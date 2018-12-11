@@ -1,6 +1,5 @@
 #include "GroundResponseSystem.h"
 #include "../../GameObject.h"
-#include "../../Settings.h"
 
 using namespace Castlevania;
 

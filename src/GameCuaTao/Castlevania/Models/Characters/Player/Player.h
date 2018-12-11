@@ -2,9 +2,9 @@
 
 #include "Direct2DGame/Utilities/Stopwatch.h"
 #include "PlayerData.h"
+#include "NearbyObjects.h"
 #include "../../Weapons/Whip.h"
 #include "../../Weapons/RangedWeapon.h"
-#include "../../Trigger.h"
 
 namespace Castlevania
 {
@@ -69,6 +69,7 @@ namespace Castlevania
 		Player();
 
 		const PlayerData &GetData();
+		const NearbyObjects GetNearbyObjects();
 		MoveState GetMoveState();
 		AttackState GetAttackState();
 		void SetSpeed(float speed) override;
@@ -135,6 +136,6 @@ namespace Castlevania
 		Stopwatch untouchableTimer; // cooldown time after taking damage
 
 		// Component-related flags
-		Trigger *nearbyStair;
+		NearbyObjects nearbyObjects;
 	};
 }

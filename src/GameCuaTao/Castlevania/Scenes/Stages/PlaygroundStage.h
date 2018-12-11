@@ -12,6 +12,6 @@ namespace Castlevania
 		void Update(GameTime gameTime) override;
 
 	private:
-		void UpdateInput() override;
+		void UpdateInput();
 	};
 }

@@ -20,8 +20,6 @@ void UndergroundStage::OnNotify(Subject &subject, int event)
 
 void UndergroundStage::Update(GameTime gameTime)
 {
-	UpdateInput();
-
 	switch (currentState)
 	{
 		case GameState::PLAYING:

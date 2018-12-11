@@ -9,11 +9,9 @@ namespace Castlevania
 	{
 	public:
 		VampireBatRenderingSystem(VampireBat &parent, std::string animationPath, std::unique_ptr<IEffect> effect);
-		GameObject &GetParent() override;
 
 	private:
 		VampireBat &parent;
-
 		void OnMoveStateChanged() override;
 	};
 }

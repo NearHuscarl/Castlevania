@@ -5,12 +5,6 @@
 
 namespace Castlevania
 {
-	constexpr auto BOUNDARY = "Boundary";
-	constexpr auto TRIGGER = "Trigger";
-	constexpr auto POSITION = "Position";
-	constexpr auto OBJECT = "Object";
-	constexpr auto SPAWNER = "Spawner";
-
 	struct ObjectCollection
 	{
 		std::shared_ptr<Player> player;

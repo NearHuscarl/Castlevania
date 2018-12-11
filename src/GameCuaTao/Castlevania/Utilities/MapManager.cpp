@@ -4,6 +4,13 @@
 
 using namespace Castlevania;
 
+constexpr auto BOUND = "Bounds";
+constexpr auto TRIGGER = "Triggers";
+constexpr auto LOCATION = "Locations";
+constexpr auto FOREGROUND = "Foregrounds";
+constexpr auto ENTITY = "Entities";
+constexpr auto AREA = "Areas";
+
 MapManager::MapManager(ObjectFactory &objectFactory) : objectFactory{ objectFactory }
 {
 	worldPosition = Vector2::Zero();
@@ -33,80 +40,108 @@ MapData MapManager::LoadMap(Map name)
 	return MapData{ map, CreateObjectCollection(mapObjects) };
 }
 
-ObjectCollection MapManager::CreateObjectCollection(ObjectsProperties objectsProperties)
+void MapManager::GetViewportAreas(Map name, std::vector<std::unique_ptr<GameObject>> &viewportAreas)
+{
+	auto map = maps.at(name);
+	auto mapObjects = map->GetMapObjects();
+
+	auto x = float{};
+	auto y = float{};
+
+	for (auto properties : mapObjects[AREA])
+	{
+		ReadObjectPosition(properties, x, y);
+		auto object = ConstructArea(properties);
+
+		object->SetPosition(x, y);
+		viewportAreas.push_back(std::move(object));
+	}
+}
+
+ObjectCollection MapManager::CreateObjectCollection(TiledMapObjectGroups objectGroups)
 {
 	auto objectCollection = ObjectCollection{};
+	auto x = float{};
+	auto y = float{};
 
-	for (auto properties : objectsProperties)
+	for (auto properties : objectGroups[LOCATION])
 	{
+		ReadObjectPosition(properties, x, y);
+		auto height = std::stoi(properties.at("height"));
+		auto position = Vector2{ x, y - height };
 		auto name = properties.at("name");
-		auto type = properties.at("type");
 
-		auto x = worldPosition.x + std::stof(properties.at("x"));
-		auto y = worldPosition.y + std::stof(properties.at("y"));
+		objectCollection.locations[name] = position;
+	}
 
-		if (type == BOUNDARY) // Rectangle
+	for (auto properties : objectGroups[TRIGGER])
+	{
+		ReadObjectPosition(properties, x, y);
+		auto width = std::stof(properties.at("width"));
+		auto height = std::stof(properties.at("height"));
+		auto bbox = RectF{ x, y, width, height };
+		auto facing = string2Facing.at(GetValueOrDefault(properties, "Facing", "None"));
+		auto name = properties.at("name");
+		auto triggerType = string2TriggerType.at(name);
+		auto object = objectFactory.CreateTrigger(bbox, triggerType);
+
+		if (triggerType == TriggerType::NEXT_MAP)
 		{
-			auto width = std::stof(properties.at("width"));
-			auto height = std::stof(properties.at("height"));
-			auto bbox = RectF{ x, y, width, height };
-			auto object = objectFactory.CreateBoundary(bbox);
-
-			objectCollection.boundaries.push_back(std::move(object));
+			object->AddProperty("Map", properties.at("Map"));
+			object->AddProperty("SpawnPoint", properties.at("SpawnPoint"));
 		}
-		else if (type == OBJECT) // GameObject (Player, Bat, Skeleton...) // tile
-		{
-			auto object = ConstructObject(properties);
-			auto height = std::stoi(properties.at("height"));
-			auto facing = string2Facing.at(GetValueOrDefault(properties, "Facing", "Right"));
-			auto foreground = GetValueOrDefault(properties, "Foreground", "False");
-			auto visibility = GetValueOrDefault(properties, "Visibility", "True");
 
-			object->SetPosition(x, y - height);
-			object->SetFacing(facing);
-			object->SetVisibility(ToBoolean(visibility));
+		object->Enabled(ToBoolean(properties.at("Enabled")));
+		object->SetFacing(facing);
+		objectCollection.triggers.push_back(std::move(object));
+	}
 
-			if (ToBoolean(foreground))
-				objectCollection.foregroundObjects.push_back(std::move(object));
-			else
-				objectCollection.entities.push_back(std::move(object));
-		}
-		else if (type == TRIGGER) // Rectangle
-		{
-			auto width = std::stof(properties.at("width"));
-			auto height = std::stof(properties.at("height"));
-			auto bbox = RectF{ x, y, width, height };
-			auto facing = string2Facing.at(GetValueOrDefault(properties, "Facing", "None"));
-			auto triggerType = string2TriggerType.at(name);
-			auto object = objectFactory.CreateTrigger(bbox, triggerType);
+	for (auto properties : objectGroups[FOREGROUND])
+	{
+		ReadObjectPosition(properties, x, y);
+		auto object = ConstructObject(properties);
+		auto height = std::stoi(properties.at("height"));
+		auto facing = string2Facing.at(GetValueOrDefault(properties, "Facing", "Right"));
+		auto visibility = GetValueOrDefault(properties, "Visibility", "True");
 
-			if (triggerType == TriggerType::NEXT_MAP)
-			{
-				object->AddProperty("Map", properties.at("Map"));
-				object->AddProperty("SpawnPoint", properties.at("SpawnPoint"));
-			}
+		object->SetPosition(x, y - height);
+		object->SetFacing(facing);
+		object->SetVisibility(ToBoolean(visibility));
 
-			object->Enabled(ToBoolean(properties.at("Enabled")));
-			object->SetFacing(facing);
-			objectCollection.triggers.push_back(std::move(object));
-		}
-		else if (type == SPAWNER) // Rectangle
-		{
-			auto width = std::stof(properties.at("width"));
-			auto height = std::stof(properties.at("height"));
-			auto bbox = RectF{ x, y, width, height };
-			auto spawnObject = string2EntityType.at(properties.at("SpawnObject"));
-			auto object = objectFactory.CreateSpawnArea(spawnObject, bbox);
-			
-			objectCollection.entities.push_back(std::move(object));
-		}
-		else if (type == POSITION)
-		{
-			auto height = std::stoi(properties.at("height"));
-			auto position = Vector2{ x, y - height };
+		objectCollection.foregroundObjects.push_back(std::move(object));
+	}
 
-			objectCollection.locations[name] = position;
-		}
+	for (auto properties : objectGroups[ENTITY])
+	{
+		ReadObjectPosition(properties, x, y);
+		auto object = ConstructObject(properties);
+		auto height = std::stoi(properties.at("height"));
+		auto facing = string2Facing.at(GetValueOrDefault(properties, "Facing", "Right"));
+
+		object->SetPosition(x, y - height);
+		object->SetFacing(facing);
+
+		objectCollection.entities.push_back(std::move(object));
+	}
+
+	for (auto properties : objectGroups[BOUND])
+	{
+		ReadObjectPosition(properties, x, y);
+		auto width = std::stof(properties.at("width"));
+		auto height = std::stof(properties.at("height"));
+		auto bbox = RectF{ x, y, width, height };
+		auto object = objectFactory.CreateBoundary(bbox);
+
+		objectCollection.boundaries.push_back(std::move(object));
+	}
+
+	for (auto properties : objectGroups[AREA])
+	{
+		ReadObjectPosition(properties, x, y);
+		auto object = ConstructArea(properties);
+
+		object->SetPosition(x, y);
+		objectCollection.entities.push_back(std::move(object));
 	}
 
 	return objectCollection;
@@ -114,8 +149,8 @@ ObjectCollection MapManager::CreateObjectCollection(ObjectsProperties objectsPro
 
 std::unique_ptr<GameObject> MapManager::ConstructObject(ObjectProperties properties)
 {
-	auto name = properties.at("name");
-	auto type = string2EntityType.at(name);
+	auto typeName = properties.at("type");
+	auto type = string2EntityType.at(typeName);
 
 	switch (type)
 	{
@@ -159,6 +194,9 @@ std::unique_ptr<GameObject> MapManager::ConstructObject(ObjectProperties propert
 		case EntityType::MoneyBag:
 			return objectFactory.CreateBat();
 
+		case EntityType::Door:
+			return objectFactory.CreateDoor();
+
 		case EntityType::Castle:
 			return objectFactory.CreateCastle();
 
@@ -168,4 +206,38 @@ std::unique_ptr<GameObject> MapManager::ConstructObject(ObjectProperties propert
 		default:
 			throw std::invalid_argument("Invalid object name");
 	}
+}
+
+std::unique_ptr<GameObject> MapManager::ConstructArea(ObjectProperties properties)
+{
+	auto width = std::stof(properties.at("width"));
+	auto height = std::stof(properties.at("height"));
+	auto bbox = RectF{ 0, 0, width, height };
+
+	auto typeName = properties.at("type");
+	auto type = string2EntityType.at(typeName);
+
+	switch (type)
+	{
+		case EntityType::SpawnArea:
+		{
+			auto spawnObject = string2EntityType.at(properties.at("SpawnObject"));
+			return objectFactory.CreateSpawnArea(spawnObject, bbox);
+		}
+
+		case EntityType::ViewportArea:
+			return objectFactory.CreateViewportArea(bbox);
+
+		default:
+			throw std::invalid_argument("Invalid object name");
+	}
+
+
+	return std::unique_ptr<GameObject>();
+}
+
+void MapManager::ReadObjectPosition(ObjectProperties properties, float &x, float &y)
+{
+	x = worldPosition.x + std::stof(properties.at("x"));
+	y = worldPosition.y + std::stof(properties.at("y"));
 }

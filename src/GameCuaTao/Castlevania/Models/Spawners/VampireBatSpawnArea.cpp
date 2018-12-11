@@ -10,8 +10,24 @@ VampireBatSpawnArea::VampireBatSpawnArea(ObjectFactory &objectFactory) :
 {
 }
 
+void VampireBatSpawnArea::SetGroupSpawnTime(int groupSpawnTime)
+{
+	this->originalGroupSpawnTime = groupSpawnTime;
+	this->groupSpawnTime = originalGroupSpawnTime;
+}
+
 void VampireBatSpawnArea::SpawnObject(UpdateData &updateData)
 {
+	if (spawnGroupCount == 1) // Randomize groupSpawnTime before restart group spawn timer
+	{
+		// In the original game, sometimes the bat spawn time is much shorter
+		// than other times
+		if (MathHelper::RandomPercent(20))
+			groupSpawnTime = originalGroupSpawnTime / 3;
+		else
+			groupSpawnTime = originalGroupSpawnTime;
+	}
+
 	auto viewport = updateData.viewport;
 	auto object = objectFactory.CreateEnemy(spawnObjectType);
 	auto spawnPosition = Vector2{};

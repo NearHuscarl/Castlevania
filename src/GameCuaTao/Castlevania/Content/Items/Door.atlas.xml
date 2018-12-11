@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Spritesheet TexturePath="Door.png">
+    <Sprite ID="open_01">
+      <SpriteFrame Left="0" Top="0" Width="24" Height="96" />
+    </Sprite>
+
+    <Sprite ID="open_02">
+      <SpriteFrame Left="26" Top="0" Width="59" Height="96" />
+    </Sprite>
+
+    <Sprite ID="open_03">
+      <SpriteFrame Left="87" Top="0" Width="94" Height="96" />
+    </Sprite>
+  </Spritesheet>
+
+</GameContent>

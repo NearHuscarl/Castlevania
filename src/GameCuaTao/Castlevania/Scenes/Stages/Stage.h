@@ -53,9 +53,10 @@ namespace Castlevania
 
 		ObjectCollection objectCollection; // TODO: move to Grid class (implement spatial partition)
 		Trigger *nextMapTrigger;
+		std::vector<GameObject*> viewportAreas;
 
 		void LoadMap(Map mapName);
-		virtual void UpdateInput();
+		void LoadSpecialObjects();
 		void UpdateGameObjects(GameTime gameTime);
 		void UpdateGameplay(GameTime gameTime);
 

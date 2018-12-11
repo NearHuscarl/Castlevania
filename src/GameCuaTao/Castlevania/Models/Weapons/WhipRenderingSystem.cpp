@@ -24,8 +24,8 @@ GameObject &WhipRenderingSystem::GetParent()
 
 void WhipRenderingSystem::Receive(int message)
 {
-	if (message == ENABLED_CHANGED)
-		OnEnabledChanged();
+	if (message == VISIBILITY_CHANGED)
+		OnVisibilityChanged();
 }
 
 void WhipRenderingSystem::LoadContent(ContentManager &content)
@@ -39,8 +39,12 @@ void WhipRenderingSystem::LoadContent(ContentManager &content)
 
 void WhipRenderingSystem::Update(GameTime gameTime)
 {
-	if (!parent.GetBody().Enabled())
+	if (!sprite->IsVisible())
 		return;
+
+	// This is the attack frame, enable collision detection
+	if (sprite->GetCurrentAnimation().GetCurrentFrameIndex() == 2)
+		parent.GetBody().Enabled(true);
 
 	sprite->Update();
 	// Update the animation first before getting position so UpdatePositionRelativeToPlayer()
@@ -50,21 +54,20 @@ void WhipRenderingSystem::Update(GameTime gameTime)
 
 void WhipRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 {
-	if (!parent.GetBody().Enabled())
+	if (!sprite->IsVisible())
 		return;
 
 	RenderingSystem::Draw(spriteBatch);
 	spriteBatch.Draw(*sprite, parent.GetPosition());
 }
 
-void WhipRenderingSystem::OnEnabledChanged()
+void WhipRenderingSystem::OnVisibilityChanged()
 {
 	UpdatePositionRelativeToPlayer();
 
-	auto enabled = parent.GetBody().Enabled();
 	auto level = MathHelper::Min(parent.GetLevel(), 2);
 
-	if (enabled)
+	if (sprite->IsVisible())
 	{
 		// Play level 1 or 2 whip animation, level 3 whip is another seperate system
 		sprite->Play("Whip_level_0" + std::to_string(level));

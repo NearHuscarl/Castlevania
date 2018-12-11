@@ -27,14 +27,12 @@ namespace Castlevania
 		void LoadContent(ContentManager &content);
 		void Draw(SpriteExtensions &spriteBatch);
 
+		~Hud();
+
 	private:
-		struct HudData
-		{
-			const PlayerData *playerData;
-			const int *bossHealth;
-			const GameplayData *gameplayData;
-		};
-		HudData data;
+		struct HudData;
+
+		std::unique_ptr<HudData> data;
 
 		int width;
 		int height;

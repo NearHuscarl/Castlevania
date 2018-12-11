@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Animations AtlasPath="Door.atlas.xml">
+    <Animation Name="normal" DefaultTime="100" IsLooping="False">
+      <Frame SpriteID="open_01" />
+    </Animation>
+
+    <Animation Name="open" DefaultTime="200" IsLooping="False">
+      <Frame SpriteID="open_01" />
+      <Frame SpriteID="open_02" />
+      <Frame SpriteID="open_03" />
+    </Animation>
+
+    <Animation Name="close" DefaultTime="200" IsLooping="False">
+      <Frame SpriteID="open_03" />
+      <Frame SpriteID="open_02" />
+      <Frame SpriteID="open_01" />
+    </Animation>
+  </Animations>
+
+</GameContent>

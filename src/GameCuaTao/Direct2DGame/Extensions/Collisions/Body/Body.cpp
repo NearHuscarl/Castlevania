@@ -2,6 +2,17 @@
 #include "Body.h"
 #include "../../../MathHelper.h"
 
+struct Body::SweptAABBResult
+{
+	float timeToCollide;
+	Direction direction;
+
+	static SweptAABBResult Empty()
+	{
+		return SweptAABBResult{ -1, Direction::None };
+	}
+};
+
 Body::Body(IColliable &colliableObject) : parent{ colliableObject }
 {
 	enabled = true;

@@ -6,13 +6,16 @@
 #include "Direct2DGame/Extensions/Camera.h"
 #include "../Models/Factories/ObjectCollection.h"
 #include "../Models/Factories/ObjectFactory.h"
+#include "../Utilities/MapSettings.h"
 
 namespace Castlevania
 {
+	class GameplayScene;
+
 	class DevTool
 	{
 	public:
-		DevTool(ObjectFactory &objectFactory, Camera &camera);
+		DevTool(GameplayScene &gameplayScene, Camera &camera);
 
 		void LoadContent(ContentManager &content);
 		void Update(ObjectCollection &objectCollection);
@@ -23,14 +26,27 @@ namespace Castlevania
 		
 		bool isDebugging;
 		std::shared_ptr<SpriteFont> debugFont;
+
 		std::unordered_map<std::string, DevToolItems> items;
-		int currentItemIndex;
+		static int currentItemIndex;
 		std::string category;
 		Facing currentFacing;
+		
+		std::vector<Map> maps;
+		static int currentMapIndex;
 
+		GameplayScene &gameplayScene;
 		ObjectFactory &objectFactory;
 		Camera &camera;
 
 		Vector2 GetCurrentItemPosition();
+
+		void SetCategory(std::string category);
+		void NextItem();
+		void PreviousItem();
+		void SpawnItem(ObjectCollection &objectCollection);
+
+		void NextMap();
+		void PreviousMap();
 	};
 }
