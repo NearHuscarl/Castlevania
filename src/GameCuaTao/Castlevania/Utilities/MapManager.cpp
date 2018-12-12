@@ -30,32 +30,76 @@ void MapManager::LoadContent(ContentManager &content)
 	maps[Map::PLAYGROUND] = content.Load<TiledMap>("TiledMaps/Playground/Playground.tmx");
 }
 
-MapData MapManager::LoadMap(Map name)
+std::shared_ptr<TiledMap> MapManager::GetTiledMap(Map name)
 {
 	auto map = maps.at(name);
-	auto mapObjects = map->GetMapObjects();
-	
 	map->SetPosition(worldPosition);
 
-	return MapData{ map, CreateObjectCollection(mapObjects) };
+	return map;
 }
 
-void MapManager::GetViewportAreas(Map name, std::vector<std::unique_ptr<GameObject>> &viewportAreas)
+ObjectCollection MapManager::GetOtherObjects(Map name)
 {
 	auto map = maps.at(name);
 	auto mapObjects = map->GetMapObjects();
 
+	return CreateObjectCollection(mapObjects);
+}
+
+GameObjects MapManager::GetMapObjects(Map name)
+{
+	return GetMapObjectsInArea(name, Rect::Empty());
+}
+
+GameObjects MapManager::GetMapObjectsInArea(Map name, Rect area)
+{
+	auto map = maps.at(name);
+	auto objectGroups = map->GetMapObjects();
 	auto x = float{};
 	auto y = float{};
+	auto objects = GameObjects{};
 
-	for (auto properties : mapObjects[AREA])
+	for (auto properties : objectGroups[ENTITY])
 	{
 		ReadObjectPosition(properties, x, y);
-		auto object = ConstructArea(properties);
+		auto height = std::stoi(properties.at("height"));
+		auto position = Vector2{ x, y - height };
 
-		object->SetPosition(x, y);
-		viewportAreas.push_back(std::move(object));
+		if (!area.Contains(position) && area != Rect::Empty())
+			continue;
+
+		auto object = ConstructObject(properties);
+		auto facing = string2Facing.at(GetValueOrDefault(properties, "Facing", "Right"));
+
+		object->SetPosition(position);
+		object->SetFacing(facing);
+
+		objects.push_back(std::move(object));
 	}
+
+	for (auto properties : objectGroups[AREA])
+	{
+		auto typeName = properties.at("type");
+		auto type = string2EntityType.at(typeName);
+
+		if (type != EntityType::SpawnArea)
+			continue;
+
+		ReadObjectPosition(properties, x, y);
+		auto width = std::stof(properties.at("width"));
+		auto height = std::stof(properties.at("height"));
+		auto bbox = RectF{ x, y, width, height };
+
+		if (!area.Contains((Rect)bbox) && area != Rect::Empty())
+			continue;
+
+		auto spawnObject = string2EntityType.at(properties.at("SpawnObject"));
+		auto object = objectFactory.CreateSpawnArea(spawnObject, bbox);
+
+		objects.push_back(std::move(object));
+	}
+
+	return objects;
 }
 
 ObjectCollection MapManager::CreateObjectCollection(TiledMapObjectGroups objectGroups)
@@ -99,29 +143,17 @@ ObjectCollection MapManager::CreateObjectCollection(TiledMapObjectGroups objectG
 	for (auto properties : objectGroups[FOREGROUND])
 	{
 		ReadObjectPosition(properties, x, y);
-		auto object = ConstructObject(properties);
 		auto height = std::stoi(properties.at("height"));
+		auto position = Vector2{ x, y - height };
+		auto object = ConstructObject(properties);
 		auto facing = string2Facing.at(GetValueOrDefault(properties, "Facing", "Right"));
 		auto visibility = GetValueOrDefault(properties, "Visibility", "True");
 
-		object->SetPosition(x, y - height);
+		object->SetPosition(position);
 		object->SetFacing(facing);
 		object->SetVisibility(ToBoolean(visibility));
 
 		objectCollection.foregroundObjects.push_back(std::move(object));
-	}
-
-	for (auto properties : objectGroups[ENTITY])
-	{
-		ReadObjectPosition(properties, x, y);
-		auto object = ConstructObject(properties);
-		auto height = std::stoi(properties.at("height"));
-		auto facing = string2Facing.at(GetValueOrDefault(properties, "Facing", "Right"));
-
-		object->SetPosition(x, y - height);
-		object->SetFacing(facing);
-
-		objectCollection.entities.push_back(std::move(object));
 	}
 
 	for (auto properties : objectGroups[BOUND])
@@ -137,11 +169,19 @@ ObjectCollection MapManager::CreateObjectCollection(TiledMapObjectGroups objectG
 
 	for (auto properties : objectGroups[AREA])
 	{
-		ReadObjectPosition(properties, x, y);
-		auto object = ConstructArea(properties);
+		auto typeName = properties.at("type");
+		auto type = string2EntityType.at(typeName);
 
-		object->SetPosition(x, y);
-		objectCollection.entities.push_back(std::move(object));
+		if (type != EntityType::ViewportArea)
+			continue;
+
+		ReadObjectPosition(properties, x, y);
+		auto width = std::stof(properties.at("width"));
+		auto height = std::stof(properties.at("height"));
+		auto bbox = RectF{ x, y, width, height };
+		auto object = objectFactory.CreateViewportArea(bbox);
+
+		objectCollection.viewportAreas.push_back(std::move(object));
 	}
 
 	return objectCollection;
@@ -206,34 +246,6 @@ std::unique_ptr<GameObject> MapManager::ConstructObject(ObjectProperties propert
 		default:
 			throw std::invalid_argument("Invalid object name");
 	}
-}
-
-std::unique_ptr<GameObject> MapManager::ConstructArea(ObjectProperties properties)
-{
-	auto width = std::stof(properties.at("width"));
-	auto height = std::stof(properties.at("height"));
-	auto bbox = RectF{ 0, 0, width, height };
-
-	auto typeName = properties.at("type");
-	auto type = string2EntityType.at(typeName);
-
-	switch (type)
-	{
-		case EntityType::SpawnArea:
-		{
-			auto spawnObject = string2EntityType.at(properties.at("SpawnObject"));
-			return objectFactory.CreateSpawnArea(spawnObject, bbox);
-		}
-
-		case EntityType::ViewportArea:
-			return objectFactory.CreateViewportArea(bbox);
-
-		default:
-			throw std::invalid_argument("Invalid object name");
-	}
-
-
-	return std::unique_ptr<GameObject>();
 }
 
 void MapManager::ReadObjectPosition(ObjectProperties properties, float &x, float &y)

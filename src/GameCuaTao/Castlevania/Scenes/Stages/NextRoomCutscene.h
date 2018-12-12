@@ -11,11 +11,22 @@ namespace Castlevania
 	public:
 		NextRoomCutscene(Player &player, Camera &camera, Door &door);
 
+		bool IsComplete();
 		void Update(GameTime gameTime);
 
 	private:
+		enum class State;
+
 		Player &player;
 		Camera &camera;
 		Door &door;
+		Direction doorHitDirection;
+
+		State currentState;
+		float viewportDestination_x;
+		float playerDestination_x;
+		float openDoorPosition_x;
+
+		bool isComplete;
 	};
 }

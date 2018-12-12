@@ -53,6 +53,11 @@ bool Rect::operator==(Rect other)
 		this->Height() == other.Height());
 }
 
+bool Rect::operator!=(Rect other)
+{
+	return !(*this == other);
+}
+
 bool Rect::Contains(Rect value)
 {
 	return (
@@ -60,6 +65,15 @@ bool Rect::Contains(Rect value)
 		this->top <= value.top &&
 		this->right >= value.right &&
 		this->bottom >= value.bottom);
+}
+
+bool Rect::Contains(Vector2 value)
+{
+	return (
+		this->left <= value.x &&
+		this->top <= value.y &&
+		this->right >= value.x &&
+		this->bottom >= value.y);
 }
 
 bool Rect::Intersects(Rect value)

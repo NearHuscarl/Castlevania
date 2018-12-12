@@ -29,6 +29,7 @@ namespace Castlevania
 		void OnCollideWithBoundary(CollisionResult &result, ResponseResult &responseResult);
 		void OnCollideWithTrigger(CollisionResult &result, ResponseResult &responseResult);
 		void OnCollideWithEnemy(CollisionResult &result);
+		void OnCollideWithVampireBat(CollisionResult &result);
 		void OnCollideWithFireball(CollisionResult &result);
 		void OnCollideWithHeart(CollisionResult &result);
 		void OnCollideWithSmallHeart(CollisionResult &result);
@@ -36,8 +37,8 @@ namespace Castlevania
 		void OnCollideWithDaggerItem(CollisionResult &result, ObjectCollection &objectCollection);
 		void OnCollideWithDoor(CollisionResult &result, ResponseResult &responseResult);
 
-		void OnCollideWithStairUpTrigger(Trigger &trigger, ResponseResult &responseResult);
-		void OnCollideWithStairDownTrigger(Trigger &trigger, ResponseResult &responseResult);
+		void OnCollideWithStairUpTrigger(Trigger &trigger);
+		void OnCollideWithStairDownTrigger(Trigger &trigger);
 		void OnCollideWithNextMapTrigger(Trigger &trigger);
 		void OnCollideWithCastleEntranceTrigger(Trigger &trigger);
 	};

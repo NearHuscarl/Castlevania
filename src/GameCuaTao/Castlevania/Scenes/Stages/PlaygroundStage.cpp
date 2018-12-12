@@ -4,7 +4,8 @@
 
 using namespace Castlevania;
 
-PlaygroundStage::PlaygroundStage(GameplayScene &gameplayScene) : Stage{ gameplayScene, Map::PLAYGROUND }
+PlaygroundStage::PlaygroundStage(GameplayScene &gameplayScene, std::string checkpoint) :
+	Stage{ gameplayScene, Map::PLAYGROUND, checkpoint }
 {
 }
 

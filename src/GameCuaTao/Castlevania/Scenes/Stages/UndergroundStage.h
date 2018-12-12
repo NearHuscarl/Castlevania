@@ -7,7 +7,7 @@ namespace Castlevania
 	class UndergroundStage : public Stage
 	{
 	public:
-		UndergroundStage(GameplayScene &gameplayScene);
+		UndergroundStage(GameplayScene &gameplayScene, std::string checkpoint);
 
 		void OnNotify(Subject &subject, int event) override;
 		void Update(GameTime gameTime) override;

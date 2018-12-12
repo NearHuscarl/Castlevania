@@ -10,11 +10,12 @@ using namespace Castlevania;
 
 constexpr auto NEXT_MAP_TRANSITION_TIME = 400; // in milliseconds
 
-Stage::Stage(GameplayScene &gameplayScene, Map map) :
+Stage::Stage(GameplayScene &gameplayScene, Map map, std::string checkpoint) :
 	gameplayScene{ gameplayScene },
 	objectFactory{ gameplayScene.GetSceneManager().GetFactory() }
 {
-	currentMap = map;
+	this->currentMap = map;
+	this->checkpoint = checkpoint;
 }
 
 UpdateData Stage::GetUpdateData()
@@ -41,7 +42,7 @@ void Stage::Initialize()
 	camera = std::make_unique<Camera>(graphicsDevice);
 	devTool = std::make_unique<DevTool>(gameplayScene, *camera);
 
-	LoadMap(currentMap);
+	LoadMap();
 }
 
 void Stage::Update(GameTime gameTime)
@@ -52,40 +53,32 @@ void Stage::Draw(SpriteExtensions &spriteBatch)
 {
 	switch (currentState)
 	{
-		case GameState::PLAYING:
-		case GameState::NEXT_ROOM_CUTSCENE:
-			DrawGameplay(spriteBatch);
-			break;
-
 		case GameState::NEXT_MAP_CUTSCENE:
 			DrawNextMapCutscene(spriteBatch);
 			break;
 
-		// In the original game, when change to cutscene, all in-game objects
-		// except tiled map, simon and the door are invisible on the screen
-		default: // Handle other cutscenes
-			DrawCutscene(spriteBatch);
+		default:
+			DrawGameplay(spriteBatch);
 			break;
 	}
 }
 
-void Stage::LoadMap(Map mapName)
+void Stage::LoadMap()
 {
 	auto &content = gameplayScene.GetSceneManager().GetContent();
 	auto &mapManager = gameplayScene.GetMapManager();
-	auto &mapData = mapManager.LoadMap(mapName);
 	
-	map = mapData.map;
-	objectCollection = std::move(mapData.objects);
-	objectCollection.player = player;
-
-	camera->SetMoveArea(0, 0,
-		map->GetWidthInPixels(),
-		map->GetHeightInPixels() + hud->GetHeight());
+	map = mapManager.GetTiledMap(currentMap);
 
 	devTool->LoadContent(content);
-	player->SetPosition(objectCollection.locations["Checkpoint"]);
+
+	// Load game objects
+	objectCollection = mapManager.GetOtherObjects(currentMap);
+	objectCollection.player = player;
+	objectCollection.player->SetPosition(objectCollection.locations[checkpoint]);
+
 	LoadSpecialObjects();
+	LoadObjectsInCurrentArea();
 }
 
 void Stage::LoadSpecialObjects()
@@ -98,22 +91,25 @@ void Stage::LoadSpecialObjects()
 			break;
 		}
 	}
+}
 
-	// Set camera move area if detects camera inside a viewport area
-	for (auto &object : objectCollection.entities)
+void Stage::LoadObjectsInCurrentArea()
+{
+	auto &mapManager = gameplayScene.GetMapManager();
+
+	for (auto &viewportArea : objectCollection.viewportAreas)
 	{
-		if ((EntityType)object->GetType() == EntityType::ViewportArea)
+		auto viewportAreaBbox = viewportArea->GetBoundingBox();
+
+		// Take account of hud height on top of the screen
+		viewportAreaBbox.top -= hud->GetHeight();
+
+		// Only load object in the active area (room)
+		if (viewportAreaBbox.Contains(player->GetBoundingBox()))
 		{
-			viewportAreas.push_back(object.get());
-
-			auto viewportAreaBbox = object->GetBoundingBox();
-
-			// Take account of hud height on top of the screen
-			viewportAreaBbox.top -= hud->GetHeight();
-			viewportAreaBbox.bottom += hud->GetHeight();
-
-			if (viewportAreaBbox.Contains(camera->GetBounds()))
-				camera->SetMoveArea((Rect)viewportAreaBbox);
+			objectCollection.entities = mapManager.GetMapObjectsInArea(currentMap, (Rect)viewportAreaBbox);
+			camera->SetMoveArea((Rect)viewportAreaBbox);
+			break;
 		}
 	}
 }
@@ -178,25 +174,6 @@ void Stage::DrawGameplay(SpriteExtensions &spriteBatch)
 void Stage::DrawNextMapCutscene(SpriteExtensions &spriteBatch)
 {
 	spriteBatch.Draw(gameplayScene.GetCutsceneBackground(), Vector2::Zero());
-}
-
-void Stage::DrawCutscene(SpriteExtensions &spriteBatch)
-{
-	map->Draw(spriteBatch);
-	hud->Draw(spriteBatch);
-
-	player->Draw(spriteBatch);
-
-	for (auto const &entity : objectCollection.entities)
-	{
-		if ((EntityType)entity->GetType() == EntityType::Door)
-			entity->Draw(spriteBatch);
-	}
-
-	for (auto const &fgObject : objectCollection.foregroundObjects)
-	{
-		fgObject->Draw(spriteBatch);
-	}
 }
 
 void Stage::SetupNextMapCutscene()

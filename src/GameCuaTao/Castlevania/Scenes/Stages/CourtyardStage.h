@@ -7,7 +7,7 @@ namespace Castlevania
 	class CourtyardStage : public Stage
 	{
 	public:
-		CourtyardStage(GameplayScene &gameplayScene);
+		CourtyardStage(GameplayScene &gameplayScene, std::string checkpoint);
 
 		void OnNotify(Subject &subject, int event) override;
 		void Initialize() override;

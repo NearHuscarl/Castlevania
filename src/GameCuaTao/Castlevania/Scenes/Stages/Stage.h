@@ -26,7 +26,7 @@ namespace Castlevania
 	class Stage : public IObserver
 	{
 	public:
-		Stage(GameplayScene &gameplayScene, Map map);
+		Stage(GameplayScene &gameplayScene, Map map, std::string checkpoint);
 
 		virtual void OnNotify(Subject &subject, int event) {}
 
@@ -43,6 +43,7 @@ namespace Castlevania
 		ObjectFactory &objectFactory;
 		GameState currentState;
 		Map currentMap;
+		std::string checkpoint;
 
 		std::shared_ptr<TiledMap> map;
 		std::unique_ptr<Camera> camera;
@@ -53,16 +54,14 @@ namespace Castlevania
 
 		ObjectCollection objectCollection; // TODO: move to Grid class (implement spatial partition)
 		Trigger *nextMapTrigger;
-		std::vector<GameObject*> viewportAreas;
 
-		void LoadMap(Map mapName);
-		void LoadSpecialObjects();
+		void LoadMap();
+		void LoadObjectsInCurrentArea();
 		void UpdateGameObjects(GameTime gameTime);
 		void UpdateGameplay(GameTime gameTime);
 
 		void DrawGameplay(SpriteExtensions &spriteBatch);
 		void DrawNextMapCutscene(SpriteExtensions &spriteBatch);
-		void DrawCutscene(SpriteExtensions &spriteBatch);
 
 		// Common cutscenes setup and update methods
 		void SetupNextMapCutscene();
@@ -70,5 +69,7 @@ namespace Castlevania
 
 	private:
 		Stopwatch nextMapTimer;
+
+		void LoadSpecialObjects();
 	};
 }

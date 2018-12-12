@@ -2,6 +2,7 @@
 
 #include <windows.h>
 #include "Point.h"
+#include "Vector2.h"
 
 struct RectF;
 
@@ -19,7 +20,9 @@ struct Rect : public RECT
 	static Rect Empty();
 
 	bool operator==(Rect other);
+	bool operator!=(Rect other);
 	bool Contains(Rect value);
+	bool Contains(Vector2 value);
 	bool Intersects(Rect value);
 	bool TouchesOrIntersects(Rect value);
 

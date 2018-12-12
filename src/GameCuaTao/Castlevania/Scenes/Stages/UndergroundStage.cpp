@@ -4,7 +4,8 @@
 
 using namespace Castlevania;
 
-UndergroundStage::UndergroundStage(GameplayScene &gameplayScene) : Stage{ gameplayScene, Map::UNDERGROUND }
+UndergroundStage::UndergroundStage(GameplayScene &gameplayScene, std::string checkpoint) :
+	Stage{ gameplayScene, Map::UNDERGROUND, checkpoint }
 {
 }
 

@@ -7,7 +7,7 @@ namespace Castlevania
 	class PlaygroundStage : public Stage
 	{
 	public:
-		PlaygroundStage(GameplayScene &gameplayScene);
+		PlaygroundStage(GameplayScene &gameplayScene, std::string checkpoint);
 
 		void Update(GameTime gameTime) override;
 

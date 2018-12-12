@@ -6,3 +6,8 @@ void ControlSystem::Enabled(bool value)
 {
 	enabled = value;
 }
+
+bool Castlevania::ControlSystem::Enabled()
+{
+	return enabled;
+}

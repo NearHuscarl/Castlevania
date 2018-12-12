@@ -52,9 +52,9 @@ std::shared_ptr<GameplayData> GameplayScene::GetData()
 	return data;
 }
 
-void GameplayScene::NextStage(Map map)
+void GameplayScene::NextStage(Map map, std::string checkpoint)
 {
-	nextStage = ConstructStage(map);
+	nextStage = ConstructStage(map, checkpoint);
 }
 
 void GameplayScene::LoadContent()
@@ -67,8 +67,7 @@ void GameplayScene::LoadContent()
 	auto cutsceneBgTexture = content.Load<Texture>("Backgrounds/Cutscene_Background.png");
 	cutsceneBackground = std::make_unique<Sprite>(cutsceneBgTexture);
 
-	currentStage = ConstructStage(Map::GREAT_HALL); // TODO: change back to COURTYARD
-	currentStage->Initialize();
+	NextStage(Map::GREAT_HALL); // TODO: change back to COURTYARD
 }
 
 void GameplayScene::Update(GameTime gameTime)
@@ -91,21 +90,21 @@ void GameplayScene::Draw(GameTime gameTime)
 	spriteBatch.End();
 }
 
-std::unique_ptr<Stage> GameplayScene::ConstructStage(Map map)
+std::unique_ptr<Stage> GameplayScene::ConstructStage(Map map, std::string checkpoint)
 {
 	switch (map)
 	{
 		case Map::COURTYARD:
-			return std::make_unique<CourtyardStage>(*this);
+			return std::make_unique<CourtyardStage>(*this, checkpoint);
 
 		case Map::GREAT_HALL:
-			return std::make_unique<GreatHallStage>(*this);
+			return std::make_unique<GreatHallStage>(*this, checkpoint);
 
 		case Map::UNDERGROUND:
-			return std::make_unique<UndergroundStage>(*this);
+			return std::make_unique<UndergroundStage>(*this, checkpoint);
 
 		case Map::PLAYGROUND:
-			return std::make_unique<PlaygroundStage>(*this);
+			return std::make_unique<PlaygroundStage>(*this, checkpoint);
 
 		default:
 			return nullptr;

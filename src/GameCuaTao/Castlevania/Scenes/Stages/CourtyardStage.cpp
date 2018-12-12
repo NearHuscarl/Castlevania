@@ -6,7 +6,8 @@ using namespace Castlevania;
 
 auto playerOriginalSpeed = 0.0f;
 
-CourtyardStage::CourtyardStage(GameplayScene &gameplayScene) : Stage{ gameplayScene, Map::COURTYARD }
+CourtyardStage::CourtyardStage(GameplayScene &gameplayScene, std::string checkpoint) :
+	Stage{ gameplayScene, Map::COURTYARD, checkpoint }
 {
 }
 

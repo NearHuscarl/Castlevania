@@ -11,12 +11,7 @@ namespace Castlevania
 
 	using ObjectProperties = std::unordered_map<std::string, std::string>;
 	using ObjectsProperties = std::vector<ObjectProperties>;
-
-	struct MapData
-	{
-		std::shared_ptr<TiledMap> map;
-		ObjectCollection objects;
-	};
+	using GameObjects = std::vector<std::unique_ptr<GameObject>>;
 
 	class MapManager
 	{
@@ -26,8 +21,12 @@ namespace Castlevania
 		void SetWorldPosition(Vector2 position);
 
 		void LoadContent(ContentManager &content);
-		MapData LoadMap(Map name);
-		void GetViewportAreas(Map name, std::vector<std::unique_ptr<GameObject>> &viewportAreas);
+
+		std::shared_ptr<TiledMap> GetTiledMap(Map name);
+		
+		ObjectCollection GetOtherObjects(Map name); // Get all other objects except object in ENITY type
+		GameObjects GetMapObjects(Map name);
+		GameObjects GetMapObjectsInArea(Map name, Rect area);
 
 	private:
 		Maps maps;
@@ -35,9 +34,9 @@ namespace Castlevania
 		Vector2 worldPosition; // absolute position of map and map objects to the world
 		ObjectFactory &objectFactory;
 
+		// Create game objects within an area
 		ObjectCollection CreateObjectCollection(TiledMapObjectGroups objectGroups);
 		std::unique_ptr<GameObject> ConstructObject(ObjectProperties properties);
-		std::unique_ptr<GameObject> ConstructArea(ObjectProperties properties);
 		
 		void ReadObjectPosition(ObjectProperties properties, float &x, float &y);
 	};

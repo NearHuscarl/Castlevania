@@ -1,32 +1,17 @@
 #include "GreatHallStage.h"
 #include "StageEvent.h"
+#include "../GameplayScene.h"
 
 using namespace Castlevania;
 
-constexpr auto CAMERA_CUTSCENE_SPEED = 140.0f;
-auto destinationPosition_x = 0.0f;
-auto openDoorPosition_x = 0.0f;
-
-GreatHallStage::GreatHallStage(GameplayScene &gameplayScene) : Stage{ gameplayScene, Map::GREAT_HALL }
+GreatHallStage::GreatHallStage(GameplayScene &gameplayScene, std::string checkpoint) :
+	Stage{ gameplayScene, Map::GREAT_HALL, checkpoint }
 {
 }
 
 void GreatHallStage::OnNotify(Subject &subject, int event)
 {
-	switch (event)
-	{
-		case NEXT_ROOM_CUTSCENE_STARTED:
-			SetupNextRoomCutscene();
-			break;
-
-		case NEXT_ROOM_CUTSCENE_ENDED:
-			door = nullptr;
-			break;
-
-		case CUTSCENE_ENDED:
-			currentState = GameState::PLAYING;
-			break;
-	}
+	newMessage = event;
 }
 
 void GreatHallStage::Update(GameTime gameTime)
@@ -37,44 +22,70 @@ void GreatHallStage::Update(GameTime gameTime)
 			UpdateGameplay(gameTime);
 			break;
 
-		// Viewport stays still
-		// Simon goes next to the door
-		//	Viewport moves to the middle
-		//	Door opens
-		//	Simon goes through door
-		//	Door closes
-		//	Viewport moves to the right
-		// stage++
 		case GameState::NEXT_ROOM_CUTSCENE:
 			UpdateNextRoomCutscene(gameTime);
 			break;
 	}
+
+	ProcessMessage();
 }
 
 void GreatHallStage::SetupNextRoomCutscene()
 {
-	auto cameraRect = camera->GetBounds();
-
-	door = player->GetNearbyObjects().door;
-	destinationPosition_x = cameraRect.left + cameraRect.Width();
-	openDoorPosition_x = cameraRect.left + cameraRect.Width() / 2;
-
 	camera->SetMoveArea(Rect::Empty()); // camera can move freely in cutscene
-	player->EnableControl(false);
+
+	auto door = player->GetNearbyObjects().door;
+
+	// Clear all objects in current room because they will not be needed
+	// anymore once player go to the next room. The door is the only exception
+	// here since it is part of the next room cutscene. It will be deleted later
+	// after the cutscene is finished
+	auto &entities = objectCollection.entities;
+
+	for (int i = entities.size() - 1; i >= 0; i--)
+	{
+		auto &entity = entities[i];
+
+		if (entity.get() != door)
+			entities.erase(entities.begin() + i);
+	}
+
+	nextRoomCutscene = std::make_unique<NextRoomCutscene>(*player, *camera, *door);
 	currentState = GameState::NEXT_ROOM_CUTSCENE;
+}
+
+void GreatHallStage::OnNextRoomCutsceneComplete()
+{
+	LoadObjectsInCurrentArea();
+	gameplayScene.GetData()->stage++;
+	currentState = GameState::PLAYING;
 }
 
 void GreatHallStage::UpdateNextRoomCutscene(GameTime gameTime)
 {
 	UpdateGameObjects(gameTime);
+	nextRoomCutscene->Update(gameTime);
 
-	auto deltaTime = (float)gameTime.ElapsedGameTime.Seconds();
-	auto cameraDistance = CAMERA_CUTSCENE_SPEED * deltaTime;
+	if (nextRoomCutscene->IsComplete())
+		OnNotify(Subject::Empty(), NEXT_ROOM_CUTSCENE_ENDED);
+}
 
-	camera->Move(Vector2{ cameraDistance, 0 });
-
-	if (camera->GetBounds().X() >= openDoorPosition_x)
+void GreatHallStage::ProcessMessage()
+{
+	switch (newMessage)
 	{
-		door->Open();
+		case NEXT_ROOM_CUTSCENE_STARTED:
+			SetupNextRoomCutscene();
+			break;
+
+		case NEXT_ROOM_CUTSCENE_ENDED:
+			OnNextRoomCutsceneComplete();
+			break;
+
+		case CUTSCENE_ENDED:
+			currentState = GameState::PLAYING;
+			break;
 	}
+
+	newMessage = -1;
 }

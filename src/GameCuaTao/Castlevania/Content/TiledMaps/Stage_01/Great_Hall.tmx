@@ -409,6 +409,6 @@
  </objectgroup>
  <objectgroup id="5" name="Locations">
   <object id="9" name="Checkpoint1" type="Position" gid="43" x="64" y="320" width="60" height="66"/>
-  <object id="13" name="Checkpoint" type="Position" gid="43" x="2929.33" y="121.333" width="60" height="66"/>
+  <object id="13" name="Checkpoint" type="Position" gid="43" x="2963.33" y="123.333" width="60" height="66"/>
  </objectgroup>
 </map>

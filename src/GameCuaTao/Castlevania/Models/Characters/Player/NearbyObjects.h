@@ -5,11 +5,14 @@
 
 namespace Castlevania
 {
-	// Some important objects will be saved here from collision response result
+	// Some collision result with important objects will be saved
 	// for future references
 	struct NearbyObjects
 	{
-		Trigger *stair;
-		Door *door;
+		Trigger *stair = nullptr;
+		Direction stairHitDirection = Direction::None;
+
+		Door *door = nullptr;
+		Direction doorHitDirection = Direction::None;
 	};
 }

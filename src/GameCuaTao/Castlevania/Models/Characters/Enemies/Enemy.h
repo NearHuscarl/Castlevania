@@ -18,6 +18,7 @@ namespace Castlevania
 
 		virtual void Update(GameTime gameTime, UpdateData &updateData) override;
 		void TakeDamage(int damage);
+		void Die();
 
 	private:
 		int health;

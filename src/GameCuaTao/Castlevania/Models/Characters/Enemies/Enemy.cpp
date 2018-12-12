@@ -47,9 +47,12 @@ void Enemy::TakeDamage(int damage)
 	health -= damage;
 
 	if (health <= 0)
-	{
-		SetState(ObjectState::DYING);
-		body.Enabled(false);
-		Detach<IMovementSystem>();
-	}
+		Die();
+}
+
+void Enemy::Die()
+{
+	SetState(ObjectState::DYING);
+	body.Enabled(false);
+	Detach<IMovementSystem>();
 }
