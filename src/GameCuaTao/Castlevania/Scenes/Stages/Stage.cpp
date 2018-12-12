@@ -96,8 +96,20 @@ void Stage::LoadSpecialObjects()
 void Stage::LoadObjectsInCurrentArea()
 {
 	auto &mapManager = gameplayScene.GetMapManager();
+	auto &viewportAreas = objectCollection.viewportAreas;
 
-	for (auto &viewportArea : objectCollection.viewportAreas)
+	if (viewportAreas.size() == 0)
+	{
+		objectCollection.entities = mapManager.GetMapObjects(currentMap);
+
+		camera->SetMoveArea(0, 0,
+			map->GetWidthInPixels(),
+			map->GetHeightInPixels() + hud->GetHeight());
+
+		return;
+	}
+
+	for (auto &viewportArea : viewportAreas)
 	{
 		auto viewportAreaBbox = viewportArea->GetBoundingBox();
 

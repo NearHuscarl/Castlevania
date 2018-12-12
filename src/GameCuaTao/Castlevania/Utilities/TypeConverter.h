@@ -45,6 +45,15 @@ namespace Castlevania
 		{ "CastleEntrance", TriggerType::CASTLE_ENTRANCE },
 	};
 
+	const auto string2Direction = std::unordered_map<std::string, Direction>
+	{
+		{ "Left", Direction::Left },
+		{ "Top", Direction::Top },
+		{ "Right", Direction::Right },
+		{ "Bottom", Direction::Bottom },
+		{ "None", Direction::None },
+	};
+
 	const auto string2Facing = std::unordered_map<std::string, Facing>
 	{
 		{ "Left", Facing::Left },

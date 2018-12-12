@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Direct2DGame/Extensions/Direction.h"
+
 namespace Castlevania
 {
 	enum class Facing
@@ -10,4 +12,5 @@ namespace Castlevania
 	};
 
 	Facing Opposite(Facing facing);
+	Facing Direction2Facing(Direction direction);
 }

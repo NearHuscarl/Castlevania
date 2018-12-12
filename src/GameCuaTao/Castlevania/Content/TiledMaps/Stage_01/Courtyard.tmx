@@ -43,7 +43,7 @@
  <objectgroup id="11" name="Foregrounds">
   <object id="44" name="Castle" type="Castle" gid="47" x="1408" y="288" width="96" height="288">
    <properties>
-    <property name="Visibility" value="False"/>
+    <property name="Visibility" type="bool" value="false"/>
    </properties>
   </object>
   <object id="45" name="DirtBlock" type="DirtBlock" gid="46" x="1248" y="320" width="32" height="32"/>
@@ -56,17 +56,17 @@
  <objectgroup id="9" name="Triggers">
   <object id="37" name="MoneyBagTrigger" type="Trigger" x="1424" y="278" width="32" height="10">
    <properties>
-    <property name="Enabled" value="True"/>
+    <property name="Enabled" type="bool" value="true"/>
    </properties>
   </object>
   <object id="21" name="CastleEntrance" type="Trigger" x="1376" y="278" width="32" height="10">
    <properties>
-    <property name="Enabled" value="True"/>
+    <property name="Enabled" type="bool" value="true"/>
    </properties>
   </object>
   <object id="42" name="NextMap" type="Trigger" x="1472" y="256" width="32" height="32">
    <properties>
-    <property name="Enabled" value="False"/>
+    <property name="Enabled" type="bool" value="false"/>
     <property name="Map" value="GreatHall"/>
     <property name="SpawnPoint" value="Checkpoint"/>
    </properties>

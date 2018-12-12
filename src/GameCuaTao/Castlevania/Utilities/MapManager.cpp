@@ -96,6 +96,16 @@ GameObjects MapManager::GetMapObjectsInArea(Map name, Rect area)
 		auto spawnObject = string2EntityType.at(properties.at("SpawnObject"));
 		auto object = objectFactory.CreateSpawnArea(spawnObject, bbox);
 
+		auto spawnGroup = GetValueOrDefault(properties, "SpawnGroup", "");
+
+		if (!spawnGroup.empty())
+			object->SetGroupCountChances(spawnGroup);
+
+		auto spawnDirection = GetValueOrDefault(properties, "SpawnDirection", "");
+
+		if (!spawnDirection.empty())
+			object->SetDirectionChances(spawnDirection);
+
 		objects.push_back(std::move(object));
 	}
 

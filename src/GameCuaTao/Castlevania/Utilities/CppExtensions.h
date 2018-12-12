@@ -18,8 +18,10 @@ namespace Castlevania
 
 	// bool b = ToBoolean("tRuE");
 	bool ToBoolean(std::string str);
-
-
+	
+	// std::vector<std::string> x = Split("one:two::three", ':');
+	// https://stackoverflow.com/a/236803/9449426
+	std::vector<std::string> Split(const std::string &str, char delimiter);
 
 	template<typename MAP>
 	const typename MAP::mapped_type &GetValueOrDefault(

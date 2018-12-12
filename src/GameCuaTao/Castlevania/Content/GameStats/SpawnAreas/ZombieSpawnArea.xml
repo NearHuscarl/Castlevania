@@ -5,7 +5,8 @@
   <Dictionary
     Name="ZombieSpawnArea"
     Spawn="Zombie"
-    SpawnGroup="3"
+    SpawnGroup="3:100"
+    SpawnDirection="Left:20-Right:80"
     GroupSpawnTime="3500"
     SpawnTime="550">
   </Dictionary>

@@ -22,12 +22,6 @@
    <frame tileid="7" duration="150"/>
   </animation>
  </tile>
- <tile id="9">
-  <animation>
-   <frame tileid="9" duration="150"/>
-   <frame tileid="10" duration="150"/>
-  </animation>
- </tile>
  <tile id="11">
   <animation>
    <frame tileid="11" duration="150"/>

@@ -8,11 +8,11 @@
     </Sprite>
 
     <Sprite ID="open_02">
-      <SpriteFrame Left="26" Top="0" Width="59" Height="96" />
+      <SpriteFrame Left="29" Top="0" Width="59" Height="96" />
     </Sprite>
 
     <Sprite ID="open_03">
-      <SpriteFrame Left="87" Top="0" Width="94" Height="96" />
+      <SpriteFrame Left="93" Top="0" Width="94" Height="96" />
     </Sprite>
   </Spritesheet>
 

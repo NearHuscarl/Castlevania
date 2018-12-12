@@ -32,6 +32,11 @@ NextRoomCutscene::NextRoomCutscene(Player &player, Camera &camera, Door &door) :
 	isComplete = false;
 }
 
+Door &NextRoomCutscene::GetDoor()
+{
+	return door;
+}
+
 bool NextRoomCutscene::IsComplete()
 {
 	return isComplete;

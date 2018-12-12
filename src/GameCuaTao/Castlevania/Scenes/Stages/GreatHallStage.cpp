@@ -56,6 +56,12 @@ void GreatHallStage::SetupNextRoomCutscene()
 
 void GreatHallStage::OnNextRoomCutsceneComplete()
 {
+	auto &door = nextRoomCutscene->GetDoor();
+	auto wall = objectFactory.CreateBoundary(door.GetBoundingBox());
+
+	objectCollection.boundaries.push_back(std::move(wall));
+	door.Destroy();
+
 	LoadObjectsInCurrentArea();
 	gameplayScene.GetData()->stage++;
 	currentState = GameState::PLAYING;

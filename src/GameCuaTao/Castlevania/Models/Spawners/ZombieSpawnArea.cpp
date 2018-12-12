@@ -17,8 +17,7 @@ void ZombieSpawnArea::SpawnObject(UpdateData &updateData)
 	auto spawnPosition = Vector2{};
 	auto facing = Facing{};
 
-	// 80% chance to spawn on the right side because that's where simon is heading to
-	if (MathHelper::RandomPercent(80))
+	if (MathHelper::RandomPercent(directionChances[Direction::Right]))
 	{
 		spawnPosition.x = viewport.right - object->GetFrameRect().Width();
 		facing = Facing::Left;

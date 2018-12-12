@@ -1,5 +1,6 @@
 #include "Direct2DGame/Input/Keyboard.h"
 #include "ObjectFactory.h"
+#include "../../Utilities/CppExtensions.h"
 #include "../../Utilities/TypeConverter.h"
 #include "../Systems/Movement/SimpleMovementSystem.h"
 #include "../Systems/Movement/EntityMovementSystem.h"
@@ -565,11 +566,13 @@ void ObjectFactory::ReadEnemyConfig(Enemy &enemy, Dictionary stats)
 void ObjectFactory::ReadSpawnAreaConfig(SpawnArea &spawnArea, Dictionary stats)
 {
 	auto spawnType = string2EntityType.at(stats.at("Spawn"));
-	auto spawnGroup = std::stoi(stats.at("SpawnGroup"));
 	auto groupSpawnTime = std::stoi(stats.at("GroupSpawnTime"));
 	auto spawnTime = std::stoi(stats.at("SpawnTime"));
+	auto spawnGroup = stats.at("SpawnGroup");
+	auto spawnDirection = stats.at("SpawnDirection");
 
-	spawnArea.SetSpawnGroupCount(spawnGroup);
+	spawnArea.SetGroupCountChances(spawnGroup);
+	spawnArea.SetDirectionChances(spawnDirection);
 	spawnArea.SetGroupSpawnTime(groupSpawnTime);
 	spawnArea.SetSpawnTime(spawnTime);
 }

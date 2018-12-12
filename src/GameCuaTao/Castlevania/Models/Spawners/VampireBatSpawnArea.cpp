@@ -18,10 +18,9 @@ void VampireBatSpawnArea::SetGroupSpawnTime(int groupSpawnTime)
 
 void VampireBatSpawnArea::SpawnObject(UpdateData &updateData)
 {
-	if (spawnGroupCount == 1) // Randomize groupSpawnTime before restart group spawn timer
+	if (spawnGroupCount == 1) // Randomize groupSpawnTime before resetting group spawn timer
 	{
-		// In the original game, sometimes the bat spawn time is much shorter
-		// than other times
+		// In the original game, sometimes bat spawn time is much shorter than other times
 		if (MathHelper::RandomPercent(20))
 			groupSpawnTime = originalGroupSpawnTime / 3;
 		else
@@ -33,7 +32,7 @@ void VampireBatSpawnArea::SpawnObject(UpdateData &updateData)
 	auto spawnPosition = Vector2{};
 	auto facing = Facing{};
 
-	if (MathHelper::RandomPercent(75))
+	if (MathHelper::RandomPercent(directionChances[Direction::Right]))
 	{
 		spawnPosition.x = viewport.right - object->GetFrameRect().Width();
 		facing = Facing::Left;

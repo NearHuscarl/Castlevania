@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="24" height="12" tilewidth="64" tileheight="64" infinite="0" backgroundcolor="#3c3c3c" nextlayerid="9" nextobjectid="71">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="24" height="12" tilewidth="64" tileheight="64" infinite="0" backgroundcolor="#3c3c3c" nextlayerid="9" nextobjectid="77">
  <tileset firstgid="1" source="../Simon.tsx"/>
  <tileset firstgid="41" source="../Brazier.tsx"/>
  <imagelayer id="2" name="Background">
@@ -16,7 +16,7 @@
   <object id="44" name="Platform" type="Boundary" x="448" y="160" width="64" height="32"/>
   <object id="45" name="Platform" type="Boundary" x="832" y="224" width="64" height="32"/>
   <object id="46" name="Platform" type="Boundary" x="960" y="192" width="64" height="32"/>
-  <object id="47" name="Platform" type="Boundary" x="320" y="288" width="320" height="32"/>
+  <object id="47" name="Platform" type="Boundary" x="320" y="288" width="32" height="32"/>
   <object id="48" name="Platform" type="Boundary" x="704" y="288" width="64" height="32"/>
   <object id="49" name="Platform" type="Boundary" x="896" y="288" width="64" height="32"/>
   <object id="50" name="Platform" type="Boundary" x="64" y="288" width="128" height="32"/>
@@ -26,6 +26,8 @@
   <object id="66" name="Platform" type="Boundary" x="256" y="704" width="1280" height="32"/>
   <object id="67" name="Platform" type="Boundary" x="576" y="608" width="64" height="32"/>
   <object id="68" name="Platform" type="Boundary" x="832" y="608" width="64" height="32"/>
+  <object id="74" name="Platform" type="Boundary" x="352" y="288" width="32" height="32"/>
+  <object id="76" name="Platform" type="Boundary" x="384" y="288" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="4" name="Game">
   <object id="15" name="Brazier" type="Brazier" gid="41" x="397" y="287" width="32" height="64">
@@ -50,13 +52,13 @@
  <objectgroup id="7" name="Triggers">
   <object id="56" name="StairUp" type="Trigger" x="112" y="256" width="32" height="32">
    <properties>
-    <property name="Enabled" value="True"/>
+    <property name="Enabled" type="bool" value="true"/>
     <property name="Facing" value="Right"/>
    </properties>
   </object>
   <object id="64" name="StairDown" type="Trigger" x="240" y="128" width="32" height="32">
    <properties>
-    <property name="Enabled" value="True"/>
+    <property name="Enabled" type="bool" value="true"/>
     <property name="Facing" value="Left"/>
    </properties>
   </object>

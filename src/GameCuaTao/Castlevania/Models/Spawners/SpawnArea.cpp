@@ -1,5 +1,9 @@
+#include "Direct2DGame/MathHelper.h"
 #include "SpawnArea.h"
 #include "../UpdateData.h"
+#include "../Factories/ObjectFactory.h"
+#include "../../Utilities/CppExtensions.h"
+#include "../../Utilities/TypeConverter.h"
 
 using namespace Castlevania;
 
@@ -8,17 +12,26 @@ SpawnArea::SpawnArea(EntityType spawnObjectType, ObjectFactory &objectFactory) :
 	GameObject{ EntityType::SpawnArea }
 {
 	this->spawnObjectType = spawnObjectType;
+
+	this->directionChances = std::map<Direction, float>
+	{
+		{ Direction::Left, 50 },
+		{ Direction::Top, 0 },
+		{ Direction::Right, 50 },
+		{ Direction::Bottom, 0 },
+	};
+
+	this->groupCountChances = std::map<int, float>
+	{
+		{ 1, 100 },
+	};
+
 	Deactivate();
 }
 
 SpawnState SpawnArea::GetSpawnState()
 {
 	return spawnState;
-}
-
-void SpawnArea::SetSpawnGroupCount(int spawnGroup)
-{
-	this->spawnGroupCount = spawnGroup;
 }
 
 void SpawnArea::SetGroupSpawnTime(int groupSpawnTime)
@@ -31,6 +44,57 @@ void SpawnArea::SetSpawnTime(int spawnTime)
 	this->spawnTime = spawnTime;
 }
 
+// config format similar to SetGroupCountChances()
+void SpawnArea::SetDirectionChances(std::string directionChancesConfig)
+{
+	auto directionChancesInfo = Split(directionChancesConfig, '-');
+	auto directionChances = std::map<Direction, float>{};
+
+	for (auto directionChance : directionChancesInfo)
+	{
+		auto directionChanceInfo = Split(directionChance, ':');
+		auto direction = string2Direction.at(directionChanceInfo[0]);
+		auto directionChance = std::stof(directionChanceInfo[1]);
+
+		directionChances[direction] = directionChance;
+	}
+
+	SetDirectionChances(directionChances);
+}
+
+void SpawnArea::SetDirectionChances(std::map<Direction, float> directionChances)
+{
+	this->directionChances = directionChances;
+}
+
+//SpawnGroup format:
+//		"3:100" - Spawn a group of 3 zombies 100 % of the time
+//		"1:20-2:50-3:30"
+//			- 20% chance to spawn 1 zombie
+//			- 50% chance to spawn a group of 2 zombies
+//			- 30% chance to spawn a group of 3 zombies
+void SpawnArea::SetGroupCountChances(std::string groupCountChancesConfig)
+{
+	auto groupCountChancesInfo = Split(groupCountChancesConfig, '-');
+	auto groupCountChances = std::map<int, float>{};
+
+	for (auto groupCountChance : groupCountChancesInfo)
+	{
+		auto groupCountChanceInfo = Split(groupCountChance, ':');
+		auto groupCount = std::stoi(groupCountChanceInfo[0]);
+		auto groupCountChance = std::stof(groupCountChanceInfo[1]);
+
+		groupCountChances[groupCount] = groupCountChance;
+	}
+
+	SetGroupCountChances(groupCountChances);
+}
+
+void SpawnArea::SetGroupCountChances(std::map<int, float> groupCountChances)
+{
+	this->groupCountChances = groupCountChances;
+}
+
 void SpawnArea::Activate()
 {
 	spawnState = SpawnState::ACTIVE;
@@ -38,8 +102,8 @@ void SpawnArea::Activate()
 
 void SpawnArea::Deactivate()
 {
-	spawnState = SpawnState::INACTIVE;
 	groupSpawnTimer.Reset();
+	spawnState = SpawnState::INACTIVE;
 }
 
 void SpawnArea::Update(GameTime gameTime, UpdateData &updateData)
@@ -58,9 +122,9 @@ void SpawnArea::Update(GameTime gameTime, UpdateData &updateData)
 			{
 				SpawnObject(updateData);
 				spawnTimer.Restart();
-				spawnGroupCountLeft--;
+				spawnGroupCount--;
 			}
-			if (spawnGroupCountLeft <= 0)
+			if (spawnGroupCount <= 0)
 				StopSpawning();
 			break;
 	}
@@ -68,13 +132,21 @@ void SpawnArea::Update(GameTime gameTime, UpdateData &updateData)
 
 void SpawnArea::StartSpawning()
 {
+	for (auto const &[groupCount, chance] : groupCountChances)
+	{
+		if (MathHelper::RandomPercent(chance))
+		{
+			spawnGroupCount = groupCount;
+			break;
+		}
+	}
+
 	spawnState = SpawnState::SPAWNING;
-	spawnGroupCountLeft = spawnGroupCount;
 }
 
 void SpawnArea::StopSpawning()
 {
-	spawnState = SpawnState::ACTIVE;
 	spawnTimer.Reset();
 	groupSpawnTimer.Restart();
+	spawnState = SpawnState::ACTIVE;
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="88" height="6" tilewidth="64" tileheight="64" infinite="0" nextlayerid="10" nextobjectid="104">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="88" height="6" tilewidth="64" tileheight="64" infinite="0" nextlayerid="10" nextobjectid="119">
  <tileset firstgid="1" source="../Simon.tsx"/>
  <tileset firstgid="41" source="../Static_Objects.tsx"/>
  <tileset firstgid="46" source="../Candle.tsx"/>
@@ -27,28 +27,39 @@
     <property name="SpawnObject" value="Zombie"/>
    </properties>
   </object>
-  <object id="100" name="ViewportArea" type="ViewportArea" x="0" y="0" width="3072" height="365"/>
-  <object id="101" name="ViewportArea" type="ViewportArea" x="3072" y="0" width="1024" height="365"/>
-  <object id="102" name="ViewportArea" type="ViewportArea" x="4096" y="0" width="1536" height="365"/>
+  <object id="100" name="ViewportArea" type="ViewportArea" x="0" y="0" width="3072" height="365" visible="0"/>
+  <object id="101" name="ViewportArea" type="ViewportArea" x="3072" y="0" width="1024" height="365" visible="0"/>
+  <object id="102" name="ViewportArea" type="ViewportArea" x="4096" y="0" width="1536" height="365" visible="0"/>
+  <object id="114" name="ZombieSpawnArea" type="SpawnArea" x="4096" y="0" width="804" height="320">
+   <properties>
+    <property name="SpawnGroup" value="1:50-2:50"/>
+    <property name="SpawnObject" value="Zombie"/>
+   </properties>
+  </object>
+  <object id="117" name="ZombieSpawnArea" type="SpawnArea" x="4096" y="0" width="352" height="192">
+   <properties>
+    <property name="SpawnDirection" value="Right:100"/>
+    <property name="SpawnGroup" value="1:50-2:50"/>
+    <property name="SpawnObject" value="Zombie"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="3" name="Bounds">
-  <object id="1" name="Platform" type="Boundary" x="0" y="320" width="3168" height="32"/>
+  <object id="1" name="Platform" type="Boundary" x="0" y="320" width="3584" height="32"/>
   <object id="2" name="Platform" type="Boundary" x="1376" y="192" width="96" height="32"/>
   <object id="3" name="Platform" type="Boundary" x="1504" y="128" width="320" height="32"/>
   <object id="4" name="Platform" type="Boundary" x="1856" y="192" width="192" height="32"/>
   <object id="5" name="Platform" type="Boundary" x="2784" y="128" width="544" height="32"/>
   <object id="6" name="Platform" type="Boundary" x="3328" y="192" width="96" height="32"/>
-  <object id="7" name="Platform" type="Boundary" x="3200" y="320" width="384" height="32"/>
-  <object id="19" name="Platform" type="Boundary" x="3712" y="160" width="64" height="32"/>
-  <object id="20" name="Platform" type="Boundary" x="3712" y="320" width="96" height="32"/>
+  <object id="19" name="Platform" type="Boundary" x="3584" y="160" width="192" height="32"/>
+  <object id="20" name="Platform" type="Boundary" x="3712" y="320" width="1920" height="32"/>
   <object id="21" name="Platform" type="Boundary" x="3776" y="192" width="96" height="32"/>
-  <object id="22" name="Platform" type="Boundary" x="3840" y="320" width="1792" height="32"/>
   <object id="23" name="Platform" type="Boundary" x="3904" y="128" width="416" height="32"/>
   <object id="24" name="Platform" type="Boundary" x="4352" y="192" width="352" height="32"/>
   <object id="25" name="Platform" type="Boundary" x="5440" y="256" width="64" height="32"/>
   <object id="26" name="Platform" type="Boundary" x="5536" y="192" width="96" height="32"/>
   <object id="27" name="Wall" type="Boundary" x="4032" y="0" width="64" height="32"/>
-  <object id="28" name="Wall" type="Boundary" x="3584" y="160" width="128" height="192"/>
+  <object id="28" name="Wall" type="Boundary" x="3584" y="192" width="128" height="160"/>
   <object id="77" name="Wall" type="Boundary" x="3056" y="0" width="32" height="32"/>
   <object id="78" name="Wall" type="Boundary" x="3056" y="160" width="32" height="160"/>
   <object id="79" name="Wall" type="Boundary" x="4080" y="160" width="16" height="160"/>
@@ -295,109 +306,109 @@
  <objectgroup id="9" name="Triggers">
   <object id="83" name="StairDown" type="Trigger" x="1360" y="160" width="32" height="32">
    <properties>
-    <property name="Enabled" value="True"/>
+    <property name="Enabled" type="bool" value="true"/>
     <property name="Facing" value="Left"/>
    </properties>
   </object>
   <object id="82" name="StairUp" type="Trigger" x="1232" y="288" width="32" height="32">
    <properties>
-    <property name="Enabled" value="True"/>
+    <property name="Enabled" type="bool" value="true"/>
     <property name="Facing" value="Right"/>
    </properties>
   </object>
   <object id="84" name="StairUp" type="Trigger" x="1424" y="160" width="32" height="32">
    <properties>
-    <property name="Enabled" value="True"/>
+    <property name="Enabled" type="bool" value="true"/>
     <property name="Facing" value="Right"/>
    </properties>
   </object>
   <object id="85" name="StairDown" type="Trigger" x="1488" y="96" width="32" height="32">
    <properties>
-    <property name="Enabled" value="True"/>
+    <property name="Enabled" type="bool" value="true"/>
     <property name="Facing" value="Left"/>
    </properties>
   </object>
   <object id="86" name="StairDown" type="Trigger" x="1808" y="96" width="32" height="32">
    <properties>
-    <property name="Enabled" value="True"/>
+    <property name="Enabled" type="bool" value="true"/>
     <property name="Facing" value="Right"/>
    </properties>
   </object>
   <object id="87" name="StairUp" type="Trigger" x="1872" y="160" width="32" height="32">
    <properties>
-    <property name="Enabled" value="True"/>
+    <property name="Enabled" type="bool" value="true"/>
     <property name="Facing" value="Left"/>
    </properties>
   </object>
   <object id="88" name="StairUp" type="Trigger" x="2576" y="288" width="32" height="32">
    <properties>
-    <property name="Enabled" value="True"/>
+    <property name="Enabled" type="bool" value="true"/>
     <property name="Facing" value="Right"/>
    </properties>
   </object>
   <object id="89" name="StairDown" type="Trigger" x="2768" y="96" width="32" height="32">
    <properties>
-    <property name="Enabled" value="True"/>
+    <property name="Enabled" type="bool" value="true"/>
     <property name="Facing" value="Left"/>
    </properties>
   </object>
   <object id="90" name="StairDown" type="Trigger" x="3408" y="160" width="32" height="32">
    <properties>
-    <property name="Enabled" value="True"/>
+    <property name="Enabled" type="bool" value="true"/>
     <property name="Facing" value="Right"/>
    </properties>
   </object>
   <object id="91" name="StairUp" type="Trigger" x="3536" y="288" width="32" height="32">
    <properties>
-    <property name="Enabled" value="True"/>
+    <property name="Enabled" type="bool" value="true"/>
     <property name="Facing" value="Left"/>
    </properties>
   </object>
   <object id="92" name="StairDown" type="Trigger" x="3856" y="160" width="32" height="32">
    <properties>
-    <property name="Enabled" value="True"/>
+    <property name="Enabled" type="bool" value="true"/>
     <property name="Facing" value="Right"/>
    </properties>
   </object>
   <object id="93" name="StairUp" type="Trigger" x="3984" y="288" width="32" height="32">
    <properties>
-    <property name="Enabled" value="True"/>
+    <property name="Enabled" type="bool" value="true"/>
     <property name="Facing" value="Left"/>
    </properties>
   </object>
   <object id="94" name="StairUp" type="Trigger" x="4368" y="160" width="32" height="32">
    <properties>
-    <property name="Enabled" value="True"/>
+    <property name="Enabled" type="bool" value="true"/>
     <property name="Facing" value="Left"/>
    </properties>
   </object>
   <object id="95" name="StairDown" type="Trigger" x="4304" y="96" width="32" height="32">
    <properties>
-    <property name="Enabled" value="True"/>
+    <property name="Enabled" type="bool" value="true"/>
     <property name="Facing" value="Right"/>
    </properties>
   </object>
   <object id="96" name="StairDown" type="Trigger" x="4688" y="160" width="32" height="32">
    <properties>
-    <property name="Enabled" value="True"/>
+    <property name="Enabled" type="bool" value="true"/>
     <property name="Facing" value="Right"/>
    </properties>
   </object>
   <object id="97" name="StairUp" type="Trigger" x="4816" y="288" width="32" height="32">
    <properties>
-    <property name="Enabled" value="True"/>
+    <property name="Enabled" type="bool" value="true"/>
     <property name="Facing" value="Left"/>
    </properties>
   </object>
   <object id="98" name="StairUp" type="Trigger" x="5456" y="224" width="32" height="32">
    <properties>
-    <property name="Enabled" value="True"/>
+    <property name="Enabled" type="bool" value="true"/>
     <property name="Facing" value="Right"/>
    </properties>
   </object>
   <object id="99" name="StairDown" type="Trigger" x="5520" y="160" width="32" height="32">
    <properties>
-    <property name="Enabled" value="True"/>
+    <property name="Enabled" type="bool" value="true"/>
     <property name="Facing" value="Left"/>
    </properties>
   </object>
@@ -406,9 +417,45 @@
     <property name="Enabled" value="True"/>
    </properties>
   </object>
+  <object id="104" name="StairDown" type="Trigger" x="3152" y="288" width="32" height="32">
+   <properties>
+    <property name="Enabled" type="bool" value="true"/>
+    <property name="Facing" value="Right"/>
+   </properties>
+  </object>
+  <object id="105" name="StairDown" type="Trigger" x="3792" y="288" width="32" height="32">
+   <properties>
+    <property name="Enabled" type="bool" value="true"/>
+    <property name="Facing" value="Right"/>
+   </properties>
+  </object>
+  <object id="106" name="NextMap" type="Trigger" x="3840" y="352" width="32" height="32">
+   <properties>
+    <property name="Enabled" type="bool" value="true"/>
+    <property name="Map" value="Underground"/>
+    <property name="SpawnPoint" value="Checkpoint"/>
+   </properties>
+  </object>
+  <object id="107" name="NextMap" type="Trigger" x="3200" y="352" width="32" height="32">
+   <properties>
+    <property name="Enabled" type="bool" value="true"/>
+    <property name="Map" value="Underground"/>
+    <property name="SpawnPoint" value="Checkpoint"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="5" name="Locations">
   <object id="9" name="Checkpoint1" type="Position" gid="43" x="64" y="320" width="60" height="66"/>
-  <object id="13" name="Checkpoint" type="Position" gid="43" x="2963.33" y="123.333" width="60" height="66"/>
+  <object id="13" name="Checkpoint" type="Position" gid="43" x="3954.33" y="121.666" width="60" height="66"/>
+  <object id="110" name="Underground_02" type="Position" gid="2147483658" x="3809" y="354" width="60" height="66">
+   <properties>
+    <property name="MoveState" value="GOING_UPSTAIRS"/>
+   </properties>
+  </object>
+  <object id="111" name="Underground_01" type="Position" gid="2147483658" x="3169" y="354" width="60" height="66">
+   <properties>
+    <property name="MoveState" value="GOING_UPSTAIRS"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

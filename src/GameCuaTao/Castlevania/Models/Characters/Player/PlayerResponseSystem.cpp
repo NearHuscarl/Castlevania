@@ -287,11 +287,9 @@ void PlayerResponseSystem::OnCollideWithDoor(CollisionResult &result, ResponseRe
 
 	if (parent.GetMoveState() == MoveState::IDLE || parent.GetMoveState() == MoveState::WALKING)
 	{
-		if (parent.controlSystem->Enabled()) // if player is not in cutscene mode, change to cutscene
-		{
-			parent.Idle();
-			parent.Notify(NEXT_ROOM_CUTSCENE_STARTED);
-		}
+		parent.Idle();
+		parent.Notify(NEXT_ROOM_CUTSCENE_STARTED);
+		door.GetBody().Enabled(false);
 	}
 }
 

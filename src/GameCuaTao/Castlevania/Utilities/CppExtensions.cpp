@@ -12,3 +12,17 @@ bool Castlevania::ToBoolean(std::string str)
 
 	return result;
 }
+
+std::vector<std::string> Castlevania::Split(const std::string &str, char delimiter)
+{
+	auto sstream = std::stringstream{ str };
+	auto subStr = std::string{};
+	auto results = std::vector<std::string>{};
+
+	while (std::getline(sstream, subStr, delimiter))
+	{
+		results.push_back(subStr);
+	}
+	
+	return results;
+}

@@ -11,6 +11,8 @@ namespace Castlevania
 	public:
 		NextRoomCutscene(Player &player, Camera &camera, Door &door);
 
+		Door &GetDoor();
+
 		bool IsComplete();
 		void Update(GameTime gameTime);
 

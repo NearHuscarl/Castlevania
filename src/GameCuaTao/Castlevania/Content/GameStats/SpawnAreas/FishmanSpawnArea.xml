@@ -5,7 +5,8 @@
   <Dictionary
     Name="FishmanSpawnArea"
     Spawn="Fishman"
-    SpawnGroup="2"
+    SpawnGroup="2:100"
+    SpawnDirection="Bottom:100"
     GroupSpawnTime="4000"
     SpawnTime="1000">
   </Dictionary>
