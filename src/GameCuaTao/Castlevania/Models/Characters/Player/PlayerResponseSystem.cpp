@@ -172,7 +172,9 @@ void PlayerResponseSystem::OnCollideWithBoundary(CollisionResult &result, Respon
 				break;
 
 			ClampDistance_X(collisionData);
-			parent.SetVelocity_X(0);
+
+			if (!parent.IsJumping())
+				parent.SetVelocity_X(0);
 			break;
 	}
 }

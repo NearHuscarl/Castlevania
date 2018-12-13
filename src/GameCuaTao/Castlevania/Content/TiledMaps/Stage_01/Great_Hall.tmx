@@ -446,7 +446,7 @@
  </objectgroup>
  <objectgroup id="5" name="Locations">
   <object id="9" name="Checkpoint1" type="Position" gid="43" x="64" y="320" width="60" height="66"/>
-  <object id="13" name="Checkpoint" type="Position" gid="43" x="3113.66" y="314.666" width="60" height="66"/>
+  <object id="13" name="Checkpoint" type="Position" gid="43" x="2789.66" y="123.999" width="60" height="66"/>
   <object id="110" name="Underground_02" type="Position" gid="2147483658" x="3808" y="351" width="60" height="66"/>
   <object id="111" name="Underground_01" type="Position" gid="2147483658" x="3168" y="351" width="60" height="66"/>
  </objectgroup>

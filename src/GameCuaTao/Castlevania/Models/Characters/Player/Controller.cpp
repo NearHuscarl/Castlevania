@@ -47,10 +47,12 @@ void Controller::OnKeyDown(int keyCode)
 				Throw();
 			break;
 
-		case MoveState::GOING_UPSTAIRS:
-		case MoveState::GOING_DOWNSTAIRS:
-			if (IsHoldingUpAndDown())
-				player.Idle();
+		case MoveState::IDLE_UPSTAIRS:
+		case MoveState::IDLE_DOWNSTAIRS:
+			if (keyCode == Button::Attack)
+				player.Attack();
+			else if (keyCode == Button::Throw)
+				Throw();
 			break;
 
 		case MoveState::JUMPING:
@@ -114,16 +116,6 @@ void Controller::Update(UpdateData &updateData)
 			if (keyboardState.IsKeyUp(Button::WalkLeft) && player.GetFacing() == Facing::Left)
 				player.Idle();
 			if (keyboardState.IsKeyUp(Button::WalkRight) && player.GetFacing() == Facing::Right)
-				player.Idle();
-			break;
-
-		case MoveState::GOING_UPSTAIRS:
-			if (keyboardState.IsKeyUp(Button::GoUpstair))
-				player.Idle();
-			break;
-
-		case MoveState::GOING_DOWNSTAIRS:
-			if (keyboardState.IsKeyUp(Button::GoDownstair))
 				player.Idle();
 			break;
 

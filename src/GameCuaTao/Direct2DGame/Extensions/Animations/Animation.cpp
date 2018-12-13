@@ -32,20 +32,6 @@ int Animation::GetCurrentFrameIndex()
 	return frameNow;
 }
 
-void Animation::SetLoop(bool value)
-{
-	isLooping = value;
-
-	// Handle edge cases
-	if (isLooping)
-	{
-		isComplete = false;
-
-		if (currentFrame = frames.size())
-			currentFrame = 0;
-	}
-}
-
 void Animation::Stop()
 {
 	if (isPaused)

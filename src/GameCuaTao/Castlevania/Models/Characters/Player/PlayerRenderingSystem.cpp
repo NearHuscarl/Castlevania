@@ -59,20 +59,10 @@ void PlayerRenderingSystem::Update(GameTime gameTime)
 		case AttackState::INACTIVE:
 			switch (moveState)
 			{
-				case MoveState::IDLE_UPSTAIRS:
+				case MoveState::GOING_UPSTAIRS:
+				case MoveState::GOING_DOWNSTAIRS:
 					if (sprite->AnimateComplete()) // finish the rest of climbing animation
-					{
-						parent.OnStopClimbingStair();
-						sprite->Play(IDLE_UPSTAIRS_ANIMATION);
-					}
-					break;
-
-				case MoveState::IDLE_DOWNSTAIRS:
-					if (sprite->AnimateComplete())
-					{
-						parent.OnStopClimbingStair();
-						sprite->Play(IDLE_DOWNSTAIRS_ANIMATION);
-					}
+						parent.Idle();
 					break;
 
 				case MoveState::JUMPING:
@@ -126,28 +116,20 @@ void PlayerRenderingSystem::OnMoveStateChanged()
 			sprite->PlayCached(WALK_ANIMATION);
 			break;
 
+		case MoveState::IDLE_UPSTAIRS:
+			sprite->Play(IDLE_UPSTAIRS_ANIMATION);
+			break;
+
+		case MoveState::IDLE_DOWNSTAIRS:
+			sprite->Play(IDLE_DOWNSTAIRS_ANIMATION);
+			break;
+
 		case MoveState::GOING_UPSTAIRS:
-			// Handle an edge case where simon is in idle state, but is playing
-			// the last walking animation loop before changing to idle animation,
-			// and suddenly moves again so the animation need to reset back to
-			// infinite loop instead of creating new animation
-			if (sprite->GetCurrentAnimation().GetName() == GO_UPSTAIRS_ANIMATION)
-				sprite->GetCurrentAnimation().SetLoop(true);
-			else
-				sprite->Play(GO_UPSTAIRS_ANIMATION);
+			sprite->Play(GO_UPSTAIRS_ANIMATION);
 			break;
 
 		case MoveState::GOING_DOWNSTAIRS:
-			if (sprite->GetCurrentAnimation().GetName() == GO_DOWNSTAIRS_ANIMATION)
-				sprite->GetCurrentAnimation().SetLoop(true);
-			else
-				sprite->Play(GO_DOWNSTAIRS_ANIMATION);
-			break;
-
-		// allow to move up|down stair one more step before actually stopping
-		case MoveState::IDLE_UPSTAIRS:
-		case MoveState::IDLE_DOWNSTAIRS:
-			sprite->GetCurrentAnimation().SetLoop(false);
+			sprite->Play(GO_DOWNSTAIRS_ANIMATION);
 			break;
 
 		case MoveState::DUCKING:
@@ -201,6 +183,14 @@ void PlayerRenderingSystem::OnAttackStateChanged()
 		case MoveState::IDLE:
 		case MoveState::WALKING:
 			sprite->Play(ATTACK_ANIMATION);
+			break;
+
+		case MoveState::IDLE_UPSTAIRS:
+			sprite->Play(GO_UPSTAIRS_ATTACK_ANIMATION);
+			break;
+
+		case MoveState::IDLE_DOWNSTAIRS:
+			sprite->Play(GO_DOWNSTAIRS_ATTACK_ANIMATION);
 			break;
 
 		case MoveState::JUMPING:

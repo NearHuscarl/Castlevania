@@ -12,7 +12,6 @@ public:
 	std::string GetName();
 	AnimationFrame GetCurrentFrame();
 	int GetCurrentFrameIndex();
-	void SetLoop(bool value);
 
 	void Stop();
 	void Continue();

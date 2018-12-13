@@ -97,6 +97,7 @@ namespace Castlevania
 		void TurnBackward();
 
 		bool IsAttacking();
+		bool IsJumping();
 		bool IsOnStairs();
 		bool CanGoUpstairs();
 		bool CanGoDownstairs();
@@ -120,12 +121,12 @@ namespace Castlevania
 		void Land();
 		void Flash(); // simon flashing when getting whip-upgrade powerup
 		void TakeDamage(int damage, Direction direction);
+		void BounceBack(Direction direction); // when simon taking damage
 
 		void UpdateStates();
 		void UpdateSubWeapons(UpdateData &updateData);
 		void OnAttackComplete();
 		void OnHitStairEntry();
-		void OnStopClimbingStair();
 
 		friend class PlayerResponseSystem;
 		friend class PlayerMovementSystem;

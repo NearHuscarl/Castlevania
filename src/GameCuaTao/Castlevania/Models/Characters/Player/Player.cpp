@@ -36,7 +36,7 @@ void Player::SetMoveState(MoveState moveState)
 void Player::SetAttackState(AttackState attackState)
 {
 	if (moveState == MoveState::WALKING)
-		velocity.x = 0;
+		Idle();
 
 	this->attackState = attackState;
 	SendMessageToSystems(ATTACK_STATE_CHANGED);
@@ -120,12 +120,19 @@ void Player::UpdateStates()
 	{
 		case MoveState::WALKING_TO_STAIRS:
 		{
-			auto playerCenter_x = GetOriginPosition().x;
 			auto stairCenter_x = nearbyObjects.stair->GetOriginPosition().x;
+			auto stairBbox = nearbyObjects.stair->GetBoundingBox();
 
-			if (playerCenter_x >= stairCenter_x && facing == Facing::Right
-				|| playerCenter_x <= stairCenter_x && facing == Facing::Left)
-				OnHitStairEntry();
+			if (facing == Facing::Left)
+			{
+				if (GetBoundingBox().left <= stairBbox.left)
+					OnHitStairEntry();
+			}
+			else
+			{
+				if (GetBoundingBox().right >= stairBbox.right)
+					OnHitStairEntry();
+			}
 			break;
 		}
 		case MoveState::JUMPING:
@@ -186,6 +193,8 @@ void Player::OnAttackComplete()
 	{
 		case MoveState::WALKING:
 		case MoveState::IDLE:
+		case MoveState::IDLE_UPSTAIRS:
+		case MoveState::IDLE_DOWNSTAIRS:
 			Idle();
 			break;
 
@@ -217,11 +226,6 @@ void Player::OnHitStairEntry()
 		GoDownstairs();
 }
 
-void Player::OnStopClimbingStair()
-{
-	velocity = Vector2::Zero();
-}
-
 void Player::Draw(SpriteExtensions &spriteBatch)
 {
 	GameObject::Draw(spriteBatch);
@@ -236,11 +240,15 @@ void Player::Idle()
 	switch (moveState)
 	{
 		case MoveState::GOING_UPSTAIRS:
+		case MoveState::IDLE_UPSTAIRS:
 			SetMoveState(MoveState::IDLE_UPSTAIRS);
+			velocity = Vector2::Zero();
 			break;
 
 		case MoveState::GOING_DOWNSTAIRS:
+		case MoveState::IDLE_DOWNSTAIRS:
 			SetMoveState(MoveState::IDLE_DOWNSTAIRS);
+			velocity = Vector2::Zero();
 			break;
 
 		default:
@@ -329,12 +337,24 @@ void Player::Duck()
 
 void Player::Attack()
 {
+	if (moveState == MoveState::GOING_UPSTAIRS
+		|| moveState == MoveState::GOING_DOWNSTAIRS)
+	{
+		return;
+	}
+
 	SetAttackState(AttackState::WHIPPING);
 	whip->Unleash();
 }
 
 void Player::Throw(std::unique_ptr<RangedWeapon> weapon)
 {
+	if (moveState == MoveState::GOING_UPSTAIRS
+		|| moveState == MoveState::GOING_DOWNSTAIRS)
+	{
+		return;
+	}
+
 	if (data.hearts == 0)
 		return;
 
@@ -362,6 +382,15 @@ void Player::TurnBackward()
 bool Player::IsAttacking()
 {
 	return attackState == AttackState::WHIPPING || attackState == AttackState::THROWING;
+}
+
+bool Player::IsJumping()
+{
+	return moveState == MoveState::JUMPING
+		|| moveState == MoveState::HOVERING
+		|| moveState == MoveState::FALLING
+		|| moveState == MoveState::FALLING_HARD
+		|| moveState == MoveState::LANDING;
 }
 
 bool Player::IsOnStairs()
@@ -440,6 +469,15 @@ void Player::TakeDamage(int damage, Direction direction)
 	if (untouchableTimer.IsRunning())
 		return;
 
+	data.health -= damage;
+	untouchableTimer.Start();
+
+	if (!IsOnStairs())
+		BounceBack(direction);
+}
+
+void Player::BounceBack(Direction direction)
+{
 	if (direction == Direction::Left)
 	{
 		SetFacing(Facing::Left);
@@ -452,11 +490,8 @@ void Player::TakeDamage(int damage, Direction direction)
 	}
 
 	velocity.y = -BOUNCE_BACK_HEIGHT;
-
 	SetMoveState(MoveState::TAKING_DAMAGE);
-	data.health -= damage;
 	whip->Withdraw();
-	untouchableTimer.Start();
 }
 
 #pragma endregion
