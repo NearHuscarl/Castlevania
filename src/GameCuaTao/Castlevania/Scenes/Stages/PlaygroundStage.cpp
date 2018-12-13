@@ -4,8 +4,8 @@
 
 using namespace Castlevania;
 
-PlaygroundStage::PlaygroundStage(GameplayScene &gameplayScene, std::string checkpoint) :
-	Stage{ gameplayScene, Map::PLAYGROUND, checkpoint }
+PlaygroundStage::PlaygroundStage(GameplayScene &gameplayScene, std::string spawnPoint) :
+	Stage{ gameplayScene, Map::PLAYGROUND, spawnPoint }
 {
 }
 
@@ -13,6 +13,8 @@ void PlaygroundStage::Update(GameTime gameTime)
 {
 	UpdateInput();
 	UpdateGameplay(gameTime);
+
+	Stage::Update(gameTime);
 }
 
 void PlaygroundStage::UpdateInput()

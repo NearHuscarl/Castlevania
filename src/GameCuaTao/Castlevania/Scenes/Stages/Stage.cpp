@@ -10,12 +10,17 @@ using namespace Castlevania;
 
 constexpr auto NEXT_MAP_TRANSITION_TIME = 400; // in milliseconds
 
-Stage::Stage(GameplayScene &gameplayScene, Map map, std::string checkpoint) :
+Stage::Stage(GameplayScene &gameplayScene, Map map, std::string spawnPoint) :
 	gameplayScene{ gameplayScene },
 	objectFactory{ gameplayScene.GetSceneManager().GetFactory() }
 {
 	this->currentMap = map;
-	this->checkpoint = checkpoint;
+	this->spawnPoint = spawnPoint;
+}
+
+void Stage::OnNotify(Subject &subject, int event)
+{
+	newEvent = std::make_unique<StageEvent>(event, subject);
 }
 
 UpdateData Stage::GetUpdateData()
@@ -47,6 +52,11 @@ void Stage::Initialize()
 
 void Stage::Update(GameTime gameTime)
 {
+	if (newEvent)
+	{
+		ProcessMessage(); // Make sure to handle new event after updating GameObjects
+		newEvent = nullptr;
+	}
 }
 
 void Stage::Draw(SpriteExtensions &spriteBatch)
@@ -75,22 +85,9 @@ void Stage::LoadMap()
 	// Load game objects
 	objectCollection = mapManager.GetOtherObjects(currentMap);
 	objectCollection.player = player;
-	objectCollection.player->SetPosition(objectCollection.locations[checkpoint]);
+	objectCollection.player->SetPosition(objectCollection.locations[spawnPoint]);
 
-	LoadSpecialObjects();
 	LoadObjectsInCurrentArea();
-}
-
-void Stage::LoadSpecialObjects()
-{
-	for (auto &trigger : objectCollection.triggers)
-	{
-		if (trigger->GetTriggerType() == TriggerType::NEXT_MAP)
-		{
-			nextMapTrigger = trigger.get();
-			break;
-		}
-	}
 }
 
 void Stage::LoadObjectsInCurrentArea()
@@ -117,7 +114,7 @@ void Stage::LoadObjectsInCurrentArea()
 		viewportAreaBbox.top -= hud->GetHeight();
 
 		// Only load object in the active area (room)
-		if (viewportAreaBbox.Contains(player->GetBoundingBox()))
+		if (viewportAreaBbox.TouchesOrIntersects(player->GetBoundingBox()))
 		{
 			objectCollection.entities = mapManager.GetMapObjectsInArea(currentMap, (Rect)viewportAreaBbox);
 			camera->SetMoveArea((Rect)viewportAreaBbox);
@@ -159,26 +156,18 @@ void Stage::DrawGameplay(SpriteExtensions &spriteBatch)
 	hud->Draw(spriteBatch);
 
 	for (auto const &entity : objectCollection.entities)
-	{
 		entity->Draw(spriteBatch);
-	}
 
 	for (auto const &boundaries : objectCollection.boundaries) // TODO: remove
-	{
 		boundaries->Draw(spriteBatch);
-	}
 
 	for (auto const &trigger : objectCollection.triggers)
-	{
 		trigger->Draw(spriteBatch);
-	}
 
 	player->Draw(spriteBatch);
 
 	for (auto const &fgObject : objectCollection.foregroundObjects)
-	{
 		fgObject->Draw(spriteBatch);
-	}
 
 	devTool->Draw(spriteBatch);
 }
@@ -198,12 +187,17 @@ void Stage::UpdateNextMapCutscene(GameTime gameTime)
 {
 	if (nextMapTimer.ElapsedMilliseconds() >= NEXT_MAP_TRANSITION_TIME)
 	{
+		auto nextMapTrigger = player->GetNearbyObjects().nextMap;
 		auto nextMap = nextMapTrigger->Property("Map");
+		auto spawnPoint = nextMapTrigger->Property("SpawnPoint");
 
 		player->EnableControl(true); // quit player auto mode
-		gameplayScene.NextStage(string2Map.at(nextMap));
+		gameplayScene.NextStage(string2Map.at(nextMap), spawnPoint);
+
 		OnNotify(Subject::Empty(), NEXT_MAP_CUTSCENE_ENDED);
 	}
+
+	ProcessMessage();
 }
 
 Stage::~Stage()

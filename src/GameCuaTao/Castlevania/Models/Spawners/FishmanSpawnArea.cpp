@@ -8,6 +8,7 @@ using namespace Castlevania;
 
 constexpr auto MIN_OFFSET = 64;
 constexpr auto MAX_OFFSET = 224;
+constexpr auto MAX_FISHMAN_COUNT = 2;
 
 FishmanSpawnArea::FishmanSpawnArea(ObjectFactory &objectFactory) :
 	SpawnArea{ EntityType::Fishman, objectFactory }
@@ -16,11 +17,22 @@ FishmanSpawnArea::FishmanSpawnArea(ObjectFactory &objectFactory) :
 
 void FishmanSpawnArea::SpawnObject(UpdateData &updateData)
 {
+	auto &objectCollection = updateData.objectCollection;
+	auto currentFishmanCount = 0;
+
+	for (auto &entity : objectCollection->entities)
+	{
+		if ((EntityType)entity->GetType() == EntityType::Fishman)
+			currentFishmanCount++;
+	}
+
+	if (currentFishmanCount >= MAX_FISHMAN_COUNT)
+		return;
+
 	auto viewport = updateData.viewport;
 	auto object = objectFactory.CreateEnemy(spawnObjectType);
-	auto spawnPosition = Vector2{};
 	auto facing = Facing{};
-	auto playerBbox = updateData.objectCollection->player->GetBoundingBox();
+	auto playerBbox = objectCollection->player->GetBoundingBox();
 	auto randomOffset = MathHelper::RandomBetween(MIN_OFFSET, MAX_OFFSET);
 
 	if (playerBbox.right + randomOffset >= viewport.right - object->GetFrameRect().Width())
@@ -30,6 +42,8 @@ void FishmanSpawnArea::SpawnObject(UpdateData &updateData)
 	else
 		facing = MathHelper::RandomBoolean() ? Facing::Left : Facing::Right;
 
+	auto spawnPosition = Vector2{};
+
 	if (facing == Facing::Left)
 		spawnPosition.x = playerBbox.right + randomOffset;
 	else // facing == Facing::Right
@@ -38,7 +52,7 @@ void FishmanSpawnArea::SpawnObject(UpdateData &updateData)
 	spawnPosition.y = GetBoundingBox().bottom - object->GetFrameRect().Height();
 	object->SetPosition(spawnPosition);
 	object->SetFacing(facing);
-	dynamic_cast<Fishman&>(*object).Launch();
+	static_cast<Fishman&>(*object).Launch();
 
-	updateData.objectCollection->entities.push_back(std::move(object));
+	objectCollection->entities.push_back(std::move(object));
 }

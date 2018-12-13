@@ -28,7 +28,7 @@ namespace Castlevania
 	public:
 		Stage(GameplayScene &gameplayScene, Map map, std::string checkpoint);
 
-		virtual void OnNotify(Subject &subject, int event) {}
+		void OnNotify(Subject &subject, int event);
 
 		UpdateData GetUpdateData();
 
@@ -39,11 +39,23 @@ namespace Castlevania
 		virtual ~Stage();
 
 	protected:
+		struct StageEvent
+		{
+			StageEvent(int message, Subject &subject) : subject{ subject }
+			{
+				this->message = message;
+			}
+
+			int message;
+			Subject &subject;
+		};
+
 		GameplayScene &gameplayScene;
 		ObjectFactory &objectFactory;
 		GameState currentState;
 		Map currentMap;
-		std::string checkpoint;
+		std::string spawnPoint;
+		std::unique_ptr<StageEvent> newEvent;
 
 		std::shared_ptr<TiledMap> map;
 		std::unique_ptr<Camera> camera;
@@ -53,9 +65,7 @@ namespace Castlevania
 		std::unique_ptr<DevTool> devTool;
 
 		ObjectCollection objectCollection; // TODO: move to Grid class (implement spatial partition)
-		Trigger *nextMapTrigger;
 
-		void LoadMap();
 		void LoadObjectsInCurrentArea();
 		void UpdateGameObjects(GameTime gameTime);
 		void UpdateGameplay(GameTime gameTime);
@@ -67,9 +77,11 @@ namespace Castlevania
 		void SetupNextMapCutscene();
 		void UpdateNextMapCutscene(GameTime gameTime);
 
+		virtual void ProcessMessage() {};
+
 	private:
 		Stopwatch nextMapTimer;
 
-		void LoadSpecialObjects();
+		void LoadMap();
 	};
 }

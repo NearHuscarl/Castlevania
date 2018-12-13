@@ -9,6 +9,8 @@ namespace Castlevania
 	// for future references
 	struct NearbyObjects
 	{
+		Trigger *nextMap = nullptr;
+		
 		Trigger *stair = nullptr;
 		Direction stairHitDirection = Direction::None;
 

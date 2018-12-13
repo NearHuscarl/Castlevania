@@ -52,9 +52,9 @@ std::shared_ptr<GameplayData> GameplayScene::GetData()
 	return data;
 }
 
-void GameplayScene::NextStage(Map map, std::string checkpoint)
+void GameplayScene::NextStage(Map map, std::string spawnPoint)
 {
-	nextStage = ConstructStage(map, checkpoint);
+	nextStage = ConstructStage(map, spawnPoint);
 }
 
 void GameplayScene::LoadContent()
@@ -90,21 +90,21 @@ void GameplayScene::Draw(GameTime gameTime)
 	spriteBatch.End();
 }
 
-std::unique_ptr<Stage> GameplayScene::ConstructStage(Map map, std::string checkpoint)
+std::unique_ptr<Stage> GameplayScene::ConstructStage(Map map, std::string spawnPoint)
 {
 	switch (map)
 	{
 		case Map::COURTYARD:
-			return std::make_unique<CourtyardStage>(*this, checkpoint);
+			return std::make_unique<CourtyardStage>(*this, spawnPoint);
 
 		case Map::GREAT_HALL:
-			return std::make_unique<GreatHallStage>(*this, checkpoint);
+			return std::make_unique<GreatHallStage>(*this, spawnPoint);
 
 		case Map::UNDERGROUND:
-			return std::make_unique<UndergroundStage>(*this, checkpoint);
+			return std::make_unique<UndergroundStage>(*this, spawnPoint);
 
 		case Map::PLAYGROUND:
-			return std::make_unique<PlaygroundStage>(*this, checkpoint);
+			return std::make_unique<PlaygroundStage>(*this, spawnPoint);
 
 		default:
 			return nullptr;

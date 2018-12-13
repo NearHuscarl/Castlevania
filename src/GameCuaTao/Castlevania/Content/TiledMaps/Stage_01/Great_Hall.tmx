@@ -429,33 +429,25 @@
     <property name="Facing" value="Right"/>
    </properties>
   </object>
-  <object id="106" name="NextMap" type="Trigger" x="3840" y="352" width="32" height="32">
+  <object id="106" name="NextMap" type="Trigger" x="3840" y="355" width="32" height="32">
    <properties>
     <property name="Enabled" type="bool" value="true"/>
     <property name="Map" value="Underground"/>
-    <property name="SpawnPoint" value="Checkpoint"/>
+    <property name="SpawnPoint" value="GreatHall_02"/>
    </properties>
   </object>
-  <object id="107" name="NextMap" type="Trigger" x="3200" y="352" width="32" height="32">
+  <object id="107" name="NextMap" type="Trigger" x="3200" y="355" width="32" height="32">
    <properties>
     <property name="Enabled" type="bool" value="true"/>
     <property name="Map" value="Underground"/>
-    <property name="SpawnPoint" value="Checkpoint"/>
+    <property name="SpawnPoint" value="GreatHall_01"/>
    </properties>
   </object>
  </objectgroup>
  <objectgroup id="5" name="Locations">
   <object id="9" name="Checkpoint1" type="Position" gid="43" x="64" y="320" width="60" height="66"/>
-  <object id="13" name="Checkpoint" type="Position" gid="43" x="3954.33" y="121.666" width="60" height="66"/>
-  <object id="110" name="Underground_02" type="Position" gid="2147483658" x="3809" y="354" width="60" height="66">
-   <properties>
-    <property name="MoveState" value="GOING_UPSTAIRS"/>
-   </properties>
-  </object>
-  <object id="111" name="Underground_01" type="Position" gid="2147483658" x="3169" y="354" width="60" height="66">
-   <properties>
-    <property name="MoveState" value="GOING_UPSTAIRS"/>
-   </properties>
-  </object>
+  <object id="13" name="Checkpoint" type="Position" gid="43" x="3113.66" y="314.666" width="60" height="66"/>
+  <object id="110" name="Underground_02" type="Position" gid="2147483658" x="3808" y="351" width="60" height="66"/>
+  <object id="111" name="Underground_01" type="Position" gid="2147483658" x="3168" y="351" width="60" height="66"/>
  </objectgroup>
 </map>

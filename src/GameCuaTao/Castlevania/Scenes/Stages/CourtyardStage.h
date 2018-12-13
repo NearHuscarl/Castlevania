@@ -7,17 +7,18 @@ namespace Castlevania
 	class CourtyardStage : public Stage
 	{
 	public:
-		CourtyardStage(GameplayScene &gameplayScene, std::string checkpoint);
+		CourtyardStage(GameplayScene &gameplayScene, std::string spawnPoint);
 
-		void OnNotify(Subject &subject, int event) override;
 		void Initialize() override;
 		void Update(GameTime gameTime) override;
 
 	private:
-		Trigger *entranceTrigger;
 		GameObject *castle;
+		Trigger *entranceTrigger;
+		Trigger *nextMapTrigger;
 
 		void UpdateGoToCastleCutscene(GameTime gameTime);
 		void SetupGoToCastleCutscene();
+		void ProcessMessage() override;
 	};
 }

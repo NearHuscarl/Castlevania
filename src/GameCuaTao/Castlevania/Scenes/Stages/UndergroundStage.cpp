@@ -4,19 +4,9 @@
 
 using namespace Castlevania;
 
-UndergroundStage::UndergroundStage(GameplayScene &gameplayScene, std::string checkpoint) :
-	Stage{ gameplayScene, Map::UNDERGROUND, checkpoint }
+UndergroundStage::UndergroundStage(GameplayScene &gameplayScene, std::string spawnPoint) :
+	Stage{ gameplayScene, Map::UNDERGROUND, spawnPoint }
 {
-}
-
-void UndergroundStage::OnNotify(Subject &subject, int event)
-{
-	switch (event)
-	{
-		case NEXT_MAP_CUTSCENE_STARTED:
-			SetupNextMapCutscene();
-			break;
-	}
 }
 
 void UndergroundStage::Update(GameTime gameTime)
@@ -29,6 +19,21 @@ void UndergroundStage::Update(GameTime gameTime)
 
 		case GameState::NEXT_MAP_CUTSCENE:
 			UpdateNextMapCutscene(gameTime);
+			break;
+	}
+
+	Stage::Update(gameTime);
+}
+
+void UndergroundStage::ProcessMessage()
+{
+	if (newEvent == nullptr)
+		return;
+
+	switch (newEvent->message)
+	{
+		case NEXT_MAP_CUTSCENE_STARTED:
+			SetupNextMapCutscene();
 			break;
 	}
 }

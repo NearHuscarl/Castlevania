@@ -6,27 +6,9 @@ using namespace Castlevania;
 
 auto playerOriginalSpeed = 0.0f;
 
-CourtyardStage::CourtyardStage(GameplayScene &gameplayScene, std::string checkpoint) :
-	Stage{ gameplayScene, Map::COURTYARD, checkpoint }
+CourtyardStage::CourtyardStage(GameplayScene &gameplayScene, std::string spawnPoint) :
+	Stage{ gameplayScene, Map::COURTYARD, spawnPoint }
 {
-}
-
-void CourtyardStage::OnNotify(Subject &subject, int event)
-{
-	switch (event)
-	{
-		case NEXT_MAP_CUTSCENE_STARTED:
-			SetupNextMapCutscene();
-			break;
-
-		case NEXT_MAP_CUTSCENE_ENDED:
-			player->SetSpeed(playerOriginalSpeed);
-			break;
-
-		case GO_TO_CASTLE_CUTSCENE_STARTED:
-			SetupGoToCastleCutscene();
-			break;
-	}
 }
 
 void CourtyardStage::Initialize()
@@ -37,12 +19,18 @@ void CourtyardStage::Initialize()
 	{
 		if (object->GetTriggerType() == TriggerType::CASTLE_ENTRANCE)
 			entranceTrigger = object.get();
+
+		if (object->GetTriggerType() == TriggerType::NEXT_MAP)
+			nextMapTrigger = object.get();
 	}
 
 	for (auto &object : objectCollection.foregroundObjects)
 	{
 		if ((EntityType)object->GetType() == EntityType::Castle)
+		{
 			castle = object.get();
+			break;
+		}
 	}
 }
 
@@ -59,10 +47,11 @@ void CourtyardStage::Update(GameTime gameTime)
 			break;
 
 		case GameState::GO_TO_CASTLE_CUTSCENE:
-			// Simon go to castle in courtyard map
 			UpdateGoToCastleCutscene(gameTime);
 			break;
 	}
+
+	Stage::Update(gameTime);
 }
 
 void CourtyardStage::UpdateGoToCastleCutscene(GameTime gameTime)
@@ -94,5 +83,30 @@ void CourtyardStage::SetupGoToCastleCutscene()
 
 	nextMapTrigger->Enabled(true);
 
+	// Remove objects before cutscene even started is not necessary
+	// But I will leave it here to mimic the original game behaviour
+	objectCollection.entities.clear();
+
 	currentState = GameState::GO_TO_CASTLE_CUTSCENE;
+}
+
+void CourtyardStage::ProcessMessage()
+{
+	if (newEvent == nullptr)
+		return;
+
+	switch (newEvent->message)
+	{
+		case NEXT_MAP_CUTSCENE_STARTED:
+			SetupNextMapCutscene();
+			break;
+
+		case NEXT_MAP_CUTSCENE_ENDED:
+			player->SetSpeed(playerOriginalSpeed);
+			break;
+
+		case GO_TO_CASTLE_CUTSCENE_STARTED:
+			SetupGoToCastleCutscene();
+			break;
+	}
 }

@@ -142,7 +142,7 @@ ObjectCollection MapManager::CreateObjectCollection(TiledMapObjectGroups objectG
 		if (triggerType == TriggerType::NEXT_MAP)
 		{
 			object->AddProperty("Map", properties.at("Map"));
-			object->AddProperty("SpawnPoint", properties.at("SpawnPoint"));
+			object->AddProperty("SpawnPoint", GetValueOrDefault(properties, "SpawnPoint", "Checkpoint"));
 		}
 
 		object->Enabled(ToBoolean(properties.at("Enabled")));

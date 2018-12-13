@@ -196,6 +196,7 @@ void PlayerResponseSystem::OnCollideWithTrigger(CollisionResult &result, Respons
 			break;
 
 		case TriggerType::NEXT_MAP:
+			responseResult.nearbyObjects.nextMap = &trigger;
 			OnCollideWithNextMapTrigger(trigger);
 			break;
 
