@@ -31,6 +31,7 @@ namespace Castlevania
 		void OnCollideWithEnemy(CollisionResult &result);
 		void OnCollideWithVampireBat(CollisionResult &result);
 		void OnCollideWithFireball(CollisionResult &result);
+		void OnCollideWithMoneyBag(CollisionResult &result);
 		void OnCollideWithHeart(CollisionResult &result);
 		void OnCollideWithSmallHeart(CollisionResult &result);
 		void OnCollideWithWhipPowerup(CollisionResult &result);

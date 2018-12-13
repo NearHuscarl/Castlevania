@@ -12,7 +12,8 @@ namespace Castlevania
 		EffectFactory(ContentManager &content);
 
 		std::unique_ptr<IEffect> CreateFlameEffect();
-		//void SpawnMoneyText(Vector2 position, int value);
+		std::unique_ptr<IEffect> CreateMoneyTextEffect(int money);
+		std::unique_ptr<IEffect> CreateFlashingMoneyTextEffect();
 
 	private:
 		ContentManager &content;

@@ -33,6 +33,9 @@ void DevTool::LoadContent(ContentManager &content)
 	auto vampireBatSprite = content.Load<Spritesheet>("Characters/Enemies/VampireBat.atlas.xml")->at("fly_01");
 	auto brazierSprite = content.Load<Spritesheet>("Items/Brazier.atlas.xml")->begin()->second;
 	auto candleSprite = content.Load<Spritesheet>("Items/Candle.atlas.xml")->begin()->second;
+	auto blueMoneyBagSprite = content.Load<Spritesheet>("Items/Money_Bag.atlas.xml")->at("money_bag_blue");
+	auto whiteMoneyBagSprite = content.Load<Spritesheet>("Items/Money_Bag.atlas.xml")->at("money_bag_white");
+	auto redMoneyBagSprite = content.Load<Spritesheet>("Items/Money_Bag.atlas.xml")->at("money_bag_red");
 	auto daggerItemSprite = content.Load<Texture>("Items/Dagger.png");
 	auto largeHeartSprite = content.Load<Texture>("Items/Large_Heart.png");
 	auto smallHeartSprite = content.Load<Texture>("Items/Small_Heart.png");
@@ -59,6 +62,10 @@ void DevTool::LoadContent(ContentManager &content)
 		{
 			POWERUP,
 			{
+				std::make_pair<std::string, Sprite>("BlueMoneyBag", blueMoneyBagSprite),
+				std::make_pair<std::string, Sprite>("WhiteMoneyBag", whiteMoneyBagSprite),
+				std::make_pair<std::string, Sprite>("RedMoneyBag", redMoneyBagSprite),
+				std::make_pair<std::string, Sprite>("FlashingMoneyBag", blueMoneyBagSprite),
 				std::make_pair<std::string, Sprite>("DaggerItem", daggerItemSprite),
 				std::make_pair<std::string, Sprite>("LargeHeart", largeHeartSprite),
 				std::make_pair<std::string, Sprite>("SmallHeart", smallHeartSprite),

@@ -3,7 +3,7 @@
 <GameContent>
 
   <Animations AtlasPath="Money_Bag.atlas.xml">
-    <Animation Name="MoneyBag" DefaultTime="100" IsLooping="False">
+    <Animation Name="MoneyBag" DefaultTime="100" IsLooping="True">
       <Frame SpriteID="money_bag_red" />
       <Frame SpriteID="money_bag_blue" />
       <Frame SpriteID="money_bag_white" />

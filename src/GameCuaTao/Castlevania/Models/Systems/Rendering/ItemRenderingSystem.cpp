@@ -1,9 +1,9 @@
-#include "FireballRenderingSystem.h"
-#include "../GameObject.h"
+#include "ItemRenderingSystem.h"
+#include "../../GameObject.h"
 
 using namespace Castlevania;
 
-FireballRenderingSystem::FireballRenderingSystem(
+ItemRenderingSystem::ItemRenderingSystem(
 	GameObject &parent,
 	std::string spritePath,
 	std::unique_ptr<IEffect> effect)
@@ -14,25 +14,39 @@ FireballRenderingSystem::FireballRenderingSystem(
 	this->spritePath = spritePath;
 }
 
-Sprite &FireballRenderingSystem::GetSprite()
+ItemRenderingSystem::ItemRenderingSystem(
+	GameObject &parent,
+	TextureRegion textureRegion,
+	std::unique_ptr<IEffect> effect)
+	:
+	parent{ parent }
+{
+	this->sprite = std::make_unique<Sprite>(textureRegion);
+	this->hitEffect = std::move(effect);
+}
+
+Sprite &ItemRenderingSystem::GetSprite()
 {
 	return *sprite;
 }
 
-GameObject &FireballRenderingSystem::GetParent()
+GameObject &ItemRenderingSystem::GetParent()
 {
 	return parent;
 }
 
-void FireballRenderingSystem::LoadContent(ContentManager &content)
+void ItemRenderingSystem::LoadContent(ContentManager &content)
 {
 	RenderingSystem::LoadContent(content);
+
+	if (sprite != nullptr)
+		return;
 
 	auto texture = content.Load<Texture>(spritePath);
 	sprite = std::make_unique<Sprite>(texture);
 }
 
-void FireballRenderingSystem::Update(GameTime gameTime)
+void ItemRenderingSystem::Update(GameTime gameTime)
 {
 	if (GetParent().GetState() == ObjectState::DYING)
 	{
@@ -41,7 +55,7 @@ void FireballRenderingSystem::Update(GameTime gameTime)
 	}
 }
 
-void FireballRenderingSystem::Draw(SpriteExtensions &spriteBatch)
+void ItemRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 {
 	switch (GetParent().GetState())
 	{
@@ -56,7 +70,7 @@ void FireballRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 	}
 }
 
-void FireballRenderingSystem::OnStateChanged()
+void ItemRenderingSystem::OnStateChanged()
 {
 	if (GetParent().GetState() == ObjectState::DYING)
 	{

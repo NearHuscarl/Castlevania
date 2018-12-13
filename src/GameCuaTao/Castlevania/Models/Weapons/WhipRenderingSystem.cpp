@@ -54,9 +54,6 @@ void WhipRenderingSystem::Update(GameTime gameTime)
 
 void WhipRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 {
-	if (!sprite->IsVisible())
-		return;
-
 	RenderingSystem::Draw(spriteBatch);
 	spriteBatch.Draw(*sprite, parent.GetPosition());
 }

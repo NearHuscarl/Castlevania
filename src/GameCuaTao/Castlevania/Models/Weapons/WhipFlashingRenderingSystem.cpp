@@ -38,7 +38,7 @@ void WhipFlashingRenderingSystem::LoadContent(ContentManager &content)
 
 void WhipFlashingRenderingSystem::Update(GameTime gameTime)
 {
-	if (!parent.GetBody().Enabled())
+	if (!sprite->IsVisible())
 		return;
 
 	if (sprite->GetCurrentAnimation().GetCurrentFrameIndex() == 2)
@@ -55,7 +55,7 @@ void WhipFlashingRenderingSystem::Update(GameTime gameTime)
 
 void WhipFlashingRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 {
-	if (!parent.GetBody().Enabled())
+	if (!sprite->IsVisible())
 		return;
 
 	RenderingSystem::Draw(spriteBatch);

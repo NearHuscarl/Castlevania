@@ -6,10 +6,10 @@
 
 namespace Castlevania
 {
-	class FlameEffect : public IEffect
+	class FlashingMoneyTextEffect : public IEffect
 	{
 	public:
-		FlameEffect(std::shared_ptr<Texture> sparkTexture, std::shared_ptr<AnimationFactory> flameAnimation);
+		FlashingMoneyTextEffect(std::shared_ptr<AnimationFactory> moneyTextAnimation);
 
 		void Show(Vector2 position) override;
 		bool IsFinished() override;
@@ -17,9 +17,8 @@ namespace Castlevania
 
 	private:
 		Vector2 position;
-		std::unique_ptr<Sprite> spark;
-		std::unique_ptr<AnimatedSprite> flame;
+		std::unique_ptr<AnimatedSprite> moneyText;
 
-		Stopwatch sparkLifespanTimer;
+		Stopwatch lifespanTimer;
 	};
 }

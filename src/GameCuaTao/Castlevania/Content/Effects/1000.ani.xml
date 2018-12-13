@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Animations AtlasPath="1000.atlas.xml">
+    <Animation Name="flashing_1000" DefaultTime="80" IsLooping="True">
+      <Frame SpriteID="1000_white" />
+      <Frame SpriteID="1000_blue" />
+      <Frame SpriteID="1000_red" />
+    </Animation>
+  </Animations>
+
+</GameContent>

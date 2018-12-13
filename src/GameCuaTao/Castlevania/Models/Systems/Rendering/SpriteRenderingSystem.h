@@ -10,6 +10,7 @@ namespace Castlevania
 	{
 	public:
 		SpriteRenderingSystem(GameObject &parent, std::string spritePath);
+		SpriteRenderingSystem(GameObject &parent, TextureRegion textureRegion);
 
 		Sprite &GetSprite() override;
 		GameObject &GetParent() override;

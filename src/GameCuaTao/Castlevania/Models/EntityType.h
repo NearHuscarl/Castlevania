@@ -40,7 +40,10 @@ namespace Castlevania
 		DoubleShot,
 		TripleShot,
 		
-		MoneyBag,
+		RedMoneyBag,
+		BlueMoneyBag,
+		WhiteMoneyBag,
+		FlashingMoneyBag,
 		PorkChop,
 
 		AxeItem,

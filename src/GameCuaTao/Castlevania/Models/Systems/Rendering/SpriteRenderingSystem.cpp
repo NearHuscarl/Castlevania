@@ -9,6 +9,12 @@ SpriteRenderingSystem::SpriteRenderingSystem(GameObject &parent, std::string spr
 	this->spritePath = spritePath;
 }
 
+SpriteRenderingSystem::SpriteRenderingSystem(GameObject &parent, TextureRegion textureRegion) :
+	parent{ parent }
+{
+	this->sprite = std::make_unique<Sprite>(textureRegion);
+}
+
 Sprite &SpriteRenderingSystem::GetSprite()
 {
 	return *sprite;
@@ -22,6 +28,9 @@ GameObject &SpriteRenderingSystem::GetParent()
 void SpriteRenderingSystem::LoadContent(ContentManager &content)
 {
 	RenderingSystem::LoadContent(content);
+
+	if (sprite != nullptr)
+		return;
 
 	auto texture = content.Load<Texture>(spritePath);
 	sprite = std::make_unique<Sprite>(texture);

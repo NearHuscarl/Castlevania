@@ -13,6 +13,7 @@
 #include "../Systems/CollisionResponse/GroundResponseSystem.h"
 #include "../Systems/Rendering/AnimationRenderingSystem.h"
 #include "../Systems/Rendering/BoundingboxRenderingSystem.h"
+#include "../Systems/Rendering/ItemRenderingSystem.h"
 #include "../Systems/Rendering/SpriteRenderingSystem.h"
 #include "../Systems/Rendering/EffectRenderingSystem.h"
 #include "../Characters/Player/Controller.h"
@@ -31,7 +32,6 @@
 #include "../Characters/Enemies/ZombieResponseSystem.h"
 #include "../Items/PowerupResponseSystem.h"
 #include "../Items/DoorRenderingSystem.h"
-#include "../Items/FireballRenderingSystem.h"
 #include "../Spawners/SpawnerCollisionSystem.h"
 #include "../Spawners/SpawnAreaResponseSystem.h"
 #include "../Weapons/WhipCollisionSystem.h"
@@ -49,7 +49,7 @@ constexpr auto ITEM_FALL_SPEED = 120.0f;
 
 ObjectFactory::ObjectFactory(ContentManager &content) : content{ content }
 {
-	effectManager = std::make_unique<EffectFactory>(content);
+	effectFactory = std::make_unique<EffectFactory>(content);
 }
 
 std::unique_ptr<GameObject> ObjectFactory::CreateBoundary(RectF rect)
@@ -188,7 +188,7 @@ std::unique_ptr<Container> ObjectFactory::CreateBrazier(EntityType itemType, Vec
 	auto object = std::make_unique<Container>();
 
 	auto renderingSystem = std::make_unique<EffectRenderingSystem>(
-		*object, "Items/Brazier.ani.xml", effectManager->CreateFlameEffect());
+		*object, "Items/Brazier.ani.xml", effectFactory->CreateFlameEffect());
 	auto item = CreatePowerup(itemType);
 
 	object->SetPosition(position);
@@ -204,7 +204,7 @@ std::unique_ptr<Container> ObjectFactory::CreateCandle(EntityType itemType, Vect
 	auto object = std::make_unique<Container>();
 
 	auto renderingSystem = std::make_unique<EffectRenderingSystem>(
-		*object, "Items/Candle.ani.xml", effectManager->CreateFlameEffect());
+		*object, "Items/Candle.ani.xml", effectFactory->CreateFlameEffect());
 	auto item = CreatePowerup(itemType);
 
 	object->SetPosition(position);
@@ -247,7 +247,7 @@ std::unique_ptr<Zombie> ObjectFactory::CreateZombie(Vector2 position)
 	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<ZombieResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<EffectRenderingSystem>(
-		*object, "Characters/Enemies/Zombie.ani.xml", effectManager->CreateFlameEffect());
+		*object, "Characters/Enemies/Zombie.ani.xml", effectFactory->CreateFlameEffect());
 
 	object->SetPosition(position);
 	object->Attach(std::move(movementSystem));
@@ -277,7 +277,7 @@ std::unique_ptr<Panther> ObjectFactory::CreatePanther(Vector2 position)
 	auto collisionSystem = std::make_unique<PantherCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PantherResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<PantherRenderingSystem>(
-		*object, "Characters/Enemies/Panther.ani.xml", effectManager->CreateFlameEffect());
+		*object, "Characters/Enemies/Panther.ani.xml", effectFactory->CreateFlameEffect());
 
 	object->SetPosition(position);
 	object->Attach(std::move(controlSystem));
@@ -304,7 +304,7 @@ std::unique_ptr<Fishman> ObjectFactory::CreateFishman(Vector2 position)
 	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<FishmanResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<FishmanRenderingSystem>(
-		*object, "Characters/Enemies/Fishman.ani.xml", effectManager->CreateFlameEffect());
+		*object, "Characters/Enemies/Fishman.ani.xml", effectFactory->CreateFlameEffect());
 
 	object->SetPosition(position);
 	object->Attach(std::move(controlSystem));
@@ -327,7 +327,7 @@ std::unique_ptr<VampireBat> ObjectFactory::CreateVampireBat(Vector2 position)
 
 	auto movementSystem = std::make_unique<WaveMovementSystem>(*object, 0.2f, 1.0f, Axis::X);
 	auto renderingSystem = std::make_unique<VampireBatRenderingSystem>(
-		*object, "Characters/Enemies/VampireBat.ani.xml", effectManager->CreateFlameEffect());
+		*object, "Characters/Enemies/VampireBat.ani.xml", effectFactory->CreateFlameEffect());
 
 	object->SetPosition(position);
 	object->Attach(std::move(movementSystem));
@@ -401,8 +401,8 @@ std::unique_ptr<Fireball> ObjectFactory::CreateFireball(Vector2 position)
 	object->SetAttack(std::stoi(stats->at("Attack")));
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
-	auto renderingSystem = std::make_unique<FireballRenderingSystem>(
-		*object, "Items/Fireball.png", effectManager->CreateFlameEffect());
+	auto renderingSystem = std::make_unique<ItemRenderingSystem>(
+		*object, "Items/Fireball.png", effectFactory->CreateFlameEffect());
 
 	object->SetPosition(position);
 	object->Attach(std::move(movementSystem));
@@ -417,6 +417,18 @@ std::unique_ptr<Powerup> ObjectFactory::CreatePowerup(EntityType type, Vector2 p
 {
 	switch (type)
 	{
+		case EntityType::BlueMoneyBag:
+			return CreateBlueMoneyBag(position);
+
+		case EntityType::WhiteMoneyBag:
+			return CreateWhiteMoneyBag(position);
+
+		case EntityType::RedMoneyBag:
+			return CreateRedMoneyBag(position);
+
+		case EntityType::FlashingMoneyBag:
+			return CreateFlashingMoneyBag(position);
+
 		case EntityType::LargeHeart:
 			return CreateLargeHeart(position);
 
@@ -432,6 +444,92 @@ std::unique_ptr<Powerup> ObjectFactory::CreatePowerup(EntityType type, Vector2 p
 		default:
 			throw std::invalid_argument("Invalid powerup type");
 	}
+}
+
+std::unique_ptr<MoneyBag> ObjectFactory::CreateMoneyBag(EntityType type, Vector2 position)
+{
+	auto money = int{};
+	auto spriteId = std::string{};
+
+	switch (type)
+	{
+		case EntityType::RedMoneyBag:
+			money = 100;
+			spriteId = "money_bag_red";
+			break;
+
+		case EntityType::BlueMoneyBag:
+			money = 400;
+			spriteId = "money_bag_blue";
+			break;
+
+		case EntityType::WhiteMoneyBag:
+			money = 700;
+			spriteId = "money_bag_white";
+			break;
+	}
+
+	auto object = std::make_unique<MoneyBag>(money, type);
+
+	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
+	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
+	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
+
+	auto moneyAtlas = content.Load<Spritesheet>("Items/Money_Bag.atlas.xml");
+	auto effect = effectFactory->CreateMoneyTextEffect(money);
+	auto renderingSystem = std::make_unique<ItemRenderingSystem>(
+		*object, moneyAtlas->at(spriteId), std::move(effect));
+
+	object->SetPosition(position);
+	object->Attach(std::move(movementSystem));
+	object->Attach(std::move(collisionSystem));
+	object->Attach(std::move(responseSystem));
+	object->Attach(std::move(renderingSystem));
+
+	object->LoadContent(content);
+	object->SetVelocity_Y(ITEM_FALL_SPEED); // Fall down
+
+	return object;
+}
+
+std::unique_ptr<MoneyBag> ObjectFactory::CreateBlueMoneyBag(Vector2 position)
+{
+	return CreateMoneyBag(EntityType::BlueMoneyBag, position);
+}
+
+std::unique_ptr<MoneyBag> ObjectFactory::CreateWhiteMoneyBag(Vector2 position)
+{
+	return CreateMoneyBag(EntityType::WhiteMoneyBag, position);
+}
+
+std::unique_ptr<MoneyBag> ObjectFactory::CreateRedMoneyBag(Vector2 position)
+{
+	return CreateMoneyBag(EntityType::RedMoneyBag, position);
+}
+
+std::unique_ptr<MoneyBag> ObjectFactory::CreateFlashingMoneyBag(Vector2 position)
+{
+	auto object = std::make_unique<MoneyBag>(1000, EntityType::FlashingMoneyBag);
+
+	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
+	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
+	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
+
+	auto moneyAtlas = content.Load<Spritesheet>("Items/Money_Bag.atlas.xml");
+	auto effect = effectFactory->CreateFlashingMoneyTextEffect();
+	auto renderingSystem = std::make_unique<EffectRenderingSystem>(
+		*object, "Items/Money_Bag.ani.xml", std::move(effect));
+
+	object->SetPosition(position);
+	object->Attach(std::move(movementSystem));
+	object->Attach(std::move(collisionSystem));
+	object->Attach(std::move(responseSystem));
+	object->Attach(std::move(renderingSystem));
+
+	object->LoadContent(content);
+	object->SetVelocity_Y(ITEM_FALL_SPEED); // Fall down
+
+	return object;
 }
 
 std::unique_ptr<Powerup> ObjectFactory::CreateDaggerItem(Vector2 position)

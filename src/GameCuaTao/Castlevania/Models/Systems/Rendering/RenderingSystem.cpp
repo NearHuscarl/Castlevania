@@ -44,7 +44,7 @@ void RenderingSystem::Update(GameTime gameTime)
 
 void RenderingSystem::Draw(SpriteExtensions &spriteBatch)
 {
-	if (drawBoundingBox)
+	if (drawBoundingBox && GetParent().GetSprite()->IsVisible())
 	{
 		auto boundingBox = GetSprite().GetBoundingRectangle(GetParent().GetPosition());
 		auto position = Vector2{ boundingBox.X(), boundingBox.Y() };

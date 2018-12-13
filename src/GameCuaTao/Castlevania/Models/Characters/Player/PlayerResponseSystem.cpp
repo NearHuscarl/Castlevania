@@ -58,6 +58,13 @@ void PlayerResponseSystem::Update(UpdateData &updateData)
 				OnCollideWithFireball(result);
 				break;
 
+			case EntityType::BlueMoneyBag:
+			case EntityType::WhiteMoneyBag:
+			case EntityType::RedMoneyBag:
+			case EntityType::FlashingMoneyBag:
+				OnCollideWithMoneyBag(result);
+				break;
+
 			case EntityType::LargeHeart:
 				OnCollideWithHeart(result);
 				break;
@@ -231,6 +238,18 @@ void PlayerResponseSystem::OnCollideWithFireball(CollisionResult &result)
 	auto hitDirection = GetPlayerHitDirection(object, result.direction);
 
 	parent.TakeDamage(object.GetAttack(), hitDirection);
+}
+
+void PlayerResponseSystem::OnCollideWithMoneyBag(CollisionResult &result)
+{
+	auto &moneyBag = dynamic_cast<MoneyBag&>(result.collidedObject);
+	auto effectPosition = Vector2{
+		parent.GetBoundingBox().right - 4,
+		parent.GetBoundingBox().top + 3 };
+
+	moneyBag.SetPosition(effectPosition);
+
+	parent.data.score += moneyBag.GetMoney();
 }
 
 void PlayerResponseSystem::OnCollideWithHeart(CollisionResult &result)

@@ -241,8 +241,14 @@ std::unique_ptr<GameObject> MapManager::ConstructObject(ObjectProperties propert
 		case EntityType::Dagger:
 			return objectFactory.CreateDagger();
 
-		case EntityType::MoneyBag:
-			return objectFactory.CreateBat();
+		case EntityType::BlueMoneyBag:
+			return objectFactory.CreateBlueMoneyBag();
+
+		case EntityType::WhiteMoneyBag:
+			return objectFactory.CreateWhiteMoneyBag();
+
+		case EntityType::RedMoneyBag:
+			return objectFactory.CreateRedMoneyBag();
 
 		case EntityType::Door:
 			return objectFactory.CreateDoor();

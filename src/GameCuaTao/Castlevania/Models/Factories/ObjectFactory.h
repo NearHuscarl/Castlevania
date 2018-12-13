@@ -10,6 +10,7 @@
 #include "../Items/Door.h"
 #include "../Items/Fireball.h"
 #include "../Weapons/Whip.h"
+#include "../Items/MoneyBag.h"
 #include "../Items/Powerup.h"
 #include "../Spawners/SpawnArea.h"
 #include "../Spawners/SpawnPoint.h"
@@ -47,6 +48,11 @@ namespace Castlevania
 		std::unique_ptr<Fireball> CreateFireball(Vector2 position = Vector2::Zero());
 
 		std::unique_ptr<Powerup> CreatePowerup(EntityType type, Vector2 position = Vector2::Zero());
+		std::unique_ptr<MoneyBag> CreateMoneyBag(EntityType type, Vector2 position = Vector2::Zero());
+		std::unique_ptr<MoneyBag> CreateBlueMoneyBag(Vector2 position = Vector2::Zero());
+		std::unique_ptr<MoneyBag> CreateWhiteMoneyBag(Vector2 position = Vector2::Zero());
+		std::unique_ptr<MoneyBag> CreateRedMoneyBag(Vector2 position = Vector2::Zero());
+		std::unique_ptr<MoneyBag> CreateFlashingMoneyBag(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Powerup> CreateDaggerItem(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Powerup> CreateLargeHeart(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Powerup> CreateSmallHeart(Vector2 position = Vector2::Zero());
@@ -58,7 +64,7 @@ namespace Castlevania
 
 	private:
 		ContentManager &content;
-		std::unique_ptr<EffectFactory> effectManager;
+		std::unique_ptr<EffectFactory> effectFactory;
 
 		void ReadEnemyConfig(Enemy &enemy, Dictionary stats);
 		void ReadSpawnAreaConfig(SpawnArea &spawnArea, Dictionary stats);

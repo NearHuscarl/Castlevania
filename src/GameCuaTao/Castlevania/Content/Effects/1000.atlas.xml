@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Spritesheet TexturePath="1000.png">
+    <Sprite ID="1000_white">
+      <SpriteFrame Left="0" Top="0" Width="32" Height="16" />
+    </Sprite>
+
+    <Sprite ID="1000_blue">
+      <SpriteFrame Left="0" Top="17" Width="32" Height="16" />
+    </Sprite>
+
+    <Sprite ID="1000_red">
+      <SpriteFrame Left="0" Top="34" Width="32" Height="16" />
+    </Sprite>
+  </Spritesheet>
+
+</GameContent>
