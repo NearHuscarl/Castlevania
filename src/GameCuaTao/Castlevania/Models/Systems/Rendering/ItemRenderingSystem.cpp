@@ -50,6 +50,8 @@ void ItemRenderingSystem::Update(GameTime gameTime)
 {
 	if (GetParent().GetState() == ObjectState::DYING)
 	{
+		hitEffect->Update(gameTime);
+
 		if (hitEffect->IsFinished())
 			GetParent().Destroy();
 	}

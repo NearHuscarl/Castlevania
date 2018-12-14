@@ -14,6 +14,7 @@
 #include "../Items/Powerup.h"
 #include "../Spawners/SpawnArea.h"
 #include "../Spawners/SpawnPoint.h"
+#include "../Areas/WaterArea.h"
 #include "../../Effects/EffectFactory.h"
 
 namespace Castlevania
@@ -25,6 +26,7 @@ namespace Castlevania
 
 		std::unique_ptr<GameObject> CreateBoundary(RectF rect);
 		std::unique_ptr<GameObject> CreateViewportArea(RectF rect);
+		std::unique_ptr<WaterArea> CreateWaterArea(RectF rect);
 		std::unique_ptr<SpawnPoint> CreateSpawnPoint(EntityType type, RectF rect);
 		std::unique_ptr<SpawnArea> CreateSpawnArea(EntityType type, RectF rect);
 		std::unique_ptr<GameObject> CreateRectangleObject(EntityType type, RectF rect);

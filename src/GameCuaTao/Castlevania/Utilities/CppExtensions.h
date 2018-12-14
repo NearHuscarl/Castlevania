@@ -37,9 +37,9 @@ namespace Castlevania
 	}
 
 	template<typename T, typename E>
-	void RemoveByValue(std::vector<T> &list, E removeItem)
+	void RemoveByValue(std::vector<T> &list, E removedItem)
 	{
-		auto it = std::find(list.begin(), list.end(), removeItem);
+		auto it = std::find(list.begin(), list.end(), removedItem);
 		
 		if (it != list.end())
 			list.erase(it);

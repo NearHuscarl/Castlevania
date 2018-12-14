@@ -1,9 +1,5 @@
 #include "GameplayScene.h"
 #include "SceneManager.h"
-#include "Stages/CourtyardStage.h"
-#include "Stages/GreatHallStage.h"
-#include "Stages/UndergroundStage.h"
-#include "Stages/PlaygroundStage.h"
 
 using namespace Castlevania;
 
@@ -32,11 +28,6 @@ MapManager &GameplayScene::GetMapManager()
 	return *mapManager;
 }
 
-Sprite &GameplayScene::GetCutsceneBackground()
-{
-	return *cutsceneBackground;
-}
-
 std::shared_ptr<Player> GameplayScene::GetPlayer()
 {
 	return player;
@@ -54,7 +45,7 @@ std::shared_ptr<GameplayData> GameplayScene::GetData()
 
 void GameplayScene::NextStage(Map map, std::string spawnPoint)
 {
-	nextStage = ConstructStage(map, spawnPoint);
+	nextStage = std::make_unique<Stage>(*this, map, spawnPoint);
 }
 
 void GameplayScene::LoadContent()
@@ -64,10 +55,7 @@ void GameplayScene::LoadContent()
 	mapManager->LoadContent(content);
 	hud->LoadContent(content);
 
-	auto cutsceneBgTexture = content.Load<Texture>("Backgrounds/Cutscene_Background.png");
-	cutsceneBackground = std::make_unique<Sprite>(cutsceneBgTexture);
-
-	NextStage(Map::GREAT_HALL); // TODO: change back to COURTYARD
+	NextStage(Map::COURTYARD); // TODO: change back to COURTYARD
 }
 
 void GameplayScene::Update(GameTime gameTime)
@@ -88,25 +76,4 @@ void GameplayScene::Draw(GameTime gameTime)
 	spriteBatch.Begin(D3DXSPRITE_ALPHABLEND);
 	currentStage->Draw(spriteBatch);
 	spriteBatch.End();
-}
-
-std::unique_ptr<Stage> GameplayScene::ConstructStage(Map map, std::string spawnPoint)
-{
-	switch (map)
-	{
-		case Map::COURTYARD:
-			return std::make_unique<CourtyardStage>(*this, spawnPoint);
-
-		case Map::GREAT_HALL:
-			return std::make_unique<GreatHallStage>(*this, spawnPoint);
-
-		case Map::UNDERGROUND:
-			return std::make_unique<UndergroundStage>(*this, spawnPoint);
-
-		case Map::PLAYGROUND:
-			return std::make_unique<PlaygroundStage>(*this, spawnPoint);
-
-		default:
-			return nullptr;
-	}
 }

@@ -18,7 +18,7 @@ namespace Castlevania
 		DevTool(GameplayScene &gameplayScene, Camera &camera);
 
 		void LoadContent(ContentManager &content);
-		void Update(ObjectCollection &objectCollection);
+		void Update(GameTime gameTime, ObjectCollection &objectCollection);
 		void Draw(SpriteExtensions &spriteBatch);
 
 	private:
@@ -39,12 +39,20 @@ namespace Castlevania
 		ObjectFactory &objectFactory;
 		Camera &camera;
 
+		std::unique_ptr<EffectFactory> effectFactory;
+		std::vector<std::shared_ptr<IEffect>> activeEffects;
+
 		Vector2 GetCurrentItemPosition();
+		std::unique_ptr<IEffect> CreateEffect(std::string name);
+		void UpdateEffects(GameTime gameTime);
 
 		void SetCategory(std::string category);
 		void NextItem();
 		void PreviousItem();
+		
 		void SpawnItem(ObjectCollection &objectCollection);
+		void SpawnObject(ObjectCollection &objectCollection);
+		void SpawnEffect();
 
 		void NextMap();
 		void PreviousMap();

@@ -13,6 +13,8 @@ namespace Castlevania
 
 		void Show(Vector2 position) override;
 		bool IsFinished() override;
+		
+		void Update(GameTime gameTime) override;
 		void Draw(SpriteExtensions &spriteBatch) override;
 
 	private:

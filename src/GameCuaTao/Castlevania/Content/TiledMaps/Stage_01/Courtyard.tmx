@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="24" height="6" tilewidth="64" tileheight="64" infinite="0" backgroundcolor="#3c3c3c" nextlayerid="13" nextobjectid="48">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="24" height="6" tilewidth="64" tileheight="64" infinite="0" backgroundcolor="#3c3c3c" nextlayerid="14" nextobjectid="50">
  <tileset firstgid="1" source="../Simon.tsx"/>
  <tileset firstgid="41" source="../Brazier.tsx"/>
  <tileset firstgid="43" source="../Money_Bag.tsx"/>
@@ -38,7 +38,7 @@
     <property name="Item" value="DaggerItem"/>
    </properties>
   </object>
-  <object id="38" name="MoneyBag" type="MoneyBag" gid="45" x="1250" y="317" width="30" height="30"/>
+  <object id="38" name="MoneyBag" type="FlashingMoneyBag" gid="45" x="1250" y="317" width="30" height="30"/>
  </objectgroup>
  <objectgroup id="11" name="Foregrounds">
   <object id="44" name="Castle" type="Castle" gid="47" x="1408" y="288" width="96" height="288">
@@ -52,6 +52,7 @@
   <object id="20" name="Ground" type="Boundary" x="0" y="288" width="1536" height="32"/>
   <object id="22" name="LeftBorder" type="Boundary" x="-22" y="0" width="25" height="288"/>
   <object id="24" name="RightBorder" type="Boundary" x="1504" y="0" width="32" height="288"/>
+  <object id="48" name="Block" type="Boundary" x="1250" y="320" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="9" name="Triggers">
   <object id="37" name="MoneyBagTrigger" type="Trigger" x="1424" y="278" width="32" height="10">

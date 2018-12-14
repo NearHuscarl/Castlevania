@@ -303,6 +303,9 @@ void PlayerResponseSystem::OnCollideWithDaggerItem(CollisionResult &result, Obje
 void PlayerResponseSystem::OnCollideWithDoor(CollisionResult &result, ResponseResult &responseResult)
 {
 	auto &door = dynamic_cast<Door&>(result.collidedObject);
+	auto collisionData = parent.GetBody().GetCollisionData();
+
+	ClampDistance_X(collisionData);
 
 	responseResult.nearbyObjects.door = &door;
 	responseResult.nearbyObjects.doorHitDirection = result.direction;

@@ -15,15 +15,15 @@ SpawnArea::SpawnArea(EntityType spawnObjectType, ObjectFactory &objectFactory) :
 
 	this->directionChances = std::map<Direction, float>
 	{
-		{ Direction::Left, 50 },
-		{ Direction::Top, 0 },
-		{ Direction::Right, 50 },
-		{ Direction::Bottom, 0 },
+		{ Direction::Left, 50.0f },
+		{ Direction::Top, 0.0f },
+		{ Direction::Right, 50.0f },
+		{ Direction::Bottom, 0.0f },
 	};
 
 	this->groupCountChances = std::map<int, float>
 	{
-		{ 1, 100 },
+		{ 1, 100.0f },
 	};
 
 	Deactivate();

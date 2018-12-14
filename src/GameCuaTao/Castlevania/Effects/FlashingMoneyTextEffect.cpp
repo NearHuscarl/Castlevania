@@ -24,8 +24,12 @@ bool FlashingMoneyTextEffect::IsFinished()
 	return false;
 }
 
-void FlashingMoneyTextEffect::Draw(SpriteExtensions &spriteBatch)
+void FlashingMoneyTextEffect::Update(GameTime gameTime)
 {
 	moneyText->Update();
+}
+
+void FlashingMoneyTextEffect::Draw(SpriteExtensions &spriteBatch)
+{
 	spriteBatch.Draw(*moneyText, position);
 }

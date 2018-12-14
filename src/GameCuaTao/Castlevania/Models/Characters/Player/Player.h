@@ -74,6 +74,7 @@ namespace Castlevania
 		AttackState GetAttackState();
 		void SetSpeed(float speed) override;
 		void SetJumpSpeed(float jumpSpeed);
+		void SetFacing(Facing facing) override;
 		void AddExp(int amount);
 		
 		void SetWhip(std::unique_ptr<Whip> whip);
@@ -112,7 +113,6 @@ namespace Castlevania
 		std::unique_ptr<Whip> whip;
 		std::unique_ptr<RangedWeapon> subWeapon;
 
-		void SetFacing(Facing facing) override;
 		void SetMoveState(MoveState moveState);
 		void SetAttackState(AttackState attackState);
 

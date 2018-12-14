@@ -12,6 +12,7 @@ namespace Castlevania
 	const auto string2EntityType = std::unordered_map<std::string, EntityType>
 	{
 		{ "ViewportArea", EntityType::ViewportArea },
+		{ "WaterArea", EntityType::WaterArea },
 		{ "SpawnArea", EntityType::SpawnArea },
 		{ "SpawnPoint", EntityType::SpawnPoint },
 		{ "Player", EntityType::Player },
@@ -41,11 +42,11 @@ namespace Castlevania
 
 	const auto string2TriggerType = std::unordered_map<std::string, TriggerType>
 	{
-		{ "NextMap", TriggerType::NEXT_MAP },
-		{ "MoneyBagTrigger", TriggerType::MONEY_BAG_EASTER_EGG },
 		{ "StairUp", TriggerType::STAIR_UP },
 		{ "StairDown", TriggerType::STAIR_DOWN },
+		{ "NextMap", TriggerType::NEXT_MAP },
 		{ "CastleEntrance", TriggerType::CASTLE_ENTRANCE },
+		{ "MoneyBagTrigger", TriggerType::MONEY_BAG_EASTER_EGG },
 	};
 
 	const auto string2Direction = std::unordered_map<std::string, Direction>

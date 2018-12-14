@@ -16,6 +16,7 @@
 #include "../Systems/Rendering/ItemRenderingSystem.h"
 #include "../Systems/Rendering/SpriteRenderingSystem.h"
 #include "../Systems/Rendering/EffectRenderingSystem.h"
+#include "../Areas/WaterAreaResponseSystem.h"
 #include "../Characters/Player/Controller.h"
 #include "../Characters/Player/PlayerMovementSystem.h"
 #include "../Characters/Player/PlayerCollisionSystem.h"
@@ -45,7 +46,7 @@
 
 using namespace Castlevania;
 
-constexpr auto ITEM_FALL_SPEED = 120.0f;
+constexpr auto ITEM_FALL_SPEED = 275.0f;
 
 ObjectFactory::ObjectFactory(ContentManager &content) : content{ content }
 {
@@ -60,6 +61,22 @@ std::unique_ptr<GameObject> ObjectFactory::CreateBoundary(RectF rect)
 std::unique_ptr<GameObject> ObjectFactory::CreateViewportArea(RectF rect)
 {
 	return CreateRectangleObject(EntityType::ViewportArea, rect);
+}
+
+std::unique_ptr<WaterArea> ObjectFactory::CreateWaterArea(RectF rect)
+{
+	auto object = std::make_unique<WaterArea>(*effectFactory);
+	//auto collisionSystem = std::make_unique<EntityCollisionSystem>(*object);
+	//auto responseSystem = std::make_unique<WaterAreaResponseSystem>(*object);
+	//auto renderingSystem = std::make_unique<BoundingBoxRenderingSystem>(*object, rect);
+
+	//object->SetPosition(Vector2{ rect.left, rect.top });
+	//object->Attach(std::move(collisionSystem));
+	//object->Attach(std::move(responseSystem));
+	//object->Attach(std::move(renderingSystem));
+	//object->LoadContent(content);
+
+	return object;
 }
 
 std::unique_ptr<SpawnPoint> ObjectFactory::CreateSpawnPoint(EntityType type, RectF rect)
@@ -304,7 +321,9 @@ std::unique_ptr<Fishman> ObjectFactory::CreateFishman(Vector2 position)
 	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<FishmanResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<FishmanRenderingSystem>(
-		*object, "Characters/Enemies/Fishman.ani.xml", effectFactory->CreateFlameEffect());
+		*object, "Characters/Enemies/Fishman.ani.xml",
+		effectFactory->CreateFlameEffect(),
+		effectFactory->CreateWaterEffect());
 
 	object->SetPosition(position);
 	object->Attach(std::move(controlSystem));
@@ -590,7 +609,7 @@ std::unique_ptr<Powerup> ObjectFactory::CreateSmallHeart(Vector2 position)
 	object->Attach(std::move(renderingSystem));
 
 	object->LoadContent(content);
-	object->SetSpeed(ITEM_FALL_SPEED); // Fall down
+	object->SetSpeed(120.0f); // Fall down
 
 	return object;
 }

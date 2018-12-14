@@ -14,6 +14,7 @@ namespace Castlevania
 		std::unique_ptr<IEffect> CreateFlameEffect();
 		std::unique_ptr<IEffect> CreateMoneyTextEffect(int money);
 		std::unique_ptr<IEffect> CreateFlashingMoneyTextEffect();
+		std::unique_ptr<IEffect> CreateWaterEffect();
 
 	private:
 		ContentManager &content;

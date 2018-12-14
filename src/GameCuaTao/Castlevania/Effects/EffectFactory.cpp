@@ -2,6 +2,7 @@
 #include "FlameEffect.h"
 #include "MoneyTextEffect.h"
 #include "FlashingMoneyTextEffect.h"
+#include "WaterEffect.h"
 
 using namespace Castlevania;
 
@@ -48,6 +49,14 @@ std::unique_ptr<IEffect> EffectFactory::CreateFlashingMoneyTextEffect()
 {
 	auto moneyTextAnimation = content.Load<AnimationFactory>("Effects/1000.ani.xml");
 	auto effect = std::make_unique<FlashingMoneyTextEffect>(moneyTextAnimation);
+
+	return effect;
+}
+
+std::unique_ptr<IEffect> EffectFactory::CreateWaterEffect()
+{
+	auto waterTexture = content.Load<Texture>("Effects/Water.png");
+	auto effect = std::make_unique<WaterEffect>(waterTexture);
 
 	return effect;
 }

@@ -21,12 +21,6 @@ Player::Player() : GameObject{ EntityType::Player }
 	this->whip = std::make_unique<Whip>(*this);
 }
 
-void Player::SetFacing(Facing facing)
-{
-	GameObject::SetFacing(facing);
-	whip->SetFacing(facing);
-}
-
 void Player::SetMoveState(MoveState moveState)
 {
 	this->moveState = moveState;
@@ -71,6 +65,12 @@ void Player::SetSpeed(float speed)
 void Player::SetJumpSpeed(float jumpSpeed)
 {
 	this->jumpSpeed = jumpSpeed;
+}
+
+void Player::SetFacing(Facing facing)
+{
+	GameObject::SetFacing(facing);
+	whip->SetFacing(facing);
 }
 
 void Player::AddExp(int amount)

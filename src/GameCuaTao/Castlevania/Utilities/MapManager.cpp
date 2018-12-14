@@ -250,6 +250,9 @@ std::unique_ptr<GameObject> MapManager::ConstructObject(ObjectProperties propert
 		case EntityType::RedMoneyBag:
 			return objectFactory.CreateRedMoneyBag();
 
+		case EntityType::FlashingMoneyBag:
+			return objectFactory.CreateFlashingMoneyBag();
+
 		case EntityType::Door:
 			return objectFactory.CreateDoor();
 

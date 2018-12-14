@@ -1,27 +1,25 @@
 #pragma once
 
-#include "Direct2DGame/GameTime.h"
 #include "Direct2DGame/Extensions/Camera.h"
+#include "Cutscene.h"
 #include "../../Models/Characters/Player/Player.h"
 
 namespace Castlevania
 {
-	class NextRoomCutscene
+	class NextRoomCutscene : public Cutscene
 	{
 	public:
-		NextRoomCutscene(Player &player, Camera &camera, Door &door);
+		NextRoomCutscene(Stage &stage, ObjectCollection &objectCollection);
 
 		Door &GetDoor();
-
-		bool IsComplete();
-		void Update(GameTime gameTime);
+		void Update(GameTime gameTime) override;
 
 	private:
 		enum class State;
 
-		Player &player;
-		Camera &camera;
-		Door &door;
+		Player *player;
+		Camera *camera;
+		Door *door;
 		Direction doorHitDirection;
 
 		State currentState;
@@ -29,6 +27,6 @@ namespace Castlevania
 		float playerDestination_x;
 		float openDoorPosition_x;
 
-		bool isComplete;
+		void SetupCutscene();
 	};
 }

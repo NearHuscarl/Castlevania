@@ -24,6 +24,10 @@ bool MoneyTextEffect::IsFinished()
 	return false;
 }
 
+void MoneyTextEffect::Update(GameTime gameTime)
+{
+}
+
 void MoneyTextEffect::Draw(SpriteExtensions &spriteBatch)
 {
 	spriteBatch.Draw(*moneyText, position);

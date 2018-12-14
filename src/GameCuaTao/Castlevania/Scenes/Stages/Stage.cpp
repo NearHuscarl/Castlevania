@@ -8,7 +8,16 @@
 
 using namespace Castlevania;
 
-constexpr auto NEXT_MAP_TRANSITION_TIME = 400; // in milliseconds
+struct Stage::StageEvent
+{
+	StageEvent(int message, Subject &subject) : subject{ subject }
+	{
+		this->message = message;
+	}
+
+	int message;
+	Subject &subject;
+};
 
 Stage::Stage(GameplayScene &gameplayScene, Map map, std::string spawnPoint) :
 	gameplayScene{ gameplayScene },
@@ -21,6 +30,11 @@ Stage::Stage(GameplayScene &gameplayScene, Map map, std::string spawnPoint) :
 void Stage::OnNotify(Subject &subject, int event)
 {
 	newEvent = std::make_unique<StageEvent>(event, subject);
+}
+
+Camera *Stage::GetCamera()
+{
+	return camera.get();
 }
 
 UpdateData Stage::GetUpdateData()
@@ -52,9 +66,20 @@ void Stage::Initialize()
 
 void Stage::Update(GameTime gameTime)
 {
+	switch (currentState)
+	{
+		case GameState::PLAYING:
+			UpdateGameplay(gameTime);
+			break;
+
+		default:
+			currentCutscene->Update(gameTime);
+			break;
+	}
+
 	if (newEvent)
 	{
-		ProcessMessage(); // Make sure to handle new event after updating GameObjects
+		ProcessMessage(newEvent->message); // Make sure to handle new event after updating GameObjects
 		newEvent = nullptr;
 	}
 }
@@ -63,12 +88,12 @@ void Stage::Draw(SpriteExtensions &spriteBatch)
 {
 	switch (currentState)
 	{
-		case GameState::NEXT_MAP_CUTSCENE:
-			DrawNextMapCutscene(spriteBatch);
+		case GameState::PLAYING:
+			DrawGameplay(spriteBatch);
 			break;
 
 		default:
-			DrawGameplay(spriteBatch);
+			currentCutscene->Draw(spriteBatch);
 			break;
 	}
 }
@@ -88,6 +113,12 @@ void Stage::LoadMap()
 	objectCollection.player->SetPosition(objectCollection.locations[spawnPoint]);
 
 	LoadObjectsInCurrentArea();
+}
+
+void Stage::SetCurrentCutscene(GameState gameState)
+{
+	currentState = gameState;
+	currentCutscene = ConstructCutscene(currentState);
 }
 
 void Stage::LoadObjectsInCurrentArea()
@@ -144,7 +175,7 @@ void Stage::UpdateGameObjects(GameTime gameTime)
 
 void Stage::UpdateGameplay(GameTime gameTime)
 {
-	devTool->Update(objectCollection);
+	devTool->Update(gameTime, objectCollection);
 	camera->LookAt(player->GetOriginPosition(), Scrolling::Horizontally);
 	UpdateGameObjects(gameTime);
 	data->timeLeft.CountDown();
@@ -172,32 +203,78 @@ void Stage::DrawGameplay(SpriteExtensions &spriteBatch)
 	devTool->Draw(spriteBatch);
 }
 
-void Stage::DrawNextMapCutscene(SpriteExtensions &spriteBatch)
+void Stage::OnNextMapCutsceneComplete()
 {
-	spriteBatch.Draw(gameplayScene.GetCutsceneBackground(), Vector2::Zero());
+	auto nextMapTrigger = player->GetNearbyObjects().nextMap;
+	auto nextMap = nextMapTrigger->Property("Map");
+	auto spawnPoint = nextMapTrigger->Property("SpawnPoint");
+
+	player->EnableControl(true); // quit player auto mode
+	gameplayScene.NextStage(string2Map.at(nextMap), spawnPoint);
 }
 
-void Stage::SetupNextMapCutscene()
+void Stage::OnNextRoomCutsceneComplete()
 {
-	nextMapTimer.Start();
-	currentState = GameState::NEXT_MAP_CUTSCENE;
+	auto &door = dynamic_cast<NextRoomCutscene&>(*currentCutscene).GetDoor();
+	auto wall = objectFactory.CreateBoundary(door.GetBoundingBox());
+
+	objectCollection.boundaries.push_back(std::move(wall));
+	door.Destroy();
+
+	LoadObjectsInCurrentArea();
+	gameplayScene.GetData()->stage++;
+	currentState = GameState::PLAYING;
 }
 
-void Stage::UpdateNextMapCutscene(GameTime gameTime)
+void Stage::ProcessMessage(int message)
 {
-	if (nextMapTimer.ElapsedMilliseconds() >= NEXT_MAP_TRANSITION_TIME)
+	switch (message)
 	{
-		auto nextMapTrigger = player->GetNearbyObjects().nextMap;
-		auto nextMap = nextMapTrigger->Property("Map");
-		auto spawnPoint = nextMapTrigger->Property("SpawnPoint");
+		case NEXT_MAP_CUTSCENE_STARTED:
+			SetCurrentCutscene(GameState::NEXT_MAP_CUTSCENE);
+			break;
 
-		player->EnableControl(true); // quit player auto mode
-		gameplayScene.NextStage(string2Map.at(nextMap), spawnPoint);
+		case NEXT_MAP_CUTSCENE_ENDED:
+			OnNextMapCutsceneComplete();
+			break;
 
-		OnNotify(Subject::Empty(), NEXT_MAP_CUTSCENE_ENDED);
+		case NEXT_ROOM_CUTSCENE_STARTED:
+			SetCurrentCutscene(GameState::NEXT_ROOM_CUTSCENE);
+			break;
+
+		case NEXT_ROOM_CUTSCENE_ENDED:
+			OnNextRoomCutsceneComplete();
+			break;
+
+		case GO_TO_CASTLE_CUTSCENE_STARTED:
+			SetCurrentCutscene(GameState::GO_TO_CASTLE_CUTSCENE);
+			break;
+
+		case PLAYER_HIT_WATER_AREA:
+			//SetupNextMapCutscene();
+			break;
 	}
+}
 
-	ProcessMessage();
+std::unique_ptr<Cutscene> Stage::ConstructCutscene(GameState gameState)
+{
+	switch (gameState)
+	{
+		case GameState::NEXT_MAP_CUTSCENE:
+		{
+			auto &content = gameplayScene.GetSceneManager().GetContent();
+			return std::make_unique<NextMapCutscene>(*this, content);
+		}
+
+		case GameState::NEXT_ROOM_CUTSCENE:
+			return std::make_unique<NextRoomCutscene>(*this, objectCollection);
+
+		case GameState::GO_TO_CASTLE_CUTSCENE:
+			return std::make_unique<GoToCastleCutscene>(*this, objectCollection);
+
+		default:
+			return nullptr;
+	}
 }
 
 Stage::~Stage()

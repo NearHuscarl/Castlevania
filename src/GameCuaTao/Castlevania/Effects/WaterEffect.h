@@ -6,10 +6,10 @@
 
 namespace Castlevania
 {
-	class MoneyTextEffect : public IEffect
+	class WaterEffect : public IEffect
 	{
 	public:
-		MoneyTextEffect(std::shared_ptr<Texture> moneyTextTexture);
+		WaterEffect(std::shared_ptr<Texture> waterTexture);
 
 		void Show(Vector2 position) override;
 		bool IsFinished() override;
@@ -18,9 +18,15 @@ namespace Castlevania
 		void Draw(SpriteExtensions &spriteBatch) override;
 
 	private:
-		Vector2 position;
-		std::unique_ptr<Sprite> moneyText;
+		Vector2 waterLeftVelocity;
+		Vector2 waterTopVelocity;
+		Vector2 waterRightVelocity;
 
+		Vector2 waterLeftPosition;
+		Vector2 waterTopPosition;
+		Vector2 waterRightPosition;
+
+		std::unique_ptr<Sprite> water;
 		Stopwatch lifespanTimer;
 	};
 }

@@ -59,8 +59,18 @@ void Controller::OnKeyDown(int keyCode)
 		case MoveState::HOVERING:
 		case MoveState::FALLING:
 		case MoveState::LANDING:
-		case MoveState::DUCKING:
 			if (keyCode == Button::Attack)
+				player.Attack();
+			else if (keyCode == Button::Throw)
+				Throw();
+			break;
+
+		case MoveState::DUCKING:
+			if (keyCode == Button::WalkLeft)
+				player.SetFacing(Facing::Left);
+			else if (keyCode == Button::WalkRight)
+				player.SetFacing(Facing::Right);
+			else if (keyCode == Button::Attack)
 				player.Attack();
 			else if (keyCode == Button::Throw)
 				Throw();

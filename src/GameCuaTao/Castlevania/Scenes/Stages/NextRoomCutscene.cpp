@@ -1,5 +1,7 @@
 #include "Direct2DGame/Extensions/Animations/AnimatedSprite.h"
 #include "NextRoomCutscene.h"
+#include "Stage.h"
+#include "StageEvent.h"
 
 using namespace Castlevania;
 
@@ -15,35 +17,56 @@ enum class NextRoomCutscene::State
 	VIEWPORT_MOVING_SECOND_HALF,
 };
 
-NextRoomCutscene::NextRoomCutscene(Player &player, Camera &camera, Door &door) :
-	player{ player },
-	camera{ camera },
-	door{ door }
+NextRoomCutscene::NextRoomCutscene(Stage &stage, ObjectCollection &objectCollection) : Cutscene{ stage }
 {
-	player.EnableControl(false);
-	doorHitDirection = player.GetNearbyObjects().doorHitDirection;
-	
-	auto cameraRect = camera.GetBounds();
+	camera = stage.GetCamera();
+	camera->SetMoveArea(Rect::Empty()); // camera can move freely in cutscene
+
+	player = objectCollection.player.get();
+	door = player->GetNearbyObjects().door;
+
+	// Clear all objects in current room because they will not be needed
+	// anymore once player go to the next room. The door is the only exception
+	// here since it is part of the next room cutscene. It will be deleted later
+	// after the cutscene is finished
+	auto &entities = objectCollection.entities;
+
+	for (int i = entities.size() - 1; i >= 0; i--)
+	{
+		auto &entity = entities[i];
+
+		if (entity.get() != door)
+			entities.erase(entities.begin() + i);
+	}
+
+	SetupCutscene();
+}
+
+void NextRoomCutscene::SetupCutscene()
+{
+	player->EnableControl(false);
+	doorHitDirection = player->GetNearbyObjects().doorHitDirection;
+
+	auto cameraRect = camera->GetBounds();
 
 	viewportDestination_x = cameraRect.left + cameraRect.Width();
 	openDoorPosition_x = cameraRect.left + cameraRect.Width() / 2;
 
 	currentState = State::VIEWPORT_MOVING_FIRST_HALF;
-	isComplete = false;
 }
 
 Door &NextRoomCutscene::GetDoor()
 {
-	return door;
-}
-
-bool NextRoomCutscene::IsComplete()
-{
-	return isComplete;
+	return *door;
 }
 
 void NextRoomCutscene::Update(GameTime gameTime)
 {
+	if (isComplete)
+		return;
+
+	stage.UpdateGameObjects(gameTime);
+
 	switch (currentState)
 	{
 		case State::VIEWPORT_MOVING_FIRST_HALF:
@@ -51,11 +74,11 @@ void NextRoomCutscene::Update(GameTime gameTime)
 			auto deltaTime = (float)gameTime.ElapsedGameTime.Seconds();
 			auto cameraDistance = CAMERA_CUTSCENE_SPEED * deltaTime;
 
-			camera.Move(Vector2{ cameraDistance, 0 });
+			camera->Move(Vector2{ cameraDistance, 0 });
 
-			if (camera.GetBounds().X() >= openDoorPosition_x)
+			if (camera->GetBounds().X() >= openDoorPosition_x)
 			{
-				door.Open();
+				door->Open();
 				currentState = State::OPENING_DOOR;
 			}
 			break;
@@ -63,23 +86,23 @@ void NextRoomCutscene::Update(GameTime gameTime)
 
 		case State::OPENING_DOOR:
 		{
-			auto &doorSprite = static_cast<AnimatedSprite&>(*door.GetSprite());
+			auto &doorSprite = static_cast<AnimatedSprite&>(*door->GetSprite());
 			
 			if (doorSprite.AnimateComplete())
 			{
 				if (doorHitDirection == Direction::Left)
-					player.WalkRight();
+					player->WalkRight();
 				else if (doorHitDirection == Direction::Right)
-					player.WalkLeft();
+					player->WalkLeft();
 				else // Handle edge cases where player may jump on top of door bbox before falling on ground
 				{
-					if (player.GetOriginPosition().x < door.GetOriginPosition().x)
-						player.WalkRight();
+					if (player->GetOriginPosition().x < door->GetOriginPosition().x)
+						player->WalkRight();
 					else
-						player.WalkLeft();
+						player->WalkLeft();
 				}
 
-				playerDestination_x = player.GetPosition().x + WALK_DISTANCE;
+				playerDestination_x = player->GetPosition().x + WALK_DISTANCE;
 				currentState = State::GOING_TO_NEXT_ROOM;
 			}
 			break;
@@ -87,10 +110,10 @@ void NextRoomCutscene::Update(GameTime gameTime)
 
 		case State::GOING_TO_NEXT_ROOM:
 		{
-			if (player.GetPosition().x >= playerDestination_x)
+			if (player->GetPosition().x >= playerDestination_x)
 			{
-				door.Close();
-				player.Idle();
+				door->Close();
+				player->Idle();
 				currentState = State::CLOSING_DOOR;
 			}
 			break;
@@ -98,7 +121,7 @@ void NextRoomCutscene::Update(GameTime gameTime)
 
 		case State::CLOSING_DOOR:
 		{
-			auto &doorSprite = static_cast<AnimatedSprite&>(*door.GetSprite());
+			auto &doorSprite = static_cast<AnimatedSprite&>(*door->GetSprite());
 
 			if (doorSprite.AnimateComplete())
 			{
@@ -112,15 +135,16 @@ void NextRoomCutscene::Update(GameTime gameTime)
 			auto deltaTime = (float)gameTime.ElapsedGameTime.Seconds();
 			auto cameraDistance = CAMERA_CUTSCENE_SPEED * deltaTime;
 
-			if (camera.GetBounds().X() + cameraDistance > viewportDestination_x)
-				cameraDistance = viewportDestination_x - camera.GetBounds().X();
+			if (camera->GetBounds().X() + cameraDistance > viewportDestination_x)
+				cameraDistance = viewportDestination_x - camera->GetBounds().X();
 
-			camera.Move(Vector2{ cameraDistance, 0 });
+			camera->Move(Vector2{ cameraDistance, 0 });
 
-			if (camera.GetBounds().X() >= viewportDestination_x)
+			if (camera->GetBounds().X() >= viewportDestination_x)
 			{
-				player.EnableControl(true);
+				player->EnableControl(true);
 				isComplete = true;
+				stage.OnNotify(Subject::Empty(), NEXT_ROOM_CUTSCENE_ENDED);
 			}
 			break;
 		}

@@ -41,6 +41,8 @@ void EffectRenderingSystem::Update(GameTime gameTime)
 			break;
 
 		case ObjectState::DYING:
+			hitEffect->Update(gameTime);
+
 			if (hitEffect->IsFinished())
 				GetParent().Destroy();
 			break;

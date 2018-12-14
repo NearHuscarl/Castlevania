@@ -77,11 +77,14 @@ Color RenderingSystem::GetBoundingBoxColor()
 	switch (type)
 	{
 		case EntityType::Boundary:
-			return Color::Blue() * bboxColorScale;
+			return Color::DimGray() * bboxColorScale;
 
 		case EntityType::SpawnArea:
 		case EntityType::SpawnPoint:
 			return Color::Red() * (bboxColorScale - 0.2f);
+
+		case EntityType::WaterArea:
+			return Color::Blue() * bboxColorScale;
 
 		case EntityType::Player:
 			return Color::Gold() * bboxColorScale;

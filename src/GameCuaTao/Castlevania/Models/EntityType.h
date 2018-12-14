@@ -13,6 +13,7 @@ namespace Castlevania
 		// Areas
 		SpawnArea,
 		ViewportArea,
+		WaterArea,
 
 		// Intro objects
 		Bat,
@@ -61,6 +62,7 @@ namespace Castlevania
 		// Misc
 		Door,
 		BreakableWall,
+		DeadZone,
 		Castle,
 		DirtBlock,
 
