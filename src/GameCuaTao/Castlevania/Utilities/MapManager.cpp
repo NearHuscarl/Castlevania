@@ -82,9 +82,6 @@ GameObjects MapManager::GetMapObjectsInArea(Map name, Rect area)
 		auto typeName = properties.at("type");
 		auto type = string2EntityType.at(typeName);
 
-		if (type != EntityType::SpawnArea)
-			continue;
-
 		ReadObjectPosition(properties, x, y);
 		auto width = std::stof(properties.at("width"));
 		auto height = std::stof(properties.at("height"));
@@ -93,18 +90,33 @@ GameObjects MapManager::GetMapObjectsInArea(Map name, Rect area)
 		if (!area.Contains((Rect)bbox) && area != Rect::Empty())
 			continue;
 
-		auto spawnObject = string2EntityType.at(properties.at("SpawnObject"));
-		auto object = objectFactory.CreateSpawnArea(spawnObject, bbox);
+		auto object = std::unique_ptr<GameObject>{};
 
-		auto spawnGroup = GetValueOrDefault(properties, "SpawnGroup", "");
+		switch (type)
+		{
+			case EntityType::SpawnArea:
+			{
+				auto spawnObject = string2EntityType.at(properties.at("SpawnObject"));
+				auto spawnArea = objectFactory.CreateSpawnArea(spawnObject, bbox);
 
-		if (!spawnGroup.empty())
-			object->SetGroupCountChances(spawnGroup);
+				auto spawnGroup = GetValueOrDefault(properties, "SpawnGroup", "");
 
-		auto spawnDirection = GetValueOrDefault(properties, "SpawnDirection", "");
+				if (!spawnGroup.empty())
+					spawnArea->SetGroupCountChances(spawnGroup);
 
-		if (!spawnDirection.empty())
-			object->SetDirectionChances(spawnDirection);
+				auto spawnDirection = GetValueOrDefault(properties, "SpawnDirection", "");
+
+				if (!spawnDirection.empty())
+					spawnArea->SetDirectionChances(spawnDirection);
+
+				object = std::move(spawnArea);
+				break;
+			}
+
+			case EntityType::WaterArea:
+				object = objectFactory.CreateWaterArea(bbox);
+				break;
+		}
 
 		objects.push_back(std::move(object));
 	}

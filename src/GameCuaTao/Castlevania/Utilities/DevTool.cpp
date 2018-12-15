@@ -10,6 +10,7 @@ using namespace Castlevania;
 
 int DevTool::currentItemIndex = 0;
 int DevTool::currentMapIndex = 0;
+bool DevTool::IsDebugging = true;
 
 constexpr auto ENEMY = "ENEMY";
 constexpr auto CONTAINER = "CONTAINER";
@@ -22,7 +23,6 @@ DevTool::DevTool(GameplayScene &gameplayScene, Camera &camera) :
 	objectFactory{ gameplayScene.GetSceneManager().GetFactory() },
 	camera{ camera }
 {
-	isDebugging = true;
 }
 
 void DevTool::LoadContent(ContentManager &content)
@@ -103,9 +103,9 @@ void DevTool::Update(GameTime gameTime, ObjectCollection &objectCollection)
 
 	// Update keyboard input
 	if (InputHelper::IsKeyDown(DIK_ESCAPE))
-		isDebugging = !isDebugging;
+		IsDebugging = !IsDebugging;
 
-	if (!isDebugging)
+	if (!IsDebugging)
 		return;
 
 	if (InputHelper::IsKeyDown(DIK_Q))
@@ -150,7 +150,7 @@ void DevTool::Update(GameTime gameTime, ObjectCollection &objectCollection)
 
 void DevTool::Draw(SpriteExtensions &spriteBatch)
 {
-	if (!isDebugging)
+	if (!IsDebugging)
 		return;
 
 	for (auto effect : activeEffects)

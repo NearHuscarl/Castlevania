@@ -9,13 +9,12 @@ namespace Castlevania
 	{
 	public:
 		FishmanResponseSystem(Fishman &parent);
+
 		GameObject &GetParent() override;
+		void Update(UpdateData &updateData) override;
 
 	protected:
 		Fishman &parent;
-
-		void OnTouchingGround(CollisionData collisionData) override;
-		void OnFalling() override;
-		void OnLanding() override;
+		bool wasOnGround;
 	};
 }

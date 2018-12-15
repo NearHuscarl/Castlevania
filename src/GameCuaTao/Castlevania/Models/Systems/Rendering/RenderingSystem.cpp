@@ -1,22 +1,19 @@
 #include "RenderingSystem.h"
 #include "../../GameObject.h"
 #include "../../Settings.h"
+#include "../../../Utilities/DevTool.h"
 
 using namespace Castlevania;
 
+std::shared_ptr<Texture> RenderingSystem::bboxTexture = nullptr;
+
 RenderingSystem::RenderingSystem()
 {
-	drawBoundingBox = true;
 }
 
 GameObject &RenderingSystem::GetParent()
 {
 	return GameObject::NullObject();
-}
-
-void RenderingSystem::DrawBoundingBox(bool value)
-{
-	drawBoundingBox = value;
 }
 
 void RenderingSystem::Receive(int message)
@@ -38,27 +35,26 @@ void RenderingSystem::LoadContent(ContentManager &content)
 	bboxTexture = content.Load<Texture>("Backgrounds/BoundingBox.png");
 }
 
+void RenderingSystem::DrawBoundingBox(SpriteExtensions &spriteBatch, RectF boundingBox, Color color)
+{
+	auto position = Vector2{ boundingBox.X(), boundingBox.Y() };
+
+	spriteBatch.Draw(*bboxTexture, position, &(Rect)boundingBox, color, 0.0f, Vector2::One(), SpriteEffects::None);
+}
+
 void RenderingSystem::Update(GameTime gameTime)
 {
 }
 
 void RenderingSystem::Draw(SpriteExtensions &spriteBatch)
 {
-	if (drawBoundingBox && GetParent().GetSprite()->IsVisible())
+	if (DevTool::IsDebugging && GetParent().GetSprite()->IsVisible())
 	{
 		auto boundingBox = GetSprite().GetBoundingRectangle(GetParent().GetPosition());
-		auto position = Vector2{ boundingBox.X(), boundingBox.Y() };
 		auto color = GetBoundingBoxColor();
 
-		spriteBatch.Draw(*bboxTexture, position, &(Rect)boundingBox, color, 0.0f, Vector2::One(), SpriteEffects::None);
+		DrawBoundingBox(spriteBatch, boundingBox, color);
 	}
-}
-
-void RenderingSystem::DrawBoundingBox(SpriteExtensions &spriteBatch, RectF boundingBox, Color color)
-{
-	auto position = Vector2{ boundingBox.X(), boundingBox.Y() };
-
-	spriteBatch.Draw(*bboxTexture, position, &(Rect)boundingBox, color, 0.0f, Vector2::One(), SpriteEffects::None);
 }
 
 void RenderingSystem::OnMoveStateChanged()

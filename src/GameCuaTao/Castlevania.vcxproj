@@ -164,7 +164,6 @@
     <ClCompile Include="Castlevania\Effects\WaterEffect.cpp" />
     <ClCompile Include="Castlevania\Models\Areas\WaterArea.cpp" />
     <ClCompile Include="Castlevania\Models\Areas\WaterAreaRenderingSystem.cpp" />
-    <ClCompile Include="Castlevania\Models\Areas\WaterAreaResponseSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Enemies\Enemy.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Enemies\Fishman.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Enemies\FishmanControlSystem.cpp" />
@@ -338,7 +337,6 @@
     <ClInclude Include="Castlevania\Models\Items\Fireball.h" />
     <ClInclude Include="Castlevania\Models\IAttackable.h" />
     <ClInclude Include="Castlevania\Models\Items\MoneyBag.h" />
-    <ClInclude Include="Castlevania\Models\Areas\WaterAreaResponseSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Rendering\ItemRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Items\PowerupResponseSystem.h" />
     <ClInclude Include="Castlevania\Models\Settings.h" />

@@ -17,6 +17,8 @@ namespace Castlevania
 	public:
 		DevTool(GameplayScene &gameplayScene, Camera &camera);
 
+		static bool IsDebugging;
+
 		void LoadContent(ContentManager &content);
 		void Update(GameTime gameTime, ObjectCollection &objectCollection);
 		void Draw(SpriteExtensions &spriteBatch);
@@ -24,7 +26,6 @@ namespace Castlevania
 	private:
 		using DevToolItems = std::vector<std::pair<std::string, Sprite>>;
 		
-		bool isDebugging;
 		std::shared_ptr<SpriteFont> debugFont;
 
 		std::unordered_map<std::string, DevToolItems> items;

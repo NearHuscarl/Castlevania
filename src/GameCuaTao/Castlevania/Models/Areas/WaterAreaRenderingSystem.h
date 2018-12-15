@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../Systems/Rendering/RenderingSystem.h"
-#include "../../Effects/WaterEffect.h"
 #include "WaterArea.h"
+#include "../../Effects/EffectFactory.h"
 
 namespace Castlevania
 {
@@ -10,10 +10,12 @@ namespace Castlevania
 	class WaterAreaRenderingSystem : public RenderingSystem
 	{
 	public:
-		WaterAreaRenderingSystem(WaterArea &parent);
+		WaterAreaRenderingSystem(WaterArea &parent, RectF boundingBox, EffectFactory &effectFactory);
 
 		Sprite &GetSprite() override;
 		GameObject &GetParent() override;
+
+		void Receive(int message) override;
 
 		void LoadContent(ContentManager &content) override;
 		void Update(GameTime gameTime) override;
@@ -22,6 +24,9 @@ namespace Castlevania
 	private:
 		WaterArea &parent;
 		std::unique_ptr<Sprite> sprite;
-		std::vector<WaterEffect> effects;
+		RectF boundingBox;
+		EffectFactory &effectFactory;
+
+		std::vector<std::shared_ptr<IEffect>> effects;
 	};
 }

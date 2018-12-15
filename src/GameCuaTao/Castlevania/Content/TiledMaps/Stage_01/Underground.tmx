@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="16" height="6" tilewidth="64" tileheight="64" infinite="0" nextlayerid="9" nextobjectid="31">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="16" height="6" tilewidth="64" tileheight="64" infinite="0" nextlayerid="9" nextobjectid="32">
  <tileset firstgid="1" source="../Candle.tsx"/>
  <tileset firstgid="3" source="../Simon.tsx"/>
  <layer id="1" name="TileLayer1" width="16" height="6">
@@ -16,8 +16,8 @@
     <property name="SpawnObject" value="Fishman"/>
    </properties>
   </object>
-  <object id="28" name="WaterArea" type="WaterArea" x="448" y="294" width="64" height="58"/>
-  <object id="29" name="WaterArea" type="WaterArea" x="576" y="294" width="64" height="58"/>
+  <object id="28" name="WaterArea" type="WaterArea" x="440" y="292" width="80" height="73"/>
+  <object id="29" name="WaterArea" type="WaterArea" x="568" y="292" width="80" height="73"/>
  </objectgroup>
  <objectgroup id="4" name="Bounds">
   <object id="1" name="Platform" type="Boundary" x="192" y="96" width="64" height="32"/>

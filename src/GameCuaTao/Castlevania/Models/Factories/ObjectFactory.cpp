@@ -16,7 +16,7 @@
 #include "../Systems/Rendering/ItemRenderingSystem.h"
 #include "../Systems/Rendering/SpriteRenderingSystem.h"
 #include "../Systems/Rendering/EffectRenderingSystem.h"
-#include "../Areas/WaterAreaResponseSystem.h"
+#include "../Areas/WaterAreaRenderingSystem.h"
 #include "../Characters/Player/Controller.h"
 #include "../Characters/Player/PlayerMovementSystem.h"
 #include "../Characters/Player/PlayerCollisionSystem.h"
@@ -51,6 +51,7 @@ constexpr auto ITEM_FALL_SPEED = 275.0f;
 ObjectFactory::ObjectFactory(ContentManager &content) : content{ content }
 {
 	effectFactory = std::make_unique<EffectFactory>(content);
+	RenderingSystem::LoadContent(content);
 }
 
 std::unique_ptr<GameObject> ObjectFactory::CreateBoundary(RectF rect)
@@ -65,16 +66,12 @@ std::unique_ptr<GameObject> ObjectFactory::CreateViewportArea(RectF rect)
 
 std::unique_ptr<WaterArea> ObjectFactory::CreateWaterArea(RectF rect)
 {
-	auto object = std::make_unique<WaterArea>(*effectFactory);
-	//auto collisionSystem = std::make_unique<EntityCollisionSystem>(*object);
-	//auto responseSystem = std::make_unique<WaterAreaResponseSystem>(*object);
-	//auto renderingSystem = std::make_unique<BoundingBoxRenderingSystem>(*object, rect);
+	auto object = std::make_unique<WaterArea>();
+	auto renderingSystem = std::make_unique<WaterAreaRenderingSystem>(*object, rect, *effectFactory);
 
-	//object->SetPosition(Vector2{ rect.left, rect.top });
-	//object->Attach(std::move(collisionSystem));
-	//object->Attach(std::move(responseSystem));
-	//object->Attach(std::move(renderingSystem));
-	//object->LoadContent(content);
+	object->SetPosition(Vector2{ rect.left, rect.top });
+	object->Attach(std::move(renderingSystem));
+	object->LoadContent(content);
 
 	return object;
 }
@@ -318,7 +315,7 @@ std::unique_ptr<Fishman> ObjectFactory::CreateFishman(Vector2 position)
 
 	auto controlSystem = std::make_unique<FishmanControlSystem>(*object, *this);
 	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, 1000.0f);
-	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
+	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<FishmanResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<FishmanRenderingSystem>(
 		*object, "Characters/Enemies/Fishman.ani.xml",
@@ -664,6 +661,18 @@ std::unique_ptr<GameObject> ObjectFactory::CreateDirtBlock(Vector2 position)
 {
 	auto object = std::make_unique<GameObject>(EntityType::DirtBlock);
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "TiledMaps/Stage_01/Dirt_Block.png");
+
+	object->SetPosition(position);
+	object->Attach(std::move(renderingSystem));
+	object->LoadContent(content);
+
+	return object;
+}
+
+std::unique_ptr<GameObject> ObjectFactory::CreateWaterZone(Vector2 position)
+{
+	auto object = std::make_unique<GameObject>(EntityType::Unknown);
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "TiledMaps/Stage_01/Water_Area.png");
 
 	object->SetPosition(position);
 	object->Attach(std::move(renderingSystem));

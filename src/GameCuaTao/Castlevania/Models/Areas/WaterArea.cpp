@@ -1,13 +1,14 @@
 #include "WaterArea.h"
+#include "../Settings.h"
 
 using namespace Castlevania;
 
-WaterArea::WaterArea(EffectFactory &effectFactory) :
-	GameObject{ EntityType::WaterArea },
-	effectFactory{ effectFactory }
+WaterArea::WaterArea() : GameObject{ EntityType::WaterArea }
 {
 }
 
-void WaterArea::SpawnWaterEffect(Vector2 position)
+void WaterArea::Splash(Vector2 position)
 {
+	splashPosition = position;
+	SendMessageToSystems(OBJECT_HITS_WATER_SURFACE);
 }

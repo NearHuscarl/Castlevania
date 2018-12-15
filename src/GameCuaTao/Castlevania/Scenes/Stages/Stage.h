@@ -35,15 +35,16 @@ namespace Castlevania
 
 		Camera *GetCamera();
 		UpdateData GetUpdateData();
+
 		void UpdateGameObjects(GameTime gameTime);
 		void UpdateGameplay(GameTime gameTime);
 		void DrawGameplay(SpriteExtensions &spriteBatch);
 
-		virtual void Initialize();
-		virtual void Update(GameTime gameTime);
-		virtual void Draw(SpriteExtensions &spriteBatch);
+		void Initialize();
+		void Update(GameTime gameTime);
+		void Draw(SpriteExtensions &spriteBatch);
 
-		virtual ~Stage();
+		~Stage();
 
 	private:
 		struct StageEvent;
@@ -69,7 +70,6 @@ namespace Castlevania
 		void LoadObjectsInCurrentArea();
 		void LoadMap();
 
-		// Common cutscenes setup and update methods
 		void OnNextMapCutsceneComplete();
 		void OnNextRoomCutsceneComplete();
 

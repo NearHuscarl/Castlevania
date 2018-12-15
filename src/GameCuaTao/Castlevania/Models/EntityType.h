@@ -62,7 +62,6 @@ namespace Castlevania
 		// Misc
 		Door,
 		BreakableWall,
-		DeadZone,
 		Castle,
 		DirtBlock,
 

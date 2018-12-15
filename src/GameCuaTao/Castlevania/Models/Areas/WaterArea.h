@@ -1,20 +1,19 @@
 #pragma once
 
-#include "Direct2DGame/GameTime.h"
 #include "../GameObject.h"
 
 namespace Castlevania
 {
-	class EffectFactory;
-
 	class WaterArea : public GameObject
 	{
 	public:
-		WaterArea(EffectFactory &effectFactory);
+		WaterArea();
+		
+		void Splash(Vector2 position);
 
-		void SpawnWaterEffect(Vector2 position);
+	private:
+		Vector2 splashPosition;
 
-	protected:
-		EffectFactory &effectFactory;
+		friend class WaterAreaRenderingSystem;
 	};
 }

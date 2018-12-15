@@ -18,4 +18,7 @@ namespace Castlevania
 
 	// Panther events
 	constexpr auto NEAR_PLAYER = 6;
+
+	// WaterArea events
+	constexpr auto OBJECT_HITS_WATER_SURFACE = 7;
 }

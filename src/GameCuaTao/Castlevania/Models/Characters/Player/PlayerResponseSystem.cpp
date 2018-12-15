@@ -44,6 +44,10 @@ void PlayerResponseSystem::Update(UpdateData &updateData)
 				OnCollideWithTrigger(result, responseResult);
 				break;
 
+			case EntityType::WaterArea:
+				OnCollideWithWaterArea(result, objectCollection);
+				break;
+
 			case EntityType::Zombie:
 			case EntityType::Panther:
 			case EntityType::Fishman:
@@ -212,6 +216,20 @@ void PlayerResponseSystem::OnCollideWithTrigger(CollisionResult &result, Respons
 		case TriggerType::CASTLE_ENTRANCE:
 			OnCollideWithCastleEntranceTrigger(trigger);
 			break;
+	}
+}
+
+void PlayerResponseSystem::OnCollideWithWaterArea(CollisionResult &result, ObjectCollection &objectCollection)
+{
+	auto &waterArea = dynamic_cast<WaterArea&>(result.collidedObject);
+	
+	if (result.direction == Direction::Top)
+	{
+		waterArea.Splash(parent.GetOriginPosition());
+
+		auto waterZone = objectFactory.CreateWaterZone();
+		waterZone->SetOriginPosition(waterArea.GetOriginPosition());
+		objectCollection.foregroundObjects.push_back(std::move(waterZone));
 	}
 }
 
