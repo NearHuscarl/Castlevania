@@ -20,7 +20,7 @@ namespace Castlevania
 		std::shared_ptr<Hud> GetHud();
 		std::shared_ptr<GameplayData> GetData();
 
-		void NextStage(Map map, std::string spawnPoint = "Checkpoint");
+		void NextStage(Map map, std::string spawnPoint = "Entrypoint");
 
 		void LoadContent() override;
 		void Update(GameTime gameTime) override;

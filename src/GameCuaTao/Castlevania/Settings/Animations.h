@@ -22,7 +22,7 @@ namespace Castlevania
 	constexpr auto GO_DOWNSTAIRS_ATTACK_ANIMATION = "go_downstairs_attack";
 	constexpr auto TURN_BACKWARD_ANIMATION = "turn_backward";
 	constexpr auto TAKE_DAMAGE_ANIMATION = "take_damage";
-	constexpr auto IS_HIT_ANIMATION = "is_hit";
+	constexpr auto DIE_ANIMATION = "die";
 
 	// Simon flashing animations
 	constexpr auto FLASH_01_ANIMATION = "flash_walk_01";

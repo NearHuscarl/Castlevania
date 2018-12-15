@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "../../Settings.h"
 #include "../../UpdateData.h"
+#include "../../../Scenes/Stages/StageEvent.h"
 
 using namespace Castlevania;
 
@@ -102,11 +103,6 @@ void Player::LoadContent(ContentManager &content)
 
 void Player::Update(GameTime gameTime, UpdateData &updateData)
 {
-	if (InputHelper::IsKeyDown(DIK_9)) // NOTE: remove debugging code
-		data.hearts += 20;
-	else if (InputHelper::IsKeyDown(DIK_0))
-		data.health = MAX_HEALTH;
-
 	GameObject::Update(gameTime, updateData);
 	UpdateStates();
 	UpdateSubWeapons(updateData);
@@ -384,13 +380,14 @@ bool Player::IsAttacking()
 	return attackState == AttackState::WHIPPING || attackState == AttackState::THROWING;
 }
 
-bool Player::IsJumping()
+bool Player::IsOnTheAir()
 {
 	return moveState == MoveState::JUMPING
 		|| moveState == MoveState::HOVERING
 		|| moveState == MoveState::FALLING
 		|| moveState == MoveState::FALLING_HARD
-		|| moveState == MoveState::LANDING;
+		|| moveState == MoveState::LANDING
+		|| moveState == MoveState::TAKING_DAMAGE;
 }
 
 bool Player::IsOnStairs()
@@ -435,6 +432,11 @@ void Player::DoThrow()
 	subWeapon->Throw();
 }
 
+void Player::Fall()
+{
+	moveState = MoveState::FALLING_HARD;
+}
+
 void Player::Land()
 {
 	if (IsAttacking())
@@ -472,7 +474,9 @@ void Player::TakeDamage(int damage, Direction direction)
 	data.health -= damage;
 	untouchableTimer.Start();
 
-	if (!IsOnStairs())
+	if (IsOnStairs() && data.health <= 0)
+		Fall(); // fall to dealth literally ~.~
+	else if (!IsOnStairs())
 		BounceBack(direction);
 }
 
@@ -492,6 +496,30 @@ void Player::BounceBack(Direction direction)
 	velocity.y = -BOUNCE_BACK_HEIGHT;
 	SetMoveState(MoveState::TAKING_DAMAGE);
 	whip->Withdraw();
+}
+
+void Player::Die()
+{
+	controlSystem->Enabled(false);
+	SetState(ObjectState::DYING);
+}
+
+void Player::Revive()
+{
+	data.lives--;
+
+	if (data.lives >= 0)
+	{
+		data.health = MAX_HEALTH;
+		Idle();
+		EnableControl(true);
+		SetState(ObjectState::NORMAL);
+	}
+	else
+	{
+		SetState(ObjectState::DEAD);
+		Notify(GAME_OVER);
+	}
 }
 
 #pragma endregion

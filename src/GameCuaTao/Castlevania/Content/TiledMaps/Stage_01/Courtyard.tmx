@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="24" height="6" tilewidth="64" tileheight="64" infinite="0" backgroundcolor="#3c3c3c" nextlayerid="14" nextobjectid="50">
  <tileset firstgid="1" source="../Simon.tsx"/>
- <tileset firstgid="41" source="../Brazier.tsx"/>
- <tileset firstgid="43" source="../Money_Bag.tsx"/>
- <tileset firstgid="46" source="../Static_Objects.tsx"/>
+ <tileset firstgid="49" source="../Brazier.tsx"/>
+ <tileset firstgid="51" source="../Money_Bag.tsx"/>
+ <tileset firstgid="54" source="../Static_Objects.tsx"/>
  <layer id="1" name="TileLayer01" width="24" height="6">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACmNgGAWjgHwAAPMY7ENAAgAA
@@ -13,40 +13,40 @@
   <image source="Courtyard.png" width="1536" height="365"/>
  </imagelayer>
  <objectgroup id="4" name="Entities">
-  <object id="15" name="Brazier" type="Brazier" gid="41" x="175" y="290" width="32" height="64">
+  <object id="15" name="Brazier" type="Brazier" gid="49" x="175" y="290" width="32" height="64">
    <properties>
     <property name="Item" value="LargeHeart"/>
    </properties>
   </object>
-  <object id="16" name="Brazier" type="Brazier" gid="41" x="434" y="290" width="32" height="64">
+  <object id="16" name="Brazier" type="Brazier" gid="49" x="434" y="290" width="32" height="64">
    <properties>
     <property name="Item" value="WhipPowerup"/>
    </properties>
   </object>
-  <object id="17" name="Brazier" type="Brazier" gid="41" x="685" y="290" width="32" height="64">
+  <object id="17" name="Brazier" type="Brazier" gid="49" x="685" y="290" width="32" height="64">
    <properties>
     <property name="Item" value="WhipPowerup"/>
    </properties>
   </object>
-  <object id="18" name="Brazier" type="Brazier" gid="41" x="942" y="290" width="32" height="64">
+  <object id="18" name="Brazier" type="Brazier" gid="49" x="942" y="290" width="32" height="64">
    <properties>
     <property name="Item" value="LargeHeart"/>
    </properties>
   </object>
-  <object id="19" name="Brazier" type="Brazier" gid="41" x="1199" y="290" width="32" height="64">
+  <object id="19" name="Brazier" type="Brazier" gid="49" x="1199" y="290" width="32" height="64">
    <properties>
     <property name="Item" value="DaggerItem"/>
    </properties>
   </object>
-  <object id="38" name="MoneyBag" type="FlashingMoneyBag" gid="45" x="1250" y="317" width="30" height="30"/>
+  <object id="38" name="MoneyBag" type="FlashingMoneyBag" gid="53" x="1250" y="317" width="30" height="30"/>
  </objectgroup>
  <objectgroup id="11" name="Foregrounds">
-  <object id="44" name="Castle" type="Castle" gid="47" x="1408" y="288" width="96" height="288">
+  <object id="44" name="Castle" type="Castle" gid="55" x="1408" y="288" width="96" height="288">
    <properties>
     <property name="Visibility" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="45" name="DirtBlock" type="DirtBlock" gid="46" x="1248" y="320" width="32" height="32"/>
+  <object id="45" name="DirtBlock" type="DirtBlock" gid="54" x="1248" y="320" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="3" name="Bounds">
   <object id="20" name="Ground" type="Boundary" x="0" y="288" width="1536" height="32"/>
@@ -74,7 +74,7 @@
   </object>
  </objectgroup>
  <objectgroup id="8" name="Locations">
-  <object id="14" name="Checkpoint1" type="Position" gid="4" x="69" y="288" width="60" height="66"/>
-  <object id="47" name="Checkpoint" type="Position" gid="4" x="1265" y="288" width="60" height="66"/>
+  <object id="14" name="Entrypoint1" type="Position" gid="4" x="69" y="288" width="60" height="66"/>
+  <object id="47" name="Entrypoint" type="Position" gid="4" x="1033" y="283" width="60" height="66"/>
  </objectgroup>
 </map>

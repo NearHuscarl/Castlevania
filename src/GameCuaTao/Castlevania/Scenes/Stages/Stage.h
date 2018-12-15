@@ -4,9 +4,7 @@
 #include "Direct2DGame/Extensions/Sprites/SpriteExtensions.h"
 #include "Direct2DGame/Extensions/Tiled/TiledMap.h"
 #include "Direct2DGame/Extensions/Camera.h"
-#include "NextMapCutscene.h"
-#include "NextRoomCutscene.h"
-#include "GoToCastleCutScene.h"
+#include "Cutscene.h"
 #include "../../Models/Factories/ObjectFactory.h"
 #include "../../Models/Factories/ObjectCollection.h"
 #include "../../Utilities/IObserver.h"
@@ -23,13 +21,14 @@ namespace Castlevania
 		PLAYING,
 		NEXT_MAP_CUTSCENE,
 		NEXT_ROOM_CUTSCENE,
+		RESET_STAGE_CUTSCENE,
 		GO_TO_CASTLE_CUTSCENE,
 	};
 
 	class Stage : public IObserver
 	{
 	public:
-		Stage(GameplayScene &gameplayScene, Map map, std::string checkpoint);
+		Stage(GameplayScene &gameplayScene, Map map, std::string spawnPoint);
 
 		void OnNotify(Subject &subject, int event);
 
@@ -53,6 +52,7 @@ namespace Castlevania
 		ObjectFactory &objectFactory;
 		GameState currentState;
 		Map currentMap;
+		Rect activeArea;
 		std::string spawnPoint;
 		std::unique_ptr<Cutscene> currentCutscene;
 		std::unique_ptr<StageEvent> newEvent;
@@ -66,9 +66,11 @@ namespace Castlevania
 
 		ObjectCollection objectCollection; // TODO: move to Grid class (implement spatial partition)
 
+		Rect GetCurrentArea(Vector2 position);
 		void SetCurrentCutscene(GameState gameState);
-		void LoadObjectsInCurrentArea();
 		void LoadMap();
+		void LoadObjectsWithin(Rect area);
+		void Reset(); // after player losing 1 live
 
 		void OnNextMapCutsceneComplete();
 		void OnNextRoomCutsceneComplete();

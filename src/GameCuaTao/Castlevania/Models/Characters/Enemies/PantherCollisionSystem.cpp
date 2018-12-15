@@ -49,12 +49,12 @@ void PantherCollisionSystem::Update(ObjectCollection &objectCollection)
 
 		//if (result.ShouldCollide())
 		//{
-		//	parent.SendMessageToSystems(NEAR_PLAYER);
+		//	parent.SendMessageToSystems(PLAYER_IN_RANGE);
 		//}
 
 		if (activeArea.TouchesOrIntersects(player->GetBoundingBox()))
 		{
-			parent.SendMessageToSystems(NEAR_PLAYER);
+			parent.SendMessageToSystems(PLAYER_IN_RANGE);
 		}
 	}
 }

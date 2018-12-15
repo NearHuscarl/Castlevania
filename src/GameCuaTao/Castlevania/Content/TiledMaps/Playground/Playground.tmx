@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="24" height="12" tilewidth="64" tileheight="64" infinite="0" backgroundcolor="#3c3c3c" nextlayerid="9" nextobjectid="77">
  <tileset firstgid="1" source="../Simon.tsx"/>
- <tileset firstgid="41" source="../Brazier.tsx"/>
+ <tileset firstgid="49" source="../Brazier.tsx"/>
  <imagelayer id="2" name="Background">
   <image source="Playground.png" width="1546" height="768"/>
  </imagelayer>
@@ -30,19 +30,19 @@
   <object id="76" name="Platform" type="Boundary" x="384" y="288" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="4" name="Game">
-  <object id="15" name="Brazier" type="Brazier" gid="41" x="397" y="287" width="32" height="64">
+  <object id="15" name="Brazier" type="Brazier" gid="49" x="397" y="287" width="32" height="64">
    <properties>
     <property name="Item" value="DaggerItem"/>
    </properties>
   </object>
-  <object id="16" name="Brazier" type="Brazier" gid="41" x="584" y="287" width="32" height="64">
+  <object id="16" name="Brazier" type="Brazier" gid="49" x="584" y="287" width="32" height="64">
    <properties>
     <property name="Item" value="LargeHeart"/>
    </properties>
   </object>
  </objectgroup>
  <objectgroup id="8" name="Locations">
-  <object id="40" name="Checkpoint" type="Position" gid="4" x="65" y="289" width="60" height="66"/>
+  <object id="40" name="Entrypoint" type="Position" gid="4" x="65" y="289" width="60" height="66"/>
   <object id="43" name="Checkpoint_03" type="Position" gid="4" x="450" y="152" width="60" height="66"/>
   <object id="65" name="Checkpoint_02" type="Position" gid="4" x="273.394" y="159.303" width="60" height="66"/>
   <object id="14" name="Checkpoint_04" type="Position" gid="4" x="332" y="285" width="60" height="66"/>

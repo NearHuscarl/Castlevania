@@ -447,6 +447,9 @@
     <ClCompile Include="Castlevania\Scenes\Stages\NextMapCutscene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Castlevania\Scenes\Stages\ResetCutscene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\pugixml.hpp">
@@ -1026,6 +1029,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Castlevania\Scenes\Stages\NextMapCutscene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Scenes\Stages\ResetCutscene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Scenes\Stages\RespawnPoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

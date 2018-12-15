@@ -1,9 +1,14 @@
 #include "Direct2DGame/Input/InputHelper.h"
 #include "Stage.h"
 #include "StageEvent.h"
+#include "NextMapCutscene.h"
+#include "NextRoomCutscene.h"
+#include "ResetCutscene.h"
+#include "GoToCastleCutScene.h"
 #include "../GameplayScene.h"
 #include "../SceneManager.h"
 #include "../../Models/UpdateData.h"
+#include "../../Utilities/CppExtensions.h"
 #include "../../Utilities/TypeConverter.h"
 
 using namespace Castlevania;
@@ -98,43 +103,15 @@ void Stage::Draw(SpriteExtensions &spriteBatch)
 	}
 }
 
-void Stage::LoadMap()
+Rect Stage::GetCurrentArea(Vector2 position)
 {
-	auto &content = gameplayScene.GetSceneManager().GetContent();
-	auto &mapManager = gameplayScene.GetMapManager();
-	
-	map = mapManager.GetTiledMap(currentMap);
-
-	devTool->LoadContent(content);
-
-	// Load game objects
-	objectCollection = mapManager.GetOtherObjects(currentMap);
-	objectCollection.player = player;
-	objectCollection.player->SetPosition(objectCollection.locations[spawnPoint]);
-
-	LoadObjectsInCurrentArea();
-}
-
-void Stage::SetCurrentCutscene(GameState gameState)
-{
-	currentState = gameState;
-	currentCutscene = ConstructCutscene(currentState);
-}
-
-void Stage::LoadObjectsInCurrentArea()
-{
-	auto &mapManager = gameplayScene.GetMapManager();
 	auto &viewportAreas = objectCollection.viewportAreas;
 
 	if (viewportAreas.size() == 0)
 	{
-		objectCollection.entities = mapManager.GetMapObjects(currentMap);
-
-		camera->SetMoveArea(0, 0,
+		return Rect{ 0, 0,
 			map->GetWidthInPixels(),
-			map->GetHeightInPixels() + hud->GetHeight());
-
-		return;
+			map->GetHeightInPixels() + hud->GetHeight() };
 	}
 
 	for (auto &viewportArea : viewportAreas)
@@ -144,14 +121,65 @@ void Stage::LoadObjectsInCurrentArea()
 		// Take account of hud height on top of the screen
 		viewportAreaBbox.top -= hud->GetHeight();
 
-		// Only load object in the active area (room)
-		if (viewportAreaBbox.TouchesOrIntersects(player->GetBoundingBox()))
+		if (viewportAreaBbox.Contains(position))
 		{
-			objectCollection.entities = mapManager.GetMapObjectsInArea(currentMap, (Rect)viewportAreaBbox);
-			camera->SetMoveArea((Rect)viewportAreaBbox);
+			return (Rect)viewportAreaBbox;
+		}
+	}
+}
+
+void Stage::SetCurrentCutscene(GameState gameState)
+{
+	currentState = gameState;
+	currentCutscene = ConstructCutscene(currentState);
+}
+
+void Stage::LoadMap()
+{
+	auto &content = gameplayScene.GetSceneManager().GetContent();
+	auto &mapManager = gameplayScene.GetMapManager();
+	
+	map = mapManager.GetTiledMap(currentMap);
+	devTool->LoadContent(content);
+
+	objectCollection = mapManager.GetOtherObjects(currentMap);
+	objectCollection.player = player;
+	objectCollection.player->SetPosition(objectCollection.locations[spawnPoint]);
+
+	activeArea = GetCurrentArea(player->GetPosition());
+	LoadObjectsWithin(activeArea);
+}
+
+void Stage::LoadObjectsWithin(Rect area)
+{
+	auto &mapManager = gameplayScene.GetMapManager();
+
+	objectCollection.entities = mapManager.GetMapObjectsInArea(currentMap, area);
+	camera->SetMoveArea(area);
+}
+
+void Stage::Reset()
+{
+	auto &mapManager = gameplayScene.GetMapManager();
+
+	objectCollection = mapManager.GetOtherObjects(currentMap);
+	objectCollection.player = player;
+	LoadObjectsWithin(activeArea); // reload objects from the last active area
+
+	for (auto [checkpoint, position] : objectCollection.locations)
+	{
+		if (checkpoint != "Entrypoint" && !StartsWith(checkpoint, "Checkpoint"))
+			continue;
+
+		if (activeArea.Contains(position))
+		{
+			player->SetPosition(position);
 			break;
 		}
 	}
+
+	player->Revive();
+	currentState = GameState::PLAYING;
 }
 
 void Stage::UpdateGameObjects(GameTime gameTime)
@@ -208,6 +236,7 @@ void Stage::OnNextMapCutsceneComplete()
 	auto nextMapTrigger = player->GetNearbyObjects().nextMap;
 	auto nextMap = nextMapTrigger->Property("Map");
 	auto spawnPoint = nextMapTrigger->Property("SpawnPoint");
+	//auto respawnPoint = RespawnPoint{};
 
 	player->EnableControl(true); // quit player auto mode
 	gameplayScene.NextStage(string2Map.at(nextMap), spawnPoint);
@@ -221,7 +250,9 @@ void Stage::OnNextRoomCutsceneComplete()
 	objectCollection.boundaries.push_back(std::move(wall));
 	door.Destroy();
 
-	LoadObjectsInCurrentArea();
+	activeArea = GetCurrentArea(player->GetPosition());
+	LoadObjectsWithin(activeArea);
+
 	gameplayScene.GetData()->stage++;
 	currentState = GameState::PLAYING;
 }
@@ -250,30 +281,36 @@ void Stage::ProcessMessage(int message)
 			SetCurrentCutscene(GameState::GO_TO_CASTLE_CUTSCENE);
 			break;
 
-		case PLAYER_HIT_WATER_AREA:
-			//SetupNextMapCutscene();
+		case PLAYER_DIE:
+			SetCurrentCutscene(GameState::RESET_STAGE_CUTSCENE);
+			break;
+
+		case RESET_STAGE_CUTSCENE_ENDED:
+			Reset();
 			break;
 	}
 }
 
 std::unique_ptr<Cutscene> Stage::ConstructCutscene(GameState gameState)
 {
+	auto &content = gameplayScene.GetSceneManager().GetContent();
+
 	switch (gameState)
 	{
 		case GameState::NEXT_MAP_CUTSCENE:
-		{
-			auto &content = gameplayScene.GetSceneManager().GetContent();
 			return std::make_unique<NextMapCutscene>(*this, content);
-		}
 
 		case GameState::NEXT_ROOM_CUTSCENE:
 			return std::make_unique<NextRoomCutscene>(*this, objectCollection);
+
+		case GameState::RESET_STAGE_CUTSCENE:
+			return std::make_unique<ResetCutscene>(*this, content);
 
 		case GameState::GO_TO_CASTLE_CUTSCENE:
 			return std::make_unique<GoToCastleCutscene>(*this, objectCollection);
 
 		default:
-			return nullptr;
+			throw std::runtime_error("Cutscene not available");
 	}
 }
 

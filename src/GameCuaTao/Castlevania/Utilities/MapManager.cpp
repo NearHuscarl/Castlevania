@@ -118,7 +118,7 @@ GameObjects MapManager::GetMapObjectsInArea(Map name, Rect area)
 				break;
 		}
 
-		objects.push_back(std::move(object));
+		if (object) objects.push_back(std::move(object));
 	}
 
 	return objects;

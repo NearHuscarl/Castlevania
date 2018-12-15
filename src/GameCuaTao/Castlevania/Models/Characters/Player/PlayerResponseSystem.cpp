@@ -134,9 +134,8 @@ void PlayerResponseSystem::OnFalling()
 {
 	auto moveState = parent.GetMoveState();
 
-	if (moveState == MoveState::WALKING
-		|| moveState == MoveState::IDLE)
-		parent.moveState = MoveState::FALLING_HARD;
+	if (moveState == MoveState::IDLE || moveState == MoveState::WALKING)
+		parent.Fall();
 }
 
 void PlayerResponseSystem::OnCollideWithBoundary(CollisionResult &result, ResponseResult &responseResult)
@@ -158,16 +157,19 @@ void PlayerResponseSystem::OnCollideWithBoundary(CollisionResult &result, Respon
 			{
 				case MoveState::FALLING:
 				case MoveState::LANDING:
-				case MoveState::FALLING_HARD:
 					ClampDistance_Y(collisionData);
 					parent.Land();
 					break;
 
+				case MoveState::FALLING_HARD:
 				case MoveState::TAKING_DAMAGE:
 					if (parent.velocity.y > 0)
 					{
 						ClampDistance_Y(collisionData);
 						parent.Land();
+						
+						if (parent.data.health <= 0)
+							parent.Die();
 					}
 					break;
 
@@ -184,7 +186,7 @@ void PlayerResponseSystem::OnCollideWithBoundary(CollisionResult &result, Respon
 
 			ClampDistance_X(collisionData);
 
-			if (!parent.IsJumping())
+			if (!parent.IsOnTheAir())
 				parent.SetVelocity_X(0);
 			break;
 	}
@@ -228,8 +230,12 @@ void PlayerResponseSystem::OnCollideWithWaterArea(CollisionResult &result, Objec
 		waterArea.Splash(parent.GetOriginPosition());
 
 		auto waterZone = objectFactory.CreateWaterZone();
-		waterZone->SetOriginPosition(waterArea.GetOriginPosition());
+		auto waterZonePosition = waterArea.GetOriginPosition();
+
+		waterZone->SetOriginPosition(waterZonePosition);
 		objectCollection.foregroundObjects.push_back(std::move(waterZone));
+
+		parent.Die();
 	}
 }
 

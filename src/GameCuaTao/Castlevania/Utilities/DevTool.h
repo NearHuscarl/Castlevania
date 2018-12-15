@@ -38,6 +38,7 @@ namespace Castlevania
 
 		GameplayScene &gameplayScene;
 		ObjectFactory &objectFactory;
+		Player &player;
 		Camera &camera;
 
 		std::unique_ptr<EffectFactory> effectFactory;

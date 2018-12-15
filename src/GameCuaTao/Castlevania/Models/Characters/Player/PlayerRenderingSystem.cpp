@@ -1,6 +1,7 @@
 #include "PlayerRenderingSystem.h"
 #include "../../Settings.h"
 #include "../../../Settings/Animations.h"
+#include "../../../Scenes/Stages/StageEvent.h"
 
 using namespace Castlevania;
 
@@ -27,6 +28,10 @@ void PlayerRenderingSystem::Receive(int message)
 {
 	switch (message)
 	{
+		case STATE_CHANGED:
+			OnStateChanged();
+			break;
+
 		case MOVE_STATE_CHANGED:
 			OnMoveStateChanged();
 			break;
@@ -50,6 +55,29 @@ void PlayerRenderingSystem::LoadContent(ContentManager &content)
 
 void PlayerRenderingSystem::Update(GameTime gameTime)
 {
+	switch (parent.state)
+	{
+		case ObjectState::NORMAL:
+			UpdateNormalState();
+			break;
+
+		case ObjectState::DYING:
+			if (sprite->AnimateComplete())
+				parent.Notify(PLAYER_DIE);
+			break;
+	}
+
+	sprite->Update();
+}
+
+void PlayerRenderingSystem::Draw(SpriteExtensions &spriteBatch)
+{
+	RenderingSystem::Draw(spriteBatch);
+	spriteBatch.Draw(*sprite, parent.GetPosition());
+}
+
+void PlayerRenderingSystem::UpdateNormalState()
+{
 	auto moveState = parent.GetMoveState();
 	auto attackState = parent.GetAttackState();
 	auto velocity = parent.GetVelocity();
@@ -70,7 +98,7 @@ void PlayerRenderingSystem::Update(GameTime gameTime)
 				case MoveState::FALLING:
 					if (velocity.y > -BEND_KNEE_ON_JUMPING_Y)
 						sprite->Play(JUMP_ANIMATION);
-					
+
 					if (velocity.y > STRETCH_LEG_ON_FALLING_Y)
 						sprite->Play(IDLE_ANIMATION);
 					break;
@@ -90,17 +118,19 @@ void PlayerRenderingSystem::Update(GameTime gameTime)
 
 	if (parent.untouchableTimer.IsRunning())
 	{
-		if (parent.moveState != MoveState::TAKING_DAMAGE)
+		if (!parent.IsOnTheAir())
 			sprite->SetVisibility(Stopwatch::Every(1) ? true : false);
 	}
-
-	sprite->Update();
 }
 
-void PlayerRenderingSystem::Draw(SpriteExtensions &spriteBatch)
+void PlayerRenderingSystem::OnStateChanged()
 {
-	RenderingSystem::Draw(spriteBatch);
-	spriteBatch.Draw(*sprite, parent.GetPosition());
+	switch (parent.state)
+	{
+		case ObjectState::DYING:
+			sprite->Play(DIE_ANIMATION);
+			break;
+	}
 }
 
 void PlayerRenderingSystem::OnMoveStateChanged()

@@ -96,9 +96,10 @@ namespace Castlevania
 		void Attack();
 		void Throw(std::unique_ptr<RangedWeapon> weapon); // Throw secondary weapon (e.g. dagger, axe, boomerang)
 		void TurnBackward();
+		void Revive();
 
 		bool IsAttacking();
-		bool IsJumping();
+		bool IsOnTheAir();
 		bool IsOnStairs();
 		bool CanGoUpstairs();
 		bool CanGoDownstairs();
@@ -118,10 +119,12 @@ namespace Castlevania
 
 		void IdleOnGround();
 		void DoThrow(); // finish throwing maneuver, weapon is now launching
+		void Fall();
 		void Land();
 		void Flash(); // simon flashing when getting whip-upgrade powerup
 		void TakeDamage(int damage, Direction direction);
 		void BounceBack(Direction direction); // when simon taking damage
+		void Die();
 
 		void UpdateStates();
 		void UpdateSubWeapons(UpdateData &updateData);
@@ -131,6 +134,7 @@ namespace Castlevania
 		friend class PlayerResponseSystem;
 		friend class PlayerMovementSystem;
 		friend class PlayerRenderingSystem;
+		friend class DevTool;
 
 		Stopwatch landingTimer;
 		Stopwatch flashingTimer;

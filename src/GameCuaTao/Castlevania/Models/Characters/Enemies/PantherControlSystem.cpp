@@ -12,7 +12,7 @@ void PantherControlSystem::Receive(int message)
 {
 	switch (message)
 	{
-		case NEAR_PLAYER:
+		case PLAYER_IN_RANGE:
 			parent.SetActive(true);
 
 			if (parent.GetPlayerDirection() == Direction::Left)

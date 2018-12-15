@@ -25,7 +25,10 @@ namespace Castlevania
 		std::unique_ptr<AnimatedSprite> sprite;
 		std::string animationPath;
 
-		void OnMoveStateChanged();
+		void UpdateNormalState();
+
+		void OnStateChanged() override;
+		void OnMoveStateChanged() override;
 		void OnAttackStateChanged();
 		void OnUntouchableFinish();
 	};

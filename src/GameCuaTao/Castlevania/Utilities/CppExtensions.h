@@ -18,6 +18,9 @@ namespace Castlevania
 
 	// bool b = ToBoolean("tRuE");
 	bool ToBoolean(std::string str);
+
+	// https://stackoverflow.com/a/8095276/9449426
+	bool StartsWith(std::string str, std::string subStr);
 	
 	// std::vector<std::string> x = Split("one:two::three", ':');
 	// https://stackoverflow.com/a/236803/9449426

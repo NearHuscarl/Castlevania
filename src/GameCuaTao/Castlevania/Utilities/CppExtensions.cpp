@@ -13,6 +13,11 @@ bool Castlevania::ToBoolean(std::string str)
 	return result;
 }
 
+bool Castlevania::StartsWith(std::string str, std::string subStr)
+{
+	return str.compare(0, subStr.length(), subStr) == 0;
+}
+
 std::vector<std::string> Castlevania::Split(const std::string &str, char delimiter)
 {
 	auto sstream = std::stringstream{ str };

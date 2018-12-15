@@ -21,6 +21,7 @@ constexpr auto OTHER = "OTHER";
 DevTool::DevTool(GameplayScene &gameplayScene, Camera &camera) :
 	gameplayScene{ gameplayScene },
 	objectFactory{ gameplayScene.GetSceneManager().GetFactory() },
+	player{ *gameplayScene.GetPlayer() },
 	camera{ camera }
 {
 }
@@ -125,17 +126,24 @@ void DevTool::Update(GameTime gameTime, ObjectCollection &objectCollection)
 		PreviousMap();
 
 	else if (InputHelper::IsKeyDown(DIK_1))
-		gameplayScene.GetPlayer()->SetPosition(objectCollection.locations["Checkpoint"]);
+		player.SetPosition(objectCollection.locations["Checkpoint"]);
 	else if (InputHelper::IsKeyDown(DIK_2))
-		gameplayScene.GetPlayer()->SetPosition(objectCollection.locations["Checkpoint_02"]);
+		player.SetPosition(objectCollection.locations["Checkpoint_02"]);
 	else if (InputHelper::IsKeyDown(DIK_3))
-		gameplayScene.GetPlayer()->SetPosition(objectCollection.locations["Checkpoint_03"]);
+		player.SetPosition(objectCollection.locations["Checkpoint_03"]);
 	else if (InputHelper::IsKeyDown(DIK_4))
-		gameplayScene.GetPlayer()->SetPosition(objectCollection.locations["Checkpoint_04"]);
+		player.SetPosition(objectCollection.locations["Checkpoint_04"]);
 	else if (InputHelper::IsKeyDown(DIK_5))
-		gameplayScene.GetPlayer()->SetPosition(objectCollection.locations["Checkpoint_05"]);
+		player.SetPosition(objectCollection.locations["Checkpoint_05"]);
 	else if (InputHelper::IsKeyDown(DIK_6))
-		gameplayScene.GetPlayer()->SetPosition(objectCollection.locations["Checkpoint_06"]);
+		player.SetPosition(objectCollection.locations["Checkpoint_06"]);
+
+	else if (InputHelper::IsKeyDown(DIK_8))
+		player.data.hearts += 200;
+	else if (InputHelper::IsKeyDown(DIK_9))
+		player.data.health = 1;
+	else if (InputHelper::IsKeyDown(DIK_0))
+		player.data.health = MAX_HEALTH;
 
 	// Update mouse input
 	if (InputHelper::IsScrollingDown())

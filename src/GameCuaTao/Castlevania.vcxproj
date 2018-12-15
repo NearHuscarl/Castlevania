@@ -222,6 +222,7 @@
     <ClCompile Include="Castlevania\Effects\EffectFactory.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\Cutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\GoToCastleCutScene.cpp" />
+    <ClCompile Include="Castlevania\Scenes\Stages\ResetCutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\NextMapCutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\NextRoomCutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\Stage.cpp" />
@@ -380,8 +381,10 @@
     <ClInclude Include="Castlevania\Scenes\GameplayData.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\GoToCastleCutScene.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\Cutscene.h" />
+    <ClInclude Include="Castlevania\Scenes\Stages\ResetCutscene.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\NextMapCutscene.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\NextRoomCutscene.h" />
+    <ClInclude Include="Castlevania\Scenes\Stages\RespawnPoint.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\StageEvent.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\Stage.h" />
     <ClInclude Include="Castlevania\Utilities\CppExtensions.h" />

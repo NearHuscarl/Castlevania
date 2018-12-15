@@ -52,6 +52,11 @@ bool RectF::operator==(RectF other)
 		this->Height() == other.Height());
 }
 
+bool RectF::operator!=(Rect other)
+{
+	return !(*this == other);
+}
+
 bool RectF::Contains(RectF value)
 {
 	return (
@@ -59,6 +64,15 @@ bool RectF::Contains(RectF value)
 		this->top <= value.top &&
 		this->right >= value.right &&
 		this->bottom >= value.bottom);
+}
+
+bool RectF::Contains(Vector2 value)
+{
+	return (
+		this->left <= value.x &&
+		this->top <= value.y &&
+		this->right >= value.x &&
+		this->bottom >= value.y);
 }
 
 bool RectF::Intersects(RectF value)
