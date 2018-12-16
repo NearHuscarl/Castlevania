@@ -39,6 +39,11 @@ void PlayerCollisionSystem::Update(ObjectCollection &objectCollection)
 		CalculateCollision(*entity, results);
 	}
 
+	for (auto &area : objectCollection.areas)
+	{
+		CalculateCollision(*area, results);
+	}
+
 	// TODO: do we need to sort?
 	body.SetCollisionData(FilterCollision(results));
 }

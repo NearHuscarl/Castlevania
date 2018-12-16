@@ -40,6 +40,11 @@ void Camera::LookAt(Vector2 position, Scrolling scrolling)
 	ClampMove();
 }
 
+void Camera::Lock()
+{
+	SetMoveArea((Rect)GetBounds());
+}
+
 Vector2 Camera::ScreenToWorld(Vector2 screenPosition)
 {
 	return viewport.Unproject(screenPosition);

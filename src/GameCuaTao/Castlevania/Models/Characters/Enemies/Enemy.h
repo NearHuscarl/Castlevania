@@ -8,7 +8,7 @@ namespace Castlevania
 	class Enemy : public GameObject, public IAttackable
 	{
 	public:
-		Enemy(EntityType type);
+		Enemy(ObjectId type);
 
 		void SetHealth(int health);
 		int GetAttack() override;

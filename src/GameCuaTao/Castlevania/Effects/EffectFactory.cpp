@@ -1,5 +1,6 @@
 #include "EffectFactory.h"
 #include "FlameEffect.h"
+#include "BigFlameEffect.h"
 #include "MoneyTextEffect.h"
 #include "FlashingMoneyTextEffect.h"
 #include "WaterEffect.h"
@@ -15,6 +16,15 @@ std::unique_ptr<IEffect> EffectFactory::CreateFlameEffect()
 	auto sparkTexture = content.Load<Texture>("Effects/Spark.png");
 	auto flameAnimations = content.Load<AnimationFactory>("Effects/Flame.ani.xml");
 	auto effect = std::make_unique<FlameEffect>(sparkTexture, flameAnimations);
+
+	return effect;
+}
+
+std::unique_ptr<IEffect> EffectFactory::CreateBigFlameEffect()
+{
+	auto sparkTexture = content.Load<Texture>("Effects/Spark.png");
+	auto flameAnimations = content.Load<AnimationFactory>("Effects/Flame.ani.xml");
+	auto effect = std::make_unique<BigFlameEffect>(sparkTexture, flameAnimations);
 
 	return effect;
 }

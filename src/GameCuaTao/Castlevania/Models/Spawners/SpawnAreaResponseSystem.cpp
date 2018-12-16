@@ -13,11 +13,11 @@ void SpawnAreaResponseSystem::Update(UpdateData &updateData)
 
 	for (auto result : collisionData.collisionResults)
 	{
-		auto type = (EntityType)result.collidedObject.GetType();
+		auto objectId = (ObjectId)result.collidedObject.GetType();
 
-		switch (type)
+		switch (objectId)
 		{
-			case EntityType::Player:
+			case ObjectId::Player:
 				collideWithPlayer = true;
 				break;
 		}

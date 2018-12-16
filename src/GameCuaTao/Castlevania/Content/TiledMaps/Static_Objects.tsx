@@ -15,4 +15,7 @@
   <tile id="4">
    <image source="Door.png" width="24" height="96"/>
   </tile>
+  <tile id="5">
+   <image source="GiantBat.png" width="98" height="46"/>
+  </tile>
 </tileset>

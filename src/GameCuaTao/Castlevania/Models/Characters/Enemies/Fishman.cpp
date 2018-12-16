@@ -7,7 +7,7 @@ using namespace Castlevania;
 constexpr auto SHOOTING_TIME = 600;
 constexpr auto RELEASE_FIREBALL_TIME = SHOOTING_TIME / 2;
 
-Fishman::Fishman() : Enemy{ EntityType::Fishman }
+Fishman::Fishman() : Enemy{ ObjectId::Fishman }
 {
 }
 

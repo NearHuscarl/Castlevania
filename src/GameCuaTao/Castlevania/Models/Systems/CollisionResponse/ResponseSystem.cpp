@@ -23,11 +23,11 @@ void ResponseSystem::Update(UpdateData &updateData)
 
 	for (auto result : collisionData.collisionResults)
 	{
-		auto type = (EntityType)result.collidedObject.GetType();
+		auto objectId = (ObjectId)result.collidedObject.GetType();
 
-		switch (type)
+		switch (objectId)
 		{
-			case EntityType::Boundary:
+			case ObjectId::Boundary:
 			{
 				if (result.direction != Direction::Top)
 					break;

@@ -3,7 +3,7 @@
 
 using namespace Castlevania;
 
-Fireball::Fireball() : GameObject{ EntityType::Fireball }
+Fireball::Fireball() : GameObject{ ObjectId::Fireball }
 {
 }
 

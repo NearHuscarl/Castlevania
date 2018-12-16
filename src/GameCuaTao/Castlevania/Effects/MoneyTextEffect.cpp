@@ -7,6 +7,7 @@ constexpr auto MONEY_TEXT_EFFECT_LIFESPAN = 400;
 MoneyTextEffect::MoneyTextEffect(std::shared_ptr<Texture> moneyTextTexture)
 {
 	this->moneyText = std::make_unique<Sprite>(moneyTextTexture);
+	isFinished = false;
 }
 
 void MoneyTextEffect::Show(Vector2 position)
@@ -18,14 +19,13 @@ void MoneyTextEffect::Show(Vector2 position)
 
 bool MoneyTextEffect::IsFinished()
 {
-	if (lifespanTimer.ElapsedMilliseconds() >= MONEY_TEXT_EFFECT_LIFESPAN)
-		return true;
-
-	return false;
+	return isFinished;
 }
 
 void MoneyTextEffect::Update(GameTime gameTime)
 {
+	if (lifespanTimer.ElapsedMilliseconds() >= MONEY_TEXT_EFFECT_LIFESPAN)
+		isFinished = true;
 }
 
 void MoneyTextEffect::Draw(SpriteExtensions &spriteBatch)

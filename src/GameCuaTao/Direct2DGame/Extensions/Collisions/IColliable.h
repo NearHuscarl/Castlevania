@@ -6,7 +6,7 @@
 class IColliable
 {
 public:
-	// Identify object type to handle collision response respectively
+	// Identify object type to handle collision response accordingly
 	virtual int GetType() = 0;
 	virtual Vector2 GetDistance() = 0;
 	virtual RectF GetBoundingBox() = 0;

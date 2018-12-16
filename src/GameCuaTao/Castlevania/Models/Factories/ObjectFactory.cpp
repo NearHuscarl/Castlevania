@@ -25,6 +25,11 @@
 #include "../Characters/Enemies/FishmanControlSystem.h"
 #include "../Characters/Enemies/FishmanResponseSystem.h"
 #include "../Characters/Enemies/FishmanRenderingSystem.h"
+#include "../Characters/Enemies/GiantBatControlSystem.h"
+#include "../Characters/Enemies/GiantBatMovementSystem.h"
+#include "../Characters/Enemies/GiantBatCollisionSystem.h"
+#include "../Characters/Enemies/GiantBatResponseSystem.h"
+#include "../Characters/Enemies/GiantBatRenderingSystem.h"
 #include "../Characters/Enemies/PantherControlSystem.h"
 #include "../Characters/Enemies/PantherCollisionSystem.h"
 #include "../Characters/Enemies/PantherResponseSystem.h"
@@ -54,14 +59,21 @@ ObjectFactory::ObjectFactory(ContentManager &content) : content{ content }
 	RenderingSystem::LoadContent(content);
 }
 
-std::unique_ptr<GameObject> ObjectFactory::CreateBoundary(RectF rect)
+std::unique_ptr<GameObject> ObjectFactory::CreateRectangleObject(ObjectId type, RectF rect)
 {
-	return CreateRectangleObject(EntityType::Boundary, rect);
+	auto object = std::make_unique<GameObject>(type);
+	auto renderingSystem = std::make_unique<BoundingBoxRenderingSystem>(*object, rect);
+
+	object->SetPosition(Vector2{ rect.left, rect.top });
+	object->Attach(std::move(renderingSystem));
+	object->LoadContent(content);
+
+	return object;
 }
 
-std::unique_ptr<GameObject> ObjectFactory::CreateViewportArea(RectF rect)
+std::unique_ptr<GameObject> ObjectFactory::CreateBoundary(RectF rect)
 {
-	return CreateRectangleObject(EntityType::ViewportArea, rect);
+	return CreateRectangleObject(ObjectId::Boundary, rect);
 }
 
 std::unique_ptr<WaterArea> ObjectFactory::CreateWaterArea(RectF rect)
@@ -76,7 +88,7 @@ std::unique_ptr<WaterArea> ObjectFactory::CreateWaterArea(RectF rect)
 	return object;
 }
 
-std::unique_ptr<SpawnPoint> ObjectFactory::CreateSpawnPoint(EntityType type, RectF rect)
+std::unique_ptr<SpawnPoint> ObjectFactory::CreateSpawnPoint(ObjectId type, RectF rect)
 {
 	auto object = std::make_unique<SpawnPoint>(type, *this);
 	auto renderingSystem = std::make_unique<BoundingBoxRenderingSystem>(*object, rect);
@@ -88,7 +100,7 @@ std::unique_ptr<SpawnPoint> ObjectFactory::CreateSpawnPoint(EntityType type, Rec
 	return object;
 }
 
-std::unique_ptr<SpawnArea> ObjectFactory::CreateSpawnArea(EntityType type, RectF rect)
+std::unique_ptr<SpawnArea> ObjectFactory::CreateSpawnArea(ObjectId type, RectF rect)
 {
 	auto object = ConstructSpawnArea(type);
 	auto collisionSystem = std::make_unique<SpawnerCollisionSystem>(*object);
@@ -98,18 +110,6 @@ std::unique_ptr<SpawnArea> ObjectFactory::CreateSpawnArea(EntityType type, RectF
 	object->SetPosition(Vector2{ rect.left, rect.top });
 	object->Attach(std::move(collisionSystem));
 	object->Attach(std::move(responseSystem));
-	object->Attach(std::move(renderingSystem));
-	object->LoadContent(content);
-
-	return object;
-}
-
-std::unique_ptr<GameObject> ObjectFactory::CreateRectangleObject(EntityType type, RectF rect)
-{
-	auto object = std::make_unique<GameObject>(type);
-	auto renderingSystem = std::make_unique<BoundingBoxRenderingSystem>(*object, rect);
-
-	object->SetPosition(Vector2{ rect.left, rect.top });
 	object->Attach(std::move(renderingSystem));
 	object->LoadContent(content);
 
@@ -130,7 +130,7 @@ std::unique_ptr<Trigger> ObjectFactory::CreateTrigger(RectF rect, TriggerType tr
 
 std::unique_ptr<GameObject> ObjectFactory::CreateBat(Vector2 position)
 {
-	auto object = std::make_unique<GameObject>(EntityType::Bat);
+	auto object = std::make_unique<GameObject>(ObjectId::Bat);
 	auto stats = content.Load<Dictionary>("GameStats/Characters/Bat.xml");
 
 	object->SetLinearVelocity(std::stof(stats->at("Speed")));
@@ -197,7 +197,7 @@ std::unique_ptr<Player> ObjectFactory::CreateIntroSimon(Vector2 position)
 	return object;
 }
 
-std::unique_ptr<Container> ObjectFactory::CreateBrazier(EntityType itemType, Vector2 position)
+std::unique_ptr<Container> ObjectFactory::CreateBrazier(ObjectId itemType, Vector2 position)
 {
 	auto object = std::make_unique<Container>();
 
@@ -213,7 +213,7 @@ std::unique_ptr<Container> ObjectFactory::CreateBrazier(EntityType itemType, Vec
 	return object;
 }
 
-std::unique_ptr<Container> ObjectFactory::CreateCandle(EntityType itemType, Vector2 position)
+std::unique_ptr<Container> ObjectFactory::CreateCandle(ObjectId itemType, Vector2 position)
 {
 	auto object = std::make_unique<Container>();
 
@@ -229,21 +229,24 @@ std::unique_ptr<Container> ObjectFactory::CreateCandle(EntityType itemType, Vect
 	return object;
 }
 
-std::unique_ptr<Enemy> ObjectFactory::CreateEnemy(EntityType type, Vector2 position)
+std::unique_ptr<Enemy> ObjectFactory::CreateEnemy(ObjectId type, Vector2 position)
 {
 	switch (type)
 	{
-		case EntityType::Zombie:
+		case ObjectId::Zombie:
 			return CreateZombie();
 
-		case EntityType::Panther:
+		case ObjectId::Panther:
 			return CreatePanther();
 
-		case EntityType::VampireBat:
+		case ObjectId::Fishman:
+			return CreateFishman();
+
+		case ObjectId::VampireBat:
 			return CreateVampireBat();
 
-		case EntityType::Fishman:
-			return CreateFishman();
+		case ObjectId::GiantBat:
+			return CreateGiantBat();
 
 		default:
 			throw std::runtime_error("Object type not supported");
@@ -354,6 +357,38 @@ std::unique_ptr<VampireBat> ObjectFactory::CreateVampireBat(Vector2 position)
 	return object;
 }
 
+std::unique_ptr<GiantBat> ObjectFactory::CreateGiantBat(Vector2 position)
+{
+	auto object = std::make_unique<GiantBat>();
+	auto stats = content.Load<Dictionary>("GameStats/Characters/GiantBat.xml");
+
+	ReadEnemyConfig(*object.get(), *stats);
+
+	auto zoneWidth = std::stoi(stats->at("AttackZoneWidth"));
+	auto zoneHeight = std::stoi(stats->at("AttackZoneHeight"));
+	object->SetAttackZone(Rect{ 0, 0, zoneWidth, zoneHeight });
+	object->SetDiveSpeed(std::stof(stats->at("DiveSpeed")));
+
+	auto controlSystem = std::make_unique<GiantBatControlSystem>(*object, *this);
+	auto movementSystem = std::make_unique<GiantBatMovementSystem>(*object);
+	auto collisionSystem = std::make_unique<GiantBatCollisionSystem>(*object);
+	auto responseSystem = std::make_unique<GiantBatResponseSystem>(*object);
+	auto renderingSystem = std::make_unique<GiantBatRenderingSystem>(
+		*object, "Characters/Enemies/GiantBat.ani.xml", effectFactory->CreateBigFlameEffect());
+
+	object->SetPosition(position);
+	object->Attach(std::move(controlSystem));
+	object->Attach(std::move(movementSystem));
+	object->Attach(std::move(collisionSystem));
+	object->Attach(std::move(responseSystem));
+	object->Attach(std::move(renderingSystem));
+
+	object->LoadContent(content);
+	object->Idle();
+
+	return object;
+}
+
 std::unique_ptr<Whip> ObjectFactory::CreateWhip(GameObject &gameObject)
 {
 	auto object = std::make_unique<Whip>(gameObject);
@@ -390,7 +425,7 @@ std::unique_ptr<Whip> ObjectFactory::CreateFlashingWhip(GameObject &gameObject)
 
 std::unique_ptr<RangedWeapon> ObjectFactory::CreateDagger(Vector2 position)
 {
-	auto object = std::make_unique<RangedWeapon>(EntityType::Dagger);
+	auto object = std::make_unique<RangedWeapon>(ObjectId::Dagger);
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
 	auto collisionSystem = std::make_unique<EntityCollisionSystem>(*object);
@@ -429,32 +464,32 @@ std::unique_ptr<Fireball> ObjectFactory::CreateFireball(Vector2 position)
 	return object;
 }
 
-std::unique_ptr<Powerup> ObjectFactory::CreatePowerup(EntityType type, Vector2 position)
+std::unique_ptr<Powerup> ObjectFactory::CreatePowerup(ObjectId type, Vector2 position)
 {
 	switch (type)
 	{
-		case EntityType::BlueMoneyBag:
+		case ObjectId::BlueMoneyBag:
 			return CreateBlueMoneyBag(position);
 
-		case EntityType::WhiteMoneyBag:
+		case ObjectId::WhiteMoneyBag:
 			return CreateWhiteMoneyBag(position);
 
-		case EntityType::RedMoneyBag:
+		case ObjectId::RedMoneyBag:
 			return CreateRedMoneyBag(position);
 
-		case EntityType::FlashingMoneyBag:
+		case ObjectId::FlashingMoneyBag:
 			return CreateFlashingMoneyBag(position);
 
-		case EntityType::LargeHeart:
+		case ObjectId::LargeHeart:
 			return CreateLargeHeart(position);
 
-		case EntityType::SmallHeart:
+		case ObjectId::SmallHeart:
 			return CreateSmallHeart(position);
 
-		case EntityType::WhipPowerup:
+		case ObjectId::WhipPowerup:
 			return CreateWhipPowerup(position);
 
-		case EntityType::DaggerItem:
+		case ObjectId::DaggerItem:
 			return CreateDaggerItem(position);
 
 		default:
@@ -462,24 +497,24 @@ std::unique_ptr<Powerup> ObjectFactory::CreatePowerup(EntityType type, Vector2 p
 	}
 }
 
-std::unique_ptr<MoneyBag> ObjectFactory::CreateMoneyBag(EntityType type, Vector2 position)
+std::unique_ptr<MoneyBag> ObjectFactory::CreateMoneyBag(ObjectId type, Vector2 position)
 {
 	auto money = int{};
 	auto spriteId = std::string{};
 
 	switch (type)
 	{
-		case EntityType::RedMoneyBag:
+		case ObjectId::RedMoneyBag:
 			money = 100;
 			spriteId = "money_bag_red";
 			break;
 
-		case EntityType::BlueMoneyBag:
+		case ObjectId::BlueMoneyBag:
 			money = 400;
 			spriteId = "money_bag_blue";
 			break;
 
-		case EntityType::WhiteMoneyBag:
+		case ObjectId::WhiteMoneyBag:
 			money = 700;
 			spriteId = "money_bag_white";
 			break;
@@ -510,22 +545,22 @@ std::unique_ptr<MoneyBag> ObjectFactory::CreateMoneyBag(EntityType type, Vector2
 
 std::unique_ptr<MoneyBag> ObjectFactory::CreateBlueMoneyBag(Vector2 position)
 {
-	return CreateMoneyBag(EntityType::BlueMoneyBag, position);
+	return CreateMoneyBag(ObjectId::BlueMoneyBag, position);
 }
 
 std::unique_ptr<MoneyBag> ObjectFactory::CreateWhiteMoneyBag(Vector2 position)
 {
-	return CreateMoneyBag(EntityType::WhiteMoneyBag, position);
+	return CreateMoneyBag(ObjectId::WhiteMoneyBag, position);
 }
 
 std::unique_ptr<MoneyBag> ObjectFactory::CreateRedMoneyBag(Vector2 position)
 {
-	return CreateMoneyBag(EntityType::RedMoneyBag, position);
+	return CreateMoneyBag(ObjectId::RedMoneyBag, position);
 }
 
 std::unique_ptr<MoneyBag> ObjectFactory::CreateFlashingMoneyBag(Vector2 position)
 {
-	auto object = std::make_unique<MoneyBag>(1000, EntityType::FlashingMoneyBag);
+	auto object = std::make_unique<MoneyBag>(1000, ObjectId::FlashingMoneyBag);
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
 	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
@@ -550,7 +585,7 @@ std::unique_ptr<MoneyBag> ObjectFactory::CreateFlashingMoneyBag(Vector2 position
 
 std::unique_ptr<Powerup> ObjectFactory::CreateDaggerItem(Vector2 position)
 {
-	auto object = std::make_unique<Powerup>(EntityType::DaggerItem);
+	auto object = std::make_unique<Powerup>(ObjectId::DaggerItem);
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
 	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
@@ -571,7 +606,7 @@ std::unique_ptr<Powerup> ObjectFactory::CreateDaggerItem(Vector2 position)
 
 std::unique_ptr<Powerup> ObjectFactory::CreateLargeHeart(Vector2 position)
 {
-	auto object = std::make_unique<Powerup>(EntityType::LargeHeart);
+	auto object = std::make_unique<Powerup>(ObjectId::LargeHeart);
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
 	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
@@ -592,7 +627,7 @@ std::unique_ptr<Powerup> ObjectFactory::CreateLargeHeart(Vector2 position)
 
 std::unique_ptr<Powerup> ObjectFactory::CreateSmallHeart(Vector2 position)
 {
-	auto object = std::make_unique<Powerup>(EntityType::SmallHeart);
+	auto object = std::make_unique<Powerup>(ObjectId::SmallHeart);
 
 	auto movementSystem = std::make_unique<WaveMovementSystem>(*object, 0.5f, 1.8f, Axis::Y);
 	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
@@ -613,7 +648,7 @@ std::unique_ptr<Powerup> ObjectFactory::CreateSmallHeart(Vector2 position)
 
 std::unique_ptr<Powerup> ObjectFactory::CreateWhipPowerup(Vector2 position)
 {
-	auto object = std::make_unique<Powerup>(EntityType::WhipPowerup);
+	auto object = std::make_unique<Powerup>(ObjectId::WhipPowerup);
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
 	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
@@ -647,7 +682,7 @@ std::unique_ptr<Door> ObjectFactory::CreateDoor(Vector2 position)
 
 std::unique_ptr<GameObject> ObjectFactory::CreateCastle(Vector2 position)
 {
-	auto object = std::make_unique<GameObject>(EntityType::Castle);
+	auto object = std::make_unique<GameObject>(ObjectId::Castle);
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "TiledMaps/Stage_01/Castle.png");
 
 	object->SetPosition(position);
@@ -659,7 +694,7 @@ std::unique_ptr<GameObject> ObjectFactory::CreateCastle(Vector2 position)
 
 std::unique_ptr<GameObject> ObjectFactory::CreateDirtBlock(Vector2 position)
 {
-	auto object = std::make_unique<GameObject>(EntityType::DirtBlock);
+	auto object = std::make_unique<GameObject>(ObjectId::DirtBlock);
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "TiledMaps/Stage_01/Dirt_Block.png");
 
 	object->SetPosition(position);
@@ -671,7 +706,7 @@ std::unique_ptr<GameObject> ObjectFactory::CreateDirtBlock(Vector2 position)
 
 std::unique_ptr<GameObject> ObjectFactory::CreateWaterZone(Vector2 position)
 {
-	auto object = std::make_unique<GameObject>(EntityType::Unknown);
+	auto object = std::make_unique<GameObject>(ObjectId::Unknown);
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "TiledMaps/Stage_01/Water_Area.png");
 
 	object->SetPosition(position);
@@ -703,28 +738,28 @@ void ObjectFactory::ReadSpawnAreaConfig(SpawnArea &spawnArea, Dictionary stats)
 	spawnArea.SetSpawnTime(spawnTime);
 }
 
-std::unique_ptr<SpawnArea> ObjectFactory::ConstructSpawnArea(EntityType type)
+std::unique_ptr<SpawnArea> ObjectFactory::ConstructSpawnArea(ObjectId type)
 {
 	auto object = std::unique_ptr<SpawnArea>{};
 	auto stats = std::shared_ptr<Dictionary>{};
 
 	switch (type)
 	{
-		case EntityType::Zombie:
+		case ObjectId::Zombie:
 		{
 			object = std::make_unique<ZombieSpawnArea>(*this);
 			stats = content.Load<Dictionary>("GameStats/SpawnAreas/ZombieSpawnArea.xml");
 			break;
 		}
 
-		case EntityType::VampireBat:
+		case ObjectId::VampireBat:
 		{
 			object = std::make_unique<VampireBatSpawnArea>(*this);
 			stats = content.Load<Dictionary>("GameStats/SpawnAreas/BatSpawnArea.xml");
 			break;
 		}
 
-		case EntityType::Fishman:
+		case ObjectId::Fishman:
 		{
 			object = std::make_unique<FishmanSpawnArea>(*this);
 			stats = content.Load<Dictionary>("GameStats/SpawnAreas/FishmanSpawnArea.xml");

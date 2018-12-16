@@ -18,6 +18,8 @@ namespace Castlevania
 		void Draw(SpriteExtensions &spriteBatch) override;
 
 	private:
+		bool isFinished;
+
 		Vector2 waterLeftVelocity;
 		Vector2 waterTopVelocity;
 		Vector2 waterRightVelocity;

@@ -1,6 +1,7 @@
 #include "Direct2DGame/Input/InputHelper.h"
 #include "Stage.h"
 #include "StageEvent.h"
+#include "BossFightCutscene.h"
 #include "NextMapCutscene.h"
 #include "NextRoomCutscene.h"
 #include "ResetCutscene.h"
@@ -48,6 +49,11 @@ UpdateData Stage::GetUpdateData()
 		camera->GetBounds(),
 		&objectCollection,
 	};
+}
+
+void Stage::SetCameraMoveArea(Rect area)
+{
+
 }
 
 void Stage::Initialize()
@@ -105,18 +111,21 @@ void Stage::Draw(SpriteExtensions &spriteBatch)
 
 Rect Stage::GetCurrentArea(Vector2 position)
 {
-	auto &viewportAreas = objectCollection.viewportAreas;
+	auto &areas = objectCollection.areas;
 
-	if (viewportAreas.size() == 0)
+	if (areas.size() == 0)
 	{
 		return Rect{ 0, 0,
 			map->GetWidthInPixels(),
 			map->GetHeightInPixels() + hud->GetHeight() };
 	}
 
-	for (auto &viewportArea : viewportAreas)
+	for (auto &area : areas)
 	{
-		auto viewportAreaBbox = viewportArea->GetBoundingBox();
+		if (area->GetId() != ObjectId::ViewportArea)
+			continue;
+
+		auto viewportAreaBbox = area->GetBoundingBox();
 
 		// Take account of hud height on top of the screen
 		viewportAreaBbox.top -= hud->GetHeight();
@@ -277,8 +286,12 @@ void Stage::ProcessMessage(int message)
 			OnNextRoomCutsceneComplete();
 			break;
 
-		case GO_TO_CASTLE_CUTSCENE_STARTED:
-			SetCurrentCutscene(GameState::GO_TO_CASTLE_CUTSCENE);
+		case BOSS_FIGHT_CUTSCENE_STARTED:
+			SetCurrentCutscene(GameState::BOSS_FIGHT_CUTSCENE);
+			break;
+
+		case BOSS_FIGHT_STARTED:
+			currentState = GameState::PLAYING;
 			break;
 
 		case PLAYER_DIE:
@@ -287,6 +300,10 @@ void Stage::ProcessMessage(int message)
 
 		case RESET_STAGE_CUTSCENE_ENDED:
 			Reset();
+			break;
+
+		case GO_TO_CASTLE_CUTSCENE_STARTED:
+			SetCurrentCutscene(GameState::GO_TO_CASTLE_CUTSCENE);
 			break;
 	}
 }
@@ -297,6 +314,9 @@ std::unique_ptr<Cutscene> Stage::ConstructCutscene(GameState gameState)
 
 	switch (gameState)
 	{
+		case GameState::BOSS_FIGHT_CUTSCENE:
+			return std::make_unique<BossFightCutscene>(*this, objectCollection, objectFactory);
+
 		case GameState::NEXT_MAP_CUTSCENE:
 			return std::make_unique<NextMapCutscene>(*this, content);
 

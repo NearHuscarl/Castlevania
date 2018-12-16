@@ -12,6 +12,8 @@ WaterEffect::WaterEffect(std::shared_ptr<Texture> waterTexture)
 	waterLeftVelocity = Vector2{ -50, -200 };
 	waterTopVelocity = Vector2{ 25, -400 };
 	waterRightVelocity = Vector2{ 50, -200 };
+
+	isFinished = false;
 }
 
 void WaterEffect::Show(Vector2 position)
@@ -30,15 +32,12 @@ void WaterEffect::Show(Vector2 position)
 
 bool WaterEffect::IsFinished()
 {
-	if (lifespanTimer.ElapsedMilliseconds() >= WATER_EFFECT_LIFESPAN)
-		return true;
-
-	return false;
+	return isFinished;
 }
 
 void WaterEffect::Update(GameTime gameTime)
 {
-	if (IsFinished())
+	if (isFinished)
 		return;
 
 	auto deltaTime = (float)gameTime.ElapsedGameTime.Seconds();
@@ -50,6 +49,9 @@ void WaterEffect::Update(GameTime gameTime)
 	waterLeftPosition += waterLeftVelocity * deltaTime;
 	waterTopPosition += waterTopVelocity * deltaTime;
 	waterRightPosition += waterRightVelocity * deltaTime;
+
+	if (lifespanTimer.ElapsedMilliseconds() >= WATER_EFFECT_LIFESPAN)
+		isFinished = true;
 }
 
 void WaterEffect::Draw(SpriteExtensions &spriteBatch)

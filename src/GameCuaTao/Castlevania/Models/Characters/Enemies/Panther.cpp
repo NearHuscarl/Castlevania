@@ -4,7 +4,7 @@
 
 using namespace Castlevania;
 
-Panther::Panther() : Enemy{ EntityType::Panther }
+Panther::Panther() : Enemy{ ObjectId::Panther }
 {
 	playerDirection = Direction::None;
 	Idle();

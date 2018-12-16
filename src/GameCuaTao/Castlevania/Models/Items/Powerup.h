@@ -8,7 +8,7 @@ namespace Castlevania
 	class Powerup : public GameObject
 	{
 	public:
-		Powerup(EntityType type);
+		Powerup(ObjectId type);
 
 		void Spawn();
 		void Update(GameTime gameTime, UpdateData &updateData) override;

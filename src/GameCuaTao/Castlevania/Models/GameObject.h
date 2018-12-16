@@ -10,7 +10,7 @@
 #include "Systems/Control/IControlSystem.h"
 #include "Systems/Rendering/IRenderingSystem.h"
 #include "IGameObject.h"
-#include "EntityType.h"
+#include "ObjectId.h"
 #include "Facing.h"
 #include "../Utilities/Subject.h"
 
@@ -28,8 +28,9 @@ namespace Castlevania
 	class GameObject : public Subject, public IGameObject
 	{
 	public:
-		GameObject(EntityType type);
+		GameObject(ObjectId type);
 
+		ObjectId GetId();
 		int GetType() override;
 
 		void SetState(ObjectState state);
@@ -90,7 +91,7 @@ namespace Castlevania
 		virtual ~GameObject();
 
 	protected:
-		EntityType type;
+		ObjectId objectId;
 		ObjectState state;
 		Vector2 position;
 		Vector2 velocity;

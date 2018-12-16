@@ -19,6 +19,7 @@ namespace Castlevania
 	enum class GameState
 	{
 		PLAYING,
+		BOSS_FIGHT_CUTSCENE,
 		NEXT_MAP_CUTSCENE,
 		NEXT_ROOM_CUTSCENE,
 		RESET_STAGE_CUTSCENE,
@@ -34,6 +35,7 @@ namespace Castlevania
 
 		Camera *GetCamera();
 		UpdateData GetUpdateData();
+		void SetCameraMoveArea(Rect area);
 
 		void UpdateGameObjects(GameTime gameTime);
 		void UpdateGameplay(GameTime gameTime);

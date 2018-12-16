@@ -33,6 +33,8 @@ void AnimatedSprite::Play(std::string name)
 		currentAnimation->Stop();
 		animations.at(name) = animationFactory->Create(name);
 		currentAnimation = &animations.at(name);
+
+		SetTextureRegion(currentAnimation->GetCurrentFrame().GetTextureRegion());
 	}
 }
 
@@ -43,6 +45,8 @@ void AnimatedSprite::PlayCached(std::string name)
 		currentAnimation->Stop();
 		currentAnimation = &animations.at(name);
 		currentAnimation->Continue();
+
+		SetTextureRegion(currentAnimation->GetCurrentFrame().GetTextureRegion());
 	}
 }
 

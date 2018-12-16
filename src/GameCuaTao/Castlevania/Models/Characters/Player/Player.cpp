@@ -17,7 +17,7 @@ constexpr auto BOUNCE_BACK_HEIGHT = 360.0f;
 // velocity to trigger hovering state
 constexpr auto HOVERING_VELOCITY = 20.0f;
 
-Player::Player() : GameObject{ EntityType::Player }
+Player::Player() : GameObject{ ObjectId::Player }
 {
 	this->whip = std::make_unique<Whip>(*this);
 }
@@ -84,12 +84,12 @@ void Player::SetWhip(std::unique_ptr<Whip> whip)
 	this->whip = std::move(whip);
 }
 
-EntityType Player::GetSubWeapon()
+ObjectId Player::GetSubWeapon()
 {
 	return data.subWeapon;
 }
 
-void Player::SetSubWeapon(EntityType weapon)
+void Player::SetSubWeapon(ObjectId weapon)
 {
 	//subWeapon->GetBody().Enabled(false);
 	data.subWeapon = weapon;
@@ -365,7 +365,7 @@ void Player::Throw(std::unique_ptr<RangedWeapon> weapon)
 
 	if (data.hearts == 0)
 	{
-		data.subWeapon = EntityType::Unknown;
+		data.subWeapon = ObjectId::Unknown;
 	}
 }
 

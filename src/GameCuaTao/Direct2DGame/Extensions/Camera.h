@@ -20,6 +20,7 @@ public:
 
 	void Move(Vector2 position);
 	void LookAt(Vector2 position, Scrolling scrolling = Scrolling::Center);
+	void Lock();
 
 	Vector2 ScreenToWorld(Vector2 screenPosition);
 	Vector2 WorldToScreen(Vector2 worldPosition);

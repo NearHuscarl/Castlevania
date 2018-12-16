@@ -7,6 +7,7 @@ constexpr auto MONEY_TEXT_EFFECT_LIFESPAN = 400;
 FlashingMoneyTextEffect::FlashingMoneyTextEffect(std::shared_ptr<AnimationFactory> moneyTextAnimation)
 {
 	this->moneyText = std::make_unique<AnimatedSprite>(moneyTextAnimation);
+	isFinished = false;
 }
 
 void FlashingMoneyTextEffect::Show(Vector2 position)
@@ -18,15 +19,18 @@ void FlashingMoneyTextEffect::Show(Vector2 position)
 
 bool FlashingMoneyTextEffect::IsFinished()
 {
-	if (lifespanTimer.ElapsedMilliseconds() >= MONEY_TEXT_EFFECT_LIFESPAN)
-		return true;
-
-	return false;
+	return isFinished;
 }
 
 void FlashingMoneyTextEffect::Update(GameTime gameTime)
 {
+	if (isFinished)
+		return;
+
 	moneyText->Update();
+
+	if (lifespanTimer.ElapsedMilliseconds() >= MONEY_TEXT_EFFECT_LIFESPAN)
+		isFinished = true;
 }
 
 void FlashingMoneyTextEffect::Draw(SpriteExtensions &spriteBatch)

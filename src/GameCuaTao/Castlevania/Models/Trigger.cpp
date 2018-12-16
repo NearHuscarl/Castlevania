@@ -2,7 +2,7 @@
 
 using namespace Castlevania;
 
-Trigger::Trigger(TriggerType type) : GameObject{ EntityType::Trigger }
+Trigger::Trigger(TriggerType type) : GameObject{ ObjectId::Trigger }
 {
 	this->type = type;
 	this->enabled = true;

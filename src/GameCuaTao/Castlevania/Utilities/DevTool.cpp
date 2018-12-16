@@ -82,6 +82,7 @@ void DevTool::LoadContent(ContentManager &content)
 			EFFECT,
 			{
 				std::make_pair<std::string, Sprite>("FlameEffect", flameSprite),
+				std::make_pair<std::string, Sprite>("BigFlameEffect", flameSprite),
 				std::make_pair<std::string, Sprite>("WaterEffect", waterSprite),
 			}
 		},
@@ -189,6 +190,8 @@ std::unique_ptr<IEffect> DevTool::CreateEffect(std::string name)
 {
 	if (name == "FlameEffect")
 		return effectFactory->CreateFlameEffect();
+	else if (name == "BigFlameEffect")
+		return effectFactory->CreateBigFlameEffect();
 	else if (name == "WaterEffect")
 		return effectFactory->CreateWaterEffect();
 	else
@@ -252,10 +255,10 @@ void DevTool::SpawnObject(ObjectCollection &objectCollection)
 		auto powerupType = string2EntityType.at(items[POWERUP][powerupIndex].first);
 		switch (type)
 		{
-			case EntityType::Brazier:
+			case ObjectId::Brazier:
 				object = objectFactory.CreateBrazier(powerupType);
 				break;
-			case EntityType::Candle:
+			case ObjectId::Candle:
 				object = objectFactory.CreateCandle(powerupType);
 				break;
 		}
@@ -264,7 +267,7 @@ void DevTool::SpawnObject(ObjectCollection &objectCollection)
 	{
 		switch (type)
 		{
-			case EntityType::Fireball:
+			case ObjectId::Fireball:
 				object = objectFactory.CreateFireball();
 				if (currentFacing == Facing::Right)
 					object->SetVelocity_X(object->GetSpeed());

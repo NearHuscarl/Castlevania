@@ -25,7 +25,7 @@ GoToCastleCutscene::GoToCastleCutscene(Stage &stage, ObjectCollection &objectCol
 
 	for (auto &object : objectCollection.foregroundObjects)
 	{
-		if ((EntityType)object->GetType() == EntityType::Castle)
+		if (object->GetId() == ObjectId::Castle)
 		{
 			castle = object.get();
 			break;

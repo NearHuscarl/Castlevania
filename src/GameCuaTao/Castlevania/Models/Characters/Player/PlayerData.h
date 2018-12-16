@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "../../EntityType.h"
+#include "../../ObjectId.h"
 
 namespace Castlevania
 {
@@ -14,14 +14,14 @@ namespace Castlevania
 		{
 			score = 0;
 			health = MAX_HEALTH;
-			subWeapon = EntityType::Unknown;
+			subWeapon = ObjectId::Unknown;
 			hearts = 5;
 			lives = 3;
 		}
 
 		int score;
 		int health;
-		EntityType subWeapon;
+		ObjectId subWeapon;
 		int hearts;
 		int lives;
 	};

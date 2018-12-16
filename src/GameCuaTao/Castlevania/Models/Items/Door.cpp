@@ -3,7 +3,7 @@
 
 using namespace Castlevania;
 
-Door::Door() : GameObject{ EntityType::Door }
+Door::Door() : GameObject{ ObjectId::Door }
 {
 }
 

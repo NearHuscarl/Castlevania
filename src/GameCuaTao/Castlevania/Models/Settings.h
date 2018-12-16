@@ -16,9 +16,10 @@ namespace Castlevania
 	constexpr auto ATTACK_STATE_CHANGED = 4;
 	constexpr auto UNTOUCHABLE_ENDED = 5;
 
-	// Panther events
+	// Enemy events
 	constexpr auto PLAYER_IN_RANGE = 6;
+	constexpr auto PLAYER_OUT_OF_RANGE = 7;
 
 	// WaterArea events
-	constexpr auto OBJECT_HITS_WATER_SURFACE = 7;
+	constexpr auto OBJECT_HITS_WATER_SURFACE = 9;
 }

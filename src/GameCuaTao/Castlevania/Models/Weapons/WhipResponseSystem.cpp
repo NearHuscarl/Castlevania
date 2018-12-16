@@ -21,22 +21,22 @@ void WhipResponseSystem::Update(UpdateData &updateData)
 
 	for (auto result : collisionData.collisionResults)
 	{
-		auto type = (EntityType)result.collidedObject.GetType();
+		auto objectId = (ObjectId)result.collidedObject.GetType();
 
-		switch (type)
+		switch (objectId)
 		{
-			case EntityType::Brazier:
+			case ObjectId::Brazier:
 				OnCollideWithBrazier(result, objectCollection);
 				break;
 
-			case EntityType::Zombie:
-			case EntityType::Panther:
-			case EntityType::Fishman:
-			case EntityType::VampireBat:
+			case ObjectId::Zombie:
+			case ObjectId::Panther:
+			case ObjectId::Fishman:
+			case ObjectId::VampireBat:
 				OnCollideWithEnemy(result, *objectCollection.player);
 				break;
 
-			case EntityType::Fireball:
+			case ObjectId::Fireball:
 				OnCollideWithFireball(result);
 		}
 	}

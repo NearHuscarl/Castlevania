@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Animations AtlasPath="GiantBat.atlas.xml">
+
+    <Animation Name="idle" DefaultTime="100" IsLooping="False">
+      <Frame SpriteID="idle_01" />
+    </Animation>
+
+    <Animation Name="fly" DefaultTime="125" IsLooping="True">
+      <Frame SpriteID="fly_01" />
+      <Frame SpriteID="fly_02" />
+    </Animation>
+
+  </Animations>
+
+</GameContent>

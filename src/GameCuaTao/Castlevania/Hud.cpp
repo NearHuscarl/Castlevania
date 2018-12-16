@@ -132,7 +132,7 @@ std::shared_ptr<Texture> Hud::GetWeaponTexture()
 {
 	switch (data->playerData->subWeapon)
 	{
-		case EntityType::DaggerItem:
+		case ObjectId::DaggerItem:
 			return daggerTexture;
 
 		default:

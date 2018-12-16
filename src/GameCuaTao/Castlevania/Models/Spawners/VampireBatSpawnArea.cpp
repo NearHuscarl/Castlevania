@@ -6,7 +6,7 @@
 using namespace Castlevania;
 
 VampireBatSpawnArea::VampireBatSpawnArea(ObjectFactory &objectFactory) :
-	SpawnArea{ EntityType::VampireBat, objectFactory }
+	SpawnArea{ ObjectId::VampireBat, objectFactory }
 {
 }
 

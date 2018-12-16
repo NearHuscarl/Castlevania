@@ -5,7 +5,7 @@ using namespace Castlevania;
 
 constexpr auto THROW_SPEED = 700.0f;
 
-RangedWeapon::RangedWeapon(EntityType type) : GameObject{ type }
+RangedWeapon::RangedWeapon(ObjectId type) : GameObject{ type }
 {
 	owner = nullptr;
 }

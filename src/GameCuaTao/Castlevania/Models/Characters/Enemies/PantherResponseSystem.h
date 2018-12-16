@@ -11,7 +11,7 @@ namespace Castlevania
 		PantherResponseSystem(Panther &parent);
 		GameObject &GetParent() override;
 
-	protected:
+	private:
 		Panther &parent;
 
 		void OnTouchingGround(CollisionData collisionData) override;

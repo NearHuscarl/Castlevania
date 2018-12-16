@@ -18,11 +18,11 @@ void DaggerResponseSystem::Update(UpdateData &updateData)
 
 	for (auto result : collisionData.collisionResults)
 	{
-		auto type = (EntityType)result.collidedObject.GetType();
+		auto objectId = (ObjectId)result.collidedObject.GetType();
 
-		switch (type)
+		switch (objectId)
 		{
-			case EntityType::Brazier:
+			case ObjectId::Brazier:
 				OnCollideWithBrazier(result, objectCollection);
 				break;
 		}

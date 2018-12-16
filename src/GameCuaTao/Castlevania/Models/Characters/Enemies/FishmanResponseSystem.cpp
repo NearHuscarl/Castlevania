@@ -22,11 +22,11 @@ void FishmanResponseSystem::Update(UpdateData &updateData)
 
 	for (auto result : collisionData.collisionResults)
 	{
-		auto type = (EntityType)result.collidedObject.GetType();
+		auto objectId = (ObjectId)result.collidedObject.GetType();
 
-		switch (type)
+		switch (objectId)
 		{
-			case EntityType::Boundary:
+			case ObjectId::Boundary:
 			{
 				if (result.direction == Direction::Top)
 				{
@@ -36,7 +36,7 @@ void FishmanResponseSystem::Update(UpdateData &updateData)
 				break;
 			}
 
-			case EntityType::WaterArea:
+			case ObjectId::WaterArea:
 			{
 				if (result.direction == Direction::Top)
 				{

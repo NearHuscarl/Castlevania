@@ -8,6 +8,8 @@ FlameEffect::FlameEffect(std::shared_ptr<Texture> sparkTexture, std::shared_ptr<
 {
 	this->spark = std::make_unique<Sprite>(sparkTexture);
 	this->flame = std::make_unique<AnimatedSprite>(flameAnimation);
+
+	isFinished = false;
 }
 
 void FlameEffect::Show(Vector2 position)
@@ -23,15 +25,18 @@ void FlameEffect::Show(Vector2 position)
 
 bool FlameEffect::IsFinished()
 {
-	if (flame->AnimateComplete())
-		return true;
-
-	return false;
+	return isFinished;
 }
 
 void FlameEffect::Update(GameTime gameTime)
 {
+	if (isFinished)
+		return;
+
 	flame->Update();
+
+	if (flame->AnimateComplete())
+		isFinished = true;
 }
 
 void FlameEffect::Draw(SpriteExtensions &spriteBatch)

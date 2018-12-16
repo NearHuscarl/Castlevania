@@ -3,7 +3,7 @@
 
 using namespace Castlevania;
 
-Zombie::Zombie() : Enemy{ EntityType::Zombie }
+Zombie::Zombie() : Enemy{ ObjectId::Zombie }
 {
 }
 

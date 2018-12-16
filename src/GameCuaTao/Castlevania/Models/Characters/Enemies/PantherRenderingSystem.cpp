@@ -1,6 +1,6 @@
 #include "PantherRenderingSystem.h"
-#include "../../Settings.h"
 #include "../../../Settings/Animations.h"
+#include "../../../Utilities/DevTool.h"
 
 using namespace Castlevania;
 
@@ -16,7 +16,8 @@ PantherRenderingSystem::PantherRenderingSystem(
 
 void PantherRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 {
-	DrawBoundingBox(spriteBatch, parent.GetActiveArea(), Color::LavenderBlue() * 0.4f); // TODO: remove debugging code
+	if (DevTool::IsDebugging)
+		DrawBoundingBox(spriteBatch, parent.GetActiveArea(), Color::LavenderBlue() * 0.4f);
 
 	EffectRenderingSystem::Draw(spriteBatch);
 }

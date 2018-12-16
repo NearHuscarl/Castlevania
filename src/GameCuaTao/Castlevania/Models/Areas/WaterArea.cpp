@@ -3,7 +3,7 @@
 
 using namespace Castlevania;
 
-WaterArea::WaterArea() : GameObject{ EntityType::WaterArea }
+WaterArea::WaterArea() : GameObject{ ObjectId::WaterArea }
 {
 }
 

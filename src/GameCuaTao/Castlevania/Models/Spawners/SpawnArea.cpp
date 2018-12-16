@@ -7,9 +7,9 @@
 
 using namespace Castlevania;
 
-SpawnArea::SpawnArea(EntityType spawnObjectType, ObjectFactory &objectFactory) :
+SpawnArea::SpawnArea(ObjectId spawnObjectType, ObjectFactory &objectFactory) :
 	objectFactory{ objectFactory },
-	GameObject{ EntityType::SpawnArea }
+	GameObject{ ObjectId::SpawnArea }
 {
 	this->spawnObjectType = spawnObjectType;
 

@@ -158,6 +158,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Castlevania\CastlevaniaGame.cpp" />
+    <ClCompile Include="Castlevania\Effects\BigFlameEffect.cpp" />
     <ClCompile Include="Castlevania\Effects\FlameEffect.cpp" />
     <ClCompile Include="Castlevania\Effects\FlashingMoneyTextEffect.cpp" />
     <ClCompile Include="Castlevania\Effects\MoneyTextEffect.cpp" />
@@ -169,6 +170,12 @@
     <ClCompile Include="Castlevania\Models\Characters\Enemies\FishmanControlSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Enemies\FishmanRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Enemies\FishmanResponseSystem.cpp" />
+    <ClCompile Include="Castlevania\Models\Characters\Enemies\GiantBat.cpp" />
+    <ClCompile Include="Castlevania\Models\Characters\Enemies\GiantBatCollisionSystem.cpp" />
+    <ClCompile Include="Castlevania\Models\Characters\Enemies\GiantBatControlSystem.cpp" />
+    <ClCompile Include="Castlevania\Models\Characters\Enemies\GiantBatMovementSystem.cpp" />
+    <ClCompile Include="Castlevania\Models\Characters\Enemies\GiantBatRenderingSystem.cpp" />
+    <ClCompile Include="Castlevania\Models\Characters\Enemies\GiantBatResponseSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Enemies\Panther.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Enemies\PantherControlSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Enemies\PantherRenderingSystem.cpp" />
@@ -220,6 +227,7 @@
     <ClCompile Include="Castlevania\Models\Weapons\WhipRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\WhipResponseSystem.cpp" />
     <ClCompile Include="Castlevania\Effects\EffectFactory.cpp" />
+    <ClCompile Include="Castlevania\Scenes\Stages\BossFightCutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\Cutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\GoToCastleCutScene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\ResetCutscene.cpp" />
@@ -305,6 +313,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Castlevania\CastlevaniaGame.h" />
+    <ClInclude Include="Castlevania\Effects\BigFlameEffect.h" />
     <ClInclude Include="Castlevania\Effects\FlameEffect.h" />
     <ClInclude Include="Castlevania\Effects\FlashingMoneyTextEffect.h" />
     <ClInclude Include="Castlevania\Effects\MoneyTextEffect.h" />
@@ -316,6 +325,12 @@
     <ClInclude Include="Castlevania\Models\Characters\Enemies\FishmanControlSystem.h" />
     <ClInclude Include="Castlevania\Models\Characters\Enemies\FishmanRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Characters\Enemies\FishmanResponseSystem.h" />
+    <ClInclude Include="Castlevania\Models\Characters\Enemies\GiantBat.h" />
+    <ClInclude Include="Castlevania\Models\Characters\Enemies\GiantBatCollisionSystem.h" />
+    <ClInclude Include="Castlevania\Models\Characters\Enemies\GiantBatControlSystem.h" />
+    <ClInclude Include="Castlevania\Models\Characters\Enemies\GiantBatMovementSystem.h" />
+    <ClInclude Include="Castlevania\Models\Characters\Enemies\GiantBatRenderingSystem.h" />
+    <ClInclude Include="Castlevania\Models\Characters\Enemies\GiantBatResponseSystem.h" />
     <ClInclude Include="Castlevania\Models\Characters\Enemies\Panther.h" />
     <ClInclude Include="Castlevania\Models\Characters\Enemies\PantherControlSystem.h" />
     <ClInclude Include="Castlevania\Models\Characters\Enemies\PantherRenderingSystem.h" />
@@ -333,6 +348,7 @@
     <ClInclude Include="Castlevania\Models\Characters\Player\PlayerCollisionSystem.h" />
     <ClInclude Include="Castlevania\Models\Characters\Player\PlayerData.h" />
     <ClInclude Include="Castlevania\Models\Characters\Player\PlayerRenderingSystem.h" />
+    <ClInclude Include="Castlevania\Models\IBoss.h" />
     <ClInclude Include="Castlevania\Models\Items\Door.h" />
     <ClInclude Include="Castlevania\Models\Items\DoorRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Items\Fireball.h" />
@@ -378,7 +394,9 @@
     <ClInclude Include="Castlevania\Models\Weapons\WhipResponseSystem.h" />
     <ClInclude Include="Castlevania\Effects\EffectFactory.h" />
     <ClInclude Include="Castlevania\Effects\IEffect.h" />
+    <ClInclude Include="Castlevania\Scenes\GameOverScene.h" />
     <ClInclude Include="Castlevania\Scenes\GameplayData.h" />
+    <ClInclude Include="Castlevania\Scenes\Stages\BossFightCutscene.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\GoToCastleCutScene.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\Cutscene.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\ResetCutscene.h" />
@@ -402,7 +420,7 @@
     <ClInclude Include="Direct2DGame\Extensions\Direction.h" />
     <ClInclude Include="Direct2DGame\Extensions\Collisions\IColliable.h" />
     <ClInclude Include="Castlevania\Models\Characters\Player\Controller.h" />
-    <ClInclude Include="Castlevania\Models\EntityType.h" />
+    <ClInclude Include="Castlevania\Models\ObjectId.h" />
     <ClInclude Include="Castlevania\Models\IGameObject.h" />
     <ClInclude Include="Castlevania\Models\Items\Container.h" />
     <ClInclude Include="Castlevania\Models\Systems\CollisionResponse\GroundResponseSystem.h" />

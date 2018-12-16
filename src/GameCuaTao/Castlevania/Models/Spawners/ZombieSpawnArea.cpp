@@ -6,7 +6,7 @@
 using namespace Castlevania;
 
 ZombieSpawnArea::ZombieSpawnArea(ObjectFactory &objectFactory) :
-	SpawnArea{ EntityType::Zombie, objectFactory }
+	SpawnArea{ ObjectId::Zombie, objectFactory }
 {
 }
 

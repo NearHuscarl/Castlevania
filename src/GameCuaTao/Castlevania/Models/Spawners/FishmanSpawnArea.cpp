@@ -11,7 +11,7 @@ constexpr auto MAX_OFFSET = 224;
 constexpr auto MAX_FISHMAN_COUNT = 2;
 
 FishmanSpawnArea::FishmanSpawnArea(ObjectFactory &objectFactory) :
-	SpawnArea{ EntityType::Fishman, objectFactory }
+	SpawnArea{ ObjectId::Fishman, objectFactory }
 {
 }
 
@@ -22,7 +22,7 @@ void FishmanSpawnArea::SpawnObject(UpdateData &updateData)
 
 	for (auto &entity : objectCollection->entities)
 	{
-		if ((EntityType)entity->GetType() == EntityType::Fishman)
+		if (entity->GetId() == ObjectId::Fishman)
 			currentFishmanCount++;
 	}
 

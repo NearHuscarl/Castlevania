@@ -2,7 +2,7 @@
 
 namespace Castlevania
 {
-	enum class EntityType
+	enum class ObjectId
 	{
 		Boundary,
 		Position,
@@ -13,6 +13,7 @@ namespace Castlevania
 		// Areas
 		SpawnArea,
 		ViewportArea,
+		BossFightArea,
 		WaterArea,
 
 		// Intro objects

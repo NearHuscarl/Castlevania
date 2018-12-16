@@ -3,7 +3,7 @@
 
 using namespace Castlevania;
 
-Enemy::Enemy(EntityType type) : GameObject{ type }
+Enemy::Enemy(ObjectId type) : GameObject{ type }
 {
 }
 

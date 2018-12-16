@@ -6,6 +6,7 @@
 #include "../Characters/Enemies/Panther.h"
 #include "../Characters/Enemies/Fishman.h"
 #include "../Characters/Enemies/VampireBat.h"
+#include "../Characters/Enemies/GiantBat.h"
 #include "../Items/Container.h"
 #include "../Items/Door.h"
 #include "../Items/Fireball.h"
@@ -24,33 +25,33 @@ namespace Castlevania
 	public:
 		ObjectFactory(ContentManager &content);
 
+		std::unique_ptr<GameObject> CreateRectangleObject(ObjectId type, RectF rect);
 		std::unique_ptr<GameObject> CreateBoundary(RectF rect);
-		std::unique_ptr<GameObject> CreateViewportArea(RectF rect);
 		std::unique_ptr<WaterArea> CreateWaterArea(RectF rect);
-		std::unique_ptr<SpawnPoint> CreateSpawnPoint(EntityType type, RectF rect);
-		std::unique_ptr<SpawnArea> CreateSpawnArea(EntityType type, RectF rect);
-		std::unique_ptr<GameObject> CreateRectangleObject(EntityType type, RectF rect);
+		std::unique_ptr<SpawnPoint> CreateSpawnPoint(ObjectId type, RectF rect);
+		std::unique_ptr<SpawnArea> CreateSpawnArea(ObjectId type, RectF rect);
 		std::unique_ptr<Trigger> CreateTrigger(RectF rect, TriggerType triggerType);
 
 		std::unique_ptr<GameObject> CreateBat(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Player> CreatePlayer(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Player> CreateIntroSimon(Vector2 position = Vector2::Zero());
-		std::unique_ptr<Container> CreateBrazier(EntityType itemType, Vector2 position = Vector2::Zero());
-		std::unique_ptr<Container> CreateCandle(EntityType itemType, Vector2 position = Vector2::Zero());
+		std::unique_ptr<Container> CreateBrazier(ObjectId itemType, Vector2 position = Vector2::Zero());
+		std::unique_ptr<Container> CreateCandle(ObjectId itemType, Vector2 position = Vector2::Zero());
 
-		std::unique_ptr<Enemy> CreateEnemy(EntityType type, Vector2 position = Vector2::Zero());
+		std::unique_ptr<Enemy> CreateEnemy(ObjectId type, Vector2 position = Vector2::Zero());
 		std::unique_ptr<Zombie> CreateZombie(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Panther> CreatePanther(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Fishman> CreateFishman(Vector2 position = Vector2::Zero());
 		std::unique_ptr<VampireBat> CreateVampireBat(Vector2 position = Vector2::Zero());
+		std::unique_ptr<GiantBat> CreateGiantBat(Vector2 position = Vector2::Zero());
 
 		std::unique_ptr<Whip> CreateWhip(GameObject &gameObject);
 		std::unique_ptr<Whip> CreateFlashingWhip(GameObject &gameObject);
 		std::unique_ptr<RangedWeapon> CreateDagger(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Fireball> CreateFireball(Vector2 position = Vector2::Zero());
 
-		std::unique_ptr<Powerup> CreatePowerup(EntityType type, Vector2 position = Vector2::Zero());
-		std::unique_ptr<MoneyBag> CreateMoneyBag(EntityType type, Vector2 position = Vector2::Zero());
+		std::unique_ptr<Powerup> CreatePowerup(ObjectId type, Vector2 position = Vector2::Zero());
+		std::unique_ptr<MoneyBag> CreateMoneyBag(ObjectId type, Vector2 position = Vector2::Zero());
 		std::unique_ptr<MoneyBag> CreateBlueMoneyBag(Vector2 position = Vector2::Zero());
 		std::unique_ptr<MoneyBag> CreateWhiteMoneyBag(Vector2 position = Vector2::Zero());
 		std::unique_ptr<MoneyBag> CreateRedMoneyBag(Vector2 position = Vector2::Zero());
@@ -72,6 +73,6 @@ namespace Castlevania
 		void ReadEnemyConfig(Enemy &enemy, Dictionary stats);
 		void ReadSpawnAreaConfig(SpawnArea &spawnArea, Dictionary stats);
 
-		std::unique_ptr<SpawnArea> ConstructSpawnArea(EntityType type);
+		std::unique_ptr<SpawnArea> ConstructSpawnArea(ObjectId type);
 	};
 }

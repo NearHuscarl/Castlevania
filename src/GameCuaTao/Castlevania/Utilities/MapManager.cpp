@@ -94,7 +94,7 @@ GameObjects MapManager::GetMapObjectsInArea(Map name, Rect area)
 
 		switch (type)
 		{
-			case EntityType::SpawnArea:
+			case ObjectId::SpawnArea:
 			{
 				auto spawnObject = string2EntityType.at(properties.at("SpawnObject"));
 				auto spawnArea = objectFactory.CreateSpawnArea(spawnObject, bbox);
@@ -113,12 +113,13 @@ GameObjects MapManager::GetMapObjectsInArea(Map name, Rect area)
 				break;
 			}
 
-			case EntityType::WaterArea:
+			case ObjectId::WaterArea:
 				object = objectFactory.CreateWaterArea(bbox);
 				break;
 		}
 
-		if (object) objects.push_back(std::move(object));
+		if (object)
+			objects.push_back(std::move(object));
 	}
 
 	return objects;
@@ -194,16 +195,22 @@ ObjectCollection MapManager::CreateObjectCollection(TiledMapObjectGroups objectG
 		auto typeName = properties.at("type");
 		auto type = string2EntityType.at(typeName);
 
-		if (type != EntityType::ViewportArea)
-			continue;
+		// Dump area objects that dont have Update() method
+		switch (type)
+		{
+			case ObjectId::ViewportArea:
+			case ObjectId::BossFightArea:
+			{
+				ReadObjectPosition(properties, x, y);
+				auto width = std::stof(properties.at("width"));
+				auto height = std::stof(properties.at("height"));
+				auto bbox = RectF{ x, y, width, height };
+				auto object = objectFactory.CreateRectangleObject(type, bbox);
 
-		ReadObjectPosition(properties, x, y);
-		auto width = std::stof(properties.at("width"));
-		auto height = std::stof(properties.at("height"));
-		auto bbox = RectF{ x, y, width, height };
-		auto object = objectFactory.CreateViewportArea(bbox);
-
-		objectCollection.viewportAreas.push_back(std::move(object));
+				objectCollection.areas.push_back(std::move(object));
+				break;
+			}
+		}
 	}
 
 	return objectCollection;
@@ -216,7 +223,7 @@ std::unique_ptr<GameObject> MapManager::ConstructObject(ObjectProperties propert
 
 	switch (type)
 	{
-		case EntityType::SpawnPoint:
+		case ObjectId::SpawnPoint:
 		{
 			auto width = std::stof(properties.at("width"));
 			auto height = std::stof(properties.at("height"));
@@ -226,52 +233,55 @@ std::unique_ptr<GameObject> MapManager::ConstructObject(ObjectProperties propert
 			return objectFactory.CreateSpawnPoint(spawnType, bbox);
 		}
 
-		case EntityType::Player:
+		case ObjectId::Player:
 			return objectFactory.CreatePlayer();
 
-		case EntityType::Bat:
+		case ObjectId::Bat:
 			return objectFactory.CreateBat();
 
-		case EntityType::Brazier:
+		case ObjectId::Brazier:
 		{
 			auto itemType = string2EntityType.at(properties.at("Item"));
 			return objectFactory.CreateBrazier(itemType);
 		}
 
-		case EntityType::Candle:
+		case ObjectId::Candle:
 		{
 			auto itemType = string2EntityType.at(properties.at("Item"));
 			return objectFactory.CreateCandle(itemType);
 		}
 
-		case EntityType::Zombie:
+		case ObjectId::Zombie:
 			return objectFactory.CreateZombie();
 
-		case EntityType::Panther:
+		case ObjectId::Panther:
 			return objectFactory.CreatePanther();
 
-		case EntityType::Dagger:
+		case ObjectId::GiantBat:
+			return objectFactory.CreateGiantBat();
+
+		case ObjectId::Dagger:
 			return objectFactory.CreateDagger();
 
-		case EntityType::BlueMoneyBag:
+		case ObjectId::BlueMoneyBag:
 			return objectFactory.CreateBlueMoneyBag();
 
-		case EntityType::WhiteMoneyBag:
+		case ObjectId::WhiteMoneyBag:
 			return objectFactory.CreateWhiteMoneyBag();
 
-		case EntityType::RedMoneyBag:
+		case ObjectId::RedMoneyBag:
 			return objectFactory.CreateRedMoneyBag();
 
-		case EntityType::FlashingMoneyBag:
+		case ObjectId::FlashingMoneyBag:
 			return objectFactory.CreateFlashingMoneyBag();
 
-		case EntityType::Door:
+		case ObjectId::Door:
 			return objectFactory.CreateDoor();
 
-		case EntityType::Castle:
+		case ObjectId::Castle:
 			return objectFactory.CreateCastle();
 
-		case EntityType::DirtBlock:
+		case ObjectId::DirtBlock:
 			return objectFactory.CreateDirtBlock();
 
 		default:

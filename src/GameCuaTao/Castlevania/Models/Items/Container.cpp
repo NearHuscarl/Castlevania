@@ -4,7 +4,7 @@
 
 using namespace Castlevania;
 
-Container::Container() : GameObject{ EntityType::Brazier }
+Container::Container() : GameObject{ ObjectId::Brazier }
 {
 }
 

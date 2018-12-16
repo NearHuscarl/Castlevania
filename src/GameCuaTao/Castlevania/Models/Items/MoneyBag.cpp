@@ -2,7 +2,7 @@
 
 using namespace Castlevania;
 
-MoneyBag::MoneyBag(int money, EntityType type) : Powerup{ type }
+MoneyBag::MoneyBag(int money, ObjectId type) : Powerup{ type }
 {
 	this->money = money;
 }

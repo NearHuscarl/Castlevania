@@ -67,39 +67,39 @@ void RenderingSystem::OnStateChanged()
 
 Color RenderingSystem::GetBoundingBoxColor()
 {
-	auto type = (EntityType)GetParent().GetType();
+	auto objectId = GetParent().GetId();
 	auto bboxColorScale = 0.65f;
 
-	switch (type)
+	switch (objectId)
 	{
-		case EntityType::Boundary:
+		case ObjectId::Boundary:
 			return Color::DimGray() * bboxColorScale;
 
-		case EntityType::SpawnArea:
-		case EntityType::SpawnPoint:
+		case ObjectId::SpawnArea:
+		case ObjectId::SpawnPoint:
 			return Color::Red() * (bboxColorScale - 0.2f);
 
-		case EntityType::WaterArea:
+		case ObjectId::WaterArea:
 			return Color::Blue() * bboxColorScale;
 
-		case EntityType::Player:
+		case ObjectId::Player:
 			return Color::Gold() * bboxColorScale;
 
-		case EntityType::Brazier:
+		case ObjectId::Brazier:
 			return Color::YellowGreen() * bboxColorScale;
 
-		case EntityType::Zombie:
-		case EntityType::Panther:
-		case EntityType::VampireBat:
-		case EntityType::Fishman:
+		case ObjectId::Zombie:
+		case ObjectId::Panther:
+		case ObjectId::VampireBat:
+		case ObjectId::Fishman:
 			return Color::Green();
 
-		case EntityType::Whip:
+		case ObjectId::Whip:
 			return Color::Red() * bboxColorScale;
 
 			// Just a fg image, skip drawing
-		case EntityType::Castle:
-		case EntityType::ViewportArea:
+		case ObjectId::Castle:
+		case ObjectId::ViewportArea:
 			return Color::Transparent();
 
 		default:

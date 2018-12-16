@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Spritesheet TexturePath="GiantBat.png">
+    <Sprite ID="idle_01">
+      <SpriteFrame Left="0" Top="0" Width="98" Height="46" />
+      <SpriteBoundary Left="33" Top="4" Width="32" Height="32" />
+    </Sprite>
+
+    <Sprite ID="fly_01">
+      <SpriteFrame Left="98" Top="0" Width="98" Height="46" />
+      <SpriteBoundary Left="135" Top="1" Width="24" Height="45" />
+    </Sprite>
+
+    <Sprite ID="fly_02">
+      <SpriteFrame Left="196" Top="0" Width="98" Height="46" />
+      <SpriteBoundary Left="233" Top="1" Width="24" Height="45" />
+    </Sprite>
+  </Spritesheet>
+
+</GameContent>

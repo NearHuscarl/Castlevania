@@ -7,16 +7,21 @@
 
 using namespace Castlevania;
 
-GameObject::GameObject(EntityType type) : body{ *this }
+GameObject::GameObject(ObjectId type) : body{ *this }
 {
-	this->type = type;
+	this->objectId = type;
 }
 
 #pragma region Getters / Setters
 
+ObjectId GameObject::GetId()
+{
+	return objectId;
+}
+
 int GameObject::GetType()
 {
-	return (int)type;
+	return (int)objectId;
 }
 
 void GameObject::SetState(ObjectState state)
@@ -318,7 +323,7 @@ void GameObject::SendMessageToSystems(int message)
 
 GameObject &GameObject::NullObject()
 {
-	static auto nullGameObject = GameObject{ EntityType::Unknown };
+	static auto nullGameObject = GameObject{ ObjectId::Unknown };
 	return nullGameObject;
 }
 

@@ -8,6 +8,12 @@
       <Frame SpriteID="flame_02" />
       <Frame SpriteID="flame_03" />
     </Animation>
+
+    <Animation Name="FlameLoop" DefaultTime="100" IsLooping="True">
+      <Frame SpriteID="flame_01" />
+      <Frame SpriteID="flame_02" />
+      <Frame SpriteID="flame_03" />
+    </Animation>
   </Animations>
 
 </GameContent>

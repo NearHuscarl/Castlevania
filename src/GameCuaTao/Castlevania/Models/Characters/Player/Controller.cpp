@@ -154,7 +154,7 @@ void Controller::Throw()
 
 	switch (weaponItem)
 	{
-		case EntityType::DaggerItem:
+		case ObjectId::DaggerItem:
 		{
 			auto weapon = objectFactory.CreateDagger();
 			

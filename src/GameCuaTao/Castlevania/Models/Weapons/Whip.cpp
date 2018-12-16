@@ -13,7 +13,7 @@ const auto HITPOINTS = std::map<int, int>
 };
 
 Whip::Whip(GameObject &owner) :
-	GameObject{ EntityType::Whip },
+	GameObject{ ObjectId::Whip },
 	owner{ owner }
 {
 	level = 1;

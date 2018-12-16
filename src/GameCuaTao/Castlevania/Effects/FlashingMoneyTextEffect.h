@@ -18,6 +18,7 @@ namespace Castlevania
 		void Draw(SpriteExtensions &spriteBatch) override;
 
 	private:
+		bool isFinished;
 		Vector2 position;
 		std::unique_ptr<AnimatedSprite> moneyText;
 

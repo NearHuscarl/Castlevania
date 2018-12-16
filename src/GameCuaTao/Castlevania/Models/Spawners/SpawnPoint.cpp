@@ -4,8 +4,8 @@
 
 using namespace Castlevania;
 
-SpawnPoint::SpawnPoint(EntityType spawnObjectType, ObjectFactory &objectFactory) :
-	GameObject{ EntityType::SpawnPoint },
+SpawnPoint::SpawnPoint(ObjectId spawnObjectType, ObjectFactory &objectFactory) :
+	GameObject{ ObjectId::SpawnPoint },
 	objectFactory{ objectFactory }
 {
 	this->spawnObjectType = spawnObjectType;

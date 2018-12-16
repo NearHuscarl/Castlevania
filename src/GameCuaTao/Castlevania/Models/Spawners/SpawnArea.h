@@ -12,7 +12,7 @@ namespace Castlevania
 	class SpawnArea : public GameObject, public ISpawner
 	{
 	public:
-		SpawnArea(EntityType spawnObjectType, ObjectFactory &objectFactory);
+		SpawnArea(ObjectId spawnObjectType, ObjectFactory &objectFactory);
 
 		SpawnState GetSpawnState() override;
 		virtual void SetGroupSpawnTime(int groupSpawnTime);
@@ -30,7 +30,7 @@ namespace Castlevania
 
 	protected:
 		ObjectFactory &objectFactory;
-		EntityType spawnObjectType;
+		ObjectId spawnObjectType;
 
 		SpawnState spawnState;
 		int spawnGroupCount;

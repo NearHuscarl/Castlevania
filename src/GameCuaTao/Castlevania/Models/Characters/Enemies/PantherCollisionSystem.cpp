@@ -1,6 +1,6 @@
 #include "PantherCollisionSystem.h"
 #include "Panther.h"
-#include "../../../Models/Factories/ObjectCollection.h"
+#include "../../Factories/ObjectCollection.h"
 #include "../../Settings.h"
 
 using namespace Castlevania;

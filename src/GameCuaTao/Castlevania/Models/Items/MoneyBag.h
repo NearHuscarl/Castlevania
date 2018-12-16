@@ -7,7 +7,7 @@ namespace Castlevania
 	class MoneyBag : public Powerup
 	{
 	public:
-		MoneyBag(int money, EntityType type);
+		MoneyBag(int money, ObjectId type);
 
 		int GetMoney();
 

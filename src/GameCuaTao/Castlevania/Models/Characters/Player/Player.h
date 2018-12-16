@@ -78,8 +78,8 @@ namespace Castlevania
 		void AddExp(int amount);
 		
 		void SetWhip(std::unique_ptr<Whip> whip);
-		EntityType GetSubWeapon();
-		void SetSubWeapon(EntityType weapon);
+		ObjectId GetSubWeapon();
+		void SetSubWeapon(ObjectId weapon);
 
 		void LoadContent(ContentManager &content) override;
 		void Update(GameTime gameTime, UpdateData &updateData) override;

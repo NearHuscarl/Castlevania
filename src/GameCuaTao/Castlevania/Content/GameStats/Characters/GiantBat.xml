@@ -5,10 +5,12 @@
   <Dictionary
     Name="GiantBat"
     Speed="75.0"
-    LaunchSpeed="200.0"
+    DiveSpeed="200.0"
     Health="16"
     Attack="2"
-    Exp="3000">
+    Exp="3000"
+    AttackZoneWidth="768"
+    AttackZoneHeight="896">
   </Dictionary>
 
 </GameContent>

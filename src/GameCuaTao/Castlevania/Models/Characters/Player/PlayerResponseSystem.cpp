@@ -31,61 +31,65 @@ void PlayerResponseSystem::Update(UpdateData &updateData)
 
 	for (auto result : collisionData.collisionResults)
 	{
-		auto type = (EntityType)result.collidedObject.GetType();
+		auto objectId = (ObjectId)result.collidedObject.GetType();
 		auto &collidedObject = result.collidedObject;
 
-		switch (type)
+		switch (objectId)
 		{
-			case EntityType::Boundary:
+			case ObjectId::Boundary:
 				OnCollideWithBoundary(result, responseResult);
 				break;
 
-			case EntityType::Trigger:
+			case ObjectId::Trigger:
 				OnCollideWithTrigger(result, responseResult);
 				break;
 
-			case EntityType::WaterArea:
+			case ObjectId::BossFightArea:
+				OnCollideWithBossFightArea(result, (Rect)updateData.viewport);
+				break;
+
+			case ObjectId::WaterArea:
 				OnCollideWithWaterArea(result, objectCollection);
 				break;
 
-			case EntityType::Zombie:
-			case EntityType::Panther:
-			case EntityType::Fishman:
+			case ObjectId::Zombie:
+			case ObjectId::Panther:
+			case ObjectId::Fishman:
 				OnCollideWithEnemy(result);
 				break;
 
-			case EntityType::VampireBat:
+			case ObjectId::VampireBat:
 				OnCollideWithVampireBat(result);
 				break;
 
-			case EntityType::Fireball:
+			case ObjectId::Fireball:
 				OnCollideWithFireball(result);
 				break;
 
-			case EntityType::BlueMoneyBag:
-			case EntityType::WhiteMoneyBag:
-			case EntityType::RedMoneyBag:
-			case EntityType::FlashingMoneyBag:
+			case ObjectId::BlueMoneyBag:
+			case ObjectId::WhiteMoneyBag:
+			case ObjectId::RedMoneyBag:
+			case ObjectId::FlashingMoneyBag:
 				OnCollideWithMoneyBag(result);
 				break;
 
-			case EntityType::LargeHeart:
+			case ObjectId::LargeHeart:
 				OnCollideWithHeart(result);
 				break;
 
-			case EntityType::SmallHeart:
+			case ObjectId::SmallHeart:
 				OnCollideWithSmallHeart(result);
 				break;
 
-			case EntityType::WhipPowerup:
+			case ObjectId::WhipPowerup:
 				OnCollideWithWhipPowerup(result);
 				break;
 
-			case EntityType::DaggerItem:
+			case ObjectId::DaggerItem:
 				OnCollideWithDaggerItem(result, objectCollection);
 				break;
 
-			case EntityType::Door:
+			case ObjectId::Door:
 				OnCollideWithDoor(result, responseResult);
 				break;
 		}
@@ -221,6 +225,18 @@ void PlayerResponseSystem::OnCollideWithTrigger(CollisionResult &result, Respons
 	}
 }
 
+void PlayerResponseSystem::OnCollideWithBossFightArea(CollisionResult &result, Rect viewport)
+{
+	auto &bossFightArea = dynamic_cast<GameObject&>(result.collidedObject);
+	auto areaBbox = bossFightArea.GetBoundingBox();
+
+	if (areaBbox.left <= viewport.left && viewport.right <= areaBbox.right)
+	{
+		parent.Notify(BOSS_FIGHT_CUTSCENE_STARTED);
+		bossFightArea.GetBody().Enabled(false);
+	}
+}
+
 void PlayerResponseSystem::OnCollideWithWaterArea(CollisionResult &result, ObjectCollection &objectCollection)
 {
 	auto &waterArea = dynamic_cast<WaterArea&>(result.collidedObject);
@@ -318,10 +334,10 @@ void PlayerResponseSystem::OnCollideWithWhipPowerup(CollisionResult &result)
 void PlayerResponseSystem::OnCollideWithDaggerItem(CollisionResult &result, ObjectCollection &objectCollection)
 {
 	auto &daggerItem = dynamic_cast<GameObject&>(result.collidedObject);
-	auto itemType = (EntityType)daggerItem.GetType();
+	auto itemId = daggerItem.GetId();
 	
 	daggerItem.Destroy();
-	parent.SetSubWeapon(itemType);
+	parent.SetSubWeapon(itemId);
 }
 
 void PlayerResponseSystem::OnCollideWithDoor(CollisionResult &result, ResponseResult &responseResult)

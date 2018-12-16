@@ -8,7 +8,7 @@ namespace Castlevania
 	class RangedWeapon : public GameObject
 	{
 	public:
-		RangedWeapon(EntityType type);
+		RangedWeapon(ObjectId type);
 
 		void SetOwner(GameObject *owner);
 		void Update(GameTime gameTime, UpdateData &updateData);

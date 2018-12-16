@@ -3,7 +3,7 @@
 
 using namespace Castlevania;
 
-VampireBat::VampireBat() : Enemy{ EntityType::VampireBat }
+VampireBat::VampireBat() : Enemy{ ObjectId::VampireBat }
 {
 	isActive = false;
 }

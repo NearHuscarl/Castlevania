@@ -2,42 +2,43 @@
 
 #include <unordered_map>
 #include <string>
-#include "../Models/EntityType.h"
+#include "../Models/ObjectId.h"
 #include "../Models/TriggerType.h"
 #include "../Models/Facing.h"
 #include "MapSettings.h"
 
 namespace Castlevania
 {
-	const auto string2EntityType = std::unordered_map<std::string, EntityType>
+	const auto string2EntityType = std::unordered_map<std::string, ObjectId>
 	{
-		{ "ViewportArea", EntityType::ViewportArea },
-		{ "WaterArea", EntityType::WaterArea },
-		{ "SpawnArea", EntityType::SpawnArea },
-		{ "SpawnPoint", EntityType::SpawnPoint },
-		{ "Player", EntityType::Player },
-		{ "Bat", EntityType::Bat },
-		{ "Cloud", EntityType::Cloud },
-		{ "Brazier", EntityType::Brazier },
-		{ "Candle", EntityType::Candle },
-		{ "Zombie", EntityType::Zombie },
-		{ "Panther", EntityType::Panther },
-		{ "Fishman", EntityType::Fishman },
-		{ "VampireBat", EntityType::VampireBat },
-		{ "GiantBat", EntityType::GiantBat },
-		{ "Fireball", EntityType::Fireball },
-		{ "Whip", EntityType::Whip },
-		{ "DaggerItem", EntityType::DaggerItem },
-		{ "LargeHeart", EntityType::LargeHeart },
-		{ "SmallHeart", EntityType::SmallHeart },
-		{ "WhipPowerup", EntityType::WhipPowerup },
-		{ "BlueMoneyBag", EntityType::BlueMoneyBag },
-		{ "WhiteMoneyBag", EntityType::WhiteMoneyBag },
-		{ "RedMoneyBag", EntityType::RedMoneyBag },
-		{ "FlashingMoneyBag", EntityType::FlashingMoneyBag },
-		{ "Door", EntityType::Door },
-		{ "Castle", EntityType::Castle },
-		{ "DirtBlock", EntityType::DirtBlock },
+		{ "ViewportArea", ObjectId::ViewportArea },
+		{ "BossFightArea", ObjectId::BossFightArea },
+		{ "WaterArea", ObjectId::WaterArea },
+		{ "SpawnArea", ObjectId::SpawnArea },
+		{ "SpawnPoint", ObjectId::SpawnPoint },
+		{ "Player", ObjectId::Player },
+		{ "Bat", ObjectId::Bat },
+		{ "Cloud", ObjectId::Cloud },
+		{ "Brazier", ObjectId::Brazier },
+		{ "Candle", ObjectId::Candle },
+		{ "Zombie", ObjectId::Zombie },
+		{ "Panther", ObjectId::Panther },
+		{ "Fishman", ObjectId::Fishman },
+		{ "VampireBat", ObjectId::VampireBat },
+		{ "GiantBat", ObjectId::GiantBat },
+		{ "Fireball", ObjectId::Fireball },
+		{ "Whip", ObjectId::Whip },
+		{ "DaggerItem", ObjectId::DaggerItem },
+		{ "LargeHeart", ObjectId::LargeHeart },
+		{ "SmallHeart", ObjectId::SmallHeart },
+		{ "WhipPowerup", ObjectId::WhipPowerup },
+		{ "BlueMoneyBag", ObjectId::BlueMoneyBag },
+		{ "WhiteMoneyBag", ObjectId::WhiteMoneyBag },
+		{ "RedMoneyBag", ObjectId::RedMoneyBag },
+		{ "FlashingMoneyBag", ObjectId::FlashingMoneyBag },
+		{ "Door", ObjectId::Door },
+		{ "Castle", ObjectId::Castle },
+		{ "DirtBlock", ObjectId::DirtBlock },
 	};
 
 	const auto string2TriggerType = std::unordered_map<std::string, TriggerType>
@@ -45,6 +46,7 @@ namespace Castlevania
 		{ "StairUp", TriggerType::STAIR_UP },
 		{ "StairDown", TriggerType::STAIR_DOWN },
 		{ "NextMap", TriggerType::NEXT_MAP },
+		{ "BossFight", TriggerType::BOSS_FIGHT },
 		{ "CastleEntrance", TriggerType::CASTLE_ENTRANCE },
 		{ "MoneyBagTrigger", TriggerType::MONEY_BAG_EASTER_EGG },
 	};
