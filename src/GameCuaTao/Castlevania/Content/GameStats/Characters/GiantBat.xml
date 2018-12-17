@@ -5,14 +5,14 @@
   <Dictionary
     Name="GiantBat"
     Speed="75.0"
-    DiveSpeed="200.0"
+    DiveSpeed="275.0"
     Health="16"
     Attack="2"
     Exp="3000"
-    ThreatZoneWidth="158"
-    ThreatZoneHeight="112"
-    AttackZoneWidth="768"
-    AttackZoneHeight="896">
+    ThreatZoneWidth="120"
+    ThreatZoneHeight="80"
+    AttackZoneWidth="650"
+    AttackZoneHeight="900">
   </Dictionary>
 
 </GameContent>

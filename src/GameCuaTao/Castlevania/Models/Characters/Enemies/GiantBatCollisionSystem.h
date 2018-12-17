@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Direct2DGame/Base/Rect.h"
 #include "../../Systems/Collision/CollisionSystem.h"
 
 namespace Castlevania
@@ -17,6 +18,8 @@ namespace Castlevania
 
 	private:
 		GiantBat &parent;
+
+		void CheckZonesCollision(Rect playerBbox);
 
 		bool wasPlayerInAttackZone;
 		bool wasPlayerInThreatZone;

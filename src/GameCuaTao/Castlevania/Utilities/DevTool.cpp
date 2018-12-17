@@ -35,6 +35,7 @@ void DevTool::LoadContent(ContentManager &content)
 	auto pantherSprite = content.Load<Spritesheet>("Characters/Enemies/Panther.atlas.xml")->begin()->second;
 	auto fishmanSprite = content.Load<Spritesheet>("Characters/Enemies/Fishman.atlas.xml")->begin()->second;
 	auto vampireBatSprite = content.Load<Spritesheet>("Characters/Enemies/VampireBat.atlas.xml")->at("fly_01");
+	auto giantBatSprite = content.Load<Spritesheet>("Characters/Enemies/GiantBat.atlas.xml")->at("fly_01");
 	auto brazierSprite = content.Load<Spritesheet>("Items/Brazier.atlas.xml")->begin()->second;
 	auto candleSprite = content.Load<Spritesheet>("Items/Candle.atlas.xml")->begin()->second;
 	auto blueMoneyBagSprite = content.Load<Spritesheet>("Items/Money_Bag.atlas.xml")->at("money_bag_blue");
@@ -56,6 +57,7 @@ void DevTool::LoadContent(ContentManager &content)
 				std::make_pair<std::string, Sprite>("Panther", pantherSprite),
 				std::make_pair<std::string, Sprite>("Fishman", fishmanSprite),
 				std::make_pair<std::string, Sprite>("VampireBat", vampireBatSprite),
+				std::make_pair<std::string, Sprite>("GiantBat", giantBatSprite),
 			},
 		},
 		{
@@ -244,6 +246,9 @@ void DevTool::SpawnObject(ObjectCollection &objectCollection)
 	if (category == ENEMY)
 	{
 		object = objectFactory.CreateEnemy(type);
+
+		if (object->GetId() == ObjectId::GiantBat)
+			dynamic_cast<GiantBat*>(object.get())->SetActive();
 	}
 	else if (category == POWERUP)
 	{

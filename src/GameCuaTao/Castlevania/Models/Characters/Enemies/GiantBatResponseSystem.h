@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../../Systems/CollisionResponse/ICollisionResponseSystem.h"
+#include "../../Systems/CollisionResponse/ResponseSystem.h"
 #include "GiantBat.h"
 
 namespace Castlevania
 {
-	class GiantBatResponseSystem : public ICollisionResponseSystem
+	class GiantBatResponseSystem : public ResponseSystem
 	{
 	public:
 		GiantBatResponseSystem(GiantBat &parent);

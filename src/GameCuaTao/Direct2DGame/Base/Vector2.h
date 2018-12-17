@@ -23,4 +23,5 @@ struct Vector2 : public D3DXVECTOR2
 
 	static float Distance(Vector2 value1, Vector2 value2);
 	float Length();
+	static Vector2 Normalize(Vector2 value);
 };

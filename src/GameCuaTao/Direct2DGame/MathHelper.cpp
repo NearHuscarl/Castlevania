@@ -7,6 +7,11 @@ double const MathHelper::PI = 3.14159265358979323846;
 double const MathHelper::TWO_PI = PI * 2;
 double const MathHelper::PI_180 = PI / 180;
 
+float MathHelper::Lerp(float value1, float value2, float amount)
+{
+	return value1 + (value2 - value1) * amount;
+}
+
 float MathHelper::ToRadians(float degrees)
 {
 	return (float)(degrees * PI_180); // 1 degree = pi / 180 radians

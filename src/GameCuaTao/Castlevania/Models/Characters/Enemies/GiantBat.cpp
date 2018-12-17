@@ -1,8 +1,14 @@
 #include <assert.h>
 #include "GiantBat.h"
+#include "../../UpdateData.h"
 #include "../../Settings.h"
 
 using namespace Castlevania;
+
+constexpr auto MIN_DIVING_RANGE = 10;
+constexpr auto DIVING_ADJUSTED_DISTANCE = 40;
+constexpr auto RISING_SPEED = 250;
+constexpr auto SHOOTING_TIME = 1700;
 
 GiantBat::GiantBat() : Enemy{ ObjectId::GiantBat }
 {
@@ -89,7 +95,7 @@ GiantBatState GiantBat::GetGiantBatState()
 
 void GiantBat::Update(GameTime gameTime, UpdateData &updateData)
 {
-	Enemy::Update(gameTime, updateData);
+	GameObject::Update(gameTime, updateData);
 
 	switch (giantBatState)
 	{
@@ -100,6 +106,25 @@ void GiantBat::Update(GameTime gameTime, UpdateData &updateData)
 
 				if (flyingDistance <= 0)
 					Hover();
+			}
+			break;
+
+		case GiantBatState::RISING:
+			if (playerPosition.y - position.y >= DIVING_ADJUSTED_DISTANCE)
+			{
+				velocity.y = 0;
+				DoDiveAttack();
+			}
+			break;
+
+		case GiantBatState::SHOOTING:
+			if (shootingTimer.ElapsedMilliseconds() > SHOOTING_TIME)
+			{
+				if (fireball != nullptr)
+					updateData.objectCollection->entities.push_back(std::move(fireball));
+				
+				Hover();
+				shootingTimer.Reset();
 			}
 			break;
 	}
@@ -126,15 +151,42 @@ void GiantBat::Fly(float distance)
 void GiantBat::Dive(Vector2 playerPosition)
 {
 	this->playerPosition = playerPosition;
-	SetGiantBatState(GiantBatState::DIVING);
+
+	if (playerPosition.y - position.y <= MIN_DIVING_RANGE)
+		Rise();
+	else
+		DoDiveAttack();
 }
 
-void GiantBat::Shoot(std::unique_ptr<GameObject> fireball)
+void GiantBat::Shoot(std::unique_ptr<GameObject> fireball, Vector2 destination)
 {
+	auto fireballPosition = GetOriginPosition();
+	auto direction = Vector2::Normalize(destination - fireballPosition);
+	auto fireballSpeed = fireball->GetSpeed();
+
+	fireball->SetVelocity(direction * fireballSpeed);
+	fireball->SetPosition(fireballPosition);
+
+	this->fireball = std::move(fireball);
+
+	SetGiantBatState(GiantBatState::SHOOTING);
+	shootingTimer.Start();
 }
 
 void GiantBat::SetGiantBatState(GiantBatState state)
 {
 	giantBatState = state;
 	SendMessageToSystems(MOVE_STATE_CHANGED);
+}
+
+void GiantBat::Rise()
+{
+	velocity.x = 0;
+	velocity.y = -RISING_SPEED;
+	SetGiantBatState(GiantBatState::RISING);
+}
+
+void GiantBat::DoDiveAttack()
+{
+	SetGiantBatState(GiantBatState::DIVING);
 }

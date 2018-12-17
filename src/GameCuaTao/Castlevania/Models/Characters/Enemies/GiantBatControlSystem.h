@@ -20,14 +20,17 @@ namespace Castlevania
 
 		int hoveringTime;
 		Stopwatch hoveringTimer;
-		float originalSpeed; // the closer the player is the quicker to boss moves
+		float originalSpeed;
 		float heightToStopDiving;
-		bool isBelowPlayer;
+		Vector2 playerPosition;
 
 		void OnMoveStateChanged();
 		void OnActiveChanged();
 
 		bool IsDistanceOutsideOfViewport(Vector2 distance);
+		bool IsBelowPlayer();
+		float GetSpeedRelativeToPlayerDistance();
+
 		void MoveRandomly();
 		Vector2 RandomDirection();
 	};

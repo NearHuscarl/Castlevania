@@ -13,6 +13,8 @@ public:
 	template<typename T>
 	static T Clamp(T value, T min, T max);
 
+	static float Lerp(float value1, float value2, float amount);
+
 	template<typename T>
 	static T Min(T value1, T value2);
 

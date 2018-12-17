@@ -12,6 +12,7 @@ namespace Castlevania
 
 		int GetAttack() override;
 		void SetAttack(int attack) override;
+
 		void Update(GameTime gameTime, UpdateData &updateData) override;
 
 	private:

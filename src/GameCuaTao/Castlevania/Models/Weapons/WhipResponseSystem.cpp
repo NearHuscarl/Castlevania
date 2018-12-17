@@ -38,6 +38,7 @@ void WhipResponseSystem::Update(UpdateData &updateData)
 
 			case ObjectId::Fireball:
 				OnCollideWithFireball(result);
+				break;
 		}
 	}
 }

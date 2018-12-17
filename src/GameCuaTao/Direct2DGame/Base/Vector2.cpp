@@ -74,3 +74,13 @@ float Vector2::Length()
 {
 	return (float)sqrt((x * x) + (y * y));
 }
+
+Vector2 Vector2::Normalize(Vector2 value)
+{
+	auto val = 1 / value.Length();
+	
+	value.x *= val;
+	value.y *= val;
+
+	return value;
+}

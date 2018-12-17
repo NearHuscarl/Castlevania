@@ -16,6 +16,13 @@ void GiantBatMovementSystem::Receive(int message)
 		case MOVE_STATE_CHANGED:
 			OnMoveStateChanged();
 			break;
+
+		case FACING_CHANGED:
+			if (parent.GetFacing() == Facing::Left)
+				direction = -1;
+			else
+				direction = 1;
+			break;
 	}
 }
 
@@ -58,9 +65,15 @@ void GiantBatMovementSystem::OnMoveStateChanged()
 			a = (y - k) / pow((x - h), 2);
 
 			if (h < x)
+			{
 				direction = -1;
+				parent.SetFacing(Facing::Left);
+			}
 			else
+			{
 				direction = 1;
+				parent.SetFacing(Facing::Right);
+			}
 
 			// Calculate speed in the x axis
 			auto dy = k - y;
