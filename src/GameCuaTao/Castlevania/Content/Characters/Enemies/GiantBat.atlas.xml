@@ -5,7 +5,7 @@
   <Spritesheet TexturePath="GiantBat.png">
     <Sprite ID="idle_01">
       <SpriteFrame Left="0" Top="0" Width="98" Height="46" />
-      <SpriteBoundary Left="33" Top="4" Width="32" Height="32" />
+      <SpriteBoundary Left="37" Top="1" Width="24" Height="45" />
     </Sprite>
 
     <Sprite ID="fly_01">

@@ -3,6 +3,7 @@
 #include "Direct2DGame/Extensions/Camera.h"
 #include "Cutscene.h"
 #include "../../Models/Characters/Player/Player.h"
+#include "../../Models/Factories/ObjectCollection.h"
 
 namespace Castlevania
 {

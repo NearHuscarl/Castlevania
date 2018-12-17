@@ -1,5 +1,5 @@
 #include "SpawnerCollisionSystem.h"
-#include "../Factories/ObjectCollection.h"
+#include "../UpdateData.h"
 
 using namespace Castlevania;
 
@@ -7,7 +7,7 @@ SpawnerCollisionSystem::SpawnerCollisionSystem(GameObject &parent) : parent { pa
 {
 }
 
-void SpawnerCollisionSystem::Update(ObjectCollection &objectCollection)
+void SpawnerCollisionSystem::Update(UpdateData &updateData)
 {
 	auto &body = parent.GetBody();
 	body.ClearCollisionData();
@@ -15,7 +15,7 @@ void SpawnerCollisionSystem::Update(ObjectCollection &objectCollection)
 	if (!body.Enabled())
 		return;
 
-	auto player = objectCollection.player;
+	auto player = updateData.objectCollection->player;
 	auto spawnAreaBbox = parent.GetBoundingBox();
 
 	if (player->GetBoundingBox().Intersects(spawnAreaBbox))

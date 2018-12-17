@@ -1,6 +1,6 @@
 #include "StandardCollisionSystem.h"
 #include "../../GameObject.h"
-#include "../../../Models/Factories/ObjectCollection.h"
+#include "../../../Models/UpdateData.h"
 
 using namespace Castlevania;
 
@@ -13,7 +13,7 @@ IGameObject &StandardCollisionSystem::GetParent()
 	return parent;
 }
 
-void StandardCollisionSystem::Update(ObjectCollection &objectCollection)
+void StandardCollisionSystem::Update(UpdateData &updateData)
 {
 	auto &body = parent.GetBody();
 	body.ClearCollisionData();
@@ -22,6 +22,7 @@ void StandardCollisionSystem::Update(ObjectCollection &objectCollection)
 		return;
 
 	auto results = std::vector<CollisionResult>{};
+	auto &objectCollection = *updateData.objectCollection;
 	auto &boundaries = objectCollection.boundaries;
 	auto &entities = objectCollection.entities;
 

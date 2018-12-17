@@ -30,10 +30,12 @@ void IntroScene::LoadContent()
 	player->SetPosition(startPosition);
 
 	bat1->SetPosition(41, 210);
-	bat1->SetLinearVelocity(40, 30);
+	bat1->SetSpeed(40);
+	bat1->SetDirection(30);
 
 	bat2->SetPosition(288, 115);
-	bat2->SetLinearVelocity(12, 165);
+	bat1->SetSpeed(12);
+	bat2->SetDirection(165);
 
 	AudioManager::Play(GAME_START_PROLOGUE);
 }

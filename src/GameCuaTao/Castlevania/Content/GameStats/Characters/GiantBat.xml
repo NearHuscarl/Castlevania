@@ -9,6 +9,8 @@
     Health="16"
     Attack="2"
     Exp="3000"
+    ThreatZoneWidth="158"
+    ThreatZoneHeight="112"
     AttackZoneWidth="768"
     AttackZoneHeight="896">
   </Dictionary>

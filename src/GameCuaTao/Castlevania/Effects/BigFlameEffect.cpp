@@ -59,8 +59,5 @@ void BigFlameEffect::Draw(SpriteExtensions &spriteBatch)
 		spriteBatch.Draw(*flame, Vector2{ position.x - flameWidth, position.y               });
 		spriteBatch.Draw(*flame, Vector2{ position.x             , position.y               });
 		spriteBatch.Draw(*flame, Vector2{ position.x + flameWidth, position.y               });
-		spriteBatch.Draw(*flame, Vector2{ position.x - flameWidth, position.y + flameHeight });
-		spriteBatch.Draw(*flame, Vector2{ position.x             , position.y + flameHeight });
-		spriteBatch.Draw(*flame, Vector2{ position.x + flameWidth, position.y + flameHeight });
 	}
 }

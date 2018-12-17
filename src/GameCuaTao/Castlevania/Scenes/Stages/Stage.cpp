@@ -51,11 +51,6 @@ UpdateData Stage::GetUpdateData()
 	};
 }
 
-void Stage::SetCameraMoveArea(Rect area)
-{
-
-}
-
 void Stage::Initialize()
 {
 	auto &graphicsDevice = gameplayScene.GetSceneManager().GetGraphicsDevice();

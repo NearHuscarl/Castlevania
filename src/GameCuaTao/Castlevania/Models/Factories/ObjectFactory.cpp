@@ -133,7 +133,7 @@ std::unique_ptr<GameObject> ObjectFactory::CreateBat(Vector2 position)
 	auto object = std::make_unique<GameObject>(ObjectId::Bat);
 	auto stats = content.Load<Dictionary>("GameStats/Characters/Bat.xml");
 
-	object->SetLinearVelocity(std::stof(stats->at("Speed")));
+	object->SetSpeed(std::stof(stats->at("Speed")));
 
 	//auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*object, "Characters/NPCs/Bat.ani.xml");
 	auto renderingSystem = std::make_unique<BoundingBoxRenderingSystem>(*object, RectF::Empty());
@@ -364,9 +364,14 @@ std::unique_ptr<GiantBat> ObjectFactory::CreateGiantBat(Vector2 position)
 
 	ReadEnemyConfig(*object.get(), *stats);
 
-	auto zoneWidth = std::stoi(stats->at("AttackZoneWidth"));
-	auto zoneHeight = std::stoi(stats->at("AttackZoneHeight"));
-	object->SetAttackZone(Rect{ 0, 0, zoneWidth, zoneHeight });
+	auto attackZoneWidth = std::stoi(stats->at("AttackZoneWidth"));
+	auto attackZoneHeight = std::stoi(stats->at("AttackZoneHeight"));
+	object->SetAttackZone(Rect{ 0, 0, attackZoneWidth, attackZoneHeight });
+
+	auto threatZoneWidth = std::stoi(stats->at("ThreatZoneWidth"));
+	auto threatZoneHeight = std::stoi(stats->at("ThreatZoneHeight"));
+	object->SetThreatZone(Rect{ 0, 0, threatZoneWidth, threatZoneHeight });
+
 	object->SetDiveSpeed(std::stof(stats->at("DiveSpeed")));
 
 	auto controlSystem = std::make_unique<GiantBatControlSystem>(*object, *this);

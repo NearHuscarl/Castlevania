@@ -13,7 +13,7 @@ namespace Castlevania
 		StaticCollisionSystem(GameObject &parent);
 
 		IGameObject &GetParent() override;
-		void Update(ObjectCollection &objectCollection) override;
+		void Update(UpdateData &updateData) override;
 
 	private:
 		IGameObject &parent;

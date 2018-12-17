@@ -10,6 +10,19 @@ Panther::Panther() : Enemy{ ObjectId::Panther }
 	Idle();
 }
 
+RectF Panther::GetActiveZone()
+{
+	auto activeArea = RectF{};
+	auto originPosition = GetOriginPosition();
+
+	activeArea.left = originPosition.x - activeZone.Width() / 2;
+	activeArea.top = originPosition.y - activeZone.Height() / 2;
+	activeArea.right = activeArea.left + activeZone.Width();
+	activeArea.bottom = activeArea.top + activeZone.Height();
+
+	return activeArea;
+}
+
 void Panther::SetActiveZone(Rect activeZone)
 {
 	this->activeZone = activeZone;
@@ -28,19 +41,6 @@ bool Panther::IsActive()
 void Panther::SetActive(bool value)
 {
 	isActive = value;
-}
-
-RectF Panther::GetActiveArea()
-{
-	auto activeArea = RectF{};
-	auto originPosition = GetOriginPosition();
-
-	activeArea.left = originPosition.x - activeZone.Width() / 2;
-	activeArea.top = originPosition.y - activeZone.Height() / 2;
-	activeArea.right = activeArea.left + activeZone.Width();
-	activeArea.bottom = activeArea.top + activeZone.Height();
-
-	return activeArea;
 }
 
 PantherState Panther::GetPantherState()

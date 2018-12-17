@@ -52,7 +52,8 @@ namespace Castlevania
 		virtual void SetVelocity(Vector2 velocity);
 		void SetVelocity_X(float x);
 		void SetVelocity_Y(float y);
-		void SetLinearVelocity(float speed, float angle = 0.0f); // angle in degree
+		void SetDirection(float angle); // angle in degree
+		void SetDirection(Vector2 direction); // angle in degree
 
 		float GetSpeed();
 		virtual void SetSpeed(float speed);

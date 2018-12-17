@@ -19,7 +19,8 @@ namespace Castlevania
 
 	private:
 		bool isFinished;
-		Vector2 position;
+		Vector2 flamePosition;
+		Vector2 sparkPosition;
 		std::unique_ptr<Sprite> spark;
 		std::unique_ptr<AnimatedSprite> flame;
 

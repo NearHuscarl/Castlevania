@@ -4,15 +4,15 @@
 
   <Spritesheet TexturePath="Flame.png">
     <Sprite ID="flame_01">
-      <SpriteFrame Left="0" Top="0" Width="42" Height="44" />
+      <SpriteFrame Left="0" Top="0" Width="18" Height="32" />
     </Sprite>
 
     <Sprite ID="flame_02">
-      <SpriteFrame Left="42" Top="0" Width="42" Height="44" />
+      <SpriteFrame Left="18" Top="0" Width="18" Height="32" />
     </Sprite>
 
     <Sprite ID="flame_03">
-      <SpriteFrame Left="84" Top="0" Width="42" Height="44" />
+      <SpriteFrame Left="36" Top="0" Width="18" Height="32" />
     </Sprite>
   </Spritesheet>
 

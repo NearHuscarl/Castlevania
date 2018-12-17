@@ -17,7 +17,10 @@ GiantBatRenderingSystem::GiantBatRenderingSystem(
 void GiantBatRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 {
 	if (DevTool::IsDebugging)
-		DrawBoundingBox(spriteBatch, parent.GetAttackArea(), Color::LavenderBlue() * 0.4f);
+	{
+		DrawBoundingBox(spriteBatch, parent.GetThreatZone(), Color::Red() * 0.3f);
+		DrawBoundingBox(spriteBatch, parent.GetAttackZone(), Color::LavenderBlue() * 0.5f);
+	}
 
 	EffectRenderingSystem::Draw(spriteBatch);
 }

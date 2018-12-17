@@ -237,6 +237,7 @@
     <ClCompile Include="Castlevania\Utilities\CppExtensions.cpp" />
     <ClCompile Include="Castlevania\Utilities\Subject.cpp" />
     <ClCompile Include="Castlevania\Utilities\Timer.cpp" />
+    <ClCompile Include="Direct2DGame\Base\Vector2.cpp" />
     <ClCompile Include="Direct2DGame\Content\SpritesheetReader.cpp" />
     <ClCompile Include="Direct2DGame\Extensions\Collisions\Body\Body.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Player\Controller.cpp" />

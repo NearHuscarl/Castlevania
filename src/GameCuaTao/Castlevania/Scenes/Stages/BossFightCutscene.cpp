@@ -41,8 +41,13 @@ void BossFightCutscene::Update(GameTime gameTime)
 	
 	if (bossWakeupTimer.ElapsedMilliseconds() >= BOSS_WAKE_UP_TIME)
 	{
-		isComplete = true;
+		auto moveArea = (Rect)stage.GetCamera()->GetBounds();
+		
+		moveArea.top += 83; // TODO: change to const
+		boss->SetMoveArea(moveArea);
 		boss->SetActive();
+	
 		stage.OnNotify(Subject::Empty(), BOSS_FIGHT_STARTED);
+		isComplete = true;
 	}
 }

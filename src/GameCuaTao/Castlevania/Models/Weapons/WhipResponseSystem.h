@@ -2,6 +2,7 @@
 
 #include "../Systems/CollisionResponse/ICollisionResponseSystem.h"
 #include "Whip.h"
+#include "../Factories/ObjectCollection.h"
 
 namespace Castlevania
 {

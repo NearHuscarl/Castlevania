@@ -109,13 +109,18 @@ void GameObject::SetVelocity_Y(float y)
 	velocity.y = y;
 }
 
-void GameObject::SetLinearVelocity(float speed, float angle)
+void GameObject::SetDirection(float angle)
 {
 	// The X-Y axis in game has the value Y inverted compare to the X-Y axis in math
 	// To convert the X-Y axis from math to game, we need to flip the degrees sign because
 	//   with sin(θ) = y, sin(-θ) = -y
 	//   with cos(θ) = x, cos(θ) = x
 	auto direction = MathHelper::Degrees2Vector(-angle);
+	SetDirection(direction);
+}
+
+void GameObject::SetDirection(Vector2 direction)
+{
 	velocity = direction * speed;
 }
 
@@ -296,7 +301,7 @@ void GameObject::Update(GameTime gameTime, UpdateData &updateData)
 		movementSystem->Update(gameTime);
 
 	if (collisionSystem != nullptr && objectCollection != nullptr)
-		collisionSystem->Update(*objectCollection);
+		collisionSystem->Update(updateData);
 
 	if (collisionResponseSystem != nullptr && objectCollection != nullptr)
 		collisionResponseSystem->Update(updateData);

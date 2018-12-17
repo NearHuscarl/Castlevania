@@ -35,7 +35,6 @@ namespace Castlevania
 
 		Camera *GetCamera();
 		UpdateData GetUpdateData();
-		void SetCameraMoveArea(Rect area);
 
 		void UpdateGameObjects(GameTime gameTime);
 		void UpdateGameplay(GameTime gameTime);

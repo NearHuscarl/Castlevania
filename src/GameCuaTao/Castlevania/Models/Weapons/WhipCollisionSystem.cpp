@@ -1,5 +1,5 @@
 #include "WhipCollisionSystem.h"
-#include "../Factories/ObjectCollection.h"
+#include "../UpdateData.h"
 
 using namespace Castlevania;
 
@@ -7,7 +7,7 @@ WhipCollisionSystem::WhipCollisionSystem(GameObject &parent) : parent{ parent }
 {
 }
 
-void WhipCollisionSystem::Update(ObjectCollection &objectCollection)
+void WhipCollisionSystem::Update(UpdateData &updateData)
 {
 	auto &body = parent.GetBody();
 	body.ClearCollisionData();
@@ -16,7 +16,7 @@ void WhipCollisionSystem::Update(ObjectCollection &objectCollection)
 		return;
 
 	auto results = std::vector<CollisionResult>{};
-	auto &entities = objectCollection.entities;
+	auto &entities = updateData.objectCollection->entities;
 
 	for (auto &entity : entities)
 	{

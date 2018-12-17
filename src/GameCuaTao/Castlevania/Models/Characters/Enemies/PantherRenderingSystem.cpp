@@ -17,7 +17,7 @@ PantherRenderingSystem::PantherRenderingSystem(
 void PantherRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 {
 	if (DevTool::IsDebugging)
-		DrawBoundingBox(spriteBatch, parent.GetActiveArea(), Color::LavenderBlue() * 0.4f);
+		DrawBoundingBox(spriteBatch, parent.GetActiveZone(), Color::LavenderBlue() * 0.4f);
 
 	EffectRenderingSystem::Draw(spriteBatch);
 }

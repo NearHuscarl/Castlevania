@@ -12,7 +12,7 @@ namespace Castlevania
 		SpawnerCollisionSystem(GameObject &parent);
 
 		void Receive(int message) override {};
-		void Update(ObjectCollection &objectCollection) override;
+		void Update(UpdateData &updateData) override;
 
 	protected:
 		GameObject &parent;

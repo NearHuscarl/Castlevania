@@ -16,14 +16,15 @@ namespace Castlevania
 	public:
 		Panther();
 
+		// If Simon steps into the active area
+		// Switch to active mode and start chasing her
+		RectF GetActiveZone();
 		void SetActiveZone(Rect activeZone);
 		void SetJumpSpeed(float speed);
+		
 		bool IsActive();
 		void SetActive(bool value);
 
-		// If Simon steps into the active area
-		// Switch to active mode and start chasing her
-		RectF GetActiveArea();
 		PantherState GetPantherState();
 		Direction GetPlayerDirection();
 

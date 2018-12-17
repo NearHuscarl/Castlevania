@@ -11,6 +11,11 @@ namespace Castlevania
 		IDLE,
 		HOVERING,
 		FLYING,
+
+		// When giant bat and simon is at the same height. It has to
+		// rise itself quickly to make the diving attack viable
+		RISING,
+
 		DIVING,
 		SHOOTING,
 	};
@@ -20,26 +25,37 @@ namespace Castlevania
 	public:
 		GiantBat();
 
+		float GetDiveSpeed();
 		void SetDiveSpeed(float speed);
 		void SetActive() override;
 		bool IsInRange();
 		void IsInRange(bool value);
 
-		Rect GetAttackArea();
+		Rect GetAttackZone();
 		void SetAttackZone(Rect attackZone);
+		Rect GetThreatZone();
+		void SetThreatZone(Rect threatZone);
+		Rect GetMoveArea() override;
+		void SetMoveArea(Rect moveArea) override;
 		GiantBatState GetGiantBatState();
+
+		void Update(GameTime gameTime, UpdateData &updateData) override;
 
 		void Idle();
 		void Hover();
-		void FlyTo(Vector2 position);
-		void Dive(Vector2 vertex);
+		void Fly(float distance);
+		void Dive(Vector2 playerPosition);
 		void Shoot(std::unique_ptr<GameObject> fireball);
 
 	private:
-		Vector2 destination;
+		Vector2 playerPosition;
+		float flyingDistance;
 		float diveSpeed;
+		bool isActive;
 		bool isInRange;
-		Rect attackZone;
+		Rect attackZone; // If player is outside of attack zone, start shooting player
+		Rect threatZone; // When player is inside threat zone, attack immediately
+		Rect moveArea;
 		GiantBatState giantBatState;
 
 		void SetGiantBatState(GiantBatState state);

@@ -13,9 +13,12 @@ namespace Castlevania
 		GiantBatCollisionSystem(GiantBat &parent);
 
 		IGameObject &GetParent() override;
-		void Update(ObjectCollection &objectCollection) override;
+		void Update(UpdateData &updateData) override;
 
 	private:
 		GiantBat &parent;
+
+		bool wasPlayerInAttackZone;
+		bool wasPlayerInThreatZone;
 	};
 }

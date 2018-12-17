@@ -474,6 +474,9 @@
     <ClCompile Include="Castlevania\Models\Characters\Enemies\GiantBatResponseSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Direct2DGame\Base\Vector2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\pugixml.hpp">

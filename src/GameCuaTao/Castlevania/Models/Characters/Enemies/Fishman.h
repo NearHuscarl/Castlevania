@@ -2,6 +2,7 @@
 
 #include "Direct2DGame/Utilities/Stopwatch.h"
 #include "Enemy.h"
+#include "../../Factories/ObjectCollection.h"
 
 namespace Castlevania
 {

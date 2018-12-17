@@ -1,5 +1,6 @@
 #pragma once
 
+#include <math.h>
 #include "Base/Vector2.h"
 
 class MathHelper
@@ -21,14 +22,16 @@ public:
 	static float ToRadians(float degrees);
 	static Vector2 Degrees2Vector(float degrees);
 
+	static Vector2 RandomDirection(float minAngle = 0.0f, float maxAngle = 360.0f);
 	static bool RandomBoolean();
 	static bool RandomPercent(float percentValue); // 1-100
 
-	template<typename T>
-	static int RandomBetween(T min, T max);
+	static int RandomBetween(int min, int max);
+	static float RandomBetween(float min, float max);
+
 	// Like RandomBetween(int, int) but do not repeat oldValue
 	template<typename T>
-	static int RandomBetween(T min, T max, T oldValue);
+	static T RandomBetween(T min, T max, T oldValue);
 };
 
 template<typename T>
@@ -53,13 +56,7 @@ inline T MathHelper::Max(T value1, T value2)
 }
 
 template<typename T>
-inline int MathHelper::RandomBetween(T min, T max)
-{
-	return rand() % (max - min + 1) + min;
-}
-
-template<typename T>
-inline int MathHelper::RandomBetween(T min, T max, T oldValue)
+inline T MathHelper::RandomBetween(T min, T max, T oldValue)
 {
 	auto newValue = RandomBetween(min, max);
 

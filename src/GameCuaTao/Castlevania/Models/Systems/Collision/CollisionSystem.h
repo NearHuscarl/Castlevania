@@ -14,7 +14,7 @@ namespace Castlevania
 		virtual IGameObject &GetParent();
 		virtual void Receive(int message) override {};
 
-		virtual void Update(ObjectCollection &objectCollection) override = 0;
+		virtual void Update(UpdateData &updateData) override = 0;
 
 	protected:
 		void CalculateCollision(IGameObject &gameObject, CollisionResults &results);

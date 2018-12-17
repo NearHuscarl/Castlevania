@@ -19,7 +19,12 @@ namespace Castlevania
 	// Enemy events
 	constexpr auto PLAYER_IN_RANGE = 6;
 	constexpr auto PLAYER_OUT_OF_RANGE = 7;
+	constexpr auto ACTIVE_CHANGED = 8;
+	constexpr auto AT_VIEWPORT_EDGE = 9;
+
+	// GiantBat events
+	constexpr auto PLAYER_IN_THREAT_ZONE = 10;
 
 	// WaterArea events
-	constexpr auto OBJECT_HITS_WATER_SURFACE = 9;
+	constexpr auto OBJECT_HITS_WATER_SURFACE = 11;
 }

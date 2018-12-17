@@ -10,10 +10,18 @@ namespace Castlevania
 	{
 	public:
 		GiantBatMovementSystem(GiantBat &parent);
+
+		void Receive(int message) override;
 		void Update(GameTime gameTime) override;
 
 	private:
 		GiantBat &parent;
+		Vector2 vertex;
+		float a; // coefficient in parabola's equation
+		float direction;
+		float speed_x;
+
+		void OnMoveStateChanged();
 
 		void UpdateLinearMovement(float deltaTime);
 		void UpdateParabolicMovement(float deltaTime);

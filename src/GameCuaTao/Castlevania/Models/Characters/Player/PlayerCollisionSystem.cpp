@@ -1,7 +1,7 @@
 #include "Direct2DGame/MathHelper.h"
 #include "PlayerCollisionSystem.h"
 #include "../../GameObject.h"
-#include "../../../Models/Factories/ObjectCollection.h"
+#include "../../../Models/UpdateData.h"
 
 using namespace Castlevania;
 
@@ -14,7 +14,7 @@ IGameObject &PlayerCollisionSystem::GetParent()
 	return parent;
 }
 
-void PlayerCollisionSystem::Update(ObjectCollection &objectCollection)
+void PlayerCollisionSystem::Update(UpdateData &updateData)
 {
 	auto &body = parent.GetBody();
 	body.ClearCollisionData();
@@ -23,6 +23,7 @@ void PlayerCollisionSystem::Update(ObjectCollection &objectCollection)
 		return;
 
 	auto results = std::vector<CollisionResult>{};
+	auto &objectCollection = *updateData.objectCollection;
 
 	for (auto &boundary : objectCollection.boundaries)
 	{

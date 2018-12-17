@@ -1,6 +1,6 @@
 #include "PantherCollisionSystem.h"
 #include "Panther.h"
-#include "../../Factories/ObjectCollection.h"
+#include "../../UpdateData.h"
 #include "../../Settings.h"
 
 using namespace Castlevania;
@@ -14,7 +14,7 @@ IGameObject &PantherCollisionSystem::GetParent()
 	return parent;
 }
 
-void PantherCollisionSystem::Update(ObjectCollection &objectCollection)
+void PantherCollisionSystem::Update(UpdateData &updateData)
 {
 	auto &body = parent.GetBody();
 	body.ClearCollisionData();
@@ -23,6 +23,7 @@ void PantherCollisionSystem::Update(ObjectCollection &objectCollection)
 		return;
 
 	auto results = std::vector<CollisionResult>{};
+	auto &objectCollection = *updateData.objectCollection;
 	auto &boundaries = objectCollection.boundaries;
 
 	for (auto &boundary : boundaries)
@@ -37,7 +38,7 @@ void PantherCollisionSystem::Update(ObjectCollection &objectCollection)
 	if (!parent.IsActive())
 	{
 		auto player = objectCollection.player;
-		auto activeArea = parent.GetActiveArea();
+		auto activeZone = parent.GetActiveZone();
 
 		// note to myself: do not use swept AABB algorithm for collision detection in this case.
 		// It wont work properly when calculating collision between a static object (in this
@@ -45,14 +46,14 @@ void PantherCollisionSystem::Update(ObjectCollection &objectCollection)
 		// The reason is because since only the distance of the Player is taken into account
 		// and the fact that it is actually from the last time the game loop ran (Player has already
 		// moved that distance), it may lead to potential out-of-sync behaviour. 
-		//auto result = player->GetBody().PredictCollision(activeArea);
+		//auto result = player->GetBody().PredictCollision(activeZone);
 
 		//if (result.ShouldCollide())
 		//{
 		//	parent.SendMessageToSystems(PLAYER_IN_RANGE);
 		//}
 
-		if (activeArea.TouchesOrIntersects(player->GetBoundingBox()))
+		if (activeZone.TouchesOrIntersects(player->GetBoundingBox()))
 		{
 			parent.SendMessageToSystems(PLAYER_IN_RANGE);
 		}

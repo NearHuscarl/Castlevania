@@ -1,3 +1,4 @@
+#include <assert.h>
 #include "GiantBat.h"
 #include "../../Settings.h"
 
@@ -7,6 +8,11 @@ GiantBat::GiantBat() : Enemy{ ObjectId::GiantBat }
 {
 }
 
+float GiantBat::GetDiveSpeed()
+{
+	return diveSpeed;
+}
+
 void GiantBat::SetDiveSpeed(float speed)
 {
 	diveSpeed = speed;
@@ -14,7 +20,8 @@ void GiantBat::SetDiveSpeed(float speed)
 
 void GiantBat::SetActive()
 {
-	Hover();
+	isActive = true;
+	SendMessageToSystems(ACTIVE_CHANGED);
 }
 
 bool GiantBat::IsInRange()
@@ -27,7 +34,7 @@ void GiantBat::IsInRange(bool value)
 	isInRange = value;
 }
 
-Rect GiantBat::GetAttackArea()
+Rect GiantBat::GetAttackZone()
 {
 	auto activeArea = Rect{};
 	auto originPosition = GetOriginPosition();
@@ -45,9 +52,57 @@ void GiantBat::SetAttackZone(Rect attackZone)
 	this->attackZone = attackZone;
 }
 
+Rect GiantBat::GetThreatZone()
+{
+	auto threatArea = Rect{};
+	auto originPosition = GetOriginPosition();
+
+	threatArea.left = (int)originPosition.x - threatZone.Width() / 2;
+	threatArea.top = (int)originPosition.y - threatZone.Height() / 2;
+	threatArea.right = (int)threatArea.left + threatZone.Width();
+	threatArea.bottom = (int)threatArea.top + threatZone.Height();
+
+	return threatArea;
+}
+
+void GiantBat::SetThreatZone(Rect threatZone)
+{
+	this->threatZone = threatZone;
+}
+
+void GiantBat::SetMoveArea(Rect moveArea)
+{
+	this->moveArea = moveArea;
+}
+
+Rect GiantBat::GetMoveArea()
+{
+	assert(moveArea != Rect::Empty());
+
+	return moveArea;
+}
+
 GiantBatState GiantBat::GetGiantBatState()
 {
 	return giantBatState;
+}
+
+void GiantBat::Update(GameTime gameTime, UpdateData &updateData)
+{
+	Enemy::Update(gameTime, updateData);
+
+	switch (giantBatState)
+	{
+		case GiantBatState::FLYING:
+			if (isActive)
+			{
+				flyingDistance -= GetDistance().Length();
+
+				if (flyingDistance <= 0)
+					Hover();
+			}
+			break;
+	}
 }
 
 void GiantBat::Idle()
@@ -62,14 +117,15 @@ void GiantBat::Hover()
 	SetGiantBatState(GiantBatState::HOVERING);
 }
 
-void GiantBat::FlyTo(Vector2 position)
+void GiantBat::Fly(float distance)
 {
-	//velocity.x = speed;
 	SetGiantBatState(GiantBatState::FLYING);
+	flyingDistance = distance;
 }
 
-void GiantBat::Dive(Vector2 vertex)
+void GiantBat::Dive(Vector2 playerPosition)
 {
+	this->playerPosition = playerPosition;
 	SetGiantBatState(GiantBatState::DIVING);
 }
 
