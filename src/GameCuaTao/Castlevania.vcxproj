@@ -189,7 +189,6 @@
     <ClCompile Include="Castlevania\Models\Facing.cpp" />
     <ClCompile Include="Castlevania\Models\Factories\ObjectFactory.cpp" />
     <ClCompile Include="Castlevania\Hud.cpp" />
-    <ClCompile Include="Castlevania\Models\Characters\Player\PlayerCollisionSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Player\PlayerRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Items\Door.cpp" />
     <ClCompile Include="Castlevania\Models\Items\DoorRenderingSystem.cpp" />
@@ -235,6 +234,8 @@
     <ClCompile Include="Castlevania\Scenes\Stages\NextMapCutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\NextRoomCutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\Stage.cpp" />
+    <ClCompile Include="Castlevania\Utilities\CollisionCell.cpp" />
+    <ClCompile Include="Castlevania\Utilities\CollisionGrid.cpp" />
     <ClCompile Include="Castlevania\Utilities\CppExtensions.cpp" />
     <ClCompile Include="Castlevania\Utilities\Subject.cpp" />
     <ClCompile Include="Castlevania\Utilities\Timer.cpp" />
@@ -269,7 +270,6 @@
     <ClCompile Include="Direct2DGame\Extensions\Animations\Animation.cpp" />
     <ClCompile Include="Direct2DGame\Extensions\Animations\AnimationFrame.cpp" />
     <ClCompile Include="Direct2DGame\Extensions\Camera.cpp" />
-    <ClCompile Include="Direct2DGame\Extensions\Collisions\Grid\CollisionGrid.cpp" />
     <ClCompile Include="Direct2DGame\Extensions\Direction.cpp" />
     <ClCompile Include="Direct2DGame\Extensions\RectF.cpp" />
     <ClCompile Include="Direct2DGame\Extensions\Sprites\Sprite.cpp" />
@@ -348,7 +348,6 @@
     <ClInclude Include="Castlevania\Models\Factories\ObjectCollection.h" />
     <ClInclude Include="Castlevania\Models\Factories\ObjectFactory.h" />
     <ClInclude Include="Castlevania\Hud.h" />
-    <ClInclude Include="Castlevania\Models\Characters\Player\PlayerCollisionSystem.h" />
     <ClInclude Include="Castlevania\Models\Characters\Player\PlayerData.h" />
     <ClInclude Include="Castlevania\Models\Characters\Player\PlayerRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\IBoss.h" />
@@ -409,6 +408,8 @@
     <ClInclude Include="Castlevania\Scenes\Stages\LevelCompletedCutscene.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\StageEvent.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\Stage.h" />
+    <ClInclude Include="Castlevania\Utilities\CollisionGrid.h" />
+    <ClInclude Include="Castlevania\Utilities\CollisionCell.h" />
     <ClInclude Include="Castlevania\Utilities\CppExtensions.h" />
     <ClInclude Include="Castlevania\Utilities\IObserver.h" />
     <ClInclude Include="Castlevania\Utilities\MapSettings.h" />
@@ -420,7 +421,6 @@
     <ClInclude Include="Direct2DGame\Extensions\Collisions\Body\BoxCollisionResult.h" />
     <ClInclude Include="Direct2DGame\Extensions\Collisions\Body\CollisionData.h" />
     <ClInclude Include="Direct2DGame\Extensions\Collisions\Body\CollisionResult.h" />
-    <ClInclude Include="Direct2DGame\Extensions\Collisions\Grid\CollisionGridCell.h" />
     <ClInclude Include="Direct2DGame\Extensions\Direction.h" />
     <ClInclude Include="Direct2DGame\Extensions\Collisions\IColliable.h" />
     <ClInclude Include="Castlevania\Models\Characters\Player\Controller.h" />
@@ -460,7 +460,6 @@
     <ClInclude Include="Direct2DGame\Base\Vector3.h" />
     <ClInclude Include="Direct2DGame\Content\DictionaryReader.h" />
     <ClInclude Include="Direct2DGame\Extensions\Camera.h" />
-    <ClInclude Include="Direct2DGame\Extensions\Collisions\Grid\CollisionGrid.h" />
     <ClInclude Include="Direct2DGame\Extensions\RectF.h" />
     <ClInclude Include="Direct2DGame\Extensions\Sprites\IDrawable.h" />
     <ClInclude Include="Direct2DGame\Extensions\TextureRegion.h" />

@@ -8,11 +8,17 @@ namespace Castlevania
 	struct ObjectCollection
 	{
 		std::shared_ptr<Player> player;
-		std::vector<std::unique_ptr<GameObject>> boundaries;
-		std::vector<std::unique_ptr<Trigger>> triggers;
+
+		// Dumb objects that dont need to run Update()
+		std::vector<std::unique_ptr<GameObject>> staticObjects;
+
+		// Regular game objects: enemy, candle, powerup...
 		std::vector<std::unique_ptr<GameObject>> entities;
-		std::vector<std::unique_ptr<GameObject>> areas;
+
+		// For aesthetic purpose only
 		std::vector<std::unique_ptr<GameObject>> foregroundObjects;
+		
+		std::vector<std::unique_ptr<GameObject>> stageAreas;
 		std::map<std::string, Vector2> locations;
 
 		void RemoveDeadObjects()

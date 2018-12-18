@@ -27,9 +27,9 @@
     <property name="SpawnObject" value="Zombie"/>
    </properties>
   </object>
-  <object id="100" name="ViewportArea" type="ViewportArea" x="0" y="0" width="3072" height="365" visible="0"/>
-  <object id="101" name="ViewportArea" type="ViewportArea" x="3072" y="0" width="1024" height="365" visible="0"/>
-  <object id="102" name="ViewportArea" type="ViewportArea" x="4096" y="0" width="1536" height="365" visible="0"/>
+  <object id="100" name="StageArea" type="StageArea" x="0" y="0" width="3072" height="365" visible="0"/>
+  <object id="101" name="StageArea" type="StageArea" x="3072" y="0" width="1024" height="365" visible="0"/>
+  <object id="102" name="StageArea" type="StageArea" x="4096" y="0" width="1536" height="365" visible="0"/>
   <object id="114" name="ZombieSpawnArea" type="SpawnArea" x="4096" y="0" width="804" height="320">
    <properties>
     <property name="SpawnGroup" value="1:50-2:50"/>

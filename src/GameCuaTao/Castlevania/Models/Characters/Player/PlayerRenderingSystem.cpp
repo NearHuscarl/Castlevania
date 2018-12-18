@@ -118,7 +118,7 @@ void PlayerRenderingSystem::UpdateNormalState()
 
 	if (parent.untouchableTimer.IsRunning())
 	{
-		if (!parent.IsOnTheAir())
+		if (parent.GetMoveState() != MoveState::TAKING_DAMAGE)
 			sprite->SetVisibility(Stopwatch::Every(1) ? true : false);
 	}
 }

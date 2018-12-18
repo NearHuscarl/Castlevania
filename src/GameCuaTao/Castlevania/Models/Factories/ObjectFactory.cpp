@@ -19,7 +19,6 @@
 #include "../Areas/WaterAreaRenderingSystem.h"
 #include "../Characters/Player/Controller.h"
 #include "../Characters/Player/PlayerMovementSystem.h"
-#include "../Characters/Player/PlayerCollisionSystem.h"
 #include "../Characters/Player/PlayerResponseSystem.h"
 #include "../Characters/Player/PlayerRenderingSystem.h"
 #include "../Characters/Enemies/FishmanControlSystem.h"
@@ -155,7 +154,7 @@ std::unique_ptr<Player> ObjectFactory::CreatePlayer(Vector2 position)
 
 	auto controller = std::make_unique<Controller>(*object, *this);
 	auto movementSystem = std::make_unique<PlayerMovementSystem>(*object);
-	auto collisionSystem = std::make_unique<PlayerCollisionSystem>(*object);
+	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PlayerResponseSystem>(*object, *this);
 	auto renderingSystem = std::make_unique<PlayerRenderingSystem>(*object, "Characters/Players/Simon.ani.xml");
 

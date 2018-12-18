@@ -111,18 +111,18 @@ void Stage::Draw(SpriteExtensions &spriteBatch)
 
 Rect Stage::GetCurrentArea(Vector2 position)
 {
-	auto &areas = objectCollection.areas;
+	auto &stageAreas = objectCollection.stageAreas;
 
-	if (areas.size() == 0)
+	if (stageAreas.size() == 0)
 	{
 		return Rect{ 0, 0,
 			map->GetWidthInPixels(),
 			map->GetHeightInPixels() + hud->GetHeight() };
 	}
 
-	for (auto &area : areas)
+	for (auto &area : stageAreas)
 	{
-		if (area->GetId() != ObjectId::ViewportArea)
+		if (area->GetId() != ObjectId::StageArea)
 			continue;
 
 		auto viewportAreaBbox = area->GetBoundingBox();
@@ -226,11 +226,8 @@ void Stage::DrawGameplay(SpriteExtensions &spriteBatch)
 	for (auto const &entity : objectCollection.entities)
 		entity->Draw(spriteBatch);
 
-	for (auto const &boundaries : objectCollection.boundaries) // TODO: remove
-		boundaries->Draw(spriteBatch);
-
-	for (auto const &trigger : objectCollection.triggers)
-		trigger->Draw(spriteBatch);
+	for (auto const &staticObjects : objectCollection.staticObjects) // TODO: remove
+		staticObjects->Draw(spriteBatch);
 
 	player->Draw(spriteBatch);
 
@@ -256,7 +253,7 @@ void Stage::OnNextRoomCutsceneComplete()
 	auto &door = dynamic_cast<NextRoomCutscene&>(*currentCutscene).GetDoor();
 	auto wall = objectFactory.CreateBoundary(door.GetBoundingBox());
 
-	objectCollection.boundaries.push_back(std::move(wall));
+	objectCollection.staticObjects.push_back(std::move(wall));
 	door.Destroy();
 
 	activeArea = GetCurrentArea(player->GetPosition());

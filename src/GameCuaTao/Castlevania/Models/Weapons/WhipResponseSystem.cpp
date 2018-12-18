@@ -17,7 +17,7 @@ void WhipResponseSystem::Receive(int message)
 	switch (message)
 	{
 		case WHIP_WITHDRAWN:
-			alreadyHitEnemies.clear();
+			hitEnemies.clear();
 			break;
 	}
 }
@@ -66,7 +66,7 @@ void WhipResponseSystem::OnCollideWithEnemy(CollisionResult &result, Player &pla
 {
 	auto &enemy = dynamic_cast<Enemy&>(result.collidedObject);
 
-	for (auto hitEnemy : alreadyHitEnemies)
+	for (auto hitEnemy : hitEnemies)
 	{
 		if (hitEnemy == &enemy)
 			return;
@@ -77,7 +77,7 @@ void WhipResponseSystem::OnCollideWithEnemy(CollisionResult &result, Player &pla
 	if (enemy.GetState() == ObjectState::DYING)
 		player.AddExp(enemy.GetExp());
 
-	alreadyHitEnemies.push_back(&enemy);
+	hitEnemies.push_back(&enemy);
 }
 
 void Castlevania::WhipResponseSystem::OnCollideWithFireball(CollisionResult &result)

@@ -24,11 +24,11 @@ void PantherCollisionSystem::Update(UpdateData &updateData)
 
 	auto results = std::vector<CollisionResult>{};
 	auto &objectCollection = *updateData.objectCollection;
-	auto &boundaries = objectCollection.boundaries;
+	auto &staticObjects = objectCollection.staticObjects;
 
-	for (auto &boundary : boundaries)
+	for (auto &staticObject : staticObjects)
 	{
-		CalculateCollision(*boundary, results);
+		CalculateCollision(*staticObject, results);
 	}
 
 	// TODO: do we need to sort?

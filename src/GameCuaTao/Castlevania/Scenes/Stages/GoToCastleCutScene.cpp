@@ -14,13 +14,18 @@ GoToCastleCutscene::GoToCastleCutscene(Stage &stage, ObjectCollection &objectCol
 {
 	player = objectCollection.player.get();
 
-	for (auto &object : objectCollection.triggers)
+	for (auto &object : objectCollection.staticObjects)
 	{
-		if (object->GetTriggerType() == TriggerType::CASTLE_ENTRANCE)
-			entranceTrigger = object.get();
+		if (object->GetId() != ObjectId::Trigger)
+			continue;
 
-		if (object->GetTriggerType() == TriggerType::NEXT_MAP)
-			nextMapTrigger = object.get(); // TODO: do we need this member?
+		auto trigger = dynamic_cast<Trigger*>(object.get());
+
+		if (trigger->GetTriggerType() == TriggerType::CASTLE_ENTRANCE)
+			entranceTrigger = trigger;
+
+		if (trigger->GetTriggerType() == TriggerType::NEXT_MAP)
+			nextMapTrigger = trigger;
 	}
 
 	for (auto &object : objectCollection.foregroundObjects)

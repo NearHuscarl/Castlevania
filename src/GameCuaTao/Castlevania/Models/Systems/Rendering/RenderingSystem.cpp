@@ -87,6 +87,9 @@ Color RenderingSystem::GetBoundingBoxColor()
 		case ObjectId::SpawnPoint:
 			return Color::Red() * (bboxColorScale - 0.2f);
 
+		case ObjectId::BossFightArea:
+			return Color::DimGray() * (bboxColorScale - 0.3f);
+
 		case ObjectId::WaterArea:
 			return Color::Blue() * bboxColorScale;
 
@@ -107,7 +110,7 @@ Color RenderingSystem::GetBoundingBoxColor()
 
 			// Just a fg image, skip drawing
 		case ObjectId::Castle:
-		case ObjectId::ViewportArea:
+		case ObjectId::StageArea:
 			return Color::Transparent();
 
 		default:

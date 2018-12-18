@@ -4,7 +4,7 @@
 #include "../Sprites/Sprite.h"
 
 using Tile = Sprite;
-using Tiles = std::vector<std::vector<Tile>>; // map[(row, column)] : Tile
+using Tiles = std::vector<std::vector<Tile>>;
 
 class TileSet
 {

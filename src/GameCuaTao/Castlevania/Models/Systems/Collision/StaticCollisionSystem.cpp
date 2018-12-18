@@ -22,11 +22,11 @@ void StaticCollisionSystem::Update(UpdateData &updateData)
 		return;
 
 	auto results = std::vector<CollisionResult>{};
-	auto &boundaries = updateData.objectCollection->boundaries;
+	auto &staticObjects = updateData.objectCollection->staticObjects;
 
-	for (auto &boundary : boundaries)
+	for (auto &staticObject : staticObjects)
 	{
-		CalculateCollision(*boundary, results);
+		CalculateCollision(*staticObject, results);
 	}
 
 	// TODO: do we need to sort?

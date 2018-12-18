@@ -23,12 +23,12 @@ void SimpleCollisionSystem::Update(UpdateData &updateData)
 
 	auto results = std::vector<CollisionResult>{};
 	auto &objectCollection = *updateData.objectCollection;
-	auto &boundaries = objectCollection.boundaries;
+	auto &staticObjects = objectCollection.staticObjects;
 	auto &entities = objectCollection.entities;
 
-	for (auto &boundary : boundaries)
+	for (auto &staticObject : staticObjects)
 	{
-		CalculateStaticCollision(*boundary, results);
+		CalculateStaticCollision(*staticObject, results);
 	}
 
 	for (auto &entity : entities)

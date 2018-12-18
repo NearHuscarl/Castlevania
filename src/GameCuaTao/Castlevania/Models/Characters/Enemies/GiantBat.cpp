@@ -95,7 +95,7 @@ GiantBatState GiantBat::GetGiantBatState()
 
 void GiantBat::Update(GameTime gameTime, UpdateData &updateData)
 {
-	GameObject::Update(gameTime, updateData);
+	Enemy::Update(gameTime, updateData);
 
 	switch (giantBatState)
 	{

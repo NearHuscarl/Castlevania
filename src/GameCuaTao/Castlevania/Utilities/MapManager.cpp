@@ -160,7 +160,7 @@ ObjectCollection MapManager::CreateObjectCollection(TiledMapObjectGroups objectG
 
 		object->Enabled(ToBoolean(properties.at("Enabled")));
 		object->SetFacing(facing);
-		objectCollection.triggers.push_back(std::move(object));
+		objectCollection.staticObjects.push_back(std::move(object));
 	}
 
 	for (auto properties : objectGroups[FOREGROUND])
@@ -187,7 +187,7 @@ ObjectCollection MapManager::CreateObjectCollection(TiledMapObjectGroups objectG
 		auto bbox = RectF{ x, y, width, height };
 		auto object = objectFactory.CreateBoundary(bbox);
 
-		objectCollection.boundaries.push_back(std::move(object));
+		objectCollection.staticObjects.push_back(std::move(object));
 	}
 
 	for (auto properties : objectGroups[AREA])
@@ -195,21 +195,23 @@ ObjectCollection MapManager::CreateObjectCollection(TiledMapObjectGroups objectG
 		auto typeName = properties.at("type");
 		auto type = string2EntityType.at(typeName);
 
+		ReadObjectPosition(properties, x, y);
+		auto width = std::stof(properties.at("width"));
+		auto height = std::stof(properties.at("height"));
+		auto bbox = RectF{ x, y, width, height };
+		auto object = objectFactory.CreateRectangleObject(type, bbox);
+
 		// Dump area objects that dont have Update() method
 		switch (type)
 		{
-			case ObjectId::ViewportArea:
-			case ObjectId::BossFightArea:
-			{
-				ReadObjectPosition(properties, x, y);
-				auto width = std::stof(properties.at("width"));
-				auto height = std::stof(properties.at("height"));
-				auto bbox = RectF{ x, y, width, height };
-				auto object = objectFactory.CreateRectangleObject(type, bbox);
-
-				objectCollection.areas.push_back(std::move(object));
+			// TODO: rip this into a seperate method GetStageAreas()
+			case ObjectId::StageArea:
+				objectCollection.stageAreas.push_back(std::move(object));
 				break;
-			}
+
+			case ObjectId::BossFightArea:
+				objectCollection.staticObjects.push_back(std::move(object));
+				break;
 		}
 	}
 

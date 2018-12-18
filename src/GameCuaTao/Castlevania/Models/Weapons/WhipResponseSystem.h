@@ -19,7 +19,7 @@ namespace Castlevania
 
 	private:
 		Whip &parent;
-		std::vector<Enemy*> alreadyHitEnemies;
+		std::vector<Enemy*> hitEnemies;
 
 		void OnCollideWithBrazier(CollisionResult &result, ObjectCollection &objectCollection);
 		void OnCollideWithEnemy(CollisionResult &result, Player &player);

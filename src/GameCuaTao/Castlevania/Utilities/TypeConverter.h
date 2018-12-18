@@ -11,7 +11,7 @@ namespace Castlevania
 {
 	const auto string2EntityType = std::unordered_map<std::string, ObjectId>
 	{
-		{ "ViewportArea", ObjectId::ViewportArea },
+		{ "StageArea", ObjectId::StageArea },
 		{ "BossFightArea", ObjectId::BossFightArea },
 		{ "WaterArea", ObjectId::WaterArea },
 		{ "SpawnArea", ObjectId::SpawnArea },

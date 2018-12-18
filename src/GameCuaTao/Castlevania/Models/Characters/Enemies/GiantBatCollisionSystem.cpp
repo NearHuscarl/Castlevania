@@ -16,25 +16,13 @@ IGameObject &GiantBatCollisionSystem::GetParent()
 
 void GiantBatCollisionSystem::Update(UpdateData &updateData)
 {
-	auto &body = parent.GetBody();
-	body.ClearCollisionData();
-
-	if (!body.Enabled())
+	if (!parent.GetBody().Enabled())
 		return;
 
 	auto &objectCollection = *updateData.objectCollection;
 	auto playerBbox = (Rect)objectCollection.player->GetBoundingBox();
 
 	CheckZonesCollision(playerBbox);
-
-	auto results = std::vector<CollisionResult>{};
-
-	for (auto &boundary : objectCollection.boundaries)
-	{
-		CalculateCollision(*boundary, results);
-	}
-
-	body.SetCollisionData(FilterCollision(results));
 }
 
 void GiantBatCollisionSystem::CheckZonesCollision(Rect playerBbox)

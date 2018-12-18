@@ -12,7 +12,7 @@ namespace Castlevania
 
 		// Areas
 		SpawnArea,
-		ViewportArea,
+		StageArea,
 		BossFightArea,
 		WaterArea,
 

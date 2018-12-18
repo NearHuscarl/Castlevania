@@ -34,7 +34,7 @@ BossFightCutscene::BossFightCutscene(Stage &stage, ObjectCollection &objectColle
 		cameraRect.Height() };
 	auto wall = objectFactory.CreateBoundary(leftBound);
 
-	objectCollection.boundaries.push_back(std::move(wall));
+	objectCollection.staticObjects.push_back(std::move(wall));
 	bossWakeupTimer.Start();
 }
 
