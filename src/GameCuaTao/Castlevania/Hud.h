@@ -20,9 +20,8 @@ namespace Castlevania
 		void Register(const int &bossHealth);
 		void Register(const GameplayData &gameplayData);
 
-		void Unregister(const PlayerData &playerData);
-		void Unregister(const int &bossHealth);
-		void Unregister(const GameplayData &gameplayData);
+		template<typename T>
+		void Unregister();
 
 		void LoadContent(ContentManager &content);
 		void Draw(SpriteExtensions &spriteBatch);

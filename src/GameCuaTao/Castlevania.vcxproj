@@ -162,6 +162,7 @@
     <ClCompile Include="Castlevania\Effects\FlameEffect.cpp" />
     <ClCompile Include="Castlevania\Effects\FlashingMoneyTextEffect.cpp" />
     <ClCompile Include="Castlevania\Effects\MoneyTextEffect.cpp" />
+    <ClCompile Include="Castlevania\Effects\SparkEffect.cpp" />
     <ClCompile Include="Castlevania\Effects\WaterEffect.cpp" />
     <ClCompile Include="Castlevania\Models\Areas\WaterArea.cpp" />
     <ClCompile Include="Castlevania\Models\Areas\WaterAreaRenderingSystem.cpp" />
@@ -318,6 +319,7 @@
     <ClInclude Include="Castlevania\Effects\FlameEffect.h" />
     <ClInclude Include="Castlevania\Effects\FlashingMoneyTextEffect.h" />
     <ClInclude Include="Castlevania\Effects\MoneyTextEffect.h" />
+    <ClInclude Include="Castlevania\Effects\SparkEffect.h" />
     <ClInclude Include="Castlevania\Effects\WaterEffect.h" />
     <ClInclude Include="Castlevania\Models\Areas\WaterArea.h" />
     <ClInclude Include="Castlevania\Models\Areas\WaterAreaRenderingSystem.h" />
@@ -404,6 +406,7 @@
     <ClInclude Include="Castlevania\Scenes\Stages\NextMapCutscene.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\NextRoomCutscene.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\RespawnPoint.h" />
+    <ClInclude Include="Castlevania\Scenes\Stages\LevelCompletedCutscene.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\StageEvent.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\Stage.h" />
     <ClInclude Include="Castlevania\Utilities\CppExtensions.h" />

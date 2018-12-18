@@ -1,25 +1,27 @@
 #pragma once
 
 #include "IEffect.h"
-#include "Direct2DGame/Extensions/Animations/AnimatedSprite.h"
+#include "Direct2DGame/Extensions/Sprites/Sprite.h"
 #include "Direct2DGame/Utilities/Stopwatch.h"
 
 namespace Castlevania
 {
-	class FlameEffect : public IEffect
+	class SparkEffect : public IEffect
 	{
 	public:
-		FlameEffect(std::shared_ptr<AnimationFactory> flameAnimation);
+		SparkEffect(std::shared_ptr<Texture> sparkTexture);
 
 		void Show(Vector2 position) override;
 		bool IsFinished() override;
-		
+
 		void Update(GameTime gameTime) override;
 		void Draw(SpriteExtensions &spriteBatch) override;
 
 	private:
 		bool isFinished;
 		Vector2 position;
-		std::unique_ptr<AnimatedSprite> flame;
+		std::unique_ptr<Sprite> spark;
+
+		Stopwatch sparkLifespanTimer;
 	};
 }

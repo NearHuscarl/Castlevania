@@ -95,7 +95,6 @@ void GiantBatMovementSystem::UpdateLinearMovement(float deltaTime)
 
 void GiantBatMovementSystem::UpdateParabolicMovement(float deltaTime)
 {
-	auto speed = parent.GetSpeed();
 	auto position = parent.GetPosition();
 
 	auto x = position.x + (direction * speed_x * deltaTime);

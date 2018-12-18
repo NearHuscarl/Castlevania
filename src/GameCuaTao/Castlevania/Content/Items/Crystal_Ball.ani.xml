@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Animations AtlasPath="Crystal_Ball.atlas.xml">
+    <Animation Name="Flash" DefaultTime="80" IsLooping="True">
+      <Frame SpriteID="flash_01" />
+      <Frame SpriteID="flash_02" />
+    </Animation>
+  </Animations>
+
+</GameContent>

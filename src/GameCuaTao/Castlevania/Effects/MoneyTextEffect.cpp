@@ -7,13 +7,14 @@ constexpr auto MONEY_TEXT_EFFECT_LIFESPAN = 400;
 MoneyTextEffect::MoneyTextEffect(std::shared_ptr<Texture> moneyTextTexture)
 {
 	this->moneyText = std::make_unique<Sprite>(moneyTextTexture);
-	isFinished = false;
+	isFinished = true;
 }
 
 void MoneyTextEffect::Show(Vector2 position)
 {
 	this->position = position;
 
+	isFinished = false;
 	lifespanTimer.Start();
 }
 

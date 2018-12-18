@@ -24,6 +24,11 @@ int Whip::GetLevel()
 	return level;
 }
 
+void Whip::SetLevel(int level)
+{
+	this->level = MathHelper::Clamp(level, 1, WHIP_MAX_LEVEL);
+}
+
 int Whip::GetAttack()
 {
 	return HITPOINTS.at(level);
@@ -49,15 +54,14 @@ void Whip::LoadContent(ContentManager &content)
 void Whip::Unleash()
 {
 	// Collision detection will be turn on when whip is on the attack frame
-	SetVisibility(true);
-	SendMessageToSystems(VISIBILITY_CHANGED);
+	// body.Enabled(true);
+	SendMessageToSystems(WHIP_UNLEASHED);
 }
 
 void Whip::Withdraw()
 {
 	body.Enabled(false);
-	SetVisibility(false);
-	SendMessageToSystems(VISIBILITY_CHANGED);
+	SendMessageToSystems(WHIP_WITHDRAWN);
 }
 
 void Whip::Upgrade()

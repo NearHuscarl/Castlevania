@@ -55,6 +55,7 @@ void PlayerResponseSystem::Update(UpdateData &updateData)
 			case ObjectId::Zombie:
 			case ObjectId::Panther:
 			case ObjectId::Fishman:
+			case ObjectId::GiantBat:
 				OnCollideWithEnemy(result);
 				break;
 
@@ -326,6 +327,7 @@ void PlayerResponseSystem::OnCollideWithWhipPowerup(CollisionResult &result)
 	{
 		whip = objectFactory.CreateFlashingWhip(parent);
 		whip->SetFacing(parent.facing);
+		whip->SetLevel(WHIP_MAX_LEVEL);
 	}
 
 	whipPowerup.Destroy();

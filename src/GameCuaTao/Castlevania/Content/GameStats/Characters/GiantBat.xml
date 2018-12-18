@@ -4,7 +4,7 @@
 
   <Dictionary
     Name="GiantBat"
-    Speed="75.0"
+    Speed="150.0"
     DiveSpeed="275.0"
     Health="16"
     Attack="2"

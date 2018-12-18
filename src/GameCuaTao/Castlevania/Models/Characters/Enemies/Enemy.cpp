@@ -1,10 +1,16 @@
 #include "Enemy.h"
 #include "../../UpdateData.h"
+#include "../../Settings.h"
 
 using namespace Castlevania;
 
 Enemy::Enemy(ObjectId type) : GameObject{ type }
 {
+}
+
+int &Enemy::GetHealthRef()
+{
+	return health;
 }
 
 void Enemy::SetHealth(int health)
@@ -48,6 +54,8 @@ void Enemy::TakeDamage(int damage)
 
 	if (health <= 0)
 		Die();
+	
+	SendMessageToSystems(TAKING_DAMAGE);
 }
 
 void Enemy::Die()

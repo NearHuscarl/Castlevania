@@ -7,9 +7,10 @@ using namespace Castlevania;
 VampireBatRenderingSystem::VampireBatRenderingSystem(
 	VampireBat &parent,
 	std::string animationPath,
-	std::unique_ptr<IEffect> effect)
+	std::unique_ptr<IEffect> deadEffect,
+	std::unique_ptr<IEffect> hitEffect)
 	:
-	EffectRenderingSystem{ parent, animationPath, std::move(effect) },
+	EffectRenderingSystem{ parent, animationPath, std::move(deadEffect), std::move(hitEffect) },
 	parent{ parent }
 {
 }

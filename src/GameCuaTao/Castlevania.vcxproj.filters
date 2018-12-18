@@ -477,6 +477,9 @@
     <ClCompile Include="Direct2DGame\Base\Vector2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Castlevania\Effects\SparkEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\pugixml.hpp">
@@ -1092,6 +1095,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Castlevania\Models\Characters\Enemies\GiantBatResponseSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Scenes\Stages\LevelCompletedCutscene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Effects\SparkEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

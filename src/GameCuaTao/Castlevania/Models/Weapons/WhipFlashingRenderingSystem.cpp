@@ -15,8 +15,12 @@ void WhipFlashingRenderingSystem::Receive(int message)
 {
 	WhipRenderingSystem::Receive(message);
 
-	if (message == FACING_CHANGED)
-		OnFacingChanged();
+	switch (message)
+	{
+		case FACING_CHANGED:
+			OnFacingChanged();
+			break;
+	}
 }
 
 void WhipFlashingRenderingSystem::LoadContent(ContentManager &content)
@@ -77,24 +81,26 @@ void WhipFlashingRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 	}
 }
 
-void WhipFlashingRenderingSystem::OnVisibilityChanged()
+void WhipFlashingRenderingSystem::OnWhipUnleashed()
 {
 	UpdatePositionRelativeToPlayer();
 
-	if (sprite->IsVisible())
-	{
-		sprite->Play("Whip_level_03_magenta");
-		spriteRed->Play("Whip_level_03_red");
-		spriteYellow->Play("Whip_level_03_yellow");
-		spriteBlue->Play("Whip_level_03_blue");
-	}
-	else
-	{
-		sprite->GetCurrentAnimation().Reset();
-		spriteRed->GetCurrentAnimation().Reset();
-		spriteYellow->GetCurrentAnimation().Reset();
-		spriteBlue->GetCurrentAnimation().Reset();
-	}
+	sprite->Play("Whip_level_03_magenta");
+	spriteRed->Play("Whip_level_03_red");
+	spriteYellow->Play("Whip_level_03_yellow");
+	spriteBlue->Play("Whip_level_03_blue");
+
+	sprite->SetVisibility(true);
+}
+
+void WhipFlashingRenderingSystem::OnWhipWithdrawn()
+{
+	sprite->GetCurrentAnimation().Reset();
+	spriteRed->GetCurrentAnimation().Reset();
+	spriteYellow->GetCurrentAnimation().Reset();
+	spriteBlue->GetCurrentAnimation().Reset();
+
+	sprite->SetVisibility(false);
 }
 
 void WhipFlashingRenderingSystem::OnFacingChanged()

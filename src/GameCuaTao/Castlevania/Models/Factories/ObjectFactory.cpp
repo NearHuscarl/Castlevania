@@ -201,8 +201,10 @@ std::unique_ptr<Container> ObjectFactory::CreateBrazier(ObjectId itemType, Vecto
 {
 	auto object = std::make_unique<Container>();
 
-	auto renderingSystem = std::make_unique<EffectRenderingSystem>(
-		*object, "Items/Brazier.ani.xml", effectFactory->CreateFlameEffect());
+	auto renderingSystem = std::make_unique<EffectRenderingSystem>(*object, "Items/Brazier.ani.xml",
+		effectFactory->CreateFlameEffect(),
+		effectFactory->CreateSparkEffect());
+
 	auto item = CreatePowerup(itemType);
 
 	object->SetPosition(position);
@@ -216,9 +218,10 @@ std::unique_ptr<Container> ObjectFactory::CreateBrazier(ObjectId itemType, Vecto
 std::unique_ptr<Container> ObjectFactory::CreateCandle(ObjectId itemType, Vector2 position)
 {
 	auto object = std::make_unique<Container>();
+	auto renderingSystem = std::make_unique<EffectRenderingSystem>(*object, "Items/Candle.ani.xml",
+		effectFactory->CreateFlameEffect(),
+		effectFactory->CreateSparkEffect());
 
-	auto renderingSystem = std::make_unique<EffectRenderingSystem>(
-		*object, "Items/Candle.ani.xml", effectFactory->CreateFlameEffect());
 	auto item = CreatePowerup(itemType);
 
 	object->SetPosition(position);
@@ -263,8 +266,9 @@ std::unique_ptr<Zombie> ObjectFactory::CreateZombie(Vector2 position)
 	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, 1000.0f);
 	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<ZombieResponseSystem>(*object);
-	auto renderingSystem = std::make_unique<EffectRenderingSystem>(
-		*object, "Characters/Enemies/Zombie.ani.xml", effectFactory->CreateFlameEffect());
+	auto renderingSystem = std::make_unique<EffectRenderingSystem>(*object, "Characters/Enemies/Zombie.ani.xml",
+		effectFactory->CreateFlameEffect(),
+		effectFactory->CreateSparkEffect());
 
 	object->SetPosition(position);
 	object->Attach(std::move(movementSystem));
@@ -294,7 +298,9 @@ std::unique_ptr<Panther> ObjectFactory::CreatePanther(Vector2 position)
 	auto collisionSystem = std::make_unique<PantherCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PantherResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<PantherRenderingSystem>(
-		*object, "Characters/Enemies/Panther.ani.xml", effectFactory->CreateFlameEffect());
+		*object, "Characters/Enemies/Panther.ani.xml",
+		effectFactory->CreateFlameEffect(),
+		effectFactory->CreateSparkEffect());
 
 	object->SetPosition(position);
 	object->Attach(std::move(controlSystem));
@@ -322,8 +328,9 @@ std::unique_ptr<Fishman> ObjectFactory::CreateFishman(Vector2 position)
 	auto responseSystem = std::make_unique<FishmanResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<FishmanRenderingSystem>(
 		*object, "Characters/Enemies/Fishman.ani.xml",
+		effectFactory->CreateWaterEffect(),
 		effectFactory->CreateFlameEffect(),
-		effectFactory->CreateWaterEffect());
+		effectFactory->CreateSparkEffect());
 
 	object->SetPosition(position);
 	object->Attach(std::move(controlSystem));
@@ -346,7 +353,9 @@ std::unique_ptr<VampireBat> ObjectFactory::CreateVampireBat(Vector2 position)
 
 	auto movementSystem = std::make_unique<WaveMovementSystem>(*object, 0.2f, 1.0f, Axis::X);
 	auto renderingSystem = std::make_unique<VampireBatRenderingSystem>(
-		*object, "Characters/Enemies/VampireBat.ani.xml", effectFactory->CreateFlameEffect());
+		*object, "Characters/Enemies/VampireBat.ani.xml",
+		effectFactory->CreateFlameEffect(),
+		effectFactory->CreateSparkEffect());
 
 	object->SetPosition(position);
 	object->Attach(std::move(movementSystem));
@@ -379,7 +388,9 @@ std::unique_ptr<GiantBat> ObjectFactory::CreateGiantBat(Vector2 position)
 	auto collisionSystem = std::make_unique<GiantBatCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<GiantBatResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<GiantBatRenderingSystem>(
-		*object, "Characters/Enemies/GiantBat.ani.xml", effectFactory->CreateBigFlameEffect());
+		*object, "Characters/Enemies/GiantBat.ani.xml",
+		effectFactory->CreateBigFlameEffect(),
+		effectFactory->CreateSparkEffect());
 
 	object->SetPosition(position);
 	object->Attach(std::move(controlSystem));
@@ -572,9 +583,8 @@ std::unique_ptr<MoneyBag> ObjectFactory::CreateFlashingMoneyBag(Vector2 position
 	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
 
 	auto moneyAtlas = content.Load<Spritesheet>("Items/Money_Bag.atlas.xml");
-	auto effect = effectFactory->CreateFlashingMoneyTextEffect();
-	auto renderingSystem = std::make_unique<EffectRenderingSystem>(
-		*object, "Items/Money_Bag.ani.xml", std::move(effect));
+	auto renderingSystem = std::make_unique<EffectRenderingSystem>(*object, "Items/Money_Bag.ani.xml",
+		effectFactory->CreateFlashingMoneyTextEffect(), nullptr);
 
 	object->SetPosition(position);
 	object->Attach(std::move(movementSystem));
@@ -666,6 +676,27 @@ std::unique_ptr<Powerup> ObjectFactory::CreateWhipPowerup(Vector2 position)
 	object->Attach(std::move(responseSystem));
 	object->Attach(std::move(renderingSystem));
 	
+	object->LoadContent(content);
+	object->SetVelocity_Y(ITEM_FALL_SPEED); // Fall down
+
+	return object;
+}
+
+std::unique_ptr<GameObject> ObjectFactory::CreateCrystalBall(Vector2 position)
+{
+	auto object = std::make_unique<GameObject>(ObjectId::CrystalBall);
+
+	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
+	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
+	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Crystal_Ball.ani.xml");
+
+	object->SetPosition(position);
+	object->Attach(std::move(movementSystem));
+	object->Attach(std::move(collisionSystem));
+	object->Attach(std::move(responseSystem));
+	object->Attach(std::move(renderingSystem));
+
 	object->LoadContent(content);
 	object->SetVelocity_Y(ITEM_FALL_SPEED); // Fall down
 

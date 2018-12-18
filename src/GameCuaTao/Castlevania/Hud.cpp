@@ -65,6 +65,24 @@ void Hud::Register(const GameplayData &gameplayData)
 	data->gameplayData = &gameplayData;
 }
 
+template<>
+void Hud::Unregister<PlayerData>()
+{
+	data->playerData = &DEFAULT_PLAYER_DATA;
+}
+
+template<>
+void Hud::Unregister<int>()
+{
+	data->bossHealth = &DEFAULT_BOSS_HEALTH;
+}
+
+template<>
+void Hud::Unregister<GameplayData>()
+{
+	data->gameplayData = &DEFAULT_GAMEPLAY_DATA;
+}
+
 void Hud::LoadContent(ContentManager &content)
 {
 	hudFont = content.Load<SpriteFont>("Fonts/MainFont.font.xml");

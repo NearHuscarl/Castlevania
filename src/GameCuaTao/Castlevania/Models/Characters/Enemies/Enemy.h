@@ -10,6 +10,7 @@ namespace Castlevania
 	public:
 		Enemy(ObjectId type);
 
+		int &GetHealthRef();
 		void SetHealth(int health);
 		int GetAttack() override;
 		void SetAttack(int attack) override;

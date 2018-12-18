@@ -20,7 +20,8 @@ namespace Castlevania
 
 		int hoveringTime;
 		Stopwatch hoveringTimer;
-		float originalSpeed;
+		float minSpeed;
+		float maxSpeed;
 		float heightToStopDiving;
 		Vector2 playerPosition;
 

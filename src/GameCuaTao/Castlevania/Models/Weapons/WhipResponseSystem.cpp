@@ -4,11 +4,22 @@
 #include "../Items/Fireball.h"
 #include "../Characters/Enemies/Enemy.h"
 #include "../Characters/Player/Player.h"
+#include "../Settings.h"
 
 using namespace Castlevania;
 
 WhipResponseSystem::WhipResponseSystem(Whip &parent) : parent{ parent }
 {
+}
+
+void WhipResponseSystem::Receive(int message)
+{
+	switch (message)
+	{
+		case WHIP_WITHDRAWN:
+			alreadyHitEnemies.clear();
+			break;
+	}
 }
 
 void WhipResponseSystem::Update(UpdateData &updateData)
@@ -33,6 +44,7 @@ void WhipResponseSystem::Update(UpdateData &updateData)
 			case ObjectId::Panther:
 			case ObjectId::Fishman:
 			case ObjectId::VampireBat:
+			case ObjectId::GiantBat:
 				OnCollideWithEnemy(result, *objectCollection.player);
 				break;
 
@@ -54,10 +66,18 @@ void WhipResponseSystem::OnCollideWithEnemy(CollisionResult &result, Player &pla
 {
 	auto &enemy = dynamic_cast<Enemy&>(result.collidedObject);
 
+	for (auto hitEnemy : alreadyHitEnemies)
+	{
+		if (hitEnemy == &enemy)
+			return;
+	}
+
 	enemy.TakeDamage(parent.GetAttack());
 
 	if (enemy.GetState() == ObjectState::DYING)
 		player.AddExp(enemy.GetExp());
+
+	alreadyHitEnemies.push_back(&enemy);
 }
 
 void Castlevania::WhipResponseSystem::OnCollideWithFireball(CollisionResult &result)

@@ -8,7 +8,12 @@ namespace Castlevania
 	class GiantBatRenderingSystem : public EffectRenderingSystem
 	{
 	public:
-		GiantBatRenderingSystem(GiantBat &parent, std::string animationPath, std::unique_ptr<IEffect> effect);
+		GiantBatRenderingSystem(
+			GiantBat &parent,
+			std::string animationPath,
+			std::unique_ptr<IEffect> deadEffect,
+			std::unique_ptr<IEffect> hitEffect);
+
 		void Draw(SpriteExtensions &spriteBatch) override;
 
 	private:

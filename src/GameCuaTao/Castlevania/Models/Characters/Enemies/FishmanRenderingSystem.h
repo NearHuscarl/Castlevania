@@ -8,9 +8,12 @@ namespace Castlevania
 	class FishmanRenderingSystem : public EffectRenderingSystem
 	{
 	public:
-		FishmanRenderingSystem(Fishman &parent, std::string animationPath,
-			std::unique_ptr<IEffect> dieEffect,
-			std::unique_ptr<IEffect> launchEffect);
+		FishmanRenderingSystem(
+			Fishman &parent,
+			std::string animationPath,
+			std::unique_ptr<IEffect> launchEffect,
+			std::unique_ptr<IEffect> deadEffect,
+			std::unique_ptr<IEffect> hitEffect);
 
 		void Update(GameTime gameTime) override;
 		void Draw(SpriteExtensions &spriteBatch) override;

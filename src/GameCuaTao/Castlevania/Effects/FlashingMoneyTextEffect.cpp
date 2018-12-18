@@ -7,13 +7,14 @@ constexpr auto MONEY_TEXT_EFFECT_LIFESPAN = 400;
 FlashingMoneyTextEffect::FlashingMoneyTextEffect(std::shared_ptr<AnimationFactory> moneyTextAnimation)
 {
 	this->moneyText = std::make_unique<AnimatedSprite>(moneyTextAnimation);
-	isFinished = false;
+	isFinished = true;
 }
 
 void FlashingMoneyTextEffect::Show(Vector2 position)
 {
 	this->position = position;
 
+	isFinished = false;
 	lifespanTimer.Start();
 }
 

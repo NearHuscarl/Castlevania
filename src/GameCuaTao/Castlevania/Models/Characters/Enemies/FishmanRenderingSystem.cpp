@@ -7,10 +7,11 @@ using namespace Castlevania;
 FishmanRenderingSystem::FishmanRenderingSystem(
 	Fishman &parent,
 	std::string animationPath,
-	std::unique_ptr<IEffect> dieEffect,
-	std::unique_ptr<IEffect> launchEffect)
+	std::unique_ptr<IEffect> launchEffect,
+	std::unique_ptr<IEffect> deadEffect,
+	std::unique_ptr<IEffect> hitEffect)
 	:
-	EffectRenderingSystem{ parent, animationPath, std::move(dieEffect) },
+	EffectRenderingSystem{ parent, animationPath, std::move(deadEffect), std::move(hitEffect) },
 	parent{ parent }
 {
 	this->launchEffect = std::move(launchEffect);

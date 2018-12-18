@@ -13,7 +13,7 @@ WaterEffect::WaterEffect(std::shared_ptr<Texture> waterTexture)
 	waterTopVelocity = Vector2{ 25, -400 };
 	waterRightVelocity = Vector2{ 50, -200 };
 
-	isFinished = false;
+	isFinished = true;
 }
 
 void WaterEffect::Show(Vector2 position)
@@ -27,6 +27,7 @@ void WaterEffect::Show(Vector2 position)
 	waterTopPosition = waterPosition;
 	waterRightPosition = waterPosition;
 
+	isFinished = false;
 	lifespanTimer.Start();
 }
 

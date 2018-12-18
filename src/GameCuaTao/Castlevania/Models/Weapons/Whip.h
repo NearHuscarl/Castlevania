@@ -13,6 +13,7 @@ namespace Castlevania
 		Whip(GameObject &owner);
 
 		int GetLevel();
+		void SetLevel(int level);
 		int GetAttack();
 		GameObject &GetOwner();
 		void SetFacing(Facing facing) override;

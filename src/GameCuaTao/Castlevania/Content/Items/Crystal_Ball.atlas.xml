@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Spritesheet TexturePath="Crystal_Ball.png">
+    <Sprite ID="flash_01">
+      <SpriteFrame Left="0" Top="0" Width="28" Height="32" />
+    </Sprite>
+
+    <Sprite ID="flash_02">
+      <SpriteFrame Left="28" Top="0" Width="28" Height="32" />
+    </Sprite>
+  </Spritesheet>
+
+</GameContent>

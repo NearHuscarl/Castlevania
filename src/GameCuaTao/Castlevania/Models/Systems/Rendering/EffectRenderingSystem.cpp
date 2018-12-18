@@ -7,11 +7,13 @@ using namespace Castlevania;
 EffectRenderingSystem::EffectRenderingSystem(
 	GameObject &parent,
 	std::string spriteConfigPath,
-	std::unique_ptr<IEffect> effect)
+	std::unique_ptr<IEffect> deadEffect,
+	std::unique_ptr<IEffect> hitEffect)
 	:
 	parent{ parent }
 {
-	this->hitEffect = std::move(effect);
+	this->deadEffect = std::move(deadEffect);
+	this->hitEffect = std::move(hitEffect);
 	this->spriteConfigPath = spriteConfigPath;
 }
 
@@ -41,12 +43,15 @@ void EffectRenderingSystem::Update(GameTime gameTime)
 			break;
 
 		case ObjectState::DYING:
-			hitEffect->Update(gameTime);
+			deadEffect->Update(gameTime);
 
-			if (hitEffect->IsFinished())
+			if (deadEffect->IsFinished())
 				GetParent().Destroy();
 			break;
 	}
+
+	if (hitEffect != nullptr)
+		hitEffect->Update(gameTime);
 }
 
 void EffectRenderingSystem::Draw(SpriteExtensions &spriteBatch)
@@ -59,15 +64,23 @@ void EffectRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 			break;
 
 		case ObjectState::DYING:
-			hitEffect->Draw(spriteBatch);
+			deadEffect->Draw(spriteBatch);
 			break;
 	}
+
+	if (hitEffect != nullptr)
+		hitEffect->Draw(spriteBatch);
 }
 
 void EffectRenderingSystem::OnStateChanged()
 {
 	if (GetParent().GetState() == ObjectState::DYING)
 	{
-		hitEffect->Show(GetParent().GetOriginPosition());
+		deadEffect->Show(GetParent().GetOriginPosition());
 	}
+}
+
+void EffectRenderingSystem::OnTakingDamage()
+{
+	hitEffect->Show(GetParent().GetOriginPosition());
 }

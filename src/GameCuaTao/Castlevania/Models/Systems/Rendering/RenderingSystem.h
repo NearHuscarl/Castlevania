@@ -27,6 +27,7 @@ namespace Castlevania
 
 		virtual void OnMoveStateChanged();
 		virtual void OnStateChanged();
+		virtual void OnTakingDamage();
 
 	private:
 		Color GetBoundingBoxColor();

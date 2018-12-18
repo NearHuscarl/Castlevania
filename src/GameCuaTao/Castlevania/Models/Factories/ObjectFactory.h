@@ -60,6 +60,7 @@ namespace Castlevania
 		std::unique_ptr<Powerup> CreateLargeHeart(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Powerup> CreateSmallHeart(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Powerup> CreateWhipPowerup(Vector2 position = Vector2::Zero());
+		std::unique_ptr<GameObject> CreateCrystalBall(Vector2 position = Vector2::Zero());
 
 		std::unique_ptr<Door> CreateDoor(Vector2 position = Vector2::Zero());
 		std::unique_ptr<GameObject> CreateCastle(Vector2 position = Vector2::Zero());

@@ -13,7 +13,10 @@ BossFightCutscene::BossFightCutscene(Stage &stage, ObjectCollection &objectColle
 	{
 		if (entity->GetId() == ObjectId::GiantBat)
 		{
-			boss = dynamic_cast<GiantBat*>(entity.get());
+			auto enemy = dynamic_cast<GiantBat*>(entity.get());
+			
+			boss = enemy;
+			stage.GetHud()->Register(enemy->GetHealthRef());
 			break;
 		}
 	}
@@ -23,7 +26,7 @@ BossFightCutscene::BossFightCutscene(Stage &stage, ObjectCollection &objectColle
 	camera->Lock();
 
 	auto cameraRect = camera->GetBounds();
-	auto boundWidth = 16.0f;
+	auto boundWidth = 16.0f; // abitrary number larger than 0
 	auto leftBound = RectF{
 		cameraRect.left - boundWidth,
 		cameraRect.top,
@@ -43,7 +46,7 @@ void BossFightCutscene::Update(GameTime gameTime)
 	{
 		auto moveArea = (Rect)stage.GetCamera()->GetBounds();
 		
-		moveArea.top += 83; // TODO: change to const
+		moveArea.top += stage.GetHud()->GetHeight();
 		boss->SetMoveArea(moveArea);
 		boss->SetActive();
 	

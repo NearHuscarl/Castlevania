@@ -147,6 +147,10 @@ void DevTool::Update(GameTime gameTime, ObjectCollection &objectCollection)
 		player.data.health = 1;
 	else if (InputHelper::IsKeyDown(DIK_0))
 		player.data.health = MAX_HEALTH;
+	else if (InputHelper::IsKeyDown(DIK_NUMPADMINUS))
+		player.Die();
+	else if (InputHelper::IsKeyDown(DIK_ADD))
+		player.data.lives++;
 
 	// Update mouse input
 	if (InputHelper::IsScrollingDown())

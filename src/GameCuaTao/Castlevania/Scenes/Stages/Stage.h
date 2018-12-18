@@ -34,6 +34,7 @@ namespace Castlevania
 		void OnNotify(Subject &subject, int event);
 
 		Camera *GetCamera();
+		Hud *GetHud();
 		UpdateData GetUpdateData();
 
 		void UpdateGameObjects(GameTime gameTime);

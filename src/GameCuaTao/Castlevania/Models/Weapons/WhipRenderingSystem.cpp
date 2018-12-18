@@ -24,8 +24,16 @@ GameObject &WhipRenderingSystem::GetParent()
 
 void WhipRenderingSystem::Receive(int message)
 {
-	if (message == VISIBILITY_CHANGED)
-		OnVisibilityChanged();
+	switch (message)
+	{
+		case WHIP_UNLEASHED:
+			OnWhipUnleashed();
+			break;
+
+		case WHIP_WITHDRAWN:
+			OnWhipWithdrawn();
+			break;
+	}
 }
 
 void WhipRenderingSystem::LoadContent(ContentManager &content)
@@ -58,19 +66,21 @@ void WhipRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 	spriteBatch.Draw(*sprite, parent.GetPosition());
 }
 
-void WhipRenderingSystem::OnVisibilityChanged()
+void WhipRenderingSystem::OnWhipUnleashed()
 {
 	UpdatePositionRelativeToPlayer();
 
 	auto level = MathHelper::Min(parent.GetLevel(), 2);
 
-	if (sprite->IsVisible())
-	{
-		// Play level 1 or 2 whip animation, level 3 whip is another seperate system
-		sprite->Play("Whip_level_0" + std::to_string(level));
-	}
-	else
-		sprite->GetCurrentAnimation().Reset();
+	// Play level 1 or 2 whip animation, level 3 whip is another seperate system
+	sprite->Play("Whip_level_0" + std::to_string(level));
+	sprite->SetVisibility(true);
+}
+
+void WhipRenderingSystem::OnWhipWithdrawn()
+{
+	sprite->GetCurrentAnimation().Reset();
+	sprite->SetVisibility(false);
 }
 
 void WhipRenderingSystem::UpdatePositionRelativeToPlayer()

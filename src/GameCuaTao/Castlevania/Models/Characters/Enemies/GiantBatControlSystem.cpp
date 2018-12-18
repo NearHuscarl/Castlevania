@@ -11,17 +11,20 @@ constexpr auto MAX_DISTANCE = 230.0f;
 constexpr auto MIN_HOVERING_TIME = 500;
 constexpr auto MAX_HOVERING_TIME = 2500;
 
-constexpr auto MIN_SPEED = 75.0f;
-constexpr auto MAX_SPEED = 220.0f;
+constexpr auto MIN_SPEED = 50.0f;
+constexpr auto MAX_SPEED = 500.0f;
 
-constexpr auto LOWER_BOUND_DISTANCE = 32;  // 1 tile
-constexpr auto UPPER_BOUND_DISTANCE = 352; // 11 tiles
+constexpr auto LOWER_BOUND_DISTANCE_TO_PLAYER = 32;  // 1 tile
+constexpr auto UPPER_BOUND_DISTANCE_TO_PLAYER = 352; // 11 tiles
 
 GiantBatControlSystem::GiantBatControlSystem(GiantBat &parent, ObjectFactory &objectFactory) :
 	parent{ parent },
 	objectFactory{ objectFactory }
 {
-	originalSpeed = parent.GetSpeed();
+	auto speed = parent.GetSpeed();
+
+	minSpeed = MathHelper::Max(speed - 75.0f, MIN_SPEED);
+	maxSpeed = MathHelper::Min(speed + 70.0f, MAX_SPEED);
 }
 
 void GiantBatControlSystem::Receive(int message)
@@ -131,10 +134,11 @@ float GiantBatControlSystem::GetSpeedRelativeToPlayerDistance()
 {
 	auto position = parent.GetPosition();
 	auto distanceToPlayer = Vector2::Distance(position, playerPosition);
-	auto distanceWeight = (distanceToPlayer - LOWER_BOUND_DISTANCE) / (UPPER_BOUND_DISTANCE - LOWER_BOUND_DISTANCE);
+	auto distanceWeight = (distanceToPlayer - LOWER_BOUND_DISTANCE_TO_PLAYER) /
+		(UPPER_BOUND_DISTANCE_TO_PLAYER - LOWER_BOUND_DISTANCE_TO_PLAYER);
 
 	// the closer the player is the quicker the boss moves
-	return MathHelper::Lerp(MAX_SPEED, MIN_SPEED, distanceWeight);
+	return MathHelper::Lerp(maxSpeed, minSpeed, distanceWeight);
 }
 
 void GiantBatControlSystem::MoveRandomly()

@@ -1,5 +1,6 @@
 #include "DaggerResponseSystem.h"
 #include "../../Models/UpdateData.h"
+#include "../Characters/Enemies/Enemy.h"
 #include "../Items/Container.h"
 
 using namespace Castlevania;
@@ -25,6 +26,14 @@ void DaggerResponseSystem::Update(UpdateData &updateData)
 			case ObjectId::Brazier:
 				OnCollideWithBrazier(result, objectCollection);
 				break;
+
+			case ObjectId::Zombie:
+			case ObjectId::Panther:
+			case ObjectId::Fishman:
+			case ObjectId::VampireBat:
+			case ObjectId::GiantBat:
+				OnCollideWithEnemy(result, *objectCollection.player);
+				break;
 		}
 	}
 }
@@ -34,5 +43,17 @@ void DaggerResponseSystem::OnCollideWithBrazier(CollisionResult &result, ObjectC
 	auto &brazier = dynamic_cast<Container&>(result.collidedObject);
 
 	brazier.OnBeingHit();
+	parent.Destroy();
+}
+
+void DaggerResponseSystem::OnCollideWithEnemy(CollisionResult &result, Player &player)
+{
+	auto &enemy = dynamic_cast<Enemy&>(result.collidedObject);
+
+	enemy.TakeDamage(2); // TODO: inherit IAttackable
+
+	if (enemy.GetState() == ObjectState::DYING)
+		player.AddExp(enemy.GetExp());
+
 	parent.Destroy();
 }

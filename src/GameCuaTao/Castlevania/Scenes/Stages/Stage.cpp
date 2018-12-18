@@ -43,6 +43,11 @@ Camera *Stage::GetCamera()
 	return camera.get();
 }
 
+Hud *Stage::GetHud()
+{
+	return hud.get();
+}
+
 UpdateData Stage::GetUpdateData()
 {
 	return UpdateData{
