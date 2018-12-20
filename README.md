@@ -80,7 +80,10 @@ With the default configuration, Visual will toss all object files into one big f
 [sample project]: https://github.com/dungdna2000/gamedev-intro-tutorials/
 
 ## References
-
+-  [Castlevania_Block_1]
+-  [Castlevania_Inventory]
+-  [Block_1 Walkthrough]
+-  [Item_Data]
 -  [Back to the Basics! Essentials of Modern C++ Style]
 -  [Smart pointers need careful programmers]
 -  [UIT-SE102-Game-Project ]
@@ -94,8 +97,12 @@ With the default configuration, Visual will toss all object files into one big f
    -  [RolePlayingGame]
 
 [native event]: https://msdn.microsoft.com/en-us/library/ee2k0a7d.aspx
-
 [Tiled]: https://www.mapeditor.org/
+
+[Castlevania_Block_1]: http://castlevania.wikia.com/wiki/Castlevania_Block_1
+[Castlevania_Inventory]: http://castlevania.wikia.com/wiki/Castlevania_Inventory
+[Block_1 Walkthrough]: http://castlevania.wikia.com/wiki/Walkthrough:Castlevania/Block_1
+[Item_Data]: http://castlevania.wikia.com/wiki/Vampire_Killer_(whip)/Item_Data
 
 [back to the basics! essentials of modern c++ style]: https://github.com/CppCon/CppCon2014/blob/master/Presentations/Back%20to%20the%20Basics!%20Essentials%20of%20Modern%20C%2B%2B%20Style/Back%20to%20the%20Basics!%20Essentials%20of%20Modern%20C%2B%2B%20Style%20-%20Herb%20Sutter%20-%20CppCon%202014.pdf
 [smart pointers need careful programmers]: https://yatb.giacomodrago.com/en/post/11/cpp11-smart-pointers-need-careful-programmers.html
