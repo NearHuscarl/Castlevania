@@ -19,8 +19,7 @@ void GiantBatCollisionSystem::Update(UpdateData &updateData)
 	if (!parent.GetBody().Enabled())
 		return;
 
-	auto &objectCollection = *updateData.objectCollection;
-	auto playerBbox = (Rect)objectCollection.player->GetBoundingBox();
+	auto playerBbox = (Rect)updateData.player->GetBoundingBox();
 
 	CheckZonesCollision(playerBbox);
 }

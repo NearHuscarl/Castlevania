@@ -18,6 +18,9 @@ public:
 	Vector2 GetPosition();
 	void SetPosition(Vector2 position);
 
+	int GetWidth();
+	int GetHeight();
+
 	int GetWidthInPixels();
 	int GetHeightInPixels();
 

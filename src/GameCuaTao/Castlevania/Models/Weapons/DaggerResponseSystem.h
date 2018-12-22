@@ -1,8 +1,7 @@
 #pragma once
 
 #include "../Systems/CollisionResponse/ICollisionResponseSystem.h"
-#include "../GameObject.h"
-#include "../Factories/ObjectCollection.h"
+#include "../Characters/Player/Player.h"
 
 namespace Castlevania
 {
@@ -17,7 +16,7 @@ namespace Castlevania
 	private:
 		GameObject &parent;
 
-		void OnCollideWithBrazier(CollisionResult &result, ObjectCollection &objectCollection);
+		void OnCollideWithBrazier(CollisionResult &result);
 		void OnCollideWithEnemy(CollisionResult &result, Player &player);
 	};
 }

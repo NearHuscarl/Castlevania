@@ -17,7 +17,6 @@ GameObject &ResponseSystem::GetParent()
 
 void ResponseSystem::Update(UpdateData &updateData)
 {
-	auto &objectCollection = *updateData.objectCollection;
 	auto collisionData = GetParent().GetBody().GetCollisionData();
 	auto isOnGround = false;
 

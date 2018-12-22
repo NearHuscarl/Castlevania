@@ -16,15 +16,15 @@ void WhipCollisionSystem::Update(UpdateData &updateData)
 		return;
 
 	auto results = std::vector<CollisionResult>{};
-	auto &entities = updateData.objectCollection->entities;
+	auto collisionObjects = *updateData.collisionObjects;
 
-	for (auto &entity : entities)
+	for (auto &collisionObject : collisionObjects)
 	{
-		auto entityRect = entity->GetFrameRect();
+		auto entityRect = collisionObject->GetFrameRect();
 
 		if (parent.GetBoundingBox().TouchesOrIntersects(entityRect))
 		{
-			results.push_back(CollisionResult{ 0, Direction::None, *entity });
+			results.push_back(CollisionResult{ 0, Direction::None, *collisionObject });
 		}
 	}
 

@@ -23,10 +23,9 @@ void PantherCollisionSystem::Update(UpdateData &updateData)
 		return;
 
 	auto results = std::vector<CollisionResult>{};
-	auto &objectCollection = *updateData.objectCollection;
-	auto &staticObjects = objectCollection.staticObjects;
+	auto &collisionObject = *updateData.collisionObjects;
 
-	for (auto &staticObject : staticObjects)
+	for (auto staticObject : collisionObject)
 	{
 		CalculateCollision(*staticObject, results);
 	}
@@ -37,7 +36,7 @@ void PantherCollisionSystem::Update(UpdateData &updateData)
 	// Check if player is inside active zone
 	if (!parent.IsActive())
 	{
-		auto player = objectCollection.player;
+		auto player = updateData.player;
 		auto activeZone = parent.GetActiveZone();
 
 		// note to myself: do not use swept AABB algorithm for collision detection in this case.

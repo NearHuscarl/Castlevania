@@ -11,7 +11,7 @@ namespace Castlevania
 	public:
 		NextMapCutscene(Stage &stage, ContentManager &content);
 
-		void Update(GameTime gameTime) override;
+		void Update(UpdateData &updateData) override;
 		void Draw(SpriteExtensions &spriteBatch) override;
 
 	private:

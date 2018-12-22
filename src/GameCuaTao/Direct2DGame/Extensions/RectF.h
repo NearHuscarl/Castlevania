@@ -24,7 +24,7 @@ struct RectF
 	static RectF Empty();
 
 	bool operator==(RectF other);
-	bool operator!=(Rect other);
+	bool operator!=(RectF other);
 	bool Contains(RectF value);
 	bool Contains(Vector2 value);
 	bool Intersects(RectF value);

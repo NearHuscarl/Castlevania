@@ -14,7 +14,7 @@ namespace Castlevania
 		SpawnPoint(ObjectId spawnObjectType, ObjectFactory &objectFactory);
 
 		SpawnState GetSpawnState() override;
-		void Update(GameTime gameTime, UpdateData &updateData) override;
+		void Update(UpdateData &updateData) override;
 
 	private:
 		ObjectFactory &objectFactory;

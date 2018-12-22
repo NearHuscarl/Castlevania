@@ -14,7 +14,7 @@ NextMapCutscene::NextMapCutscene(Stage &stage, ContentManager &content) : Cutsce
 	transitionTimer.Start();
 }
 
-void NextMapCutscene::Update(GameTime gameTime)
+void NextMapCutscene::Update(UpdateData &updateData)
 {
 	if (transitionTimer.ElapsedMilliseconds() >= NEXT_MAP_TRANSITION_TIME)
 	{

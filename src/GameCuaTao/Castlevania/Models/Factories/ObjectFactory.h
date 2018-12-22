@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../GameObject.h"
 #include "../Characters/Player/Player.h"
 #include "../Characters/Enemies/Zombie.h"
 #include "../Characters/Enemies/Panther.h"

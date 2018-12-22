@@ -1,6 +1,7 @@
 #include "SpawnPoint.h"
 #include "../UpdateData.h"
 #include "../Factories/ObjectFactory.h"
+#include "../../Utilities/CollisionGrid.h"
 
 using namespace Castlevania;
 
@@ -26,9 +27,9 @@ SpawnState SpawnPoint::GetSpawnState()
 	return spawnState;
 }
 
-void SpawnPoint::Update(GameTime gameTime, UpdateData &updateData)
+void SpawnPoint::Update(UpdateData &updateData)
 {
-	GameObject::Update(gameTime, updateData);
+	GameObject::Update(updateData);
 	auto viewport = updateData.viewport;
 
 	switch (spawnState)
@@ -43,11 +44,10 @@ void SpawnPoint::Update(GameTime gameTime, UpdateData &updateData)
 			{
 				Activate();
 				auto object = objectFactory.CreateEnemy(spawnObjectType);
-				auto objectCollection = updateData.objectCollection;
 
 				object->SetPosition(position);
 				object->SetFacing(facing);
-				objectCollection->entities.push_back(std::move(object));
+				collisionGrid->Add(std::move(object), CollisionObjectType::Entity);
 			}
 			break;
 	}

@@ -1,11 +1,29 @@
 #pragma once
 
-class CollisionCell
+#include "CollisionObject.h"
+
+namespace Castlevania
 {
-public:
+	class CollisionCell
+	{
+	public:
+		CollisionCell(RectF boundingBox);
 
-	bool IsEmpty();
+		static CollisionCell &NullCell();
 
-private:
-	bool isEmpty;
-};
+		RectF GetBoundingBox();
+		CollisionObject &GetObjects();
+		UGameObjects &GetEntites();
+
+		void AddBlock(std::shared_ptr<GameObject> object);
+		void AddEntity(std::unique_ptr<GameObject> object);
+		void AddStaticObject(std::unique_ptr<GameObject> object);
+
+	private:
+		CollisionObject collisionObject;
+		RectF boundingBox;
+
+		void AddObject(UGameObjects &objects, std::unique_ptr<GameObject> newObject);
+		void AddSharedObject(SGameObjects &objects, std::shared_ptr<GameObject> newObject);
+	};
+}

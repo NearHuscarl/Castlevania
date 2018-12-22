@@ -40,7 +40,7 @@ namespace Castlevania
 		void SetMoveArea(Rect moveArea) override;
 		GiantBatState GetGiantBatState();
 
-		void Update(GameTime gameTime, UpdateData &updateData) override;
+		void Update(UpdateData &updateData) override;
 
 		void Idle();
 		void Hover();

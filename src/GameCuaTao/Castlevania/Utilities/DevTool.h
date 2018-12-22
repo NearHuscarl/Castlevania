@@ -4,8 +4,8 @@
 #include "Direct2DGame/Content/ContentManager.h"
 #include "Direct2DGame/Extensions/Sprites/Sprite.h"
 #include "Direct2DGame/Extensions/Camera.h"
-#include "../Models/Factories/ObjectCollection.h"
 #include "../Models/Factories/ObjectFactory.h"
+#include "../Utilities/CollisionGrid.h"
 #include "../Utilities/MapSettings.h"
 
 namespace Castlevania
@@ -20,7 +20,7 @@ namespace Castlevania
 		static bool IsDebugging;
 
 		void LoadContent(ContentManager &content);
-		void Update(GameTime gameTime, ObjectCollection &objectCollection);
+		void Update(UpdateData &updatData, CollisionGrid &collisionGrid);
 		void Draw(SpriteExtensions &spriteBatch);
 
 	private:
@@ -52,8 +52,8 @@ namespace Castlevania
 		void NextItem();
 		void PreviousItem();
 		
-		void SpawnItem(ObjectCollection &objectCollection);
-		void SpawnObject(ObjectCollection &objectCollection);
+		void SpawnItem(CollisionGrid &collisionGrid);
+		void SpawnObject(CollisionGrid &collisionGrid);
 		void SpawnEffect();
 
 		void NextMap();

@@ -16,7 +16,6 @@ GameObject &FishmanResponseSystem::GetParent()
 
 void FishmanResponseSystem::Update(UpdateData &updateData)
 {
-	auto &objectCollection = *updateData.objectCollection;
 	auto collisionData = GetParent().GetBody().GetCollisionData();
 	auto isOnGround = false;
 

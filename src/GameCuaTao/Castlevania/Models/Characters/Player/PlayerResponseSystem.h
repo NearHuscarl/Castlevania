@@ -2,6 +2,7 @@
 
 #include "../../Systems/CollisionResponse/ResponseSystem.h"
 #include "../../../Models/Factories/ObjectFactory.h"
+#include "../../../Scenes/Stages/StageObject.h"
 #include "Player.h"
 
 namespace Castlevania
@@ -29,7 +30,7 @@ namespace Castlevania
 		void OnCollideWithBoundary(CollisionResult &result, ResponseResult &responseResult);
 		void OnCollideWithTrigger(CollisionResult &result, ResponseResult &responseResult);
 		void OnCollideWithBossFightArea(CollisionResult &result, Rect viewport);
-		void OnCollideWithWaterArea(CollisionResult &result, ObjectCollection &objectCollection);
+		void OnCollideWithWaterArea(CollisionResult &result, StageObject &stageObject);
 		void OnCollideWithEnemy(CollisionResult &result);
 		void OnCollideWithVampireBat(CollisionResult &result);
 		void OnCollideWithFireball(CollisionResult &result);
@@ -37,7 +38,7 @@ namespace Castlevania
 		void OnCollideWithHeart(CollisionResult &result);
 		void OnCollideWithSmallHeart(CollisionResult &result);
 		void OnCollideWithWhipPowerup(CollisionResult &result);
-		void OnCollideWithDaggerItem(CollisionResult &result, ObjectCollection &objectCollection);
+		void OnCollideWithDaggerItem(CollisionResult &result);
 		void OnCollideWithDoor(CollisionResult &result, ResponseResult &responseResult);
 
 		void OnCollideWithStairUpTrigger(Trigger &trigger);

@@ -2,6 +2,7 @@
 
 #include <sstream>
 #include <vector>
+#include <list>
 
 namespace Castlevania
 {
@@ -46,5 +47,19 @@ namespace Castlevania
 		
 		if (it != list.end())
 			list.erase(it);
+	}
+
+	// http://www.cplusplus.com/reference/list/list/splice/
+	template<typename T>
+	typename std::list<T>::iterator Transfer(
+		std::list<T> &fromList,
+		std::list<T> &toList,
+		typename std::list<T>::iterator it)
+	{
+		// "it" is now invalid.
+		toList.splice(toList.end(), fromList, it);
+
+		// return the new iterator
+		return std::prev(toList.end());
 	}
 }

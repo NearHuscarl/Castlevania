@@ -101,9 +101,9 @@ void DevTool::LoadContent(ContentManager &content)
 	maps = std::vector<Map>{ Map::COURTYARD, Map::GREAT_HALL, Map::UNDERGROUND, Map::PLAYGROUND };
 }
 
-void DevTool::Update(GameTime gameTime, ObjectCollection &objectCollection)
+void DevTool::Update(UpdateData &updatData, CollisionGrid &collisionGrid)
 {
-	UpdateEffects(gameTime);
+	UpdateEffects(updatData.gameTime);
 
 	// Update keyboard input
 	if (InputHelper::IsKeyDown(DIK_ESCAPE))
@@ -111,6 +111,8 @@ void DevTool::Update(GameTime gameTime, ObjectCollection &objectCollection)
 
 	if (!IsDebugging)
 		return;
+
+	auto checkpoints = updatData.stageObject->checkpoints;
 
 	if (InputHelper::IsKeyDown(DIK_Q))
 		SetCategory(ENEMY);
@@ -129,17 +131,17 @@ void DevTool::Update(GameTime gameTime, ObjectCollection &objectCollection)
 		PreviousMap();
 
 	else if (InputHelper::IsKeyDown(DIK_1))
-		player.SetPosition(objectCollection.locations["Checkpoint"]);
+		player.SetPosition(checkpoints["Checkpoint"]);
 	else if (InputHelper::IsKeyDown(DIK_2))
-		player.SetPosition(objectCollection.locations["Checkpoint_02"]);
+		player.SetPosition(checkpoints["Checkpoint_02"]);
 	else if (InputHelper::IsKeyDown(DIK_3))
-		player.SetPosition(objectCollection.locations["Checkpoint_03"]);
+		player.SetPosition(checkpoints["Checkpoint_03"]);
 	else if (InputHelper::IsKeyDown(DIK_4))
-		player.SetPosition(objectCollection.locations["Checkpoint_04"]);
+		player.SetPosition(checkpoints["Checkpoint_04"]);
 	else if (InputHelper::IsKeyDown(DIK_5))
-		player.SetPosition(objectCollection.locations["Checkpoint_05"]);
+		player.SetPosition(checkpoints["Checkpoint_05"]);
 	else if (InputHelper::IsKeyDown(DIK_6))
-		player.SetPosition(objectCollection.locations["Checkpoint_06"]);
+		player.SetPosition(checkpoints["Checkpoint_06"]);
 
 	else if (InputHelper::IsKeyDown(DIK_8))
 		player.data.hearts += 200;
@@ -158,7 +160,7 @@ void DevTool::Update(GameTime gameTime, ObjectCollection &objectCollection)
 	else if (InputHelper::IsScrollingUp())
 		NextItem();
 	else if (InputHelper::IsMouseReleased(MouseButton::Left))
-		SpawnItem(objectCollection);
+		SpawnItem(collisionGrid);
 	else if (InputHelper::IsMouseReleased(MouseButton::Right))
 		currentFacing = Opposite(currentFacing);
 }
@@ -233,15 +235,15 @@ void DevTool::PreviousItem()
 		currentItemIndex = items[category].size() - 1;
 }
 
-void DevTool::SpawnItem(ObjectCollection &objectCollection)
+void DevTool::SpawnItem(CollisionGrid &collisionGrid)
 {
 	if (category == EFFECT)
 		SpawnEffect();
 	else
-		SpawnObject(objectCollection);
+		SpawnObject(collisionGrid);
 }
 
-void DevTool::SpawnObject(ObjectCollection &objectCollection)
+void DevTool::SpawnObject(CollisionGrid &collisionGrid)
 {
 	auto type = string2EntityType.at(items[category][currentItemIndex].first);
 	auto objectPosition = GetCurrentItemPosition();
@@ -288,7 +290,7 @@ void DevTool::SpawnObject(ObjectCollection &objectCollection)
 
 	object->SetPosition(objectPosition);
 	object->SetFacing(currentFacing);
-	objectCollection.entities.push_back(std::move(object));
+	collisionGrid.Add(std::move(object), CollisionObjectType::Entity);
 }
 
 void DevTool::SpawnEffect()

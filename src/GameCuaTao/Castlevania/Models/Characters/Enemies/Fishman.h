@@ -22,7 +22,7 @@ namespace Castlevania
 		void SetLaunchSpeed(float speed);
 		FishmanState GetFishmanState();
 
-		void Update(GameTime gameTime, UpdateData &updateData) override;
+		void Update(UpdateData &updateData) override;
 
 		void Launch();
 		void WalkRight();
@@ -41,7 +41,7 @@ namespace Castlevania
 		void Land();
 
 		void SetFishmanState(FishmanState state);
-		void ReleaseFireball(ObjectCollection &objectCollection);
+		void ReleaseFireball();
 
 		friend class FishmanResponseSystem;
 	};

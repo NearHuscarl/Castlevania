@@ -6,41 +6,46 @@ using namespace Castlevania;
 
 constexpr auto BOSS_WAKE_UP_TIME = 2000.0f; // in milliseconds
 
-BossFightCutscene::BossFightCutscene(Stage &stage, ObjectCollection &objectCollection, ObjectFactory &objectFactory)
+BossFightCutscene::BossFightCutscene(Stage &stage, CollisionGrid &grid, ObjectFactory &objectFactory)
 	: Cutscene{ stage }
 {
-	for (auto &entity : objectCollection.entities)
-	{
-		if (entity->GetId() == ObjectId::GiantBat)
-		{
-			auto enemy = dynamic_cast<GiantBat*>(entity.get());
-			
-			boss = enemy;
-			stage.GetHud()->Register(enemy->GetHealthRef());
-			break;
-		}
-	}
-
 	auto camera = stage.GetCamera();
-	
+	auto cameraBound = camera->GetBounds();
+
 	camera->Lock();
 
-	auto cameraRect = camera->GetBounds();
+	grid.GetCellsFromBoundingBox(cameraBound, [&](CollisionCell &cell, int col, int row)
+	{
+		auto &entities = cell.GetEntites();
+
+		for (auto &entity : entities)
+		{
+			if (entity->GetId() == ObjectId::GiantBat)
+			{
+				auto enemy = dynamic_cast<GiantBat*>(entity.get());
+
+				boss = enemy;
+				stage.GetHud()->Register(enemy->GetHealthRef());
+				break; // TODO: should stop iterate all other remaining cells
+			}
+		}
+	});
+
 	auto boundWidth = 16.0f; // abitrary number larger than 0
 	auto leftBound = RectF{
-		cameraRect.left - boundWidth,
-		cameraRect.top,
+		cameraBound.left - boundWidth,
+		cameraBound.top,
 		boundWidth,
-		cameraRect.Height() };
+		cameraBound.Height() };
 	auto wall = objectFactory.CreateBoundary(leftBound);
 
-	objectCollection.staticObjects.push_back(std::move(wall));
+	grid.Add(std::move(wall), CollisionObjectType::Static);
 	bossWakeupTimer.Start();
 }
 
-void BossFightCutscene::Update(GameTime gameTime)
+void BossFightCutscene::Update(UpdateData &updateData)
 {
-	stage.UpdateGameplay(gameTime);
+	stage.UpdateGameplay(updateData);
 	
 	if (bossWakeupTimer.ElapsedMilliseconds() >= BOSS_WAKE_UP_TIME)
 	{

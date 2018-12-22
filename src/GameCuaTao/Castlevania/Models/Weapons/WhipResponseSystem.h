@@ -2,7 +2,7 @@
 
 #include "../Systems/CollisionResponse/ICollisionResponseSystem.h"
 #include "Whip.h"
-#include "../Factories/ObjectCollection.h"
+#include "../Characters/Player/Player.h"
 
 namespace Castlevania
 {
@@ -21,7 +21,7 @@ namespace Castlevania
 		Whip &parent;
 		std::vector<Enemy*> hitEnemies;
 
-		void OnCollideWithBrazier(CollisionResult &result, ObjectCollection &objectCollection);
+		void OnCollideWithBrazier(CollisionResult &result);
 		void OnCollideWithEnemy(CollisionResult &result, Player &player);
 		void OnCollideWithFireball(CollisionResult &result);
 	};

@@ -3,17 +3,16 @@
 #include "Direct2DGame/Extensions/Camera.h"
 #include "Cutscene.h"
 #include "../../Models/Characters/Player/Player.h"
-#include "../../Models/Factories/ObjectCollection.h"
 
 namespace Castlevania
 {
 	class NextRoomCutscene : public Cutscene
 	{
 	public:
-		NextRoomCutscene(Stage &stage, ObjectCollection &objectCollection);
+		NextRoomCutscene(Stage &stage, CollisionGrid &grid, Player &player);
 
 		Door &GetDoor();
-		void Update(GameTime gameTime) override;
+		void Update(UpdateData &updateData) override;
 
 	private:
 		enum class State;

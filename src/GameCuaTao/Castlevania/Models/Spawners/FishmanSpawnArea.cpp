@@ -3,6 +3,7 @@
 #include "../UpdateData.h"
 #include "../Characters/Enemies/Fishman.h"
 #include "../Factories/ObjectFactory.h"
+#include "../../Utilities/CollisionGrid.h"
 
 using namespace Castlevania;
 
@@ -17,14 +18,18 @@ FishmanSpawnArea::FishmanSpawnArea(ObjectFactory &objectFactory) :
 
 void FishmanSpawnArea::SpawnObject(UpdateData &updateData)
 {
-	auto &objectCollection = updateData.objectCollection;
 	auto currentFishmanCount = 0;
 
-	for (auto &entity : objectCollection->entities)
+	collisionGrid->GetCellsFromBoundingBox(updateData.viewport, [&](CollisionCell &cell, int col, int row)
 	{
-		if (entity->GetId() == ObjectId::Fishman)
-			currentFishmanCount++;
-	}
+		auto &entities = cell.GetEntites();
+
+		for (auto &entity : entities)
+		{
+			if (entity->GetId() == ObjectId::Fishman)
+				currentFishmanCount++;
+		}
+	});
 
 	if (currentFishmanCount >= MAX_FISHMAN_COUNT)
 		return;
@@ -32,7 +37,7 @@ void FishmanSpawnArea::SpawnObject(UpdateData &updateData)
 	auto viewport = updateData.viewport;
 	auto object = objectFactory.CreateEnemy(spawnObjectType);
 	auto facing = Facing{};
-	auto playerBbox = objectCollection->player->GetBoundingBox();
+	auto playerBbox = updateData.player->GetBoundingBox();
 	auto randomOffset = MathHelper::RandomBetween(MIN_OFFSET, MAX_OFFSET);
 
 	if (playerBbox.right + randomOffset >= viewport.right - object->GetFrameRect().Width())
@@ -54,5 +59,5 @@ void FishmanSpawnArea::SpawnObject(UpdateData &updateData)
 	object->SetFacing(facing);
 	static_cast<Fishman&>(*object).Launch();
 
-	objectCollection->entities.push_back(std::move(object));
+	collisionGrid->Add(std::move(object), CollisionObjectType::Entity);
 }

@@ -1,7 +1,7 @@
 #include "Direct2DGame/MathHelper.h"
 #include "VampireBatSpawnArea.h"
-#include "../UpdateData.h"
 #include "../Factories/ObjectFactory.h"
+#include "../../Utilities/CollisionGrid.h"
 
 using namespace Castlevania;
 
@@ -43,11 +43,11 @@ void VampireBatSpawnArea::SpawnObject(UpdateData &updateData)
 		facing = Facing::Right;
 	}
 
-	auto playerBbox = updateData.objectCollection->player->GetBoundingBox();
+	auto playerBbox = updateData.player->GetBoundingBox();
 	spawnPosition.y = playerBbox.bottom - playerBbox.Height() / 2 - object->GetFrameRect().Height() / 2;
 
 	object->SetPosition(spawnPosition);
 	object->SetFacing(facing);
 
-	updateData.objectCollection->entities.push_back(std::move(object));
+	collisionGrid->Add(std::move(object), CollisionObjectType::Entity);
 }

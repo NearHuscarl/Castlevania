@@ -15,7 +15,7 @@ void SpawnerCollisionSystem::Update(UpdateData &updateData)
 	if (!body.Enabled())
 		return;
 
-	auto player = updateData.objectCollection->player;
+	auto player = updateData.player;
 	auto spawnAreaBbox = parent.GetBoundingBox();
 
 	if (player->GetBoundingBox().Intersects(spawnAreaBbox))

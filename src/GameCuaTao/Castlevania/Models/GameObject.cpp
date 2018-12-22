@@ -4,6 +4,7 @@
 #include "UpdateData.h"
 #include "Settings.h"
 #include "../Utilities/CppExtensions.h"
+#include "../Utilities/CollisionGrid.h"
 
 using namespace Castlevania;
 
@@ -201,9 +202,12 @@ void GameObject::EnableControl(bool value)
 		controlSystem->Enabled(value);
 }
 
-void GameObject::Move(Vector2 direction)
+void GameObject::Move(Vector2 distance)
 {
-	position += direction;
+	if (collisionGrid != nullptr)
+		collisionGrid->Move(*this, distance);
+	else
+		position += distance;
 }
 
 void GameObject::SwitchFacing()
@@ -212,6 +216,21 @@ void GameObject::SwitchFacing()
 		SetFacing(Facing::Right);
 	else if (facing == Facing::Right)
 		SetFacing(Facing::Left);
+}
+
+CollisionUnit GameObject::GetCollisionUnit()
+{
+	return unit;
+}
+
+void GameObject::SetCollisionUnit(CollisionUnit unit)
+{
+	this->unit = unit;
+}
+
+void GameObject::Attach(CollisionGrid *grid)
+{
+	collisionGrid = grid;
 }
 
 void GameObject::Attach(std::unique_ptr<IControlSystem> system)
@@ -287,27 +306,27 @@ void GameObject::LoadContent(ContentManager &content)
 		renderingSystem->LoadContent(content);
 }
 
-void GameObject::Update(GameTime gameTime, UpdateData &updateData)
+void GameObject::Update(UpdateData &updateData)
 {
 	if (!updateData.viewport.TouchesOrIntersects(GetFrameRect())) // TODO: remove after using collision grid
 		return;
 
-	auto objectCollection = updateData.objectCollection;
+	auto collisionObjects = updateData.collisionObjects;
 
 	if (controlSystem != nullptr)
 		controlSystem->Update(updateData);
 
 	if (movementSystem != nullptr)
-		movementSystem->Update(gameTime);
+		movementSystem->Update(updateData.gameTime);
 
-	if (collisionSystem != nullptr && objectCollection != nullptr)
+	if (collisionSystem != nullptr && collisionObjects != nullptr)
 		collisionSystem->Update(updateData);
 
-	if (collisionResponseSystem != nullptr && objectCollection != nullptr)
+	if (collisionResponseSystem != nullptr && collisionObjects != nullptr)
 		collisionResponseSystem->Update(updateData);
 
 	if (renderingSystem != nullptr)
-		renderingSystem->Update(gameTime);
+		renderingSystem->Update(updateData.gameTime);
 
 	Move(GetDistance()); // Can move properly now after handling potential collisions with other objects
 }

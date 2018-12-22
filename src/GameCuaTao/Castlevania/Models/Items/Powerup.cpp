@@ -13,9 +13,9 @@ void Powerup::Spawn()
 	lifespanTimer.Start();
 }
 
-void Powerup::Update(GameTime gameTime, UpdateData &updateData)
+void Powerup::Update(UpdateData &updateData)
 {
-	GameObject::Update(gameTime, updateData);
+	GameObject::Update(updateData);
 
 	// Powerup self-destruct after a given amount of time
 	if (lifespanTimer.ElapsedMilliseconds() >= LIFESPAN)

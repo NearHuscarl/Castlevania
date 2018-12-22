@@ -1,6 +1,7 @@
 #include "MapManager.h"
 #include "TypeConverter.h"
 #include "CppExtensions.h"
+#include "../Scenes/Stages/StageObject.h"
 
 using namespace Castlevania;
 
@@ -38,43 +39,19 @@ std::shared_ptr<TiledMap> MapManager::GetTiledMap(Map name)
 	return map;
 }
 
-ObjectCollection MapManager::GetOtherObjects(Map name)
-{
-	auto map = maps.at(name);
-	auto mapObjects = map->GetMapObjects();
-
-	return CreateObjectCollection(mapObjects);
-}
-
-GameObjects MapManager::GetMapObjects(Map name)
-{
-	return GetMapObjectsInArea(name, Rect::Empty());
-}
-
-GameObjects MapManager::GetMapObjectsInArea(Map name, Rect area)
+std::unique_ptr<StageObject> MapManager::GetStageObjects(Map name)
 {
 	auto map = maps.at(name);
 	auto objectGroups = map->GetMapObjects();
-	auto x = float{};
-	auto y = float{};
-	auto objects = GameObjects{};
+	auto stageObject = std::make_unique<StageObject>();
 
-	for (auto properties : objectGroups[ENTITY])
+	for (auto properties : objectGroups[LOCATION])
 	{
-		ReadObjectPosition(properties, x, y);
-		auto height = std::stoi(properties.at("height"));
-		auto position = Vector2{ x, y - height };
+		auto boundingBox = GetMapObjectBoundingBox(properties, MapObjectType::Tile);
+		auto name = properties.at("name");
+		auto position = Vector2{ boundingBox.X(), boundingBox.Y() };
 
-		if (!area.Contains(position) && area != Rect::Empty())
-			continue;
-
-		auto object = ConstructObject(properties);
-		auto facing = string2Facing.at(GetValueOrDefault(properties, "Facing", "Right"));
-
-		object->SetPosition(position);
-		object->SetFacing(facing);
-
-		objects.push_back(std::move(object));
+		stageObject->checkpoints[name] = position;
 	}
 
 	for (auto properties : objectGroups[AREA])
@@ -82,75 +59,54 @@ GameObjects MapManager::GetMapObjectsInArea(Map name, Rect area)
 		auto typeName = properties.at("type");
 		auto type = string2EntityType.at(typeName);
 
-		ReadObjectPosition(properties, x, y);
-		auto width = std::stof(properties.at("width"));
-		auto height = std::stof(properties.at("height"));
-		auto bbox = RectF{ x, y, width, height };
-
-		if (!area.Contains((Rect)bbox) && area != Rect::Empty())
+		if (type != ObjectId::StageArea)
 			continue;
 
-		auto object = std::unique_ptr<GameObject>{};
+		auto boundingBox = GetMapObjectBoundingBox(properties, MapObjectType::Rectangle);
+		auto object = objectFactory.CreateRectangleObject(type, boundingBox);
 
-		switch (type)
-		{
-			case ObjectId::SpawnArea:
-			{
-				auto spawnObject = string2EntityType.at(properties.at("SpawnObject"));
-				auto spawnArea = objectFactory.CreateSpawnArea(spawnObject, bbox);
-
-				auto spawnGroup = GetValueOrDefault(properties, "SpawnGroup", "");
-
-				if (!spawnGroup.empty())
-					spawnArea->SetGroupCountChances(spawnGroup);
-
-				auto spawnDirection = GetValueOrDefault(properties, "SpawnDirection", "");
-
-				if (!spawnDirection.empty())
-					spawnArea->SetDirectionChances(spawnDirection);
-
-				object = std::move(spawnArea);
-				break;
-			}
-
-			case ObjectId::WaterArea:
-				object = objectFactory.CreateWaterArea(bbox);
-				break;
-		}
-
-		if (object)
-			objects.push_back(std::move(object));
+		stageObject->stageAreas.push_back(std::move(object));
 	}
 
-	return objects;
+	for (auto properties : objectGroups[FOREGROUND])
+	{
+		auto boundingBox = GetMapObjectBoundingBox(properties, MapObjectType::Tile);
+		auto object = ConstructObject(properties);
+		auto facing = string2Facing.at(GetValueOrDefault(properties, "Facing", "Right"));
+		auto visibility = GetValueOrDefault(properties, "Visibility", "True");
+		auto position = Vector2{ boundingBox.X(), boundingBox.Y() };
+
+		object->SetPosition(position);
+		object->SetFacing(facing);
+		object->SetVisibility(ToBoolean(visibility));
+
+		stageObject->foregroundObjects.push_back(std::move(object));
+	}
+
+	return stageObject;
 }
 
-ObjectCollection MapManager::CreateObjectCollection(TiledMapObjectGroups objectGroups)
+ObjectCollection MapManager::GetMapObjects(Map name)
 {
+	return GetMapObjectsInArea(name, Rect::Empty());
+}
+
+ObjectCollection MapManager::GetMapObjectsInArea(Map name, RectF area)
+{
+	auto map = maps.at(name);
+	auto objectGroups = map->GetMapObjects();
 	auto objectCollection = ObjectCollection{};
-	auto x = float{};
-	auto y = float{};
-
-	for (auto properties : objectGroups[LOCATION])
-	{
-		ReadObjectPosition(properties, x, y);
-		auto height = std::stoi(properties.at("height"));
-		auto position = Vector2{ x, y - height };
-		auto name = properties.at("name");
-
-		objectCollection.locations[name] = position;
-	}
 
 	for (auto properties : objectGroups[TRIGGER])
 	{
-		ReadObjectPosition(properties, x, y);
-		auto width = std::stof(properties.at("width"));
-		auto height = std::stof(properties.at("height"));
-		auto bbox = RectF{ x, y, width, height };
+		auto boundingBox = GetMapObjectBoundingBox(properties, MapObjectType::Rectangle);
+		if (!area.TouchesOrIntersects(boundingBox) && area != RectF::Empty())
+			continue;
+
 		auto facing = string2Facing.at(GetValueOrDefault(properties, "Facing", "None"));
 		auto name = properties.at("name");
 		auto triggerType = string2TriggerType.at(name);
-		auto object = objectFactory.CreateTrigger(bbox, triggerType);
+		auto object = objectFactory.CreateTrigger(boundingBox, triggerType);
 
 		if (triggerType == TriggerType::NEXT_MAP)
 		{
@@ -163,53 +119,77 @@ ObjectCollection MapManager::CreateObjectCollection(TiledMapObjectGroups objectG
 		objectCollection.staticObjects.push_back(std::move(object));
 	}
 
-	for (auto properties : objectGroups[FOREGROUND])
+	for (auto properties : objectGroups[ENTITY])
 	{
-		ReadObjectPosition(properties, x, y);
-		auto height = std::stoi(properties.at("height"));
-		auto position = Vector2{ x, y - height };
+		auto boundingBox = GetMapObjectBoundingBox(properties, MapObjectType::Tile);
+		if (!area.TouchesOrIntersects(boundingBox) && area != RectF::Empty())
+			continue;
+
 		auto object = ConstructObject(properties);
 		auto facing = string2Facing.at(GetValueOrDefault(properties, "Facing", "Right"));
-		auto visibility = GetValueOrDefault(properties, "Visibility", "True");
+		auto position = Vector2{ boundingBox.X(), boundingBox.Y() };
 
 		object->SetPosition(position);
 		object->SetFacing(facing);
-		object->SetVisibility(ToBoolean(visibility));
 
-		objectCollection.foregroundObjects.push_back(std::move(object));
+		objectCollection.entities.push_back(std::move(object));
 	}
 
 	for (auto properties : objectGroups[BOUND])
 	{
-		ReadObjectPosition(properties, x, y);
-		auto width = std::stof(properties.at("width"));
-		auto height = std::stof(properties.at("height"));
-		auto bbox = RectF{ x, y, width, height };
-		auto object = objectFactory.CreateBoundary(bbox);
+		auto boundingBox = GetMapObjectBoundingBox(properties, MapObjectType::Rectangle);
+		if (!area.TouchesOrIntersects(boundingBox) && area != RectF::Empty())
+			continue;
 
-		objectCollection.staticObjects.push_back(std::move(object));
+		auto object = objectFactory.CreateBoundary(boundingBox);
+
+		objectCollection.blocks.push_back(std::move(object));
 	}
 
 	for (auto properties : objectGroups[AREA])
 	{
 		auto typeName = properties.at("type");
 		auto type = string2EntityType.at(typeName);
+		auto boundingBox = GetMapObjectBoundingBox(properties, MapObjectType::Rectangle);
 
-		ReadObjectPosition(properties, x, y);
-		auto width = std::stof(properties.at("width"));
-		auto height = std::stof(properties.at("height"));
-		auto bbox = RectF{ x, y, width, height };
-		auto object = objectFactory.CreateRectangleObject(type, bbox);
+		if (!area.TouchesOrIntersects(boundingBox) && area != Rect::Empty())
+			continue;
 
-		// Dump area objects that dont have Update() method
+		auto object = std::unique_ptr<GameObject>{};
+
 		switch (type)
 		{
-			// TODO: rip this into a seperate method GetStageAreas()
-			case ObjectId::StageArea:
-				objectCollection.stageAreas.push_back(std::move(object));
+			case ObjectId::SpawnArea:
+			{
+				auto spawnObject = string2EntityType.at(properties.at("SpawnObject"));
+				auto object = objectFactory.CreateSpawnArea(spawnObject, boundingBox);
+
+				auto spawnGroup = GetValueOrDefault(properties, "SpawnGroup", "");
+
+				if (!spawnGroup.empty())
+					object->SetGroupCountChances(spawnGroup);
+
+				auto spawnDirection = GetValueOrDefault(properties, "SpawnDirection", "");
+
+				if (!spawnDirection.empty())
+					object->SetDirectionChances(spawnDirection);
+
+				objectCollection.entities.push_back(std::move(object));
+				break;
+			}
+
+			case ObjectId::WaterArea:
+				object = objectFactory.CreateWaterArea(boundingBox);
+				objectCollection.entities.push_back(std::move(object));
 				break;
 
-			case ObjectId::BossFightArea:
+
+				// Dump area objects that dont have Update() method
+			case ObjectId::StageArea:
+				break;
+
+			default: // ObjectId::BossFightArea
+				object = objectFactory.CreateRectangleObject(type, boundingBox);
 				objectCollection.staticObjects.push_back(std::move(object));
 				break;
 		}
@@ -291,8 +271,15 @@ std::unique_ptr<GameObject> MapManager::ConstructObject(ObjectProperties propert
 	}
 }
 
-void MapManager::ReadObjectPosition(ObjectProperties properties, float &x, float &y)
+RectF MapManager::GetMapObjectBoundingBox(ObjectProperties properties, MapObjectType type)
 {
-	x = worldPosition.x + std::stof(properties.at("x"));
-	y = worldPosition.y + std::stof(properties.at("y"));
+	auto x = worldPosition.x + std::stof(properties.at("x"));
+	auto y = worldPosition.y + std::stof(properties.at("y"));
+	auto width = std::stof(properties.at("width"));
+	auto height = std::stof(properties.at("height"));
+
+	if (type == MapObjectType::Tile)
+		return RectF{ x, y - height, width, height };
+	else // (type == MapObjectType::Rectangle)
+		return RectF{ x, y, width, height };
 }

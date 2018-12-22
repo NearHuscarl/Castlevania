@@ -17,9 +17,9 @@ void Fireball::SetAttack(int attack)
 	this->attack = attack;
 }
 
-void Fireball::Update(GameTime gameTime, UpdateData &updateData)
+void Fireball::Update(UpdateData &updateData)
 {
-	GameObject::Update(gameTime, updateData);
+	GameObject::Update(updateData);
 
 	auto viewport = updateData.viewport;
 

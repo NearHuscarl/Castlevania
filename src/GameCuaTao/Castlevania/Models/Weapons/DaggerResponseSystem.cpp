@@ -11,7 +11,6 @@ DaggerResponseSystem::DaggerResponseSystem(GameObject &parent) : parent{ parent 
 
 void DaggerResponseSystem::Update(UpdateData &updateData)
 {
-	auto &objectCollection = *updateData.objectCollection;
 	auto collisionData = parent.GetBody().GetCollisionData();
 
 	if (collisionData.collisionResults.size() == 0)
@@ -24,7 +23,7 @@ void DaggerResponseSystem::Update(UpdateData &updateData)
 		switch (objectId)
 		{
 			case ObjectId::Brazier:
-				OnCollideWithBrazier(result, objectCollection);
+				OnCollideWithBrazier(result);
 				break;
 
 			case ObjectId::Zombie:
@@ -32,13 +31,13 @@ void DaggerResponseSystem::Update(UpdateData &updateData)
 			case ObjectId::Fishman:
 			case ObjectId::VampireBat:
 			case ObjectId::GiantBat:
-				OnCollideWithEnemy(result, *objectCollection.player);
+				OnCollideWithEnemy(result, *updateData.player);
 				break;
 		}
 	}
 }
 
-void DaggerResponseSystem::OnCollideWithBrazier(CollisionResult &result, ObjectCollection &objectCollection)
+void DaggerResponseSystem::OnCollideWithBrazier(CollisionResult &result)
 {
 	auto &brazier = dynamic_cast<Container&>(result.collidedObject);
 

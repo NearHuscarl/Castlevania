@@ -52,7 +52,7 @@ bool RectF::operator==(RectF other)
 		this->Height() == other.Height());
 }
 
-bool RectF::operator!=(Rect other)
+bool RectF::operator!=(RectF other)
 {
 	return !(*this == other);
 }

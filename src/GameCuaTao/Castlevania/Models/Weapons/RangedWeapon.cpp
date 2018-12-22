@@ -15,9 +15,9 @@ void RangedWeapon::SetOwner(GameObject *owner)
 	this->owner = owner;
 }
 
-void RangedWeapon::Update(GameTime gameTime, UpdateData &updateData)
+void RangedWeapon::Update(UpdateData &updateData)
 {
-	GameObject::Update(gameTime, updateData);
+	GameObject::Update(updateData);
 
 	auto viewport = updateData.viewport;
 

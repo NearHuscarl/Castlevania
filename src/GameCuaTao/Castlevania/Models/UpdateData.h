@@ -1,14 +1,17 @@
 #pragma once
 
-#include "Factories/ObjectCollection.h"
+#include "Characters/Player/Player.h"
+#include "../Scenes/Stages/StageObject.h"
+#include "../Utilities/CollisionObject.h"
 
 namespace Castlevania
 {
 	struct UpdateData
 	{
+		GameTime gameTime;
 		RectF viewport;
-		ObjectCollection *objectCollection;
-
-		static UpdateData Empty();
+		Player *player;
+		StageObject *stageObject;
+		std::vector<GameObject*> *collisionObjects;
 	};
 }

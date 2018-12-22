@@ -1,7 +1,7 @@
 #include "Direct2DGame/MathHelper.h"
 #include "ZombieSpawnArea.h"
-#include "../UpdateData.h"
 #include "../Factories/ObjectFactory.h"
+#include "../../Utilities/CollisionGrid.h"
 
 using namespace Castlevania;
 
@@ -33,5 +33,5 @@ void ZombieSpawnArea::SpawnObject(UpdateData &updateData)
 	object->SetPosition(spawnPosition);
 	object->SetFacing(facing);
 
-	updateData.objectCollection->entities.push_back(std::move(object));
+	collisionGrid->Add(std::move(object), CollisionObjectType::Entity);
 }

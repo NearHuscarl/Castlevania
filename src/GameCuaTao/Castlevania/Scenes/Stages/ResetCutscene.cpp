@@ -15,7 +15,7 @@ ResetCutscene::ResetCutscene(Stage &stage, ContentManager &content) : Cutscene{ 
 	transitionTimer.Start();
 }
 
-void ResetCutscene::Update(GameTime gameTime)
+void ResetCutscene::Update(UpdateData &updateData)
 {
 	if (transitionTimer.ElapsedMilliseconds() >= RESET_TRANSITION_TIME)
 	{

@@ -25,7 +25,6 @@ GameObject &PlayerResponseSystem::GetParent()
 
 void PlayerResponseSystem::Update(UpdateData &updateData)
 {
-	auto &objectCollection = *updateData.objectCollection;
 	auto collisionData = parent.GetBody().GetCollisionData();
 	auto responseResult = ResponseResult{};
 
@@ -49,7 +48,7 @@ void PlayerResponseSystem::Update(UpdateData &updateData)
 				break;
 
 			case ObjectId::WaterArea:
-				OnCollideWithWaterArea(result, objectCollection);
+				OnCollideWithWaterArea(result, *updateData.stageObject);
 				break;
 
 			case ObjectId::Zombie:
@@ -87,7 +86,7 @@ void PlayerResponseSystem::Update(UpdateData &updateData)
 				break;
 
 			case ObjectId::DaggerItem:
-				OnCollideWithDaggerItem(result, objectCollection);
+				OnCollideWithDaggerItem(result);
 				break;
 
 			case ObjectId::Door:
@@ -238,7 +237,7 @@ void PlayerResponseSystem::OnCollideWithBossFightArea(CollisionResult &result, R
 	}
 }
 
-void PlayerResponseSystem::OnCollideWithWaterArea(CollisionResult &result, ObjectCollection &objectCollection)
+void PlayerResponseSystem::OnCollideWithWaterArea(CollisionResult &result, StageObject &stageObject)
 {
 	auto &waterArea = dynamic_cast<WaterArea&>(result.collidedObject);
 	
@@ -250,7 +249,7 @@ void PlayerResponseSystem::OnCollideWithWaterArea(CollisionResult &result, Objec
 		auto waterZonePosition = waterArea.GetOriginPosition();
 
 		waterZone->SetOriginPosition(waterZonePosition);
-		objectCollection.foregroundObjects.push_back(std::move(waterZone));
+		stageObject.foregroundObjects.push_back(std::move(waterZone));
 
 		parent.Die();
 	}
@@ -333,7 +332,7 @@ void PlayerResponseSystem::OnCollideWithWhipPowerup(CollisionResult &result)
 	whipPowerup.Destroy();
 }
 
-void PlayerResponseSystem::OnCollideWithDaggerItem(CollisionResult &result, ObjectCollection &objectCollection)
+void PlayerResponseSystem::OnCollideWithDaggerItem(CollisionResult &result)
 {
 	auto &daggerItem = dynamic_cast<GameObject&>(result.collidedObject);
 	auto itemId = daggerItem.GetId();

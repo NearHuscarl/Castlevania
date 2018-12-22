@@ -28,7 +28,7 @@ namespace Castlevania
 		PantherState GetPantherState();
 		Direction GetPlayerDirection();
 
-		void Update(GameTime gameTime, UpdateData &updateData) override;
+		void Update(UpdateData &updateData) override;
 
 		void Idle();
 		void RunRight();

@@ -25,7 +25,6 @@ void WhipResponseSystem::Receive(int message)
 void WhipResponseSystem::Update(UpdateData &updateData)
 {
 	auto collisionData = parent.GetBody().GetCollisionData();
-	auto &objectCollection = *updateData.objectCollection;
 
 	if (collisionData.collisionResults.size() == 0)
 		return;
@@ -37,7 +36,7 @@ void WhipResponseSystem::Update(UpdateData &updateData)
 		switch (objectId)
 		{
 			case ObjectId::Brazier:
-				OnCollideWithBrazier(result, objectCollection);
+				OnCollideWithBrazier(result);
 				break;
 
 			case ObjectId::Zombie:
@@ -45,7 +44,7 @@ void WhipResponseSystem::Update(UpdateData &updateData)
 			case ObjectId::Fishman:
 			case ObjectId::VampireBat:
 			case ObjectId::GiantBat:
-				OnCollideWithEnemy(result, *objectCollection.player);
+				OnCollideWithEnemy(result, *updateData.player);
 				break;
 
 			case ObjectId::Fireball:
@@ -55,7 +54,7 @@ void WhipResponseSystem::Update(UpdateData &updateData)
 	}
 }
 
-void WhipResponseSystem::OnCollideWithBrazier(CollisionResult &result, ObjectCollection &objectCollection)
+void WhipResponseSystem::OnCollideWithBrazier(CollisionResult &result)
 {
 	auto &brazier = dynamic_cast<Container&>(result.collidedObject);
 

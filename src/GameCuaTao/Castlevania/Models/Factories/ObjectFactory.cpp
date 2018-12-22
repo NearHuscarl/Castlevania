@@ -6,9 +6,7 @@
 #include "../Systems/Movement/EntityMovementSystem.h"
 #include "../Systems/Movement/WaveMovementSystem.h"
 #include "../Systems/Collision/CollisionSystem.h"
-#include "../Systems/Collision/EntityCollisionSystem.h"
 #include "../Systems/Collision/SimpleCollisionSystem.h"
-#include "../Systems/Collision/StaticCollisionSystem.h"
 #include "../Systems/Collision/StandardCollisionSystem.h"
 #include "../Systems/CollisionResponse/GroundResponseSystem.h"
 #include "../Systems/Rendering/AnimationRenderingSystem.h"
@@ -263,7 +261,7 @@ std::unique_ptr<Zombie> ObjectFactory::CreateZombie(Vector2 position)
 	ReadEnemyConfig(*object.get(), *stats);
 
 	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, 1000.0f);
-	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
+	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<ZombieResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<EffectRenderingSystem>(*object, "Characters/Enemies/Zombie.ani.xml",
 		effectFactory->CreateFlameEffect(),
@@ -443,7 +441,7 @@ std::unique_ptr<RangedWeapon> ObjectFactory::CreateDagger(Vector2 position)
 	auto object = std::make_unique<RangedWeapon>(ObjectId::Dagger);
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
-	auto collisionSystem = std::make_unique<EntityCollisionSystem>(*object);
+	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<DaggerResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Dagger.png");
 
@@ -538,7 +536,7 @@ std::unique_ptr<MoneyBag> ObjectFactory::CreateMoneyBag(ObjectId type, Vector2 p
 	auto object = std::make_unique<MoneyBag>(money, type);
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
-	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
+	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
 
 	auto moneyAtlas = content.Load<Spritesheet>("Items/Money_Bag.atlas.xml");
@@ -578,7 +576,7 @@ std::unique_ptr<MoneyBag> ObjectFactory::CreateFlashingMoneyBag(Vector2 position
 	auto object = std::make_unique<MoneyBag>(1000, ObjectId::FlashingMoneyBag);
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
-	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
+	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
 
 	auto moneyAtlas = content.Load<Spritesheet>("Items/Money_Bag.atlas.xml");
@@ -602,7 +600,7 @@ std::unique_ptr<Powerup> ObjectFactory::CreateDaggerItem(Vector2 position)
 	auto object = std::make_unique<Powerup>(ObjectId::DaggerItem);
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
-	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
+	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Dagger.png");
 
@@ -623,7 +621,7 @@ std::unique_ptr<Powerup> ObjectFactory::CreateLargeHeart(Vector2 position)
 	auto object = std::make_unique<Powerup>(ObjectId::LargeHeart);
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
-	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
+	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Large_Heart.png");
 	
@@ -644,7 +642,7 @@ std::unique_ptr<Powerup> ObjectFactory::CreateSmallHeart(Vector2 position)
 	auto object = std::make_unique<Powerup>(ObjectId::SmallHeart);
 
 	auto movementSystem = std::make_unique<WaveMovementSystem>(*object, 0.5f, 1.8f, Axis::Y);
-	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
+	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Small_Heart.png");
 
@@ -665,7 +663,7 @@ std::unique_ptr<Powerup> ObjectFactory::CreateWhipPowerup(Vector2 position)
 	auto object = std::make_unique<Powerup>(ObjectId::WhipPowerup);
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
-	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
+	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Whip_Powerup.png");
 
@@ -686,7 +684,7 @@ std::unique_ptr<GameObject> ObjectFactory::CreateCrystalBall(Vector2 position)
 	auto object = std::make_unique<GameObject>(ObjectId::CrystalBall);
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
-	auto collisionSystem = std::make_unique<StaticCollisionSystem>(*object);
+	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Crystal_Ball.ani.xml");
 

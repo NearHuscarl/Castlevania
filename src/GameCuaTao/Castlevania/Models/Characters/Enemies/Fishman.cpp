@@ -1,6 +1,7 @@
 #include "Fishman.h"
 #include "../../UpdateData.h"
 #include "../../Settings.h"
+#include "../../../Utilities/CollisionGrid.h"
 
 using namespace Castlevania;
 
@@ -21,9 +22,9 @@ FishmanState Fishman::GetFishmanState()
 	return fishmanState;
 }
 
-void Fishman::Update(GameTime gameTime, UpdateData &updateData)
+void Fishman::Update(UpdateData &updateData)
 {
-	Enemy::Update(gameTime, updateData);
+	Enemy::Update(updateData);
 
 	switch (fishmanState)
 	{
@@ -40,7 +41,7 @@ void Fishman::Update(GameTime gameTime, UpdateData &updateData)
 			else if (shootingTimer.ElapsedMilliseconds() > RELEASE_FIREBALL_TIME)
 			{
 				if (fireball != nullptr)
-					ReleaseFireball(*updateData.objectCollection);
+					ReleaseFireball();
 			}
 			break;
 	}
@@ -95,7 +96,7 @@ void Fishman::SetFishmanState(FishmanState state)
 	SendMessageToSystems(MOVE_STATE_CHANGED);
 }
 
-void Fishman::ReleaseFireball(ObjectCollection &objectCollection)
+void Fishman::ReleaseFireball()
 {
 	fireball->SetFacing(facing);
 
@@ -114,5 +115,5 @@ void Fishman::ReleaseFireball(ObjectCollection &objectCollection)
 	else
 		fireball->SetVelocity_X(-fireballSpeed);
 
-	objectCollection.entities.push_back(std::move(fireball));
+	collisionGrid->Add(std::move(fireball), CollisionObjectType::Entity);
 }

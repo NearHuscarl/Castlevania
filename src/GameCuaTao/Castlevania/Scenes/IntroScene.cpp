@@ -57,10 +57,10 @@ void IntroScene::Update(GameTime gameTime)
 		sceneManager.SetNextScene(Scene::GAMEPLAY);
 	}
 
-	bat1->Update(gameTime, UpdateData::Empty());
-	bat2->Update(gameTime, UpdateData::Empty());
+	bat1->Update(UpdateData{ gameTime });
+	bat2->Update(UpdateData{ gameTime });
 
-	player->Update(gameTime, UpdateData::Empty());
+	player->Update(UpdateData{ gameTime });
 }
 
 void IntroScene::Draw(GameTime gameTime)

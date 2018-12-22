@@ -68,7 +68,7 @@
   <object id="77" name="Wall" type="Boundary" x="3056" y="0" width="32" height="32"/>
   <object id="78" name="Wall" type="Boundary" x="3056" y="160" width="32" height="160"/>
   <object id="79" name="Wall" type="Boundary" x="4080" y="160" width="16" height="160"/>
-  <object id="80" name="Wall" type="Boundary" x="-30" y="0" width="32" height="320"/>
+  <object id="80" name="Wall" type="Boundary" x="0" y="0" width="2" height="320"/>
   <object id="81" name="Wall" type="Boundary" x="5616" y="0" width="16" height="320"/>
  </objectgroup>
  <objectgroup id="4" name="Entities">

@@ -1,6 +1,7 @@
 #include "Container.h"
 #include "../Settings.h"
 #include "../../Models/UpdateData.h"
+#include "../../Utilities/CollisionGrid.h"
 
 using namespace Castlevania;
 
@@ -27,10 +28,10 @@ std::unique_ptr<GameObject> Container::SpawnItem()
 	return std::move(item);
 }
 
-void Container::Update(GameTime gameTime, UpdateData &updateData)
+void Container::Update(UpdateData &updateData)
 {
-	GameObject::Update(gameTime, updateData);
+	GameObject::Update(updateData);
 
 	if (state == ObjectState::DEAD)
-		updateData.objectCollection->entities.push_back(SpawnItem());
+		collisionGrid->Add(SpawnItem(), CollisionObjectType::Entity);
 }

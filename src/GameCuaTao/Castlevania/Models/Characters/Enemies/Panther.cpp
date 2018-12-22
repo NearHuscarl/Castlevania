@@ -53,11 +53,11 @@ Direction Panther::GetPlayerDirection()
 	return playerDirection;
 }
 
-void Panther::Update(GameTime gameTime, UpdateData &updateData)
+void Panther::Update(UpdateData &updateData)
 {
-	Enemy::Update(gameTime, updateData);
+	Enemy::Update(updateData);
 
-	auto player = updateData.objectCollection->player;
+	auto player = updateData.player;
 
 	if (player->GetOriginPosition().x <= GetOriginPosition().x)
 		playerDirection = Direction::Left;

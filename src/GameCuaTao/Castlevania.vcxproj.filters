@@ -177,12 +177,6 @@
     <ClCompile Include="Castlevania\Models\Characters\Player\Controller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Castlevania\Models\Characters\Player\Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Castlevania\Models\GameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Direct2DGame\Extensions\RectF.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -201,9 +195,6 @@
     <ClCompile Include="Castlevania\Models\Systems\Collision\CollisionSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Castlevania\Models\Systems\Collision\StaticCollisionSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Castlevania\Models\Systems\Rendering\AnimationRenderingSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -217,9 +208,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Castlevania\Models\Weapons\WhipFlashingRenderingSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Castlevania\Models\Systems\Collision\EntityCollisionSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Castlevania\Models\Systems\Collision\StandardCollisionSystem.cpp">
@@ -283,9 +271,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Castlevania\Scenes\Stages\Stage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Castlevania\Models\UpdateData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Castlevania\Models\Systems\Rendering\BoundingboxRenderingSystem.cpp">
@@ -478,6 +463,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Castlevania\Utilities\CollisionCell.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Models\Characters\Player\Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Models\GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -710,12 +701,6 @@
     <ClInclude Include="Castlevania\Models\Characters\Player\Controller.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Castlevania\Models\Characters\Player\Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Castlevania\Models\GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Castlevania\Models\IGameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -758,9 +743,6 @@
     <ClInclude Include="Castlevania\Models\Systems\Movement\IMovementSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Castlevania\Models\Systems\Collision\StaticCollisionSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Castlevania\Models\Systems\Rendering\AnimationRenderingSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -783,9 +765,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Castlevania\Models\Weapons\WhipFlashingRenderingSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Castlevania\Models\Systems\Collision\EntityCollisionSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Castlevania\Models\Systems\Collision\StandardCollisionSystem.h">
@@ -1100,8 +1079,21 @@
     <ClInclude Include="Castlevania\Utilities\CollisionCell.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Castlevania\Scenes\Stages\StageObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Utilities\CollisionObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Characters\Player\Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\GameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

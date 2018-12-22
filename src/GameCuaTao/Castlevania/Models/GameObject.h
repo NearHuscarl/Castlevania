@@ -4,10 +4,10 @@
 #include "Direct2DGame/Content/ContentManager.h"
 #include "Direct2DGame/Extensions/Collisions/Body/Body.h"
 #include "Direct2DGame/Extensions/Sprites/SpriteExtensions.h"
+#include "Systems/Control/IControlSystem.h"
 #include "Systems/Movement/IMovementSystem.h"
 #include "Systems/Collision/ICollisionSystem.h"
 #include "Systems/CollisionResponse/ICollisionResponseSystem.h"
-#include "Systems/Control/IControlSystem.h"
 #include "Systems/Rendering/IRenderingSystem.h"
 #include "IGameObject.h"
 #include "ObjectId.h"
@@ -17,6 +17,8 @@
 namespace Castlevania
 {
 	struct UpdateData;
+	class CollisionGrid;
+	using CollisionUnit = std::list<std::unique_ptr<GameObject>>::iterator;
 
 	enum class ObjectState
 	{
@@ -70,9 +72,13 @@ namespace Castlevania
 		void Destroy();
 
 		void EnableControl(bool value);
-		void Move(Vector2 direction);
+		void Move(Vector2 distance);
 		void SwitchFacing();
 
+		CollisionUnit GetCollisionUnit();
+		void SetCollisionUnit(CollisionUnit unit);
+
+		void Attach(CollisionGrid *grid);
 		void Attach(std::unique_ptr<IControlSystem> system);
 		void Attach(std::unique_ptr<IMovementSystem> system);
 		void Attach(std::unique_ptr<ICollisionSystem> system);
@@ -83,7 +89,7 @@ namespace Castlevania
 		void Detach();
 
 		virtual void LoadContent(ContentManager &content);
-		virtual void Update(GameTime gameTime, UpdateData &updateData);
+		virtual void Update(UpdateData &updateData);
 		virtual void Draw(SpriteExtensions &spriteBatch);
 
 		void SendMessageToSystems(int message);
@@ -100,6 +106,8 @@ namespace Castlevania
 		Facing facing;
 		Body body;
 
+		CollisionGrid *collisionGrid;
+		CollisionUnit unit;
 		std::vector<IReceiver*> components;
 
 		std::unique_ptr<IControlSystem> controlSystem;

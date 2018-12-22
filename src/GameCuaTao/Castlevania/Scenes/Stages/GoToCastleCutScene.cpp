@@ -9,26 +9,31 @@ enum class GoToCastleCutscene::State
 	WALKING_TO_NEXT_MAP,
 };
 
-GoToCastleCutscene::GoToCastleCutscene(Stage &stage, ObjectCollection &objectCollection) :
+GoToCastleCutscene::GoToCastleCutscene(Stage &stage, StageObject &stageObject, CollisionGrid &grid, Player &player) :
 	Cutscene{ stage }
 {
-	player = objectCollection.player.get();
+	this->player = &player;
 
-	for (auto &object : objectCollection.staticObjects)
+	grid.GetCellsFromBoundingBox(stage.GetCamera()->GetBounds(), [&](CollisionCell &cell, int col, int row)
 	{
-		if (object->GetId() != ObjectId::Trigger)
-			continue;
+		auto &objects = cell.GetObjects();
 
-		auto trigger = dynamic_cast<Trigger*>(object.get());
+		for (auto &object : objects.staticObjects)
+		{
+			if (object->GetId() != ObjectId::Trigger)
+				continue;
 
-		if (trigger->GetTriggerType() == TriggerType::CASTLE_ENTRANCE)
-			entranceTrigger = trigger;
+			auto trigger = dynamic_cast<Trigger*>(object.get());
 
-		if (trigger->GetTriggerType() == TriggerType::NEXT_MAP)
-			nextMapTrigger = trigger;
-	}
+			if (trigger->GetTriggerType() == TriggerType::CASTLE_ENTRANCE)
+				entranceTrigger = trigger;
 
-	for (auto &object : objectCollection.foregroundObjects)
+			if (trigger->GetTriggerType() == TriggerType::NEXT_MAP)
+				nextMapTrigger = trigger;
+		}
+	});
+
+	for (auto &object : stageObject.foregroundObjects)
 	{
 		if (object->GetId() == ObjectId::Castle)
 		{
@@ -39,7 +44,10 @@ GoToCastleCutscene::GoToCastleCutscene(Stage &stage, ObjectCollection &objectCol
 
 	// Remove objects before cutscene even started is not necessary
 	// But I will leave it here to mimic the original game behaviour
-	objectCollection.entities.clear();
+	grid.GetAllCells([&](CollisionCell &cell)
+	{
+		cell.GetEntites().clear();
+	});
 
 	SetupCutscene();
 }
@@ -61,9 +69,9 @@ void GoToCastleCutscene::SetupCutscene()
 	currentState = State::WALKING_TO_CASTLE_GATE;
 }
 
-void GoToCastleCutscene::Update(GameTime gameTime)
+void GoToCastleCutscene::Update(UpdateData &updateData)
 {
-	stage.UpdateGameObjects(gameTime);
+	stage.UpdateGameObjects(updateData);
 
 	switch (currentState)
 	{

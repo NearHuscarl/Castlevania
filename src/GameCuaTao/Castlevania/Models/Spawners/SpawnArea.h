@@ -26,7 +26,7 @@ namespace Castlevania
 		void Activate() override;
 		void Deactivate() override;
 
-		void Update(GameTime gameTime, UpdateData &updateData) override;
+		void Update(UpdateData &updateData) override;
 
 	protected:
 		ObjectFactory &objectFactory;

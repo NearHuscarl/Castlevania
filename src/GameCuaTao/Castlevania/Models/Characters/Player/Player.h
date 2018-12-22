@@ -82,7 +82,7 @@ namespace Castlevania
 		void SetSubWeapon(ObjectId weapon);
 
 		void LoadContent(ContentManager &content) override;
-		void Update(GameTime gameTime, UpdateData &updateData) override;
+		void Update(UpdateData &updateData) override;
 		void Draw(SpriteExtensions &spriteBatch) override;
 
 		void Idle();

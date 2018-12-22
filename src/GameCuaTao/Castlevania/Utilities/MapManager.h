@@ -4,14 +4,19 @@
 #include "MapSettings.h"
 #include "../Models/Factories/ObjectFactory.h"
 #include "../Models/Factories/ObjectCollection.h"
+#include "../Scenes/Stages/StageObject.h"
 
 namespace Castlevania
 {
 	using Maps = std::map<Map, std::shared_ptr<TiledMap>>;
-
 	using ObjectProperties = std::unordered_map<std::string, std::string>;
 	using ObjectsProperties = std::vector<ObjectProperties>;
-	using GameObjects = std::vector<std::unique_ptr<GameObject>>;
+	
+	enum class MapObjectType
+	{
+		Tile,
+		Rectangle,
+	};
 
 	class MapManager
 	{
@@ -24,9 +29,9 @@ namespace Castlevania
 
 		std::shared_ptr<TiledMap> GetTiledMap(Map name);
 		
-		ObjectCollection GetOtherObjects(Map name); // Get all other objects except object in ENITY type
-		GameObjects GetMapObjects(Map name);
-		GameObjects GetMapObjectsInArea(Map name, Rect area);
+		std::unique_ptr<StageObject> GetStageObjects(Map name);
+		ObjectCollection GetMapObjects(Map name);
+		ObjectCollection GetMapObjectsInArea(Map name, RectF area);
 
 	private:
 		Maps maps;
@@ -34,10 +39,7 @@ namespace Castlevania
 		Vector2 worldPosition; // absolute position of map and map objects to the world
 		ObjectFactory &objectFactory;
 
-		// Create game objects within an area
-		ObjectCollection CreateObjectCollection(TiledMapObjectGroups objectGroups);
 		std::unique_ptr<GameObject> ConstructObject(ObjectProperties properties);
-		
-		void ReadObjectPosition(ObjectProperties properties, float &x, float &y);
+		RectF GetMapObjectBoundingBox(ObjectProperties properties, MapObjectType type);
 	};
 }

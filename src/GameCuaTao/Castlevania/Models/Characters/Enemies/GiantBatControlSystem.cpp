@@ -48,7 +48,7 @@ void GiantBatControlSystem::Receive(int message)
 
 void GiantBatControlSystem::Update(UpdateData &updateData)
 {
-	auto player = updateData.objectCollection->player;
+	auto player = updateData.player;
 	playerPosition = player->GetPosition();
 
 	switch (parent.GetGiantBatState())

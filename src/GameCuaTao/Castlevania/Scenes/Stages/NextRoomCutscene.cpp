@@ -17,27 +17,31 @@ enum class NextRoomCutscene::State
 	VIEWPORT_MOVING_SECOND_HALF,
 };
 
-NextRoomCutscene::NextRoomCutscene(Stage &stage, ObjectCollection &objectCollection) : Cutscene{ stage }
+NextRoomCutscene::NextRoomCutscene(Stage &stage, CollisionGrid &grid, Player &player) : Cutscene{ stage }
 {
 	camera = stage.GetCamera();
 	camera->SetMoveArea(Rect::Empty()); // camera can move freely in cutscene
 
-	player = objectCollection.player.get();
-	door = player->GetNearbyObjects().door;
+	this->player = &player;
+	door = player.GetNearbyObjects().door;
 
 	// Clear all objects in current room because they will not be needed
 	// anymore once player go to the next room. The door is the only exception
 	// here since it is part of the next room cutscene. It will be deleted later
 	// after the cutscene is finished
-	auto &entities = objectCollection.entities;
-
-	for (int i = entities.size() - 1; i >= 0; i--)
+	grid.GetAllCells([&](CollisionCell &cell)
 	{
-		auto &entity = entities[i];
+		auto &entities = cell.GetEntites();
 
-		if (entity.get() != door)
-			entities.erase(entities.begin() + i);
-	}
+		for (auto it = entities.end(); it != entities.begin(); )
+		{
+			std::advance(it, -1);
+			auto entity = (*it).get();
+
+			if (entity != door)
+				it = entities.erase(it);
+		}
+	});
 
 	SetupCutscene();
 }
@@ -60,18 +64,18 @@ Door &NextRoomCutscene::GetDoor()
 	return *door;
 }
 
-void NextRoomCutscene::Update(GameTime gameTime)
+void NextRoomCutscene::Update(UpdateData &updateData)
 {
 	if (isComplete)
 		return;
 
-	stage.UpdateGameObjects(gameTime);
+	stage.UpdateGameObjects(updateData);
 
 	switch (currentState)
 	{
 		case State::VIEWPORT_MOVING_FIRST_HALF:
 		{
-			auto deltaTime = (float)gameTime.ElapsedGameTime.Seconds();
+			auto deltaTime = (float)updateData.gameTime.ElapsedGameTime.Seconds();
 			auto cameraDistance = CAMERA_CUTSCENE_SPEED * deltaTime;
 
 			camera->Move(Vector2{ cameraDistance, 0 });
@@ -132,7 +136,7 @@ void NextRoomCutscene::Update(GameTime gameTime)
 
 		case State::VIEWPORT_MOVING_SECOND_HALF:
 		{
-			auto deltaTime = (float)gameTime.ElapsedGameTime.Seconds();
+			auto deltaTime = (float)updateData.gameTime.ElapsedGameTime.Seconds();
 			auto cameraDistance = CAMERA_CUTSCENE_SPEED * deltaTime;
 
 			if (camera->GetBounds().X() + cameraDistance > viewportDestination_x)

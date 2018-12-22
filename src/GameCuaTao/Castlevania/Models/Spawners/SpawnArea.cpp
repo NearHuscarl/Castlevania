@@ -106,9 +106,9 @@ void SpawnArea::Deactivate()
 	spawnState = SpawnState::INACTIVE;
 }
 
-void SpawnArea::Update(GameTime gameTime, UpdateData &updateData)
+void SpawnArea::Update(UpdateData &updateData)
 {
-	GameObject::Update(gameTime, updateData);
+	GameObject::Update(updateData);
 
 	switch (spawnState)
 	{

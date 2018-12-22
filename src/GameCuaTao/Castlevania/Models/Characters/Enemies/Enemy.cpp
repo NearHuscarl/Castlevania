@@ -38,9 +38,9 @@ int Enemy::GetExp()
 	return exp;
 }
 
-void Enemy::Update(GameTime gameTime, UpdateData &updateData)
+void Enemy::Update(UpdateData &updateData)
 {
-	GameObject::Update(gameTime, updateData);
+	GameObject::Update(updateData);
 
 	auto viewport = updateData.viewport;
 

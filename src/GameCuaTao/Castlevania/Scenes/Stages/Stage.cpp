@@ -48,14 +48,6 @@ Hud *Stage::GetHud()
 	return hud.get();
 }
 
-UpdateData Stage::GetUpdateData()
-{
-	return UpdateData{
-		camera->GetBounds(),
-		&objectCollection,
-	};
-}
-
 void Stage::Initialize()
 {
 	auto &graphicsDevice = gameplayScene.GetSceneManager().GetGraphicsDevice();
@@ -69,7 +61,19 @@ void Stage::Initialize()
 	data->timeLeft.ResetLastSecond(); // When change to the next map, the last second is reset
 
 	mapManager.SetWorldPosition(Vector2{ 0, (float)hud->GetHeight() });
+	
+	map = mapManager.GetTiledMap(currentMap);
 	camera = std::make_unique<Camera>(graphicsDevice);
+
+	auto cellWidth = (int)(camera->GetBounds().Width() / 2);
+	auto cellHeight = (int)(camera->GetBounds().Height() / 2);
+	
+	grid = std::make_unique<CollisionGrid>(
+		map->GetWidthInPixels() / cellWidth + 1,
+		map->GetHeightInPixels() / cellHeight + 1,
+		cellWidth,
+		cellHeight);
+
 	devTool = std::make_unique<DevTool>(gameplayScene, *camera);
 
 	LoadMap();
@@ -77,14 +81,22 @@ void Stage::Initialize()
 
 void Stage::Update(GameTime gameTime)
 {
+	auto updateData = UpdateData{
+		gameTime,
+		camera->GetBounds(),
+		player.get(),
+		stageObject.get(),
+		nullptr,
+	};
+
 	switch (currentState)
 	{
 		case GameState::PLAYING:
-			UpdateGameplay(gameTime);
+			UpdateGameplay(updateData);
 			break;
 
 		default:
-			currentCutscene->Update(gameTime);
+			currentCutscene->Update(updateData);
 			break;
 	}
 
@@ -111,7 +123,7 @@ void Stage::Draw(SpriteExtensions &spriteBatch)
 
 Rect Stage::GetCurrentArea(Vector2 position)
 {
-	auto &stageAreas = objectCollection.stageAreas;
+	auto &stageAreas = stageObject->stageAreas;
 
 	if (stageAreas.size() == 0)
 	{
@@ -148,13 +160,13 @@ void Stage::LoadMap()
 	auto &content = gameplayScene.GetSceneManager().GetContent();
 	auto &mapManager = gameplayScene.GetMapManager();
 	
-	map = mapManager.GetTiledMap(currentMap);
 	devTool->LoadContent(content);
 
-	objectCollection = mapManager.GetOtherObjects(currentMap);
-	objectCollection.player = player;
-	objectCollection.player->SetPosition(objectCollection.locations[spawnPoint]);
+	stageObject = mapManager.GetStageObjects(currentMap);
 
+	auto checkpoint = stageObject->checkpoints[spawnPoint];
+
+	player->SetPosition(checkpoint);
 	activeArea = GetCurrentArea(player->GetPosition());
 	LoadObjectsWithin(activeArea);
 }
@@ -162,8 +174,9 @@ void Stage::LoadMap()
 void Stage::LoadObjectsWithin(Rect area)
 {
 	auto &mapManager = gameplayScene.GetMapManager();
-
-	objectCollection.entities = mapManager.GetMapObjectsInArea(currentMap, area);
+	auto &objectCollection = mapManager.GetMapObjectsInArea(currentMap, area);
+	
+	grid->PopulateObjects(objectCollection);
 	camera->SetMoveArea(area);
 }
 
@@ -171,11 +184,9 @@ void Stage::Reset()
 {
 	auto &mapManager = gameplayScene.GetMapManager();
 
-	objectCollection = mapManager.GetOtherObjects(currentMap);
-	objectCollection.player = player;
 	LoadObjectsWithin(activeArea); // reload objects from the last active area
 
-	for (auto [checkpoint, position] : objectCollection.locations)
+	for (auto [checkpoint, position] : stageObject->checkpoints)
 	{
 		if (checkpoint != "Entrypoint" && !StartsWith(checkpoint, "Checkpoint"))
 			continue;
@@ -191,30 +202,17 @@ void Stage::Reset()
 	currentState = GameState::PLAYING;
 }
 
-void Stage::UpdateGameObjects(GameTime gameTime)
+void Stage::UpdateGameObjects(UpdateData &updateData)
 {
-	player->Update(gameTime, GetUpdateData());
-
-	auto &entities = objectCollection.entities;
-
-	// Only update existing objects. Any new objects will have to wait until next turn
-	// That's way, a newly spawned object wont get a chance to act during the same frame
-	// that it was spawned, before the player has even had a chance to see it
-	auto sizeThisTurn = entities.size();
-
-	for (unsigned int i = 0; i < sizeThisTurn; i++)
-	{
-		entities[i]->Update(gameTime, GetUpdateData());
-	}
-
-	objectCollection.RemoveDeadObjects();
+	player->Update(updateData);
+	grid->Update(updateData);
 }
 
-void Stage::UpdateGameplay(GameTime gameTime)
+void Stage::UpdateGameplay(UpdateData &updateData)
 {
-	devTool->Update(gameTime, objectCollection);
+	devTool->Update(updateData, *grid);
 	camera->LookAt(player->GetOriginPosition(), Scrolling::Horizontally);
-	UpdateGameObjects(gameTime);
+	UpdateGameObjects(updateData);
 	data->timeLeft.CountDown();
 }
 
@@ -223,15 +221,42 @@ void Stage::DrawGameplay(SpriteExtensions &spriteBatch)
 	map->Draw(spriteBatch);
 	hud->Draw(spriteBatch);
 
-	for (auto const &entity : objectCollection.entities)
-		entity->Draw(spriteBatch);
+	auto existedBlocks = std::vector<GameObject*>{};
 
-	for (auto const &staticObjects : objectCollection.staticObjects) // TODO: remove
-		staticObjects->Draw(spriteBatch);
+	grid->GetCellsFromBoundingBox(camera->GetBounds(), [&](CollisionCell &cell, int col, int row)
+	{
+		auto &collisionObject = cell.GetObjects();
+
+		for (auto &block : collisionObject.blocks)
+		{
+			auto existed = false;
+
+			for (auto existedBlock : existedBlocks)
+			{
+				if (block.get() == existedBlock)
+				{
+					existed = true;
+					break;
+				}
+			}
+
+			if (!existed)
+			{
+				existedBlocks.push_back(block.get());
+				block->Draw(spriteBatch);
+			}
+		}
+
+		for (auto const &staticObject : collisionObject.staticObjects)
+			staticObject->Draw(spriteBatch);
+
+		for (auto const &entity : collisionObject.entities)
+			entity->Draw(spriteBatch);
+	});
 
 	player->Draw(spriteBatch);
 
-	for (auto const &fgObject : objectCollection.foregroundObjects)
+	for (auto const &fgObject : stageObject->foregroundObjects)
 		fgObject->Draw(spriteBatch);
 
 	devTool->Draw(spriteBatch);
@@ -253,7 +278,7 @@ void Stage::OnNextRoomCutsceneComplete()
 	auto &door = dynamic_cast<NextRoomCutscene&>(*currentCutscene).GetDoor();
 	auto wall = objectFactory.CreateBoundary(door.GetBoundingBox());
 
-	objectCollection.staticObjects.push_back(std::move(wall));
+	grid->Add(std::move(wall), CollisionObjectType::Static);
 	door.Destroy();
 
 	activeArea = GetCurrentArea(player->GetPosition());
@@ -312,19 +337,19 @@ std::unique_ptr<Cutscene> Stage::ConstructCutscene(GameState gameState)
 	switch (gameState)
 	{
 		case GameState::BOSS_FIGHT_CUTSCENE:
-			return std::make_unique<BossFightCutscene>(*this, objectCollection, objectFactory);
+			return std::make_unique<BossFightCutscene>(*this, *grid, objectFactory);
 
 		case GameState::NEXT_MAP_CUTSCENE:
 			return std::make_unique<NextMapCutscene>(*this, content);
 
 		case GameState::NEXT_ROOM_CUTSCENE:
-			return std::make_unique<NextRoomCutscene>(*this, objectCollection);
+			return std::make_unique<NextRoomCutscene>(*this, *grid, *player);
 
 		case GameState::RESET_STAGE_CUTSCENE:
 			return std::make_unique<ResetCutscene>(*this, content);
 
 		case GameState::GO_TO_CASTLE_CUTSCENE:
-			return std::make_unique<GoToCastleCutscene>(*this, objectCollection);
+			return std::make_unique<GoToCastleCutscene>(*this, *stageObject, *grid, *player);
 
 		default:
 			throw std::runtime_error("Cutscene not available");

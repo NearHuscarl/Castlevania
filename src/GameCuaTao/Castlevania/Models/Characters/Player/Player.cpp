@@ -3,6 +3,7 @@
 #include "../../Settings.h"
 #include "../../UpdateData.h"
 #include "../../../Scenes/Stages/StageEvent.h"
+#include "../../../Utilities/CollisionGrid.h"
 
 using namespace Castlevania;
 
@@ -19,7 +20,6 @@ constexpr auto HOVERING_VELOCITY = 20.0f;
 
 Player::Player() : GameObject{ ObjectId::Player }
 {
-	this->whip = std::make_unique<Whip>(*this);
 }
 
 void Player::SetMoveState(MoveState moveState)
@@ -101,13 +101,13 @@ void Player::LoadContent(ContentManager &content)
 	Idle();
 }
 
-void Player::Update(GameTime gameTime, UpdateData &updateData)
+void Player::Update(UpdateData &updateData)
 {
-	GameObject::Update(gameTime, updateData);
+	GameObject::Update(updateData);
 	UpdateStates();
 	UpdateSubWeapons(updateData);
 
-	whip->Update(gameTime, updateData);
+	whip->Update(updateData);
 }
 
 void Player::UpdateStates()
@@ -167,13 +167,11 @@ void Player::UpdateStates()
 
 void Player::UpdateSubWeapons(UpdateData &updateData)
 {
-	auto objectCollection = updateData.objectCollection;
-
-	if (subWeapon == nullptr || objectCollection == nullptr)
+	if (subWeapon == nullptr)
 		return;
 
 	if (subWeapon->GetBody().Enabled()) // weapon is flying and active
-		objectCollection->entities.push_back(std::move(subWeapon));
+		collisionGrid->Add(std::move(subWeapon), CollisionObjectType::Entity);
 }
 
 void Player::OnAttackComplete()

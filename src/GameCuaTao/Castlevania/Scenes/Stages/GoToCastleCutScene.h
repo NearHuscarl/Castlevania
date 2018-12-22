@@ -2,7 +2,6 @@
 
 #include "Direct2DGame/GameTime.h"
 #include "Cutscene.h"
-#include "../../Models/Factories/ObjectCollection.h"
 
 namespace Castlevania
 {
@@ -11,9 +10,9 @@ namespace Castlevania
 	class GoToCastleCutscene : public Cutscene
 	{
 	public:
-		GoToCastleCutscene(Stage &stage, ObjectCollection &objectCollection);
+		GoToCastleCutscene(Stage &stage, StageObject &stageObject, CollisionGrid &grid, Player &player);
 
-		void Update(GameTime gameTime);
+		void Update(UpdateData &updateData);
 
 	private:
 		enum class State;

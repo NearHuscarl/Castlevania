@@ -1,13 +1,13 @@
 #pragma once
 
-#include "../Characters/Player/Player.h"
-#include "../Trigger.h"
+#include "../GameObject.h"
 
 namespace Castlevania
 {
 	struct ObjectCollection
 	{
-		std::shared_ptr<Player> player;
+		// wall, floor, ground, platform...
+		std::vector<std::unique_ptr<GameObject>> blocks;
 
 		// Dumb objects that dont need to run Update()
 		std::vector<std::unique_ptr<GameObject>> staticObjects;
@@ -17,19 +17,12 @@ namespace Castlevania
 
 		// For aesthetic purpose only
 		std::vector<std::unique_ptr<GameObject>> foregroundObjects;
-		
-		std::vector<std::unique_ptr<GameObject>> stageAreas;
-		std::map<std::string, Vector2> locations;
 
-		void RemoveDeadObjects()
+		void Clear()
 		{
-			for (int i = entities.size() - 1; i >= 0; i--)
-			{
-				auto &entity = entities[i];
-
-				if (entity->GetState() == ObjectState::DEAD)
-					entities.erase(entities.begin() + i);
-			}
+			staticObjects.clear();
+			entities.clear();
+			foregroundObjects.clear();
 		}
 	};
 }

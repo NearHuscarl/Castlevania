@@ -22,6 +22,16 @@ void TiledMap::SetPosition(Vector2 position)
 	this->position = position;
 }
 
+int TiledMap::GetWidth()
+{
+	return width;
+}
+
+int TiledMap::GetHeight()
+{
+	return height;
+}
+
 int TiledMap::GetWidthInPixels()
 {
 	return width * tileWidth;

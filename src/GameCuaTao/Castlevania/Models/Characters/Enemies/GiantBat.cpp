@@ -2,6 +2,7 @@
 #include "GiantBat.h"
 #include "../../UpdateData.h"
 #include "../../Settings.h"
+#include "../../../Utilities/CollisionGrid.h"
 
 using namespace Castlevania;
 
@@ -93,9 +94,9 @@ GiantBatState GiantBat::GetGiantBatState()
 	return giantBatState;
 }
 
-void GiantBat::Update(GameTime gameTime, UpdateData &updateData)
+void GiantBat::Update(UpdateData &updateData)
 {
-	Enemy::Update(gameTime, updateData);
+	Enemy::Update(updateData);
 
 	switch (giantBatState)
 	{
@@ -121,7 +122,7 @@ void GiantBat::Update(GameTime gameTime, UpdateData &updateData)
 			if (shootingTimer.ElapsedMilliseconds() > SHOOTING_TIME)
 			{
 				if (fireball != nullptr)
-					updateData.objectCollection->entities.push_back(std::move(fireball));
+					collisionGrid->Add(std::move(fireball), CollisionObjectType::Entity);
 				
 				Hover();
 				shootingTimer.Reset();

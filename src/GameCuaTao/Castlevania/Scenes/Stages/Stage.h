@@ -5,6 +5,7 @@
 #include "Direct2DGame/Extensions/Tiled/TiledMap.h"
 #include "Direct2DGame/Extensions/Camera.h"
 #include "Cutscene.h"
+#include "StageObject.h"
 #include "../../Models/Factories/ObjectFactory.h"
 #include "../../Models/Factories/ObjectCollection.h"
 #include "../../Utilities/IObserver.h"
@@ -35,10 +36,9 @@ namespace Castlevania
 
 		Camera *GetCamera();
 		Hud *GetHud();
-		UpdateData GetUpdateData();
 
-		void UpdateGameObjects(GameTime gameTime);
-		void UpdateGameplay(GameTime gameTime);
+		void UpdateGameObjects(UpdateData &updateData);
+		void UpdateGameplay(UpdateData &updateData);
 		void DrawGameplay(SpriteExtensions &spriteBatch);
 
 		void Initialize();
@@ -61,12 +61,13 @@ namespace Castlevania
 
 		std::shared_ptr<TiledMap> map;
 		std::unique_ptr<Camera> camera;
-		std::shared_ptr<Player> player; // Our player need special attention
 		std::shared_ptr<Hud> hud;
 		std::shared_ptr<GameplayData> data;
 		std::unique_ptr<DevTool> devTool;
 
-		ObjectCollection objectCollection; // TODO: move to Grid class (implement spatial partition)
+		std::unique_ptr<StageObject> stageObject;
+		std::unique_ptr<CollisionGrid> grid;
+		std::shared_ptr<Player> player; // Our player need special attention
 
 		Rect GetCurrentArea(Vector2 position);
 		void SetCurrentCutscene(GameState gameState);

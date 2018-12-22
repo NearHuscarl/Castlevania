@@ -11,7 +11,7 @@ namespace Castlevania
 
 		void SetSpawnedItem(std::unique_ptr<Powerup> item);
 		void OnBeingHit();
-		void Update(GameTime gameTime, UpdateData &updateData) override;
+		void Update(UpdateData &updateData) override;
 
 	private:
 		std::unique_ptr<Powerup> item;
