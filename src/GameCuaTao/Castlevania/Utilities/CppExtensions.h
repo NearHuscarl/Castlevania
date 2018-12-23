@@ -54,12 +54,16 @@ namespace Castlevania
 	typename std::list<T>::iterator Transfer(
 		std::list<T> &fromList,
 		std::list<T> &toList,
-		typename std::list<T>::iterator it)
+		typename std::list<T>::iterator &it)
 	{
+		auto nextIt = std::next(it);
+
 		// "it" is now invalid.
 		toList.splice(toList.end(), fromList, it);
 
-		// return the new iterator
-		return std::prev(toList.end());
+		it = std::prev(toList.end());
+
+		// return next iterator like std::list.erase()
+		return nextIt;
 	}
 }

@@ -74,7 +74,7 @@ void Stage::Initialize()
 		cellWidth,
 		cellHeight);
 
-	devTool = std::make_unique<DevTool>(gameplayScene, *camera);
+	devTool = std::make_unique<DevTool>(*this);
 
 	LoadMap();
 }
@@ -169,6 +169,9 @@ void Stage::LoadMap()
 	player->SetPosition(checkpoint);
 	activeArea = GetCurrentArea(player->GetPosition());
 	LoadObjectsWithin(activeArea);
+
+	for (auto const &spawnArea : stageObject->spawnAreas)
+		spawnArea->Attach(grid.get());
 }
 
 void Stage::LoadObjectsWithin(Rect area)
@@ -177,6 +180,15 @@ void Stage::LoadObjectsWithin(Rect area)
 	auto &objectCollection = mapManager.GetMapObjectsInArea(currentMap, area);
 	
 	grid->PopulateObjects(objectCollection);
+
+	for (auto const &spawnArea : stageObject->spawnAreas)
+	{
+		if (area.Contains((Rect)spawnArea->GetBoundingBox()))
+			spawnArea->GetBody().Enabled(true);
+		else
+			spawnArea->GetBody().Enabled(false);
+	}
+
 	camera->SetMoveArea(area);
 }
 
@@ -204,13 +216,12 @@ void Stage::Reset()
 
 void Stage::UpdateGameObjects(UpdateData &updateData)
 {
-	player->Update(updateData);
 	grid->Update(updateData);
 }
 
 void Stage::UpdateGameplay(UpdateData &updateData)
 {
-	devTool->Update(updateData, *grid);
+	devTool->Update(updateData);
 	camera->LookAt(player->GetOriginPosition(), Scrolling::Horizontally);
 	UpdateGameObjects(updateData);
 	data->timeLeft.CountDown();
@@ -223,6 +234,7 @@ void Stage::DrawGameplay(SpriteExtensions &spriteBatch)
 
 	auto existedBlocks = std::vector<GameObject*>{};
 
+	// TODO: divide big block into smaller blocks so grid can consume it
 	grid->GetCellsFromBoundingBox(camera->GetBounds(), [&](CollisionCell &cell, int col, int row)
 	{
 		auto &collisionObject = cell.GetObjects();
@@ -255,6 +267,9 @@ void Stage::DrawGameplay(SpriteExtensions &spriteBatch)
 	});
 
 	player->Draw(spriteBatch);
+
+	for (auto const &spawnArea : stageObject->spawnAreas)
+		spawnArea->Draw(spriteBatch);
 
 	for (auto const &fgObject : stageObject->foregroundObjects)
 		fgObject->Draw(spriteBatch);
@@ -343,7 +358,7 @@ std::unique_ptr<Cutscene> Stage::ConstructCutscene(GameState gameState)
 			return std::make_unique<NextMapCutscene>(*this, content);
 
 		case GameState::NEXT_ROOM_CUTSCENE:
-			return std::make_unique<NextRoomCutscene>(*this, *grid, *player);
+			return std::make_unique<NextRoomCutscene>(*this, *stageObject, *grid, *player);
 
 		case GameState::RESET_STAGE_CUTSCENE:
 			return std::make_unique<ResetCutscene>(*this, content);

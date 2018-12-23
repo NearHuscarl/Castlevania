@@ -218,14 +218,14 @@ void GameObject::SwitchFacing()
 		SetFacing(Facing::Left);
 }
 
-CollisionUnit GameObject::GetCollisionUnit()
+CollisionGridData GameObject::GetCollisionGridData()
 {
-	return unit;
+	return collisionGridData;
 }
 
-void GameObject::SetCollisionUnit(CollisionUnit unit)
+void GameObject::SetCollisionGridData(CollisionGridData data)
 {
-	this->unit = unit;
+	collisionGridData = data;
 }
 
 void GameObject::Attach(CollisionGrid *grid)
@@ -308,9 +308,6 @@ void GameObject::LoadContent(ContentManager &content)
 
 void GameObject::Update(UpdateData &updateData)
 {
-	if (!updateData.viewport.TouchesOrIntersects(GetFrameRect())) // TODO: remove after using collision grid
-		return;
-
 	auto collisionObjects = updateData.collisionObjects;
 
 	if (controlSystem != nullptr)

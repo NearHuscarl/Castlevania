@@ -407,6 +407,7 @@
     <ClInclude Include="Castlevania\Scenes\Stages\Stage.h" />
     <ClInclude Include="Castlevania\Utilities\CollisionGrid.h" />
     <ClInclude Include="Castlevania\Utilities\CollisionCell.h" />
+    <ClInclude Include="Castlevania\Utilities\CollisionGridData.h" />
     <ClInclude Include="Castlevania\Utilities\CppExtensions.h" />
     <ClInclude Include="Castlevania\Utilities\CollisionObject.h" />
     <ClInclude Include="Castlevania\Utilities\IObserver.h" />

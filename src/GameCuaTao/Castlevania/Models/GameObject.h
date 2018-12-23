@@ -13,12 +13,12 @@
 #include "ObjectId.h"
 #include "Facing.h"
 #include "../Utilities/Subject.h"
+#include "../Utilities/CollisionGridData.h"
 
 namespace Castlevania
 {
 	struct UpdateData;
 	class CollisionGrid;
-	using CollisionUnit = std::list<std::unique_ptr<GameObject>>::iterator;
 
 	enum class ObjectState
 	{
@@ -75,8 +75,8 @@ namespace Castlevania
 		void Move(Vector2 distance);
 		void SwitchFacing();
 
-		CollisionUnit GetCollisionUnit();
-		void SetCollisionUnit(CollisionUnit unit);
+		CollisionGridData GetCollisionGridData();
+		void SetCollisionGridData(CollisionGridData data);
 
 		void Attach(CollisionGrid *grid);
 		void Attach(std::unique_ptr<IControlSystem> system);
@@ -107,7 +107,7 @@ namespace Castlevania
 		Body body;
 
 		CollisionGrid *collisionGrid;
-		CollisionUnit unit;
+		CollisionGridData collisionGridData;
 		std::vector<IReceiver*> components;
 
 		std::unique_ptr<IControlSystem> controlSystem;

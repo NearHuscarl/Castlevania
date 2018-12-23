@@ -10,17 +10,17 @@
 
 namespace Castlevania
 {
-	class GameplayScene;
+	class Stage;
 
 	class DevTool
 	{
 	public:
-		DevTool(GameplayScene &gameplayScene, Camera &camera);
+		DevTool(Stage &stage);
 
 		static bool IsDebugging;
 
 		void LoadContent(ContentManager &content);
-		void Update(UpdateData &updatData, CollisionGrid &collisionGrid);
+		void Update(UpdateData &updatData);
 		void Draw(SpriteExtensions &spriteBatch);
 
 	private:
@@ -36,7 +36,7 @@ namespace Castlevania
 		std::vector<Map> maps;
 		static int currentMapIndex;
 
-		GameplayScene &gameplayScene;
+		Stage &stage;
 		ObjectFactory &objectFactory;
 		Player &player;
 		Camera &camera;
@@ -47,13 +47,14 @@ namespace Castlevania
 		Vector2 GetCurrentItemPosition();
 		std::unique_ptr<IEffect> CreateEffect(std::string name);
 		void UpdateEffects(GameTime gameTime);
+		void DrawCollisionGridInfo(SpriteExtensions &spriteBatch);
 
 		void SetCategory(std::string category);
 		void NextItem();
 		void PreviousItem();
 		
-		void SpawnItem(CollisionGrid &collisionGrid);
-		void SpawnObject(CollisionGrid &collisionGrid);
+		void SpawnItem();
+		void SpawnObject();
 		void SpawnEffect();
 
 		void NextMap();

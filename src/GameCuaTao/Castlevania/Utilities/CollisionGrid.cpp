@@ -75,9 +75,9 @@ void CollisionGrid::GetCellsFromBoundingBox(RectF boundingBox,
 
 void CollisionGrid::GetAllCells(std::function<void(CollisionCell &cell)> callback)
 {
-	for (auto column = 0; column <= width; column++)
+	for (auto column = 0; column < width; column++)
 	{
-		for (auto row = 0; row <= height; row++)
+		for (auto row = 0; row < height; row++)
 		{
 			callback(*cells[column][row]);
 		}
@@ -104,7 +104,7 @@ void CollisionGrid::PopulateObjects(ObjectCollection &objectCollection)
 
 void CollisionGrid::Add(std::unique_ptr<GameObject> object, CollisionObjectType type)
 {
-	//object->Attach(this);
+	object->Attach(this);
 
 	auto position = object->GetPosition();
 
@@ -154,23 +154,30 @@ void CollisionGrid::Move(GameObject &object, Vector2 distance)
 		return;
 	}
 
-	auto &oldCell = *cells[oldCellCol][oldCellRow];
-	auto &newCell = *cells[newCellCol][newCellRow];
-	auto newUnit = Transfer(oldCell.GetEntites(), newCell.GetEntites(), object.GetCollisionUnit());
+	auto collisionGridData = CollisionGridData{
+		true,
+		oldCellCol,
+		oldCellRow,
+		newCellCol,
+		newCellRow,
+		object.GetCollisionGridData().unit,
+	};
 
-	object.SetCollisionUnit(newUnit);
+	object.SetCollisionGridData(collisionGridData);
 }
 
 void CollisionGrid::Update(UpdateData &updateData)
 {
 	auto &player = *updateData.player;
-	auto collisionObjects = std::vector<GameObject*>{};
 	auto cellCol = (int)(player.GetPosition().x / cellWidth);
 	auto cellRow = (int)(player.GetPosition().y / cellHeight);
+	auto collisionObjects = GetCollisionObjects(cellCol, cellRow);
 
-	GetCollisionObjects(collisionObjects, cellCol, cellRow);
 	updateData.collisionObjects = &collisionObjects;
 	player.Update(updateData);
+
+	for (auto const &spawnArea : updateData.stageObject->spawnAreas)
+		spawnArea->Update(updateData);
 
 	GetCellsFromBoundingBox(updateData.viewport, [&](CollisionCell &cell, int col, int row)
 	{
@@ -194,19 +201,43 @@ void CollisionGrid::UpdateCell(int col, int row, UpdateData &updateData)
 	for (auto it = entities.begin(); it != std::next(entities.begin(), sizeThisTurn); std::advance(it, 1))
 	{
 		auto object = (*it).get();
-		auto collisionObjects = std::vector<GameObject*>{};
+		auto collisionObjects = GetCollisionObjects(col, row);
 
-		GetCollisionObjects(collisionObjects, col, row);
 		updateData.collisionObjects = &collisionObjects;
-
 		object->Update(updateData);
 	}
 
-	cell.GetObjects().RemoveDeadEntities();
+	// Defer modifying the list until now. Post processing code walk the list
+	// again to remove dead objects or move objects to another cell
+	for (auto it = entities.end(); it != entities.begin(); )
+	{
+		std::advance(it, -1);
+		auto object = (*it).get();
+
+		if (object->GetState() == ObjectState::DEAD)
+		{
+			it = entities.erase(it);
+			continue;
+		}
+
+		auto data = object->GetCollisionGridData();
+
+		if (data.moveToNextCell)
+		{
+			auto &oldCell = *cells[data.oldCellCol][data.oldCellRow];
+			auto &newCell = *cells[data.newCellCol][data.newCellRow];
+			
+			it = Transfer(oldCell.GetEntites(), newCell.GetEntites(), data.unit);
+			data.moveToNextCell = false;
+			object->SetCollisionGridData(data);
+		}
+	}
 }
 
-void CollisionGrid::GetCollisionObjects(std::vector<GameObject*> &collisionObjects, int col, int row)
+std::vector<GameObject*> CollisionGrid::GetCollisionObjects(int col, int row)
 {
+	auto collisionObjects = std::vector<GameObject*>{};
+
 	if (col > 0 && row > 0)	                 GetObjectsFromCell(collisionObjects, col - 1, row - 1);
 	if (col > 0)				                 GetObjectsFromCell(collisionObjects, col - 1, row    );
 	if (col > 0 && row < height - 1)         GetObjectsFromCell(collisionObjects, col - 1, row + 1);
@@ -216,6 +247,8 @@ void CollisionGrid::GetCollisionObjects(std::vector<GameObject*> &collisionObjec
 	if (col < width - 1 && row > 0)          GetObjectsFromCell(collisionObjects, col + 1, row - 1);
 	if (col < width - 1)                     GetObjectsFromCell(collisionObjects, col + 1, row    );
 	if (col < width - 1 && row < height - 1) GetObjectsFromCell(collisionObjects, col + 1, row + 1);
+
+	return collisionObjects;
 }
 
 void CollisionGrid::GetObjectsFromCell(std::vector<GameObject*> &collisionObjects, int col, int row)
@@ -228,7 +261,7 @@ void CollisionGrid::GetObjectsFromCell(std::vector<GameObject*> &collisionObject
 	auto &entities = cellObjects.entities;
 	auto &staticObjects = cellObjects.staticObjects;
 
-	for (auto &block : blocks)
+	for (auto &block : blocks) // TODO: divide big block into smaller blocks so grid can consume it
 	{
 		auto existed = false;
 

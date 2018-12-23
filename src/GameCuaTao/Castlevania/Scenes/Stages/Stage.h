@@ -81,5 +81,7 @@ namespace Castlevania
 		void ProcessMessage(int message);
 
 		std::unique_ptr<Cutscene> ConstructCutscene(GameState gameState);
+
+		friend class DevTool;
 	};
 }

@@ -31,7 +31,7 @@ void CollisionCell::AddStaticObject(std::unique_ptr<GameObject> object)
 void CollisionCell::AddObject(UGameObjects &objects, std::unique_ptr<GameObject> newObject)
 {
 	auto newUnit = objects.insert(objects.end(), std::move(newObject));
-	objects.back()->SetCollisionUnit(newUnit);
+	objects.back()->SetCollisionGridData(CollisionGridData{ false, 0, 0, 0, 0, newUnit });
 }
 
 void CollisionCell::AddSharedObject(SGameObjects &objects, std::shared_ptr<GameObject> newObject)

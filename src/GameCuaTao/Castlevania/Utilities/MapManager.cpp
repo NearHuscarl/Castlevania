@@ -59,13 +59,30 @@ std::unique_ptr<StageObject> MapManager::GetStageObjects(Map name)
 		auto typeName = properties.at("type");
 		auto type = string2EntityType.at(typeName);
 
-		if (type != ObjectId::StageArea)
-			continue;
-
 		auto boundingBox = GetMapObjectBoundingBox(properties, MapObjectType::Rectangle);
-		auto object = objectFactory.CreateRectangleObject(type, boundingBox);
 
-		stageObject->stageAreas.push_back(std::move(object));
+		if (type == ObjectId::StageArea)
+		{
+			auto object = objectFactory.CreateRectangleObject(type, boundingBox);
+			stageObject->stageAreas.push_back(std::move(object));
+		}
+		else if (type == ObjectId::SpawnArea)
+		{
+			auto spawnObject = string2EntityType.at(properties.at("SpawnObject"));
+			auto object = objectFactory.CreateSpawnArea(spawnObject, boundingBox);
+
+			auto spawnGroup = GetValueOrDefault(properties, "SpawnGroup", "");
+
+			if (!spawnGroup.empty())
+				object->SetGroupCountChances(spawnGroup);
+
+			auto spawnDirection = GetValueOrDefault(properties, "SpawnDirection", "");
+
+			if (!spawnDirection.empty())
+				object->SetDirectionChances(spawnDirection);
+
+			stageObject->spawnAreas.push_back(std::move(object));
+		}
 	}
 
 	for (auto properties : objectGroups[FOREGROUND])
@@ -100,7 +117,8 @@ ObjectCollection MapManager::GetMapObjectsInArea(Map name, RectF area)
 	for (auto properties : objectGroups[TRIGGER])
 	{
 		auto boundingBox = GetMapObjectBoundingBox(properties, MapObjectType::Rectangle);
-		if (!area.TouchesOrIntersects(boundingBox) && area != RectF::Empty())
+		auto position = Vector2{ boundingBox.left, boundingBox.top };
+		if (!area.Contains(position) && area != RectF::Empty())
 			continue;
 
 		auto facing = string2Facing.at(GetValueOrDefault(properties, "Facing", "None"));
@@ -122,12 +140,12 @@ ObjectCollection MapManager::GetMapObjectsInArea(Map name, RectF area)
 	for (auto properties : objectGroups[ENTITY])
 	{
 		auto boundingBox = GetMapObjectBoundingBox(properties, MapObjectType::Tile);
-		if (!area.TouchesOrIntersects(boundingBox) && area != RectF::Empty())
+		auto position = Vector2{ boundingBox.X(), boundingBox.Y() };
+		if (!area.Contains(position) && area != RectF::Empty())
 			continue;
 
 		auto object = ConstructObject(properties);
 		auto facing = string2Facing.at(GetValueOrDefault(properties, "Facing", "Right"));
-		auto position = Vector2{ boundingBox.X(), boundingBox.Y() };
 
 		object->SetPosition(position);
 		object->SetFacing(facing);
@@ -151,41 +169,24 @@ ObjectCollection MapManager::GetMapObjectsInArea(Map name, RectF area)
 		auto typeName = properties.at("type");
 		auto type = string2EntityType.at(typeName);
 		auto boundingBox = GetMapObjectBoundingBox(properties, MapObjectType::Rectangle);
+		auto position = Vector2{ boundingBox.X(), boundingBox.Y() };
 
-		if (!area.TouchesOrIntersects(boundingBox) && area != Rect::Empty())
+		if (!area.Contains(position) && area != Rect::Empty())
 			continue;
 
 		auto object = std::unique_ptr<GameObject>{};
 
 		switch (type)
 		{
-			case ObjectId::SpawnArea:
-			{
-				auto spawnObject = string2EntityType.at(properties.at("SpawnObject"));
-				auto object = objectFactory.CreateSpawnArea(spawnObject, boundingBox);
-
-				auto spawnGroup = GetValueOrDefault(properties, "SpawnGroup", "");
-
-				if (!spawnGroup.empty())
-					object->SetGroupCountChances(spawnGroup);
-
-				auto spawnDirection = GetValueOrDefault(properties, "SpawnDirection", "");
-
-				if (!spawnDirection.empty())
-					object->SetDirectionChances(spawnDirection);
-
-				objectCollection.entities.push_back(std::move(object));
-				break;
-			}
-
 			case ObjectId::WaterArea:
 				object = objectFactory.CreateWaterArea(boundingBox);
 				objectCollection.entities.push_back(std::move(object));
 				break;
 
 
-				// Dump area objects that dont have Update() method
+			// Dump area objects that dont have Update() method
 			case ObjectId::StageArea:
+			case ObjectId::SpawnArea:
 				break;
 
 			default: // ObjectId::BossFightArea

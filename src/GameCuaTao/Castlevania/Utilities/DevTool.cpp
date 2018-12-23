@@ -4,7 +4,7 @@
 #include "TypeConverter.h"
 #include "CppExtensions.h"
 #include "../Scenes/GameplayScene.h"
-#include "../Scenes/SceneManager.h"
+#include "../Models/Systems/Rendering/RenderingSystem.h"
 
 using namespace Castlevania;
 
@@ -18,18 +18,18 @@ constexpr auto POWERUP = "POWERUP";
 constexpr auto EFFECT = "EFFECT";
 constexpr auto OTHER = "OTHER";
 
-DevTool::DevTool(GameplayScene &gameplayScene, Camera &camera) :
-	gameplayScene{ gameplayScene },
-	objectFactory{ gameplayScene.GetSceneManager().GetFactory() },
-	player{ *gameplayScene.GetPlayer() },
-	camera{ camera }
+DevTool::DevTool(Stage &stage) :
+	stage{ stage },
+	objectFactory{ stage.objectFactory },
+	player{ *stage.player },
+	camera{ *stage.camera }
 {
 }
 
 void DevTool::LoadContent(ContentManager &content)
 {
-	debugFont = content.Load<SpriteFont>("Fonts/DebugFont.font.xml");
 	effectFactory = std::make_unique<EffectFactory>(content);
+	debugFont = content.Load<SpriteFont>("Fonts/DebugFont.font.xml");
 
 	auto zombieSprite = content.Load<Spritesheet>("Characters/Enemies/Zombie.atlas.xml")->begin()->second;
 	auto pantherSprite = content.Load<Spritesheet>("Characters/Enemies/Panther.atlas.xml")->begin()->second;
@@ -98,10 +98,14 @@ void DevTool::LoadContent(ContentManager &content)
 
 	category = items.begin()->first;
 
-	maps = std::vector<Map>{ Map::COURTYARD, Map::GREAT_HALL, Map::UNDERGROUND, Map::PLAYGROUND };
+	maps = std::vector<Map>{
+		Map::COURTYARD,
+		Map::GREAT_HALL,
+		Map::UNDERGROUND,
+		Map::PLAYGROUND };
 }
 
-void DevTool::Update(UpdateData &updatData, CollisionGrid &collisionGrid)
+void DevTool::Update(UpdateData &updatData)
 {
 	UpdateEffects(updatData.gameTime);
 
@@ -160,7 +164,7 @@ void DevTool::Update(UpdateData &updatData, CollisionGrid &collisionGrid)
 	else if (InputHelper::IsScrollingUp())
 		NextItem();
 	else if (InputHelper::IsMouseReleased(MouseButton::Left))
-		SpawnItem(collisionGrid);
+		SpawnItem();
 	else if (InputHelper::IsMouseReleased(MouseButton::Right))
 		currentFacing = Opposite(currentFacing);
 }
@@ -181,6 +185,7 @@ void DevTool::Draw(SpriteExtensions &spriteBatch)
 	
 	sprite.SetEffect(effect);
 
+	DrawCollisionGridInfo(spriteBatch);
 	spriteBatch.DrawString(*debugFont, itemName, textPosition, Color::White());
 	spriteBatch.Draw(sprite, objectPosition);
 }
@@ -217,6 +222,39 @@ void DevTool::UpdateEffects(GameTime gameTime)
 	}
 }
 
+void DevTool::DrawCollisionGridInfo(SpriteExtensions &spriteBatch)
+{
+	auto &grid = *stage.grid;
+	
+	grid.GetCellsFromBoundingBox(camera.GetBounds(), [&](CollisionCell &cell, int col, int row)
+	{
+		auto &objects = cell.GetObjects();
+		auto gridInfoText = std::stringstream{};
+
+		// another O(n) from grid.GetCollisionObjects(), but it's debugging code so...
+		gridInfoText
+			<< "B:" << std::to_string(objects.blocks.size()) << "\n"
+			<< "S:" << std::to_string(objects.staticObjects.size()) << "\n"
+			<< "E:" << std::to_string(objects.entities.size()) << "\n"
+			<< "CoObjs:" << std::to_string(grid.GetCollisionObjects(col, row).size());
+
+		auto cellBbox = cell.GetBoundingBox();
+		auto gridInfoTextPosition = Vector2{
+			cellBbox.X() + cellBbox.Width() / 2 - 10,
+			cellBbox.Y() + cellBbox.Height() / 2 - 20 };
+
+		auto rightLine = RectF{ cellBbox.right, cellBbox.top, 1, cellBbox.Height() };
+		auto bottomLine = RectF{ cellBbox.left, cellBbox.bottom, cellBbox.Width(), 1 };
+		auto textBackground = RectF{ gridInfoTextPosition.x - 5, gridInfoTextPosition.y - 2, 70, 60 };
+
+		RenderingSystem::DrawBoundingBox(spriteBatch, rightLine, Color::DimGray());
+		RenderingSystem::DrawBoundingBox(spriteBatch, bottomLine, Color::DimGray());
+		RenderingSystem::DrawBoundingBox(spriteBatch, textBackground, Color::DimGray() * 0.7);
+		
+		spriteBatch.DrawString(*debugFont, gridInfoText.str(), gridInfoTextPosition, Color::White());
+	});
+}
+
 void DevTool::SetCategory(std::string category)
 {
 	this->category = category;
@@ -235,15 +273,15 @@ void DevTool::PreviousItem()
 		currentItemIndex = items[category].size() - 1;
 }
 
-void DevTool::SpawnItem(CollisionGrid &collisionGrid)
+void DevTool::SpawnItem()
 {
 	if (category == EFFECT)
 		SpawnEffect();
 	else
-		SpawnObject(collisionGrid);
+		SpawnObject();
 }
 
-void DevTool::SpawnObject(CollisionGrid &collisionGrid)
+void DevTool::SpawnObject()
 {
 	auto type = string2EntityType.at(items[category][currentItemIndex].first);
 	auto objectPosition = GetCurrentItemPosition();
@@ -290,7 +328,7 @@ void DevTool::SpawnObject(CollisionGrid &collisionGrid)
 
 	object->SetPosition(objectPosition);
 	object->SetFacing(currentFacing);
-	collisionGrid.Add(std::move(object), CollisionObjectType::Entity);
+	stage.grid->Add(std::move(object), CollisionObjectType::Entity);
 }
 
 void DevTool::SpawnEffect()
@@ -307,7 +345,7 @@ void DevTool::NextMap()
 	if (++currentMapIndex > (int)maps.size() - 1)
 		currentMapIndex = 0;
 
-	gameplayScene.NextStage(maps[currentMapIndex]);
+	stage.gameplayScene.NextStage(maps[currentMapIndex]);
 }
 
 void DevTool::PreviousMap()
@@ -315,5 +353,5 @@ void DevTool::PreviousMap()
 	if (--currentMapIndex < 0)
 		currentMapIndex = maps.size() - 1;
 
-	gameplayScene.NextStage(maps[currentMapIndex]);
+	stage.gameplayScene.NextStage(maps[currentMapIndex]);
 }

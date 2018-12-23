@@ -39,7 +39,7 @@ namespace Castlevania
 		void Update(UpdateData &updateData);
 		void UpdateCell(int col, int row, UpdateData &updateData);
 
-		void GetCollisionObjects(std::vector<GameObject*> &collisionObjects, int col, int row);
+		std::vector<GameObject*> GetCollisionObjects(int col, int row);
 		void GetObjectsFromCell(std::vector<GameObject*> &collisionObjects, int col, int row);
 
 	private:

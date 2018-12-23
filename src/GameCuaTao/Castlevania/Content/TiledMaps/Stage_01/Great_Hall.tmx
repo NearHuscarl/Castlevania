@@ -459,7 +459,7 @@
   <object id="9" name="Entrypoint1" type="Position" gid="51" x="64" y="320" width="60" height="66"/>
   <object id="110" name="Underground_02" type="Position" gid="2147483658" x="3808" y="351" width="60" height="66"/>
   <object id="111" name="Underground_01" type="Position" gid="2147483658" x="3168" y="351" width="60" height="66"/>
-  <object id="120" name="Entrypoint" type="Position" gid="51" x="5043.41" y="318" width="60" height="66"/>
+  <object id="120" name="Entrypoint" type="Position" gid="51" x="3939.41" y="126" width="60" height="66"/>
   <object id="121" name="Checkpoint_01" type="Position" gid="51" x="3151" y="128" width="60" height="66"/>
   <object id="122" name="Checkpoint_02" type="Position" gid="51" x="4169" y="128" width="60" height="66"/>
  </objectgroup>

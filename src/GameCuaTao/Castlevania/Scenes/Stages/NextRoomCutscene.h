@@ -9,7 +9,7 @@ namespace Castlevania
 	class NextRoomCutscene : public Cutscene
 	{
 	public:
-		NextRoomCutscene(Stage &stage, CollisionGrid &grid, Player &player);
+		NextRoomCutscene(Stage &stage, StageObject &stageObject, CollisionGrid &grid, Player &player);
 
 		Door &GetDoor();
 		void Update(UpdateData &updateData) override;

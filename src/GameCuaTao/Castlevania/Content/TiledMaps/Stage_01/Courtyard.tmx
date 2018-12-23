@@ -69,12 +69,12 @@
    <properties>
     <property name="Enabled" type="bool" value="false"/>
     <property name="Map" value="GreatHall"/>
-    <property name="SpawnPoint" value="Checkpoint"/>
+    <property name="SpawnPoint" value="Entrypoint"/>
    </properties>
   </object>
  </objectgroup>
  <objectgroup id="8" name="Locations">
   <object id="14" name="Entrypoint1" type="Position" gid="4" x="69" y="288" width="60" height="66"/>
-  <object id="47" name="Entrypoint" type="Position" gid="4" x="1021" y="136" width="60" height="66"/>
+  <object id="47" name="Entrypoint" type="Position" gid="4" x="1021" y="288" width="60" height="66"/>
  </objectgroup>
 </map>

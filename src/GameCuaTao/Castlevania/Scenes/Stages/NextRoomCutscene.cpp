@@ -17,7 +17,7 @@ enum class NextRoomCutscene::State
 	VIEWPORT_MOVING_SECOND_HALF,
 };
 
-NextRoomCutscene::NextRoomCutscene(Stage &stage, CollisionGrid &grid, Player &player) : Cutscene{ stage }
+NextRoomCutscene::NextRoomCutscene(Stage &stage, StageObject &stageObject, CollisionGrid &grid, Player &player) : Cutscene{ stage }
 {
 	camera = stage.GetCamera();
 	camera->SetMoveArea(Rect::Empty()); // camera can move freely in cutscene
@@ -42,6 +42,9 @@ NextRoomCutscene::NextRoomCutscene(Stage &stage, CollisionGrid &grid, Player &pl
 				it = entities.erase(it);
 		}
 	});
+
+	for (auto const &spawnArea : stageObject.spawnAreas)
+		spawnArea->GetBody().Enabled(false);
 
 	SetupCutscene();
 }

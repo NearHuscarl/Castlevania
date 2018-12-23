@@ -17,19 +17,5 @@ namespace Castlevania
 
 		// Regular game objects: enemy, candle, powerup...
 		UGameObjects entities;
-
-		void RemoveDeadEntities()
-		{
-			for (auto it = entities.end(); it != entities.begin(); )
-			{
-				std::advance(it, -1);
-				auto object = (*it).get();
-
-				if (object->GetState() == ObjectState::DEAD)
-				{
-					it = entities.erase(it);
-				}
-			}
-		};
 	};
 }

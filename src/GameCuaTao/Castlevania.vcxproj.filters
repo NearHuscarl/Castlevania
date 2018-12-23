@@ -1091,6 +1091,9 @@
     <ClInclude Include="Castlevania\Models\GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Castlevania\Utilities\CollisionGridData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
