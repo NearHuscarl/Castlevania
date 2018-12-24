@@ -9,7 +9,6 @@ namespace Castlevania
 	{
 	public:
 		DoorRenderingSystem(Door &parent, std::string animationPath);
-		GameObject &GetParent() override;
 
 	private:
 		Door &parent;

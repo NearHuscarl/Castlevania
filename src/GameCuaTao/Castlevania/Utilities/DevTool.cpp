@@ -41,7 +41,9 @@ void DevTool::LoadContent(ContentManager &content)
 	auto blueMoneyBagSprite = content.Load<Spritesheet>("Items/Money_Bag.atlas.xml")->at("money_bag_blue");
 	auto whiteMoneyBagSprite = content.Load<Spritesheet>("Items/Money_Bag.atlas.xml")->at("money_bag_white");
 	auto redMoneyBagSprite = content.Load<Spritesheet>("Items/Money_Bag.atlas.xml")->at("money_bag_red");
+	auto axeItemSprite = content.Load<Texture>("Items/Axe_Item.png");
 	auto daggerItemSprite = content.Load<Texture>("Items/Dagger.png");
+	auto holyWaterItemSprite = content.Load<Texture>("Items/Holy_Water_Item.png");
 	auto largeHeartSprite = content.Load<Texture>("Items/Large_Heart.png");
 	auto smallHeartSprite = content.Load<Texture>("Items/Small_Heart.png");
 	auto whipPowerupSprite = content.Load<Texture>("Items/Whip_Powerup.png");
@@ -74,7 +76,9 @@ void DevTool::LoadContent(ContentManager &content)
 				std::make_pair<std::string, Sprite>("WhiteMoneyBag", whiteMoneyBagSprite),
 				std::make_pair<std::string, Sprite>("RedMoneyBag", redMoneyBagSprite),
 				std::make_pair<std::string, Sprite>("FlashingMoneyBag", blueMoneyBagSprite),
+				std::make_pair<std::string, Sprite>("AxeItem", axeItemSprite),
 				std::make_pair<std::string, Sprite>("DaggerItem", daggerItemSprite),
+				std::make_pair<std::string, Sprite>("HolyWaterItem", holyWaterItemSprite),
 				std::make_pair<std::string, Sprite>("LargeHeart", largeHeartSprite),
 				std::make_pair<std::string, Sprite>("SmallHeart", smallHeartSprite),
 				std::make_pair<std::string, Sprite>("WhipPowerup", whipPowerupSprite),
@@ -249,7 +253,7 @@ void DevTool::DrawCollisionGridInfo(SpriteExtensions &spriteBatch)
 
 		RenderingSystem::DrawBoundingBox(spriteBatch, rightLine, Color::DimGray());
 		RenderingSystem::DrawBoundingBox(spriteBatch, bottomLine, Color::DimGray());
-		RenderingSystem::DrawBoundingBox(spriteBatch, textBackground, Color::DimGray() * 0.7);
+		RenderingSystem::DrawBoundingBox(spriteBatch, textBackground, Color::DimGray() * 0.7f);
 		
 		spriteBatch.DrawString(*debugFont, gridInfoText.str(), gridInfoTextPosition, Color::White());
 	});

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Spritesheet TexturePath="Holy_Water.png">
+    <Sprite ID="holy_water_01">
+      <SpriteFrame Left="0" Top="0" Width="34" Height="30" />
+      <SpriteBoundary Left="9" Top="8" Width="16" Height="8" />
+    </Sprite>
+
+    <Sprite ID="holy_water_flame_01">
+      <SpriteFrame Left="34" Top="0" Width="34" Height="30" />
+      <SpriteBoundary Left="45" Top="0" Width="12" Height="30" />
+    </Sprite>
+
+    <Sprite ID="holy_water_flame_02">
+      <SpriteFrame Left="68" Top="0" Width="34" Height="30" />
+      <SpriteBoundary Left="79" Top="0" Width="12" Height="30" />
+    </Sprite>
+
+    <Sprite ID="holy_water_flame_03">
+      <SpriteFrame Left="102" Top="0" Width="34" Height="30" />
+      <SpriteBoundary Left="113" Top="0" Width="12" Height="30" />
+    </Sprite>
+
+    <Sprite ID="holy_water_flame_04">
+      <SpriteFrame Left="136" Top="0" Width="34" Height="30" />
+      <SpriteBoundary Left="147" Top="0" Width="12" Height="30" />
+    </Sprite>
+
+    <Sprite ID="holy_water_flame_05">
+      <SpriteFrame Left="170" Top="0" Width="34" Height="30" />
+      <SpriteBoundary Left="181" Top="0" Width="12" Height="30" />
+    </Sprite>
+  </Spritesheet>
+
+</GameContent>

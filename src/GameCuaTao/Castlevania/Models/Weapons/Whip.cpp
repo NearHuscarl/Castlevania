@@ -34,6 +34,10 @@ int Whip::GetAttack()
 	return HITPOINTS.at(level);
 }
 
+void Whip::SetAttack(int attack)
+{
+}
+
 GameObject &Whip::GetOwner()
 {
 	return owner;

@@ -5,18 +5,23 @@
 
 namespace Castlevania
 {
-	class DaggerResponseSystem : public ICollisionResponseSystem
+	class Enemy;
+
+	class WeaponResponseSystem : public ICollisionResponseSystem
 	{
 	public:
-		DaggerResponseSystem(GameObject &parent);
+		WeaponResponseSystem(GameObject &parent, bool destroyOnHit);
 
-		virtual void Receive(int message) override {};
+		virtual void Receive(int message) override;
 		void Update(UpdateData &updateData) override;
 
 	private:
 		GameObject &parent;
+		std::vector<Enemy*> hitEnemies;
+		bool destroyOnHit;
 
 		void OnCollideWithBrazier(CollisionResult &result);
 		void OnCollideWithEnemy(CollisionResult &result, Player &player);
+		void OnCollideWithFireball(CollisionResult &result);
 	};
 }

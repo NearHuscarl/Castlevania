@@ -4,8 +4,6 @@
 
 namespace Castlevania
 {
-	class GameObject;
-
 	// Basic movement system: distance = velocity * deltaTime
 	class SimpleMovementSystem : public MovementSystem
 	{

@@ -34,6 +34,7 @@ namespace Castlevania
 		// Weapons
 		Axe,
 		Dagger,
+		HolyWater,
 		Boomerang,
 		Fireball, // from Fishman
 		Whip,
@@ -52,7 +53,7 @@ namespace Castlevania
 		BoomerangItem,
 		Cross,
 		DaggerItem,
-		HolyWater,
+		HolyWaterItem,
 		LargeHeart,
 		SmallHeart,
 		InvisibleJar,

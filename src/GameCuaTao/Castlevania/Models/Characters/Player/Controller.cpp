@@ -151,15 +151,8 @@ bool Controller::IsHoldingUpAndDown()
 void Controller::Throw()
 {
 	auto weaponItem = player.GetSubWeapon();
+	auto subWeapon = objectFactory.CreateSubWeapon(weaponItem);
 
-	switch (weaponItem)
-	{
-		case ObjectId::DaggerItem:
-		{
-			auto weapon = objectFactory.CreateDagger();
-			
-			player.Throw(std::move(weapon));
-			break;
-		}
-	}
+	if (subWeapon != nullptr)
+		player.Throw(std::move(subWeapon));
 }

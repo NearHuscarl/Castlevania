@@ -1,15 +1,16 @@
-#include "DaggerResponseSystem.h"
+#include "PoisonResponseSystem.h"
 #include "../../Models/UpdateData.h"
-#include "../Characters/Enemies/Enemy.h"
 #include "../Items/Container.h"
+#include "../Items/Fireball.h"
+#include "../Characters/Enemies/Enemy.h"
 
 using namespace Castlevania;
 
-DaggerResponseSystem::DaggerResponseSystem(GameObject &parent) : parent{ parent }
+PoisonResponseSystem::PoisonResponseSystem(RangedWeapon &parent) : parent{ parent }
 {
 }
 
-void DaggerResponseSystem::Update(UpdateData &updateData)
+void PoisonResponseSystem::Update(UpdateData &updateData)
 {
 	auto collisionData = parent.GetBody().GetCollisionData();
 
@@ -33,26 +34,35 @@ void DaggerResponseSystem::Update(UpdateData &updateData)
 			case ObjectId::GiantBat:
 				OnCollideWithEnemy(result, *updateData.player);
 				break;
+
+			case ObjectId::Fireball:
+				OnCollideWithFireball(result);
+				break;
 		}
 	}
 }
 
-void DaggerResponseSystem::OnCollideWithBrazier(CollisionResult &result)
+void PoisonResponseSystem::OnCollideWithBrazier(CollisionResult &result)
 {
 	auto &brazier = dynamic_cast<Container&>(result.collidedObject);
 
 	brazier.OnBeingHit();
-	parent.Destroy();
 }
 
-void DaggerResponseSystem::OnCollideWithEnemy(CollisionResult &result, Player &player)
+void PoisonResponseSystem::OnCollideWithEnemy(CollisionResult &result, Player &player)
 {
 	auto &enemy = dynamic_cast<Enemy&>(result.collidedObject);
 
-	enemy.TakeDamage(2); // TODO: inherit IAttackable
+	enemy.TakeDamage(parent.GetAttack());
 
 	if (enemy.GetState() == ObjectState::DYING)
 		player.AddExp(enemy.GetExp());
+}
 
-	parent.Destroy();
+void PoisonResponseSystem::OnCollideWithFireball(CollisionResult &result)
+{
+	auto &fireball = dynamic_cast<Fireball&>(result.collidedObject);
+
+	fireball.GetBody().Enabled(false);
+	fireball.SetState(ObjectState::DYING);
 }

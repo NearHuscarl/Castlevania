@@ -4,14 +4,9 @@
 using namespace Castlevania;
 
 DoorRenderingSystem::DoorRenderingSystem(Door &parent, std::string animationPath) :
-	AnimationRenderingSystem{ animationPath },
+	AnimationRenderingSystem{ parent, animationPath },
 	parent{ parent }
 {
-}
-
-GameObject &DoorRenderingSystem::GetParent()
-{
-	return parent;
 }
 
 void DoorRenderingSystem::OnMoveStateChanged()

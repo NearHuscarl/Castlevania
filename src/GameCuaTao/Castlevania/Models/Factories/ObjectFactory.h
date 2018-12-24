@@ -9,7 +9,7 @@
 #include "../Items/Container.h"
 #include "../Items/Door.h"
 #include "../Items/Fireball.h"
-#include "../Weapons/Whip.h"
+#include "../Weapons/HolyWater.h"
 #include "../Items/MoneyBag.h"
 #include "../Items/Powerup.h"
 #include "../Spawners/SpawnArea.h"
@@ -46,7 +46,10 @@ namespace Castlevania
 
 		std::unique_ptr<Whip> CreateWhip(GameObject &gameObject);
 		std::unique_ptr<Whip> CreateFlashingWhip(GameObject &gameObject);
+		std::unique_ptr<RangedWeapon> CreateSubWeapon(ObjectId type, Vector2 position = Vector2::Zero());
+		std::unique_ptr<RangedWeapon> CreateAxe(Vector2 position = Vector2::Zero());
 		std::unique_ptr<RangedWeapon> CreateDagger(Vector2 position = Vector2::Zero());
+		std::unique_ptr<HolyWater> CreateHolyWater(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Fireball> CreateFireball(Vector2 position = Vector2::Zero());
 
 		std::unique_ptr<Powerup> CreatePowerup(ObjectId type, Vector2 position = Vector2::Zero());
@@ -55,7 +58,9 @@ namespace Castlevania
 		std::unique_ptr<MoneyBag> CreateWhiteMoneyBag(Vector2 position = Vector2::Zero());
 		std::unique_ptr<MoneyBag> CreateRedMoneyBag(Vector2 position = Vector2::Zero());
 		std::unique_ptr<MoneyBag> CreateFlashingMoneyBag(Vector2 position = Vector2::Zero());
+		std::unique_ptr<Powerup> CreateAxeItem(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Powerup> CreateDaggerItem(Vector2 position = Vector2::Zero());
+		std::unique_ptr<Powerup> CreateHolyWaterItem(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Powerup> CreateLargeHeart(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Powerup> CreateSmallHeart(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Powerup> CreateWhipPowerup(Vector2 position = Vector2::Zero());
@@ -71,6 +76,7 @@ namespace Castlevania
 		std::unique_ptr<EffectFactory> effectFactory;
 
 		void ReadEnemyConfig(Enemy &enemy, Dictionary stats);
+		void ReadSubWeaponConfig(RangedWeapon &weapon, Dictionary stats);
 		void ReadSpawnAreaConfig(SpawnArea &spawnArea, Dictionary stats);
 
 		std::unique_ptr<SpawnArea> ConstructSpawnArea(ObjectId type);

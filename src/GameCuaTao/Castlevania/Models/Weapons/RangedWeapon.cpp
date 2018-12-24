@@ -3,16 +3,30 @@
 
 using namespace Castlevania;
 
-constexpr auto THROW_SPEED = 700.0f;
-
 RangedWeapon::RangedWeapon(ObjectId type) : GameObject{ type }
 {
-	owner = nullptr;
+	this->owner = nullptr;
+	this->throwVelocity = Vector2{ 500, 0 };
 }
 
 void RangedWeapon::SetOwner(GameObject *owner)
 {
 	this->owner = owner;
+}
+
+void RangedWeapon::SetThrowVelocity(Vector2 velocity)
+{
+	throwVelocity = velocity;
+}
+
+int RangedWeapon::GetAttack()
+{
+	return attack;
+}
+
+void RangedWeapon::SetAttack(int attack)
+{
+	this->attack = attack;
 }
 
 void RangedWeapon::Update(UpdateData &updateData)
@@ -41,8 +55,10 @@ void RangedWeapon::Throw()
 	};
 	SetPosition(position);
 	
+	velocity = throwVelocity;
+	
 	if (facing == Facing::Right)
-		velocity.x = THROW_SPEED;
+		velocity.x = std::abs(velocity.x);
 	else
-		velocity.x = -THROW_SPEED;
+		velocity.x = -std::abs(velocity.x);
 }

@@ -38,7 +38,7 @@ namespace Castlevania
 		void OnCollideWithHeart(CollisionResult &result);
 		void OnCollideWithSmallHeart(CollisionResult &result);
 		void OnCollideWithWhipPowerup(CollisionResult &result);
-		void OnCollideWithDaggerItem(CollisionResult &result);
+		void OnCollideWithSubWeaponItem(CollisionResult &result);
 		void OnCollideWithDoor(CollisionResult &result, ResponseResult &responseResult);
 
 		void OnCollideWithStairUpTrigger(Trigger &trigger);

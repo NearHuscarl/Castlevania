@@ -3,7 +3,8 @@
 
 using namespace Castlevania;
 
-AnimationRenderingSystem::AnimationRenderingSystem(std::string spriteConfigPath)
+AnimationRenderingSystem::AnimationRenderingSystem(GameObject &parent, std::string spriteConfigPath) :
+	parent{ parent }
 {
 	this->spriteConfigPath = spriteConfigPath;
 }
@@ -11,6 +12,11 @@ AnimationRenderingSystem::AnimationRenderingSystem(std::string spriteConfigPath)
 Sprite &AnimationRenderingSystem::GetSprite()
 {
 	return *sprite;
+}
+
+GameObject &AnimationRenderingSystem::GetParent()
+{
+	return parent;
 }
 
 void AnimationRenderingSystem::LoadContent(ContentManager &content)

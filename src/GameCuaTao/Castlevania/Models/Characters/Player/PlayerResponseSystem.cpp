@@ -85,8 +85,10 @@ void PlayerResponseSystem::Update(UpdateData &updateData)
 				OnCollideWithWhipPowerup(result);
 				break;
 
+			case ObjectId::AxeItem:
 			case ObjectId::DaggerItem:
-				OnCollideWithDaggerItem(result);
+			case ObjectId::HolyWaterItem:
+				OnCollideWithSubWeaponItem(result);
 				break;
 
 			case ObjectId::Door:
@@ -332,12 +334,12 @@ void PlayerResponseSystem::OnCollideWithWhipPowerup(CollisionResult &result)
 	whipPowerup.Destroy();
 }
 
-void PlayerResponseSystem::OnCollideWithDaggerItem(CollisionResult &result)
+void PlayerResponseSystem::OnCollideWithSubWeaponItem(CollisionResult &result)
 {
-	auto &daggerItem = dynamic_cast<GameObject&>(result.collidedObject);
-	auto itemId = daggerItem.GetId();
+	auto &subWeaponItem = dynamic_cast<GameObject&>(result.collidedObject);
+	auto itemId = subWeaponItem.GetId();
 	
-	daggerItem.Destroy();
+	subWeaponItem.Destroy();
 	parent.SetSubWeapon(itemId);
 }
 

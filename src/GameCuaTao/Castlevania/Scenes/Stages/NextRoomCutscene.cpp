@@ -44,7 +44,10 @@ NextRoomCutscene::NextRoomCutscene(Stage &stage, StageObject &stageObject, Colli
 	});
 
 	for (auto const &spawnArea : stageObject.spawnAreas)
+	{
+		spawnArea->Deactivate();
 		spawnArea->GetBody().Enabled(false);
+	}
 
 	SetupCutscene();
 }

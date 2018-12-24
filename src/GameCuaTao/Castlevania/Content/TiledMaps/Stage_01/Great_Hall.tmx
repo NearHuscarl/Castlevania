@@ -158,7 +158,7 @@
   </object>
   <object id="44" name="Candle" type="Candle" gid="55" x="1590" y="34" width="16" height="32">
    <properties>
-    <property name="Item" value="LargeHeart"/>
+    <property name="Item" value="HolyWaterItem"/>
    </properties>
   </object>
   <object id="45" name="Candle" type="Candle" gid="55" x="1718" y="98" width="16" height="32">
@@ -273,7 +273,7 @@
   </object>
   <object id="67" name="Candle" type="Candle" gid="55" x="4790" y="226" width="16" height="32">
    <properties>
-    <property name="Item" value="LargeHeart"/>
+    <property name="Item" value="AxeItem"/>
    </properties>
   </object>
   <object id="68" name="Candle" type="Candle" gid="55" x="4664" y="290" width="16" height="32">
@@ -459,9 +459,9 @@
   <object id="9" name="Entrypoint2" type="Position" gid="51" x="64" y="320" width="60" height="66"/>
   <object id="110" name="Underground_02" type="Position" gid="2147483658" x="3808" y="351" width="60" height="66"/>
   <object id="111" name="Underground_01" type="Position" gid="2147483658" x="3168" y="351" width="60" height="66"/>
-  <object id="120" name="Entrypoint1" type="Position" gid="51" x="5043.41" y="318" width="60" height="66"/>
+  <object id="120" name="Entrypoint" type="Position" gid="51" x="5043.41" y="318" width="60" height="66"/>
   <object id="121" name="Checkpoint_01" type="Position" gid="51" x="3151" y="128" width="60" height="66"/>
   <object id="122" name="Checkpoint_02" type="Position" gid="51" x="4169" y="128" width="60" height="66"/>
-  <object id="125" name="Entrypoint" type="Position" gid="51" x="2944" y="124" width="60" height="66"/>
+  <object id="125" name="Entrypoint1" type="Position" gid="51" x="2944" y="124" width="60" height="66"/>
  </objectgroup>
 </map>

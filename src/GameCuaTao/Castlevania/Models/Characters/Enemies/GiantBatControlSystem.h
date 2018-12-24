@@ -33,6 +33,7 @@ namespace Castlevania
 		float GetSpeedRelativeToPlayerDistance();
 
 		void MoveRandomly();
+		void ClampMoveInArea();
 		Vector2 RandomDirection();
 	};
 }

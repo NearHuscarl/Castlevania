@@ -148,15 +148,17 @@ void CollisionGrid::Add(std::unique_ptr<GameObject> object, CollisionObjectType 
 void CollisionGrid::Move(GameObject &object, Vector2 distance)
 {
 	auto oldPosition = object.GetPosition();
+	auto oldBoundingBox = object.GetBoundingBox();
 	auto newPosition = oldPosition + distance;
+	auto newBoundingBox = object.GetBoundingBox();
 
 	object.SetPosition(newPosition);
 	
-	auto oldCellCol = (int)(oldPosition.x / cellWidth);
-	auto oldCellRow = (int)(oldPosition.y / cellHeight);
+	auto oldCellCol = (int)(oldBoundingBox.X() / cellWidth);
+	auto oldCellRow = (int)(oldBoundingBox.Y() / cellHeight);
 									
-	auto newCellCol = (int)(newPosition.x / cellWidth);
-	auto newCellRow = (int)(newPosition.y / cellHeight);
+	auto newCellCol = (int)(newBoundingBox.X() / cellWidth);
+	auto newCellRow = (int)(newBoundingBox.Y() / cellHeight);
 
 	if (oldCellCol == newCellCol && oldCellRow == newCellRow)
 		return;

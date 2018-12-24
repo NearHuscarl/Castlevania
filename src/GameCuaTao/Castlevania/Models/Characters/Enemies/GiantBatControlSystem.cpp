@@ -67,24 +67,19 @@ void GiantBatControlSystem::Update(UpdateData &updateData)
 			}
 			break;
 
+		case GiantBatState::FLYING:
+			ClampMoveInArea();
+			break;
+
 		case GiantBatState::DIVING:
 		{
 			auto velocity = parent.GetVelocity();
 			auto position = parent.GetPosition();
 
 			if (velocity.y < 0 && position.y <= heightToStopDiving)
-			{
 				MoveRandomly();
-			}
 
-			auto boundingBox = parent.GetBoundingBox();
-			auto moveArea = parent.GetMoveArea();
-			
-			if (boundingBox.left <= moveArea.left + 4)
-				parent.SetFacing(Facing::Right);
-		
-			if (boundingBox.right >= moveArea.right - 4)
-				parent.SetFacing(Facing::Left);
+			ClampMoveInArea();
 		}
 	}
 }
@@ -156,6 +151,18 @@ void GiantBatControlSystem::MoveRandomly()
 
 	parent.SetDirection(direction);
 	parent.Fly(distance);
+}
+
+void GiantBatControlSystem::ClampMoveInArea()
+{
+	auto boundingBox = parent.GetBoundingBox();
+	auto moveArea = parent.GetMoveArea();
+
+	if (boundingBox.left <= moveArea.left + 4)
+		parent.SetFacing(Facing::Right);
+
+	if (boundingBox.right >= moveArea.right - 4)
+		parent.SetFacing(Facing::Left);
 }
 
 Vector2 GiantBatControlSystem::RandomDirection()

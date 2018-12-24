@@ -11,6 +11,7 @@ using namespace Castlevania;
 constexpr auto LANDING_TIME = 400;
 constexpr auto FLASHING_TIME = 900;
 constexpr auto UNTOUCHABLE_TIME = 2000;
+constexpr auto THROWING_COOLDOWN = 850;
 
 // Simon bounce back's max height (when taking damage)
 constexpr auto BOUNCE_BACK_HEIGHT = 360.0f;
@@ -116,6 +117,9 @@ void Player::UpdateStates()
 	{
 		case MoveState::WALKING_TO_STAIRS:
 		{
+			if (nearbyObjects.stair == nullptr) // This should not happen. But life finds a way so here is a temporary fix
+				Idle();
+
 			auto stairCenter_x = nearbyObjects.stair->GetOriginPosition().x;
 			auto stairBbox = nearbyObjects.stair->GetBoundingBox();
 
@@ -343,6 +347,14 @@ void Player::Attack()
 
 void Player::Throw(std::unique_ptr<RangedWeapon> weapon)
 {
+	if (throwingCooldownTimer.IsRunning())
+	{
+		if (throwingCooldownTimer.ElapsedMilliseconds() < THROWING_COOLDOWN)
+			return;
+	}
+
+	throwingCooldownTimer.Restart();
+
 	if (moveState == MoveState::GOING_UPSTAIRS
 		|| moveState == MoveState::GOING_DOWNSTAIRS)
 	{

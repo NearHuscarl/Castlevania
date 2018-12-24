@@ -22,6 +22,7 @@ void GiantBatMovementSystem::Receive(int message)
 				direction = -1;
 			else
 				direction = 1;
+			parent.velocity.x = -parent.velocity.x;
 			break;
 	}
 }

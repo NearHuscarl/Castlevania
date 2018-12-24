@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Animations AtlasPath="Holy_Water.atlas.xml">
+    <Animation Name="holy_water" DefaultTime="100" IsLooping="False">
+      <Frame SpriteID="holy_water_01" />
+    </Animation>
+
+    <Animation Name="holy_water_flame" DefaultTime="150" IsLooping="True">
+      <Frame SpriteID="holy_water_flame_01" />
+      <Frame SpriteID="holy_water_flame_02" />
+      <Frame SpriteID="holy_water_flame_03" />
+      <Frame SpriteID="holy_water_flame_04" />
+      <Frame SpriteID="holy_water_flame_05" />
+    </Animation>
+  </Animations>
+
+</GameContent>

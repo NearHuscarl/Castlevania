@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Animations AtlasPath="Axe.atlas.xml">
+    <Animation Name="axe" DefaultTime="62" IsLooping="True">
+      <Frame SpriteID="axe_01" />
+      <Frame SpriteID="axe_02" />
+      <Frame SpriteID="axe_03" />
+      <Frame SpriteID="axe_04" />
+    </Animation>
+  </Animations>
+
+</GameContent>

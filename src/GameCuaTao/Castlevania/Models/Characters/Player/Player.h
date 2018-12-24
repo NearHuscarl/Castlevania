@@ -139,6 +139,7 @@ namespace Castlevania
 		Stopwatch landingTimer;
 		Stopwatch flashingTimer;
 		Stopwatch untouchableTimer; // cooldown time after taking damage
+		Stopwatch throwingCooldownTimer;
 
 		// Component-related flags
 		NearbyObjects nearbyObjects;

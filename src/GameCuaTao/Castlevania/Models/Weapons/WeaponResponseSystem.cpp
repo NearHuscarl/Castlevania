@@ -1,18 +1,20 @@
-#include "WhipResponseSystem.h"
+#include "WeaponResponseSystem.h"
 #include "../../Models/UpdateData.h"
 #include "../Items/Container.h"
 #include "../Items/Fireball.h"
 #include "../Characters/Enemies/Enemy.h"
 #include "../Characters/Player/Player.h"
 #include "../Settings.h"
+#include "../IAttackable.h"
 
 using namespace Castlevania;
 
-WhipResponseSystem::WhipResponseSystem(Whip &parent) : parent{ parent }
+WeaponResponseSystem::WeaponResponseSystem(GameObject &parent, bool destroyOnHit) : parent{ parent }
 {
+	this->destroyOnHit = destroyOnHit;
 }
 
-void WhipResponseSystem::Receive(int message)
+void WeaponResponseSystem::Receive(int message)
 {
 	switch (message)
 	{
@@ -22,7 +24,7 @@ void WhipResponseSystem::Receive(int message)
 	}
 }
 
-void WhipResponseSystem::Update(UpdateData &updateData)
+void WeaponResponseSystem::Update(UpdateData &updateData)
 {
 	auto collisionData = parent.GetBody().GetCollisionData();
 
@@ -54,15 +56,23 @@ void WhipResponseSystem::Update(UpdateData &updateData)
 	}
 }
 
-void WhipResponseSystem::OnCollideWithBrazier(CollisionResult &result)
+void WeaponResponseSystem::OnCollideWithBrazier(CollisionResult &result)
 {
 	auto &brazier = dynamic_cast<Container&>(result.collidedObject);
 
 	brazier.OnBeingHit();
+
+	if (destroyOnHit)
+		parent.Destroy();
 }
 
-void WhipResponseSystem::OnCollideWithEnemy(CollisionResult &result, Player &player)
+void WeaponResponseSystem::OnCollideWithEnemy(CollisionResult &result, Player &player)
 {
+	auto weapon = dynamic_cast<IAttackable*>(&parent);
+
+	if (weapon == nullptr)
+		return;
+
 	auto &enemy = dynamic_cast<Enemy&>(result.collidedObject);
 
 	for (auto hitEnemy : hitEnemies)
@@ -71,18 +81,24 @@ void WhipResponseSystem::OnCollideWithEnemy(CollisionResult &result, Player &pla
 			return;
 	}
 
-	enemy.TakeDamage(parent.GetAttack());
+	enemy.TakeDamage(weapon->GetAttack());
 
 	if (enemy.GetState() == ObjectState::DYING)
 		player.AddExp(enemy.GetExp());
 
 	hitEnemies.push_back(&enemy);
+
+	if (destroyOnHit)
+		parent.Destroy();
 }
 
-void Castlevania::WhipResponseSystem::OnCollideWithFireball(CollisionResult &result)
+void WeaponResponseSystem::OnCollideWithFireball(CollisionResult &result)
 {
 	auto &fireball = dynamic_cast<Fireball&>(result.collidedObject);
 
 	fireball.GetBody().Enabled(false);
 	fireball.SetState(ObjectState::DYING);
+
+	if (destroyOnHit)
+		parent.Destroy();
 }

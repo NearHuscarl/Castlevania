@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Dictionary
+    Name="Axe"
+    ThrowSpeed_X="150.0"
+    ThrowSpeed_Y="-625.0"
+    Attack="2">
+  </Dictionary>
+
+</GameContent>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Spritesheet TexturePath="Axe.png">
+    <Sprite ID="axe_01">
+      <SpriteFrame Left="0" Top="0" Width="32" Height="28" />
+      <SpriteBoundary Left="1" Top="0" Width="30" Height="28" />
+    </Sprite>
+
+    <Sprite ID="axe_02">
+      <SpriteFrame Left="32" Top="0" Width="32" Height="28" />
+      <SpriteBoundary Left="33" Top="0" Width="30" Height="28" />
+    </Sprite>
+
+    <Sprite ID="axe_03">
+      <SpriteFrame Left="64" Top="0" Width="32" Height="28" />
+      <SpriteBoundary Left="65" Top="0" Width="30" Height="28" />
+    </Sprite>
+
+    <Sprite ID="axe_04">
+      <SpriteFrame Left="96" Top="0" Width="32" Height="28" />
+      <SpriteBoundary Left="97" Top="0" Width="30" Height="28" />
+    </Sprite>
+  </Spritesheet>
+
+</GameContent>
