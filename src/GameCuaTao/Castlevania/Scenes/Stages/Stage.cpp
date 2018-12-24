@@ -167,6 +167,8 @@ void Stage::LoadMap()
 	auto checkpoint = stageObject->checkpoints[spawnPoint];
 
 	player->SetPosition(checkpoint);
+	player->Attach(grid.get());
+
 	activeArea = GetCurrentArea(player->GetPosition());
 	LoadObjectsWithin(activeArea);
 

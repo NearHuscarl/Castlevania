@@ -47,8 +47,8 @@ Rect Rect::Empty()
 bool Rect::operator==(Rect other)
 {
 	return (
-		this->X() == other.Y() &&
-		this->X() == other.Y() &&
+		this->X() == other.X() &&
+		this->Y() == other.Y() &&
 		this->Width() == other.Width() &&
 		this->Height() == other.Height());
 }

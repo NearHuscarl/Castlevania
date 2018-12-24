@@ -117,7 +117,20 @@ void CollisionGrid::Add(std::unique_ptr<GameObject> object, CollisionObjectType 
 
 			GetCellsFromBoundingBox(boundingBox, [&](CollisionCell &cell, int col, int row)
 			{
-				cell.AddBlock(sharedObject);
+				auto existedBlocks = cell.GetObjects().blocks;
+				auto existed = false;
+
+				for (auto &existedBlock : existedBlocks)
+				{
+					if (existedBlock->GetBoundingBox() == sharedObject->GetBoundingBox())
+					{
+						existed = true;
+						break;
+					}
+				}
+				
+				if (!existed)
+					cell.AddBlock(sharedObject);
 			});
 			break;
 		}

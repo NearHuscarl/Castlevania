@@ -48,7 +48,7 @@
 
 using namespace Castlevania;
 
-constexpr auto ITEM_FALL_SPEED = 275.0f;
+constexpr auto ITEM_FALL_SPEED = 225.0f;
 
 ObjectFactory::ObjectFactory(ContentManager &content) : content{ content }
 {

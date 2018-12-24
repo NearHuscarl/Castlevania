@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="88" height="6" tilewidth="64" tileheight="64" infinite="0" nextlayerid="10" nextobjectid="125">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="88" height="6" tilewidth="64" tileheight="64" infinite="0" nextlayerid="10" nextobjectid="126">
  <tileset firstgid="1" source="../Simon.tsx"/>
  <tileset firstgid="49" source="../Static_Objects.tsx"/>
  <tileset firstgid="55" source="../Candle.tsx"/>
@@ -456,11 +456,12 @@
   </object>
  </objectgroup>
  <objectgroup id="5" name="Locations">
-  <object id="9" name="Entrypoint1" type="Position" gid="51" x="64" y="320" width="60" height="66"/>
+  <object id="9" name="Entrypoint2" type="Position" gid="51" x="64" y="320" width="60" height="66"/>
   <object id="110" name="Underground_02" type="Position" gid="2147483658" x="3808" y="351" width="60" height="66"/>
   <object id="111" name="Underground_01" type="Position" gid="2147483658" x="3168" y="351" width="60" height="66"/>
-  <object id="120" name="Entrypoint" type="Position" gid="51" x="3939.41" y="126" width="60" height="66"/>
+  <object id="120" name="Entrypoint1" type="Position" gid="51" x="5043.41" y="318" width="60" height="66"/>
   <object id="121" name="Checkpoint_01" type="Position" gid="51" x="3151" y="128" width="60" height="66"/>
   <object id="122" name="Checkpoint_02" type="Position" gid="51" x="4169" y="128" width="60" height="66"/>
+  <object id="125" name="Entrypoint" type="Position" gid="51" x="2944" y="124" width="60" height="66"/>
  </objectgroup>
 </map>
