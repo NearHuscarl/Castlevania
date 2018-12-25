@@ -30,5 +30,5 @@ void StandardCollisionSystem::Update(UpdateData &updateData)
 	}
 
 	// TODO: do we need to sort?
-	body.SetCollisionData(FilterCollision(results));
+	body.SetCollisionData(FilterCollisionResults(results));
 }

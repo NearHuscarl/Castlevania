@@ -1,13 +1,13 @@
-#include "WhipCollisionSystem.h"
+#include "WeaponCollisionSystem.h"
 #include "../UpdateData.h"
 
 using namespace Castlevania;
 
-WhipCollisionSystem::WhipCollisionSystem(GameObject &parent) : parent{ parent }
+WeaponCollisionSystem::WeaponCollisionSystem(GameObject &parent) : parent{ parent }
 {
 }
 
-void WhipCollisionSystem::Update(UpdateData &updateData)
+void WeaponCollisionSystem::Update(UpdateData &updateData)
 {
 	auto &body = parent.GetBody();
 	body.ClearCollisionData();

@@ -15,8 +15,8 @@ bool DevTool::IsDebugging = true;
 constexpr auto ENEMY = "ENEMY";
 constexpr auto CONTAINER = "CONTAINER";
 constexpr auto POWERUP = "POWERUP";
+constexpr auto WEAPON = "WEAPON";
 constexpr auto EFFECT = "EFFECT";
-constexpr auto OTHER = "OTHER";
 
 DevTool::DevTool(Stage &stage) :
 	stage{ stage },
@@ -36,8 +36,10 @@ void DevTool::LoadContent(ContentManager &content)
 	auto fishmanSprite = content.Load<Spritesheet>("Characters/Enemies/Fishman.atlas.xml")->begin()->second;
 	auto vampireBatSprite = content.Load<Spritesheet>("Characters/Enemies/VampireBat.atlas.xml")->at("fly_01");
 	auto giantBatSprite = content.Load<Spritesheet>("Characters/Enemies/GiantBat.atlas.xml")->at("fly_01");
+
 	auto brazierSprite = content.Load<Spritesheet>("Items/Brazier.atlas.xml")->begin()->second;
 	auto candleSprite = content.Load<Spritesheet>("Items/Candle.atlas.xml")->begin()->second;
+
 	auto blueMoneyBagSprite = content.Load<Spritesheet>("Items/Money_Bag.atlas.xml")->at("money_bag_blue");
 	auto whiteMoneyBagSprite = content.Load<Spritesheet>("Items/Money_Bag.atlas.xml")->at("money_bag_white");
 	auto redMoneyBagSprite = content.Load<Spritesheet>("Items/Money_Bag.atlas.xml")->at("money_bag_red");
@@ -47,9 +49,13 @@ void DevTool::LoadContent(ContentManager &content)
 	auto largeHeartSprite = content.Load<Texture>("Items/Large_Heart.png");
 	auto smallHeartSprite = content.Load<Texture>("Items/Small_Heart.png");
 	auto whipPowerupSprite = content.Load<Texture>("Items/Whip_Powerup.png");
+
+	auto axeSprite = content.Load<Spritesheet>("Items/Axe.atlas.xml")->at("axe_01");
+	auto holyWaterSprite = content.Load<Spritesheet>("Items/Holy_Water.atlas.xml")->at("holy_water_01");
+	auto fireballSprite = content.Load<Texture>("Items/Fireball.png");
+
 	auto flameSprite = content.Load<Spritesheet>("Effects/Flame.atlas.xml")->at("flame_02");
 	auto waterSprite = content.Load<Texture>("Effects/Water.png");
-	auto fireballSprite = content.Load<Texture>("Items/Fireball.png");
 
 	items = std::unordered_map<std::string, DevToolItems>{
 		{
@@ -85,17 +91,20 @@ void DevTool::LoadContent(ContentManager &content)
 			}
 		},
 		{
+			WEAPON,
+			{
+				std::make_pair<std::string, Sprite>("Axe", axeSprite),
+				std::make_pair<std::string, Sprite>("Dagger", daggerItemSprite),
+				std::make_pair<std::string, Sprite>("HolyWater", holyWaterSprite),
+				std::make_pair<std::string, Sprite>("Fireball", fireballSprite),
+			}
+		},
+		{
 			EFFECT,
 			{
 				std::make_pair<std::string, Sprite>("FlameEffect", flameSprite),
 				std::make_pair<std::string, Sprite>("BigFlameEffect", flameSprite),
 				std::make_pair<std::string, Sprite>("WaterEffect", waterSprite),
-			}
-		},
-		{
-			OTHER,
-			{
-				std::make_pair<std::string, Sprite>("Fireball", fireballSprite),
 			}
 		},
 	};
@@ -129,9 +138,9 @@ void DevTool::Update(UpdateData &updatData)
 	else if (InputHelper::IsKeyDown(DIK_E))
 		SetCategory(POWERUP);
 	else if (InputHelper::IsKeyDown(DIK_R))
-		SetCategory(EFFECT);
+		SetCategory(WEAPON);
 	else if (InputHelper::IsKeyDown(DIK_T))
-		SetCategory(OTHER);
+		SetCategory(EFFECT);
 
 	else if (InputHelper::IsKeyDown(DIK_HOME))
 		NextMap();
@@ -316,17 +325,20 @@ void DevTool::SpawnObject()
 				break;
 		}
 	}
-	else if (category == OTHER)
+	else if (category == WEAPON)
 	{
 		switch (type)
 		{
+			case ObjectId::Axe:
+			case ObjectId::Dagger:
+			case ObjectId::HolyWater:
 			case ObjectId::Fireball:
-				object = objectFactory.CreateFireball();
-				if (currentFacing == Facing::Right)
-					object->SetVelocity_X(object->GetSpeed());
-				else
-					object->SetVelocity_X(-object->GetSpeed());
+			{
+				object = objectFactory.CreateSubWeapon(type);
+				object->SetFacing(currentFacing);
+				dynamic_cast<RangedWeapon&>(*object).Throw(InputHelper::GetMousePosition());
 				break;
+			}
 		}
 	}
 

@@ -12,16 +12,15 @@ namespace Castlevania
 	public:
 		RangedWeapon(ObjectId type);
 
-		void SetOwner(GameObject *owner);
+		Vector2 GetThrowVelocity();
 		void SetThrowVelocity(Vector2 velocity);
 		int GetAttack() override;
 		void SetAttack(int attack) override;
 
 		void Update(UpdateData &updateData) override;
-		void Throw();
+		void Throw(Vector2 position);
 
 	private:
-		GameObject *owner;
 		Vector2 throwVelocity;
 		int attack;
 	};

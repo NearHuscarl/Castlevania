@@ -127,7 +127,6 @@ namespace Castlevania
 		void Die();
 
 		void UpdateStates();
-		void UpdateSubWeapons(UpdateData &updateData);
 		void OnAttackComplete();
 		void OnHitStairEntry();
 

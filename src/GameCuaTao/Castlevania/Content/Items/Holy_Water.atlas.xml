@@ -10,27 +10,27 @@
 
     <Sprite ID="holy_water_flame_01">
       <SpriteFrame Left="34" Top="0" Width="34" Height="30" />
-      <SpriteBoundary Left="45" Top="0" Width="12" Height="30" />
+      <SpriteBoundary Left="39" Top="0" Width="24" Height="30" />
     </Sprite>
 
     <Sprite ID="holy_water_flame_02">
       <SpriteFrame Left="68" Top="0" Width="34" Height="30" />
-      <SpriteBoundary Left="79" Top="0" Width="12" Height="30" />
+      <SpriteBoundary Left="73" Top="0" Width="24" Height="30" />
     </Sprite>
 
     <Sprite ID="holy_water_flame_03">
       <SpriteFrame Left="102" Top="0" Width="34" Height="30" />
-      <SpriteBoundary Left="113" Top="0" Width="12" Height="30" />
+      <SpriteBoundary Left="107" Top="0" Width="24" Height="30" />
     </Sprite>
 
     <Sprite ID="holy_water_flame_04">
       <SpriteFrame Left="136" Top="0" Width="34" Height="30" />
-      <SpriteBoundary Left="147" Top="0" Width="12" Height="30" />
+      <SpriteBoundary Left="141" Top="0" Width="24" Height="30" />
     </Sprite>
 
     <Sprite ID="holy_water_flame_05">
       <SpriteFrame Left="170" Top="0" Width="34" Height="30" />
-      <SpriteBoundary Left="181" Top="0" Width="12" Height="30" />
+      <SpriteBoundary Left="175" Top="0" Width="24" Height="30" />
     </Sprite>
   </Spritesheet>
 

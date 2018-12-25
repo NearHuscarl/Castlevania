@@ -4,7 +4,8 @@
 
   <Dictionary
     Name="Fireball"
-    Speed="300.0"
+    ThrowSpeed_X="300.0"
+    ThrowSpeed_Y="0.0"
     Attack="2">
   </Dictionary>
 

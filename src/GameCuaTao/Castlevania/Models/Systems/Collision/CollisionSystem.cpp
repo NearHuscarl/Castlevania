@@ -49,7 +49,7 @@ bool CollisionSystem::CalculateDynamicCollision(IGameObject &gameObject, Collisi
 }
 
 // Get a list of objects that has the shortest time to collide with or already collided
-CollisionData CollisionSystem::FilterCollision(CollisionResults collisionResults)
+CollisionData CollisionSystem::FilterCollisionResults(CollisionResults collisionResults)
 {
 	if (collisionResults.size() == 0)
 		return CollisionData{};

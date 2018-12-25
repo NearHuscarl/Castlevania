@@ -194,7 +194,6 @@
     <ClCompile Include="Castlevania\Models\GameObject.cpp" />
     <ClCompile Include="Castlevania\Models\Items\Door.cpp" />
     <ClCompile Include="Castlevania\Models\Items\DoorRenderingSystem.cpp" />
-    <ClCompile Include="Castlevania\Models\Items\Fireball.cpp" />
     <ClCompile Include="Castlevania\Models\Items\MoneyBag.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Rendering\ItemRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Items\Powerup.cpp" />
@@ -222,8 +221,9 @@
     <ClCompile Include="Castlevania\Models\Weapons\HolyWater.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\HolyWaterRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\HolyWaterResponseSystem.cpp" />
+    <ClCompile Include="Castlevania\Models\Weapons\PoisonResponseSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\RangedWeapon.cpp" />
-    <ClCompile Include="Castlevania\Models\Weapons\WhipCollisionSystem.cpp" />
+    <ClCompile Include="Castlevania\Models\Weapons\WeaponCollisionSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\WhipFlashingRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\WhipRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\WeaponResponseSystem.cpp" />
@@ -354,7 +354,6 @@
     <ClInclude Include="Castlevania\Models\IBoss.h" />
     <ClInclude Include="Castlevania\Models\Items\Door.h" />
     <ClInclude Include="Castlevania\Models\Items\DoorRenderingSystem.h" />
-    <ClInclude Include="Castlevania\Models\Items\Fireball.h" />
     <ClInclude Include="Castlevania\Models\IAttackable.h" />
     <ClInclude Include="Castlevania\Models\Items\MoneyBag.h" />
     <ClInclude Include="Castlevania\Models\IThrowable.h" />
@@ -391,8 +390,9 @@
     <ClInclude Include="Castlevania\Models\Weapons\HolyWater.h" />
     <ClInclude Include="Castlevania\Models\Weapons\HolyWaterRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Weapons\HolyWaterResponseSystem.h" />
+    <ClInclude Include="Castlevania\Models\Weapons\PoisonResponseSystem.h" />
     <ClInclude Include="Castlevania\Models\Weapons\RangedWeapon.h" />
-    <ClInclude Include="Castlevania\Models\Weapons\WhipCollisionSystem.h" />
+    <ClInclude Include="Castlevania\Models\Weapons\WeaponCollisionSystem.h" />
     <ClInclude Include="Castlevania\Models\Weapons\WhipFlashingRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Weapons\WhipRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Weapons\WeaponResponseSystem.h" />

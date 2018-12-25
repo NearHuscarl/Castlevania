@@ -67,9 +67,12 @@ void Fishman::WalkLeft()
 	SetFishmanState(FishmanState::WALKING);
 }
 
-void Fishman::Shoot(std::unique_ptr<GameObject> fireball)
+void Fishman::Shoot(std::unique_ptr<RangedWeapon> fireball)
 {
 	this->fireball = std::move(fireball);
+	this->fireball->GetBody().Enabled(false);
+	this->fireball->SetVisibility(false);
+
 	velocity.x = 0.0f;
 	SetFishmanState(FishmanState::SHOOTING);
 	shootingTimer.Start();
@@ -106,14 +109,6 @@ void Fishman::ReleaseFireball()
 		fishmanRect.top + 6
 	};
 
-	fireball->SetPosition(position);
-
-	auto fireballSpeed = fireball->GetSpeed();
-
-	if (facing == Facing::Right)
-		fireball->SetVelocity_X(fireballSpeed);
-	else
-		fireball->SetVelocity_X(-fireballSpeed);
-
+	fireball->Throw(position);
 	collisionGrid->Add(std::move(fireball), CollisionObjectType::Entity);
 }

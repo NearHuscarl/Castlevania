@@ -29,6 +29,5 @@ void SimpleCollisionSystem::Update(UpdateData &updateData)
 		CalculateStaticCollision(*collisionObject, results);
 	}
 
-	// TODO: do we need to sort?
-	body.SetCollisionData(FilterCollision(results));
+	body.SetCollisionData(CollisionData{ results });
 }

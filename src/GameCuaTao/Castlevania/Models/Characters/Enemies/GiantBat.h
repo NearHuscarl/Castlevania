@@ -3,7 +3,7 @@
 #include "Direct2DGame/Utilities/Stopwatch.h"
 #include "Enemy.h"
 #include "../../IBoss.h"
-#include "../../Items/Fireball.h"
+#include "../../Weapons/RangedWeapon.h"
 
 namespace Castlevania
 {
@@ -46,7 +46,7 @@ namespace Castlevania
 		void Hover();
 		void Fly(float distance);
 		void Dive(Vector2 playerPosition);
-		void Shoot(std::unique_ptr<GameObject> fireball, Vector2 destination);
+		void Shoot(std::unique_ptr<RangedWeapon> fireball, Vector2 destination);
 
 	private:
 		Vector2 playerPosition;
@@ -62,8 +62,9 @@ namespace Castlevania
 		void SetGiantBatState(GiantBatState state);
 		void Rise();
 		void DoDiveAttack();
+		void ReleaseFireball();
 
-		std::unique_ptr<GameObject> fireball;
+		std::unique_ptr<RangedWeapon> fireball;
 		Stopwatch shootingTimer;
 
 		friend class GiantBatMovementSystem;

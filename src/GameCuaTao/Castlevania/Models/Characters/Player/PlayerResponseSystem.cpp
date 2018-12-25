@@ -276,7 +276,7 @@ void PlayerResponseSystem::OnCollideWithVampireBat(CollisionResult &result)
 
 void PlayerResponseSystem::OnCollideWithFireball(CollisionResult &result)
 {
-	auto &object = dynamic_cast<Fireball&>(result.collidedObject);
+	auto &object = dynamic_cast<RangedWeapon&>(result.collidedObject);
 	auto hitDirection = GetPlayerHitDirection(object, result.direction);
 
 	parent.TakeDamage(object.GetAttack(), hitDirection);

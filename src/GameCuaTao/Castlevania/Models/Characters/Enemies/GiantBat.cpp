@@ -121,9 +121,7 @@ void GiantBat::Update(UpdateData &updateData)
 		case GiantBatState::SHOOTING:
 			if (shootingTimer.ElapsedMilliseconds() > SHOOTING_TIME)
 			{
-				if (fireball != nullptr)
-					collisionGrid->Add(std::move(fireball), CollisionObjectType::Entity);
-				
+				ReleaseFireball();
 				Hover();
 				shootingTimer.Reset();
 			}
@@ -159,13 +157,18 @@ void GiantBat::Dive(Vector2 playerPosition)
 		DoDiveAttack();
 }
 
-void GiantBat::Shoot(std::unique_ptr<GameObject> fireball, Vector2 destination)
+void GiantBat::Shoot(std::unique_ptr<RangedWeapon> fireball, Vector2 destination)
 {
 	auto fireballPosition = GetOriginPosition();
 	auto direction = Vector2::Normalize(destination - fireballPosition);
-	auto fireballSpeed = fireball->GetSpeed();
+	auto fireballSpeed = fireball->GetThrowVelocity().x;
+	
+	if (direction.x > 0)
+		fireball->SetFacing(Facing::Right);
+	else
+		fireball->SetFacing(Facing::Left);
 
-	fireball->SetVelocity(direction * fireballSpeed);
+	fireball->SetThrowVelocity(direction * fireballSpeed);
 	fireball->SetPosition(fireballPosition);
 
 	this->fireball = std::move(fireball);
@@ -190,4 +193,13 @@ void GiantBat::Rise()
 void GiantBat::DoDiveAttack()
 {
 	SetGiantBatState(GiantBatState::DIVING);
+}
+
+void GiantBat::ReleaseFireball()
+{
+	if (fireball == nullptr)
+		return;
+
+	fireball->Throw(fireball->GetPosition());
+	collisionGrid->Add(std::move(fireball), CollisionObjectType::Entity);
 }

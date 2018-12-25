@@ -2,6 +2,7 @@
 
 #include "Direct2DGame/Utilities/Stopwatch.h"
 #include "Enemy.h"
+#include "../../Weapons/RangedWeapon.h"
 #include "../../Factories/ObjectCollection.h"
 
 namespace Castlevania
@@ -27,14 +28,14 @@ namespace Castlevania
 		void Launch();
 		void WalkRight();
 		void WalkLeft();
-		void Shoot(std::unique_ptr<GameObject> fireball);
+		void Shoot(std::unique_ptr<RangedWeapon> fireball);
 
 	private:
 		float launchSpeed;
 		FishmanState fishmanState;
 		Stopwatch shootingTimer;
 
-		std::unique_ptr<GameObject> fireball;
+		std::unique_ptr<RangedWeapon> fireball;
 
 		// Fishman animation stop updating when in falling state
 		void Freeze();

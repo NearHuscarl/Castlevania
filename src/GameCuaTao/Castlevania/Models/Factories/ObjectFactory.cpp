@@ -39,11 +39,10 @@
 #include "../Spawners/SpawnAreaResponseSystem.h"
 #include "../Weapons/HolyWaterResponseSystem.h"
 #include "../Weapons/HolyWaterRenderingSystem.h"
-#include "../Weapons/WhipCollisionSystem.h"
 #include "../Weapons/WhipRenderingSystem.h"
 #include "../Weapons/WhipFlashingRenderingSystem.h"
+#include "../Weapons/WeaponCollisionSystem.h"
 #include "../Weapons/WeaponResponseSystem.h"
-#include "../Weapons/PoisonResponseSystem.h"
 #include "../Spawners/ZombieSpawnArea.h"
 #include "../Spawners/VampireBatSpawnArea.h"
 #include "../Spawners/FishmanSpawnArea.h"
@@ -408,7 +407,7 @@ std::unique_ptr<Whip> ObjectFactory::CreateWhip(GameObject &gameObject)
 {
 	auto object = std::make_unique<Whip>(gameObject);
 
-	auto collisionSystem = std::make_unique<WhipCollisionSystem>(*object);
+	auto collisionSystem = std::make_unique<WeaponCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<WeaponResponseSystem>(*object, false);
 	auto renderingSystem = std::make_unique<WhipRenderingSystem>(*object, "Items/Whip.ani.xml");
 
@@ -425,7 +424,7 @@ std::unique_ptr<Whip> ObjectFactory::CreateFlashingWhip(GameObject &gameObject)
 {
 	auto object = std::make_unique<Whip>(gameObject);
 
-	auto collisionSystem = std::make_unique<WhipCollisionSystem>(*object);
+	auto collisionSystem = std::make_unique<WeaponCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<WeaponResponseSystem>(*object, false);
 	auto renderingSystem = std::make_unique<WhipFlashingRenderingSystem>(*object, "Items/Whip.ani.xml");
 
@@ -442,14 +441,20 @@ std::unique_ptr<RangedWeapon> ObjectFactory::CreateSubWeapon(ObjectId type, Vect
 {
 	switch (type)
 	{
+		case ObjectId::Axe:
 		case ObjectId::AxeItem:
 			return CreateAxe(position);
 
+		case ObjectId::Dagger:
 		case ObjectId::DaggerItem:
 			return CreateDagger(position);
 
+		case ObjectId::HolyWater:
 		case ObjectId::HolyWaterItem:
 			return CreateHolyWater(position);
+
+		case ObjectId::Fireball:
+			return CreateFireball(position);
 
 		default:
 			return nullptr;
@@ -464,7 +469,7 @@ std::unique_ptr<RangedWeapon> ObjectFactory::CreateAxe(Vector2 position)
 	ReadSubWeaponConfig(*object.get(), *stats);
 
 	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, 2000.0f);
-	auto collisionSystem = std::make_unique<SimpleCollisionSystem>(*object);
+	auto collisionSystem = std::make_unique<WeaponCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<WeaponResponseSystem>(*object, false);
 	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*object, "Items/Axe.ani.xml");
 
@@ -487,7 +492,7 @@ std::unique_ptr<RangedWeapon> ObjectFactory::CreateDagger(Vector2 position)
 	ReadSubWeaponConfig(*object.get(), *stats);
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
-	auto collisionSystem = std::make_unique<SimpleCollisionSystem>(*object);
+	auto collisionSystem = std::make_unique<WeaponCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<WeaponResponseSystem>(*object, true);
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Dagger.png");
 
@@ -510,7 +515,7 @@ std::unique_ptr<HolyWater> ObjectFactory::CreateHolyWater(Vector2 position)
 	ReadSubWeaponConfig(*object.get(), *stats);
 
 	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, 600.0f);
-	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
+	auto collisionSystem = std::make_unique<WeaponCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<HolyWaterResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<HolyWaterRenderingSystem>(*object, "Items/Holy_Water.ani.xml");
 
@@ -525,13 +530,12 @@ std::unique_ptr<HolyWater> ObjectFactory::CreateHolyWater(Vector2 position)
 	return object;
 }
 
-std::unique_ptr<Fireball> ObjectFactory::CreateFireball(Vector2 position)
+std::unique_ptr<RangedWeapon> ObjectFactory::CreateFireball(Vector2 position)
 {
-	auto object = std::make_unique<Fireball>();
-	auto stats = content.Load<Dictionary>("GameStats/Items/Fireball.xml");
+	auto object = std::make_unique<RangedWeapon>(ObjectId::Fireball);
+	auto stats = content.Load<Dictionary>("GameStats/Weapons/Fireball.xml");
 
-	object->SetSpeed(std::stof(stats->at("Speed")));
-	object->SetAttack(std::stoi(stats->at("Attack")));
+	ReadSubWeaponConfig(*object.get(), *stats);
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
 	auto renderingSystem = std::make_unique<ItemRenderingSystem>(

@@ -106,7 +106,6 @@ void Player::Update(UpdateData &updateData)
 {
 	GameObject::Update(updateData);
 	UpdateStates();
-	UpdateSubWeapons(updateData);
 
 	whip->Update(updateData);
 }
@@ -167,15 +166,6 @@ void Player::UpdateStates()
 		untouchableTimer.Reset();
 		SendMessageToSystems(UNTOUCHABLE_ENDED);
 	}
-}
-
-void Player::UpdateSubWeapons(UpdateData &updateData)
-{
-	if (subWeapon == nullptr)
-		return;
-
-	if (subWeapon->GetBody().Enabled()) // weapon is flying and active
-		collisionGrid->Add(std::move(subWeapon), CollisionObjectType::Entity);
 }
 
 void Player::OnAttackComplete()
@@ -365,7 +355,6 @@ void Player::Throw(std::unique_ptr<RangedWeapon> weapon)
 		return;
 
 	subWeapon = std::move(weapon);
-	subWeapon->SetOwner(this);
 	subWeapon->GetBody().Enabled(false);
 	subWeapon->SetVisibility(false);
 
@@ -439,7 +428,15 @@ void Player::DoThrow()
 	if (subWeapon == nullptr)
 		return;
 
-	subWeapon->Throw();
+	auto playerBbox = GetBoundingBox();
+	auto position = Vector2{
+		playerBbox.left,
+		playerBbox.top + 5
+	};
+
+	subWeapon->SetFacing(facing);
+	subWeapon->Throw(position);
+	collisionGrid->Add(std::move(subWeapon), CollisionObjectType::Entity);
 }
 
 void Player::Fall()

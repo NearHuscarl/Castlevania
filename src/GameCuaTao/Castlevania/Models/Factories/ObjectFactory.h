@@ -8,7 +8,6 @@
 #include "../Characters/Enemies/GiantBat.h"
 #include "../Items/Container.h"
 #include "../Items/Door.h"
-#include "../Items/Fireball.h"
 #include "../Weapons/HolyWater.h"
 #include "../Items/MoneyBag.h"
 #include "../Items/Powerup.h"
@@ -50,7 +49,7 @@ namespace Castlevania
 		std::unique_ptr<RangedWeapon> CreateAxe(Vector2 position = Vector2::Zero());
 		std::unique_ptr<RangedWeapon> CreateDagger(Vector2 position = Vector2::Zero());
 		std::unique_ptr<HolyWater> CreateHolyWater(Vector2 position = Vector2::Zero());
-		std::unique_ptr<Fireball> CreateFireball(Vector2 position = Vector2::Zero());
+		std::unique_ptr<RangedWeapon> CreateFireball(Vector2 position = Vector2::Zero());
 
 		std::unique_ptr<Powerup> CreatePowerup(ObjectId type, Vector2 position = Vector2::Zero());
 		std::unique_ptr<MoneyBag> CreateMoneyBag(ObjectId type, Vector2 position = Vector2::Zero());

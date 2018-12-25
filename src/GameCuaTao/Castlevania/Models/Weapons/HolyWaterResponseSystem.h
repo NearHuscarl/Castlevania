@@ -1,13 +1,13 @@
 #pragma once
 
-#include "../Systems/CollisionResponse/ICollisionResponseSystem.h"
+#include "PoisonResponseSystem.h"
 #include "HolyWater.h"
 
 namespace Castlevania
 {
 	class Player;
 
-	class HolyWaterResponseSystem : public ICollisionResponseSystem
+	class HolyWaterResponseSystem : public PoisonResponseSystem
 	{
 	public:
 		HolyWaterResponseSystem(HolyWater &parent);
@@ -17,10 +17,5 @@ namespace Castlevania
 
 	private:
 		HolyWater &parent;
-		
-		void OnCollideWithBoundary(CollisionResult &result);
-		void OnCollideWithBrazier(CollisionResult &result);
-		void OnCollideWithEnemy(CollisionResult &result, Player &player);
-		void OnCollideWithFireball(CollisionResult &result);
 	};
 }

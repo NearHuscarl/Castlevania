@@ -23,6 +23,6 @@ namespace Castlevania
 		// Use Swept AABB algorithm to calculate collision between a dynamic object with another object
 		bool CalculateDynamicCollision(IGameObject &gameObject, CollisionResults &results);
 
-		CollisionData FilterCollision(CollisionResults collisionResults);
+		CollisionData FilterCollisionResults(CollisionResults collisionResults);
 	};
 }

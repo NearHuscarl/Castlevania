@@ -1,7 +1,6 @@
 #include "WeaponResponseSystem.h"
 #include "../../Models/UpdateData.h"
 #include "../Items/Container.h"
-#include "../Items/Fireball.h"
 #include "../Characters/Enemies/Enemy.h"
 #include "../Characters/Player/Player.h"
 #include "../Settings.h"
@@ -94,7 +93,7 @@ void WeaponResponseSystem::OnCollideWithEnemy(CollisionResult &result, Player &p
 
 void WeaponResponseSystem::OnCollideWithFireball(CollisionResult &result)
 {
-	auto &fireball = dynamic_cast<Fireball&>(result.collidedObject);
+	auto &fireball = dynamic_cast<GameObject&>(result.collidedObject);
 
 	fireball.GetBody().Enabled(false);
 	fireball.SetState(ObjectState::DYING);

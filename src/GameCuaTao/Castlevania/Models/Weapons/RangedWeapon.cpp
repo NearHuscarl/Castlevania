@@ -5,13 +5,12 @@ using namespace Castlevania;
 
 RangedWeapon::RangedWeapon(ObjectId type) : GameObject{ type }
 {
-	this->owner = nullptr;
 	this->throwVelocity = Vector2{ 500, 0 };
 }
 
-void RangedWeapon::SetOwner(GameObject *owner)
+Vector2 RangedWeapon::GetThrowVelocity()
 {
-	this->owner = owner;
+	return throwVelocity;
 }
 
 void RangedWeapon::SetThrowVelocity(Vector2 velocity)
@@ -39,20 +38,10 @@ void RangedWeapon::Update(UpdateData &updateData)
 		Destroy();
 }
 
-void RangedWeapon::Throw()
+void RangedWeapon::Throw(Vector2 position)
 {
-	if (owner == nullptr)
-		return;
-
 	body.Enabled(true);
 	SetVisibility(true);
-	SetFacing(owner->GetFacing());
-
-	auto playerBbox = owner->GetBoundingBox();
-	auto position = Vector2{
-		playerBbox.left,
-		playerBbox.top + 5
-	};
 	SetPosition(position);
 	
 	velocity = throwVelocity;

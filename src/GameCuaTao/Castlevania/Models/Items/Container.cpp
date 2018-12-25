@@ -22,8 +22,11 @@ void Container::OnBeingHit()
 
 std::unique_ptr<GameObject> Container::SpawnItem()
 {
-	item->Spawn();
-	item->SetOriginPosition(GetOriginPosition());
+	if (item != nullptr)
+	{
+		item->Spawn();
+		item->SetOriginPosition(GetOriginPosition());
+	}
 	
 	return std::move(item);
 }
@@ -31,7 +34,12 @@ std::unique_ptr<GameObject> Container::SpawnItem()
 void Container::Update(UpdateData &updateData)
 {
 	GameObject::Update(updateData);
-
+	
 	if (state == ObjectState::DEAD)
-		collisionGrid->Add(SpawnItem(), CollisionObjectType::Entity);
+	{
+		auto spawnedItem = SpawnItem();
+
+		if (spawnedItem != nullptr)
+			collisionGrid->Add(std::move(spawnedItem), CollisionObjectType::Entity);
+	}
 }

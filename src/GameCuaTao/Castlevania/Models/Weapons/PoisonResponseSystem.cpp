@@ -1,7 +1,6 @@
 #include "PoisonResponseSystem.h"
 #include "../../Models/UpdateData.h"
 #include "../Items/Container.h"
-#include "../Items/Fireball.h"
 #include "../Characters/Enemies/Enemy.h"
 
 using namespace Castlevania;
@@ -61,7 +60,7 @@ void PoisonResponseSystem::OnCollideWithEnemy(CollisionResult &result, Player &p
 
 void PoisonResponseSystem::OnCollideWithFireball(CollisionResult &result)
 {
-	auto &fireball = dynamic_cast<Fireball&>(result.collidedObject);
+	auto &fireball = dynamic_cast<GameObject&>(result.collidedObject);
 
 	fireball.GetBody().Enabled(false);
 	fireball.SetState(ObjectState::DYING);
