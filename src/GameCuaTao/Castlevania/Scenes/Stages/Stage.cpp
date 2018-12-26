@@ -6,6 +6,7 @@
 #include "NextRoomCutscene.h"
 #include "ResetCutscene.h"
 #include "GoToCastleCutScene.h"
+#include "CrossCutScene.h"
 #include "StopwatchCutScene.h"
 #include "../GameplayScene.h"
 #include "../SceneManager.h"
@@ -345,6 +346,10 @@ void Stage::ProcessMessage(int message)
 			Reset();
 			break;
 
+		case CROSS_POWERUP_ACTIVATED:
+			SetCurrentCutscene(GameState::CROSS_CUTSCENE);
+			break;
+
 		case STOPWATCH_POWERUP_ACTIVATED:
 			SetCurrentCutscene(GameState::STOPWATCH_CUTSCENE);
 			break;
@@ -374,7 +379,7 @@ std::unique_ptr<Cutscene> Stage::ConstructCutscene(GameState gameState)
 			return std::make_unique<ResetCutscene>(*this, content);
 
 		case GameState::CROSS_CUTSCENE:
-			return std::make_unique<StopwatchCutscene>(*this);
+			return std::make_unique<CrossCutscene>(*this, content, *grid);
 
 		case GameState::STOPWATCH_CUTSCENE:
 			return std::make_unique<StopwatchCutscene>(*this);

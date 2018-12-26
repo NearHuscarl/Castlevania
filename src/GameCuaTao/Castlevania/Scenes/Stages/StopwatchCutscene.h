@@ -2,7 +2,6 @@
 
 #include "Direct2DGame/Utilities/Stopwatch.h"
 #include "Cutscene.h"
-#include "../../Models/Factories/ObjectFactory.h"
 
 namespace Castlevania
 {
@@ -10,7 +9,6 @@ namespace Castlevania
 	{
 	public:
 		StopwatchCutscene(Stage &stage);
-
 		void Update(UpdateData &updateData) override;
 
 	private:

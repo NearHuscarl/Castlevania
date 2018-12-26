@@ -315,7 +315,7 @@
   <object id="76" name="Door" type="Door" gid="77" x="4072" y="128" width="24" height="96"/>
   <object id="119" name="Candle" type="Candle" gid="79" x="2998" y="34" width="16" height="32">
    <properties>
-    <property name="Item" value="LargeHeart"/>
+    <property name="Item" value="Cross"/>
    </properties>
   </object>
  </objectgroup>

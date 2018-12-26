@@ -86,7 +86,6 @@ void Hud::Unregister<GameplayData>()
 void Hud::LoadContent(ContentManager &content)
 {
 	hudFont = content.Load<SpriteFont>("Fonts/MainFont.font.xml");
-	backgroundTexture = content.Load<Texture>("Hud/Background.png");
 	borderTexture = content.Load<Texture>("Hud/Border.png");
 	heartTexture = content.Load<Texture>("Hud/Heart.png");
 	
@@ -104,7 +103,6 @@ void Hud::LoadContent(ContentManager &content)
 
 void Hud::Draw(SpriteExtensions &spriteBatch)
 {
-	spriteBatch.Draw(*backgroundTexture, Vector2::Zero(), Color::White(), false);
 	spriteBatch.Draw(*heartTexture, heartTexturePosition, Color::White(), false);
 	spriteBatch.Draw(*borderTexture, borderTexturePosition, Color::White(), false);
 

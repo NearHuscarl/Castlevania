@@ -25,5 +25,5 @@ void NextMapCutscene::Update(UpdateData &updateData)
 
 void NextMapCutscene::Draw(SpriteExtensions &spriteBatch)
 {
-	spriteBatch.Draw(*cutsceneBackground, Vector2::Zero());
+	spriteBatch.Draw(*cutsceneBackground, Vector2::Zero(), false);
 }

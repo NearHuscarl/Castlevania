@@ -35,11 +35,12 @@ namespace Castlevania
 		void OnCollideWithVampireBat(CollisionResult &result);
 		void OnCollideWithFireball(CollisionResult &result);
 		void OnCollideWithMoneyBag(CollisionResult &result);
+		void OnCollideWithSubWeaponItem(CollisionResult &result);
+		void OnCollideWithCross(CollisionResult &result);
 		void OnCollideWithHeart(CollisionResult &result);
 		void OnCollideWithSmallHeart(CollisionResult &result);
 		void OnCollideWithInvisibleJar(CollisionResult &result);
 		void OnCollideWithWhipPowerup(CollisionResult &result);
-		void OnCollideWithSubWeaponItem(CollisionResult &result);
 		void OnCollideWithDoor(CollisionResult &result, ResponseResult &responseResult);
 
 		void OnCollideWithStairUpTrigger(Trigger &trigger);

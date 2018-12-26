@@ -480,6 +480,9 @@
     <ClCompile Include="Castlevania\Scenes\Stages\StopwatchCutscene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Castlevania\Scenes\Stages\CrossCutscene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\pugixml.hpp">
@@ -1113,6 +1116,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Castlevania\Scenes\Stages\StopwatchCutscene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Scenes\Stages\CrossCutscene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

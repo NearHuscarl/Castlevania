@@ -73,6 +73,17 @@ void PlayerResponseSystem::Update(UpdateData &updateData)
 				OnCollideWithMoneyBag(result);
 				break;
 
+			case ObjectId::AxeItem:
+			case ObjectId::DaggerItem:
+			case ObjectId::HolyWaterItem:
+			case ObjectId::Stopwatch:
+				OnCollideWithSubWeaponItem(result);
+				break;
+
+			case ObjectId::Cross:
+				OnCollideWithCross(result);
+				break;
+
 			case ObjectId::LargeHeart:
 				OnCollideWithHeart(result);
 				break;
@@ -88,13 +99,6 @@ void PlayerResponseSystem::Update(UpdateData &updateData)
 
 			case ObjectId::WhipPowerup:
 				OnCollideWithWhipPowerup(result);
-				break;
-
-			case ObjectId::AxeItem:
-			case ObjectId::DaggerItem:
-			case ObjectId::HolyWaterItem:
-			case ObjectId::Stopwatch:
-				OnCollideWithSubWeaponItem(result);
 				break;
 
 			case ObjectId::Door:
@@ -300,6 +304,23 @@ void PlayerResponseSystem::OnCollideWithMoneyBag(CollisionResult &result)
 	parent.data.score += moneyBag.GetMoney();
 }
 
+void PlayerResponseSystem::OnCollideWithSubWeaponItem(CollisionResult &result)
+{
+	auto &subWeaponItem = dynamic_cast<GameObject&>(result.collidedObject);
+	auto itemId = subWeaponItem.GetId();
+
+	subWeaponItem.Destroy();
+	parent.SetSubWeapon(itemId);
+}
+
+void PlayerResponseSystem::OnCollideWithCross(CollisionResult &result)
+{
+	auto &cross = dynamic_cast<GameObject&>(result.collidedObject);
+
+	parent.Notify(CROSS_POWERUP_ACTIVATED);
+	cross.Destroy();
+}
+
 void PlayerResponseSystem::OnCollideWithHeart(CollisionResult &result)
 {
 	auto &largeHeart = dynamic_cast<GameObject&>(result.collidedObject);
@@ -346,15 +367,6 @@ void PlayerResponseSystem::OnCollideWithWhipPowerup(CollisionResult &result)
 	}
 
 	whipPowerup.Destroy();
-}
-
-void PlayerResponseSystem::OnCollideWithSubWeaponItem(CollisionResult &result)
-{
-	auto &subWeaponItem = dynamic_cast<GameObject&>(result.collidedObject);
-	auto itemId = subWeaponItem.GetId();
-	
-	subWeaponItem.Destroy();
-	parent.SetSubWeapon(itemId);
 }
 
 void PlayerResponseSystem::OnCollideWithDoor(CollisionResult &result, ResponseResult &responseResult)

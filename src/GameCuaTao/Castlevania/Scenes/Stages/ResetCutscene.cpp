@@ -25,7 +25,7 @@ void ResetCutscene::Update(UpdateData &updateData)
 
 void ResetCutscene::Draw(SpriteExtensions &spriteBatch)
 {
-	spriteBatch.Draw(*cutsceneBackground, Vector2::Zero());
+	spriteBatch.Draw(*cutsceneBackground, Vector2::Zero(), false);
 
 	if (isComplete)
 		stage.OnNotify(Subject::Empty(), RESET_STAGE_CUTSCENE_ENDED);
