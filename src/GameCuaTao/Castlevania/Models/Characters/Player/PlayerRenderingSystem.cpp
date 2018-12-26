@@ -2,11 +2,15 @@
 #include "../../Settings.h"
 #include "../../../Settings/Animations.h"
 #include "../../../Scenes/Stages/StageEvent.h"
+#include "../../../Utilities/CppExtensions.h"
 
 using namespace Castlevania;
 
 constexpr auto BEND_KNEE_ON_JUMPING_Y = 330.0f;
 constexpr auto STRETCH_LEG_ON_FALLING_Y = 200.0f;
+
+constexpr auto INVISIBLE_EFFECT_START = 2000;
+constexpr auto INVISIBLE_EFFECT_END = 4000;
 
 PlayerRenderingSystem::PlayerRenderingSystem(Player &parent, std::string animationPath) :
 	parent{ parent }
@@ -41,7 +45,8 @@ void PlayerRenderingSystem::Receive(int message)
 			break;
 
 		case UNTOUCHABLE_ENDED:
-			OnUntouchableFinish();
+		case INVISIBLE_ENDED:
+			sprite->SetVisibility(true);
 			break;
 	}
 }
@@ -97,10 +102,10 @@ void PlayerRenderingSystem::UpdateNormalState()
 				case MoveState::HOVERING:
 				case MoveState::FALLING:
 					if (velocity.y > -BEND_KNEE_ON_JUMPING_Y)
-						sprite->Play(JUMP_ANIMATION);
+						PlayAnimation(JUMP_ANIMATION);
 
 					if (velocity.y > STRETCH_LEG_ON_FALLING_Y)
-						sprite->Play(IDLE_ANIMATION);
+						PlayAnimation(IDLE_ANIMATION);
 					break;
 			}
 			break;
@@ -121,6 +126,53 @@ void PlayerRenderingSystem::UpdateNormalState()
 		if (parent.GetMoveState() != MoveState::TAKING_DAMAGE)
 			sprite->SetVisibility(Stopwatch::Every(1) ? true : false);
 	}
+
+	if (parent.invisibleTimer.IsRunning())
+	{
+		UpdateInvisibleRendering();
+	}
+}
+
+void PlayerRenderingSystem::UpdateInvisibleRendering()
+{
+	auto invisibleElapsed = parent.invisibleTimer.ElapsedMilliseconds();
+
+	if (invisibleElapsed >= INVISIBLE_EFFECT_START && invisibleElapsed <= INVISIBLE_EFFECT_END)
+	{
+		if (!drawInvisibleEffect)
+		{
+			sprite->SetVisibility(true);
+			drawInvisibleEffect = true;
+			PlayAnimation(sprite->GetCurrentAnimation().GetName());
+		}
+	}
+	else
+	{
+		if (drawInvisibleEffect)
+			drawInvisibleEffect = false;
+
+		sprite->SetVisibility(Stopwatch::Every(1) ? true : false);
+	}
+}
+
+void PlayerRenderingSystem::PlayAnimation(std::string name)
+{
+	if (drawInvisibleEffect)
+	{
+		auto invisibleSuffix = "_invisible";
+
+		if (EndsWith(name, invisibleSuffix))
+			return;
+
+		sprite->Play(name + invisibleSuffix);
+	}
+	else
+	{
+		if (name == WALK_ANIMATION)
+			sprite->PlayCached(name);
+		else
+			sprite->Play(name);
+	}
 }
 
 void PlayerRenderingSystem::OnStateChanged()
@@ -128,7 +180,7 @@ void PlayerRenderingSystem::OnStateChanged()
 	switch (parent.state)
 	{
 		case ObjectState::DYING:
-			sprite->Play(DIE_ANIMATION);
+			PlayAnimation(DIE_ANIMATION);
 			break;
 	}
 }
@@ -138,37 +190,37 @@ void PlayerRenderingSystem::OnMoveStateChanged()
 	switch (parent.moveState)
 	{
 		case MoveState::IDLE:
-			sprite->Play(IDLE_ANIMATION);
+			PlayAnimation(IDLE_ANIMATION);
 			break;
 
 		case MoveState::WALKING:
 		case MoveState::WALKING_TO_STAIRS:
-			sprite->PlayCached(WALK_ANIMATION);
+			PlayAnimation(WALK_ANIMATION);
 			break;
 
 		case MoveState::IDLE_UPSTAIRS:
-			sprite->Play(IDLE_UPSTAIRS_ANIMATION);
+			PlayAnimation(IDLE_UPSTAIRS_ANIMATION);
 			break;
 
 		case MoveState::IDLE_DOWNSTAIRS:
-			sprite->Play(IDLE_DOWNSTAIRS_ANIMATION);
+			PlayAnimation(IDLE_DOWNSTAIRS_ANIMATION);
 			break;
 
 		case MoveState::GOING_UPSTAIRS:
-			sprite->Play(GO_UPSTAIRS_ANIMATION);
+			PlayAnimation(GO_UPSTAIRS_ANIMATION);
 			break;
 
 		case MoveState::GOING_DOWNSTAIRS:
-			sprite->Play(GO_DOWNSTAIRS_ANIMATION);
+			PlayAnimation(GO_DOWNSTAIRS_ANIMATION);
 			break;
 
 		case MoveState::DUCKING:
 		case MoveState::LANDING_HARD:
-			sprite->Play(DUCK_ANIMATION);
+			PlayAnimation(DUCK_ANIMATION);
 			break;
 
 		case MoveState::LANDING:
-			sprite->Play(JUMP_ANIMATION);
+			PlayAnimation(JUMP_ANIMATION);
 			break;
 
 		case MoveState::FLASHING:
@@ -178,27 +230,27 @@ void PlayerRenderingSystem::OnMoveStateChanged()
 			switch (currentFrameIndex)
 			{
 				case 0:
-					sprite->Play(FLASH_01_ANIMATION);
+					PlayAnimation(FLASH_01_ANIMATION);
 					break;
 				case 1:
-					sprite->Play(FLASH_02_ANIMATION);
+					PlayAnimation(FLASH_02_ANIMATION);
 					break;
 				case 2:
-					sprite->Play(FLASH_03_ANIMATION);
+					PlayAnimation(FLASH_03_ANIMATION);
 					break;
 				case 3:
-					sprite->Play(FLASH_04_ANIMATION);
+					PlayAnimation(FLASH_04_ANIMATION);
 					break;
 			}
 			break;
 		}
 
 		case MoveState::TURNING_BACKWARD:
-			sprite->Play(TURN_BACKWARD_ANIMATION);
+			PlayAnimation(TURN_BACKWARD_ANIMATION);
 			break;
 
 		case MoveState::TAKING_DAMAGE:
-			sprite->Play(TAKE_DAMAGE_ANIMATION);
+			PlayAnimation(TAKE_DAMAGE_ANIMATION);
 			break;
 	}
 }
@@ -212,31 +264,26 @@ void PlayerRenderingSystem::OnAttackStateChanged()
 	{
 		case MoveState::IDLE:
 		case MoveState::WALKING:
-			sprite->Play(ATTACK_ANIMATION);
+			PlayAnimation(ATTACK_ANIMATION);
 			break;
 
 		case MoveState::IDLE_UPSTAIRS:
-			sprite->Play(GO_UPSTAIRS_ATTACK_ANIMATION);
+			PlayAnimation(GO_UPSTAIRS_ATTACK_ANIMATION);
 			break;
 
 		case MoveState::IDLE_DOWNSTAIRS:
-			sprite->Play(GO_DOWNSTAIRS_ATTACK_ANIMATION);
+			PlayAnimation(GO_DOWNSTAIRS_ATTACK_ANIMATION);
 			break;
 
 		case MoveState::JUMPING:
 		case MoveState::HOVERING:
 		case MoveState::LANDING:
 		case MoveState::FALLING:
-			sprite->Play(JUMP_ATTACK_ANIMATION);
+			PlayAnimation(JUMP_ATTACK_ANIMATION);
 			break;
 
 		case MoveState::DUCKING:
-			sprite->Play(DUCK_ATTACK_ANIMATION);
+			PlayAnimation(DUCK_ATTACK_ANIMATION);
 			break;
 	}
-}
-
-void PlayerRenderingSystem::OnUntouchableFinish()
-{
-	sprite->SetVisibility(true);
 }

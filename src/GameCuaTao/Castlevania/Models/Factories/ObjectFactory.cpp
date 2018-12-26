@@ -471,7 +471,7 @@ std::unique_ptr<RangedWeapon> ObjectFactory::CreateAxe(Vector2 position)
 	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, 2000.0f);
 	auto collisionSystem = std::make_unique<WeaponCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<WeaponResponseSystem>(*object, false);
-	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*object, "Items/Axe.ani.xml");
+	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*object, "Weapons/Axe.ani.xml");
 
 	object->SetPosition(position);
 	object->Attach(std::move(movementSystem));
@@ -494,7 +494,7 @@ std::unique_ptr<RangedWeapon> ObjectFactory::CreateDagger(Vector2 position)
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
 	auto collisionSystem = std::make_unique<WeaponCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<WeaponResponseSystem>(*object, true);
-	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Dagger.png");
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Weapons/Dagger.png");
 
 	object->SetPosition(position);
 	object->Attach(std::move(movementSystem));
@@ -517,7 +517,7 @@ std::unique_ptr<HolyWater> ObjectFactory::CreateHolyWater(Vector2 position)
 	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, 600.0f);
 	auto collisionSystem = std::make_unique<WeaponCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<HolyWaterResponseSystem>(*object);
-	auto renderingSystem = std::make_unique<HolyWaterRenderingSystem>(*object, "Items/Holy_Water.ani.xml");
+	auto renderingSystem = std::make_unique<HolyWaterRenderingSystem>(*object, "Weapons/Holy_Water.ani.xml");
 
 	object->SetPosition(position);
 	object->Attach(std::move(movementSystem));
@@ -539,7 +539,7 @@ std::unique_ptr<RangedWeapon> ObjectFactory::CreateFireball(Vector2 position)
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
 	auto renderingSystem = std::make_unique<ItemRenderingSystem>(
-		*object, "Items/Fireball.png", effectFactory->CreateFlameEffect());
+		*object, "Weapons/Fireball.png", effectFactory->CreateFlameEffect());
 
 	object->SetPosition(position);
 	object->Attach(std::move(movementSystem));
@@ -569,6 +569,9 @@ std::unique_ptr<Powerup> ObjectFactory::CreatePowerup(ObjectId type, Vector2 pos
 		case ObjectId::AxeItem:
 			return CreateAxeItem(position);
 
+		case ObjectId::Cross:
+			return CreateCross(position);
+
 		case ObjectId::DaggerItem:
 			return CreateDaggerItem(position);
 
@@ -580,6 +583,12 @@ std::unique_ptr<Powerup> ObjectFactory::CreatePowerup(ObjectId type, Vector2 pos
 
 		case ObjectId::SmallHeart:
 			return CreateSmallHeart(position);
+
+		case ObjectId::InvisibleJar:
+			return CreateInvisibleJar(position);
+
+		case ObjectId::Stopwatch:
+			return CreateStopwatch(position);
 
 		case ObjectId::WhipPowerup:
 			return CreateWhipPowerup(position);
@@ -681,7 +690,28 @@ std::unique_ptr<Powerup> ObjectFactory::CreateAxeItem(Vector2 position)
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
 	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
-	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Axe_Item.png");
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Axe.png");
+
+	object->SetPosition(position);
+	object->Attach(std::move(movementSystem));
+	object->Attach(std::move(collisionSystem));
+	object->Attach(std::move(responseSystem));
+	object->Attach(std::move(renderingSystem));
+
+	object->LoadContent(content);
+	object->SetVelocity_Y(ITEM_FALL_SPEED); // Fall down
+
+	return object;
+}
+
+std::unique_ptr<Powerup> ObjectFactory::CreateCross(Vector2 position)
+{
+	auto object = std::make_unique<Powerup>(ObjectId::Cross, 100000);
+
+	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
+	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
+	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Cross.png");
 
 	object->SetPosition(position);
 	object->Attach(std::move(movementSystem));
@@ -723,7 +753,7 @@ std::unique_ptr<Powerup> ObjectFactory::CreateHolyWaterItem(Vector2 position)
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
 	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
-	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Holy_Water_Item.png");
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Holy_Water.png");
 
 	object->SetPosition(position);
 	object->Attach(std::move(movementSystem));
@@ -775,6 +805,48 @@ std::unique_ptr<Powerup> ObjectFactory::CreateSmallHeart(Vector2 position)
 
 	object->LoadContent(content);
 	object->SetSpeed(120.0f); // Fall down
+
+	return object;
+}
+
+std::unique_ptr<Powerup> ObjectFactory::CreateInvisibleJar(Vector2 position)
+{
+	auto object = std::make_unique<Powerup>(ObjectId::InvisibleJar);
+
+	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
+	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
+	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Invisible_Jar.png");
+
+	object->SetPosition(position);
+	object->Attach(std::move(movementSystem));
+	object->Attach(std::move(collisionSystem));
+	object->Attach(std::move(responseSystem));
+	object->Attach(std::move(renderingSystem));
+
+	object->LoadContent(content);
+	object->SetVelocity_Y(ITEM_FALL_SPEED); // Fall down
+
+	return object;
+}
+
+std::unique_ptr<Powerup> ObjectFactory::CreateStopwatch(Vector2 position)
+{
+	auto object = std::make_unique<Powerup>(ObjectId::Stopwatch, 100000);
+
+	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
+	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
+	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Stopwatch.png");
+
+	object->SetPosition(position);
+	object->Attach(std::move(movementSystem));
+	object->Attach(std::move(collisionSystem));
+	object->Attach(std::move(responseSystem));
+	object->Attach(std::move(renderingSystem));
+
+	object->LoadContent(content);
+	object->SetVelocity_Y(ITEM_FALL_SPEED); // Fall down
 
 	return object;
 }

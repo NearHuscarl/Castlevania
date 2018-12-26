@@ -13,9 +13,14 @@ bool Castlevania::ToBoolean(std::string str)
 	return result;
 }
 
-bool Castlevania::StartsWith(std::string str, std::string subStr)
+bool Castlevania::StartsWith(const std::string &str, const std::string &prefix)
 {
-	return str.compare(0, subStr.length(), subStr) == 0;
+	return str.length() >= prefix.length() && str.compare(0, prefix.length(), prefix) == 0;
+}
+
+bool Castlevania::EndsWith(const std::string &str, const std::string &suffix)
+{
+	return str.length() >= suffix.length() && str.compare(str.length() - suffix.length(), suffix.length(), suffix) == 0;
 }
 
 std::vector<std::string> Castlevania::Split(const std::string &str, char delimiter)

@@ -12,6 +12,7 @@ constexpr auto LANDING_TIME = 400;
 constexpr auto FLASHING_TIME = 900;
 constexpr auto UNTOUCHABLE_TIME = 2000;
 constexpr auto THROWING_COOLDOWN = 850;
+constexpr auto INVISIBLE_TIME = 6000;
 
 // Simon bounce back's max height (when taking damage)
 constexpr auto BOUNCE_BACK_HEIGHT = 360.0f;
@@ -165,6 +166,12 @@ void Player::UpdateStates()
 	{
 		untouchableTimer.Reset();
 		SendMessageToSystems(UNTOUCHABLE_ENDED);
+	}
+
+	if (invisibleTimer.ElapsedMilliseconds() > INVISIBLE_TIME)
+	{
+		invisibleTimer.Reset();
+		SendMessageToSystems(INVISIBLE_ENDED);
 	}
 }
 
@@ -473,9 +480,14 @@ void Player::Flash()
 	flashingTimer.Start();
 }
 
+void Player::BecomeInvisible()
+{
+	invisibleTimer.Start();
+}
+
 void Player::TakeDamage(int damage, Direction direction)
 {
-	if (untouchableTimer.IsRunning())
+	if (untouchableTimer.IsRunning() || invisibleTimer.IsRunning())
 		return;
 
 	data.health -= damage;

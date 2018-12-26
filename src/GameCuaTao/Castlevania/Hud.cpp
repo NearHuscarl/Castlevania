@@ -96,9 +96,9 @@ void Hud::LoadContent(ContentManager &content)
 	bossFullBlock = std::make_unique<Sprite>(hpBlockAtlas->at("boss_full"));
 	emptyBlock = std::make_unique<Sprite>(hpBlockAtlas->at("empty"));
 
-	axeItemTexture = content.Load<Texture>("Hud/Axe.png");
-	daggerItemTexture = content.Load<Texture>("Hud/Dagger.png");
-	holyWaterItemTexture = content.Load<Texture>("Hud/Holy_Water.png");
+	axeTexture = content.Load<Texture>("Items/Axe.png");
+	daggerTexture = content.Load<Texture>("Items/Dagger.png");
+	holyWaterTexture = content.Load<Texture>("Items/Holy_Water.png");
 }
 
 void Hud::Draw(SpriteExtensions &spriteBatch)
@@ -153,13 +153,13 @@ std::shared_ptr<Texture> Hud::GetWeaponTexture()
 	switch (data->playerData->subWeapon)
 	{
 		case ObjectId::AxeItem:
-			return axeItemTexture;
+			return axeTexture;
 
 		case ObjectId::DaggerItem:
-			return daggerItemTexture;
+			return daggerTexture;
 
 		case ObjectId::HolyWaterItem:
-			return holyWaterItemTexture;
+			return holyWaterTexture;
 
 		default:
 			return nullptr;

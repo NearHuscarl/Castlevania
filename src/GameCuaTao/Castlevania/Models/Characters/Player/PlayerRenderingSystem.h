@@ -24,12 +24,14 @@ namespace Castlevania
 		Player &parent;
 		std::unique_ptr<AnimatedSprite> sprite;
 		std::string animationPath;
+		bool drawInvisibleEffect;
 
 		void UpdateNormalState();
+		void UpdateInvisibleRendering();
+		void PlayAnimation(std::string name);
 
 		void OnStateChanged() override;
 		void OnMoveStateChanged() override;
 		void OnAttackStateChanged();
-		void OnUntouchableFinish();
 	};
 }

@@ -236,7 +236,7 @@ void Stage::DrawGameplay(SpriteExtensions &spriteBatch)
 
 	auto existedBlocks = std::vector<GameObject*>{};
 
-	// TODO: divide big block into smaller blocks so grid can consume it
+	// TODO: divide big block into smaller blocks so each cell can consume it
 	grid->GetCellsFromBoundingBox(camera->GetBounds(), [&](CollisionCell &cell, int col, int row)
 	{
 		auto &collisionObject = cell.GetObjects();

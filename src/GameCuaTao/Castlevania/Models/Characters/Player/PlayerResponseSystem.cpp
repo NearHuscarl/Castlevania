@@ -81,6 +81,10 @@ void PlayerResponseSystem::Update(UpdateData &updateData)
 				OnCollideWithSmallHeart(result);
 				break;
 
+			case ObjectId::InvisibleJar:
+				OnCollideWithInvisibleJar(result);
+				break;
+
 			case ObjectId::WhipPowerup:
 				OnCollideWithWhipPowerup(result);
 				break;
@@ -308,6 +312,14 @@ void PlayerResponseSystem::OnCollideWithSmallHeart(CollisionResult &result)
 
 	parent.data.hearts += 1;
 	smallHeart.Destroy();
+}
+
+void PlayerResponseSystem::OnCollideWithInvisibleJar(CollisionResult &result)
+{
+	auto &invisibleJar = dynamic_cast<GameObject&>(result.collidedObject);
+
+	parent.BecomeInvisible();
+	invisibleJar.Destroy();
 }
 
 void PlayerResponseSystem::OnCollideWithWhipPowerup(CollisionResult &result)

@@ -2,10 +2,14 @@
 
 using namespace Castlevania;
 
-constexpr auto LIFESPAN = 4000; // in milliseconds
+constexpr auto DEFAULT_POWERUP_LIFESPAN = 4000; // in milliseconds
 
-Powerup::Powerup(ObjectId type) : GameObject{ type }
+Powerup::Powerup(ObjectId type, int lifeSpan) : GameObject{ type }
 {
+	if (lifeSpan == 0)
+		this->lifeSpan = DEFAULT_POWERUP_LIFESPAN;
+	else
+		this->lifeSpan = lifeSpan;
 }
 
 void Powerup::Spawn()
@@ -18,6 +22,6 @@ void Powerup::Update(UpdateData &updateData)
 	GameObject::Update(updateData);
 
 	// Powerup self-destruct after a given amount of time
-	if (lifespanTimer.ElapsedMilliseconds() >= LIFESPAN)
+	if (lifespanTimer.ElapsedMilliseconds() >= lifeSpan)
 		Destroy();
 }

@@ -122,6 +122,7 @@ namespace Castlevania
 		void Fall();
 		void Land();
 		void Flash(); // simon flashing when getting whip-upgrade powerup
+		void BecomeInvisible();
 		void TakeDamage(int damage, Direction direction);
 		void BounceBack(Direction direction); // when simon taking damage
 		void Die();
@@ -139,6 +140,7 @@ namespace Castlevania
 		Stopwatch flashingTimer;
 		Stopwatch untouchableTimer; // cooldown time after taking damage
 		Stopwatch throwingCooldownTimer;
+		Stopwatch invisibleTimer;
 
 		// Component-related flags
 		NearbyObjects nearbyObjects;

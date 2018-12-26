@@ -57,7 +57,7 @@ namespace Castlevania
 		LargeHeart,
 		SmallHeart,
 		InvisibleJar,
-		StopWatch,
+		Stopwatch,
 		WhipPowerup,
 		CrystalBall,
 

@@ -8,12 +8,13 @@ namespace Castlevania
 	class Powerup : public GameObject
 	{
 	public:
-		Powerup(ObjectId type);
+		Powerup(ObjectId type, int lifeSpan = 0);
 
 		void Spawn();
 		void Update(UpdateData &updateData) override;
 
 	private:
 		Stopwatch lifespanTimer;
+		int lifeSpan;
 	};
 }

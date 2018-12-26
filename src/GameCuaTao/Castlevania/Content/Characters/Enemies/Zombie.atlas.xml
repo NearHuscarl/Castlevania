@@ -5,7 +5,7 @@
   <Spritesheet TexturePath="Zombie.png">
     <Sprite ID="walk_01">
       <SpriteFrame Left="0" Top="0" Width="34" Height="64" />
-      <SpriteBoundary Left="10" Top="12" Width="2" Height="52" />
+      <SpriteBoundary Left="12" Top="12" Width="2" Height="52" />
     </Sprite>
 
     <Sprite ID="walk_02">

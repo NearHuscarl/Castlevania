@@ -41,9 +41,9 @@ namespace Castlevania
 		std::shared_ptr<Texture> borderTexture;
 		std::shared_ptr<Texture> heartTexture;
 
-		std::shared_ptr<Texture> axeItemTexture;
-		std::shared_ptr<Texture> daggerItemTexture;
-		std::shared_ptr<Texture> holyWaterItemTexture;
+		std::shared_ptr<Texture> axeTexture;
+		std::shared_ptr<Texture> daggerTexture;
+		std::shared_ptr<Texture> holyWaterTexture;
 
 		std::unique_ptr<Sprite> playerFullBlock;
 		std::unique_ptr<Sprite> bossFullBlock;

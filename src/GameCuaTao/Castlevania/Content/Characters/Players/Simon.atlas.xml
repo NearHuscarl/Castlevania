@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <GameContent>
-  <!-- 48 x 64 -->
+  <!-- 60 x 66 -->
+
+  <!-- ========================= -->
+  <!-- === Normal Atlases === -->
+  <!-- ========================= -->
+
   <Spritesheet TexturePath="Simon.png">
     <Sprite ID="attack_01">
       <SpriteFrame Left="300" Top="66" Width="60" Height="66" />
@@ -138,6 +143,10 @@
       <SpriteBoundary Left="10" Top="138" Width="32" Height="58" />
     </Sprite>
 
+    <!-- ========================== -->
+    <!-- === Special Atlases === -->
+    <!-- ========================== -->
+
     <Sprite ID="die_01">
       <SpriteFrame Left="0" Top="198" Width="60" Height="66" />
       <SpriteBoundary Left="16" Top="218" Width="32" Height="44" />
@@ -149,18 +158,18 @@
     </Sprite>
 
     <Sprite ID="walk_flash_red_01">
-      <SpriteFrame Left="180" Top="330" Width="60" Height="66" />
-      <SpriteBoundary Left="196" Top="334" Width="32" Height="60" />
+      <SpriteFrame Left="0" Top="330" Width="60" Height="66" />
+      <SpriteBoundary Left="16" Top="334" Width="32" Height="60" />
     </Sprite>
 
     <Sprite ID="walk_flash_magenta_01">
-      <SpriteFrame Left="240" Top="330" Width="60" Height="66" />
-      <SpriteBoundary Left="256" Top="334" Width="32" Height="60" />
+      <SpriteFrame Left="60" Top="330" Width="60" Height="66" />
+      <SpriteBoundary Left="76" Top="334" Width="32" Height="60" />
     </Sprite>
 
     <Sprite ID="walk_flash_blue_01">
-      <SpriteFrame Left="300" Top="330" Width="60" Height="66" />
-      <SpriteBoundary Left="316" Top="334" Width="32" Height="60" />
+      <SpriteFrame Left="120" Top="330" Width="60" Height="66" />
+      <SpriteBoundary Left="136" Top="334" Width="32" Height="60" />
     </Sprite>
 
     <Sprite ID="walk_flash_red_02">
@@ -193,20 +202,145 @@
       <SpriteBoundary Left="318" Top="268" Width="30" Height="60" />
     </Sprite>
 
-    <Sprite ID="walk_flash_red_04">
-      <SpriteFrame Left="0" Top="330" Width="60" Height="66" />
-      <SpriteBoundary Left="24" Top="332" Width="24" Height="62" />
+    <!-- ============================ -->
+    <!-- === Invisible Atlases === -->
+    <!-- ============================ -->
+
+    <Sprite ID="attack_invisible_01">
+      <SpriteFrame Left="300" Top="462" Width="60" Height="66" />
+      <SpriteBoundary Left="300" Top="466" Width="48" Height="60" />
     </Sprite>
 
-    <Sprite ID="walk_flash_magenta_04">
-      <SpriteFrame Left="60" Top="330" Width="60" Height="66" />
-      <SpriteBoundary Left="84" Top="332" Width="24" Height="62" />
+    <Sprite ID="attack_invisible_02">
+      <SpriteFrame Left="360" Top="462" Width="60" Height="66" />
+      <SpriteBoundary Left="376" Top="466" Width="32" Height="60" />
     </Sprite>
 
-    <Sprite ID="walk_flash_blue_04">
-      <SpriteFrame Left="120" Top="330" Width="60" Height="66" />
-      <SpriteBoundary Left="144" Top="332" Width="24" Height="62" />
+    <Sprite ID="attack_invisible_03">
+      <SpriteFrame Left="420" Top="462" Width="60" Height="66" />
+      <SpriteBoundary Left="436" Top="468" Width="43" Height="58" />
     </Sprite>
+
+    <Sprite ID="jump_invisible_01">
+      <SpriteFrame Left="240" Top="396" Width="60" Height="66" />
+      <SpriteBoundary Left="256" Top="405" Width="32" Height="55" />
+    </Sprite>
+
+    <Sprite ID="duck_invisible_01"> <!-- OffsetY = -9 -->
+      <SpriteFrame Left="240" Top="387" Width="60" Height="66" />
+      <SpriteBoundary Left="256" Top="405" Width="32" Height="46" />
+    </Sprite>
+
+    <Sprite ID="walk_invisible_01">
+      <SpriteFrame Left="180" Top="396" Width="60" Height="66" />
+      <SpriteBoundary Left="196" Top="400" Width="32" Height="60" />
+    </Sprite>
+
+    <Sprite ID="walk_invisible_02">
+      <SpriteFrame Left="0" Top="396" Width="60" Height="66" />
+      <SpriteBoundary Left="24" Top="399" Width="24" Height="61" />
+    </Sprite>
+
+    <Sprite ID="walk_invisible_03">
+      <SpriteFrame Left="60" Top="396" Width="60" Height="66" />
+      <SpriteBoundary Left="78" Top="400" Width="30" Height="60" />
+    </Sprite>
+
+    <Sprite ID="walk_invisible_04">
+      <SpriteFrame Left="120" Top="396" Width="60" Height="66" />
+      <SpriteBoundary Left="144" Top="398" Width="24" Height="62" />
+    </Sprite>
+
+    <Sprite ID="go_upstairs_invisible_01">
+      <SpriteFrame Left="60" Top="462" Width="60" Height="66" />
+      <SpriteBoundary Left="71" Top="464" Width="30" Height="62" />
+    </Sprite>
+
+    <Sprite ID="go_upstairs_invisible_02">
+      <SpriteFrame Left="120" Top="462" Width="60" Height="66" />
+      <SpriteBoundary Left="134" Top="464" Width="24" Height="62" />
+    </Sprite>
+
+    <Sprite ID="go_downstairs_invisible_01">
+      <SpriteFrame Left="180" Top="462" Width="60" Height="66" />
+      <SpriteBoundary Left="198" Top="464" Width="32" Height="62" />
+    </Sprite>
+
+    <Sprite ID="go_downstairs_invisible_02">
+      <SpriteFrame Left="240" Top="462" Width="60" Height="66" />
+      <SpriteBoundary Left="266" Top="464" Width="24" Height="62" />
+    </Sprite>
+
+    <Sprite ID="go_upstairs_attack_invisible_01">
+      <SpriteFrame Left="120" Top="528" Width="60" Height="66" />
+      <SpriteBoundary Left="120" Top="530" Width="41" Height="62" />
+    </Sprite>
+
+    <Sprite ID="go_upstairs_attack_invisible_02">
+      <SpriteFrame Left="180" Top="528" Width="60" Height="66" />
+      <SpriteBoundary Left="189" Top="530" Width="32" Height="62" />
+    </Sprite>
+
+    <Sprite ID="go_upstairs_attack_invisible_03">
+      <SpriteFrame Left="240" Top="528" Width="60" Height="66" />
+      <SpriteBoundary Left="249" Top="532" Width="44" Height="60" />
+    </Sprite>
+
+    <Sprite ID="go_downstairs_attack_invisible_01">
+      <SpriteFrame Left="300" Top="528" Width="60" Height="66" />
+      <SpriteBoundary Left="302" Top="530" Width="48" Height="62" />
+    </Sprite>
+
+    <Sprite ID="go_downstairs_attack_invisible_02">
+      <SpriteFrame Left="360" Top="528" Width="60" Height="66" />
+      <SpriteBoundary Left="378" Top="530" Width="32" Height="62" />
+    </Sprite>
+
+    <Sprite ID="go_downstairs_attack_invisible_03">
+      <SpriteFrame Left="420" Top="528" Width="60" Height="66" />
+      <SpriteBoundary Left="438" Top="532" Width="41" Height="60" />
+    </Sprite>
+
+    <Sprite ID="jump_attack_invisible_01">
+      <SpriteFrame Left="300" Top="396" Width="60" Height="66" />
+      <SpriteBoundary Left="300" Top="405" Width="48" Height="46" />
+    </Sprite>
+
+    <Sprite ID="jump_attack_invisible_02">
+      <SpriteFrame Left="360" Top="396" Width="60" Height="66" />
+      <SpriteBoundary Left="376" Top="405" Width="32" Height="46" />
+    </Sprite>
+
+    <Sprite ID="jump_attack_invisible_03">
+      <SpriteFrame Left="420" Top="396" Width="60" Height="66" />
+      <SpriteBoundary Left="435" Top="407" Width="44" Height="44" />
+    </Sprite>
+
+    <Sprite ID="duck_attack_invisible_01"> <!-- OffsetY = -9 -->
+      <SpriteFrame Left="300" Top="387" Width="60" Height="66" />
+      <SpriteBoundary Left="300" Top="405" Width="48" Height="46" />
+    </Sprite>
+
+    <Sprite ID="duck_attack_invisible_02"> <!-- OffsetY = -9 -->
+      <SpriteFrame Left="360" Top="387" Width="60" Height="66" />
+      <SpriteBoundary Left="377" Top="405" Width="32" Height="46" />
+    </Sprite>
+
+    <Sprite ID="duck_attack_invisible_03"> <!-- OffsetY = -9 -->
+      <SpriteFrame Left="420" Top="387" Width="60" Height="66" />
+      <SpriteBoundary Left="435" Top="407" Width="44" Height="44" />
+    </Sprite>
+
+    <Sprite ID="turn_backward_invisible_01">
+      <SpriteFrame Left="0" Top="462" Width="60" Height="66" />
+      <SpriteBoundary Left="8" Top="462" Width="32" Height="64" />
+    </Sprite>
+
+    <Sprite ID="take_damage_invisible_01">
+      <SpriteFrame Left="0" Top="528" Width="60" Height="66" />
+      <SpriteBoundary Left="10" Top="534" Width="32" Height="58" />
+    </Sprite>
+
   </Spritesheet>
   
 </GameContent>

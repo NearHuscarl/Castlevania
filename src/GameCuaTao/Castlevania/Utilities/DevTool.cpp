@@ -43,16 +43,19 @@ void DevTool::LoadContent(ContentManager &content)
 	auto blueMoneyBagSprite = content.Load<Spritesheet>("Items/Money_Bag.atlas.xml")->at("money_bag_blue");
 	auto whiteMoneyBagSprite = content.Load<Spritesheet>("Items/Money_Bag.atlas.xml")->at("money_bag_white");
 	auto redMoneyBagSprite = content.Load<Spritesheet>("Items/Money_Bag.atlas.xml")->at("money_bag_red");
-	auto axeItemSprite = content.Load<Texture>("Items/Axe_Item.png");
+	auto axeItemSprite = content.Load<Texture>("Items/Axe.png");
+	auto crossSprite = content.Load<Texture>("Items/Cross.png");
 	auto daggerItemSprite = content.Load<Texture>("Items/Dagger.png");
-	auto holyWaterItemSprite = content.Load<Texture>("Items/Holy_Water_Item.png");
+	auto holyWaterItemSprite = content.Load<Texture>("Items/Holy_Water.png");
 	auto largeHeartSprite = content.Load<Texture>("Items/Large_Heart.png");
 	auto smallHeartSprite = content.Load<Texture>("Items/Small_Heart.png");
+	auto invisibleJarSprite = content.Load<Texture>("Items/Invisible_Jar.png");
+	auto stopwatchSprite = content.Load<Texture>("Items/Stopwatch.png");
 	auto whipPowerupSprite = content.Load<Texture>("Items/Whip_Powerup.png");
 
-	auto axeSprite = content.Load<Spritesheet>("Items/Axe.atlas.xml")->at("axe_01");
-	auto holyWaterSprite = content.Load<Spritesheet>("Items/Holy_Water.atlas.xml")->at("holy_water_01");
-	auto fireballSprite = content.Load<Texture>("Items/Fireball.png");
+	auto axeSprite = content.Load<Spritesheet>("Weapons/Axe.atlas.xml")->at("axe_01");
+	auto holyWaterSprite = content.Load<Spritesheet>("Weapons/Holy_Water.atlas.xml")->at("holy_water_01");
+	auto fireballSprite = content.Load<Texture>("Weapons/Fireball.png");
 
 	auto flameSprite = content.Load<Spritesheet>("Effects/Flame.atlas.xml")->at("flame_02");
 	auto waterSprite = content.Load<Texture>("Effects/Water.png");
@@ -83,10 +86,13 @@ void DevTool::LoadContent(ContentManager &content)
 				std::make_pair<std::string, Sprite>("RedMoneyBag", redMoneyBagSprite),
 				std::make_pair<std::string, Sprite>("FlashingMoneyBag", blueMoneyBagSprite),
 				std::make_pair<std::string, Sprite>("AxeItem", axeItemSprite),
+				std::make_pair<std::string, Sprite>("Cross", crossSprite),
 				std::make_pair<std::string, Sprite>("DaggerItem", daggerItemSprite),
 				std::make_pair<std::string, Sprite>("HolyWaterItem", holyWaterItemSprite),
 				std::make_pair<std::string, Sprite>("LargeHeart", largeHeartSprite),
 				std::make_pair<std::string, Sprite>("SmallHeart", smallHeartSprite),
+				std::make_pair<std::string, Sprite>("InvisibleJar", invisibleJarSprite),
+				std::make_pair<std::string, Sprite>("Stopwatch", stopwatchSprite),
 				std::make_pair<std::string, Sprite>("WhipPowerup", whipPowerupSprite),
 			}
 		},
@@ -246,10 +252,10 @@ void DevTool::DrawCollisionGridInfo(SpriteExtensions &spriteBatch)
 
 		// another O(n) from grid.GetCollisionObjects(), but it's debugging code so...
 		gridInfoText
-			<< "B:" << std::to_string(objects.blocks.size()) << "\n"
-			<< "S:" << std::to_string(objects.staticObjects.size()) << "\n"
-			<< "E:" << std::to_string(objects.entities.size()) << "\n"
-			<< "CoObjs:" << std::to_string(grid.GetCollisionObjects(col, row).size());
+			<< "B:" << objects.blocks.size() << "\n"
+			<< "S:" << objects.staticObjects.size() << "\n"
+			<< "E:" << objects.entities.size() << "\n"
+			<< "CoObjs:" << grid.GetCollisionObjects(col, row).size();
 
 		auto cellBbox = cell.GetBoundingBox();
 		auto gridInfoTextPosition = Vector2{
@@ -310,6 +316,7 @@ void DevTool::SpawnObject()
 	else if (category == POWERUP)
 	{
 		object = objectFactory.CreatePowerup(type);
+		dynamic_cast<Powerup&>(*object).Spawn();
 	}
 	else if (category == CONTAINER)
 	{

@@ -57,11 +57,15 @@ namespace Castlevania
 		std::unique_ptr<MoneyBag> CreateWhiteMoneyBag(Vector2 position = Vector2::Zero());
 		std::unique_ptr<MoneyBag> CreateRedMoneyBag(Vector2 position = Vector2::Zero());
 		std::unique_ptr<MoneyBag> CreateFlashingMoneyBag(Vector2 position = Vector2::Zero());
+
 		std::unique_ptr<Powerup> CreateAxeItem(Vector2 position = Vector2::Zero());
+		std::unique_ptr<Powerup> CreateCross(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Powerup> CreateDaggerItem(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Powerup> CreateHolyWaterItem(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Powerup> CreateLargeHeart(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Powerup> CreateSmallHeart(Vector2 position = Vector2::Zero());
+		std::unique_ptr<Powerup> CreateInvisibleJar(Vector2 position = Vector2::Zero());
+		std::unique_ptr<Powerup> CreateStopwatch(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Powerup> CreateWhipPowerup(Vector2 position = Vector2::Zero());
 		std::unique_ptr<GameObject> CreateCrystalBall(Vector2 position = Vector2::Zero());
 

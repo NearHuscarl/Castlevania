@@ -106,7 +106,8 @@ void CollisionGrid::Add(std::unique_ptr<GameObject> object, CollisionObjectType 
 {
 	object->Attach(this);
 
-	auto position = object->GetPosition();
+	auto bBox = object->GetBoundingBox();
+	auto position = Vector2{ bBox.left, bBox.top };
 
 	switch (type)
 	{
@@ -150,9 +151,10 @@ void CollisionGrid::Move(GameObject &object, Vector2 distance)
 	auto oldPosition = object.GetPosition();
 	auto oldBoundingBox = object.GetBoundingBox();
 	auto newPosition = oldPosition + distance;
-	auto newBoundingBox = object.GetBoundingBox();
-
+	
 	object.SetPosition(newPosition);
+	
+	auto newBoundingBox = object.GetBoundingBox();
 	
 	auto oldCellCol = (int)(oldBoundingBox.X() / cellWidth);
 	auto oldCellRow = (int)(oldBoundingBox.Y() / cellHeight);
@@ -207,6 +209,9 @@ void CollisionGrid::UpdateCell(int col, int row, UpdateData &updateData)
 {
 	auto &cell = *cells[col][row];
 	auto &entities = cell.GetEntites();
+	auto collisionObjects = GetCollisionObjects(col, row);
+
+	updateData.collisionObjects = &collisionObjects;
 
 	// Only update existing objects. Any new objects will have to wait until next turn
 	// That way, a newly spawned object wont get a chance to act during the same frame
@@ -216,9 +221,7 @@ void CollisionGrid::UpdateCell(int col, int row, UpdateData &updateData)
 	for (auto it = entities.begin(); it != std::next(entities.begin(), sizeThisTurn); std::advance(it, 1))
 	{
 		auto object = (*it).get();
-		auto collisionObjects = GetCollisionObjects(col, row);
 
-		updateData.collisionObjects = &collisionObjects;
 		object->Update(updateData);
 	}
 
@@ -276,7 +279,7 @@ void CollisionGrid::GetObjectsFromCell(std::vector<GameObject*> &collisionObject
 	auto &entities = cellObjects.entities;
 	auto &staticObjects = cellObjects.staticObjects;
 
-	for (auto &block : blocks) // TODO: divide big block into smaller blocks so grid can consume it
+	for (auto &block : blocks) // TODO: divide big block into smaller blocks so each cell can consume it
 	{
 		auto existed = false;
 
