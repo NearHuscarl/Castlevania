@@ -26,6 +26,10 @@ void Fishman::Update(UpdateData &updateData)
 {
 	Enemy::Update(updateData);
 
+	if (updateData.isStopwatchActive)
+		if (renderingSystem != nullptr && fishmanState == FishmanState::LAUNCHING)
+			renderingSystem->Update(updateData.gameTime); // Update launching effect
+
 	switch (fishmanState)
 	{
 		case FishmanState::SHOOTING:

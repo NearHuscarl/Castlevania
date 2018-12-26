@@ -11,7 +11,7 @@ using namespace Castlevania;
 constexpr auto LANDING_TIME = 400;
 constexpr auto FLASHING_TIME = 900;
 constexpr auto UNTOUCHABLE_TIME = 2000;
-constexpr auto THROWING_COOLDOWN = 850;
+constexpr auto THROWING_COOLDOWN_TIME = 850;
 constexpr auto INVISIBLE_TIME = 6000;
 
 // Simon bounce back's max height (when taking damage)
@@ -107,6 +107,7 @@ void Player::Update(UpdateData &updateData)
 {
 	GameObject::Update(updateData);
 	UpdateStates();
+	isStopwatchActive = updateData.isStopwatchActive;
 
 	whip->Update(updateData);
 }
@@ -342,11 +343,23 @@ void Player::Attack()
 	whip->Unleash();
 }
 
+void Player::Stoptime()
+{
+	if (isStopwatchActive)
+		return;
+
+	data.hearts -= 5;
+	Notify(STOPWATCH_POWERUP_ACTIVATED);
+
+	if (data.hearts == 0)
+		data.subWeapon = ObjectId::Unknown;
+}
+
 void Player::Throw(std::unique_ptr<RangedWeapon> weapon)
 {
 	if (throwingCooldownTimer.IsRunning())
 	{
-		if (throwingCooldownTimer.ElapsedMilliseconds() < THROWING_COOLDOWN)
+		if (throwingCooldownTimer.ElapsedMilliseconds() < THROWING_COOLDOWN_TIME)
 			return;
 	}
 

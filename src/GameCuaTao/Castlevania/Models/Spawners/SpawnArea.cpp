@@ -108,6 +108,9 @@ void SpawnArea::Deactivate()
 
 void SpawnArea::Update(UpdateData &updateData)
 {
+	if (updateData.isStopwatchActive)
+		return;
+
 	GameObject::Update(updateData);
 
 	switch (spawnState)

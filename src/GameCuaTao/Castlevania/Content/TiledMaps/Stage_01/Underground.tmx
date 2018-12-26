@@ -52,7 +52,7 @@
   </object>
   <object id="15" name="Candle" type="Candle" gid="1" x="568" y="66" width="16" height="32">
    <properties>
-    <property name="Item" value="LargeHeart"/>
+    <property name="Item" value="Stopwatch"/>
    </properties>
   </object>
   <object id="16" name="Candle" type="Candle" gid="1" x="694" y="66" width="16" height="32">

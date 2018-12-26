@@ -94,6 +94,7 @@ namespace Castlevania
 		void Jump();
 		void Duck();
 		void Attack();
+		void Stoptime();
 		void Throw(std::unique_ptr<RangedWeapon> weapon); // Throw secondary weapon (e.g. dagger, axe, boomerang)
 		void TurnBackward();
 		void Revive();
@@ -110,6 +111,7 @@ namespace Castlevania
 		AttackState attackState;
 		float stairWalkingSpeed;
 		float jumpSpeed;
+		bool isStopwatchActive;
 
 		std::unique_ptr<Whip> whip;
 		std::unique_ptr<RangedWeapon> subWeapon;

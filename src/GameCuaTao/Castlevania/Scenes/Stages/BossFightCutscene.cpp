@@ -55,7 +55,7 @@ void BossFightCutscene::Update(UpdateData &updateData)
 		boss->SetMoveArea(moveArea);
 		boss->SetActive();
 	
-		stage.OnNotify(Subject::Empty(), BOSS_FIGHT_STARTED);
+		stage.OnNotify(Subject::Empty(), CUTSCENE_ENDED);
 		isComplete = true;
 	}
 }

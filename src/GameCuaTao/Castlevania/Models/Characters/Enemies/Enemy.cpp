@@ -40,7 +40,11 @@ int Enemy::GetExp()
 
 void Enemy::Update(UpdateData &updateData)
 {
-	GameObject::Update(updateData);
+	if (!updateData.isStopwatchActive)
+		GameObject::Update(updateData);
+	else
+		if (renderingSystem != nullptr && state == ObjectState::DYING)
+			renderingSystem->Update(updateData.gameTime); // Update hit effect
 
 	auto viewport = updateData.viewport;
 

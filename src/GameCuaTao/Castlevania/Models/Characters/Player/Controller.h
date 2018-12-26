@@ -27,6 +27,6 @@ namespace Castlevania
 		bool IsHoldingLeftAndRight();
 		bool IsHoldingUpAndDown();
 
-		void Throw();
+		void UseSubweapon();
 	};
 }

@@ -832,7 +832,7 @@ std::unique_ptr<Powerup> ObjectFactory::CreateInvisibleJar(Vector2 position)
 
 std::unique_ptr<Powerup> ObjectFactory::CreateStopwatch(Vector2 position)
 {
-	auto object = std::make_unique<Powerup>(ObjectId::Stopwatch, 100000);
+	auto object = std::make_unique<Powerup>(ObjectId::Stopwatch);
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
 	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);

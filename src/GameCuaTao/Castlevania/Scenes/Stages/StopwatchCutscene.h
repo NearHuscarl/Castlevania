@@ -3,19 +3,17 @@
 #include "Direct2DGame/Utilities/Stopwatch.h"
 #include "Cutscene.h"
 #include "../../Models/Factories/ObjectFactory.h"
-#include "../../Models/IBoss.h"
 
 namespace Castlevania
 {
-	class BossFightCutscene : public Cutscene
+	class StopwatchCutscene : public Cutscene
 	{
 	public:
-		BossFightCutscene(Stage &stage, CollisionGrid &grid, ObjectFactory &objectFactory);
+		StopwatchCutscene(Stage &stage);
 
 		void Update(UpdateData &updateData) override;
 
 	private:
-		IBoss *boss;
-		Stopwatch bossWakeupTimer;
+		Stopwatch stopwatchTimer; // A stopwatch of another stopwatch >.>
 	};
 }

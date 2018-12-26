@@ -235,6 +235,7 @@
     <ClCompile Include="Castlevania\Scenes\Stages\NextMapCutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\NextRoomCutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\Stage.cpp" />
+    <ClCompile Include="Castlevania\Scenes\Stages\StopwatchCutscene.cpp" />
     <ClCompile Include="Castlevania\Utilities\CollisionCell.cpp" />
     <ClCompile Include="Castlevania\Utilities\CollisionGrid.cpp" />
     <ClCompile Include="Castlevania\Utilities\CppExtensions.cpp" />
@@ -410,6 +411,7 @@
     <ClInclude Include="Castlevania\Scenes\Stages\LevelCompletedCutscene.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\StageEvent.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\Stage.h" />
+    <ClInclude Include="Castlevania\Scenes\Stages\StopwatchCutscene.h" />
     <ClInclude Include="Castlevania\Utilities\CollisionGrid.h" />
     <ClInclude Include="Castlevania\Utilities\CollisionCell.h" />
     <ClInclude Include="Castlevania\Utilities\CollisionGridData.h" />
@@ -525,7 +527,6 @@
     <ClInclude Include="Library\pugixml\pugixml.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
     <None Include="cpp.hint" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

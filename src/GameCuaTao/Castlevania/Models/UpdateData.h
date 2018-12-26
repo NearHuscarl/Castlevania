@@ -11,6 +11,7 @@ namespace Castlevania
 		GameTime gameTime;
 		RectF viewport;
 		Player *player;
+		bool isStopwatchActive;
 		StageObject *stageObject;
 		std::vector<GameObject*> *collisionObjects;
 	};

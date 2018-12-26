@@ -99,6 +99,7 @@ void Hud::LoadContent(ContentManager &content)
 	axeTexture = content.Load<Texture>("Items/Axe.png");
 	daggerTexture = content.Load<Texture>("Items/Dagger.png");
 	holyWaterTexture = content.Load<Texture>("Items/Holy_Water.png");
+	stopwatchTexture = content.Load<Texture>("Items/Stopwatch.png");
 }
 
 void Hud::Draw(SpriteExtensions &spriteBatch)
@@ -160,6 +161,9 @@ std::shared_ptr<Texture> Hud::GetWeaponTexture()
 
 		case ObjectId::HolyWaterItem:
 			return holyWaterTexture;
+
+		case ObjectId::Stopwatch:
+			return stopwatchTexture;
 
 		default:
 			return nullptr;

@@ -204,6 +204,9 @@ void GameObject::EnableControl(bool value)
 
 void GameObject::Move(Vector2 distance)
 {
+	if (distance == Vector2::Zero())
+		return;
+
 	if (collisionGrid != nullptr)
 		collisionGrid->Move(*this, distance);
 	else

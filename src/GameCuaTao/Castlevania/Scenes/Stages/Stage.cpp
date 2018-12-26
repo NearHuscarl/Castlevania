@@ -6,6 +6,7 @@
 #include "NextRoomCutscene.h"
 #include "ResetCutscene.h"
 #include "GoToCastleCutScene.h"
+#include "StopwatchCutScene.h"
 #include "../GameplayScene.h"
 #include "../SceneManager.h"
 #include "../../Models/UpdateData.h"
@@ -85,6 +86,7 @@ void Stage::Update(GameTime gameTime)
 		gameTime,
 		camera->GetBounds(),
 		player.get(),
+		false,
 		stageObject.get(),
 		nullptr,
 	};
@@ -226,7 +228,9 @@ void Stage::UpdateGameplay(UpdateData &updateData)
 	devTool->Update(updateData);
 	camera->LookAt(player->GetOriginPosition(), Scrolling::Horizontally);
 	UpdateGameObjects(updateData);
-	data->timeLeft.CountDown();
+
+	if (!updateData.isStopwatchActive)
+		data->timeLeft.CountDown();
 }
 
 void Stage::DrawGameplay(SpriteExtensions &spriteBatch)
@@ -329,7 +333,7 @@ void Stage::ProcessMessage(int message)
 			SetCurrentCutscene(GameState::BOSS_FIGHT_CUTSCENE);
 			break;
 
-		case BOSS_FIGHT_STARTED:
+		case CUTSCENE_ENDED:
 			currentState = GameState::PLAYING;
 			break;
 
@@ -339,6 +343,10 @@ void Stage::ProcessMessage(int message)
 
 		case RESET_STAGE_CUTSCENE_ENDED:
 			Reset();
+			break;
+
+		case STOPWATCH_POWERUP_ACTIVATED:
+			SetCurrentCutscene(GameState::STOPWATCH_CUTSCENE);
 			break;
 
 		case GO_TO_CASTLE_CUTSCENE_STARTED:
@@ -364,6 +372,12 @@ std::unique_ptr<Cutscene> Stage::ConstructCutscene(GameState gameState)
 
 		case GameState::RESET_STAGE_CUTSCENE:
 			return std::make_unique<ResetCutscene>(*this, content);
+
+		case GameState::CROSS_CUTSCENE:
+			return std::make_unique<StopwatchCutscene>(*this);
+
+		case GameState::STOPWATCH_CUTSCENE:
+			return std::make_unique<StopwatchCutscene>(*this);
 
 		case GameState::GO_TO_CASTLE_CUTSCENE:
 			return std::make_unique<GoToCastleCutscene>(*this, *stageObject, *grid, *player);

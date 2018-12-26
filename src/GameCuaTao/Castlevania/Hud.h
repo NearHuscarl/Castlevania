@@ -6,8 +6,8 @@
 
 namespace Castlevania
 {
-	// Head-up display to show current player stats (health, weapon...)
-	// on top of the screen
+	// Head-up display to show current player stats
+	// (health, weapon...) on top of the screen
 	class Hud
 	{
 	public:
@@ -44,6 +44,7 @@ namespace Castlevania
 		std::shared_ptr<Texture> axeTexture;
 		std::shared_ptr<Texture> daggerTexture;
 		std::shared_ptr<Texture> holyWaterTexture;
+		std::shared_ptr<Texture> stopwatchTexture;
 
 		std::unique_ptr<Sprite> playerFullBlock;
 		std::unique_ptr<Sprite> bossFullBlock;

@@ -477,6 +477,9 @@
     <ClCompile Include="Castlevania\Models\Weapons\WeaponCollisionSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Castlevania\Scenes\Stages\StopwatchCutscene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\pugixml.hpp">
@@ -1109,9 +1112,11 @@
     <ClInclude Include="Castlevania\Models\Weapons\WeaponCollisionSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Castlevania\Scenes\Stages\StopwatchCutscene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

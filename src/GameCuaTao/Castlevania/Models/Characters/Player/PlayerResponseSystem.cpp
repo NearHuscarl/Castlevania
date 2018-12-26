@@ -84,6 +84,7 @@ void PlayerResponseSystem::Update(UpdateData &updateData)
 			case ObjectId::InvisibleJar:
 				OnCollideWithInvisibleJar(result);
 				break;
+				break;
 
 			case ObjectId::WhipPowerup:
 				OnCollideWithWhipPowerup(result);
@@ -92,6 +93,7 @@ void PlayerResponseSystem::Update(UpdateData &updateData)
 			case ObjectId::AxeItem:
 			case ObjectId::DaggerItem:
 			case ObjectId::HolyWaterItem:
+			case ObjectId::Stopwatch:
 				OnCollideWithSubWeaponItem(result);
 				break;
 

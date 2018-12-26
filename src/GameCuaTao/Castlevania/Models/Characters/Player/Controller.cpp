@@ -31,7 +31,7 @@ void Controller::OnKeyDown(int keyCode)
 			else if (keyCode == Button::Attack)
 				player.Attack();
 			else if (keyCode == Button::Throw)
-				Throw();
+				UseSubweapon();
 			break;
 
 		case MoveState::WALKING:
@@ -44,7 +44,7 @@ void Controller::OnKeyDown(int keyCode)
 			else if (keyCode == Button::Attack)
 				player.Attack();
 			else if (keyCode == Button::Throw)
-				Throw();
+				UseSubweapon();
 			break;
 
 		case MoveState::IDLE_UPSTAIRS:
@@ -52,7 +52,7 @@ void Controller::OnKeyDown(int keyCode)
 			if (keyCode == Button::Attack)
 				player.Attack();
 			else if (keyCode == Button::Throw)
-				Throw();
+				UseSubweapon();
 			break;
 
 		case MoveState::JUMPING:
@@ -62,7 +62,7 @@ void Controller::OnKeyDown(int keyCode)
 			if (keyCode == Button::Attack)
 				player.Attack();
 			else if (keyCode == Button::Throw)
-				Throw();
+				UseSubweapon();
 			break;
 
 		case MoveState::DUCKING:
@@ -73,7 +73,7 @@ void Controller::OnKeyDown(int keyCode)
 			else if (keyCode == Button::Attack)
 				player.Attack();
 			else if (keyCode == Button::Throw)
-				Throw();
+				UseSubweapon();
 			break;
 	}
 }
@@ -148,11 +148,19 @@ bool Controller::IsHoldingUpAndDown()
 	return keyboardState.IsKeyDown(Button::Duck) && keyboardState.IsKeyDown(Button::GoUpstair);
 }
 
-void Controller::Throw()
+void Controller::UseSubweapon()
 {
 	auto weaponItem = player.GetSubWeapon();
-	auto subWeapon = objectFactory.CreateSubWeapon(weaponItem);
 
-	if (subWeapon != nullptr)
-		player.Throw(std::move(subWeapon));
+	if (weaponItem == ObjectId::Stopwatch)
+	{
+		player.Stoptime();
+	}
+	else
+	{
+		auto subWeapon = objectFactory.CreateSubWeapon(weaponItem);
+
+		if (subWeapon != nullptr)
+			player.Throw(std::move(subWeapon));
+	}
 }
