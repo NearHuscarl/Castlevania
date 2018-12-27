@@ -149,7 +149,7 @@ void DevTool::Update(UpdateData &updatData)
 	if (!IsDebugging)
 		return;
 
-	auto checkpoints = updatData.stageObject->checkpoints;
+	auto checkpoints = updatData.stageObject->locations;
 
 	if (InputHelper::IsKeyDown(DIK_TAB))
 		SetCategory(PLAYER);

@@ -5,6 +5,7 @@
 using namespace Castlevania;
 
 constexpr auto HUD_HEIGHT = 83;
+constexpr auto POWERUP_FLASHING_TIME = 2500;
 
 const auto DEFAULT_PLAYER_DATA = PlayerData{};
 const auto DEFAULT_BOSS_HEALTH = MAX_HEALTH;
@@ -122,35 +123,33 @@ void Hud::Draw(SpriteExtensions &spriteBatch)
 
 	spriteBatch.DrawString(*hudFont, GetHeartCountText(), heartTextPosition, Color::White(), false);
 	spriteBatch.DrawString(*hudFont, GetLiveCountText(), liveTextPosition, Color::White(), false);
-
-	auto powerupTexture = GetPowerupTexture();
-	if (powerupTexture != nullptr)
-		spriteBatch.Draw(*powerupTexture, GetPowerupPosition(*powerupTexture), Color::White(), false);
+	
+	DrawPowerup(spriteBatch);
 }
 
 std::string Hud::GetScoreText()
 {
-	return "SCORE-" + padZero(data->playerData->score, 6);
+	return "SCORE-" + PadZero(data->playerData->score, 6);
 }
 
 std::string Hud::GetTimeText()
 {
-	return "TIME " + padZero(data->gameplayData->timeLeft.GetCounter(), 4);
+	return "TIME " + PadZero(data->gameplayData->timeLeft.GetCounter(), 4);
 }
 
 std::string Hud::GetStageText()
 {
-	return "STAGE " + padZero(data->gameplayData->stage, 2);
+	return "STAGE " + PadZero(data->gameplayData->stage, 2);
 }
 
 std::string Hud::GetHeartCountText()
 {
-	return "-" + padZero(data->playerData->hearts, 2);
+	return "-" + PadZero(data->playerData->hearts, 2);
 }
 
 std::string Hud::GetLiveCountText()
 {
-	return "P-" + padZero(data->playerData->lives, 2);
+	return "P-" + PadZero(data->playerData->lives, 2);
 }
 
 std::shared_ptr<Texture> Hud::GetWeaponTexture()
@@ -234,7 +233,31 @@ void Hud::DrawHealthBars(SpriteExtensions &spriteBatch)
 	}
 }
 
-std::string Hud::padZero(int number, int paddingCount)
+void Hud::DrawPowerup(SpriteExtensions &spriteBatch)
+{
+	auto currentPowerupTexture = GetPowerupTexture();
+
+	if (currentPowerupTexture == nullptr)
+		return;
+
+	if (powerupTexture == nullptr && currentPowerupTexture != nullptr)
+		powerupFlashingTimer.Start();
+
+	if (powerupFlashingTimer.IsRunning())
+	{
+		if (powerupFlashingTimer.ElapsedMilliseconds() >= POWERUP_FLASHING_TIME)
+			powerupFlashingTimer.Reset();
+		else
+			spriteBatch.Draw(*currentPowerupTexture, GetPowerupPosition(*currentPowerupTexture),
+				Stopwatch::Every(60) ? Color::White() : Color::Transparent(), false);
+	}
+	else
+		spriteBatch.Draw(*currentPowerupTexture, GetPowerupPosition(*currentPowerupTexture), Color::White(), false);
+	
+	powerupTexture = currentPowerupTexture;
+}
+
+std::string Hud::PadZero(int number, int paddingCount)
 {
 	auto sstream = std::stringstream{};
 

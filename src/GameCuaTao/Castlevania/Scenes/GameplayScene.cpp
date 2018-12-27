@@ -61,7 +61,7 @@ void GameplayScene::LoadContent()
 	
 	hud->LoadContent(content);
 
-	NextStage(Map::GREAT_HALL); // TODO: change back to COURTYARD
+	NextStage(Map::UNDERGROUND); // TODO: change back to COURTYARD
 }
 
 void GameplayScene::Update(GameTime gameTime)

@@ -45,6 +45,7 @@ namespace Castlevania
 		std::shared_ptr<Texture> holyWaterTexture;
 		std::shared_ptr<Texture> stopwatchTexture;
 		std::shared_ptr<Texture> doubleShotTexture;
+		std::shared_ptr<Texture> powerupTexture;
 
 		std::unique_ptr<Sprite> playerFullBlock;
 		std::unique_ptr<Sprite> bossFullBlock;
@@ -69,12 +70,16 @@ namespace Castlevania
 		std::string GetHeartCountText();
 		std::string GetLiveCountText();
 
+		Stopwatch powerupFlashingTimer;
+
 		std::shared_ptr<Texture> GetWeaponTexture();
 		std::shared_ptr<Texture> GetPowerupTexture();
 		Vector2 GetWeaponPosition(Texture &weaponTexture);
 		Vector2 GetPowerupPosition(Texture &powerupTexture);
-		void DrawHealthBars(SpriteExtensions &spriteBatch);
 
-		std::string padZero(int number, int paddingCount); // (123, 5) -> "00123"
+		void DrawHealthBars(SpriteExtensions &spriteBatch);
+		void DrawPowerup(SpriteExtensions &spriteBatch);
+
+		std::string PadZero(int number, int paddingCount); // (123, 5) -> "00123"
 	};
 }

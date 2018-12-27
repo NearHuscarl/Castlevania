@@ -255,6 +255,10 @@ void PlayerResponseSystem::OnCollideWithTrigger(CollisionResult &result, Respons
 			OnCollideWithNextMapTrigger(trigger);
 			break;
 
+		case TriggerType::MONEY_BAG_EASTER_EGG:
+			OnCollideWithMoneyBagTrigger(trigger);
+			break;
+
 		case TriggerType::CASTLE_ENTRANCE:
 			OnCollideWithCastleEntranceTrigger(trigger);
 			break;
@@ -469,18 +473,18 @@ void PlayerResponseSystem::OnCollideWithStairDownTrigger(Trigger &trigger)
 
 void PlayerResponseSystem::OnCollideWithNextMapTrigger(Trigger &trigger)
 {
-	if (trigger.Enabled())
-	{
-		parent.Notify(NEXT_MAP_CUTSCENE_STARTED);
-		trigger.Enabled(false);
-	}
+	parent.Notify(NEXT_MAP_CUTSCENE_STARTED);
+	trigger.GetBody().Enabled(false);
+}
+
+void PlayerResponseSystem::OnCollideWithMoneyBagTrigger(Trigger &trigger)
+{
+	parent.Notify(HIDDEN_MONEY_BAG_FOUND);
+	trigger.GetBody().Enabled(false);
 }
 
 void PlayerResponseSystem::OnCollideWithCastleEntranceTrigger(Trigger &trigger)
 {
-	if (trigger.Enabled())
-	{
-		parent.Notify(GO_TO_CASTLE_CUTSCENE_STARTED);
-		trigger.Enabled(false);
-	}
+	parent.Notify(GO_TO_CASTLE_CUTSCENE_STARTED);
+	trigger.GetBody().Enabled(false);
 }

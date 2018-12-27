@@ -2,6 +2,7 @@
 #include "Stage.h"
 #include "StageEvent.h"
 #include "BossFightCutscene.h"
+#include "HiddenMoneyBagCutscene.h"
 #include "NextMapCutscene.h"
 #include "NextRoomCutscene.h"
 #include "ResetCutscene.h"
@@ -128,7 +129,7 @@ Rect Stage::GetCurrentArea(Vector2 position)
 {
 	auto &stageAreas = stageObject->stageAreas;
 
-	if (stageAreas.size() == 0)
+	if (stageAreas.empty())
 	{
 		return Rect{ 0, 0,
 			map->GetWidthInPixels(),
@@ -150,6 +151,8 @@ Rect Stage::GetCurrentArea(Vector2 position)
 			return (Rect)viewportAreaBbox;
 		}
 	}
+
+	return Rect::Empty();
 }
 
 void Stage::SetCurrentCutscene(GameState gameState)
@@ -167,7 +170,7 @@ void Stage::LoadMap()
 
 	stageObject = mapManager.GetStageObjects(currentMap);
 
-	auto checkpoint = stageObject->checkpoints[spawnPoint];
+	auto checkpoint = stageObject->locations[spawnPoint];
 
 	player->SetPosition(checkpoint);
 	player->Attach(grid.get());
@@ -203,7 +206,7 @@ void Stage::Reset()
 
 	LoadObjectsWithin(activeArea); // reload objects from the last active area
 
-	for (auto [checkpoint, position] : stageObject->checkpoints)
+	for (auto [checkpoint, position] : stageObject->locations)
 	{
 		if (checkpoint != "Entrypoint" && !StartsWith(checkpoint, "Checkpoint"))
 			continue;
@@ -354,6 +357,10 @@ void Stage::ProcessMessage(int message)
 			SetCurrentCutscene(GameState::STOPWATCH_CUTSCENE);
 			break;
 
+		case HIDDEN_MONEY_BAG_FOUND:
+			SetCurrentCutscene(GameState::HIDDEN_MONEYBAG_CUTSCENE);
+			break;
+
 		case GO_TO_CASTLE_CUTSCENE_STARTED:
 			SetCurrentCutscene(GameState::GO_TO_CASTLE_CUTSCENE);
 			break;
@@ -383,6 +390,9 @@ std::unique_ptr<Cutscene> Stage::ConstructCutscene(GameState gameState)
 
 		case GameState::STOPWATCH_CUTSCENE:
 			return std::make_unique<StopwatchCutscene>(*this);
+
+		case GameState::HIDDEN_MONEYBAG_CUTSCENE:
+			return std::make_unique<HiddenMoneyBagCutscene>(*this, *stageObject, *grid, objectFactory);
 
 		case GameState::GO_TO_CASTLE_CUTSCENE:
 			return std::make_unique<GoToCastleCutscene>(*this, *stageObject, *grid, *player);

@@ -51,7 +51,7 @@ std::unique_ptr<StageObject> MapManager::GetStageObjects(Map name)
 		auto name = properties.at("name");
 		auto position = Vector2{ boundingBox.X(), boundingBox.Y() };
 
-		stageObject->checkpoints[name] = position;
+		stageObject->locations[name] = position;
 	}
 
 	for (auto properties : objectGroups[AREA])
@@ -132,7 +132,7 @@ ObjectCollection MapManager::GetMapObjectsInArea(Map name, RectF area)
 			object->AddProperty("SpawnPoint", GetValueOrDefault(properties, "SpawnPoint", "Checkpoint"));
 		}
 
-		object->Enabled(ToBoolean(properties.at("Enabled")));
+		object->GetBody().Enabled(ToBoolean(properties.at("Enabled")));
 		object->SetFacing(facing);
 		objectCollection.staticObjects.push_back(std::move(object));
 	}
@@ -275,6 +275,9 @@ std::unique_ptr<GameObject> MapManager::ConstructObject(ObjectProperties propert
 
 		case ObjectId::Castle:
 			return objectFactory.CreateCastle();
+
+		case ObjectId::BrickBlock:
+			return objectFactory.CreateBrickBlock();
 
 		case ObjectId::DirtBlock:
 			return objectFactory.CreateDirtBlock();

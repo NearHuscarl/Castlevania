@@ -64,7 +64,7 @@ void GoToCastleCutscene::SetupCutscene()
 	else
 		player->WalkLeft();
 
-	nextMapTrigger->Enabled(true);
+	nextMapTrigger->GetBody().Enabled(true);
 
 	currentState = State::WALKING_TO_CASTLE_GATE;
 }

@@ -17,7 +17,7 @@
     <property name="SpawnObject" value="Zombie"/>
    </properties>
   </object>
-  <object id="29" name="BatSpawnArea" type="SpawnArea" x="3072" y="0" width="1008" height="166">
+  <object id="29" name="BatSpawnArea" type="SpawnArea" x="3072" y="0" width="1008" height="277">
    <properties>
     <property name="SpawnObject" value="VampireBat"/>
    </properties>
@@ -475,7 +475,7 @@
   <object id="9" name="Entrypoint2" type="Position" gid="75" x="64" y="320" width="60" height="66"/>
   <object id="110" name="Underground_02" type="Position" gid="2147483658" x="3808" y="351" width="60" height="66"/>
   <object id="111" name="Underground_01" type="Position" gid="2147483658" x="3168" y="351" width="60" height="66"/>
-  <object id="120" name="Entrypoint" type="Position" gid="75" x="5044" y="310.83" width="60" height="66"/>
+  <object id="120" name="Entrypoint" type="Position" gid="75" x="5050" y="310.83" width="60" height="66"/>
   <object id="121" name="Checkpoint_01" type="Position" gid="75" x="3151" y="128" width="60" height="66"/>
   <object id="122" name="Checkpoint_02" type="Position" gid="75" x="4169" y="128" width="60" height="66"/>
   <object id="125" name="Entrypoint1" type="Position" gid="75" x="2944" y="124" width="60" height="66"/>

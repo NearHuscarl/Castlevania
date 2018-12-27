@@ -19,6 +19,8 @@
 
 namespace Castlevania
 {
+	constexpr auto ITEM_FALL_SPEED = 225.0f;
+
 	class ObjectFactory
 	{
 	public:
@@ -77,6 +79,7 @@ namespace Castlevania
 
 		std::unique_ptr<Door> CreateDoor(Vector2 position = Vector2::Zero());
 		std::unique_ptr<GameObject> CreateCastle(Vector2 position = Vector2::Zero());
+		std::unique_ptr<GameObject> CreateBrickBlock(Vector2 position = Vector2::Zero());
 		std::unique_ptr<GameObject> CreateDirtBlock(Vector2 position = Vector2::Zero());
 		std::unique_ptr<GameObject> CreateWaterZone(Vector2 position = Vector2::Zero());
 

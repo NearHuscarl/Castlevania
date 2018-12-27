@@ -66,6 +66,7 @@ namespace Castlevania
 		BreakableBlock,
 		BreakableWall,
 		Castle,
+		BrickBlock,
 		DirtBlock,
 
 		Unknown,

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="16" height="6" tilewidth="64" tileheight="64" infinite="0" nextlayerid="9" nextobjectid="36">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="16" height="6" tilewidth="64" tileheight="64" infinite="0" nextlayerid="9" nextobjectid="41">
  <tileset firstgid="1" source="../Candle.tsx"/>
  <tileset firstgid="3" source="../Simon.tsx"/>
  <tileset firstgid="75" source="../Static_Objects.tsx"/>
+ <tileset firstgid="83" source="../Money_Bag.tsx"/>
  <layer id="1" name="TileLayer1" width="16" height="6">
   <data encoding="base64">
    AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -77,7 +78,10 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="8" name="Foregrounds"/>
+ <objectgroup id="8" name="Foregrounds">
+  <object id="39" name="Block" type="BrickBlock" gid="81" x="672" y="192" width="32" height="32"/>
+  <object id="40" name="Block" type="BrickBlock" gid="81" x="704" y="192" width="32" height="32"/>
+ </objectgroup>
  <objectgroup id="6" name="Triggers">
   <object id="19" name="StairUp" type="Trigger" x="176" y="64" width="32" height="32">
    <properties>
@@ -105,10 +109,16 @@
     <property name="SpawnPoint" value="Underground_02"/>
    </properties>
   </object>
+  <object id="36" name="MoneyBagTrigger" type="Trigger" x="912" y="278" width="32" height="10">
+   <properties>
+    <property name="Enabled" type="bool" value="true"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="7" name="Locations">
   <object id="24" name="GreatHall_02" type="Position" gid="14" x="738" y="40" width="60" height="66"/>
   <object id="23" name="GreatHall_01" type="Position" gid="14" x="98" y="40" width="60" height="66"/>
   <object id="34" name="Entrypoint" type="Position" gid="6" x="20" y="160" width="60" height="66"/>
+  <object id="37" name="MoneyBag" type="Position" gid="85" x="688" y="192" width="30" height="30"/>
  </objectgroup>
 </map>

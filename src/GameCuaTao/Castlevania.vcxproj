@@ -234,6 +234,7 @@
     <ClCompile Include="Castlevania\Scenes\Stages\CrossCutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\Cutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\GoToCastleCutScene.cpp" />
+    <ClCompile Include="Castlevania\Scenes\Stages\HiddenMoneyBagCutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\ResetCutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\NextMapCutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\NextRoomCutscene.cpp" />
@@ -410,6 +411,7 @@
     <ClInclude Include="Castlevania\Scenes\Stages\CrossCutscene.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\GoToCastleCutScene.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\Cutscene.h" />
+    <ClInclude Include="Castlevania\Scenes\Stages\HiddenMoneyBagCutscene.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\ResetCutscene.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\NextMapCutscene.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\NextRoomCutscene.h" />

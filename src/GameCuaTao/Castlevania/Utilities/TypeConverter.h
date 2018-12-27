@@ -50,6 +50,7 @@ namespace Castlevania
 		{ "BreakableWall", ObjectId::BreakableWall },
 		{ "Door", ObjectId::Door },
 		{ "Castle", ObjectId::Castle },
+		{ "BrickBlock", ObjectId::BrickBlock },
 		{ "DirtBlock", ObjectId::DirtBlock },
 	};
 
@@ -58,7 +59,6 @@ namespace Castlevania
 		{ "StairUp", TriggerType::STAIR_UP },
 		{ "StairDown", TriggerType::STAIR_DOWN },
 		{ "NextMap", TriggerType::NEXT_MAP },
-		{ "BossFight", TriggerType::BOSS_FIGHT },
 		{ "CastleEntrance", TriggerType::CASTLE_ENTRANCE },
 		{ "MoneyBagTrigger", TriggerType::MONEY_BAG_EASTER_EGG },
 	};

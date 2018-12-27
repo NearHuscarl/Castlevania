@@ -489,6 +489,9 @@
     <ClCompile Include="Castlevania\Models\Systems\Rendering\EntityRenderingSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Castlevania\Scenes\Stages\HiddenMoneyBagCutscene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\pugixml.hpp">
@@ -1131,6 +1134,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Castlevania\Models\Systems\Rendering\EntityRenderingSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Scenes\Stages\HiddenMoneyBagCutscene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

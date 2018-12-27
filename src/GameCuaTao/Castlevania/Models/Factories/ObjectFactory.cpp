@@ -49,8 +49,6 @@
 
 using namespace Castlevania;
 
-constexpr auto ITEM_FALL_SPEED = 225.0f;
-
 ObjectFactory::ObjectFactory(ContentManager &content) : content{ content }
 {
 	effectFactory = std::make_unique<EffectFactory>(content);
@@ -1003,6 +1001,18 @@ std::unique_ptr<GameObject> ObjectFactory::CreateCastle(Vector2 position)
 	return object;
 }
 
+std::unique_ptr<GameObject> ObjectFactory::CreateBrickBlock(Vector2 position)
+{
+	auto object = std::make_unique<GameObject>(ObjectId::Unknown);
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "TiledMaps/Stage_01/Block.png");
+
+	object->SetPosition(position);
+	object->Attach(std::move(renderingSystem));
+	object->LoadContent(content);
+
+	return object;
+}
+
 std::unique_ptr<GameObject> ObjectFactory::CreateDirtBlock(Vector2 position)
 {
 	auto object = std::make_unique<GameObject>(ObjectId::DirtBlock);
@@ -1085,7 +1095,6 @@ std::unique_ptr<SpawnArea> ObjectFactory::ConstructSpawnArea(ObjectId type)
 			object = std::make_unique<FishmanSpawnArea>(*this);
 			stats = content.Load<Dictionary>("GameStats/SpawnAreas/FishmanSpawnArea.xml");
 			break;
-			return object;
 		}
 
 		default:

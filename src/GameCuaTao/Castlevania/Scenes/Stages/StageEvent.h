@@ -16,7 +16,9 @@ namespace Castlevania
 	constexpr auto CROSS_POWERUP_ACTIVATED = 9;
 	constexpr auto STOPWATCH_POWERUP_ACTIVATED = 10;
 
+	constexpr auto HIDDEN_MONEY_BAG_FOUND = 11;
+
 	// Courtyard events
-	constexpr auto GO_TO_CASTLE_CUTSCENE_STARTED = 11;
+	constexpr auto GO_TO_CASTLE_CUTSCENE_STARTED = 12;
 
 }
