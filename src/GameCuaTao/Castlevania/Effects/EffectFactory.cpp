@@ -4,6 +4,7 @@
 #include "BigFlameEffect.h"
 #include "MoneyTextEffect.h"
 #include "FlashingMoneyTextEffect.h"
+#include "DebrisEffect.h"
 #include "WaterEffect.h"
 
 using namespace Castlevania;
@@ -22,7 +23,6 @@ std::unique_ptr<IEffect> EffectFactory::CreateSparkEffect()
 
 std::unique_ptr<IEffect> EffectFactory::CreateFlameEffect()
 {
-	// TODO: remove this
 	auto flameAnimations = content.Load<AnimationFactory>("Effects/Flame.ani.xml");
 	auto effect = std::make_unique<FlameEffect>(flameAnimations);
 
@@ -67,6 +67,14 @@ std::unique_ptr<IEffect> EffectFactory::CreateFlashingMoneyTextEffect()
 {
 	auto moneyTextAnimation = content.Load<AnimationFactory>("Effects/1000.ani.xml");
 	auto effect = std::make_unique<FlashingMoneyTextEffect>(moneyTextAnimation);
+
+	return effect;
+}
+
+std::unique_ptr<IEffect> EffectFactory::CreateDebrisEffect()
+{
+	auto debrisTexture = content.Load<Texture>("Effects/Debris.png");
+	auto effect = std::make_unique<DebrisEffect>(debrisTexture);
 
 	return effect;
 }

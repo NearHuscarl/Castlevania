@@ -20,6 +20,9 @@ void WeaponCollisionSystem::Update(UpdateData &updateData)
 
 	for (auto &collisionObject : collisionObjects)
 	{
+		if (!collisionObject->GetBody().Enabled())
+			continue;
+
 		auto entityRect = collisionObject->GetFrameRect();
 
 		if (parent.GetBoundingBox().TouchesOrIntersects(entityRect))

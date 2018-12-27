@@ -1,4 +1,5 @@
 #include "RectF.h"
+#include "../MathHelper.h"
 
 RectF::RectF() : RectF(0, 0, 0, 0)
 {
@@ -91,6 +92,22 @@ bool RectF::TouchesOrIntersects(RectF value)
 		this->top <= value.bottom &&
 		this->right >= value.left &&
 		this->bottom >= value.top);
+}
+
+RectF RectF::Merge(RectF value1, RectF value2)
+{
+	if (value1 == RectF::Empty())
+		return value2;
+
+	if (value2 == RectF::Empty())
+		return value1;
+
+	auto left = MathHelper::Min(value1.left, value2.left);
+	auto top = MathHelper::Min(value1.top, value2.top);
+	auto right = MathHelper::Max(value1.right, value2.right);
+	auto bottom = MathHelper::Max(value1.bottom, value2.bottom);
+
+	return RectF{ left, top, right - left, bottom - top };
 }
 
 RectF::operator Rect()

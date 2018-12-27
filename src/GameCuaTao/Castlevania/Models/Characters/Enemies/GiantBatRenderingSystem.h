@@ -1,11 +1,11 @@
 #pragma once
 
 #include "GiantBat.h"
-#include "../../Systems/Rendering/EffectRenderingSystem.h"
+#include "../../Systems/Rendering/EntityRenderingSystem.h"
 
 namespace Castlevania
 {
-	class GiantBatRenderingSystem : public EffectRenderingSystem
+	class GiantBatRenderingSystem : public EntityRenderingSystem
 	{
 	public:
 		GiantBatRenderingSystem(

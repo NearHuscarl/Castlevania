@@ -6,23 +6,27 @@ using namespace Castlevania;
 ItemRenderingSystem::ItemRenderingSystem(
 	GameObject &parent,
 	std::string spritePath,
-	std::unique_ptr<IEffect> effect)
+	std::unique_ptr<IEffect> deadEffect,
+	std::unique_ptr<IEffect> hitEffect)
 	:
 	parent{ parent }
 {
-	this->hitEffect = std::move(effect);
 	this->spritePath = spritePath;
+	this->deadEffect = std::move(deadEffect);
+	this->hitEffect = std::move(hitEffect);
 }
 
 ItemRenderingSystem::ItemRenderingSystem(
 	GameObject &parent,
 	TextureRegion textureRegion,
-	std::unique_ptr<IEffect> effect)
+	std::unique_ptr<IEffect> deadEffect,
+	std::unique_ptr<IEffect> hitEffect)
 	:
 	parent{ parent }
 {
 	this->sprite = std::make_unique<Sprite>(textureRegion);
-	this->hitEffect = std::move(effect);
+	this->deadEffect = std::move(deadEffect);
+	this->hitEffect = std::move(hitEffect);
 }
 
 Sprite &ItemRenderingSystem::GetSprite()
@@ -50,11 +54,14 @@ void ItemRenderingSystem::Update(GameTime gameTime)
 {
 	if (GetParent().GetState() == ObjectState::DYING)
 	{
-		hitEffect->Update(gameTime);
+		deadEffect->Update(gameTime);
 
-		if (hitEffect->IsFinished())
+		if (deadEffect->IsFinished())
 			GetParent().Destroy();
 	}
+
+	if (hitEffect != nullptr)
+		hitEffect->Update(gameTime);
 }
 
 void ItemRenderingSystem::Draw(SpriteExtensions &spriteBatch)
@@ -67,15 +74,27 @@ void ItemRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 			break;
 
 		case ObjectState::DYING:
-			hitEffect->Draw(spriteBatch);
+			deadEffect->Draw(spriteBatch);
 			break;
 	}
+
+	if (hitEffect != nullptr)
+		hitEffect->Draw(spriteBatch);
 }
 
 void ItemRenderingSystem::OnStateChanged()
 {
 	if (GetParent().GetState() == ObjectState::DYING)
 	{
-		hitEffect->Show(GetParent().GetOriginPosition());
+		if (deadEffect != nullptr)
+			deadEffect->Show(GetParent().GetOriginPosition());
+		else
+			GetParent().Destroy();
 	}
+}
+
+void ItemRenderingSystem::OnTakingDamage()
+{
+	if (hitEffect != nullptr)
+		hitEffect->Show(GetParent().GetOriginPosition());
 }

@@ -15,6 +15,7 @@ namespace Castlevania
 			score = 0;
 			health = MAX_HEALTH;
 			subWeapon = ObjectId::Unknown;
+			powerup = ObjectId::Unknown;
 			hearts = 5;
 			lives = 3;
 		}
@@ -22,6 +23,7 @@ namespace Castlevania
 		int score;
 		int health;
 		ObjectId subWeapon;
+		ObjectId powerup;
 		int hearts;
 		int lives;
 	};

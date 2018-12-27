@@ -23,6 +23,7 @@ void PoisonResponseSystem::Update(UpdateData &updateData)
 		switch (objectId)
 		{
 			case ObjectId::Brazier:
+			case ObjectId::Candle:
 				OnCollideWithBrazier(result);
 				break;
 

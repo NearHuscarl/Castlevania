@@ -17,11 +17,6 @@ MapManager::MapManager(ObjectFactory &objectFactory) : objectFactory{ objectFact
 	worldPosition = Vector2::Zero();
 }
 
-void MapManager::SetWorldPosition(Vector2 position)
-{
-	worldPosition = position;
-}
-
 void MapManager::LoadContent(ContentManager &content)
 {
 	//maps[Map::INTRO] = content.Load<TiledMap>("TiledMaps/Intro.tmx");
@@ -29,6 +24,11 @@ void MapManager::LoadContent(ContentManager &content)
 	maps[Map::GREAT_HALL] = content.Load<TiledMap>("TiledMaps/Stage_01/Great_Hall.tmx");
 	maps[Map::UNDERGROUND] = content.Load<TiledMap>("TiledMaps/Stage_01/Underground.tmx");
 	maps[Map::PLAYGROUND] = content.Load<TiledMap>("TiledMaps/Playground/Playground.tmx");
+}
+
+void MapManager::SetWorldPosition(Vector2 position)
+{
+	worldPosition = position;
 }
 
 std::shared_ptr<TiledMap> MapManager::GetTiledMap(Map name)
@@ -232,6 +232,18 @@ std::unique_ptr<GameObject> MapManager::ConstructObject(ObjectProperties propert
 		{
 			auto itemType = string2EntityType.at(properties.at("Item"));
 			return objectFactory.CreateCandle(itemType);
+		}
+
+		case ObjectId::BreakableBlock:
+		{
+			auto itemType = string2EntityType.at(properties.at("Item"));
+			return objectFactory.CreateBreakableBlock(itemType);
+		}
+
+		case ObjectId::BreakableWall:
+		{
+			auto itemType = string2EntityType.at(properties.at("Item"));
+			return objectFactory.CreateBreakableWall(itemType);
 		}
 
 		case ObjectId::Zombie:

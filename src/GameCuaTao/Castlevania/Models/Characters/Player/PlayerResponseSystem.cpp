@@ -1,3 +1,4 @@
+#include "Direct2DGame/MathHelper.h"
 #include "PlayerResponseSystem.h"
 #include "NearbyObjects.h"
 #include "../../Settings.h"
@@ -36,6 +37,8 @@ void PlayerResponseSystem::Update(UpdateData &updateData)
 		switch (objectId)
 		{
 			case ObjectId::Boundary:
+			case ObjectId::BreakableBlock:
+			case ObjectId::BreakableWall:
 				OnCollideWithBoundary(result, responseResult);
 				break;
 
@@ -95,10 +98,17 @@ void PlayerResponseSystem::Update(UpdateData &updateData)
 			case ObjectId::InvisibleJar:
 				OnCollideWithInvisibleJar(result);
 				break;
+
+			case ObjectId::PorkChop:
+				OnCollideWithPorkChop(result);
 				break;
 
 			case ObjectId::WhipPowerup:
 				OnCollideWithWhipPowerup(result);
+				break;
+
+			case ObjectId::DoubleShot:
+				OnCollideWithDoubleShot(result);
 				break;
 
 			case ObjectId::Door:
@@ -189,7 +199,7 @@ void PlayerResponseSystem::OnCollideWithBoundary(CollisionResult &result, Respon
 					}
 					break;
 
-				default:
+				default: // IDLE, WALKING
 					ClampDistance_Y(collisionData);
 					break;
 			}
@@ -200,10 +210,24 @@ void PlayerResponseSystem::OnCollideWithBoundary(CollisionResult &result, Respon
 			if (parent.IsOnStairs())
 				break;
 
-			ClampDistance_X(collisionData);
+			auto moveState = parent.GetMoveState();
 
-			if (!parent.IsOnTheAir())
-				parent.SetVelocity_X(0);
+			// Fix a bug where the player is stopped when walking to the next block with
+			// the same height as the current block the player is standing on.
+			if (moveState == MoveState::IDLE
+				|| moveState == MoveState::WALKING
+				|| moveState == MoveState::WALKING_TO_STAIRS)
+			{
+				auto &block = dynamic_cast<GameObject&>(result.collidedObject);
+
+				if (parent.GetBoundingBox().bottom > block.GetBoundingBox().top && parent.GetVelocity().y >= 0)
+					ClampDistance_X(collisionData);
+
+				if (parent.GetBoundingBox().top > block.GetBoundingBox().bottom && parent.GetVelocity().y <= 0)
+					ClampDistance_X(collisionData);
+			}
+			else
+				ClampDistance_X(collisionData);
 			break;
 	}
 }
@@ -345,6 +369,14 @@ void PlayerResponseSystem::OnCollideWithInvisibleJar(CollisionResult &result)
 	invisibleJar.Destroy();
 }
 
+void PlayerResponseSystem::OnCollideWithPorkChop(CollisionResult &result)
+{
+	auto &porkChop = dynamic_cast<GameObject&>(result.collidedObject);
+
+	parent.data.health = MathHelper::Min(parent.data.health + 6, MAX_HEALTH);
+	porkChop.Destroy();
+}
+
 void PlayerResponseSystem::OnCollideWithWhipPowerup(CollisionResult &result)
 {
 	// Only consume this powerup on the ground because I only have flashing sprites on ground
@@ -367,6 +399,14 @@ void PlayerResponseSystem::OnCollideWithWhipPowerup(CollisionResult &result)
 	}
 
 	whipPowerup.Destroy();
+}
+
+void PlayerResponseSystem::OnCollideWithDoubleShot(CollisionResult &result)
+{
+	auto &doubleShot = dynamic_cast<GameObject&>(result.collidedObject);
+
+	parent.data.powerup = ObjectId::DoubleShot;
+	doubleShot.Destroy();
 }
 
 void PlayerResponseSystem::OnCollideWithDoor(CollisionResult &result, ResponseResult &responseResult)

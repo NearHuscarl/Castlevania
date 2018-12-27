@@ -5,8 +5,14 @@
 
 using namespace Castlevania;
 
-Container::Container() : GameObject{ ObjectId::Brazier }
+Container::Container(ObjectId type) : GameObject{ type }
 {
+	spawningState = ObjectState::DEAD;
+}
+
+void Container::SetSpawningState(ObjectState spawningState)
+{
+	this->spawningState = spawningState;
 }
 
 void Container::SetSpawnedItem(std::unique_ptr<Powerup> item)
@@ -16,6 +22,14 @@ void Container::SetSpawnedItem(std::unique_ptr<Powerup> item)
 
 void Container::OnBeingHit()
 {
+	if (spawningState == ObjectState::DYING)
+	{
+		auto spawnedItem = SpawnItem();
+
+		if (spawnedItem != nullptr)
+			collisionGrid->Add(std::move(spawnedItem), CollisionObjectType::Entity);
+	}
+	
 	SetState(ObjectState::DYING);
 	body.Enabled(false);
 }
@@ -35,7 +49,7 @@ void Container::Update(UpdateData &updateData)
 {
 	GameObject::Update(updateData);
 	
-	if (state == ObjectState::DEAD)
+	if (state == ObjectState::DEAD && spawningState == ObjectState::DEAD)
 	{
 		auto spawnedItem = SpawnItem();
 

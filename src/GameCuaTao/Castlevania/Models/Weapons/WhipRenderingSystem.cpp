@@ -30,7 +30,7 @@ void WhipRenderingSystem::Receive(int message)
 			OnWhipUnleashed();
 			break;
 
-		case WHIP_WITHDRAWN:
+		case WEAPON_WITHDRAWN:
 			OnWhipWithdrawn();
 			break;
 	}

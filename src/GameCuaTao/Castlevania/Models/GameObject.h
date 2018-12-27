@@ -39,8 +39,8 @@ namespace Castlevania
 		ObjectState GetState();
 
 		Vector2 GetPosition();
-		void SetPosition(float x, float y);
-		void SetPosition(Vector2 position);
+		virtual void SetPosition(float x, float y);
+		virtual void SetPosition(Vector2 position);
 
 		Vector2 GetDistance();
 		void SetDistance(Vector2 distance);
@@ -55,7 +55,7 @@ namespace Castlevania
 		void SetVelocity_X(float x);
 		void SetVelocity_Y(float y);
 		void SetDirection(float angle); // angle in degree
-		void SetDirection(Vector2 direction); // angle in degree
+		void SetDirection(Vector2 direction);
 
 		float GetSpeed();
 		virtual void SetSpeed(float speed);
@@ -78,7 +78,7 @@ namespace Castlevania
 		CollisionGridData GetCollisionGridData();
 		void SetCollisionGridData(CollisionGridData data);
 
-		void Attach(CollisionGrid *grid);
+		virtual void Attach(CollisionGrid *grid);
 		void Attach(std::unique_ptr<IControlSystem> system);
 		void Attach(std::unique_ptr<IMovementSystem> system);
 		void Attach(std::unique_ptr<ICollisionSystem> system);

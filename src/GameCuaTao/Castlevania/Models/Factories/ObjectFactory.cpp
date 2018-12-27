@@ -13,7 +13,7 @@
 #include "../Systems/Rendering/BoundingboxRenderingSystem.h"
 #include "../Systems/Rendering/ItemRenderingSystem.h"
 #include "../Systems/Rendering/SpriteRenderingSystem.h"
-#include "../Systems/Rendering/EffectRenderingSystem.h"
+#include "../Systems/Rendering/EntityRenderingSystem.h"
 #include "../Areas/WaterAreaRenderingSystem.h"
 #include "../Characters/Player/Controller.h"
 #include "../Characters/Player/PlayerMovementSystem.h"
@@ -197,9 +197,9 @@ std::unique_ptr<Player> ObjectFactory::CreateIntroSimon(Vector2 position)
 
 std::unique_ptr<Container> ObjectFactory::CreateBrazier(ObjectId itemType, Vector2 position)
 {
-	auto object = std::make_unique<Container>();
+	auto object = std::make_unique<Container>(ObjectId::Brazier);
 
-	auto renderingSystem = std::make_unique<EffectRenderingSystem>(*object, "Items/Brazier.ani.xml",
+	auto renderingSystem = std::make_unique<EntityRenderingSystem>(*object, "Items/Brazier.ani.xml",
 		effectFactory->CreateFlameEffect(),
 		effectFactory->CreateSparkEffect());
 
@@ -215,8 +215,8 @@ std::unique_ptr<Container> ObjectFactory::CreateBrazier(ObjectId itemType, Vecto
 
 std::unique_ptr<Container> ObjectFactory::CreateCandle(ObjectId itemType, Vector2 position)
 {
-	auto object = std::make_unique<Container>();
-	auto renderingSystem = std::make_unique<EffectRenderingSystem>(*object, "Items/Candle.ani.xml",
+	auto object = std::make_unique<Container>(ObjectId::Candle);
+	auto renderingSystem = std::make_unique<EntityRenderingSystem>(*object, "Items/Candle.ani.xml",
 		effectFactory->CreateFlameEffect(),
 		effectFactory->CreateSparkEffect());
 
@@ -225,6 +225,40 @@ std::unique_ptr<Container> ObjectFactory::CreateCandle(ObjectId itemType, Vector
 	object->SetPosition(position);
 	object->Attach(std::move(renderingSystem));
 	object->SetSpawnedItem(std::move(item));
+	object->LoadContent(content);
+
+	return object;
+}
+
+std::unique_ptr<Container> ObjectFactory::CreateBreakableBlock(ObjectId itemType, std::string spritePath, Vector2 position)
+{
+	auto object = std::make_unique<Container>(ObjectId::BreakableBlock);
+
+	if (spritePath.empty())
+		spritePath = "TiledMaps/Stage_01/Block.png";
+
+	auto renderingSystem = std::make_unique<ItemRenderingSystem>(*object, spritePath,
+		effectFactory->CreateDebrisEffect(), nullptr);
+
+	if (itemType != ObjectId::Unknown)
+		object->SetSpawnedItem(CreatePowerup(itemType));
+
+	object->SetPosition(position);
+	object->SetSpawningState(ObjectState::DYING); // spawn item immediately after being hit
+	object->Attach(std::move(renderingSystem));
+	object->LoadContent(content);
+
+	return object;
+}
+
+std::unique_ptr<BreakableWall> ObjectFactory::CreateBreakableWall(ObjectId itemType, Vector2 position)
+{
+	auto object = std::make_unique<BreakableWall>();
+	auto topBlock = CreateBreakableBlock(ObjectId::Unknown, "TiledMaps/Stage_01/Block_01.png");
+	auto bottomBlock = CreateBreakableBlock(itemType, "TiledMaps/Stage_01/Block_02.png");
+
+	object->SetTopBlock(std::move(topBlock));
+	object->SetBottomBlock(std::move(bottomBlock));
 	object->LoadContent(content);
 
 	return object;
@@ -264,7 +298,7 @@ std::unique_ptr<Zombie> ObjectFactory::CreateZombie(Vector2 position)
 	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, 1000.0f);
 	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<ZombieResponseSystem>(*object);
-	auto renderingSystem = std::make_unique<EffectRenderingSystem>(*object, "Characters/Enemies/Zombie.ani.xml",
+	auto renderingSystem = std::make_unique<EntityRenderingSystem>(*object, "Characters/Enemies/Zombie.ani.xml",
 		effectFactory->CreateFlameEffect(),
 		effectFactory->CreateSparkEffect());
 
@@ -515,7 +549,7 @@ std::unique_ptr<HolyWater> ObjectFactory::CreateHolyWater(Vector2 position)
 	ReadSubWeaponConfig(*object.get(), *stats);
 
 	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, 600.0f);
-	auto collisionSystem = std::make_unique<WeaponCollisionSystem>(*object);
+	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<HolyWaterResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<HolyWaterRenderingSystem>(*object, "Weapons/Holy_Water.ani.xml");
 
@@ -538,8 +572,9 @@ std::unique_ptr<RangedWeapon> ObjectFactory::CreateFireball(Vector2 position)
 	ReadSubWeaponConfig(*object.get(), *stats);
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
-	auto renderingSystem = std::make_unique<ItemRenderingSystem>(
-		*object, "Weapons/Fireball.png", effectFactory->CreateFlameEffect());
+	auto renderingSystem = std::make_unique<ItemRenderingSystem>(*object, "Weapons/Fireball.png",
+		effectFactory->CreateFlameEffect(),
+		effectFactory->CreateSparkEffect());
 
 	object->SetPosition(position);
 	object->Attach(std::move(movementSystem));
@@ -587,11 +622,17 @@ std::unique_ptr<Powerup> ObjectFactory::CreatePowerup(ObjectId type, Vector2 pos
 		case ObjectId::InvisibleJar:
 			return CreateInvisibleJar(position);
 
+		case ObjectId::PorkChop:
+			return CreatePorkChop(position);
+
 		case ObjectId::Stopwatch:
 			return CreateStopwatch(position);
 
 		case ObjectId::WhipPowerup:
 			return CreateWhipPowerup(position);
+
+		case ObjectId::DoubleShot:
+			return CreateDoubleShot(position);
 
 		default:
 			throw std::invalid_argument("Invalid powerup type");
@@ -630,7 +671,7 @@ std::unique_ptr<MoneyBag> ObjectFactory::CreateMoneyBag(ObjectId type, Vector2 p
 	auto moneyAtlas = content.Load<Spritesheet>("Items/Money_Bag.atlas.xml");
 	auto effect = effectFactory->CreateMoneyTextEffect(money);
 	auto renderingSystem = std::make_unique<ItemRenderingSystem>(
-		*object, moneyAtlas->at(spriteId), std::move(effect));
+		*object, moneyAtlas->at(spriteId), std::move(effect), nullptr);
 
 	object->SetPosition(position);
 	object->Attach(std::move(movementSystem));
@@ -667,8 +708,7 @@ std::unique_ptr<MoneyBag> ObjectFactory::CreateFlashingMoneyBag(Vector2 position
 	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
 
-	auto moneyAtlas = content.Load<Spritesheet>("Items/Money_Bag.atlas.xml");
-	auto renderingSystem = std::make_unique<EffectRenderingSystem>(*object, "Items/Money_Bag.ani.xml",
+	auto renderingSystem = std::make_unique<EntityRenderingSystem>(*object, "Items/Money_Bag.ani.xml",
 		effectFactory->CreateFlashingMoneyTextEffect(), nullptr);
 
 	object->SetPosition(position);
@@ -830,6 +870,30 @@ std::unique_ptr<Powerup> ObjectFactory::CreateInvisibleJar(Vector2 position)
 	return object;
 }
 
+std::unique_ptr<Powerup> ObjectFactory::CreatePorkChop(Vector2 position)
+{
+	auto object = std::make_unique<Powerup>(ObjectId::PorkChop);
+
+	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
+	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
+	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
+	
+	auto porkChopAtlas = content.Load<Spritesheet>("Items/Pork_Chop.atlas.xml");
+	auto porkTextureRegion = porkChopAtlas->begin()->second;
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, porkTextureRegion);
+
+	object->SetPosition(position);
+	object->Attach(std::move(movementSystem));
+	object->Attach(std::move(collisionSystem));
+	object->Attach(std::move(responseSystem));
+	object->Attach(std::move(renderingSystem));
+
+	object->LoadContent(content);
+	object->SetVelocity_Y(ITEM_FALL_SPEED); // Fall down
+
+	return object;
+}
+
 std::unique_ptr<Powerup> ObjectFactory::CreateStopwatch(Vector2 position)
 {
 	auto object = std::make_unique<Powerup>(ObjectId::Stopwatch);
@@ -866,6 +930,27 @@ std::unique_ptr<Powerup> ObjectFactory::CreateWhipPowerup(Vector2 position)
 	object->Attach(std::move(responseSystem));
 	object->Attach(std::move(renderingSystem));
 	
+	object->LoadContent(content);
+	object->SetVelocity_Y(ITEM_FALL_SPEED); // Fall down
+
+	return object;
+}
+
+std::unique_ptr<Powerup> ObjectFactory::CreateDoubleShot(Vector2 position)
+{
+	auto object = std::make_unique<Powerup>(ObjectId::DoubleShot);
+
+	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
+	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
+	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Double_Shot.png");
+
+	object->SetPosition(position);
+	object->Attach(std::move(movementSystem));
+	object->Attach(std::move(collisionSystem));
+	object->Attach(std::move(responseSystem));
+	object->Attach(std::move(renderingSystem));
+
 	object->LoadContent(content);
 	object->SetVelocity_Y(ITEM_FALL_SPEED); // Fall down
 

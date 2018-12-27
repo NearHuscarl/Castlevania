@@ -97,6 +97,7 @@ Color RenderingSystem::GetBoundingBoxColor()
 			return Color::Gold() * bboxColorScale;
 
 		case ObjectId::Brazier:
+		case ObjectId::Candle:
 			return Color::YellowGreen() * bboxColorScale;
 
 		case ObjectId::Zombie:

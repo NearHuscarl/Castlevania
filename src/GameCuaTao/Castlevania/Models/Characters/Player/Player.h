@@ -112,6 +112,7 @@ namespace Castlevania
 		float stairWalkingSpeed;
 		float jumpSpeed;
 		bool isStopwatchActive;
+		int subWeaponCount;
 
 		std::unique_ptr<Whip> whip;
 		std::unique_ptr<RangedWeapon> subWeapon;

@@ -38,6 +38,7 @@ Hud::Hud(GraphicsDevice &graphicsDevice)
 	heartTexturePosition = Vector2{ 340, 32 };
 	heartTextPosition = Vector2{ 355, 32 };
 	liveTextPosition = Vector2{ 340, 49 };
+	powerupPosition = Vector2{ 432, 48 };
 }
 
 int Hud::GetWidth()
@@ -99,16 +100,13 @@ void Hud::LoadContent(ContentManager &content)
 	daggerTexture = content.Load<Texture>("Items/Dagger.png");
 	holyWaterTexture = content.Load<Texture>("Items/Holy_Water.png");
 	stopwatchTexture = content.Load<Texture>("Items/Stopwatch.png");
+	doubleShotTexture = content.Load<Texture>("Hud/Double_Shot.png");
 }
 
 void Hud::Draw(SpriteExtensions &spriteBatch)
 {
 	spriteBatch.Draw(*heartTexture, heartTexturePosition, Color::White(), false);
 	spriteBatch.Draw(*borderTexture, borderTexturePosition, Color::White(), false);
-
-	auto weaponTexture = GetWeaponTexture();
-	if (weaponTexture != nullptr)
-		spriteBatch.Draw(*weaponTexture, GetWeaponPosition(*weaponTexture), Color::White(), false);
 
 	spriteBatch.DrawString(*hudFont, GetScoreText(), scoreTextPosition, Color::White(), false);
 	spriteBatch.DrawString(*hudFont, GetTimeText(), timeTextPosition, Color::White(), false);
@@ -118,8 +116,16 @@ void Hud::Draw(SpriteExtensions &spriteBatch)
 	spriteBatch.DrawString(*hudFont, "ENEMY", enemyTextPosition, Color::White(), false);
 	DrawHealthBars(spriteBatch);
 
+	auto weaponTexture = GetWeaponTexture();
+	if (weaponTexture != nullptr)
+		spriteBatch.Draw(*weaponTexture, GetWeaponPosition(*weaponTexture), Color::White(), false);
+
 	spriteBatch.DrawString(*hudFont, GetHeartCountText(), heartTextPosition, Color::White(), false);
 	spriteBatch.DrawString(*hudFont, GetLiveCountText(), liveTextPosition, Color::White(), false);
+
+	auto powerupTexture = GetPowerupTexture();
+	if (powerupTexture != nullptr)
+		spriteBatch.Draw(*powerupTexture, GetPowerupPosition(*powerupTexture), Color::White(), false);
 }
 
 std::string Hud::GetScoreText()
@@ -168,6 +174,18 @@ std::shared_ptr<Texture> Hud::GetWeaponTexture()
 	}
 }
 
+std::shared_ptr<Texture> Hud::GetPowerupTexture()
+{
+	switch (data->playerData->powerup)
+	{
+		case ObjectId::DoubleShot:
+			return doubleShotTexture;
+
+		default:
+			return nullptr;
+	}
+}
+
 Vector2 Hud::GetWeaponPosition(Texture &weaponTexture)
 {
 	auto borderCenter = Vector2{
@@ -179,6 +197,13 @@ Vector2 Hud::GetWeaponPosition(Texture &weaponTexture)
 		borderCenter.y - weaponTexture.Height() / 2 };
 
 	return weaponPosition;
+}
+
+Vector2 Hud::GetPowerupPosition(Texture &powerupTexture)
+{
+	return Vector2{
+		powerupPosition.x - powerupTexture.Width() / 2,
+		powerupPosition.y - powerupTexture.Height() / 2 };
 }
 
 void Hud::DrawHealthBars(SpriteExtensions &spriteBatch)

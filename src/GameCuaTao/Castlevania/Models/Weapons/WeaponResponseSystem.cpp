@@ -1,5 +1,6 @@
 #include "WeaponResponseSystem.h"
 #include "../../Models/UpdateData.h"
+#include "../Items/BreakableWall.h"
 #include "../Items/Container.h"
 #include "../Characters/Enemies/Enemy.h"
 #include "../Characters/Player/Player.h"
@@ -17,8 +18,8 @@ void WeaponResponseSystem::Receive(int message)
 {
 	switch (message)
 	{
-		case WHIP_WITHDRAWN:
-			hitEnemies.clear();
+		case WEAPON_WITHDRAWN:
+			hitObjects.clear();
 			break;
 	}
 }
@@ -37,7 +38,13 @@ void WeaponResponseSystem::Update(UpdateData &updateData)
 		switch (objectId)
 		{
 			case ObjectId::Brazier:
-				OnCollideWithBrazier(result);
+			case ObjectId::Candle:
+			case ObjectId::BreakableBlock:
+				OnCollideWithContainer(result);
+				break;
+
+			case ObjectId::BreakableWall:
+				OnCollideWithBreakableWall(result);
 				break;
 
 			case ObjectId::Zombie:
@@ -55,14 +62,31 @@ void WeaponResponseSystem::Update(UpdateData &updateData)
 	}
 }
 
-void WeaponResponseSystem::OnCollideWithBrazier(CollisionResult &result)
+void WeaponResponseSystem::OnCollideWithContainer(CollisionResult &result)
 {
-	auto &brazier = dynamic_cast<Container&>(result.collidedObject);
+	auto &container = dynamic_cast<Container&>(result.collidedObject);
 
-	brazier.OnBeingHit();
+	container.OnBeingHit();
 
 	if (destroyOnHit)
 		parent.Destroy();
+}
+
+void WeaponResponseSystem::OnCollideWithBreakableWall(CollisionResult &result)
+{
+	if (parent.GetId() != ObjectId::Whip)
+		return;
+
+	auto &breakableWall = dynamic_cast<BreakableWall&>(result.collidedObject);
+
+	for (auto hitObject : hitObjects)
+	{
+		if (hitObject == &breakableWall)
+			return;
+	}
+
+	hitObjects.push_back(&breakableWall);
+	breakableWall.TakeDamage();
 }
 
 void WeaponResponseSystem::OnCollideWithEnemy(CollisionResult &result, Player &player)
@@ -74,18 +98,17 @@ void WeaponResponseSystem::OnCollideWithEnemy(CollisionResult &result, Player &p
 
 	auto &enemy = dynamic_cast<Enemy&>(result.collidedObject);
 
-	for (auto hitEnemy : hitEnemies)
+	for (auto hitObject : hitObjects)
 	{
-		if (hitEnemy == &enemy)
+		if (hitObject == &enemy)
 			return;
 	}
 
+	hitObjects.push_back(&enemy);
 	enemy.TakeDamage(weapon->GetAttack());
 
 	if (enemy.GetState() == ObjectState::DYING)
 		player.AddExp(enemy.GetExp());
-
-	hitEnemies.push_back(&enemy);
 
 	if (destroyOnHit)
 		parent.Destroy();

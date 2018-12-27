@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Fishman.h"
-#include "../../Systems/Rendering/EffectRenderingSystem.h"
+#include "../../Systems/Rendering/EntityRenderingSystem.h"
 
 namespace Castlevania
 {
-	class FishmanRenderingSystem : public EffectRenderingSystem
+	class FishmanRenderingSystem : public EntityRenderingSystem
 	{
 	public:
 		FishmanRenderingSystem(

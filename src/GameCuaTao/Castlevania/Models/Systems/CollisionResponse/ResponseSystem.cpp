@@ -27,6 +27,7 @@ void ResponseSystem::Update(UpdateData &updateData)
 		switch (objectId)
 		{
 			case ObjectId::Boundary:
+			case ObjectId::BreakableBlock:
 			{
 				if (result.direction != Direction::Top)
 					break;

@@ -1,3 +1,4 @@
+#include "Direct2DGame/MathHelper.h"
 #include "Direct2DGame/Input/InputHelper.h"
 #include "Player.h"
 #include "../../Settings.h"
@@ -11,7 +12,7 @@ using namespace Castlevania;
 constexpr auto LANDING_TIME = 400;
 constexpr auto FLASHING_TIME = 900;
 constexpr auto UNTOUCHABLE_TIME = 2000;
-constexpr auto THROWING_COOLDOWN_TIME = 850;
+constexpr auto THROWING_COOLDOWN_TIME = 1000;
 constexpr auto INVISIBLE_TIME = 6000;
 
 // Simon bounce back's max height (when taking damage)
@@ -22,6 +23,7 @@ constexpr auto HOVERING_VELOCITY = 20.0f;
 
 Player::Player() : GameObject{ ObjectId::Player }
 {
+	subWeaponCount = 1;
 }
 
 void Player::SetMoveState(MoveState moveState)
@@ -357,19 +359,27 @@ void Player::Stoptime()
 
 void Player::Throw(std::unique_ptr<RangedWeapon> weapon)
 {
-	if (throwingCooldownTimer.IsRunning())
+	if (subWeaponCount == 0)
 	{
 		if (throwingCooldownTimer.ElapsedMilliseconds() < THROWING_COOLDOWN_TIME)
 			return;
+
+		if (throwingCooldownTimer.ElapsedMilliseconds() >= THROWING_COOLDOWN_TIME)
+		{
+			if (data.powerup == ObjectId::DoubleShot)
+				subWeaponCount = 2;
+			else
+				subWeaponCount = 1;
+
+			throwingCooldownTimer.Reset();
+		}
 	}
 
-	throwingCooldownTimer.Restart();
+	if (subWeaponCount == 1)
+		throwingCooldownTimer.Start();
 
-	if (moveState == MoveState::GOING_UPSTAIRS
-		|| moveState == MoveState::GOING_DOWNSTAIRS)
-	{
-		return;
-	}
+	subWeaponCount = MathHelper::Max(--subWeaponCount, 0);
+
 
 	if (data.hearts == 0)
 		return;
@@ -383,9 +393,7 @@ void Player::Throw(std::unique_ptr<RangedWeapon> weapon)
 	data.hearts--;
 
 	if (data.hearts == 0)
-	{
 		data.subWeapon = ObjectId::Unknown;
-	}
 }
 
 void Player::TurnBackward()

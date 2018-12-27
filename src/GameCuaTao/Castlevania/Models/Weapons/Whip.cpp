@@ -65,7 +65,7 @@ void Whip::Unleash()
 void Whip::Withdraw()
 {
 	body.Enabled(false);
-	SendMessageToSystems(WHIP_WITHDRAWN);
+	SendMessageToSystems(WEAPON_WITHDRAWN);
 }
 
 void Whip::Upgrade()

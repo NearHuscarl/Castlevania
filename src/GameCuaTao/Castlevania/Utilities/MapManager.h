@@ -23,12 +23,10 @@ namespace Castlevania
 	public:
 		MapManager(ObjectFactory &objectFactory);
 
-		void SetWorldPosition(Vector2 position);
-
 		void LoadContent(ContentManager &content);
 
+		void SetWorldPosition(Vector2 position);
 		std::shared_ptr<TiledMap> GetTiledMap(Map name);
-		
 		std::unique_ptr<StageObject> GetStageObjects(Map name);
 		ObjectCollection GetMapObjects(Map name);
 		ObjectCollection GetMapObjectsInArea(Map name, RectF area);

@@ -1,11 +1,11 @@
 #pragma once
 
 #include "VampireBat.h"
-#include "../../Systems/Rendering/EffectRenderingSystem.h"
+#include "../../Systems/Rendering/EntityRenderingSystem.h"
 
 namespace Castlevania
 {
-	class VampireBatRenderingSystem : public EffectRenderingSystem
+	class VampireBatRenderingSystem : public EntityRenderingSystem
 	{
 	public:
 		VampireBatRenderingSystem(

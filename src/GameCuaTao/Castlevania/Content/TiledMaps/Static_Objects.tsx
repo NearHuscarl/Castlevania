@@ -18,4 +18,10 @@
   <tile id="5">
    <image source="GiantBat.png" width="98" height="46"/>
   </tile>
+  <tile id="6">
+   <image source="Stage_01/Block.png" width="32" height="32"/>
+  </tile>
+  <tile id="7">
+   <image source="Breakable_Wall.png" width="32" height="32"/>
+  </tile>
 </tileset>

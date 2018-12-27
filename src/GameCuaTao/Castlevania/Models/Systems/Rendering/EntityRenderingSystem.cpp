@@ -1,10 +1,10 @@
-#include "EffectRenderingSystem.h"
+#include "EntityRenderingSystem.h"
 #include "../../GameObject.h"
 #include "../../Settings.h"
 
 using namespace Castlevania;
 
-EffectRenderingSystem::EffectRenderingSystem(
+EntityRenderingSystem::EntityRenderingSystem(
 	GameObject &parent,
 	std::string spriteConfigPath,
 	std::unique_ptr<IEffect> deadEffect,
@@ -17,24 +17,24 @@ EffectRenderingSystem::EffectRenderingSystem(
 	this->spriteConfigPath = spriteConfigPath;
 }
 
-Sprite &EffectRenderingSystem::GetSprite()
+Sprite &EntityRenderingSystem::GetSprite()
 {
 	return *sprite;
 }
 
-GameObject &Castlevania::EffectRenderingSystem::GetParent()
+GameObject &Castlevania::EntityRenderingSystem::GetParent()
 {
 	return parent;
 }
 
-void EffectRenderingSystem::LoadContent(ContentManager &content)
+void EntityRenderingSystem::LoadContent(ContentManager &content)
 {
 	RenderingSystem::LoadContent(content);
 	auto animationFactory = content.Load<AnimationFactory>(spriteConfigPath);
 	sprite = std::make_unique<AnimatedSprite>(animationFactory);
 }
 
-void EffectRenderingSystem::Update(GameTime gameTime)
+void EntityRenderingSystem::Update(GameTime gameTime)
 {
 	switch (GetParent().GetState())
 	{
@@ -54,7 +54,7 @@ void EffectRenderingSystem::Update(GameTime gameTime)
 		hitEffect->Update(gameTime);
 }
 
-void EffectRenderingSystem::Draw(SpriteExtensions &spriteBatch)
+void EntityRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 {
 	switch (GetParent().GetState())
 	{
@@ -72,15 +72,19 @@ void EffectRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 		hitEffect->Draw(spriteBatch);
 }
 
-void EffectRenderingSystem::OnStateChanged()
+void EntityRenderingSystem::OnStateChanged()
 {
 	if (GetParent().GetState() == ObjectState::DYING)
 	{
-		deadEffect->Show(GetParent().GetOriginPosition());
+		if (deadEffect != nullptr)
+			deadEffect->Show(GetParent().GetOriginPosition());
+		else
+			GetParent().Destroy();
 	}
 }
 
-void EffectRenderingSystem::OnTakingDamage()
+void EntityRenderingSystem::OnTakingDamage()
 {
-	hitEffect->Show(GetParent().GetOriginPosition());
+	if (hitEffect != nullptr)
+		hitEffect->Show(GetParent().GetOriginPosition());
 }

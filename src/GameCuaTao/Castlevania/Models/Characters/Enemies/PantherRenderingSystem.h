@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Panther.h"
-#include "../../Systems/Rendering/EffectRenderingSystem.h"
+#include "../../Systems/Rendering/EntityRenderingSystem.h"
 
 namespace Castlevania
 {
-	class PantherRenderingSystem : public EffectRenderingSystem
+	class PantherRenderingSystem : public EntityRenderingSystem
 	{
 	public:
 		PantherRenderingSystem(

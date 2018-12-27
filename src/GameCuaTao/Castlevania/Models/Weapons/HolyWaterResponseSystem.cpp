@@ -35,8 +35,12 @@ void HolyWaterResponseSystem::Update(UpdateData &updateData)
 				auto &boundary = dynamic_cast<GameObject&>(result.collidedObject);
 				auto position = parent.GetPosition();
 
-				position.y = boundary.GetPosition().y - parent.GetFrameRect().Height();
-				parent.SetPosition(position);
+				if (result.direction == Direction::Top)
+				{
+					position.y = boundary.GetPosition().y - parent.GetFrameRect().Height();
+					parent.SetPosition(position);
+				}
+
 				parent.StartFlaming();
 				break;
 			}

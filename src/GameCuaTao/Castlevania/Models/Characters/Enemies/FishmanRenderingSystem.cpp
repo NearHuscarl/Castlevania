@@ -11,7 +11,7 @@ FishmanRenderingSystem::FishmanRenderingSystem(
 	std::unique_ptr<IEffect> deadEffect,
 	std::unique_ptr<IEffect> hitEffect)
 	:
-	EffectRenderingSystem{ parent, animationPath, std::move(deadEffect), std::move(hitEffect) },
+	EntityRenderingSystem{ parent, animationPath, std::move(deadEffect), std::move(hitEffect) },
 	parent{ parent }
 {
 	this->launchEffect = std::move(launchEffect);
@@ -19,7 +19,7 @@ FishmanRenderingSystem::FishmanRenderingSystem(
 
 void FishmanRenderingSystem::Update(GameTime gameTime)
 {
-	EffectRenderingSystem::Update(gameTime);
+	EntityRenderingSystem::Update(gameTime);
 
 	switch (parent.GetFishmanState())
 	{
@@ -31,7 +31,7 @@ void FishmanRenderingSystem::Update(GameTime gameTime)
 
 void FishmanRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 {
-	EffectRenderingSystem::Draw(spriteBatch);
+	EntityRenderingSystem::Draw(spriteBatch);
 
 	switch (parent.GetFishmanState())
 	{

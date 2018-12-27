@@ -10,7 +10,7 @@ VampireBatRenderingSystem::VampireBatRenderingSystem(
 	std::unique_ptr<IEffect> deadEffect,
 	std::unique_ptr<IEffect> hitEffect)
 	:
-	EffectRenderingSystem{ parent, animationPath, std::move(deadEffect), std::move(hitEffect) },
+	EntityRenderingSystem{ parent, animationPath, std::move(deadEffect), std::move(hitEffect) },
 	parent{ parent }
 {
 }

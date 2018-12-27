@@ -30,5 +30,7 @@ struct RectF
 	bool Intersects(RectF value);
 	bool TouchesOrIntersects(RectF value);
 
+	static RectF Merge(RectF value1, RectF value2);
+
 	explicit operator Rect();
 };

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Spritesheet TexturePath="Pork_Chop.png">
+    <Sprite ID="porkchop">
+      <SpriteFrame Left="0" Top="0" Width="32" Height="26" />
+      <SpriteBoundary Left="15" Top="0" Width="2" Height="26" />
+    </Sprite>
+  </Spritesheet>
+
+</GameContent>

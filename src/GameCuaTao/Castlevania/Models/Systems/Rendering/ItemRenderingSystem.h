@@ -5,12 +5,21 @@
 
 namespace Castlevania
 {
-	// Rendering system for interactive objects that spawns effect when being hit (candle, enemies)
+	// Rendering system for inanimate objects + effect (fireball)
 	class ItemRenderingSystem : public RenderingSystem
 	{
 	public:
-		ItemRenderingSystem(GameObject &parent, std::string spriteConfigPath, std::unique_ptr<IEffect> effect);
-		ItemRenderingSystem(GameObject &parent, TextureRegion textureRegion, std::unique_ptr<IEffect> effect);
+		ItemRenderingSystem(
+			GameObject &parent,
+			std::string spritePath,
+			std::unique_ptr<IEffect> deadEffect,
+			std::unique_ptr<IEffect> hitEffect);
+		
+		ItemRenderingSystem(
+			GameObject &parent,
+			TextureRegion textureRegion,
+			std::unique_ptr<IEffect> deadEffect,
+			std::unique_ptr<IEffect> hitEffect);
 
 		Sprite &GetSprite() override;
 		GameObject &GetParent() override;
@@ -22,9 +31,11 @@ namespace Castlevania
 	private:
 		GameObject &parent;
 		std::unique_ptr<Sprite> sprite;
+		std::unique_ptr<IEffect> deadEffect;
 		std::unique_ptr<IEffect> hitEffect;
 		std::string spritePath;
 
 		void OnStateChanged() override;
+		void OnTakingDamage() override;
 	};
 }

@@ -17,10 +17,11 @@ namespace Castlevania
 
 	private:
 		GameObject &parent;
-		std::vector<Enemy*> hitEnemies;
+		std::vector<GameObject*> hitObjects;
 		bool destroyOnHit;
 
-		void OnCollideWithBrazier(CollisionResult &result);
+		void OnCollideWithContainer(CollisionResult &result);
+		void OnCollideWithBreakableWall(CollisionResult &result);
 		void OnCollideWithEnemy(CollisionResult &result, Player &player);
 		void OnCollideWithFireball(CollisionResult &result);
 	};

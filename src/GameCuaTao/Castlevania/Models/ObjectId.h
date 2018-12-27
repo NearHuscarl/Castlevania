@@ -40,14 +40,10 @@ namespace Castlevania
 		Whip,
 
 		// Items
-		DoubleShot,
-		TripleShot,
-		
 		RedMoneyBag,
 		BlueMoneyBag,
 		WhiteMoneyBag,
 		FlashingMoneyBag,
-		PorkChop,
 
 		AxeItem,
 		BoomerangItem,
@@ -57,12 +53,17 @@ namespace Castlevania
 		LargeHeart,
 		SmallHeart,
 		InvisibleJar,
+		PorkChop,
 		Stopwatch,
 		WhipPowerup,
+
+		DoubleShot,
+		TripleShot,
 		CrystalBall,
 
 		// Misc
 		Door,
+		BreakableBlock,
 		BreakableWall,
 		Castle,
 		DirtBlock,

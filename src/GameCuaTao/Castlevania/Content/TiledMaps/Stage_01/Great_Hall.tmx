@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="88" height="6" tilewidth="64" tileheight="64" infinite="0" nextlayerid="10" nextobjectid="127">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="88" height="6" tilewidth="64" tileheight="64" infinite="0" nextlayerid="10" nextobjectid="135">
  <tileset firstgid="1" source="../Simon.tsx"/>
  <tileset firstgid="73" source="../Static_Objects.tsx"/>
- <tileset firstgid="79" source="../Candle.tsx"/>
+ <tileset firstgid="81" source="../Candle.tsx"/>
  <layer id="1" name="TileLayer01" width="88" height="6">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACmNgGAWjYBSMglEwCkbBKCANAADzn1fmQAgAAA==
@@ -17,7 +17,7 @@
     <property name="SpawnObject" value="Zombie"/>
    </properties>
   </object>
-  <object id="29" name="BatSpawnArea" type="SpawnArea" x="3072" y="0" width="1008" height="320">
+  <object id="29" name="BatSpawnArea" type="SpawnArea" x="3072" y="0" width="1008" height="166">
    <properties>
     <property name="SpawnObject" value="VampireBat"/>
    </properties>
@@ -50,26 +50,27 @@
   </object>
  </objectgroup>
  <objectgroup id="3" name="Bounds">
-  <object id="1" name="Platform" type="Boundary" x="0" y="320" width="3584" height="32"/>
+  <object id="1" name="Platform" type="Boundary" x="0" y="320" width="3648" height="32"/>
   <object id="2" name="Platform" type="Boundary" x="1376" y="192" width="96" height="32"/>
   <object id="3" name="Platform" type="Boundary" x="1504" y="128" width="320" height="32"/>
-  <object id="4" name="Platform" type="Boundary" x="1856" y="192" width="192" height="32"/>
+  <object id="4" name="Platform" type="Boundary" x="1856" y="192" width="160" height="32"/>
   <object id="5" name="Platform" type="Boundary" x="2784" y="128" width="544" height="32"/>
   <object id="6" name="Platform" type="Boundary" x="3328" y="192" width="96" height="32"/>
-  <object id="19" name="Platform" type="Boundary" x="3584" y="160" width="192" height="32"/>
-  <object id="20" name="Platform" type="Boundary" x="3712" y="320" width="1920" height="32"/>
+  <object id="19" name="Block" type="Boundary" x="3616" y="160" width="96" height="160"/>
+  <object id="20" name="Platform" type="Boundary" x="3648" y="320" width="1984" height="32"/>
   <object id="21" name="Platform" type="Boundary" x="3776" y="192" width="96" height="32"/>
   <object id="23" name="Platform" type="Boundary" x="3904" y="128" width="416" height="32"/>
   <object id="24" name="Platform" type="Boundary" x="4352" y="192" width="352" height="32"/>
-  <object id="25" name="Platform" type="Boundary" x="5440" y="256" width="64" height="32"/>
+  <object id="25" name="Platform" type="Boundary" x="5440" y="256" width="32" height="32"/>
   <object id="26" name="Platform" type="Boundary" x="5536" y="192" width="96" height="32"/>
   <object id="27" name="Wall" type="Boundary" x="4032" y="0" width="64" height="32"/>
-  <object id="28" name="Wall" type="Boundary" x="3584" y="192" width="128" height="160"/>
   <object id="77" name="Wall" type="Boundary" x="3056" y="0" width="32" height="32"/>
   <object id="78" name="Wall" type="Boundary" x="3056" y="160" width="32" height="160"/>
   <object id="79" name="Wall" type="Boundary" x="4080" y="160" width="16" height="160"/>
   <object id="80" name="Wall" type="Boundary" x="0" y="0" width="2" height="320"/>
   <object id="81" name="Wall" type="Boundary" x="5616" y="0" width="16" height="320"/>
+  <object id="131" name="Platform" type="Boundary" x="3712" y="160" width="64" height="32"/>
+  <object id="133" name="Block" type="Boundary" x="3584" y="160" width="32" height="96"/>
  </objectgroup>
  <objectgroup id="4" name="Entities">
   <object id="124" name="Boss" type="SpawnPoint" gid="78" x="5293" y="60" width="98" height="46">
@@ -96,226 +97,241 @@
     <property name="SpawnObject" value="Panther"/>
    </properties>
   </object>
-  <object id="32" name="Candle" type="Candle" gid="79" x="56" y="290" width="16" height="32">
+  <object id="32" name="Candle" type="Candle" gid="81" x="56" y="290" width="16" height="32">
    <properties>
     <property name="Item" value="BlueMoneyBag"/>
    </properties>
   </object>
-  <object id="33" name="Candle" type="Candle" gid="79" x="184" y="226" width="16" height="32">
+  <object id="33" name="Candle" type="Candle" gid="81" x="184" y="226" width="16" height="32">
    <properties>
     <property name="Item" value="SmallHeart"/>
    </properties>
   </object>
-  <object id="34" name="Candle" type="Candle" gid="79" x="440" y="226" width="16" height="32">
+  <object id="34" name="Candle" type="Candle" gid="81" x="440" y="226" width="16" height="32">
    <properties>
     <property name="Item" value="RedMoneyBag"/>
    </properties>
   </object>
-  <object id="35" name="Candle" type="Candle" gid="79" x="308" y="290" width="16" height="32">
+  <object id="35" name="Candle" type="Candle" gid="81" x="308" y="290" width="16" height="32">
    <properties>
     <property name="Item" value="SmallHeart"/>
    </properties>
   </object>
-  <object id="36" name="Candle" type="Candle" gid="79" x="564" y="290" width="16" height="32">
+  <object id="36" name="Candle" type="Candle" gid="81" x="564" y="290" width="16" height="32">
    <properties>
     <property name="Item" value="SmallHeart"/>
    </properties>
   </object>
-  <object id="37" name="Candle" type="Candle" gid="79" x="694" y="226" width="16" height="32">
+  <object id="37" name="Candle" type="Candle" gid="81" x="694" y="226" width="16" height="32">
    <properties>
     <property name="Item" value="RedMoneyBag"/>
    </properties>
   </object>
-  <object id="38" name="Candle" type="Candle" gid="79" x="822" y="290" width="16" height="32">
+  <object id="38" name="Candle" type="Candle" gid="81" x="822" y="290" width="16" height="32">
    <properties>
     <property name="Item" value="SmallHeart"/>
    </properties>
   </object>
-  <object id="39" name="Candle" type="Candle" gid="79" x="950" y="226" width="16" height="32">
+  <object id="39" name="Candle" type="Candle" gid="81" x="950" y="226" width="16" height="32">
    <properties>
     <property name="Item" value="SmallHeart"/>
    </properties>
   </object>
-  <object id="40" name="Candle" type="Candle" gid="79" x="1078" y="290" width="16" height="32">
+  <object id="40" name="Candle" type="Candle" gid="81" x="1078" y="290" width="16" height="32">
    <properties>
     <property name="Item" value="SmallHeart"/>
    </properties>
   </object>
-  <object id="41" name="Candle" type="Candle" gid="79" x="1206" y="226" width="16" height="32">
+  <object id="41" name="Candle" type="Candle" gid="81" x="1206" y="226" width="16" height="32">
    <properties>
     <property name="Item" value="SmallHeart"/>
    </properties>
   </object>
-  <object id="42" name="Candle" type="Candle" gid="79" x="1462" y="290" width="16" height="32">
+  <object id="42" name="Candle" type="Candle" gid="81" x="1462" y="290" width="16" height="32">
    <properties>
     <property name="Item" value="WhiteMoneyBag"/>
    </properties>
   </object>
-  <object id="43" name="Candle" type="Candle" gid="79" x="1334" y="98" width="16" height="32">
+  <object id="43" name="Candle" type="Candle" gid="81" x="1334" y="98" width="16" height="32">
    <properties>
     <property name="Item" value="RedMoneyBag"/>
    </properties>
   </object>
-  <object id="44" name="Candle" type="Candle" gid="79" x="1590" y="34" width="16" height="32">
+  <object id="44" name="Candle" type="Candle" gid="81" x="1590" y="34" width="16" height="32">
    <properties>
     <property name="Item" value="HolyWaterItem"/>
    </properties>
   </object>
-  <object id="45" name="Candle" type="Candle" gid="79" x="1718" y="98" width="16" height="32">
+  <object id="45" name="Candle" type="Candle" gid="81" x="1718" y="98" width="16" height="32">
    <properties>
     <property name="Item" value="LargeHeart"/>
    </properties>
   </object>
-  <object id="46" name="Candle" type="Candle" gid="79" x="1974" y="98" width="16" height="32">
+  <object id="46" name="Candle" type="Candle" gid="81" x="1974" y="98" width="16" height="32">
    <properties>
     <property name="Item" value="SmallHeart"/>
    </properties>
   </object>
-  <object id="47" name="Candle" type="Candle" gid="79" x="1846" y="290" width="16" height="32">
+  <object id="47" name="Candle" type="Candle" gid="81" x="1846" y="290" width="16" height="32">
    <properties>
     <property name="Item" value="WhiteMoneyBag"/>
    </properties>
   </object>
-  <object id="48" name="Candle" type="Candle" gid="79" x="2102" y="290" width="16" height="32">
+  <object id="48" name="Candle" type="Candle" gid="81" x="2102" y="290" width="16" height="32">
    <properties>
     <property name="Item" value="SmallHeart"/>
    </properties>
   </object>
-  <object id="49" name="Candle" type="Candle" gid="79" x="2230" y="290" width="16" height="32">
+  <object id="49" name="Candle" type="Candle" gid="81" x="2230" y="290" width="16" height="32">
    <properties>
     <property name="Item" value="SmallHeart"/>
    </properties>
   </object>
-  <object id="50" name="Candle" type="Candle" gid="79" x="2358" y="290" width="16" height="32">
+  <object id="50" name="Candle" type="Candle" gid="81" x="2358" y="290" width="16" height="32">
    <properties>
     <property name="Item" value="SmallHeart"/>
    </properties>
   </object>
-  <object id="51" name="Candle" type="Candle" gid="79" x="2484" y="290" width="16" height="32">
+  <object id="51" name="Candle" type="Candle" gid="81" x="2484" y="290" width="16" height="32">
    <properties>
     <property name="Item" value="SmallHeart"/>
    </properties>
   </object>
-  <object id="52" name="Candle" type="Candle" gid="79" x="2612" y="290" width="16" height="32">
+  <object id="52" name="Candle" type="Candle" gid="81" x="2612" y="290" width="16" height="32">
    <properties>
     <property name="Item" value="SmallHeart"/>
    </properties>
   </object>
-  <object id="53" name="Candle" type="Candle" gid="79" x="2740" y="226" width="16" height="32">
+  <object id="53" name="Candle" type="Candle" gid="81" x="2740" y="226" width="16" height="32">
    <properties>
     <property name="Item" value="SmallHeart"/>
    </properties>
   </object>
-  <object id="54" name="Candle" type="Candle" gid="79" x="2860" y="98" width="16" height="32">
+  <object id="54" name="Candle" type="Candle" gid="81" x="2860" y="98" width="16" height="32">
    <properties>
     <property name="Item" value="SmallHeart"/>
    </properties>
   </object>
-  <object id="55" name="Candle" type="Candle" gid="79" x="3256" y="98" width="16" height="32">
+  <object id="55" name="Candle" type="Candle" gid="81" x="3256" y="98" width="16" height="32">
    <properties>
     <property name="Item" value="LargeHeart"/>
    </properties>
   </object>
-  <object id="56" name="Candle" type="Candle" gid="79" x="3384" y="66" width="16" height="32">
+  <object id="56" name="Candle" type="Candle" gid="81" x="3384" y="66" width="16" height="32">
    <properties>
     <property name="Item" value="RedMoneyBag"/>
    </properties>
   </object>
-  <object id="57" name="Candle" type="Candle" gid="79" x="3512" y="226" width="16" height="32">
+  <object id="57" name="Candle" type="Candle" gid="81" x="3512" y="226" width="16" height="32">
    <properties>
     <property name="Item" value="RedMoneyBag"/>
    </properties>
   </object>
-  <object id="58" name="Candle" type="Candle" gid="79" x="3128" y="290" width="16" height="32">
+  <object id="58" name="Candle" type="Candle" gid="81" x="3128" y="290" width="16" height="32">
    <properties>
     <property name="Item" value="WhiteMoneyBag"/>
    </properties>
   </object>
-  <object id="59" name="Candle" type="Candle" gid="79" x="3672" y="66" width="16" height="32">
+  <object id="59" name="Candle" type="Candle" gid="81" x="3672" y="66" width="16" height="32">
    <properties>
     <property name="Item" value="LargeHeart"/>
    </properties>
   </object>
-  <object id="60" name="Candle" type="Candle" gid="79" x="3766" y="290" width="16" height="32">
+  <object id="60" name="Candle" type="Candle" gid="81" x="3766" y="290" width="16" height="32">
    <properties>
     <property name="Item" value="RedMoneyBag"/>
    </properties>
   </object>
-  <object id="61" name="Candle" type="Candle" gid="79" x="3896" y="36" width="16" height="32">
+  <object id="61" name="Candle" type="Candle" gid="81" x="3896" y="36" width="16" height="32">
    <properties>
     <property name="Item" value="LargeHeart"/>
    </properties>
   </object>
-  <object id="62" name="Candle" type="Candle" gid="79" x="4024" y="98" width="16" height="32">
+  <object id="62" name="Candle" type="Candle" gid="81" x="4024" y="98" width="16" height="32">
    <properties>
     <property name="Item" value="SmallHeart"/>
    </properties>
   </object>
-  <object id="63" name="Candle" type="Candle" gid="79" x="4280" y="98" width="16" height="32">
+  <object id="63" name="Candle" type="Candle" gid="81" x="4280" y="98" width="16" height="32">
    <properties>
     <property name="Item" value="RedMoneyBag"/>
    </properties>
   </object>
-  <object id="64" name="Candle" type="Candle" gid="79" x="4408" y="162" width="16" height="32">
+  <object id="64" name="Candle" type="Candle" gid="81" x="4408" y="162" width="16" height="32">
    <properties>
     <property name="Item" value="SmallHeart"/>
    </properties>
   </object>
-  <object id="65" name="Candle" type="Candle" gid="79" x="4152" y="226" width="16" height="32">
+  <object id="65" name="Candle" type="Candle" gid="81" x="4152" y="226" width="16" height="32">
    <properties>
     <property name="Item" value="LargeHeart"/>
    </properties>
   </object>
-  <object id="66" name="Candle" type="Candle" gid="79" x="4536" y="98" width="16" height="32">
+  <object id="66" name="Candle" type="Candle" gid="81" x="4536" y="98" width="16" height="32">
    <properties>
     <property name="Item" value="InvisibleJar"/>
    </properties>
   </object>
-  <object id="67" name="Candle" type="Candle" gid="79" x="4790" y="226" width="16" height="32">
+  <object id="67" name="Candle" type="Candle" gid="81" x="4790" y="226" width="16" height="32">
    <properties>
     <property name="Item" value="AxeItem"/>
    </properties>
   </object>
-  <object id="68" name="Candle" type="Candle" gid="79" x="4664" y="290" width="16" height="32">
+  <object id="68" name="Candle" type="Candle" gid="81" x="4664" y="290" width="16" height="32">
    <properties>
     <property name="Item" value="SmallHeart"/>
    </properties>
   </object>
-  <object id="69" name="Candle" type="Candle" gid="79" x="4918" y="290" width="16" height="32">
+  <object id="69" name="Candle" type="Candle" gid="81" x="4918" y="290" width="16" height="32">
    <properties>
     <property name="Item" value="SmallHeart"/>
    </properties>
   </object>
-  <object id="70" name="Candle" type="Candle" gid="79" x="5046" y="290" width="16" height="32">
+  <object id="70" name="Candle" type="Candle" gid="81" x="5046" y="290" width="16" height="32">
    <properties>
     <property name="Item" value="SmallHeart"/>
    </properties>
   </object>
-  <object id="71" name="Candle" type="Candle" gid="79" x="5174" y="226" width="16" height="32">
+  <object id="71" name="Candle" type="Candle" gid="81" x="5174" y="226" width="16" height="32">
    <properties>
     <property name="Item" value="LargeHeart"/>
    </properties>
   </object>
-  <object id="72" name="Candle" type="Candle" gid="79" x="5302" y="290" width="16" height="32">
+  <object id="72" name="Candle" type="Candle" gid="81" x="5302" y="290" width="16" height="32">
    <properties>
     <property name="Item" value="SmallHeart"/>
    </properties>
   </object>
-  <object id="73" name="Candle" type="Candle" gid="79" x="5430" y="226" width="16" height="32">
+  <object id="73" name="Candle" type="Candle" gid="81" x="5430" y="226" width="16" height="32">
    <properties>
     <property name="Item" value="RedMoneyBag"/>
    </properties>
   </object>
-  <object id="74" name="Candle" type="Candle" gid="79" x="5558" y="226" width="16" height="32">
+  <object id="74" name="Candle" type="Candle" gid="81" x="5558" y="226" width="16" height="32">
    <properties>
     <property name="Item" value="LargeHeart"/>
    </properties>
   </object>
   <object id="75" name="Door" type="Door" gid="77" x="3048" y="128" width="24" height="96"/>
   <object id="76" name="Door" type="Door" gid="77" x="4072" y="128" width="24" height="96"/>
-  <object id="119" name="Candle" type="Candle" gid="79" x="2998" y="34" width="16" height="32">
+  <object id="119" name="Candle" type="Candle" gid="81" x="2998" y="34" width="16" height="32">
    <properties>
     <property name="Item" value="Cross"/>
+   </properties>
+  </object>
+  <object id="127" name="BreakableBlock" type="BreakableBlock" gid="79" x="2016" y="224" width="32" height="32">
+   <properties>
+    <property name="Item" value="BlueMoneyBag"/>
+   </properties>
+  </object>
+  <object id="128" name="BreakableBlock" type="BreakableBlock" gid="79" x="5472" y="288" width="32" height="32">
+   <properties>
+    <property name="Item" value="DoubleShot"/>
+   </properties>
+  </object>
+  <object id="134" name="BreakableWall" type="BreakableWall" gid="80" x="3584" y="320" width="32" height="64">
+   <properties>
+    <property name="Item" value="PorkChop"/>
    </properties>
   </object>
  </objectgroup>
@@ -459,7 +475,7 @@
   <object id="9" name="Entrypoint2" type="Position" gid="75" x="64" y="320" width="60" height="66"/>
   <object id="110" name="Underground_02" type="Position" gid="2147483658" x="3808" y="351" width="60" height="66"/>
   <object id="111" name="Underground_01" type="Position" gid="2147483658" x="3168" y="351" width="60" height="66"/>
-  <object id="120" name="Entrypoint" type="Position" gid="75" x="5043.41" y="318" width="60" height="66"/>
+  <object id="120" name="Entrypoint" type="Position" gid="75" x="5044" y="310.83" width="60" height="66"/>
   <object id="121" name="Checkpoint_01" type="Position" gid="75" x="3151" y="128" width="60" height="66"/>
   <object id="122" name="Checkpoint_02" type="Position" gid="75" x="4169" y="128" width="60" height="66"/>
   <object id="125" name="Entrypoint1" type="Position" gid="75" x="2944" y="124" width="60" height="66"/>

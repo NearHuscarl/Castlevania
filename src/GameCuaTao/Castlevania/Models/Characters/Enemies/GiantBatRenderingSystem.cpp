@@ -10,7 +10,7 @@ GiantBatRenderingSystem::GiantBatRenderingSystem(
 	std::unique_ptr<IEffect> deadEffect,
 	std::unique_ptr<IEffect> hitEffect)
 	:
-	EffectRenderingSystem{ parent, animationPath, std::move(deadEffect), std::move(hitEffect) },
+	EntityRenderingSystem{ parent, animationPath, std::move(deadEffect), std::move(hitEffect) },
 	parent{ parent }
 {
 }
@@ -23,7 +23,7 @@ void GiantBatRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 		DrawBoundingBox(spriteBatch, parent.GetAttackZone(), Color::LavenderBlue() * 0.5f);
 	}
 
-	EffectRenderingSystem::Draw(spriteBatch);
+	EntityRenderingSystem::Draw(spriteBatch);
 }
 
 void GiantBatRenderingSystem::OnMoveStateChanged()

@@ -26,5 +26,7 @@ struct Rect : public RECT
 	bool Intersects(Rect value);
 	bool TouchesOrIntersects(Rect value);
 
+	static Rect Merge(Rect value1, Rect value2);
+
 	operator RectF(); // Implicit conversion
 };

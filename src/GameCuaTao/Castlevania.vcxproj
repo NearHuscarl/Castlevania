@@ -159,6 +159,7 @@
   <ItemGroup>
     <ClCompile Include="Castlevania\CastlevaniaGame.cpp" />
     <ClCompile Include="Castlevania\Effects\BigFlameEffect.cpp" />
+    <ClCompile Include="Castlevania\Effects\DebrisEffect.cpp" />
     <ClCompile Include="Castlevania\Effects\FlameEffect.cpp" />
     <ClCompile Include="Castlevania\Effects\FlashingMoneyTextEffect.cpp" />
     <ClCompile Include="Castlevania\Effects\MoneyTextEffect.cpp" />
@@ -192,6 +193,7 @@
     <ClCompile Include="Castlevania\Hud.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Player\PlayerRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\GameObject.cpp" />
+    <ClCompile Include="Castlevania\Models\Items\BreakableWall.cpp" />
     <ClCompile Include="Castlevania\Models\Items\Door.cpp" />
     <ClCompile Include="Castlevania\Models\Items\DoorRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Items\MoneyBag.cpp" />
@@ -214,7 +216,7 @@
     <ClCompile Include="Castlevania\Models\Systems\Movement\WaveMovementSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Rendering\AnimationRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Rendering\BoundingboxRenderingSystem.cpp" />
-    <ClCompile Include="Castlevania\Models\Systems\Rendering\EffectRenderingSystem.cpp" />
+    <ClCompile Include="Castlevania\Models\Systems\Rendering\EntityRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Rendering\RenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Rendering\SpriteRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Trigger.cpp" />
@@ -317,6 +319,7 @@
   <ItemGroup>
     <ClInclude Include="Castlevania\CastlevaniaGame.h" />
     <ClInclude Include="Castlevania\Effects\BigFlameEffect.h" />
+    <ClInclude Include="Castlevania\Effects\DebrisEffect.h" />
     <ClInclude Include="Castlevania\Effects\FlameEffect.h" />
     <ClInclude Include="Castlevania\Effects\FlashingMoneyTextEffect.h" />
     <ClInclude Include="Castlevania\Effects\MoneyTextEffect.h" />
@@ -354,6 +357,7 @@
     <ClInclude Include="Castlevania\Models\Characters\Player\PlayerRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\GameObject.h" />
     <ClInclude Include="Castlevania\Models\IBoss.h" />
+    <ClInclude Include="Castlevania\Models\Items\BreakableWall.h" />
     <ClInclude Include="Castlevania\Models\Items\Door.h" />
     <ClInclude Include="Castlevania\Models\Items\DoorRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\IAttackable.h" />
@@ -381,7 +385,7 @@
     <ClInclude Include="Castlevania\Models\Systems\Movement\MovementSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Movement\WaveMovementSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Rendering\BoundingboxRenderingSystem.h" />
-    <ClInclude Include="Castlevania\Models\Systems\Rendering\EffectRenderingSystem.h" />
+    <ClInclude Include="Castlevania\Models\Systems\Rendering\EntityRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Rendering\IRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Rendering\AnimationRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Systems\Rendering\RenderingSystem.h" />

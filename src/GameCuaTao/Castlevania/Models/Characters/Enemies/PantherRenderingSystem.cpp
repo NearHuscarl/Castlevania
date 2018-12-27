@@ -10,7 +10,7 @@ PantherRenderingSystem::PantherRenderingSystem(
 	std::unique_ptr<IEffect> deadEffect,
 	std::unique_ptr<IEffect> hitEffect)
 	:
-	EffectRenderingSystem{ parent, animationPath, std::move(deadEffect), std::move(hitEffect) },
+	EntityRenderingSystem{ parent, animationPath, std::move(deadEffect), std::move(hitEffect) },
 	parent{ parent }
 {
 }
@@ -20,7 +20,7 @@ void PantherRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 	if (DevTool::IsDebugging)
 		DrawBoundingBox(spriteBatch, parent.GetActiveZone(), Color::LavenderBlue() * 0.4f);
 
-	EffectRenderingSystem::Draw(spriteBatch);
+	EntityRenderingSystem::Draw(spriteBatch);
 }
 
 void PantherRenderingSystem::OnMoveStateChanged()

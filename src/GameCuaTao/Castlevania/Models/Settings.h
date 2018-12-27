@@ -19,7 +19,7 @@ namespace Castlevania
 
 	// Whip events
 	constexpr auto WHIP_UNLEASHED = 7;
-	constexpr auto WHIP_WITHDRAWN = 8;
+	constexpr auto WEAPON_WITHDRAWN = 8;
 
 	// Enemy events
 	constexpr auto PLAYER_IN_RANGE = 9;

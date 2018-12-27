@@ -6,6 +6,7 @@
 #include "../Characters/Enemies/Fishman.h"
 #include "../Characters/Enemies/VampireBat.h"
 #include "../Characters/Enemies/GiantBat.h"
+#include "../Items/BreakableWall.h"
 #include "../Items/Container.h"
 #include "../Items/Door.h"
 #include "../Weapons/HolyWater.h"
@@ -33,8 +34,11 @@ namespace Castlevania
 		std::unique_ptr<GameObject> CreateBat(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Player> CreatePlayer(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Player> CreateIntroSimon(Vector2 position = Vector2::Zero());
+
 		std::unique_ptr<Container> CreateBrazier(ObjectId itemType, Vector2 position = Vector2::Zero());
 		std::unique_ptr<Container> CreateCandle(ObjectId itemType, Vector2 position = Vector2::Zero());
+		std::unique_ptr<Container> CreateBreakableBlock(ObjectId itemType, std::string spritePath = "", Vector2 position = Vector2::Zero());
+		std::unique_ptr<BreakableWall> CreateBreakableWall(ObjectId itemType, Vector2 position = Vector2::Zero());
 
 		std::unique_ptr<Enemy> CreateEnemy(ObjectId type, Vector2 position = Vector2::Zero());
 		std::unique_ptr<Zombie> CreateZombie(Vector2 position = Vector2::Zero());
@@ -57,7 +61,7 @@ namespace Castlevania
 		std::unique_ptr<MoneyBag> CreateWhiteMoneyBag(Vector2 position = Vector2::Zero());
 		std::unique_ptr<MoneyBag> CreateRedMoneyBag(Vector2 position = Vector2::Zero());
 		std::unique_ptr<MoneyBag> CreateFlashingMoneyBag(Vector2 position = Vector2::Zero());
-
+		
 		std::unique_ptr<Powerup> CreateAxeItem(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Powerup> CreateCross(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Powerup> CreateDaggerItem(Vector2 position = Vector2::Zero());
@@ -65,8 +69,10 @@ namespace Castlevania
 		std::unique_ptr<Powerup> CreateLargeHeart(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Powerup> CreateSmallHeart(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Powerup> CreateInvisibleJar(Vector2 position = Vector2::Zero());
+		std::unique_ptr<Powerup> CreatePorkChop(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Powerup> CreateStopwatch(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Powerup> CreateWhipPowerup(Vector2 position = Vector2::Zero());
+		std::unique_ptr<Powerup> CreateDoubleShot(Vector2 position = Vector2::Zero());
 		std::unique_ptr<GameObject> CreateCrystalBall(Vector2 position = Vector2::Zero());
 
 		std::unique_ptr<Door> CreateDoor(Vector2 position = Vector2::Zero());

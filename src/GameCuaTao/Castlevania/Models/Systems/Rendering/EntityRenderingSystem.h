@@ -6,11 +6,12 @@
 
 namespace Castlevania
 {
-	// Rendering system for interactive objects that spawns effect when being hit (candle, enemies)
-	class EffectRenderingSystem : public RenderingSystem
+	// Rendering system for interactive objects that spawns effect when being hit
+	// and when about to die (candle, enemies)
+	class EntityRenderingSystem : public RenderingSystem
 	{
 	public:
-		EffectRenderingSystem(
+		EntityRenderingSystem(
 			GameObject &parent,
 			std::string spriteConfigPath,
 			std::unique_ptr<IEffect> deadEffect,

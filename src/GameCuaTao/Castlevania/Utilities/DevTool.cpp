@@ -12,6 +12,7 @@ int DevTool::currentItemIndex = 0;
 int DevTool::currentMapIndex = 0;
 bool DevTool::IsDebugging = true;
 
+constexpr auto PLAYER = "PLAYER";
 constexpr auto ENEMY = "ENEMY";
 constexpr auto CONTAINER = "CONTAINER";
 constexpr auto POWERUP = "POWERUP";
@@ -31,6 +32,7 @@ void DevTool::LoadContent(ContentManager &content)
 	effectFactory = std::make_unique<EffectFactory>(content);
 	debugFont = content.Load<SpriteFont>("Fonts/DebugFont.font.xml");
 
+	auto playerSprite = content.Load<Spritesheet>("Characters/Players/Simon.atlas.xml")->at("walk_01");
 	auto zombieSprite = content.Load<Spritesheet>("Characters/Enemies/Zombie.atlas.xml")->begin()->second;
 	auto pantherSprite = content.Load<Spritesheet>("Characters/Enemies/Panther.atlas.xml")->begin()->second;
 	auto fishmanSprite = content.Load<Spritesheet>("Characters/Enemies/Fishman.atlas.xml")->begin()->second;
@@ -50,17 +52,26 @@ void DevTool::LoadContent(ContentManager &content)
 	auto largeHeartSprite = content.Load<Texture>("Items/Large_Heart.png");
 	auto smallHeartSprite = content.Load<Texture>("Items/Small_Heart.png");
 	auto invisibleJarSprite = content.Load<Texture>("Items/Invisible_Jar.png");
+	auto porkChopSprite = content.Load<Texture>("Items/Pork_Chop.png");
 	auto stopwatchSprite = content.Load<Texture>("Items/Stopwatch.png");
 	auto whipPowerupSprite = content.Load<Texture>("Items/Whip_Powerup.png");
+	auto doubleShotSprite = content.Load<Texture>("Items/Double_Shot.png");
 
 	auto axeSprite = content.Load<Spritesheet>("Weapons/Axe.atlas.xml")->at("axe_01");
 	auto holyWaterSprite = content.Load<Spritesheet>("Weapons/Holy_Water.atlas.xml")->at("holy_water_01");
 	auto fireballSprite = content.Load<Texture>("Weapons/Fireball.png");
 
 	auto flameSprite = content.Load<Spritesheet>("Effects/Flame.atlas.xml")->at("flame_02");
+	auto debrisSprite = content.Load<Texture>("Effects/Debris.png");
 	auto waterSprite = content.Load<Texture>("Effects/Water.png");
 
 	items = std::unordered_map<std::string, DevToolItems>{
+		{
+			PLAYER,
+			{
+				std::make_pair<std::string, Sprite>("Player", playerSprite),
+			},
+		},
 		{
 			ENEMY,
 			{
@@ -92,8 +103,10 @@ void DevTool::LoadContent(ContentManager &content)
 				std::make_pair<std::string, Sprite>("LargeHeart", largeHeartSprite),
 				std::make_pair<std::string, Sprite>("SmallHeart", smallHeartSprite),
 				std::make_pair<std::string, Sprite>("InvisibleJar", invisibleJarSprite),
+				std::make_pair<std::string, Sprite>("PorkChop", porkChopSprite),
 				std::make_pair<std::string, Sprite>("Stopwatch", stopwatchSprite),
 				std::make_pair<std::string, Sprite>("WhipPowerup", whipPowerupSprite),
+				std::make_pair<std::string, Sprite>("DoubleShot", doubleShotSprite),
 			}
 		},
 		{
@@ -110,6 +123,7 @@ void DevTool::LoadContent(ContentManager &content)
 			{
 				std::make_pair<std::string, Sprite>("FlameEffect", flameSprite),
 				std::make_pair<std::string, Sprite>("BigFlameEffect", flameSprite),
+				std::make_pair<std::string, Sprite>("DebrisEffect", debrisSprite),
 				std::make_pair<std::string, Sprite>("WaterEffect", waterSprite),
 			}
 		},
@@ -137,7 +151,9 @@ void DevTool::Update(UpdateData &updatData)
 
 	auto checkpoints = updatData.stageObject->checkpoints;
 
-	if (InputHelper::IsKeyDown(DIK_Q))
+	if (InputHelper::IsKeyDown(DIK_TAB))
+		SetCategory(PLAYER);
+	else if (InputHelper::IsKeyDown(DIK_Q))
 		SetCategory(ENEMY);
 	else if (InputHelper::IsKeyDown(DIK_W))
 		SetCategory(CONTAINER);
@@ -224,6 +240,8 @@ std::unique_ptr<IEffect> DevTool::CreateEffect(std::string name)
 		return effectFactory->CreateFlameEffect();
 	else if (name == "BigFlameEffect")
 		return effectFactory->CreateBigFlameEffect();
+	else if (name == "DebrisEffect")
+		return effectFactory->CreateDebrisEffect();
 	else if (name == "WaterEffect")
 		return effectFactory->CreateWaterEffect();
 	else
@@ -306,7 +324,14 @@ void DevTool::SpawnObject()
 	auto objectPosition = GetCurrentItemPosition();
 	auto object = std::unique_ptr<GameObject>{};
 
-	if (category == ENEMY)
+	if (category == PLAYER)
+	{
+		player.SetPosition(GetCurrentItemPosition());
+		player.SetFacing(currentFacing);
+		player.IdleOnGround();
+		return;
+	}
+	else if (category == ENEMY)
 	{
 		object = objectFactory.CreateEnemy(type);
 
