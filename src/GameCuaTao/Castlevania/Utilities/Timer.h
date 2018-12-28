@@ -10,6 +10,7 @@ namespace Castlevania
 		// interval in seconds
 		Timer(int startingTime = 0);
 
+		void AddCounter(int counter);
 		void SetCounter(int counter);
 		void ResetLastSecond();
 		int GetCounter() const;

@@ -111,6 +111,10 @@ void PlayerResponseSystem::Update(UpdateData &updateData)
 				OnCollideWithDoubleShot(result);
 				break;
 
+			case ObjectId::CrystalBall:
+				OnCollideWithCrystalBall(result);
+				break;
+
 			case ObjectId::Door:
 				OnCollideWithDoor(result, responseResult);
 				break;
@@ -194,7 +198,7 @@ void PlayerResponseSystem::OnCollideWithBoundary(CollisionResult &result, Respon
 						ClampDistance_Y(collisionData);
 						parent.Land();
 						
-						if (parent.data.health <= 0)
+						if (parent.data.health.Value() <= 0)
 							parent.Die();
 					}
 					break;
@@ -340,7 +344,7 @@ void PlayerResponseSystem::OnCollideWithMoneyBag(CollisionResult &result)
 
 	moneyBag.SetPosition(effectPosition);
 
-	parent.data.score += moneyBag.GetMoney();
+	parent.AddExp(moneyBag.GetMoney());
 }
 
 void PlayerResponseSystem::OnCollideWithSubWeaponItem(CollisionResult &result)
@@ -364,7 +368,7 @@ void PlayerResponseSystem::OnCollideWithHeart(CollisionResult &result)
 {
 	auto &largeHeart = dynamic_cast<GameObject&>(result.collidedObject);
 
-	parent.data.hearts += 5;
+	parent.AddHeart(5);
 	largeHeart.Destroy();
 }
 
@@ -372,7 +376,7 @@ void PlayerResponseSystem::OnCollideWithSmallHeart(CollisionResult &result)
 {
 	auto &smallHeart = dynamic_cast<GameObject&>(result.collidedObject);
 
-	parent.data.hearts += 1;
+	parent.AddHeart(1);
 	smallHeart.Destroy();
 }
 
@@ -388,7 +392,7 @@ void PlayerResponseSystem::OnCollideWithPorkChop(CollisionResult &result)
 {
 	auto &porkChop = dynamic_cast<GameObject&>(result.collidedObject);
 
-	parent.data.health = MathHelper::Min(parent.data.health + 6, MAX_HEALTH);
+	parent.data.health.Add(6);
 	porkChop.Destroy();
 }
 
@@ -422,6 +426,15 @@ void PlayerResponseSystem::OnCollideWithDoubleShot(CollisionResult &result)
 
 	parent.data.powerup = ObjectId::DoubleShot;
 	doubleShot.Destroy();
+}
+
+void PlayerResponseSystem::OnCollideWithCrystalBall(CollisionResult &result)
+{
+	auto &crystalBall = dynamic_cast<GameObject&>(result.collidedObject);
+	auto &playerHealth = parent.data.health;
+	
+	playerHealth.Add(MAX_HEALTH - playerHealth.Value());
+	crystalBall.Destroy();
 }
 
 void PlayerResponseSystem::OnCollideWithDoor(CollisionResult &result, ResponseResult &responseResult)

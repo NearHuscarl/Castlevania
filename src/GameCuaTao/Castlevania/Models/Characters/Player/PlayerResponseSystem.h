@@ -43,6 +43,7 @@ namespace Castlevania
 		void OnCollideWithPorkChop(CollisionResult &result);
 		void OnCollideWithWhipPowerup(CollisionResult &result);
 		void OnCollideWithDoubleShot(CollisionResult &result);
+		void OnCollideWithCrystalBall(CollisionResult &result);
 		void OnCollideWithDoor(CollisionResult &result, ResponseResult &responseResult);
 
 		void OnCollideWithStairUpTrigger(Trigger &trigger);

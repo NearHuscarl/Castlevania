@@ -622,6 +622,9 @@ std::unique_ptr<Powerup> ObjectFactory::CreatePowerup(ObjectId type, Vector2 pos
 		case ObjectId::DoubleShot:
 			return CreateDoubleShot(position);
 
+		case ObjectId::CrystalBall:
+			return CreateCrystalBall(position);
+
 		default:
 			throw std::invalid_argument("Invalid powerup type");
 	}
@@ -945,14 +948,14 @@ std::unique_ptr<Powerup> ObjectFactory::CreateDoubleShot(Vector2 position)
 	return object;
 }
 
-std::unique_ptr<GameObject> ObjectFactory::CreateCrystalBall(Vector2 position)
+std::unique_ptr<Powerup> ObjectFactory::CreateCrystalBall(Vector2 position)
 {
-	auto object = std::make_unique<GameObject>(ObjectId::CrystalBall);
+	auto object = std::make_unique<Powerup>(ObjectId::CrystalBall, 100000);
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
 	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
-	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Crystal_Ball.ani.xml");
+	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*object, "Items/Crystal_Ball.ani.xml");
 
 	object->SetPosition(position);
 	object->Attach(std::move(movementSystem));

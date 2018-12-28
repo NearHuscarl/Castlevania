@@ -46,6 +46,7 @@ namespace Castlevania
 		{ "Stopwatch", ObjectId::Stopwatch },
 		{ "WhipPowerup", ObjectId::WhipPowerup },
 		{ "DoubleShot", ObjectId::DoubleShot },
+		{ "CrystalBall", ObjectId::CrystalBall },
 		{ "BreakableBlock", ObjectId::BreakableBlock },
 		{ "BreakableWall", ObjectId::BreakableWall },
 		{ "Door", ObjectId::Door },

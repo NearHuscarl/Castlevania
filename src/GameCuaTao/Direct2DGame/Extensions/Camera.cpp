@@ -21,6 +21,12 @@ RectF Camera::GetBounds()
 	return viewport.Bounds();
 }
 
+void Camera::SetPosition(Vector2 position)
+{
+	viewport.x = position.x;
+	viewport.y = position.y;
+}
+
 void Camera::Move(Vector2 position)
 {
 	viewport.x += position.x;

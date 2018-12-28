@@ -8,13 +8,13 @@ constexpr auto HUD_HEIGHT = 83;
 constexpr auto POWERUP_FLASHING_TIME = 2500;
 
 const auto DEFAULT_PLAYER_DATA = PlayerData{};
-const auto DEFAULT_BOSS_HEALTH = MAX_HEALTH;
+const auto DEFAULT_BOSS_HEALTH = Health{ MAX_HEALTH };
 const auto DEFAULT_GAMEPLAY_DATA = GameplayData{};
 
 struct Hud::HudData
 {
 	const PlayerData *playerData;
-	const int *bossHealth;
+	const Health *bossHealth;
 	const GameplayData *gameplayData;
 };
 
@@ -57,7 +57,7 @@ void Hud::Register(const PlayerData &playerData)
 	data->playerData = &playerData;
 }
 
-void Hud::Register(const int &bossHealth)
+void Hud::Register(const Health &bossHealth)
 {
 	data->bossHealth = &bossHealth;
 }
@@ -207,9 +207,12 @@ Vector2 Hud::GetPowerupPosition(Texture &powerupTexture)
 
 void Hud::DrawHealthBars(SpriteExtensions &spriteBatch)
 {
+	auto playerHealth = data->playerData->health.Value();
+	auto bossHealth = data->bossHealth->Value();
+
 	for (auto i = 0; i < MAX_HEALTH; i++)
 	{
-		if (i + 1 <= data->playerData->health)
+		if (i + 1 <= playerHealth)
 		{
 			auto position = Vector2{ playerHealthPosition.x + i * 9, playerHealthPosition.y };
 			spriteBatch.Draw(*playerFullBlock, position, false);
@@ -220,7 +223,7 @@ void Hud::DrawHealthBars(SpriteExtensions &spriteBatch)
 			spriteBatch.Draw(*emptyBlock, position, false);
 		}
 
-		if (i + 1 <= *data->bossHealth)
+		if (i + 1 <= bossHealth)
 		{
 			auto position = Vector2{ enemyHealthPosition.x + i * 9, enemyHealthPosition.y };
 			spriteBatch.Draw(*bossFullBlock, position, false);

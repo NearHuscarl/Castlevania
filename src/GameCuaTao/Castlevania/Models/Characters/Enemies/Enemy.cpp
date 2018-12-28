@@ -8,14 +8,14 @@ Enemy::Enemy(ObjectId type) : GameObject{ type }
 {
 }
 
-int &Enemy::GetHealthRef()
+Health &Enemy::GetHealthRef()
 {
 	return health;
 }
 
-void Enemy::SetHealth(int health)
+void Enemy::SetHealth(int value)
 {
-	this->health = health;
+	health = Health{ value };
 }
 
 int Enemy::GetAttack()
@@ -23,14 +23,14 @@ int Enemy::GetAttack()
 	return attack;
 }
 
-void Enemy::SetAttack(int attack)
+void Enemy::SetAttack(int value)
 {
-	this->attack = attack;
+	attack = value;
 }
 
-void Enemy::SetExp(int exp)
+void Enemy::SetExp(int value)
 {
-	this->exp = exp;
+	exp = value;
 }
 
 int Enemy::GetExp()
@@ -46,6 +46,8 @@ void Enemy::Update(UpdateData &updateData)
 		if (renderingSystem != nullptr && state == ObjectState::DYING)
 			renderingSystem->Update(updateData.gameTime); // Update hit effect
 
+	health.Update();
+
 	auto viewport = updateData.viewport;
 
 	if (!viewport.Contains(GetBoundingBox()))
@@ -54,11 +56,10 @@ void Enemy::Update(UpdateData &updateData)
 
 void Enemy::TakeDamage(int damage)
 {
-	health -= damage;
-
-	if (health <= 0)
+	if (health.Value() - damage <= 0)
 		Die();
 	
+	health.Add(-damage);
 	SendMessageToSystems(TAKING_DAMAGE);
 }
 

@@ -19,7 +19,7 @@ void CastlevaniaGame::Initialize()
 	Game::Initialize();
 
 	sceneManager = std::make_unique<SceneManager>(*this);
-	sceneManager->SetNextScene(Scene::MENU); // TODO: change back to MENU
+	sceneManager->SetNextScene(Scene::GAMEPLAY); // TODO: change back to MENU
 }
 
 void CastlevaniaGame::LoadContent()

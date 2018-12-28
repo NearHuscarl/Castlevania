@@ -67,6 +67,7 @@ namespace Castlevania
 	{
 	public:
 		Player();
+		~Player();
 
 		const PlayerData &GetData();
 		const NearbyObjects GetNearbyObjects();
@@ -76,6 +77,7 @@ namespace Castlevania
 		void SetJumpSpeed(float jumpSpeed);
 		void SetFacing(Facing facing) override;
 		void AddExp(int amount);
+		void AddHeart(int amount);
 		
 		void SetWhip(std::unique_ptr<Whip> whip);
 		ObjectId GetSubWeapon();

@@ -1,4 +1,5 @@
 #include "Direct2DGame/MathHelper.h"
+#include "Direct2DGame/Input/Keyboard.h"
 #include "Direct2DGame/Input/InputHelper.h"
 #include "Player.h"
 #include "../../Settings.h"
@@ -24,6 +25,11 @@ constexpr auto HOVERING_VELOCITY = 20.0f;
 Player::Player() : GameObject{ ObjectId::Player }
 {
 	subWeaponCount = 1;
+}
+
+Player::~Player()
+{
+	Keyboard::Register(nullptr);
 }
 
 void Player::SetMoveState(MoveState moveState)
@@ -83,6 +89,11 @@ void Player::AddExp(int amount)
 	data.score += amount;
 }
 
+void Player::AddHeart(int amount)
+{
+	data.hearts += amount;
+}
+
 void Player::SetWhip(std::unique_ptr<Whip> whip)
 {
 	this->whip = std::move(whip);
@@ -109,6 +120,7 @@ void Player::Update(UpdateData &updateData)
 {
 	GameObject::Update(updateData);
 	UpdateStates();
+	data.health.Update();
 	isStopwatchActive = updateData.isStopwatchActive;
 
 	whip->Update(updateData);
@@ -510,13 +522,13 @@ void Player::TakeDamage(int damage, Direction direction)
 	if (untouchableTimer.IsRunning() || invisibleTimer.IsRunning() || godMode)
 		return;
 
-	data.health -= damage;
-	untouchableTimer.Start();
-
-	if (IsOnStairs() && data.health <= 0)
+	if (IsOnStairs() && data.health.Value() - damage <= 0)
 		Fall(); // fall to dealth literally ~.~
 	else if (!IsOnStairs())
 		BounceBack(direction);
+
+	data.health.Add(-damage);
+	untouchableTimer.Start();
 }
 
 void Player::BounceBack(Direction direction)
@@ -559,7 +571,7 @@ void Player::Revive()
 
 	if (data.lives >= 0)
 	{
-		data.health = MAX_HEALTH;
+		data.health = Health{ MAX_HEALTH };
 		Idle();
 		EnableControl(true);
 		SetState(ObjectState::NORMAL);

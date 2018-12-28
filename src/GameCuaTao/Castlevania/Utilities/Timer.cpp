@@ -8,6 +8,12 @@ Timer::Timer(int startingTime)
 	stopwatch.Start();
 }
 
+void Timer::AddCounter(int counter)
+{
+	this->counter += counter;
+	stopwatch.Restart();
+}
+
 void Timer::SetCounter(int counter)
 {
 	this->counter = counter;

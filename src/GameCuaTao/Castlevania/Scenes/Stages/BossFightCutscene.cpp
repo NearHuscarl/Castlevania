@@ -26,6 +26,7 @@ BossFightCutscene::BossFightCutscene(Stage &stage, CollisionGrid &grid, ObjectFa
 
 				boss = enemy;
 				stage.GetHud()->Register(enemy->GetHealthRef());
+				enemy->AddObserver(stage);
 				break; // TODO: should stop iterate all other remaining cells
 			}
 		}

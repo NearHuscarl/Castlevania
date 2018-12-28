@@ -3,6 +3,7 @@
 #include <sstream>
 #include <vector>
 #include <list>
+#include <stack>
 
 namespace Castlevania
 {
@@ -66,5 +67,14 @@ namespace Castlevania
 
 		// return next iterator like std::list.erase()
 		return nextIt;
+	}
+
+	template<typename T>
+	T Pop(std::stack<T> &stack)
+	{
+		auto popValue = stack.top();
+		stack.pop();
+
+		return popValue;
 	}
 }

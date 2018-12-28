@@ -6,6 +6,7 @@
 #include "HiddenMoneyBagCutscene.h"
 #include "NextMapCutscene.h"
 #include "NextRoomCutscene.h"
+#include "LevelCompletedCutscene.h"
 #include "ResetCutscene.h"
 #include "GoToCastleCutScene.h"
 #include "CrossCutScene.h"
@@ -360,6 +361,15 @@ void Stage::ProcessMessage(int message)
 			SetCurrentCutscene(GameState::RESET_STAGE_CUTSCENE);
 			break;
 
+		case BOSS_DIE:
+			SetCurrentCutscene(GameState::LEVEL_COMPLETED_CUTSCENE);
+			break;
+
+		case LEVEL_COMPLETED:
+			camera->SetPosition(Vector2::Zero());
+			gameplayScene.GetSceneManager().SetNextScene(Scene::MENU);
+			break;
+
 		case RESET_STAGE_CUTSCENE_ENDED:
 			Reset();
 			break;
@@ -399,6 +409,9 @@ std::unique_ptr<Cutscene> Stage::ConstructCutscene(GameState gameState)
 
 		case GameState::NEXT_ROOM_CUTSCENE:
 			return std::make_unique<NextRoomCutscene>(*this, *stageObject, *grid, *player);
+
+		case GameState::LEVEL_COMPLETED_CUTSCENE:
+			return std::make_unique<LevelCompletedCutscene>(*this, *grid, objectFactory, *player, *data);
 
 		case GameState::RESET_STAGE_CUTSCENE:
 			return std::make_unique<ResetCutscene>(*this, content);

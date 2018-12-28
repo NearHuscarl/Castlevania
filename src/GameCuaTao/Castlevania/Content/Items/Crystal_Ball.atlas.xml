@@ -5,10 +5,12 @@
   <Spritesheet TexturePath="Crystal_Ball.png">
     <Sprite ID="flash_01">
       <SpriteFrame Left="0" Top="0" Width="28" Height="32" />
+      <SpriteBoundary Left="3" Top="3" Width="22" Height="26" />
     </Sprite>
 
     <Sprite ID="flash_02">
       <SpriteFrame Left="28" Top="0" Width="28" Height="32" />
+      <SpriteBoundary Left="31" Top="3" Width="22" Height="26" />
     </Sprite>
   </Spritesheet>
 

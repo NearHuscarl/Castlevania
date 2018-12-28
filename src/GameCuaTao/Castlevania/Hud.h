@@ -17,7 +17,7 @@ namespace Castlevania
 		int GetHeight();
 
 		void Register(const PlayerData &playerData);
-		void Register(const int &bossHealth);
+		void Register(const Health &bossHealth);
 		void Register(const GameplayData &gameplayData);
 
 		template<typename T>

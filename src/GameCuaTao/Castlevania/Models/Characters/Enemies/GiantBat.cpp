@@ -3,6 +3,7 @@
 #include "../../UpdateData.h"
 #include "../../Settings.h"
 #include "../../../Utilities/CollisionGrid.h"
+#include "../../../Scenes/Stages/StageEvent.h"
 
 using namespace Castlevania;
 
@@ -127,6 +128,9 @@ void GiantBat::Update(UpdateData &updateData)
 			}
 			break;
 	}
+
+	if (state == ObjectState::DEAD)
+		Notify(BOSS_DIE);
 }
 
 void GiantBat::Idle()

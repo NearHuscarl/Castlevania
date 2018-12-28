@@ -2,6 +2,7 @@
 
 #include <memory>
 #include "../../ObjectId.h"
+#include "../../Health.h"
 
 namespace Castlevania
 {
@@ -13,7 +14,7 @@ namespace Castlevania
 		PlayerData()
 		{
 			score = 0;
-			health = MAX_HEALTH;
+			health = Health{ MAX_HEALTH };
 			subWeapon = ObjectId::Unknown;
 			powerup = ObjectId::Unknown;
 			hearts = 5;
@@ -21,7 +22,7 @@ namespace Castlevania
 		}
 
 		int score;
-		int health;
+		Health health;
 		ObjectId subWeapon;
 		ObjectId powerup;
 		int hearts;

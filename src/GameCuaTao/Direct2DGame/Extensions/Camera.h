@@ -18,6 +18,7 @@ public:
 	void SetMoveArea(Rect moveArea);
 	RectF GetBounds();
 
+	void SetPosition(Vector2 position);
 	void Move(Vector2 position);
 	void LookAt(Vector2 position, Scrolling scrolling = Scrolling::Center);
 	void Lock();

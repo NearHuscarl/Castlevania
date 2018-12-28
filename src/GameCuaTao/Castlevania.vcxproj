@@ -193,6 +193,7 @@
     <ClCompile Include="Castlevania\Hud.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Player\PlayerRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\GameObject.cpp" />
+    <ClCompile Include="Castlevania\Models\Health.cpp" />
     <ClCompile Include="Castlevania\Models\Items\BreakableWall.cpp" />
     <ClCompile Include="Castlevania\Models\Items\Door.cpp" />
     <ClCompile Include="Castlevania\Models\Items\DoorRenderingSystem.cpp" />
@@ -236,6 +237,7 @@
     <ClCompile Include="Castlevania\Scenes\Stages\GoToCastleCutScene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\HiddenMoneyBagCutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\IntroCutscene.cpp" />
+    <ClCompile Include="Castlevania\Scenes\Stages\LevelCompletedCutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\ResetCutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\NextMapCutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\NextRoomCutscene.cpp" />
@@ -357,6 +359,7 @@
     <ClInclude Include="Castlevania\Models\Characters\Player\PlayerData.h" />
     <ClInclude Include="Castlevania\Models\Characters\Player\PlayerRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\GameObject.h" />
+    <ClInclude Include="Castlevania\Models\Health.h" />
     <ClInclude Include="Castlevania\Models\IBoss.h" />
     <ClInclude Include="Castlevania\Models\Items\BreakableWall.h" />
     <ClInclude Include="Castlevania\Models\Items\Door.h" />

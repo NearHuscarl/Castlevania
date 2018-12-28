@@ -2,6 +2,7 @@
 
 #include "../../GameObject.h"
 #include "../../IAttackable.h"
+#include "../../Health.h"
 
 namespace Castlevania
 {
@@ -10,11 +11,11 @@ namespace Castlevania
 	public:
 		Enemy(ObjectId type);
 
-		int &GetHealthRef();
-		void SetHealth(int health);
+		Health &GetHealthRef();
+		void SetHealth(int value);
 		int GetAttack() override;
-		void SetAttack(int attack) override;
-		void SetExp(int exp);
+		void SetAttack(int value) override;
+		void SetExp(int value);
 		int GetExp();
 
 		virtual void Update(UpdateData &updateData) override;
@@ -22,7 +23,7 @@ namespace Castlevania
 		void Die();
 
 	private:
-		int health;
+		Health health;
 		int attack;
 		int exp;
 	};

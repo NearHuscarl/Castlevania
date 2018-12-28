@@ -56,6 +56,7 @@ void DevTool::LoadContent(ContentManager &content)
 	auto stopwatchSprite = content.Load<Texture>("Items/Stopwatch.png");
 	auto whipPowerupSprite = content.Load<Texture>("Items/Whip_Powerup.png");
 	auto doubleShotSprite = content.Load<Texture>("Items/Double_Shot.png");
+	auto crystalBallSprite = content.Load<Spritesheet>("Items/Crystal_Ball.atlas.xml")->begin()->second;
 
 	auto axeSprite = content.Load<Spritesheet>("Weapons/Axe.atlas.xml")->at("axe_01");
 	auto holyWaterSprite = content.Load<Spritesheet>("Weapons/Holy_Water.atlas.xml")->at("holy_water_01");
@@ -107,6 +108,7 @@ void DevTool::LoadContent(ContentManager &content)
 				std::make_pair<std::string, Sprite>("Stopwatch", stopwatchSprite),
 				std::make_pair<std::string, Sprite>("WhipPowerup", whipPowerupSprite),
 				std::make_pair<std::string, Sprite>("DoubleShot", doubleShotSprite),
+				std::make_pair<std::string, Sprite>("CrystalBall", crystalBallSprite),
 			}
 		},
 		{
@@ -187,9 +189,9 @@ void DevTool::Update(UpdateData &updatData)
 	else if (InputHelper::IsKeyDown(DIK_8))
 		player.data.hearts += 200;
 	else if (InputHelper::IsKeyDown(DIK_9))
-		player.data.health = 1;
+		player.data.health.Set(1);
 	else if (InputHelper::IsKeyDown(DIK_0))
-		player.data.health = MAX_HEALTH;
+		player.data.health.Set(MAX_HEALTH);
 	else if (InputHelper::IsKeyDown(DIK_NUMPADMINUS))
 		player.Die();
 	else if (InputHelper::IsKeyDown(DIK_ADD))
