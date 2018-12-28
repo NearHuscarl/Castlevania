@@ -380,7 +380,6 @@ void Player::Throw(std::unique_ptr<RangedWeapon> weapon)
 
 	subWeaponCount = MathHelper::Max(--subWeaponCount, 0);
 
-
 	if (data.hearts == 0)
 		return;
 
@@ -508,7 +507,7 @@ void Player::BecomeInvisible()
 
 void Player::TakeDamage(int damage, Direction direction)
 {
-	if (untouchableTimer.IsRunning() || invisibleTimer.IsRunning())
+	if (untouchableTimer.IsRunning() || invisibleTimer.IsRunning() || godMode)
 		return;
 
 	data.health -= damage;
@@ -542,6 +541,16 @@ void Player::Die()
 {
 	controlSystem->Enabled(false);
 	SetState(ObjectState::DYING);
+}
+
+void Player::ToggleGodMode()
+{
+	godMode = !godMode;
+
+	if (godMode)
+		SendMessageToSystems(GOD_MODE_ACTIVATED);
+	else
+		SendMessageToSystems(GOD_MODE_DEACTIVATED);
 }
 
 void Player::Revive()

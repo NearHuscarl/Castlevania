@@ -48,6 +48,11 @@ void PlayerRenderingSystem::Receive(int message)
 		case INVISIBLE_ENDED:
 			sprite->SetVisibility(true);
 			break;
+
+		case GOD_MODE_ACTIVATED:
+		case GOD_MODE_DEACTIVATED:
+			PlayAnimation(sprite->GetCurrentAnimation().GetName());
+			break;
 	}
 }
 
@@ -149,7 +154,10 @@ void PlayerRenderingSystem::UpdateInvisibleRendering()
 	else
 	{
 		if (drawInvisibleEffect)
+		{
 			drawInvisibleEffect = false;
+			PlayAnimation(sprite->GetCurrentAnimation().GetName());
+		}
 
 		sprite->SetVisibility(Stopwatch::Every(1) ? true : false);
 	}
@@ -157,22 +165,24 @@ void PlayerRenderingSystem::UpdateInvisibleRendering()
 
 void PlayerRenderingSystem::PlayAnimation(std::string name)
 {
-	if (drawInvisibleEffect)
+	auto animationName = name;
+	auto invisibleSuffix = std::string{ "_invisible" };
+
+	if (drawInvisibleEffect || parent.godMode)
 	{
-		auto invisibleSuffix = "_invisible";
-
-		if (EndsWith(name, invisibleSuffix))
-			return;
-
-		sprite->Play(name + invisibleSuffix);
+		if (!EndsWith(animationName, invisibleSuffix))
+			animationName += invisibleSuffix;
 	}
 	else
 	{
-		if (name == WALK_ANIMATION)
-			sprite->PlayCached(name);
-		else
-			sprite->Play(name);
+		if (EndsWith(animationName, invisibleSuffix))
+			animationName = animationName.substr(0, animationName.size() - invisibleSuffix.size());
 	}
+
+	if (name == WALK_ANIMATION)
+		sprite->PlayCached(animationName);
+	else
+		sprite->Play(animationName);
 }
 
 void PlayerRenderingSystem::OnStateChanged()

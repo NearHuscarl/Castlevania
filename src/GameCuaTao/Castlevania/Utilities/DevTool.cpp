@@ -163,6 +163,8 @@ void DevTool::Update(UpdateData &updatData)
 		SetCategory(WEAPON);
 	else if (InputHelper::IsKeyDown(DIK_T))
 		SetCategory(EFFECT);
+	else if (InputHelper::IsKeyDown(DIK_G))
+		drawingGridInfo = !drawingGridInfo;
 
 	else if (InputHelper::IsKeyDown(DIK_HOME))
 		NextMap();
@@ -192,6 +194,8 @@ void DevTool::Update(UpdateData &updatData)
 		player.Die();
 	else if (InputHelper::IsKeyDown(DIK_ADD))
 		player.data.lives++;
+	else if (InputHelper::IsKeyDown(DIK_GRAVE))
+		player.ToggleGodMode();
 
 	// Update mouse input
 	if (InputHelper::IsScrollingDown())
@@ -261,6 +265,9 @@ void DevTool::UpdateEffects(GameTime gameTime)
 
 void DevTool::DrawCollisionGridInfo(SpriteExtensions &spriteBatch)
 {
+	if (!drawingGridInfo)
+		return;
+
 	auto &grid = *stage.grid;
 	
 	grid.GetCellsFromBoundingBox(camera.GetBounds(), [&](CollisionCell &cell, int col, int row)

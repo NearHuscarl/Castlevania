@@ -16,19 +16,21 @@ namespace Castlevania
 	constexpr auto ATTACK_STATE_CHANGED = 4;
 	constexpr auto UNTOUCHABLE_ENDED = 5;
 	constexpr auto INVISIBLE_ENDED = 6;
+	constexpr auto GOD_MODE_ACTIVATED = 7;
+	constexpr auto GOD_MODE_DEACTIVATED = 8;
 
 	// Whip events
-	constexpr auto WHIP_UNLEASHED = 7;
-	constexpr auto WEAPON_WITHDRAWN = 8;
+	constexpr auto WHIP_UNLEASHED = 9;
+	constexpr auto WEAPON_WITHDRAWN = 10;
 
 	// Enemy events
-	constexpr auto PLAYER_IN_RANGE = 9;
-	constexpr auto PLAYER_OUT_OF_RANGE = 10;
-	constexpr auto ACTIVE_CHANGED = 11;
+	constexpr auto PLAYER_IN_RANGE = 11;
+	constexpr auto PLAYER_OUT_OF_RANGE = 12;
+	constexpr auto ACTIVE_CHANGED = 13;
 
 	// GiantBat events
-	constexpr auto PLAYER_IN_THREAT_ZONE = 12;
+	constexpr auto PLAYER_IN_THREAT_ZONE = 14;
 
 	// WaterArea events
-	constexpr auto OBJECT_HITS_WATER_SURFACE = 13;
+	constexpr auto OBJECT_HITS_WATER_SURFACE = 15;
 }

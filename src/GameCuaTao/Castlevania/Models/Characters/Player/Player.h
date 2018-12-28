@@ -113,6 +113,7 @@ namespace Castlevania
 		float jumpSpeed;
 		bool isStopwatchActive;
 		int subWeaponCount;
+		bool godMode;
 
 		std::unique_ptr<Whip> whip;
 		std::unique_ptr<RangedWeapon> subWeapon;
@@ -129,6 +130,7 @@ namespace Castlevania
 		void TakeDamage(int damage, Direction direction);
 		void BounceBack(Direction direction); // when simon taking damage
 		void Die();
+		void ToggleGodMode();
 
 		void UpdateStates();
 		void OnAttackComplete();
