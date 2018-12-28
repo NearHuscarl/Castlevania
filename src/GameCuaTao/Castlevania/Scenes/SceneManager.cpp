@@ -1,6 +1,5 @@
 #include "SceneManager.h"
 #include "MenuScene.h"
-#include "IntroScene.h"
 #include "GameplayScene.h"
 
 using namespace Castlevania;
@@ -64,9 +63,6 @@ std::unique_ptr<AbstractScene> SceneManager::ConstructScene(Scene scene)
 	{
 		case Scene::MENU:
 			return std::make_unique<MenuScene>(*this);
-		
-		case Scene::INTRO:
-			return std::make_unique<IntroScene>(*this);
 		
 		case Scene::GAMEPLAY:
 			return std::make_unique<GameplayScene>(*this);

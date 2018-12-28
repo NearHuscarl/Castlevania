@@ -127,14 +127,25 @@ std::unique_ptr<Trigger> ObjectFactory::CreateTrigger(RectF rect, TriggerType tr
 std::unique_ptr<GameObject> ObjectFactory::CreateBat(Vector2 position)
 {
 	auto object = std::make_unique<GameObject>(ObjectId::Bat);
-	auto stats = content.Load<Dictionary>("GameStats/Characters/Bat.xml");
-
-	object->SetSpeed(std::stof(stats->at("Speed")));
-
-	//auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*object, "Characters/NPCs/Bat.ani.xml");
-	auto renderingSystem = std::make_unique<BoundingBoxRenderingSystem>(*object, RectF::Empty());
+	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
+	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*object, "Characters/NPCs/Bat.ani.xml");
 
 	object->SetPosition(position);
+	object->Attach(std::move(movementSystem));
+	object->Attach(std::move(renderingSystem));
+	object->LoadContent(content);
+
+	return object;
+}
+
+std::unique_ptr<GameObject> ObjectFactory::CreateCloud(Vector2 position)
+{
+	auto object = std::make_unique<GameObject>(ObjectId::Cloud);
+	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Misc/Cloud.png");
+
+	object->SetPosition(position);
+	object->Attach(std::move(movementSystem));
 	object->Attach(std::move(renderingSystem));
 	object->LoadContent(content);
 
@@ -167,27 +178,6 @@ std::unique_ptr<Player> ObjectFactory::CreatePlayer(Vector2 position)
 	auto whip = CreateWhip(*object);
 	
 	object->SetWhip(std::move(whip));
-	object->LoadContent(content);
-
-	return object;
-}
-
-std::unique_ptr<Player> ObjectFactory::CreateIntroSimon(Vector2 position)
-{
-	auto object = std::make_unique<Player>();
-	auto stats = content.Load<Dictionary>("GameStats/Characters/Simon.xml");
-
-	object->SetSpeed(std::stof(stats->at("Speed")));
-
-	auto controller = std::make_unique<Controller>(*object, *this); // TODO: make intro controller
-	auto movementSystem = std::make_unique<PlayerMovementSystem>(*object);
-	auto renderingSystem = std::make_unique<PlayerRenderingSystem>(*object, "Characters/Players/Simon.ani.xml");
-
-	object->SetPosition(position);
-	object->Attach(std::move(controller));
-	object->Attach(std::move(movementSystem));
-	object->Attach(std::move(renderingSystem));
-
 	object->LoadContent(content);
 
 	return object;

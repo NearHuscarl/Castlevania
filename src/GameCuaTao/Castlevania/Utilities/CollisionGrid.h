@@ -26,6 +26,8 @@ namespace Castlevania
 		CollisionGrid(int columns, int rows, int cellWidth, int cellHeight);
 
 		bool IsOutOfRange(int col, int row);
+		int GetCellWidth();
+		int GetCellHeight();
 		CollisionCell &GetCellAtPosition(Vector2 objectPosition);
 		CollisionCell &GetCellAtIndex(int col, int row);
 		

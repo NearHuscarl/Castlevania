@@ -79,9 +79,8 @@
     </Animation>
 
     <Animation Name="die" DefaultTime="300" IsLooping="False">
-      <!-- <Frame SpriteID="take_damage_01" /> -->
       <Frame SpriteID="die_01" />
-      <Frame SpriteID="die_02" Time="1200" />
+      <Frame SpriteID="die_02" Time="1" />
     </Animation>
 
     <!-- Flashing animation for frame 01 in walk animation -->

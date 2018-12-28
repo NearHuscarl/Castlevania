@@ -1,6 +1,7 @@
 #include "Direct2DGame/Input/InputHelper.h"
 #include "Stage.h"
 #include "StageEvent.h"
+#include "IntroCutscene.h"
 #include "BossFightCutscene.h"
 #include "HiddenMoneyBagCutscene.h"
 #include "NextMapCutscene.h"
@@ -180,6 +181,9 @@ void Stage::LoadMap()
 
 	for (auto const &spawnArea : stageObject->spawnAreas)
 		spawnArea->Attach(grid.get());
+
+	if (currentMap == Map::INTRO)
+		SetCurrentCutscene(GameState::INTRO_CUTSCENE);
 }
 
 void Stage::LoadObjectsWithin(Rect area)
@@ -224,12 +228,23 @@ void Stage::Reset()
 
 void Stage::UpdateGameObjects(UpdateData &updateData)
 {
+	devTool->Update(updateData);
+
+	auto cellCol = (int)(player->GetPosition().x / grid->GetCellWidth());
+	auto cellRow = (int)(player->GetPosition().y / grid->GetCellHeight());
+	auto collisionObjects = grid->GetCollisionObjects(cellCol, cellRow);
+
+	updateData.collisionObjects = &collisionObjects;
+	player->Update(updateData);
+
+	for (auto const &spawnArea : updateData.stageObject->spawnAreas)
+		spawnArea->Update(updateData);
+
 	grid->Update(updateData);
 }
 
 void Stage::UpdateGameplay(UpdateData &updateData)
 {
-	devTool->Update(updateData);
 	camera->LookAt(player->GetOriginPosition(), Scrolling::Horizontally);
 	UpdateGameObjects(updateData);
 
@@ -373,6 +388,9 @@ std::unique_ptr<Cutscene> Stage::ConstructCutscene(GameState gameState)
 
 	switch (gameState)
 	{
+		case GameState::INTRO_CUTSCENE:
+			return std::make_unique<IntroCutscene>(*this, *grid, *player);
+
 		case GameState::BOSS_FIGHT_CUTSCENE:
 			return std::make_unique<BossFightCutscene>(*this, *grid, objectFactory);
 

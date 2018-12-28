@@ -2,7 +2,6 @@
 
 #include "../GameObject.h"
 #include "../IAttackable.h"
-#include "../IThrowable.h"
 
 namespace Castlevania
 {

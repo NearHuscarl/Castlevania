@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="8" height="6" tilewidth="64" tileheight="64" infinite="0" backgroundcolor="#3c3c3c" nextlayerid="15" nextobjectid="57">
+ <tileset firstgid="1" source="../Simon.tsx"/>
+ <tileset firstgid="73" source="../Static_Objects.tsx"/>
+ <layer id="1" name="TileLayer01" width="8" height="6">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGNoAAPII/4vAAAAA
+  </data>
+ </layer>
+ <imagelayer id="14" name="Background">
+  <image source="../../Backgrounds/Intro_Scene.png" width="512" height="365"/>
+ </imagelayer>
+ <objectgroup color="#00557f" id="3" name="Bounds">
+  <object id="20" name="Ground" type="Boundary" x="0" y="319" width="549" height="32"/>
+ </objectgroup>
+ <objectgroup color="#ffaa00" id="4" name="Entities">
+  <object id="51" name="Bat" type="Bat" gid="81" x="41" y="127" width="18" height="18">
+   <properties>
+    <property name="Direction" value="30"/>
+    <property name="Speed" value="25"/>
+   </properties>
+  </object>
+  <object id="53" name="Bat" type="Bat" gid="81" x="288" y="32" width="18" height="18">
+   <properties>
+    <property name="Direction" value="165"/>
+    <property name="Speed" value="6"/>
+   </properties>
+  </object>
+  <object id="54" name="Cloud" type="Cloud" gid="82" x="444" y="77" width="64" height="28">
+   <properties>
+    <property name="Direction" value="180"/>
+    <property name="Speed" value="15"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup color="#55ff7f" id="11" name="Foregrounds"/>
+ <objectgroup color="#0055ff" id="9" name="Triggers">
+  <object id="55" name="NextMap" type="Trigger" x="242" y="287" width="32" height="32">
+   <properties>
+    <property name="Enabled" type="bool" value="false"/>
+    <property name="Map" value="Courtyard"/>
+    <property name="SpawnPoint" value="Entrypoint"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup color="#ff0000" id="8" name="Locations">
+  <object id="47" name="Entrypoint1" type="Position" gid="2147483652" x="478" y="319" width="60" height="66"/>
+  <object id="56" name="Entrypoint" type="Position" gid="2147483652" x="513" y="319" width="60" height="66"/>
+ </objectgroup>
+</map>

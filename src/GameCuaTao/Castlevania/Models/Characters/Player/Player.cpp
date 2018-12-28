@@ -537,12 +537,6 @@ void Player::BounceBack(Direction direction)
 	whip->Withdraw();
 }
 
-void Player::Die()
-{
-	controlSystem->Enabled(false);
-	SetState(ObjectState::DYING);
-}
-
 void Player::ToggleGodMode()
 {
 	godMode = !godMode;
@@ -551,6 +545,12 @@ void Player::ToggleGodMode()
 		SendMessageToSystems(GOD_MODE_ACTIVATED);
 	else
 		SendMessageToSystems(GOD_MODE_DEACTIVATED);
+}
+
+void Player::Die()
+{
+	controlSystem->Enabled(false);
+	SetState(ObjectState::DYING);
 }
 
 void Player::Revive()

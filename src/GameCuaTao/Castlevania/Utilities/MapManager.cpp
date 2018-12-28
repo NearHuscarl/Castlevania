@@ -19,7 +19,7 @@ MapManager::MapManager(ObjectFactory &objectFactory) : objectFactory{ objectFact
 
 void MapManager::LoadContent(ContentManager &content)
 {
-	//maps[Map::INTRO] = content.Load<TiledMap>("TiledMaps/Intro.tmx");
+	maps[Map::INTRO] = content.Load<TiledMap>("TiledMaps/Intro/Intro.tmx");
 	maps[Map::COURTYARD] = content.Load<TiledMap>("TiledMaps/Stage_01/Courtyard.tmx");
 	maps[Map::GREAT_HALL] = content.Load<TiledMap>("TiledMaps/Stage_01/Great_Hall.tmx");
 	maps[Map::UNDERGROUND] = content.Load<TiledMap>("TiledMaps/Stage_01/Underground.tmx");
@@ -146,6 +146,14 @@ ObjectCollection MapManager::GetMapObjectsInArea(Map name, RectF area)
 
 		auto object = ConstructObject(properties);
 		auto facing = string2Facing.at(GetValueOrDefault(properties, "Facing", "Right"));
+		auto speed = std::stof(GetValueOrDefault(properties, "Speed", "-1"));
+		auto direction = std::stof(GetValueOrDefault(properties, "Direction", "-1"));
+
+		if (speed != -1)
+			object->SetSpeed(speed);
+
+		if (direction != -1)
+			object->SetDirection(direction);
 
 		object->SetPosition(position);
 		object->SetFacing(facing);
@@ -221,6 +229,9 @@ std::unique_ptr<GameObject> MapManager::ConstructObject(ObjectProperties propert
 
 		case ObjectId::Bat:
 			return objectFactory.CreateBat();
+
+		case ObjectId::Cloud:
+			return objectFactory.CreateCloud();
 
 		case ObjectId::Brazier:
 		{

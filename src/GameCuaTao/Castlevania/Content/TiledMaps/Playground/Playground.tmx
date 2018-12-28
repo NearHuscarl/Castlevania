@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="24" height="12" tilewidth="64" tileheight="64" infinite="0" backgroundcolor="#3c3c3c" nextlayerid="9" nextobjectid="77">
  <tileset firstgid="1" source="../Simon.tsx"/>
- <tileset firstgid="49" source="../Brazier.tsx"/>
+ <tileset firstgid="73" source="../Brazier.tsx"/>
  <imagelayer id="2" name="Background">
   <image source="Playground.png" width="1546" height="768"/>
  </imagelayer>
@@ -10,7 +10,7 @@
    H4sIAAAAAAAACmNgGAWjYBSMgoEBADBYXKGABAAA
   </data>
  </layer>
- <objectgroup id="3" name="Bounds">
+ <objectgroup color="#00557f" id="3" name="Bounds">
   <object id="38" name="Platform" type="Boundary" x="256" y="160" width="64" height="64"/>
   <object id="41" name="LeftBorder" type="Boundary" x="0" y="0" width="64" height="352"/>
   <object id="44" name="Platform" type="Boundary" x="448" y="160" width="64" height="32"/>
@@ -29,27 +29,19 @@
   <object id="74" name="Platform" type="Boundary" x="352" y="288" width="32" height="32"/>
   <object id="76" name="Platform" type="Boundary" x="384" y="288" width="32" height="32"/>
  </objectgroup>
- <objectgroup id="4" name="Game">
-  <object id="15" name="Brazier" type="Brazier" gid="49" x="397" y="287" width="32" height="64">
+ <objectgroup color="#ffaa00" id="4" name="Entities">
+  <object id="15" name="Brazier" type="Brazier" gid="73" x="397" y="287" width="32" height="64">
    <properties>
     <property name="Item" value="DaggerItem"/>
    </properties>
   </object>
-  <object id="16" name="Brazier" type="Brazier" gid="49" x="584" y="287" width="32" height="64">
+  <object id="16" name="Brazier" type="Brazier" gid="73" x="584" y="287" width="32" height="64">
    <properties>
     <property name="Item" value="LargeHeart"/>
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="8" name="Locations">
-  <object id="40" name="Entrypoint" type="Position" gid="4" x="65" y="289" width="60" height="66"/>
-  <object id="43" name="Checkpoint_03" type="Position" gid="4" x="450" y="152" width="60" height="66"/>
-  <object id="65" name="Checkpoint_02" type="Position" gid="4" x="273.394" y="159.303" width="60" height="66"/>
-  <object id="14" name="Checkpoint_04" type="Position" gid="4" x="332" y="285" width="60" height="66"/>
-  <object id="69" name="Checkpoint_05" type="Position" gid="4" x="579" y="607" width="60" height="66"/>
-  <object id="70" name="Checkpoint_06" type="Position" gid="4" x="481" y="699" width="60" height="66"/>
- </objectgroup>
- <objectgroup id="7" name="Triggers">
+ <objectgroup color="#0055ff" id="7" name="Triggers">
   <object id="56" name="StairUp" type="Trigger" x="112" y="256" width="32" height="32">
    <properties>
     <property name="Enabled" type="bool" value="true"/>
@@ -62,5 +54,13 @@
     <property name="Facing" value="Left"/>
    </properties>
   </object>
+ </objectgroup>
+ <objectgroup color="#ff0000" id="8" name="Locations">
+  <object id="40" name="Entrypoint" type="Position" gid="4" x="65" y="289" width="60" height="66"/>
+  <object id="43" name="Checkpoint_03" type="Position" gid="4" x="450" y="152" width="60" height="66"/>
+  <object id="65" name="Checkpoint_02" type="Position" gid="4" x="273.394" y="159.303" width="60" height="66"/>
+  <object id="14" name="Checkpoint_04" type="Position" gid="4" x="332" y="285" width="60" height="66"/>
+  <object id="69" name="Checkpoint_05" type="Position" gid="4" x="579" y="607" width="60" height="66"/>
+  <object id="70" name="Checkpoint_06" type="Position" gid="4" x="481" y="699" width="60" height="66"/>
  </objectgroup>
 </map>

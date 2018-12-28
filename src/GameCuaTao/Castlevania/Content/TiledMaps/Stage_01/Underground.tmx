@@ -3,7 +3,7 @@
  <tileset firstgid="1" source="../Candle.tsx"/>
  <tileset firstgid="3" source="../Simon.tsx"/>
  <tileset firstgid="75" source="../Static_Objects.tsx"/>
- <tileset firstgid="83" source="../Money_Bag.tsx"/>
+ <tileset firstgid="84" source="../Money_Bag.tsx"/>
  <layer id="1" name="TileLayer1" width="16" height="6">
   <data encoding="base64">
    AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -12,7 +12,7 @@
  <imagelayer id="3" name="Background">
   <image source="Underground.png" width="1024" height="365"/>
  </imagelayer>
- <objectgroup id="5" name="Areas">
+ <objectgroup color="#55557f" id="5" name="Areas">
   <object id="8" name="FishmanSpawnArea" type="SpawnArea" x="0" y="64" width="1024" height="230">
    <properties>
     <property name="SpawnObject" value="Fishman"/>
@@ -21,7 +21,7 @@
   <object id="28" name="WaterArea" type="WaterArea" x="440" y="292" width="80" height="73"/>
   <object id="29" name="WaterArea" type="WaterArea" x="568" y="292" width="80" height="73"/>
  </objectgroup>
- <objectgroup id="4" name="Bounds">
+ <objectgroup color="#00557f" id="4" name="Bounds">
   <object id="1" name="Platform" type="Boundary" x="192" y="96" width="64" height="32"/>
   <object id="2" name="Platform" type="Boundary" x="0" y="160" width="448" height="32"/>
   <object id="3" name="Platform" type="Boundary" x="512" y="160" width="64" height="32"/>
@@ -31,7 +31,7 @@
   <object id="26" name="Wall" type="Boundary" x="1006" y="0" width="18" height="224"/>
   <object id="27" name="Wall" type="Boundary" x="0" y="0" width="4" height="160"/>
  </objectgroup>
- <objectgroup id="2" name="Entities">
+ <objectgroup color="#ffaa00" id="2" name="Entities">
   <object id="10" name="Candle" type="Candle" gid="1" x="56" y="66" width="16" height="32">
    <properties>
     <property name="Item" value="WhiteMoneyBag"/>
@@ -78,11 +78,11 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="8" name="Foregrounds">
+ <objectgroup color="#55ff7f" id="8" name="Foregrounds">
   <object id="39" name="Block" type="BrickBlock" gid="81" x="672" y="192" width="32" height="32"/>
   <object id="40" name="Block" type="BrickBlock" gid="81" x="704" y="192" width="32" height="32"/>
  </objectgroup>
- <objectgroup id="6" name="Triggers">
+ <objectgroup color="#0055ff" id="6" name="Triggers">
   <object id="19" name="StairUp" type="Trigger" x="176" y="64" width="32" height="32">
    <properties>
     <property name="Enabled" type="bool" value="true"/>
@@ -115,10 +115,10 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="7" name="Locations">
+ <objectgroup color="#ff0000" id="7" name="Locations">
   <object id="24" name="GreatHall_02" type="Position" gid="14" x="738" y="40" width="60" height="66"/>
   <object id="23" name="GreatHall_01" type="Position" gid="14" x="98" y="40" width="60" height="66"/>
   <object id="34" name="Entrypoint" type="Position" gid="6" x="20" y="160" width="60" height="66"/>
-  <object id="37" name="MoneyBag" type="Position" gid="85" x="688" y="192" width="30" height="30"/>
+  <object id="37" name="MoneyBag" type="Position" gid="86" x="688" y="192" width="30" height="30"/>
  </objectgroup>
 </map>

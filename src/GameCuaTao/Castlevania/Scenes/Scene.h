@@ -5,7 +5,7 @@ namespace Castlevania
 	enum class Scene
 	{
 		MENU,
-		INTRO,
 		GAMEPLAY,
+		GAMEOVER,
 	};
 }

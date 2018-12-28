@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Animations AtlasPath="Menu_Bat.atlas.xml">
+
+    <Animation Name="fly_out" DefaultTime="100" IsLooping="False">
+      <Frame SpriteID="fly_01" />
+      <Frame SpriteID="fly_02" />
+      <Frame SpriteID="fly_03" />
+      <Frame SpriteID="fly_04" />
+      <Frame SpriteID="fly_05" />
+      <Frame SpriteID="fly_06" />
+      <Frame SpriteID="fly_07" />
+      <Frame SpriteID="fly_08" />
+      <Frame SpriteID="fly_09" />
+      <Frame SpriteID="fly_10" />
+      <Frame SpriteID="fly_11" />
+      <Frame SpriteID="fly_12" />
+    </Animation>
+
+    <Animation Name="hover" DefaultTime="100" IsLooping="True">
+      <Frame SpriteID="hover_01" />
+      <Frame SpriteID="hover_02" />
+      <Frame SpriteID="hover_03" />
+    </Animation>
+
+  </Animations>
+
+</GameContent>

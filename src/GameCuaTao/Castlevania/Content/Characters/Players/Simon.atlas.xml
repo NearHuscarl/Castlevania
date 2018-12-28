@@ -135,7 +135,7 @@
 
     <Sprite ID="turn_backward_01">
       <SpriteFrame Left="0" Top="66" Width="60" Height="66" />
-      <SpriteBoundary Left="8" Top="66" Width="32" Height="64" />
+      <SpriteBoundary Left="14" Top="66" Width="32" Height="64" />
     </Sprite>
 
     <Sprite ID="take_damage_01">

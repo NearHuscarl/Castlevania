@@ -290,13 +290,21 @@ void PlayerResponseSystem::OnCollideWithWaterArea(CollisionResult &result, Stage
 
 		waterZone->SetOriginPosition(waterZonePosition);
 		stageObject.foregroundObjects.push_back(std::move(waterZone));
+	}
 
-		parent.Die();
+	if (waterArea.GetBoundingBox().top <= parent.GetBoundingBox().top)
+	{
+		waterArea.GetBody().Enabled(false);
+		parent.SetVelocity(Vector2::Zero());
+		parent.Notify(PLAYER_DIE);
 	}
 }
 
 void PlayerResponseSystem::OnCollideWithEnemy(CollisionResult &result)
 {
+	if (parent.state != ObjectState::NORMAL)
+		return;
+
 	auto &object = dynamic_cast<Enemy&>(result.collidedObject);
 	auto hitDirection = GetPlayerHitDirection(object, result.direction);
 
@@ -305,6 +313,9 @@ void PlayerResponseSystem::OnCollideWithEnemy(CollisionResult &result)
 
 void PlayerResponseSystem::OnCollideWithVampireBat(CollisionResult &result)
 {
+	if (parent.state != ObjectState::NORMAL)
+		return;
+
 	OnCollideWithEnemy(result);
 
 	auto &vampireBat = dynamic_cast<VampireBat&>(result.collidedObject);

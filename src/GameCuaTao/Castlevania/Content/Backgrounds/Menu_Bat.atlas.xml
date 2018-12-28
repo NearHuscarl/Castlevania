@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Spritesheet TexturePath="Menu_Bat.png">
+    <Sprite ID="fly_01">
+      <SpriteFrame Left="0" Top="0" Width="145" Height="113" />
+    </Sprite>
+
+    <Sprite ID="fly_02">
+      <SpriteFrame Left="145" Top="0" Width="145" Height="113" />
+    </Sprite>
+
+    <Sprite ID="fly_03">
+      <SpriteFrame Left="290" Top="0" Width="145" Height="113" />
+    </Sprite>
+
+    <Sprite ID="fly_04">
+      <SpriteFrame Left="435" Top="0" Width="145" Height="113" />
+    </Sprite>
+
+    <Sprite ID="fly_05">
+      <SpriteFrame Left="580" Top="0" Width="145" Height="113" />
+    </Sprite>
+
+    <Sprite ID="fly_06">
+      <SpriteFrame Left="0" Top="113" Width="145" Height="113" />
+    </Sprite>
+
+    <Sprite ID="fly_07">
+      <SpriteFrame Left="145" Top="113" Width="145" Height="113" />
+    </Sprite>
+
+    <Sprite ID="fly_08">
+      <SpriteFrame Left="290" Top="113" Width="145" Height="113" />
+    </Sprite>
+
+    <Sprite ID="fly_09">
+      <SpriteFrame Left="435" Top="113" Width="145" Height="113" />
+    </Sprite>
+
+    <Sprite ID="fly_10">
+      <SpriteFrame Left="580" Top="113" Width="145" Height="113" />
+    </Sprite>
+
+    <Sprite ID="fly_11">
+      <SpriteFrame Left="0" Top="226" Width="145" Height="113" />
+    </Sprite>
+
+    <Sprite ID="fly_12">
+      <SpriteFrame Left="145" Top="226" Width="145" Height="113" />
+    </Sprite>
+
+    <Sprite ID="hover_01">
+      <SpriteFrame Left="290" Top="226" Width="145" Height="113" />
+    </Sprite>
+
+    <Sprite ID="hover_02">
+      <SpriteFrame Left="435" Top="226" Width="145" Height="113" />
+    </Sprite>
+
+    <Sprite ID="hover_03">
+      <SpriteFrame Left="580" Top="226" Width="145" Height="113" />
+    </Sprite>
+  </Spritesheet>
+
+</GameContent>

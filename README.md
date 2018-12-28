@@ -47,8 +47,8 @@ A remake of Castlevania NES (Block 01) written in C++ and directx 9
 
 | Mouse button           | Command                              |
 |------------------------|--------------------------------------|
-| <kbd>Scroll up</kbd>   | Select to next item                  |
-| <kbd>Scroll down</kbd> | Select to previous item              |
+| <kbd>Scroll up</kbd>   | Select next item                     |
+| <kbd>Scroll down</kbd> | Select previous item                 |
 | <kbd>Left click</kbd>  | Spawn current item at mouse position |
 | <kbd>Right click</kbd> | Toggle item facing                   |
 

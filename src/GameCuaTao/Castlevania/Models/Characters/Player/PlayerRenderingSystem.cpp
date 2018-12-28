@@ -73,7 +73,10 @@ void PlayerRenderingSystem::Update(GameTime gameTime)
 
 		case ObjectState::DYING:
 			if (sprite->AnimateComplete())
+			{
+				parent.state = ObjectState::DEAD;
 				parent.Notify(PLAYER_DIE);
+			}
 			break;
 	}
 

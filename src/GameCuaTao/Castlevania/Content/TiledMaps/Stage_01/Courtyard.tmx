@@ -12,7 +12,12 @@
  <imagelayer id="7" name="Background">
   <image source="Courtyard.png" width="1536" height="365"/>
  </imagelayer>
- <objectgroup id="4" name="Entities">
+ <objectgroup color="#00557f" id="3" name="Bounds">
+  <object id="20" name="Ground" type="Boundary" x="0" y="288" width="1536" height="32"/>
+  <object id="22" name="LeftBorder" type="Boundary" x="0" y="0" width="3" height="288"/>
+  <object id="24" name="RightBorder" type="Boundary" x="1504" y="0" width="32" height="288"/>
+ </objectgroup>
+ <objectgroup color="#ffaa00" id="4" name="Entities">
   <object id="15" name="Brazier" type="Brazier" gid="73" x="175" y="290" width="32" height="64">
    <properties>
     <property name="Item" value="LargeHeart"/>
@@ -39,7 +44,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="11" name="Foregrounds">
+ <objectgroup color="#55ff7f" id="11" name="Foregrounds">
   <object id="44" name="Castle" type="Castle" gid="79" x="1408" y="288" width="96" height="288">
    <properties>
     <property name="Visibility" type="bool" value="false"/>
@@ -47,12 +52,7 @@
   </object>
   <object id="45" name="DirtBlock" type="DirtBlock" gid="78" x="1248" y="320" width="32" height="32"/>
  </objectgroup>
- <objectgroup id="3" name="Bounds">
-  <object id="20" name="Ground" type="Boundary" x="0" y="288" width="1536" height="32"/>
-  <object id="22" name="LeftBorder" type="Boundary" x="0" y="0" width="3" height="288"/>
-  <object id="24" name="RightBorder" type="Boundary" x="1504" y="0" width="32" height="288"/>
- </objectgroup>
- <objectgroup id="9" name="Triggers">
+ <objectgroup color="#0055ff" id="9" name="Triggers">
   <object id="37" name="MoneyBagTrigger" type="Trigger" x="1424" y="278" width="32" height="10">
    <properties>
     <property name="Enabled" type="bool" value="true"/>
@@ -71,9 +71,9 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="8" name="Locations">
-  <object id="14" name="Entrypoint1" type="Position" gid="4" x="69" y="288" width="60" height="66"/>
-  <object id="47" name="Entrypoint" type="Position" gid="4" x="1021" y="288" width="60" height="66"/>
+ <objectgroup color="#ff0000" id="8" name="Locations">
+  <object id="14" name="Entrypoint" type="Position" gid="4" x="69" y="288" width="60" height="66"/>
+  <object id="47" name="Entrypoint1" type="Position" gid="4" x="1021" y="288" width="60" height="66"/>
   <object id="38" name="MoneyBag" type="Position" gid="77" x="1250" y="318" width="30" height="30"/>
  </objectgroup>
 </map>

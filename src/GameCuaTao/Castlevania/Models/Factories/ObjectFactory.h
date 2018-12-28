@@ -34,8 +34,8 @@ namespace Castlevania
 		std::unique_ptr<Trigger> CreateTrigger(RectF rect, TriggerType triggerType);
 
 		std::unique_ptr<GameObject> CreateBat(Vector2 position = Vector2::Zero());
+		std::unique_ptr<GameObject> CreateCloud(Vector2 position = Vector2::Zero());
 		std::unique_ptr<Player> CreatePlayer(Vector2 position = Vector2::Zero());
-		std::unique_ptr<Player> CreateIntroSimon(Vector2 position = Vector2::Zero());
 
 		std::unique_ptr<Container> CreateBrazier(ObjectId itemType, Vector2 position = Vector2::Zero());
 		std::unique_ptr<Container> CreateCandle(ObjectId itemType, Vector2 position = Vector2::Zero());

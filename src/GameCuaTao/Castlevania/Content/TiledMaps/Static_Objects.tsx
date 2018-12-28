@@ -24,4 +24,10 @@
   <tile id="7">
    <image source="Breakable_Wall.png" width="32" height="32"/>
   </tile>
+  <tile id="8">
+   <image source="Bat.png" width="32" height="32"/>
+  </tile>
+  <tile id="9">
+   <image source="../Misc/Cloud.png" width="64" height="28"/>
+  </tile>
 </tileset>

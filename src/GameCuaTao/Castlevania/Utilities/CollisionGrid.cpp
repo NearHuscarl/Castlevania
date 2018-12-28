@@ -35,6 +35,16 @@ bool CollisionGrid::IsOutOfRange(int col, int row)
 	return (col < 0 || col > width - 1 || row < 0 || row > height - 1);
 }
 
+int CollisionGrid::GetCellWidth()
+{
+	return cellWidth;
+}
+
+int CollisionGrid::GetCellHeight()
+{
+	return cellHeight;
+}
+
 CollisionCell &CollisionGrid::GetCellAtPosition(Vector2 position)
 {
 	auto cellCol = (int)(position.x / cellWidth);
@@ -185,17 +195,6 @@ void CollisionGrid::Move(GameObject &object, Vector2 distance)
 
 void CollisionGrid::Update(UpdateData &updateData)
 {
-	auto &player = *updateData.player;
-	auto cellCol = (int)(player.GetPosition().x / cellWidth);
-	auto cellRow = (int)(player.GetPosition().y / cellHeight);
-	auto collisionObjects = GetCollisionObjects(cellCol, cellRow);
-
-	updateData.collisionObjects = &collisionObjects;
-	player.Update(updateData);
-
-	for (auto const &spawnArea : updateData.stageObject->spawnAreas)
-		spawnArea->Update(updateData);
-
 	GetCellsFromBoundingBox(updateData.viewport, [&](CollisionCell &cell, int col, int row)
 	{
 		if (cell.GetEntites().empty())

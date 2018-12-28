@@ -20,6 +20,7 @@ namespace Castlevania
 	enum class GameState
 	{
 		PLAYING,
+		INTRO_CUTSCENE,
 		BOSS_FIGHT_CUTSCENE,
 		NEXT_MAP_CUTSCENE,
 		NEXT_ROOM_CUTSCENE,

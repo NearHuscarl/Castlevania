@@ -97,6 +97,7 @@ namespace Castlevania
 		void Stoptime();
 		void Throw(std::unique_ptr<RangedWeapon> weapon); // Throw secondary weapon (e.g. dagger, axe, boomerang)
 		void TurnBackward();
+		void Die();
 		void Revive();
 
 		bool IsAttacking();
@@ -129,7 +130,6 @@ namespace Castlevania
 		void BecomeInvisible();
 		void TakeDamage(int damage, Direction direction);
 		void BounceBack(Direction direction); // when simon taking damage
-		void Die();
 		void ToggleGodMode();
 
 		void UpdateStates();

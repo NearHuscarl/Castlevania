@@ -15,7 +15,10 @@ namespace Castlevania
 		void Draw(SpriteExtensions &spriteBatch) override;
 
 	private:
+		enum class State;
+
 		std::unique_ptr<Sprite> cutsceneBackground;
 		Stopwatch transitionTimer;
+		State currentState;
 	};
 }

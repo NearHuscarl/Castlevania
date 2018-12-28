@@ -235,6 +235,7 @@
     <ClCompile Include="Castlevania\Scenes\Stages\Cutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\GoToCastleCutScene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\HiddenMoneyBagCutscene.cpp" />
+    <ClCompile Include="Castlevania\Scenes\Stages\IntroCutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\ResetCutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\NextMapCutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\NextRoomCutscene.cpp" />
@@ -266,7 +267,6 @@
     <ClCompile Include="Direct2DGame\Content\AnimationFactoryReader.cpp" />
     <ClCompile Include="Castlevania\Scenes\AbstractScene.cpp" />
     <ClCompile Include="Castlevania\Scenes\GameplayScene.cpp" />
-    <ClCompile Include="Castlevania\Scenes\IntroScene.cpp" />
     <ClCompile Include="Castlevania\Scenes\MenuScene.cpp" />
     <ClCompile Include="Castlevania\Scenes\SceneManager.cpp" />
     <ClCompile Include="Castlevania\Utilities\AudioManager.cpp" />
@@ -363,7 +363,6 @@
     <ClInclude Include="Castlevania\Models\Items\DoorRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\IAttackable.h" />
     <ClInclude Include="Castlevania\Models\Items\MoneyBag.h" />
-    <ClInclude Include="Castlevania\Models\IThrowable.h" />
     <ClInclude Include="Castlevania\Models\Systems\Rendering\ItemRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Items\PowerupResponseSystem.h" />
     <ClInclude Include="Castlevania\Models\Settings.h" />
@@ -412,6 +411,7 @@
     <ClInclude Include="Castlevania\Scenes\Stages\GoToCastleCutScene.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\Cutscene.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\HiddenMoneyBagCutscene.h" />
+    <ClInclude Include="Castlevania\Scenes\Stages\IntroCutscene.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\ResetCutscene.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\NextMapCutscene.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\NextRoomCutscene.h" />
@@ -460,7 +460,6 @@
     <ClInclude Include="Castlevania\Settings\Animations.h" />
     <ClInclude Include="Castlevania\Scenes\AbstractScene.h" />
     <ClInclude Include="Castlevania\Scenes\GameplayScene.h" />
-    <ClInclude Include="Castlevania\Scenes\IntroScene.h" />
     <ClInclude Include="Castlevania\Scenes\MenuScene.h" />
     <ClInclude Include="Castlevania\Scenes\Scene.h" />
     <ClInclude Include="Castlevania\Scenes\SceneManager.h" />
