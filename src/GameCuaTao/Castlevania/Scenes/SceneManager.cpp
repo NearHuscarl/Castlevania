@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 #include "MenuScene.h"
 #include "GameplayScene.h"
+#include "GameOverScene.h"
 
 using namespace Castlevania;
 
@@ -12,6 +13,11 @@ SceneManager::SceneManager(Game &game) : game{ game }
 }
 
 #pragma region Getters
+
+AbstractScene &SceneManager::GetNextScene()
+{
+	return *nextScene;
+}
 
 GraphicsDevice &SceneManager::GetGraphicsDevice()
 {
@@ -66,6 +72,9 @@ std::unique_ptr<AbstractScene> SceneManager::ConstructScene(Scene scene)
 		
 		case Scene::GAMEPLAY:
 			return std::make_unique<GameplayScene>(*this);
+
+		case Scene::GAMEOVER:
+			return std::make_unique<GameOverScene>(*this);
 
 		default:
 			throw std::invalid_argument("Bad scene choice");

@@ -231,6 +231,7 @@
     <ClCompile Include="Castlevania\Models\Weapons\WhipRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Weapons\WeaponResponseSystem.cpp" />
     <ClCompile Include="Castlevania\Effects\EffectFactory.cpp" />
+    <ClCompile Include="Castlevania\Scenes\GameOverScene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\BossFightCutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\CrossCutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\Cutscene.cpp" />

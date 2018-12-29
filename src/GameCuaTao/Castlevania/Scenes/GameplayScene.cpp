@@ -61,7 +61,7 @@ void GameplayScene::LoadContent()
 	
 	hud->LoadContent(content);
 
-	NextStage(Map::INTRO); // TODO: change back to INTRO
+	NextStage(Map::GREAT_HALL); // TODO: change back to INTRO
 }
 
 void GameplayScene::Update(GameTime gameTime)

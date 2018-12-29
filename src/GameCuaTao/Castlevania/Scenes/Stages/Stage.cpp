@@ -367,7 +367,7 @@ void Stage::ProcessMessage(int message)
 
 		case LEVEL_COMPLETED:
 			camera->SetPosition(Vector2::Zero());
-			gameplayScene.GetSceneManager().SetNextScene(Scene::MENU);
+			gameplayScene.GetSceneManager().SetNextScene(Scene::GAMEOVER);
 			break;
 
 		case RESET_STAGE_CUTSCENE_ENDED:

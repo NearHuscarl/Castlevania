@@ -14,6 +14,7 @@ namespace Castlevania
 	public:
 		SceneManager(Game &game);
 
+		AbstractScene &GetNextScene();
 		GraphicsDevice &GetGraphicsDevice();
 		ContentManager &GetContent();
 		ObjectFactory &GetFactory();
