@@ -141,6 +141,16 @@ Color Color::operator*(float scale)
 		(int)(A() * scale) };
 }
 
+bool Color::operator==(Color other)
+{
+	return this->packedValue == other.packedValue;
+}
+
+bool Color::operator!=(Color other)
+{
+	return !(*this == other);
+}
+
 Color Color::FromRgb(std::string rgb)
 {
 	if (rgb.empty())

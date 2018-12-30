@@ -44,8 +44,14 @@ void PlayerRenderingSystem::Receive(int message)
 			OnAttackStateChanged();
 			break;
 
+		case UNTOUCHABLE_STARTED:
+		case INVISIBLE_STARTED:
+			drawUntouchableEffect = true;
+			break;
+
 		case UNTOUCHABLE_ENDED:
 		case INVISIBLE_ENDED:
+			drawUntouchableEffect = false;
 			sprite->SetVisibility(true);
 			break;
 
@@ -89,6 +95,12 @@ void PlayerRenderingSystem::Update(GameTime gameTime)
 
 void PlayerRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 {
+	if (drawUntouchableEffect)
+	{
+		auto visible = !sprite->IsVisible();
+		sprite->SetVisibility(visible);
+	}
+
 	RenderingSystem::Draw(spriteBatch);
 	spriteBatch.Draw(*sprite, parent.GetPosition());
 }
@@ -155,6 +167,7 @@ void PlayerRenderingSystem::UpdateInvisibleRendering()
 		{
 			sprite->SetVisibility(true);
 			drawInvisibleEffect = true;
+			drawUntouchableEffect = false;
 			PlayAnimation(sprite->GetCurrentAnimation().GetName());
 		}
 	}
@@ -162,11 +175,10 @@ void PlayerRenderingSystem::UpdateInvisibleRendering()
 	{
 		if (drawInvisibleEffect)
 		{
+			drawUntouchableEffect = true;
 			drawInvisibleEffect = false;
 			PlayAnimation(sprite->GetCurrentAnimation().GetName());
 		}
-
-		sprite->SetVisibility(Stopwatch::Every(1) ? true : false);
 	}
 }
 
@@ -177,7 +189,9 @@ void PlayerRenderingSystem::PlayAnimation(std::string name)
 
 	if (drawInvisibleEffect || parent.godMode)
 	{
-		if (!EndsWith(animationName, invisibleSuffix))
+		if (!EndsWith(animationName, invisibleSuffix)
+			&& animationName != DIE_ANIMATION
+			&& !StartsWith(animationName, "flash"))
 			animationName += invisibleSuffix;
 	}
 	else

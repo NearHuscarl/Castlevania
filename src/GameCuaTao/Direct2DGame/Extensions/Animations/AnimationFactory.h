@@ -6,6 +6,8 @@
 
 using AnimationDict = std::map<std::string, Animation>;
 
+const auto NULL_ANIMATION = Animation{ "", 0 };
+
 class AnimationFactory
 {
 public:

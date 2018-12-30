@@ -18,6 +18,7 @@ public:
 
 	bool IsPlaying();
 	bool IsComplete();
+	bool IsEmpty();
 
 	void Add(TextureRegion textureRegion, int time = 0);
 	void Update();

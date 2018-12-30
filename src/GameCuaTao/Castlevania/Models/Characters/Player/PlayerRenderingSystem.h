@@ -25,6 +25,7 @@ namespace Castlevania
 		std::unique_ptr<AnimatedSprite> sprite;
 		std::string animationPath;
 		bool drawInvisibleEffect;
+		bool drawUntouchableEffect;
 
 		void UpdateNormalState();
 		void UpdateInvisibleRendering();

@@ -64,6 +64,11 @@ bool Animation::IsComplete()
 	return isComplete;
 }
 
+bool Animation::IsEmpty()
+{
+	return frames.empty();
+}
+
 void Animation::Add(TextureRegion textureRegion, int time)
 {
 	if (time == 0)

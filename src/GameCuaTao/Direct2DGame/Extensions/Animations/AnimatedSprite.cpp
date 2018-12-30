@@ -30,8 +30,13 @@ void AnimatedSprite::Play(std::string name)
 {
 	if (currentAnimation->GetName() != name || currentAnimation->IsComplete())
 	{
+		auto newAnimation = animationFactory->Create(name);
+
+		if (newAnimation.IsEmpty())
+			return;
+
 		currentAnimation->Stop();
-		animations.at(name) = animationFactory->Create(name);
+		animations.at(name) = newAnimation;
 		currentAnimation = &animations.at(name);
 
 		SetTextureRegion(currentAnimation->GetCurrentFrame().GetTextureRegion());
@@ -42,8 +47,13 @@ void AnimatedSprite::PlayCached(std::string name)
 {
 	if (currentAnimation->GetName() != name || currentAnimation->IsComplete())
 	{
+		auto it = animations.find(name);
+
+		if (it == animations.end())
+			return;
+
 		currentAnimation->Stop();
-		currentAnimation = &animations.at(name);
+		currentAnimation = &it->second;
 		currentAnimation->Continue();
 
 		SetTextureRegion(currentAnimation->GetCurrentFrame().GetTextureRegion());

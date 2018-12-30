@@ -32,6 +32,8 @@ public:
 	static Color YellowGreen();
 
 	Color operator*(float scale);
+	bool operator==(Color other);
+	bool operator!=(Color other);
 
 	static Color FromRgb(std::string rgb);
 	static Color FromArgb(std::string rgba);

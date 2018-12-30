@@ -239,7 +239,7 @@ void Stage::UpdateGameObjects(UpdateData &updateData)
 	updateData.collisionObjects = &collisionObjects;
 	player->Update(updateData);
 
-	if (data->timeLeft.GetCounter() < 0 && player->GetState() == ObjectState::NORMAL)
+	if (data->timeLeft.GetCounter() < 0)
 		player->Die();
 
 	for (auto const &spawnArea : updateData.stageObject->spawnAreas)

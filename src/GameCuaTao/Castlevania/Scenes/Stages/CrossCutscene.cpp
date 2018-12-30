@@ -5,7 +5,7 @@
 
 using namespace Castlevania;
 
-constexpr auto CROSS_TIME = 750; // in milliseconds
+constexpr auto CROSS_TIME = 650; // in milliseconds
 
 CrossCutscene::CrossCutscene(Stage &stage, ContentManager &content, CollisionGrid &grid) :
 	Cutscene{ stage },
@@ -43,7 +43,9 @@ void CrossCutscene::Update(UpdateData &updateData)
 
 void CrossCutscene::Draw(SpriteExtensions &spriteBatch)
 {
-	background->SetColor(Stopwatch::Every(1) ? MAP_BLACK_COLOR : MAP_WHITE_COLOR);
+	auto backgroundColor = background->GetColor() == MAP_BLACK_COLOR ? MAP_WHITE_COLOR : MAP_BLACK_COLOR;
+	background->SetColor(backgroundColor);
+
 	spriteBatch.Draw(*background, Vector2::Zero(), false);
 	Cutscene::Draw(spriteBatch);
 }

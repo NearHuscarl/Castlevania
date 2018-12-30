@@ -518,6 +518,7 @@ void Player::Flash()
 void Player::BecomeInvisible()
 {
 	invisibleTimer.Start();
+	SendMessageToSystems(INVISIBLE_STARTED);
 }
 
 void Player::TakeDamage(int damage, Direction direction)
@@ -532,6 +533,7 @@ void Player::TakeDamage(int damage, Direction direction)
 
 	data.health.Add(-damage);
 	untouchableTimer.Start();
+	SendMessageToSystems(UNTOUCHABLE_STARTED);
 }
 
 void Player::BounceBack(Direction direction)
@@ -564,6 +566,9 @@ void Player::ToggleGodMode()
 
 void Player::Die()
 {
+	if (state != ObjectState::NORMAL || godMode)
+		return;
+
 	velocity.x = 0.0f;
 	controlSystem->Enabled(false);
 	SetState(ObjectState::DYING);

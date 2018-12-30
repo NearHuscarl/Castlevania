@@ -1,4 +1,5 @@
 #include "AnimationFactory.h"
+#include "../../Utilities/CppExtensions.h"
 
 AnimationFactory::AnimationFactory(AnimationDict animations)
 {
@@ -15,7 +16,7 @@ Animation AnimationFactory::Create()
 
 Animation AnimationFactory::Create(std::string name)
 {
-	return animations.at(name);
+	return GetValueOrDefault(animations, name, NULL_ANIMATION);
 }
 
 std::shared_ptr<AnimationFactory> AnimationFactory::Clone(std::vector<std::string> animationNames)
