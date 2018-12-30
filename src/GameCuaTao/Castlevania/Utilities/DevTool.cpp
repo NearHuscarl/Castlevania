@@ -1,16 +1,13 @@
 #include "Direct2DGame/MathHelper.h"
 #include "Direct2DGame/Input/InputHelper.h"
+#include "Direct2DGame/Utilities/CppExtensions.h"
 #include "DevTool.h"
 #include "TypeConverter.h"
-#include "CppExtensions.h"
+#include "../Scenes/SceneManager.h"
 #include "../Scenes/GameplayScene.h"
 #include "../Models/Systems/Rendering/RenderingSystem.h"
 
 using namespace Castlevania;
-
-int DevTool::currentItemIndex = 0;
-int DevTool::currentMapIndex = 0;
-bool DevTool::IsDebugging = true;
 
 constexpr auto PLAYER = "PLAYER";
 constexpr auto ENEMY = "ENEMY";
@@ -18,6 +15,11 @@ constexpr auto CONTAINER = "CONTAINER";
 constexpr auto POWERUP = "POWERUP";
 constexpr auto WEAPON = "WEAPON";
 constexpr auto EFFECT = "EFFECT";
+
+std::string DevTool::currentCategory = POWERUP;
+int DevTool::currentItemIndex = 0;
+int DevTool::currentMapIndex = 0;
+bool DevTool::IsDebugging = true;
 
 DevTool::DevTool(Stage &stage) :
 	stage{ stage },
@@ -131,19 +133,26 @@ void DevTool::LoadContent(ContentManager &content)
 		},
 	};
 
-	category = items.begin()->first;
-
 	maps = std::vector<Map>{
+		Map::INTRO,
 		Map::COURTYARD,
 		Map::GREAT_HALL,
 		Map::UNDERGROUND,
 		Map::PLAYGROUND };
 }
 
+void DevTool::Update(SceneManager &sceneManager)
+{
+	if (InputHelper::IsKeyDown(DIK_NUMPAD1))
+		sceneManager.SetNextScene(Scene::MENU);
+	else if (InputHelper::IsKeyDown(DIK_NUMPAD2))
+		sceneManager.SetNextScene(Scene::GAMEPLAY);
+	else if (InputHelper::IsKeyDown(DIK_NUMPAD3))
+		sceneManager.SetNextScene(Scene::GAMEOVER);
+}
+
 void DevTool::Update(UpdateData &updatData)
 {
-	UpdateEffects(updatData.gameTime);
-
 	// Update keyboard input
 	if (InputHelper::IsKeyDown(DIK_ESCAPE))
 		IsDebugging = !IsDebugging;
@@ -208,6 +217,8 @@ void DevTool::Update(UpdateData &updatData)
 		SpawnItem();
 	else if (InputHelper::IsMouseReleased(MouseButton::Right))
 		currentFacing = Opposite(currentFacing);
+
+	UpdateEffects(updatData.gameTime);
 }
 
 void DevTool::Draw(SpriteExtensions &spriteBatch)
@@ -221,8 +232,8 @@ void DevTool::Draw(SpriteExtensions &spriteBatch)
 	auto objectPosition = GetCurrentItemPosition();
 	auto textPosition = Vector2{ objectPosition.x, objectPosition.y - 20 };
 	auto effect = currentFacing == Facing::Left ? SpriteEffects::FlipHorizontally : SpriteEffects::None;
-	auto itemName = items[category][currentItemIndex].first;
-	auto sprite = items[category][currentItemIndex].second;
+	auto itemName = items[currentCategory][currentItemIndex].first;
+	auto sprite = items[currentCategory][currentItemIndex].second;
 	
 	sprite.SetEffect(effect);
 
@@ -234,7 +245,7 @@ void DevTool::Draw(SpriteExtensions &spriteBatch)
 Vector2 DevTool::GetCurrentItemPosition()
 {
 	auto mousePosition = camera.ScreenToWorld(InputHelper::GetMousePosition());
-	auto sprite = items[category][currentItemIndex].second;
+	auto sprite = items[currentCategory][currentItemIndex].second;
 	auto spriteWidth = sprite.GetFrameRectangle(mousePosition).Width();
 	
 	return Vector2{ mousePosition.x - spriteWidth, mousePosition.y };
@@ -303,25 +314,25 @@ void DevTool::DrawCollisionGridInfo(SpriteExtensions &spriteBatch)
 
 void DevTool::SetCategory(std::string category)
 {
-	this->category = category;
+	this->currentCategory = category;
 	this->currentItemIndex = 0;
 }
 
 void DevTool::NextItem()
 {
-	if (++currentItemIndex > (int)items[category].size() - 1)
+	if (++currentItemIndex > (int)items[currentCategory].size() - 1)
 		currentItemIndex = 0;
 }
 
 void DevTool::PreviousItem()
 {
 	if (--currentItemIndex < 0)
-		currentItemIndex = items[category].size() - 1;
+		currentItemIndex = items[currentCategory].size() - 1;
 }
 
 void DevTool::SpawnItem()
 {
-	if (category == EFFECT)
+	if (currentCategory == EFFECT)
 		SpawnEffect();
 	else
 		SpawnObject();
@@ -329,30 +340,30 @@ void DevTool::SpawnItem()
 
 void DevTool::SpawnObject()
 {
-	auto type = string2EntityType.at(items[category][currentItemIndex].first);
+	auto type = string2EntityType.at(items[currentCategory][currentItemIndex].first);
 	auto objectPosition = GetCurrentItemPosition();
 	auto object = std::unique_ptr<GameObject>{};
 
-	if (category == PLAYER)
+	if (currentCategory == PLAYER)
 	{
 		player.SetPosition(GetCurrentItemPosition());
 		player.SetFacing(currentFacing);
 		player.IdleOnGround();
 		return;
 	}
-	else if (category == ENEMY)
+	else if (currentCategory == ENEMY)
 	{
 		object = objectFactory.CreateEnemy(type);
 
 		if (object->GetId() == ObjectId::GiantBat)
 			dynamic_cast<GiantBat*>(object.get())->SetActive();
 	}
-	else if (category == POWERUP)
+	else if (currentCategory == POWERUP)
 	{
 		object = objectFactory.CreatePowerup(type);
 		dynamic_cast<Powerup&>(*object).Spawn();
 	}
-	else if (category == CONTAINER)
+	else if (currentCategory == CONTAINER)
 	{
 		auto powerupIndex = MathHelper::RandomBetween(0, (int)items[POWERUP].size() - 1);
 		auto powerupType = string2EntityType.at(items[POWERUP][powerupIndex].first);
@@ -366,7 +377,7 @@ void DevTool::SpawnObject()
 				break;
 		}
 	}
-	else if (category == WEAPON)
+	else if (currentCategory == WEAPON)
 	{
 		switch (type)
 		{
@@ -399,6 +410,13 @@ void DevTool::SpawnEffect()
 
 void DevTool::NextMap()
 {
+	if (maps[currentMapIndex] == Map::INTRO)
+	{
+		player.EnableControl(true);
+		player.SetSpeed(125);
+		player.Idle();
+	}
+
 	if (++currentMapIndex > (int)maps.size() - 1)
 		currentMapIndex = 0;
 
@@ -407,6 +425,13 @@ void DevTool::NextMap()
 
 void DevTool::PreviousMap()
 {
+	if (maps[currentMapIndex] == Map::INTRO)
+	{
+		player.EnableControl(true);
+		player.SetSpeed(125);
+		player.Idle();
+	}
+
 	if (--currentMapIndex < 0)
 		currentMapIndex = maps.size() - 1;
 

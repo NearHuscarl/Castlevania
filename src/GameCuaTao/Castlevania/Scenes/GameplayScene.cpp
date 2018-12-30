@@ -52,16 +52,10 @@ void GameplayScene::LoadContent()
 {
 	auto &content = sceneManager.GetContent();
 
-	auto &graphicsDevice = sceneManager.GetGraphicsDevice();
-	auto oldColorKey = graphicsDevice.GetColorKey();
-	
-	graphicsDevice.SetColorKey(MAP_COLORKEY);
 	mapManager->LoadContent(content);
-	graphicsDevice.SetColorKey(oldColorKey);
-	
 	hud->LoadContent(content);
 
-	NextStage(Map::GREAT_HALL); // TODO: change back to INTRO
+	NextStage(Map::INTRO);
 }
 
 void GameplayScene::Update(GameTime gameTime)

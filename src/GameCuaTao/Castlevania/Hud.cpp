@@ -1,5 +1,6 @@
 #include <iomanip>
 #include <sstream>
+#include "Direct2DGame/MathHelper.h"
 #include "Hud.h"
 
 using namespace Castlevania;
@@ -134,7 +135,7 @@ std::string Hud::GetScoreText()
 
 std::string Hud::GetTimeText()
 {
-	return "TIME " + PadZero(data->gameplayData->timeLeft.GetCounter(), 4);
+	return "TIME " + PadZero(MathHelper::Max(data->gameplayData->timeLeft.GetCounter(), 0), 4);
 }
 
 std::string Hud::GetStageText()

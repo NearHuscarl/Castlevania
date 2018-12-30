@@ -1,6 +1,6 @@
 #include "Direct2DGame/Input/Keyboard.h"
+#include "Direct2DGame/Utilities/CppExtensions.h"
 #include "ObjectFactory.h"
-#include "../../Utilities/CppExtensions.h"
 #include "../../Utilities/TypeConverter.h"
 #include "../Systems/Movement/SimpleMovementSystem.h"
 #include "../Systems/Movement/EntityMovementSystem.h"

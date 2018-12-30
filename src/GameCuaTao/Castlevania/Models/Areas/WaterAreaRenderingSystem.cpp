@@ -1,5 +1,5 @@
+#include "Direct2DGame/Utilities/CppExtensions.h"
 #include "WaterAreaRenderingSystem.h"
-#include "../../Utilities/CppExtensions.h"
 #include "../GameObject.h"
 #include "../Settings.h"
 

@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="24" height="6" tilewidth="64" tileheight="64" infinite="0" backgroundcolor="#3c3c3c" nextlayerid="14" nextobjectid="51">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="24" height="6" tilewidth="64" tileheight="64" infinite="0" backgroundcolor="#3c3c3c" nextlayerid="19" nextobjectid="51">
  <tileset firstgid="1" source="../Simon.tsx"/>
  <tileset firstgid="73" source="../Brazier.tsx"/>
  <tileset firstgid="75" source="../Money_Bag.tsx"/>
  <tileset firstgid="78" source="../Static_Objects.tsx"/>
- <layer id="1" name="TileLayer01" width="24" height="6">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACmNgGAWjgHwAAPMY7ENAAgAA
-  </data>
+ <tileset firstgid="88" name="Courtyard" tilewidth="64" tileheight="64" tilecount="40" columns="10">
+  <image source="Courtyard.bmp" width="640" height="256"/>
+ </tileset>
+ <layer id="18" name="TileLayer" width="24" height="6">
+  <properties>
+   <property name="ColorKey" type="color" value="#ff050505"/>
+  </properties>
+  <data encoding="csv">
+89,90,90,90,90,90,91,91,89,90,90,90,90,90,91,91,91,91,91,91,92,93,93,94,
+95,96,95,95,95,95,90,90,95,96,95,95,95,95,90,90,90,90,97,97,98,99,100,101,
+96,102,96,96,96,96,96,96,96,102,96,96,96,96,96,96,96,96,102,102,103,104,100,105,
+106,107,102,106,106,102,106,102,106,107,102,106,106,102,106,102,102,102,107,108,109,110,111,112,
+113,114,115,113,113,115,113,115,113,114,115,113,113,115,113,115,115,116,114,117,118,119,120,121,
+108,108,108,108,108,108,108,108,108,108,108,108,108,108,108,108,108,108,108,108,108,108,108,108
+</data>
  </layer>
- <imagelayer id="7" name="Background">
-  <image source="Courtyard.png" width="1536" height="365"/>
- </imagelayer>
  <objectgroup color="#00557f" id="3" name="Bounds">
   <object id="20" name="Ground" type="Boundary" x="0" y="288" width="1536" height="32"/>
   <object id="22" name="LeftBorder" type="Boundary" x="0" y="0" width="3" height="288"/>

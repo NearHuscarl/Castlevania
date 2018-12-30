@@ -1,14 +1,13 @@
 #include "TiledMap.h"
 #include "../../MathHelper.h"
 
-TiledMap::TiledMap(std::string name, int width, int height, int tileWidth, int tileHeight, Color backgroundColor)
+TiledMap::TiledMap(std::string name, int width, int height, int tileWidth, int tileHeight)
 {
 	this->name = name;
 	this->width = width;
 	this->height = height;
 	this->tileWidth = tileWidth;
 	this->tileHeight = tileHeight;
-	this->backgroundColor = backgroundColor;
 	this->position = Vector2::Zero();
 }
 
@@ -42,12 +41,12 @@ int TiledMap::GetHeightInPixels()
 	return height * tileHeight;
 }
 
-void TiledMap::CreateTileSet(std::shared_ptr<Texture> texture)
+void TiledMap::SetTileLayer(std::unique_ptr<TileSet> tileLayer)
 {
-	tileSet = std::make_unique<TileSet>(texture, tileWidth, tileHeight, columns, rows);
+	this->tileLayer = std::move(tileLayer);
 }
 
-void TiledMap::CreateMapObjects(TiledMapObjectGroups objects)
+void TiledMap::SetMapObjects(TiledMapObjectGroups objects)
 {
 	this->objects = objects;
 }
@@ -59,12 +58,12 @@ TiledMapObjectGroups TiledMap::GetMapObjects()
 
 void TiledMap::Draw(SpriteExtensions &spriteBatch)
 {
-	auto camRect = spriteBatch.GetGraphicsDevice().GetViewport().Bounds();
+	auto camBbox = spriteBatch.GetGraphicsDevice().GetViewport().Bounds();
 
-	auto startRow = (int)camRect.top / tileHeight;
-	auto endRow = (int)camRect.bottom / tileHeight;
-	auto startColumn = (int)camRect.left / tileWidth;
-	auto endColumn = (int)camRect.right / tileWidth;
+	auto startRow = (int)camBbox.top / tileHeight;
+	auto endRow = (int)camBbox.bottom / tileHeight;
+	auto startColumn = (int)camBbox.left / tileWidth;
+	auto endColumn = (int)camBbox.right / tileWidth;
 
 	startRow = MathHelper::Clamp(startRow, 0, rows - 1);
 	endRow = MathHelper::Clamp(endRow, 0, rows - 1);
@@ -75,11 +74,12 @@ void TiledMap::Draw(SpriteExtensions &spriteBatch)
 	{
 		for (auto column = startColumn; column <= endColumn; column++)
 		{
-			auto tile = tileSet->GetTile(row, column);
-			auto rect = tile.GetTextureRegion().GetFrameRectangle();
-			auto tilePosition = position + Vector2{ (float)rect.X(), (float)rect.Y() };
+			auto &tile = tileLayer->at(row).at(column);
+			auto &sprite = tile.GetSprite();
+			auto tileBbox = tile.GetBoundingBox();
+			auto tilePosition = position + Vector2{ tileBbox.X(), tileBbox.Y() };
 
-			spriteBatch.Draw(tile, tilePosition);
+			spriteBatch.Draw(sprite, tilePosition);
 		}
 	}
 }

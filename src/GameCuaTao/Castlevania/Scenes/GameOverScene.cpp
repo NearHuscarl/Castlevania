@@ -37,7 +37,7 @@ void GameOverScene::LoadContent()
 
 void GameOverScene::Update(GameTime gameTime)
 {
-	if (InputHelper::IsKeyUp(DIK_DOWN) || InputHelper::IsKeyUp(DIK_UP))
+	if (InputHelper::IsKeyDown(DIK_DOWN) || InputHelper::IsKeyDown(DIK_UP))
 	{
 		if (currentOption == CONTINUE_TEXT)
 			currentOption = END_TEXT;
@@ -45,7 +45,7 @@ void GameOverScene::Update(GameTime gameTime)
 			currentOption = CONTINUE_TEXT;
 	}
 
-	if (InputHelper::IsKeyUp(DIK_RETURN))
+	if (InputHelper::IsKeyDown(DIK_RETURN))
 	{
 		if (currentOption == CONTINUE_TEXT)
 		{

@@ -10,6 +10,7 @@
 
 namespace Castlevania
 {
+	class SceneManager;
 	class Stage;
 
 	class DevTool
@@ -20,6 +21,7 @@ namespace Castlevania
 		static bool IsDebugging;
 
 		void LoadContent(ContentManager &content);
+		static void Update(SceneManager &sceneManager);
 		void Update(UpdateData &updatData);
 		void Draw(SpriteExtensions &spriteBatch);
 
@@ -31,7 +33,7 @@ namespace Castlevania
 		
 		std::unordered_map<std::string, DevToolItems> items;
 		static int currentItemIndex;
-		std::string category;
+		static std::string currentCategory;
 		Facing currentFacing;
 		
 		std::vector<Map> maps;

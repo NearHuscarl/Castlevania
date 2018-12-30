@@ -246,7 +246,8 @@
     <ClCompile Include="Castlevania\Scenes\Stages\StopwatchCutscene.cpp" />
     <ClCompile Include="Castlevania\Utilities\CollisionCell.cpp" />
     <ClCompile Include="Castlevania\Utilities\CollisionGrid.cpp" />
-    <ClCompile Include="Castlevania\Utilities\CppExtensions.cpp" />
+    <ClCompile Include="Direct2DGame\Graphics\Viewport.cpp" />
+    <ClCompile Include="Direct2DGame\Utilities\CppExtensions.cpp" />
     <ClCompile Include="Castlevania\Utilities\Subject.cpp" />
     <ClCompile Include="Castlevania\Utilities\Timer.cpp" />
     <ClCompile Include="Direct2DGame\Base\Vector2.cpp" />
@@ -282,8 +283,8 @@
     <ClCompile Include="Direct2DGame\Extensions\Sprites\Sprite.cpp" />
     <ClCompile Include="Direct2DGame\Extensions\Sprites\SpriteExtensions.cpp" />
     <ClCompile Include="Direct2DGame\Extensions\TextureRegion.cpp" />
+    <ClCompile Include="Direct2DGame\Extensions\Tiled\Tile.cpp" />
     <ClCompile Include="Direct2DGame\Extensions\Tiled\TiledMap.cpp" />
-    <ClCompile Include="Direct2DGame\Extensions\Tiled\TileSet.cpp" />
     <ClCompile Include="Direct2DGame\Graphics\SpriteBatch.cpp" />
     <ClCompile Include="Direct2DGame\Input\DirectInput.cpp" />
     <ClCompile Include="Direct2DGame\Input\GameInput.cpp" />
@@ -427,7 +428,7 @@
     <ClInclude Include="Castlevania\Utilities\CollisionGrid.h" />
     <ClInclude Include="Castlevania\Utilities\CollisionCell.h" />
     <ClInclude Include="Castlevania\Utilities\CollisionGridData.h" />
-    <ClInclude Include="Castlevania\Utilities\CppExtensions.h" />
+    <ClInclude Include="Direct2DGame\Utilities\CppExtensions.h" />
     <ClInclude Include="Castlevania\Utilities\CollisionObject.h" />
     <ClInclude Include="Castlevania\Utilities\IObserver.h" />
     <ClInclude Include="Castlevania\Utilities\MapSettings.h" />
@@ -479,8 +480,8 @@
     <ClInclude Include="Direct2DGame\Extensions\RectF.h" />
     <ClInclude Include="Direct2DGame\Extensions\Sprites\IDrawable.h" />
     <ClInclude Include="Direct2DGame\Extensions\TextureRegion.h" />
+    <ClInclude Include="Direct2DGame\Extensions\Tiled\Tile.h" />
     <ClInclude Include="Direct2DGame\Extensions\Tiled\TiledMap.h" />
-    <ClInclude Include="Direct2DGame\Extensions\Tiled\TileSet.h" />
     <ClInclude Include="Direct2DGame\Input\DirectInput.h" />
     <ClInclude Include="Direct2DGame\GameTime.h" />
     <ClInclude Include="Direct2DGame\GraphicsDeviceInformation.h" />

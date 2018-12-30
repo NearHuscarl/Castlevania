@@ -22,7 +22,7 @@ Sprite &EntityRenderingSystem::GetSprite()
 	return *sprite;
 }
 
-GameObject &Castlevania::EntityRenderingSystem::GetParent()
+GameObject &EntityRenderingSystem::GetParent()
 {
 	return parent;
 }

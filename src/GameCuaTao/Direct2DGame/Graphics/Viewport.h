@@ -10,25 +10,13 @@ struct Viewport
 	int width;
 	int height;
 
-	Vector2 Project(float x, float y)
-	{
-		return Project(Vector2{ x, y });
-	}
+	Vector2 Project(float x, float y);
 
 	// Get position relative to screen space from world space position
-	Vector2 Project(Vector2 source)
-	{
-		return Vector2{ source.x - x, source.y - y };
-	}
+	Vector2 Project(Vector2 source);
 
 	// Get position relative to world space from screen space position
-	Vector2 Unproject(Vector2 source)
-	{
-		return Vector2{ source.x + x, source.y + y };
-	}
+	Vector2 Unproject(Vector2 source);
 
-	RectF Bounds()
-	{
-		return RectF{ x, y, (float)width, (float)height };
-	}
+	RectF Bounds();
 };

@@ -1,4 +1,5 @@
 #include "Direct2DGame/Input/InputHelper.h"
+#include "Direct2DGame/Utilities/CppExtensions.h"
 #include "Stage.h"
 #include "StageEvent.h"
 #include "IntroCutscene.h"
@@ -14,7 +15,6 @@
 #include "../GameplayScene.h"
 #include "../SceneManager.h"
 #include "../../Models/UpdateData.h"
-#include "../../Utilities/CppExtensions.h"
 #include "../../Utilities/TypeConverter.h"
 
 using namespace Castlevania;
@@ -224,6 +224,7 @@ void Stage::Reset()
 	}
 
 	player->Revive();
+	data->timeLeft.SetCounter(STAGE_TIME);
 	currentState = GameState::PLAYING;
 }
 
@@ -237,6 +238,9 @@ void Stage::UpdateGameObjects(UpdateData &updateData)
 
 	updateData.collisionObjects = &collisionObjects;
 	player->Update(updateData);
+
+	if (data->timeLeft.GetCounter() < 0 && player->GetState() == ObjectState::NORMAL)
+		player->Die();
 
 	for (auto const &spawnArea : updateData.stageObject->spawnAreas)
 		spawnArea->Update(updateData);
@@ -365,6 +369,7 @@ void Stage::ProcessMessage(int message)
 			SetCurrentCutscene(GameState::LEVEL_COMPLETED_CUTSCENE);
 			break;
 
+		case GAME_OVER:
 		case LEVEL_COMPLETED:
 			camera->SetPosition(Vector2::Zero());
 			gameplayScene.GetSceneManager().SetNextScene(Scene::GAMEOVER);

@@ -2,6 +2,7 @@
 #include "MenuScene.h"
 #include "GameplayScene.h"
 #include "GameOverScene.h"
+#include "../Utilities/DevTool.h"
 
 using namespace Castlevania;
 
@@ -43,12 +44,11 @@ SpriteExtensions &SceneManager::GetSpriteBatch()
 
 void SceneManager::Update(GameTime gameTime)
 {
+	DevTool::Update(*this);
+
 	if (nextScene != nullptr)
-	{
-		// reassign std::unique_ptr make the old object destroyed
-		// and its memory deallocated automatically :)
 		currentScene = std::move(nextScene);
-	}
+	
 	currentScene->Update(gameTime);
 }
 

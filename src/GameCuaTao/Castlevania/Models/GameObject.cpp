@@ -1,9 +1,9 @@
 ﻿#include "Direct2DGame/MathHelper.h"
 #include "Direct2DGame/Input/Keyboard.h"
+#include "Direct2DGame/Utilities/CppExtensions.h"
 #include "GameObject.h"
 #include "UpdateData.h"
 #include "Settings.h"
-#include "../Utilities/CppExtensions.h"
 #include "../Utilities/CollisionGrid.h"
 
 using namespace Castlevania;
@@ -186,7 +186,7 @@ void GameObject::SetVisibility(bool value)
 	GetSprite()->SetVisibility(value);
 }
 
-Body &Castlevania::GameObject::GetBody()
+Body &GameObject::GetBody()
 {
 	return body;
 }

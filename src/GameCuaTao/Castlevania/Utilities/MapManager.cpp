@@ -1,6 +1,6 @@
+#include "Direct2DGame/Utilities/CppExtensions.h"
 #include "MapManager.h"
 #include "TypeConverter.h"
-#include "CppExtensions.h"
 #include "../Scenes/Stages/StageObject.h"
 
 using namespace Castlevania;

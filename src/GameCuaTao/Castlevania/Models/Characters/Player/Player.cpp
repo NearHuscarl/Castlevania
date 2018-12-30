@@ -485,6 +485,9 @@ void Player::Fall()
 
 void Player::Land()
 {
+	if (state != ObjectState::NORMAL)
+		return;
+
 	if (IsAttacking())
 	{
 		velocity.x = 0; // Still keep attacking on the ground but not moving anymore
@@ -561,26 +564,18 @@ void Player::ToggleGodMode()
 
 void Player::Die()
 {
+	velocity.x = 0.0f;
 	controlSystem->Enabled(false);
 	SetState(ObjectState::DYING);
+	data.lives--;
 }
 
 void Player::Revive()
 {
-	data.lives--;
-
-	if (data.lives >= 0)
-	{
-		data.health = Health{ MAX_HEALTH };
-		Idle();
-		EnableControl(true);
-		SetState(ObjectState::NORMAL);
-	}
-	else
-	{
-		SetState(ObjectState::DEAD);
-		Notify(GAME_OVER);
-	}
+	data.health = Health{ MAX_HEALTH };
+	Idle();
+	EnableControl(true);
+	SetState(ObjectState::NORMAL);
 }
 
 #pragma endregion

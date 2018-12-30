@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="16" height="6" tilewidth="64" tileheight="64" infinite="0" nextlayerid="9" nextobjectid="41">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="16" height="6" tilewidth="64" tileheight="64" infinite="0" nextlayerid="11" nextobjectid="41">
  <tileset firstgid="1" source="../Candle.tsx"/>
  <tileset firstgid="3" source="../Simon.tsx"/>
  <tileset firstgid="75" source="../Static_Objects.tsx"/>
- <tileset firstgid="84" source="../Money_Bag.tsx"/>
- <layer id="1" name="TileLayer1" width="16" height="6">
-  <data encoding="base64">
-   AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  </data>
+ <tileset firstgid="85" source="../Money_Bag.tsx"/>
+ <tileset firstgid="88" name="Underground" tilewidth="64" tileheight="64" tilecount="40" columns="10">
+  <image source="Underground.bmp" width="640" height="256"/>
+ </tileset>
+ <layer id="10" name="TileLayer" width="16" height="6">
+  <properties>
+   <property name="ColorKey" type="color" value="#ff050505"/>
+  </properties>
+  <data encoding="csv">
+89,90,91,92,93,93,92,93,89,93,94,90,91,93,94,95,
+96,97,90,98,93,93,99,93,94,93,94,97,90,91,94,95,
+98,100,100,101,102,102,98,93,103,93,103,100,100,104,105,95,
+92,106,106,92,107,108,89,109,89,109,89,108,110,106,89,111,
+112,113,113,112,113,114,115,116,115,116,115,114,116,113,103,117,
+118,118,118,118,118,118,118,118,118,118,118,118,118,118,119,118
+</data>
  </layer>
- <imagelayer id="3" name="Background">
-  <image source="Underground.png" width="1024" height="365"/>
- </imagelayer>
  <objectgroup color="#55557f" id="5" name="Areas">
   <object id="8" name="FishmanSpawnArea" type="SpawnArea" x="0" y="64" width="1024" height="230">
    <properties>
@@ -119,6 +127,6 @@
   <object id="24" name="GreatHall_02" type="Position" gid="14" x="738" y="40" width="60" height="66"/>
   <object id="23" name="GreatHall_01" type="Position" gid="14" x="98" y="40" width="60" height="66"/>
   <object id="34" name="Entrypoint" type="Position" gid="6" x="20" y="160" width="60" height="66"/>
-  <object id="37" name="MoneyBag" type="Position" gid="86" x="688" y="192" width="30" height="30"/>
+  <object id="37" name="MoneyBag" type="Position" gid="87" x="688" y="192" width="30" height="30"/>
  </objectgroup>
 </map>

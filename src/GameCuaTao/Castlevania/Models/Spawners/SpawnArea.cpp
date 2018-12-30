@@ -1,8 +1,8 @@
 #include "Direct2DGame/MathHelper.h"
+#include "Direct2DGame/Utilities/CppExtensions.h"
 #include "SpawnArea.h"
 #include "../UpdateData.h"
 #include "../Factories/ObjectFactory.h"
-#include "../../Utilities/CppExtensions.h"
 #include "../../Utilities/TypeConverter.h"
 
 using namespace Castlevania;

@@ -141,21 +141,37 @@ Color Color::operator*(float scale)
 		(int)(A() * scale) };
 }
 
-Color Color::FromHex(std::string hexColor)
+Color Color::FromRgb(std::string rgb)
 {
-	if (hexColor.empty())
+	if (rgb.empty())
 		return Color{ 0, 0, 0 };
 
-	if (hexColor[0] == '#')
-		hexColor.erase(0, 1);
+	if (rgb[0] == '#')
+		rgb.erase(0, 1);
 
-	auto r = std::stoi(hexColor.substr(0, 2), nullptr, 16);
-	auto g = std::stoi(hexColor.substr(2, 2), nullptr, 16);
-	auto b = std::stoi(hexColor.substr(4, 2), nullptr, 16);
+	auto r = std::stoi(rgb.substr(0, 2), nullptr, 16);
+	auto g = std::stoi(rgb.substr(2, 2), nullptr, 16);
+	auto b = std::stoi(rgb.substr(4, 2), nullptr, 16);
 	auto a = 255;
 
-	if (hexColor.length() == 8)
-		a = std::stoi(hexColor.substr(6, 2), nullptr, 16);
+	if (rgb.length() == 8)
+		a = std::stoi(rgb.substr(6, 2), nullptr, 16);
+
+	return Color{ r, g, b, a };
+}
+
+Color Color::FromArgb(std::string argb)
+{
+	if (argb.empty())
+		return Color{ 0, 0, 0 };
+
+	if (argb[0] == '#')
+		argb.erase(0, 1);
+
+	auto a = std::stoi(argb.substr(0, 2), nullptr, 16);
+	auto r = std::stoi(argb.substr(2, 2), nullptr, 16);
+	auto g = std::stoi(argb.substr(4, 2), nullptr, 16);
+	auto b = std::stoi(argb.substr(6, 2), nullptr, 16);
 
 	return Color{ r, g, b, a };
 }

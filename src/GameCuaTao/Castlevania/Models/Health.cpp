@@ -1,6 +1,6 @@
 #include "Direct2DGame/MathHelper.h"
+#include "Direct2DGame/Utilities/CppExtensions.h"
 #include "Health.h"
-#include "../Utilities/CppExtensions.h"
 
 using namespace Castlevania;
 

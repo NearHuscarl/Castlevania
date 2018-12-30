@@ -2,11 +2,6 @@
 <map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="8" height="6" tilewidth="64" tileheight="64" infinite="0" backgroundcolor="#3c3c3c" nextlayerid="15" nextobjectid="57">
  <tileset firstgid="1" source="../Simon.tsx"/>
  <tileset firstgid="73" source="../Static_Objects.tsx"/>
- <layer id="1" name="TileLayer01" width="8" height="6">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACmNgGNoAAPII/4vAAAAA
-  </data>
- </layer>
  <imagelayer id="14" name="Background">
   <image source="../../Backgrounds/Intro_Scene.png" width="512" height="365"/>
  </imagelayer>

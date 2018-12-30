@@ -4,11 +4,13 @@
 
 namespace Castlevania
 {
+	constexpr auto STAGE_TIME = 300; // in seconds
+
 	struct GameplayData
 	{
 		GameplayData()
 		{
-			timeLeft = Timer{ 300 };
+			timeLeft = Timer{ STAGE_TIME };
 			stage = 1;
 		}
 

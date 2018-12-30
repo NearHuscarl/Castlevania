@@ -33,7 +33,8 @@ public:
 
 	Color operator*(float scale);
 
-	static Color FromHex(std::string hexColor);
+	static Color FromRgb(std::string rgb);
+	static Color FromArgb(std::string rgba);
 
 private:
 	unsigned long packedValue;

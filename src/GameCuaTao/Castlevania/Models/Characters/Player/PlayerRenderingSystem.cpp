@@ -1,8 +1,8 @@
+#include "Direct2DGame/Utilities/CppExtensions.h"
 #include "PlayerRenderingSystem.h"
 #include "../../Settings.h"
 #include "../../../Settings/Animations.h"
 #include "../../../Scenes/Stages/StageEvent.h"
-#include "../../../Utilities/CppExtensions.h"
 
 using namespace Castlevania;
 
@@ -75,7 +75,11 @@ void PlayerRenderingSystem::Update(GameTime gameTime)
 			if (sprite->AnimateComplete())
 			{
 				parent.state = ObjectState::DEAD;
-				parent.Notify(PLAYER_DIE);
+
+				if (parent.data.lives >= 0)
+					parent.Notify(PLAYER_DIE);
+				else
+					parent.Notify(GAME_OVER);
 			}
 			break;
 	}
