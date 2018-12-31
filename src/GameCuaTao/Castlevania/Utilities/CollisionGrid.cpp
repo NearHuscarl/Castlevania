@@ -162,7 +162,7 @@ void CollisionGrid::Move(GameObject &object, Vector2 distance)
 	auto oldBoundingBox = object.GetBoundingBox();
 	auto newPosition = oldPosition + distance;
 	
-	object.SetPosition(newPosition);
+	object.SetRawPosition(newPosition);
 	
 	auto newBoundingBox = object.GetBoundingBox();
 	

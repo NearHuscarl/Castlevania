@@ -368,6 +368,7 @@
     <ClInclude Include="Castlevania\Models\Items\DoorRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\IAttackable.h" />
     <ClInclude Include="Castlevania\Models\Items\MoneyBag.h" />
+    <ClInclude Include="Castlevania\Models\Checkpoint.h" />
     <ClInclude Include="Castlevania\Models\Systems\Rendering\ItemRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Items\PowerupResponseSystem.h" />
     <ClInclude Include="Castlevania\Models\Settings.h" />

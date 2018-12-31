@@ -49,8 +49,8 @@ void GameOverScene::Update(GameTime gameTime)
 	{
 		if (currentOption == CONTINUE_TEXT)
 		{
-			sceneManager.SetNextScene(Scene::GAMEPLAY);
-			dynamic_cast<GameplayScene&>(sceneManager.GetNextScene()).NextStage(Map::COURTYARD);
+			auto &scene = sceneManager.SetNextScene(Scene::GAMEPLAY);
+			dynamic_cast<GameplayScene&>(scene).NextStage(Map::COURTYARD);
 		}
 		else
 			sceneManager.SetNextScene(Scene::MENU);

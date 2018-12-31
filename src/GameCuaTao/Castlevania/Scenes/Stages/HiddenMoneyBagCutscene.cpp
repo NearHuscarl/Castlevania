@@ -12,7 +12,7 @@ HiddenMoneyBagCutscene::HiddenMoneyBagCutscene(
 	:
 	Cutscene{ stage }
 {
-	auto spawnPoint = stageObject.locations.at("MoneyBag");
+	auto spawnPoint = stageObject.locations.at("MoneyBag").position;
 	auto moneyBag = objectFactory.CreateFlashingMoneyBag(spawnPoint);
 
 	hiddenMoneyBag = moneyBag.get();

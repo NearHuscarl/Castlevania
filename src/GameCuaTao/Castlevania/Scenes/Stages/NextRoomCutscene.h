@@ -9,17 +9,23 @@ namespace Castlevania
 	class NextRoomCutscene : public Cutscene
 	{
 	public:
-		NextRoomCutscene(Stage &stage, StageObject &stageObject, CollisionGrid &grid, Player &player);
-
-		Door &GetDoor();
+		NextRoomCutscene(
+			Stage &stage,
+			StageObject &stageObject,
+			CollisionGrid &grid,
+			ObjectFactory &objectFactory,
+			Player &player);
+		
 		void Update(UpdateData &updateData) override;
 
 	private:
 		enum class State;
 
-		Player *player;
-		Camera *camera;
-		Door *door;
+		Player &player;
+		CollisionGrid &grid;
+		ObjectFactory &objectFactory;
+		Camera &camera;
+		Door &door;
 		Direction doorHitDirection;
 
 		State currentState;
@@ -28,5 +34,6 @@ namespace Castlevania
 		float openDoorPosition_x;
 
 		void SetupCutscene();
+		void OnComplete();
 	};
 }

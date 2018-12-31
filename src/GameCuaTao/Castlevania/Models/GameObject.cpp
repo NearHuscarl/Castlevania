@@ -43,13 +43,22 @@ Vector2 GameObject::GetPosition()
 
 void GameObject::SetPosition(float x, float y)
 {
-	position.x = x;
-	position.y = y;
+	auto newPosition = Vector2{ x, y };
+
+	if (collisionGrid != nullptr)
+		collisionGrid->Move(*this, newPosition - position);
+	else
+		position = newPosition;
 }
 
 void GameObject::SetPosition(Vector2 position)
 {
 	SetPosition(position.x, position.y);
+}
+
+void GameObject::SetRawPosition(Vector2 position)
+{
+	this->position = position;
 }
 
 Vector2 GameObject::GetDistance()

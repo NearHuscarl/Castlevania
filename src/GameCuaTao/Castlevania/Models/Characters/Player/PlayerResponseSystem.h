@@ -30,7 +30,7 @@ namespace Castlevania
 		void OnCollideWithBoundary(CollisionResult &result, ResponseResult &responseResult);
 		void OnCollideWithTrigger(CollisionResult &result, ResponseResult &responseResult);
 		void OnCollideWithBossFightArea(CollisionResult &result, Rect viewport);
-		void OnCollideWithWaterArea(CollisionResult &result, StageObject &stageObject);
+		void OnCollideWithWaterArea(CollisionResult &result, ObjectCollection &objectCollection);
 		void OnCollideWithEnemy(CollisionResult &result);
 		void OnCollideWithVampireBat(CollisionResult &result);
 		void OnCollideWithFireball(CollisionResult &result);

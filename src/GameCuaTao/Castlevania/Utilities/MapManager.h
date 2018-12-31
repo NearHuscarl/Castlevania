@@ -31,6 +31,14 @@ namespace Castlevania
 		ObjectCollection GetMapObjects(Map name);
 		ObjectCollection GetMapObjectsInArea(Map name, RectF area);
 
+		void GetLocations(std::map<std::string, Checkpoint> &objects, TiledMapObjectGroups &objectGroups);
+		void GetStageAreas(std::vector<std::unique_ptr<GameObject>> &objects, TiledMapObjectGroups &objectGroups);
+		void GetTriggers(std::vector<std::unique_ptr<GameObject>> &objects, TiledMapObjectGroups &objectGroups, RectF area);
+		void GetEntities(std::vector<std::unique_ptr<GameObject>> &objects, TiledMapObjectGroups &objectGroups, RectF area);
+		void GetBounds(std::vector<std::unique_ptr<GameObject>> &objects, TiledMapObjectGroups &objectGroups, RectF area);
+		void GetAreas(std::vector<std::unique_ptr<GameObject>> &objects, TiledMapObjectGroups &objectGroups, RectF area);
+		void GetForegrounds(std::vector<std::unique_ptr<GameObject>> &objects, TiledMapObjectGroups &objectGroups, RectF area);
+
 	private:
 		Maps maps;
 

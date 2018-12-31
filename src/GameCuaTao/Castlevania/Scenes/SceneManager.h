@@ -14,13 +14,12 @@ namespace Castlevania
 	public:
 		SceneManager(Game &game);
 
-		AbstractScene &GetNextScene();
 		GraphicsDevice &GetGraphicsDevice();
 		ContentManager &GetContent();
 		ObjectFactory &GetFactory();
 		SpriteExtensions &GetSpriteBatch();
 
-		void SetNextScene(Scene scene);
+		AbstractScene &SetNextScene(Scene scene);
 
 		void Update(GameTime gameTime);
 		void Draw(GameTime gameTime);

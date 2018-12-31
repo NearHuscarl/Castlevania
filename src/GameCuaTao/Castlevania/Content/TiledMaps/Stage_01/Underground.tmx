@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="16" height="6" tilewidth="64" tileheight="64" infinite="0" nextlayerid="11" nextobjectid="41">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="16" height="6" tilewidth="64" tileheight="64" infinite="0" nextlayerid="11" nextobjectid="43">
  <tileset firstgid="1" source="../Candle.tsx"/>
  <tileset firstgid="3" source="../Simon.tsx"/>
  <tileset firstgid="75" source="../Static_Objects.tsx"/>
- <tileset firstgid="85" source="../Money_Bag.tsx"/>
- <tileset firstgid="88" name="Underground" tilewidth="64" tileheight="64" tilecount="40" columns="10">
+ <tileset firstgid="86" source="../Money_Bag.tsx"/>
+ <tileset firstgid="89" name="Underground" tilewidth="64" tileheight="64" tilecount="40" columns="10">
   <image source="Underground.bmp" width="640" height="256"/>
  </tileset>
  <layer id="10" name="TileLayer" width="16" height="6">
@@ -12,12 +12,12 @@
    <property name="ColorKey" type="color" value="#ff050505"/>
   </properties>
   <data encoding="csv">
-89,90,91,92,93,93,92,93,89,93,94,90,91,93,94,95,
-96,97,90,98,93,93,99,93,94,93,94,97,90,91,94,95,
-98,100,100,101,102,102,98,93,103,93,103,100,100,104,105,95,
-92,106,106,92,107,108,89,109,89,109,89,108,110,106,89,111,
-112,113,113,112,113,114,115,116,115,116,115,114,116,113,103,117,
-118,118,118,118,118,118,118,118,118,118,118,118,118,118,119,118
+90,91,92,93,94,94,93,94,90,94,95,91,92,94,95,96,
+97,98,91,99,94,94,100,94,95,94,95,98,91,92,95,96,
+99,101,101,102,103,103,99,94,104,94,104,101,101,105,106,96,
+93,107,107,93,108,109,90,110,90,110,90,109,111,107,90,112,
+113,114,114,113,114,115,116,117,116,117,116,115,117,114,104,118,
+119,119,119,119,119,119,119,119,119,119,119,119,119,119,120,119
 </data>
  </layer>
  <objectgroup color="#55557f" id="5" name="Areas">
@@ -26,8 +26,6 @@
     <property name="SpawnObject" value="Fishman"/>
    </properties>
   </object>
-  <object id="28" name="WaterArea" type="WaterArea" x="440" y="292" width="80" height="73"/>
-  <object id="29" name="WaterArea" type="WaterArea" x="568" y="292" width="80" height="73"/>
  </objectgroup>
  <objectgroup color="#00557f" id="4" name="Bounds">
   <object id="1" name="Platform" type="Boundary" x="192" y="96" width="64" height="32"/>
@@ -85,6 +83,8 @@
     <property name="Item" value="BlueMoneyBag"/>
    </properties>
   </object>
+  <object id="41" name="WaterArea" type="WaterArea" gid="85" x="384" y="365" width="192" height="73"/>
+  <object id="42" name="WaterArea" type="WaterArea" gid="85" x="512" y="365" width="192" height="73"/>
  </objectgroup>
  <objectgroup color="#55ff7f" id="8" name="Foregrounds">
   <object id="39" name="Block" type="BrickBlock" gid="81" x="672" y="192" width="32" height="32"/>
@@ -124,9 +124,21 @@
   </object>
  </objectgroup>
  <objectgroup color="#ff0000" id="7" name="Locations">
-  <object id="24" name="GreatHall_02" type="Position" gid="14" x="738" y="40" width="60" height="66"/>
-  <object id="23" name="GreatHall_01" type="Position" gid="14" x="98" y="40" width="60" height="66"/>
-  <object id="34" name="Entrypoint" type="Position" gid="6" x="20" y="160" width="60" height="66"/>
-  <object id="37" name="MoneyBag" type="Position" gid="87" x="688" y="192" width="30" height="30"/>
+  <object id="24" name="GreatHall_02" type="Position" gid="14" x="738" y="40" width="60" height="66">
+   <properties>
+    <property name="Facing" value="Right"/>
+   </properties>
+  </object>
+  <object id="23" name="GreatHall_01" type="Position" gid="14" x="98" y="40" width="60" height="66">
+   <properties>
+    <property name="Facing" value="Right"/>
+   </properties>
+  </object>
+  <object id="34" name="Entrypoint" type="Position" gid="6" x="20" y="160" width="60" height="66">
+   <properties>
+    <property name="Facing" value="Right"/>
+   </properties>
+  </object>
+  <object id="37" name="MoneyBag" type="Position" gid="88" x="688" y="192" width="30" height="30"/>
  </objectgroup>
 </map>

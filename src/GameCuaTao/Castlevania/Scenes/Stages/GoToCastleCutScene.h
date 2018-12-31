@@ -9,7 +9,7 @@ namespace Castlevania
 	class GoToCastleCutscene : public Cutscene
 	{
 	public:
-		GoToCastleCutscene(Stage &stage, StageObject &stageObject, CollisionGrid &grid, Player &player);
+		GoToCastleCutscene(Stage &stage, ObjectCollection &objectCollection, CollisionGrid &grid, Player &player);
 
 		void Update(UpdateData &updateData);
 

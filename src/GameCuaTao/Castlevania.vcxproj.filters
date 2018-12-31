@@ -1151,6 +1151,9 @@
     <ClInclude Include="Direct2DGame\Utilities\CppExtensions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Castlevania\Models\Checkpoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

@@ -51,7 +51,7 @@ void PlayerResponseSystem::Update(UpdateData &updateData)
 				break;
 
 			case ObjectId::WaterArea:
-				OnCollideWithWaterArea(result, *updateData.stageObject);
+				OnCollideWithWaterArea(result, *updateData.objects);
 				break;
 
 			case ObjectId::Zombie:
@@ -281,7 +281,7 @@ void PlayerResponseSystem::OnCollideWithBossFightArea(CollisionResult &result, R
 	}
 }
 
-void PlayerResponseSystem::OnCollideWithWaterArea(CollisionResult &result, StageObject &stageObject)
+void PlayerResponseSystem::OnCollideWithWaterArea(CollisionResult &result, ObjectCollection &objectCollection)
 {
 	auto &waterArea = dynamic_cast<WaterArea&>(result.collidedObject);
 	
@@ -293,7 +293,7 @@ void PlayerResponseSystem::OnCollideWithWaterArea(CollisionResult &result, Stage
 		auto waterZonePosition = waterArea.GetOriginPosition();
 
 		waterZone->SetOriginPosition(waterZonePosition);
-		stageObject.foregroundObjects.push_back(std::move(waterZone));
+		objectCollection.foregroundObjects.push_back(std::move(waterZone));
 	}
 
 	if (waterArea.GetBoundingBox().top <= parent.GetBoundingBox().top)

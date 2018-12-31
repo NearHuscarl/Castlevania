@@ -3,6 +3,7 @@
 #include "Direct2DGame/Utilities/Stopwatch.h"
 #include "PlayerData.h"
 #include "NearbyObjects.h"
+#include "../../Checkpoint.h"
 #include "../../Weapons/Whip.h"
 #include "../../Weapons/RangedWeapon.h"
 
@@ -73,6 +74,9 @@ namespace Castlevania
 		const NearbyObjects GetNearbyObjects();
 		MoveState GetMoveState();
 		AttackState GetAttackState();
+
+		using GameObject::SetPosition;
+		void SetPosition(Checkpoint checkpoint);
 		void SetSpeed(float speed) override;
 		void SetJumpSpeed(float jumpSpeed);
 		void SetFacing(Facing facing) override;

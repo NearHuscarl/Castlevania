@@ -41,6 +41,7 @@ namespace Castlevania
 		Vector2 GetPosition();
 		virtual void SetPosition(float x, float y);
 		virtual void SetPosition(Vector2 position);
+		void SetRawPosition(Vector2 position);
 
 		Vector2 GetDistance();
 		void SetDistance(Vector2 distance);

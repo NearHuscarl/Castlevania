@@ -15,11 +15,6 @@ SceneManager::SceneManager(Game &game) : game{ game }
 
 #pragma region Getters
 
-AbstractScene &SceneManager::GetNextScene()
-{
-	return *nextScene;
-}
-
 GraphicsDevice &SceneManager::GetGraphicsDevice()
 {
 	return game.GetGraphicsDevice();
@@ -57,10 +52,11 @@ void SceneManager::Draw(GameTime gameTime)
 	currentScene->Draw(gameTime);
 }
 
-void SceneManager::SetNextScene(Scene scene)
+AbstractScene &SceneManager::SetNextScene(Scene scene)
 {
 	nextScene = ConstructScene(scene);
 	nextScene->LoadContent();
+	return *nextScene;
 }
 
 std::unique_ptr<AbstractScene> SceneManager::ConstructScene(Scene scene)

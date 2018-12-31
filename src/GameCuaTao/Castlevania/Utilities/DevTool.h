@@ -28,9 +28,10 @@ namespace Castlevania
 	private:
 		using DevToolItems = std::vector<std::pair<std::string, Sprite>>;
 		
-		bool drawingGridInfo;
+		static bool drawingGridInfo;
 		std::shared_ptr<SpriteFont> debugFont;
-		
+		std::vector<std::string> blockSpritePaths;
+
 		std::unordered_map<std::string, DevToolItems> items;
 		static int currentItemIndex;
 		static std::string currentCategory;

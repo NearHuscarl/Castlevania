@@ -3,7 +3,7 @@
 <GameContent>
 
   <Animations AtlasPath="Crystal_Ball.atlas.xml">
-    <Animation Name="Flash" DefaultTime="80" IsLooping="True">
+    <Animation Name="Flash" DefaultTime="20" IsLooping="True">
       <Frame SpriteID="flash_01" />
       <Frame SpriteID="flash_02" />
     </Animation>

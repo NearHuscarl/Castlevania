@@ -20,6 +20,7 @@ std::string DevTool::currentCategory = POWERUP;
 int DevTool::currentItemIndex = 0;
 int DevTool::currentMapIndex = 0;
 bool DevTool::IsDebugging = true;
+bool DevTool::drawingGridInfo = false;
 
 DevTool::DevTool(Stage &stage) :
 	stage{ stage },
@@ -33,6 +34,7 @@ void DevTool::LoadContent(ContentManager &content)
 {
 	effectFactory = std::make_unique<EffectFactory>(content);
 	debugFont = content.Load<SpriteFont>("Fonts/DebugFont.font.xml");
+	blockSpritePaths = { "TiledMaps/Stage_01/Block.png", "TiledMaps/Stage_01/Block_01.png", "TiledMaps/Stage_01/Block_02.png" };
 
 	auto playerSprite = content.Load<Spritesheet>("Characters/Players/Simon.atlas.xml")->at("walk_01");
 	auto zombieSprite = content.Load<Spritesheet>("Characters/Enemies/Zombie.atlas.xml")->begin()->second;
@@ -43,6 +45,8 @@ void DevTool::LoadContent(ContentManager &content)
 
 	auto brazierSprite = content.Load<Spritesheet>("Items/Brazier.atlas.xml")->begin()->second;
 	auto candleSprite = content.Load<Spritesheet>("Items/Candle.atlas.xml")->begin()->second;
+	auto blockSprite = content.Load<Texture>("TiledMaps/Stage_01/Block.png");
+	auto wallSprite = content.Load<Texture>("TiledMaps/Breakable_Wall.png");
 
 	auto blueMoneyBagSprite = content.Load<Spritesheet>("Items/Money_Bag.atlas.xml")->at("money_bag_blue");
 	auto whiteMoneyBagSprite = content.Load<Spritesheet>("Items/Money_Bag.atlas.xml")->at("money_bag_white");
@@ -90,6 +94,8 @@ void DevTool::LoadContent(ContentManager &content)
 			{
 				std::make_pair<std::string, Sprite>("Brazier", brazierSprite),
 				std::make_pair<std::string, Sprite>("Candle", candleSprite),
+				std::make_pair<std::string, Sprite>("BreakableBlock", blockSprite),
+				std::make_pair<std::string, Sprite>("BreakableWall", wallSprite),
 			}
 		},
 		{
@@ -146,7 +152,10 @@ void DevTool::Update(SceneManager &sceneManager)
 	if (InputHelper::IsKeyDown(DIK_NUMPAD1))
 		sceneManager.SetNextScene(Scene::MENU);
 	else if (InputHelper::IsKeyDown(DIK_NUMPAD2))
-		sceneManager.SetNextScene(Scene::GAMEPLAY);
+	{
+		auto &scene = sceneManager.SetNextScene(Scene::GAMEPLAY);
+		dynamic_cast<GameplayScene&>(scene).NextStage(Map::COURTYARD);
+	}
 	else if (InputHelper::IsKeyDown(DIK_NUMPAD3))
 		sceneManager.SetNextScene(Scene::GAMEOVER);
 }
@@ -160,7 +169,7 @@ void DevTool::Update(UpdateData &updatData)
 	if (!IsDebugging)
 		return;
 
-	auto checkpoints = updatData.stageObject->locations;
+	auto checkpoints = stage.stageObject->locations;
 
 	if (InputHelper::IsKeyDown(DIK_TAB))
 		SetCategory(PLAYER);
@@ -177,10 +186,10 @@ void DevTool::Update(UpdateData &updatData)
 	else if (InputHelper::IsKeyDown(DIK_G))
 		drawingGridInfo = !drawingGridInfo;
 
-	else if (InputHelper::IsKeyDown(DIK_HOME))
-		NextMap();
-	else if (InputHelper::IsKeyDown(DIK_END))
+	else if (InputHelper::IsKeyDown(DIK_LBRACKET))
 		PreviousMap();
+	else if (InputHelper::IsKeyDown(DIK_RBRACKET))
+		NextMap();
 
 	else if (InputHelper::IsKeyDown(DIK_1))
 		player.SetPosition(checkpoints["Checkpoint"]);
@@ -365,8 +374,8 @@ void DevTool::SpawnObject()
 	}
 	else if (currentCategory == CONTAINER)
 	{
-		auto powerupIndex = MathHelper::RandomBetween(0, (int)items[POWERUP].size() - 1);
-		auto powerupType = string2EntityType.at(items[POWERUP][powerupIndex].first);
+		auto powerupItem = *MathHelper::RandomItem(items[POWERUP].begin(), items[POWERUP].end());
+		auto powerupType = string2EntityType.at(powerupItem.first);
 		switch (type)
 		{
 			case ObjectId::Brazier:
@@ -374,6 +383,15 @@ void DevTool::SpawnObject()
 				break;
 			case ObjectId::Candle:
 				object = objectFactory.CreateCandle(powerupType);
+				break;
+			case ObjectId::BreakableBlock:
+			{
+				auto blockSprite = *MathHelper::RandomItem(blockSpritePaths.begin(), blockSpritePaths.end());
+				object = objectFactory.CreateBreakableBlock(powerupType, blockSprite);
+				break;
+			}
+			case ObjectId::BreakableWall:
+				object = objectFactory.CreateBreakableWall(powerupType);
 				break;
 		}
 	}

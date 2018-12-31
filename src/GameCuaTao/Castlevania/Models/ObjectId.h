@@ -23,6 +23,8 @@ namespace Castlevania
 		// Containers
 		Brazier,
 		Candle,
+		BreakableBlock,
+		BreakableWall,
 
 		// Enemies
 		Zombie,
@@ -63,8 +65,6 @@ namespace Castlevania
 
 		// Misc
 		Door,
-		BreakableBlock,
-		BreakableWall,
 		Castle,
 		BrickBlock,
 		DirtBlock,

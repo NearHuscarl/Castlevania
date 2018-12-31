@@ -480,12 +480,40 @@
   </object>
  </objectgroup>
  <objectgroup color="#ff0000" id="5" name="Locations">
-  <object id="9" name="Entrypoint" type="Position" gid="185" x="64" y="320" width="60" height="66"/>
-  <object id="110" name="Underground_02" type="Position" gid="2147483768" x="3808" y="351" width="60" height="66"/>
-  <object id="111" name="Underground_01" type="Position" gid="2147483768" x="3168" y="351" width="60" height="66"/>
-  <object id="120" name="Entrypoint1" type="Position" gid="185" x="5050" y="310.83" width="60" height="66"/>
-  <object id="121" name="Checkpoint_01" type="Position" gid="185" x="3151" y="128" width="60" height="66"/>
-  <object id="122" name="Checkpoint_02" type="Position" gid="185" x="4169" y="128" width="60" height="66"/>
-  <object id="125" name="Entrypoint2" type="Position" gid="185" x="2944" y="124" width="60" height="66"/>
+  <object id="9" name="Entrypoint1" type="Position" gid="185" x="64" y="320" width="60" height="66">
+   <properties>
+    <property name="Facing" value="Right"/>
+   </properties>
+  </object>
+  <object id="110" name="Underground_02" type="Position" gid="2147483768" x="3808" y="351" width="60" height="66">
+   <properties>
+    <property name="Facing" value="Left"/>
+   </properties>
+  </object>
+  <object id="111" name="Underground_01" type="Position" gid="2147483768" x="3168" y="351" width="60" height="66">
+   <properties>
+    <property name="Facing" value="Left"/>
+   </properties>
+  </object>
+  <object id="120" name="Entrypoint2" type="Position" gid="185" x="5050" y="310.83" width="60" height="66">
+   <properties>
+    <property name="Facing" value="Right"/>
+   </properties>
+  </object>
+  <object id="121" name="Checkpoint_01" type="Position" gid="185" x="3151" y="128" width="60" height="66">
+   <properties>
+    <property name="Facing" value="Right"/>
+   </properties>
+  </object>
+  <object id="122" name="Checkpoint_02" type="Position" gid="185" x="4169" y="128" width="60" height="66">
+   <properties>
+    <property name="Facing" value="Right"/>
+   </properties>
+  </object>
+  <object id="125" name="Entrypoint" type="Position" gid="185" x="2944" y="124" width="60" height="66">
+   <properties>
+    <property name="Facing" value="Right"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

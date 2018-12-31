@@ -1,6 +1,8 @@
 #pragma once
 
 #include <math.h>
+#include <random>
+#include <iterator>
 #include "Base/Vector2.h"
 
 class MathHelper
@@ -34,6 +36,14 @@ public:
 	// Like RandomBetween(int, int) but do not repeat oldValue
 	template<typename T>
 	static T RandomBetween(T min, T max, T oldValue);
+
+	// https://stackoverflow.com/a/16421677/9449426
+	template<typename Iter, typename RandomGenerator>
+	static Iter RandomItem(Iter start, Iter end, RandomGenerator& g);
+
+	// int r = *RandomItem(foo.begin(), foo.end());
+	template<typename Iter>
+	static Iter RandomItem(Iter start, Iter end);
 };
 
 template<typename T>
@@ -68,4 +78,22 @@ inline T MathHelper::RandomBetween(T min, T max, T oldValue)
 	}
 
 	return newValue;
+}
+
+template<typename Iter>
+inline Iter MathHelper::RandomItem(Iter start, Iter end)
+{
+	static auto rd = std::random_device{};
+	static auto gen = std::mt19937{ rd() };
+
+	return RandomItem(start, end, gen);
+}
+
+template<typename Iter, typename RandomGenerator>
+inline Iter MathHelper::RandomItem(Iter start, Iter end, RandomGenerator &g)
+{
+	std::uniform_int_distribution<> dis(0, std::distance(start, end) - 1);
+	std::advance(start, dis(g));
+
+	return start;
 }

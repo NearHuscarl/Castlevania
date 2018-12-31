@@ -36,6 +36,7 @@ Stage::Stage(GameplayScene &gameplayScene, Map map, std::string spawnPoint) :
 {
 	this->currentMap = map;
 	this->spawnPoint = spawnPoint;
+	this->objectCollection = std::make_unique<ObjectCollection>();
 }
 
 void Stage::OnNotify(Subject &subject, int event)
@@ -51,6 +52,63 @@ Camera *Stage::GetCamera()
 Hud *Stage::GetHud()
 {
 	return hud.get();
+}
+
+Rect Stage::GetActiveArea()
+{
+	return activeArea;
+}
+
+void Stage::LoadObjectsWithin(Rect area)
+{
+	auto &mapManager = gameplayScene.GetMapManager();
+	auto &gridObjects = mapManager.GetMapObjectsInArea(currentMap, area);
+
+	grid->PopulateObjects(gridObjects);
+
+	auto mapObjectGroups = mapManager.GetTiledMap(currentMap)->GetMapObjects();
+
+	mapManager.GetForegrounds(objectCollection->foregroundObjects, mapObjectGroups, area);
+	mapManager.GetAreas(objectCollection->staticObjects, mapObjectGroups, area);
+
+	for (auto const &object : objectCollection->staticObjects)
+	{
+		if (object->GetId() == ObjectId::SpawnArea)
+			object->Attach(grid.get());
+	}
+
+	camera->SetMoveArea(area);
+}
+
+void Stage::ClearObjectsWithin(Rect area, std::set<GameObject*> exceptionList)
+{
+	objectCollection->staticObjects.clear();
+	objectCollection->foregroundObjects.clear();
+
+	grid->GetCellsFromBoundingBox(activeArea, [&](CollisionCell &cell, int col, int row)
+	{
+		auto &entities = cell.GetObjects().entities;
+		auto &staticObjects = cell.GetObjects().staticObjects;
+
+		for (auto it = entities.end(); it != entities.begin(); )
+		{
+			std::advance(it, -1);
+			auto entity = (*it).get();
+
+			if (exceptionList.find(entity) == exceptionList.end())
+				it = entities.erase(it);
+		}
+
+		for (auto it = staticObjects.end(); it != staticObjects.begin(); )
+		{
+			std::advance(it, -1);
+			auto obj = (*it).get();
+			auto objBbox = (Rect)obj->GetBoundingBox();
+
+			if (exceptionList.find(obj) == exceptionList.end() && activeArea.Contains(objBbox))
+				it = staticObjects.erase(it);
+		}
+	});
 }
 
 void Stage::Initialize()
@@ -91,7 +149,7 @@ void Stage::Update(GameTime gameTime)
 		camera->GetBounds(),
 		player.get(),
 		false,
-		stageObject.get(),
+		objectCollection.get(),
 		nullptr,
 	};
 
@@ -180,45 +238,25 @@ void Stage::LoadMap()
 	activeArea = GetCurrentArea(player->GetPosition());
 	LoadObjectsWithin(activeArea);
 
-	for (auto const &spawnArea : stageObject->spawnAreas)
-		spawnArea->Attach(grid.get());
-
 	if (currentMap == Map::INTRO)
 		SetCurrentCutscene(GameState::INTRO_CUTSCENE);
-}
-
-void Stage::LoadObjectsWithin(Rect area)
-{
-	auto &mapManager = gameplayScene.GetMapManager();
-	auto &objectCollection = mapManager.GetMapObjectsInArea(currentMap, area);
-	
-	grid->PopulateObjects(objectCollection);
-
-	for (auto const &spawnArea : stageObject->spawnAreas)
-	{
-		if (area.Contains((Rect)spawnArea->GetBoundingBox()))
-			spawnArea->GetBody().Enabled(true);
-		else
-			spawnArea->GetBody().Enabled(false);
-	}
-
-	camera->SetMoveArea(area);
 }
 
 void Stage::Reset()
 {
 	auto &mapManager = gameplayScene.GetMapManager();
 
+	ClearObjectsWithin(activeArea);
 	LoadObjectsWithin(activeArea); // reload objects from the last active area
 
-	for (auto [checkpoint, position] : stageObject->locations)
+	for (auto [checkpointName, checkpoint] : stageObject->locations)
 	{
-		if (checkpoint != "Entrypoint" && !StartsWith(checkpoint, "Checkpoint"))
+		if (checkpointName != "Entrypoint" && !StartsWith(checkpointName, "Checkpoint"))
 			continue;
 
-		if (activeArea.Contains(position))
+		if (activeArea.Contains(checkpoint.position))
 		{
-			player->SetPosition(position);
+			player->SetPosition(checkpoint);
 			break;
 		}
 	}
@@ -242,8 +280,8 @@ void Stage::UpdateGameObjects(UpdateData &updateData)
 	if (data->timeLeft.GetCounter() < 0)
 		player->Die();
 
-	for (auto const &spawnArea : updateData.stageObject->spawnAreas)
-		spawnArea->Update(updateData);
+	for (auto const &object : objectCollection->staticObjects)
+		object->Update(updateData);
 
 	grid->Update(updateData);
 }
@@ -298,10 +336,10 @@ void Stage::DrawGameplay(SpriteExtensions &spriteBatch)
 
 	player->Draw(spriteBatch);
 
-	for (auto const &spawnArea : stageObject->spawnAreas)
-		spawnArea->Draw(spriteBatch);
+	for (auto const &object : objectCollection->staticObjects)
+		object->Draw(spriteBatch);
 
-	for (auto const &fgObject : stageObject->foregroundObjects)
+	for (auto const &fgObject : objectCollection->foregroundObjects)
 		fgObject->Draw(spriteBatch);
 
 	devTool->Draw(spriteBatch);
@@ -320,12 +358,6 @@ void Stage::OnNextMapCutsceneComplete()
 
 void Stage::OnNextRoomCutsceneComplete()
 {
-	auto &door = dynamic_cast<NextRoomCutscene&>(*currentCutscene).GetDoor();
-	auto wall = objectFactory.CreateBoundary(door.GetBoundingBox());
-
-	grid->Add(std::move(wall), CollisionObjectType::Static);
-	door.Destroy();
-
 	activeArea = GetCurrentArea(player->GetPosition());
 	LoadObjectsWithin(activeArea);
 
@@ -413,7 +445,7 @@ std::unique_ptr<Cutscene> Stage::ConstructCutscene(GameState gameState)
 			return std::make_unique<NextMapCutscene>(*this, content);
 
 		case GameState::NEXT_ROOM_CUTSCENE:
-			return std::make_unique<NextRoomCutscene>(*this, *stageObject, *grid, *player);
+			return std::make_unique<NextRoomCutscene>(*this, *stageObject, *grid, objectFactory, *player);
 
 		case GameState::LEVEL_COMPLETED_CUTSCENE:
 			return std::make_unique<LevelCompletedCutscene>(*this, *grid, objectFactory, *player, *data);
@@ -431,7 +463,7 @@ std::unique_ptr<Cutscene> Stage::ConstructCutscene(GameState gameState)
 			return std::make_unique<HiddenMoneyBagCutscene>(*this, *stageObject, *grid, objectFactory);
 
 		case GameState::GO_TO_CASTLE_CUTSCENE:
-			return std::make_unique<GoToCastleCutscene>(*this, *stageObject, *grid, *player);
+			return std::make_unique<GoToCastleCutscene>(*this, *objectCollection, *grid, *player);
 
 		default:
 			throw std::runtime_error("Cutscene not available");

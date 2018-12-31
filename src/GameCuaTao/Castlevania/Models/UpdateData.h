@@ -12,7 +12,7 @@ namespace Castlevania
 		RectF viewport;
 		Player *player;
 		bool isStopwatchActive;
-		StageObject *stageObject;
+		ObjectCollection *objects;
 		std::vector<GameObject*> *collisionObjects;
 	};
 }

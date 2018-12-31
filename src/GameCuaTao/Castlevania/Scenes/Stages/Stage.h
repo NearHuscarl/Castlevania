@@ -1,5 +1,6 @@
 #pragma once
 
+#include <set>
 #include "Direct2DGame/GameTime.h"
 #include "Direct2DGame/Extensions/Sprites/SpriteExtensions.h"
 #include "Direct2DGame/Extensions/Tiled/TiledMap.h"
@@ -41,6 +42,10 @@ namespace Castlevania
 
 		Camera *GetCamera();
 		Hud *GetHud();
+		Rect GetActiveArea();
+
+		void LoadObjectsWithin(Rect area);
+		void ClearObjectsWithin(Rect area, std::set<GameObject*> exceptionList = std::set<GameObject*>{});
 
 		void UpdateGameObjects(UpdateData &updateData);
 		void UpdateGameplay(UpdateData &updateData);
@@ -71,13 +76,13 @@ namespace Castlevania
 		std::unique_ptr<DevTool> devTool;
 
 		std::unique_ptr<StageObject> stageObject;
+		std::unique_ptr<ObjectCollection> objectCollection; // standalone objects that are not belonged in collision grid
 		std::unique_ptr<CollisionGrid> grid;
 		std::shared_ptr<Player> player; // Our player need special attention
 
 		Rect GetCurrentArea(Vector2 position);
 		void SetCurrentCutscene(GameState gameState);
 		void LoadMap();
-		void LoadObjectsWithin(Rect area);
 		void Reset(); // after player losing 1 live
 
 		void OnNextMapCutsceneComplete();

@@ -67,6 +67,12 @@ AttackState Player::GetAttackState()
 	return attackState;
 }
 
+void Player::SetPosition(Checkpoint checkpoint)
+{
+	position = checkpoint.position;
+	SetFacing(checkpoint.facing);
+}
+
 void Player::SetSpeed(float speed)
 {
 	GameObject::SetSpeed(speed);

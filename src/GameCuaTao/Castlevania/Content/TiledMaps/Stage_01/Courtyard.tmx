@@ -80,8 +80,16 @@
   </object>
  </objectgroup>
  <objectgroup color="#ff0000" id="8" name="Locations">
-  <object id="14" name="Entrypoint" type="Position" gid="4" x="69" y="288" width="60" height="66"/>
-  <object id="47" name="Entrypoint1" type="Position" gid="4" x="1021" y="288" width="60" height="66"/>
+  <object id="14" name="Entrypoint" type="Position" gid="4" x="69" y="288" width="60" height="66">
+   <properties>
+    <property name="Facing" value="Right"/>
+   </properties>
+  </object>
+  <object id="47" name="Entrypoint1" type="Position" gid="4" x="1021" y="288" width="60" height="66">
+   <properties>
+    <property name="Facing" value="Right"/>
+   </properties>
+  </object>
   <object id="38" name="MoneyBag" type="Position" gid="77" x="1250" y="318" width="30" height="30"/>
  </objectgroup>
 </map>

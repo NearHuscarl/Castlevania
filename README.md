@@ -28,8 +28,8 @@ A remake of Castlevania NES (Block 01) written in C++ and directx 9
 | <kbd>r</kbd>        | Set category to WEAPON         |
 | <kbd>t</kbd>        | Set category to EFFECT         |
 | <kbd>g</kbd>        | Toggle drawing grid info       |
-| <kbd>home</kbd>     | Previous map                   |
-| <kbd>end</kbd>      | Next map                       |
+| <kbd>[</kbd>        | Previous map                   |
+| <kbd>]</kbd>        | Next map                       |
 | <kbd>1</kbd>        | Move player to `Checkpoint`    |
 | <kbd>2</kbd>        | Move player to `Checkpoint_02` |
 | <kbd>3</kbd>        | Move player to `Checkpoint_03` |

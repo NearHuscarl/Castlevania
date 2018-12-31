@@ -9,7 +9,7 @@ enum class GoToCastleCutscene::State
 	WALKING_TO_NEXT_MAP,
 };
 
-GoToCastleCutscene::GoToCastleCutscene(Stage &stage, StageObject &stageObject, CollisionGrid &grid, Player &player) :
+GoToCastleCutscene::GoToCastleCutscene(Stage &stage, ObjectCollection &objectCollection, CollisionGrid &grid, Player &player) :
 	Cutscene{ stage }
 {
 	this->player = &player;
@@ -33,7 +33,7 @@ GoToCastleCutscene::GoToCastleCutscene(Stage &stage, StageObject &stageObject, C
 		}
 	});
 
-	for (auto &object : stageObject.foregroundObjects)
+	for (auto &object : objectCollection.foregroundObjects)
 	{
 		if (object->GetId() == ObjectId::Castle)
 		{
