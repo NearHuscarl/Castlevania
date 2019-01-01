@@ -45,7 +45,6 @@ void PlayerRenderingSystem::Receive(int message)
 			break;
 
 		case UNTOUCHABLE_STARTED:
-		case INVISIBLE_STARTED:
 			drawUntouchableEffect = true;
 			break;
 
@@ -88,6 +87,14 @@ void PlayerRenderingSystem::Update(GameTime gameTime)
 					parent.Notify(GAME_OVER);
 			}
 			break;
+	}
+
+	if (parent.untouchableTimer.IsRunning())
+	{
+		if (parent.velocity.y > 0 && !drawUntouchableEffect)
+			drawUntouchableEffect = true;
+		else if (drawUntouchableEffect)
+			drawUntouchableEffect = false;
 	}
 
 	sprite->Update();

@@ -20,7 +20,7 @@
 
     <Sprite ID="attack_03">
       <SpriteFrame Left="420" Top="66" Width="60" Height="66" />
-      <SpriteBoundary Left="436" Top="72" Width="43" Height="58" />
+      <SpriteBoundary Left="436" Top="72" Width="32" Height="58" />
     </Sprite>
 
     <Sprite ID="jump_01">
@@ -115,7 +115,7 @@
 
     <Sprite ID="jump_attack_03">
       <SpriteFrame Left="420" Top="0" Width="60" Height="66" />
-      <SpriteBoundary Left="435" Top="11" Width="44" Height="44" />
+      <SpriteBoundary Left="436" Top="11" Width="32" Height="44" />
     </Sprite>
 
     <Sprite ID="duck_attack_01"> <!-- OffsetY = -9 -->
@@ -125,12 +125,12 @@
 
     <Sprite ID="duck_attack_02"> <!-- OffsetY = -9 -->
       <SpriteFrame Left="360" Top="-9" Width="60" Height="66" />
-      <SpriteBoundary Left="377" Top="9" Width="32" Height="46" />
+      <SpriteBoundary Left="376" Top="9" Width="32" Height="46" />
     </Sprite>
 
     <Sprite ID="duck_attack_03"> <!-- OffsetY = -9 -->
       <SpriteFrame Left="420" Top="-9" Width="60" Height="66" />
-      <SpriteBoundary Left="435" Top="11" Width="44" Height="44" />
+      <SpriteBoundary Left="436" Top="11" Width="32" Height="44" />
     </Sprite>
 
     <Sprite ID="turn_backward_01">
@@ -140,7 +140,7 @@
 
     <Sprite ID="take_damage_01">
       <SpriteFrame Left="0" Top="132" Width="60" Height="66" />
-      <SpriteBoundary Left="10" Top="138" Width="32" Height="58" />
+      <SpriteBoundary Left="12" Top="138" Width="30" Height="58" />
     </Sprite>
 
     <!-- ========================== -->
@@ -218,7 +218,7 @@
 
     <Sprite ID="attack_invisible_03">
       <SpriteFrame Left="420" Top="462" Width="60" Height="66" />
-      <SpriteBoundary Left="436" Top="468" Width="43" Height="58" />
+      <SpriteBoundary Left="436" Top="468" Width="32" Height="58" />
     </Sprite>
 
     <Sprite ID="jump_invisible_01">
@@ -313,7 +313,7 @@
 
     <Sprite ID="jump_attack_invisible_03">
       <SpriteFrame Left="420" Top="396" Width="60" Height="66" />
-      <SpriteBoundary Left="435" Top="407" Width="44" Height="44" />
+      <SpriteBoundary Left="436" Top="407" Width="32" Height="44" />
     </Sprite>
 
     <Sprite ID="duck_attack_invisible_01"> <!-- OffsetY = -9 -->
@@ -323,12 +323,12 @@
 
     <Sprite ID="duck_attack_invisible_02"> <!-- OffsetY = -9 -->
       <SpriteFrame Left="360" Top="387" Width="60" Height="66" />
-      <SpriteBoundary Left="377" Top="405" Width="32" Height="46" />
+      <SpriteBoundary Left="376" Top="405" Width="32" Height="46" />
     </Sprite>
 
     <Sprite ID="duck_attack_invisible_03"> <!-- OffsetY = -9 -->
       <SpriteFrame Left="420" Top="387" Width="60" Height="66" />
-      <SpriteBoundary Left="435" Top="407" Width="44" Height="44" />
+      <SpriteBoundary Left="436" Top="407" Width="32" Height="44" />
     </Sprite>
 
     <Sprite ID="turn_backward_invisible_01">
@@ -338,7 +338,7 @@
 
     <Sprite ID="take_damage_invisible_01">
       <SpriteFrame Left="0" Top="528" Width="60" Height="66" />
-      <SpriteBoundary Left="10" Top="534" Width="32" Height="58" />
+      <SpriteBoundary Left="12" Top="534" Width="30" Height="58" />
     </Sprite>
 
   </Spritesheet>

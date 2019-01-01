@@ -1,5 +1,4 @@
 #include "GiantBatResponseSystem.h"
-#include "../../UpdateData.h"
 #include "../../Settings.h"
 
 using namespace Castlevania;

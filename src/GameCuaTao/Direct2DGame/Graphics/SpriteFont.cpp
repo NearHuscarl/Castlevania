@@ -11,7 +11,7 @@ IFont_ SpriteFont::Get()
 	return font;
 }
 
-Vector2 SpriteFont::MessureString(std::string text)
+Vector2 SpriteFont::MessureString(const std::string &text)
 {
 	if (font == nullptr)
 	{

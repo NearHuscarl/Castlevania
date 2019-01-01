@@ -1,4 +1,5 @@
 #include "SpawnAreaResponseSystem.h"
+#include "../Settings.h"
 
 using namespace Castlevania;
 
@@ -6,33 +7,20 @@ SpawnAreaResponseSystem::SpawnAreaResponseSystem(SpawnArea &parent) : parent{ pa
 {
 }
 
+void SpawnAreaResponseSystem::Receive(int message)
+{
+	switch (message)
+	{
+		case PLAYER_IN_RANGE:
+			parent.Activate();
+			break;
+
+		case PLAYER_OUT_OF_RANGE:
+			parent.Deactivate();
+			break;
+	}
+}
+
 void SpawnAreaResponseSystem::Update(UpdateData &updateData)
 {
-	auto collisionData = parent.GetBody().GetCollisionData();
-	auto collideWithPlayer = false;
-
-	for (auto result : collisionData.collisionResults)
-	{
-		auto objectId = (ObjectId)result.collidedObject.GetType();
-
-		switch (objectId)
-		{
-			case ObjectId::Player:
-				collideWithPlayer = true;
-				break;
-		}
-	}
-
-	switch (parent.GetSpawnState())
-	{
-		case SpawnState::ACTIVE:
-			if (!collideWithPlayer)
-				parent.Deactivate();
-			break;
-
-		case SpawnState::INACTIVE:
-			if (collideWithPlayer)
-				parent.Activate();
-			break;
-	}
 }

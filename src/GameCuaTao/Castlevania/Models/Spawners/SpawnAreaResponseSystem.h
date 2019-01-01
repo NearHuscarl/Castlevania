@@ -12,7 +12,7 @@ namespace Castlevania
 	public:
 		SpawnAreaResponseSystem(SpawnArea &parent);
 
-		virtual void Receive(int message) override {};
+		void Receive(int message) override;
 		void Update(UpdateData &updateData) override;
 
 	private:

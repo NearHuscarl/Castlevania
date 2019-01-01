@@ -54,7 +54,7 @@ void MenuScene::Update(GameTime gameTime)
 	switch (currentState)
 	{
 		case State::NORMAL:
-			if (InputHelper::IsKeyPressed(DIK_RETURN))
+			if (InputHelper::IsKeyDown(DIK_RETURN) || InputHelper::IsKeyDown(DIK_SPACE))
 			{
 				transitionTimer.Start();
 				currentState = State::CHANGING_TO_NEXT_SCENE;

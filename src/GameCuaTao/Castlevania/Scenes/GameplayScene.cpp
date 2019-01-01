@@ -7,8 +7,9 @@ GameplayScene::GameplayScene(SceneManager &sceneManager) : AbstractScene{ sceneM
 {
 	auto &objectFactory = sceneManager.GetFactory();
 	auto &graphicsDevice = sceneManager.GetGraphicsDevice();
+	auto &content = sceneManager.GetContent();
 
-	mapManager = std::make_unique<MapManager>(objectFactory);
+	mapManager = std::make_unique<MapManager>(content, objectFactory);
 	player = std::move(objectFactory.CreatePlayer());
 
 	data = std::make_unique<GameplayData>();
@@ -52,7 +53,6 @@ void GameplayScene::LoadContent()
 {
 	auto &content = sceneManager.GetContent();
 
-	mapManager->LoadContent(content);
 	hud->LoadContent(content);
 
 	NextStage(Map::INTRO);

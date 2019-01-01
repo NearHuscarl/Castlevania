@@ -39,12 +39,7 @@
   </object>
  </objectgroup>
  <objectgroup color="#ff0000" id="8" name="Locations">
-  <object id="47" name="Entrypoint1" type="Position" gid="2147483652" x="478" y="319" width="60" height="66">
-   <properties>
-    <property name="Facing" value="Left"/>
-   </properties>
-  </object>
-  <object id="56" name="Entrypoint" type="Position" gid="2147483652" x="513" y="319" width="60" height="66">
+  <object id="47" name="Entrypoint" type="Position" gid="2147483652" x="490" y="319" width="60" height="66">
    <properties>
     <property name="Facing" value="Left"/>
    </properties>

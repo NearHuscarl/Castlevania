@@ -10,7 +10,7 @@ public:
 	SpriteFont(IFont_ font);
 
 	IFont_ Get();
-	Vector2 MessureString(std::string text);
+	Vector2 MessureString(const std::string &text);
 
 private:
 	IFont_ font;

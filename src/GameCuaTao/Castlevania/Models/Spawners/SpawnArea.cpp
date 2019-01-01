@@ -67,7 +67,7 @@ void SpawnArea::SetDirectionChances(std::map<Direction, float> directionChances)
 	this->directionChances = directionChances;
 }
 
-//SpawnGroup format:
+// SpawnGroup format:
 //		"3:100" - Spawn a group of 3 zombies 100 % of the time
 //		"1:20-2:50-3:30"
 //			- 20% chance to spawn 1 zombie

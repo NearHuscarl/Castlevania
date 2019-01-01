@@ -188,6 +188,7 @@
     <ClCompile Include="Castlevania\Models\Characters\Enemies\Zombie.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Enemies\ZombieResponseSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Characters\Player\Player.cpp" />
+    <ClCompile Include="Castlevania\Models\Characters\Player\PlayerCollisionSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Facing.cpp" />
     <ClCompile Include="Castlevania\Models\Factories\ObjectFactory.cpp" />
     <ClCompile Include="Castlevania\Hud.cpp" />
@@ -204,7 +205,7 @@
     <ClCompile Include="Castlevania\Models\Spawners\FishmanSpawnArea.cpp" />
     <ClCompile Include="Castlevania\Models\Spawners\SpawnArea.cpp" />
     <ClCompile Include="Castlevania\Models\Spawners\SpawnAreaResponseSystem.cpp" />
-    <ClCompile Include="Castlevania\Models\Spawners\SpawnerCollisionSystem.cpp" />
+    <ClCompile Include="Castlevania\Models\Spawners\AreaCollisionSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Spawners\SpawnPoint.cpp" />
     <ClCompile Include="Castlevania\Models\Spawners\VampireBatSpawnArea.cpp" />
     <ClCompile Include="Castlevania\Models\Spawners\ZombieSpawnArea.cpp" />
@@ -354,6 +355,7 @@
     <ClInclude Include="Castlevania\Models\Characters\Enemies\ZombieResponseSystem.h" />
     <ClInclude Include="Castlevania\Models\Characters\Player\NearbyObjects.h" />
     <ClInclude Include="Castlevania\Models\Characters\Player\Player.h" />
+    <ClInclude Include="Castlevania\Models\Characters\Player\PlayerCollisionSystem.h" />
     <ClInclude Include="Castlevania\Models\Facing.h" />
     <ClInclude Include="Castlevania\Models\Factories\ObjectCollection.h" />
     <ClInclude Include="Castlevania\Models\Factories\ObjectFactory.h" />
@@ -377,7 +379,7 @@
     <ClInclude Include="Castlevania\Models\Spawners\ISpawner.h" />
     <ClInclude Include="Castlevania\Models\Spawners\SpawnArea.h" />
     <ClInclude Include="Castlevania\Models\Spawners\SpawnAreaResponseSystem.h" />
-    <ClInclude Include="Castlevania\Models\Spawners\SpawnerCollisionSystem.h" />
+    <ClInclude Include="Castlevania\Models\Spawners\AreaCollisionSystem.h" />
     <ClInclude Include="Castlevania\Models\Spawners\SpawnPoint.h" />
     <ClInclude Include="Castlevania\Models\Spawners\VampireBatSpawnArea.h" />
     <ClInclude Include="Castlevania\Models\Spawners\ZombieSpawnArea.h" />

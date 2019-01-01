@@ -27,7 +27,7 @@ public:
 		SpriteEffects effects,
 		bool useViewport = true);
 
-	void DrawString(SpriteFont &spriteFont, std::string text, Vector2 position, Color color, bool useViewport = true);
+	void DrawString(SpriteFont &spriteFont, const std::string &text, Vector2 position, Color color, bool useViewport = true);
 
 protected:
 	GraphicsDevice &graphicsDevice;

@@ -339,9 +339,6 @@
     <ClCompile Include="Castlevania\Models\Spawners\ZombieSpawnArea.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Castlevania\Models\Spawners\SpawnerCollisionSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Castlevania\Models\Spawners\SpawnAreaResponseSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -502,6 +499,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Direct2DGame\Graphics\Viewport.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Models\Spawners\AreaCollisionSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Castlevania\Models\Characters\Player\PlayerCollisionSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -977,9 +980,6 @@
     <ClInclude Include="Castlevania\Models\Spawners\ZombieSpawnArea.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Castlevania\Models\Spawners\SpawnerCollisionSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Castlevania\Models\Spawners\SpawnAreaResponseSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1152,6 +1152,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Castlevania\Models\Checkpoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Spawners\AreaCollisionSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Models\Characters\Player\PlayerCollisionSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

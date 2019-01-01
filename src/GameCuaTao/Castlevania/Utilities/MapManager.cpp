@@ -12,18 +12,17 @@ constexpr auto FOREGROUND = "Foregrounds";
 constexpr auto ENTITY = "Entities";
 constexpr auto AREA = "Areas";
 
-MapManager::MapManager(ObjectFactory &objectFactory) : objectFactory{ objectFactory }
+MapManager::MapManager(ContentManager &content, ObjectFactory &objectFactory) :
+	content{ content },
+	objectFactory{ objectFactory }
 {
 	worldPosition = Vector2::Zero();
-}
 
-void MapManager::LoadContent(ContentManager &content)
-{
-	maps[Map::INTRO] = content.Load<TiledMap>("TiledMaps/Intro/Intro.tmx");
-	maps[Map::COURTYARD] = content.Load<TiledMap>("TiledMaps/Stage_01/Courtyard.tmx");
-	maps[Map::GREAT_HALL] = content.Load<TiledMap>("TiledMaps/Stage_01/Great_Hall.tmx");
-	maps[Map::UNDERGROUND] = content.Load<TiledMap>("TiledMaps/Stage_01/Underground.tmx");
-	maps[Map::PLAYGROUND] = content.Load<TiledMap>("TiledMaps/Playground/Playground.tmx");
+	maps[Map::INTRO] = "TiledMaps/Intro/Intro.tmx";
+	maps[Map::COURTYARD] = "TiledMaps/Stage_01/Courtyard.tmx";
+	maps[Map::GREAT_HALL] = "TiledMaps/Stage_01/Great_Hall.tmx";
+	maps[Map::UNDERGROUND] = "TiledMaps/Stage_01/Underground.tmx";
+	maps[Map::PLAYGROUND] = "TiledMaps/Playground/Playground.tmx";
 }
 
 void MapManager::SetWorldPosition(Vector2 position)
@@ -33,7 +32,7 @@ void MapManager::SetWorldPosition(Vector2 position)
 
 std::shared_ptr<TiledMap> MapManager::GetTiledMap(Map name)
 {
-	auto map = maps.at(name);
+	auto map = content.Load<TiledMap>(maps.at(name));
 	map->SetPosition(worldPosition);
 
 	return map;
@@ -41,8 +40,7 @@ std::shared_ptr<TiledMap> MapManager::GetTiledMap(Map name)
 
 std::unique_ptr<StageObject> MapManager::GetStageObjects(Map name)
 {
-	auto map = maps.at(name);
-	auto objectGroups = map->GetMapObjects();
+	auto objectGroups = GetTiledMap(name)->GetMapObjects();
 	auto stageObject = std::make_unique<StageObject>();
 
 	GetLocations(stageObject->locations, objectGroups);
@@ -58,8 +56,7 @@ ObjectCollection MapManager::GetMapObjects(Map name)
 
 ObjectCollection MapManager::GetMapObjectsInArea(Map name, RectF area)
 {
-	auto map = maps.at(name);
-	auto objectGroups = map->GetMapObjects();
+	auto objectGroups = GetTiledMap(name)->GetMapObjects();
 	auto objectCollection = ObjectCollection{};
 
 	GetTriggers(objectCollection.staticObjects, objectGroups, area);

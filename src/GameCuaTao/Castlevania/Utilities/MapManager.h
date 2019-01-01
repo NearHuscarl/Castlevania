@@ -8,7 +8,6 @@
 
 namespace Castlevania
 {
-	using Maps = std::map<Map, std::shared_ptr<TiledMap>>;
 	using ObjectProperties = std::unordered_map<std::string, std::string>;
 	using ObjectsProperties = std::vector<ObjectProperties>;
 	
@@ -21,9 +20,7 @@ namespace Castlevania
 	class MapManager
 	{
 	public:
-		MapManager(ObjectFactory &objectFactory);
-
-		void LoadContent(ContentManager &content);
+		MapManager(ContentManager &content, ObjectFactory &objectFactory);
 
 		void SetWorldPosition(Vector2 position);
 		std::shared_ptr<TiledMap> GetTiledMap(Map name);
@@ -40,9 +37,10 @@ namespace Castlevania
 		void GetForegrounds(std::vector<std::unique_ptr<GameObject>> &objects, TiledMapObjectGroups &objectGroups, RectF area);
 
 	private:
-		Maps maps;
+		std::map<Map, std::string> maps;
 
 		Vector2 worldPosition; // absolute position of map and map objects to the world
+		ContentManager &content;
 		ObjectFactory &objectFactory;
 
 		std::unique_ptr<GameObject> ConstructObject(ObjectProperties properties);

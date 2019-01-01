@@ -73,7 +73,7 @@ void SpriteBatch::Draw(
 	spriteHandler->SetTransform(&oldMatrix);
 }
 
-void SpriteBatch::DrawString(SpriteFont &spriteFont, std::string text, Vector2 position, Color color, bool useViewport)
+void SpriteBatch::DrawString(SpriteFont &spriteFont, const std::string &text, Vector2 position, Color color, bool useViewport)
 {
 	auto font = spriteFont.Get();
 	if (font == nullptr)

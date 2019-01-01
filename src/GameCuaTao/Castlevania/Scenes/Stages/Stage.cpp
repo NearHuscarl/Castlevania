@@ -66,7 +66,7 @@ void Stage::LoadObjectsWithin(Rect area)
 
 	grid->PopulateObjects(gridObjects);
 
-	auto mapObjectGroups = mapManager.GetTiledMap(currentMap)->GetMapObjects();
+	auto mapObjectGroups = map->GetMapObjects();
 
 	mapManager.GetForegrounds(objectCollection->foregroundObjects, mapObjectGroups, area);
 	mapManager.GetAreas(objectCollection->staticObjects, mapObjectGroups, area);

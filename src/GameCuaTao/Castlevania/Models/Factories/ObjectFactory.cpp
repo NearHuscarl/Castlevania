@@ -17,6 +17,7 @@
 #include "../Areas/WaterAreaRenderingSystem.h"
 #include "../Characters/Player/Controller.h"
 #include "../Characters/Player/PlayerMovementSystem.h"
+#include "../Characters/Player/PlayerCollisionSystem.h"
 #include "../Characters/Player/PlayerResponseSystem.h"
 #include "../Characters/Player/PlayerRenderingSystem.h"
 #include "../Characters/Enemies/FishmanControlSystem.h"
@@ -35,7 +36,7 @@
 #include "../Characters/Enemies/ZombieResponseSystem.h"
 #include "../Items/PowerupResponseSystem.h"
 #include "../Items/DoorRenderingSystem.h"
-#include "../Spawners/SpawnerCollisionSystem.h"
+#include "../Spawners/AreaCollisionSystem.h"
 #include "../Spawners/SpawnAreaResponseSystem.h"
 #include "../Weapons/HolyWaterResponseSystem.h"
 #include "../Weapons/HolyWaterRenderingSystem.h"
@@ -99,7 +100,7 @@ std::unique_ptr<SpawnPoint> ObjectFactory::CreateSpawnPoint(ObjectId type, RectF
 std::unique_ptr<SpawnArea> ObjectFactory::CreateSpawnArea(ObjectId type, RectF rect)
 {
 	auto object = ConstructSpawnArea(type);
-	auto collisionSystem = std::make_unique<SpawnerCollisionSystem>(*object);
+	auto collisionSystem = std::make_unique<AreaCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<SpawnAreaResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<BoundingBoxRenderingSystem>(*object, rect);
 
@@ -162,7 +163,7 @@ std::unique_ptr<Player> ObjectFactory::CreatePlayer(Vector2 position)
 
 	auto controller = std::make_unique<Controller>(*object, *this);
 	auto movementSystem = std::make_unique<PlayerMovementSystem>(*object);
-	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
+	auto collisionSystem = std::make_unique<PlayerCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PlayerResponseSystem>(*object, *this);
 	auto renderingSystem = std::make_unique<PlayerRenderingSystem>(*object, "Characters/Players/Simon.ani.xml");
 

@@ -6,15 +6,16 @@
 
 namespace Castlevania
 {
-	class SpawnerCollisionSystem : public ICollisionSystem
+	class AreaCollisionSystem : public ICollisionSystem
 	{
 	public:
-		SpawnerCollisionSystem(GameObject &parent);
+		AreaCollisionSystem(GameObject &parent);
 
 		void Receive(int message) override {};
 		void Update(UpdateData &updateData) override;
 
 	protected:
 		GameObject &parent;
+		bool wasPlayerInSpawnZone;
 	};
 }
