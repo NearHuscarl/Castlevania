@@ -37,7 +37,9 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
+    <IncludePath>Library\directx\Include;Library\freetype\Include;Library\fmt\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>Library\directx\Lib;Library\freetype\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -100,10 +102,11 @@
       </SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>XCOPY "$(ProjectDir)\library\freetype\lib\freetype.dll" "$(TargetDir)" /D /K /Y</Command>
+      <Command>XCOPY "$(ProjectDir)library\freetype\lib\freetype.dll" "$(TargetDir)" /D /K /Y
+XCOPY "$(ProjectDir)Castlevania\Content" "$(TargetDir)Castlevania\Content" /D /E /I /K /Y</Command>
     </PostBuildEvent>
     <PostBuildEvent>
-      <Message>Copy DLLs to Target Directory</Message>
+      <Message>Copy DLLs and asset files to Target Directory</Message>
     </PostBuildEvent>
     <PreBuildEvent>
       <!-- <Command>#$(ProjectDir)Deployment\cppclean.sh</Command> -->
@@ -135,11 +138,21 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <ConformanceMode>true</ConformanceMode>
+      <!-- <ConformanceMode>true</ConformanceMode> -->
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>false</ConformanceMode>
+      <AdditionalIncludeDirectories>SDK Path\Include;.</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>freetype.lib;d3d9.lib;d3dx9.lib;dinput8.lib;dxguid.lib;dsound.lib;dxerr.lib;winmm.lib;%(AdditionalDependencies);legacy_stdio_definitions.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>SDK Path\Include</AdditionalLibraryDirectories>
+      <SubSystem>
+      </SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -199,6 +212,7 @@
     <ClCompile Include="Castlevania\Models\Items\Door.cpp" />
     <ClCompile Include="Castlevania\Models\Items\DoorRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Items\MoneyBag.cpp" />
+    <ClCompile Include="Castlevania\Models\PowerupGenerator.cpp" />
     <ClCompile Include="Castlevania\Models\Systems\Rendering\ItemRenderingSystem.cpp" />
     <ClCompile Include="Castlevania\Models\Items\Powerup.cpp" />
     <ClCompile Include="Castlevania\Models\Items\PowerupResponseSystem.cpp" />
@@ -371,6 +385,7 @@
     <ClInclude Include="Castlevania\Models\IAttackable.h" />
     <ClInclude Include="Castlevania\Models\Items\MoneyBag.h" />
     <ClInclude Include="Castlevania\Models\Checkpoint.h" />
+    <ClInclude Include="Castlevania\Models\PowerupGenerator.h" />
     <ClInclude Include="Castlevania\Models\Systems\Rendering\ItemRenderingSystem.h" />
     <ClInclude Include="Castlevania\Models\Items\PowerupResponseSystem.h" />
     <ClInclude Include="Castlevania\Models\Settings.h" />

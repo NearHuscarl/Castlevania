@@ -1,6 +1,8 @@
 #include "Enemy.h"
+#include "../../Items/Powerup.h"
 #include "../../UpdateData.h"
 #include "../../Settings.h"
+#include "../../../Utilities/CollisionGrid.h"
 
 using namespace Castlevania;
 
@@ -38,6 +40,11 @@ int Enemy::GetExp()
 	return exp;
 }
 
+void Enemy::SetPowerupGenerator(std::unique_ptr<PowerupGenerator> powerupGenerator)
+{
+	this->powerupGenerator = std::move(powerupGenerator);
+}
+
 void Enemy::Update(UpdateData &updateData)
 {
 	if (!updateData.isStopwatchActive)
@@ -68,4 +75,22 @@ void Enemy::Die()
 	SetState(ObjectState::DYING);
 	body.Enabled(false);
 	Detach<IMovementSystem>();
+	SpawnItem();
+}
+
+void Enemy::SpawnItem()
+{
+	if (powerupGenerator == nullptr)
+		return;
+
+	auto item = powerupGenerator->Generate();
+
+	if (item == nullptr)
+		return;
+
+	auto spawnedPosition = Vector2{ GetOriginPosition().x, position.y };
+
+	item->SetPosition(spawnedPosition);
+	item->Spawn();
+	collisionGrid->Add(std::move(item), CollisionObjectType::Entity);
 }

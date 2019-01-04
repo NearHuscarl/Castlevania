@@ -45,6 +45,7 @@ void PlayerRenderingSystem::Receive(int message)
 			break;
 
 		case UNTOUCHABLE_STARTED:
+		case INVISIBLE_STARTED:
 			drawUntouchableEffect = true;
 			break;
 
@@ -168,7 +169,7 @@ void PlayerRenderingSystem::UpdateInvisibleRendering()
 {
 	auto invisibleElapsed = parent.invisibleTimer.ElapsedMilliseconds();
 
-	if (invisibleElapsed >= INVISIBLE_EFFECT_START && invisibleElapsed <= INVISIBLE_EFFECT_END)
+	if (INVISIBLE_EFFECT_START <= invisibleElapsed && invisibleElapsed <= INVISIBLE_EFFECT_END)
 	{
 		if (!drawInvisibleEffect)
 		{

@@ -19,7 +19,7 @@ constexpr auto EFFECT = "EFFECT";
 std::string DevTool::currentCategory = POWERUP;
 int DevTool::currentItemIndex = 0;
 int DevTool::currentMapIndex = 0;
-bool DevTool::IsDebugging = true;
+bool DevTool::IsDebugging = false;
 bool DevTool::drawingGridInfo = false;
 
 DevTool::DevTool(Stage &stage) :

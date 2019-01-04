@@ -47,7 +47,7 @@ d3d9.lib;d3dx9.lib;dinput8.lib;dxguid.lib;dsound.lib;dxerr.lib;winmm.lib;%(Addit
 -  Add this line in the Command Line
 
 ```
-XCOPY "$(ProjectDir)\lib\*.dll" "$(TargetDir)" /D /K /Y
+XCOPY "$(ProjectDir)lib\*.dll" "$(TargetDir)" /D /K /Y
 ```
 
 By default, Visual Studio only copy `*.dll` files in the `$(ProjectDir)`. If you put

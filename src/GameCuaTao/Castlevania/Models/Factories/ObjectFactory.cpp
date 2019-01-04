@@ -186,17 +186,15 @@ std::unique_ptr<Player> ObjectFactory::CreatePlayer(Vector2 position)
 
 std::unique_ptr<Container> ObjectFactory::CreateBrazier(ObjectId itemType, Vector2 position)
 {
-	auto object = std::make_unique<Container>(ObjectId::Brazier);
+	auto object = std::make_unique<Container>(ObjectId::Brazier, std::make_unique<PowerupGenerator>(*this));
 
 	auto renderingSystem = std::make_unique<EntityRenderingSystem>(*object, "Items/Brazier.ani.xml",
 		effectFactory->CreateFlameEffect(),
 		effectFactory->CreateSparkEffect());
 
-	auto item = CreatePowerup(itemType);
-
 	object->SetPosition(position);
 	object->Attach(std::move(renderingSystem));
-	object->SetSpawnedItem(std::move(item));
+	object->SetSpawnedItem(itemType);
 	object->LoadContent(content);
 	
 	return object;
@@ -204,16 +202,14 @@ std::unique_ptr<Container> ObjectFactory::CreateBrazier(ObjectId itemType, Vecto
 
 std::unique_ptr<Container> ObjectFactory::CreateCandle(ObjectId itemType, Vector2 position)
 {
-	auto object = std::make_unique<Container>(ObjectId::Candle);
+	auto object = std::make_unique<Container>(ObjectId::Candle, std::make_unique<PowerupGenerator>(*this));
 	auto renderingSystem = std::make_unique<EntityRenderingSystem>(*object, "Items/Candle.ani.xml",
 		effectFactory->CreateFlameEffect(),
 		effectFactory->CreateSparkEffect());
 
-	auto item = CreatePowerup(itemType);
-
 	object->SetPosition(position);
 	object->Attach(std::move(renderingSystem));
-	object->SetSpawnedItem(std::move(item));
+	object->SetSpawnedItem(itemType);
 	object->LoadContent(content);
 
 	return object;
@@ -221,7 +217,7 @@ std::unique_ptr<Container> ObjectFactory::CreateCandle(ObjectId itemType, Vector
 
 std::unique_ptr<Container> ObjectFactory::CreateBreakableBlock(ObjectId itemType, std::string spritePath, Vector2 position)
 {
-	auto object = std::make_unique<Container>(ObjectId::BreakableBlock);
+	auto object = std::make_unique<Container>(ObjectId::BreakableBlock, std::make_unique<PowerupGenerator>(*this));
 
 	if (spritePath.empty())
 		spritePath = "TiledMaps/Stage_01/Block.png";
@@ -229,9 +225,7 @@ std::unique_ptr<Container> ObjectFactory::CreateBreakableBlock(ObjectId itemType
 	auto renderingSystem = std::make_unique<ItemRenderingSystem>(*object, spritePath,
 		effectFactory->CreateDebrisEffect(), nullptr);
 
-	if (itemType != ObjectId::Unknown)
-		object->SetSpawnedItem(CreatePowerup(itemType));
-
+	object->SetSpawnedItem(itemType);
 	object->SetPosition(position);
 	object->SetSpawningState(ObjectState::DYING); // spawn item immediately after being hit
 	object->Attach(std::move(renderingSystem));
@@ -292,6 +286,7 @@ std::unique_ptr<Zombie> ObjectFactory::CreateZombie(Vector2 position)
 		effectFactory->CreateSparkEffect());
 
 	object->SetPosition(position);
+	object->SetPowerupGenerator(std::make_unique<PowerupGenerator>(*this));
 	object->Attach(std::move(movementSystem));
 	object->Attach(std::move(collisionSystem));
 	object->Attach(std::move(responseSystem));
@@ -324,6 +319,7 @@ std::unique_ptr<Panther> ObjectFactory::CreatePanther(Vector2 position)
 		effectFactory->CreateSparkEffect());
 
 	object->SetPosition(position);
+	object->SetPowerupGenerator(std::make_unique<PowerupGenerator>(*this));
 	object->Attach(std::move(controlSystem));
 	object->Attach(std::move(movementSystem));
 	object->Attach(std::move(collisionSystem));
@@ -354,6 +350,7 @@ std::unique_ptr<Fishman> ObjectFactory::CreateFishman(Vector2 position)
 		effectFactory->CreateSparkEffect());
 
 	object->SetPosition(position);
+	object->SetPowerupGenerator(std::make_unique<PowerupGenerator>(*this));
 	object->Attach(std::move(controlSystem));
 	object->Attach(std::move(movementSystem));
 	object->Attach(std::move(collisionSystem));
@@ -379,6 +376,7 @@ std::unique_ptr<VampireBat> ObjectFactory::CreateVampireBat(Vector2 position)
 		effectFactory->CreateSparkEffect());
 
 	object->SetPosition(position);
+	object->SetPowerupGenerator(std::make_unique<PowerupGenerator>(*this));
 	object->Attach(std::move(movementSystem));
 	object->Attach(std::move(renderingSystem));
 

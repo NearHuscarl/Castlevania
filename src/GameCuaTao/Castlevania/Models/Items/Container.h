@@ -1,23 +1,24 @@
 #pragma once
 
-#include "Powerup.h"
+#include "../PowerupGenerator.h"
 
 namespace Castlevania
 {
 	class Container : public GameObject
 	{
 	public:
-		Container(ObjectId type);
+		Container(ObjectId type, std::unique_ptr<PowerupGenerator> powerupGenerator);
 
 		void SetSpawningState(ObjectState spawningState);
-		void SetSpawnedItem(std::unique_ptr<Powerup> item);
+		void SetSpawnedItem(ObjectId powerupType);
 		void OnBeingHit();
 		void Update(UpdateData &updateData) override;
 
 	private:
-		std::unique_ptr<Powerup> item;
+		ObjectId powerupType;
 		ObjectState spawningState; // Determine the state to trigger spawning item (DYING or DEAD)
-		
-		std::unique_ptr<GameObject> SpawnItem(); // Spawn item and disappear after hit by player
+		std::unique_ptr<PowerupGenerator> powerupGenerator;
+
+		void SpawnItem(); // Spawn item and disappear after hit by player
 	};
 }

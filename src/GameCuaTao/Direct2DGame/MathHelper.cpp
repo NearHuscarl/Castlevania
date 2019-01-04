@@ -42,7 +42,7 @@ bool MathHelper::RandomBoolean()
 
 bool MathHelper::RandomPercent(float percentValue)
 {
-	return RandomBetween(1, 100) < percentValue;
+	return RandomBetween(1, 100) <= percentValue;
 }
 
 int MathHelper::RandomBetween(int min, int max)

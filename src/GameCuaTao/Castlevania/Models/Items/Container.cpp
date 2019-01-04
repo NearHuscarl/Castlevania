@@ -1,13 +1,16 @@
 #include "Container.h"
+#include "Powerup.h"
 #include "../Settings.h"
 #include "../../Models/UpdateData.h"
 #include "../../Utilities/CollisionGrid.h"
 
 using namespace Castlevania;
 
-Container::Container(ObjectId type) : GameObject{ type }
+Container::Container(ObjectId type, std::unique_ptr<PowerupGenerator> powerupGenerator) :
+	GameObject{ type }
 {
-	spawningState = ObjectState::DEAD;
+	this->spawningState = ObjectState::DEAD;
+	this->powerupGenerator = std::move(powerupGenerator);
 }
 
 void Container::SetSpawningState(ObjectState spawningState)
@@ -15,34 +18,32 @@ void Container::SetSpawningState(ObjectState spawningState)
 	this->spawningState = spawningState;
 }
 
-void Container::SetSpawnedItem(std::unique_ptr<Powerup> item)
+void Container::SetSpawnedItem(ObjectId powerupType)
 {
-	this->item = std::move(item);
+	this->powerupType = powerupType;
 }
 
 void Container::OnBeingHit()
 {
 	if (spawningState == ObjectState::DYING)
 	{
-		auto spawnedItem = SpawnItem();
-
-		if (spawnedItem != nullptr)
-			collisionGrid->Add(std::move(spawnedItem), CollisionObjectType::Entity);
+		SpawnItem();
 	}
 	
 	SetState(ObjectState::DYING);
 	body.Enabled(false);
 }
 
-std::unique_ptr<GameObject> Container::SpawnItem()
+void Container::SpawnItem()
 {
-	if (item != nullptr)
-	{
-		item->Spawn();
-		item->SetOriginPosition(GetOriginPosition());
-	}
-	
-	return std::move(item);
+	if (powerupType == ObjectId::Unknown)
+		return;
+
+	auto item = powerupGenerator->Generate(powerupType);
+
+	item->Spawn();
+	item->SetOriginPosition(GetOriginPosition());
+	collisionGrid->Add(std::move(item), CollisionObjectType::Entity);
 }
 
 void Container::Update(UpdateData &updateData)
@@ -51,9 +52,6 @@ void Container::Update(UpdateData &updateData)
 	
 	if (state == ObjectState::DEAD && spawningState == ObjectState::DEAD)
 	{
-		auto spawnedItem = SpawnItem();
-
-		if (spawnedItem != nullptr)
-			collisionGrid->Add(std::move(spawnedItem), CollisionObjectType::Entity);
+		SpawnItem();
 	}
 }

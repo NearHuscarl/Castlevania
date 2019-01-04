@@ -15,6 +15,7 @@ constexpr auto FLASHING_TIME = 900;
 constexpr auto UNTOUCHABLE_TIME = 2000;
 constexpr auto THROWING_COOLDOWN_TIME = 1000;
 constexpr auto INVISIBLE_TIME = 6000;
+constexpr auto LARGE_HEIGHT = 32 * 2.5f; // 2.5 tiles
 
 // Simon bounce back's max height (when taking damage)
 constexpr auto BOUNCE_BACK_HEIGHT = 360.0f;
@@ -71,6 +72,7 @@ void Player::SetPosition(Checkpoint checkpoint)
 {
 	position = checkpoint.position;
 	SetFacing(checkpoint.facing);
+	lastPlatformHeight = position.y + GetFrameRect().Height();
 }
 
 void Player::SetSpeed(float speed)
@@ -464,6 +466,7 @@ bool Player::CanGoDownstairs()
 
 void Player::IdleOnGround()
 {
+	lastPlatformHeight = position.y + GetFrameRect().Height();
 	SetMoveState(MoveState::IDLE);
 	velocity.x = 0;
 }
@@ -486,6 +489,7 @@ void Player::DoThrow()
 
 void Player::Fall()
 {
+	velocity.x = 0.0f;
 	moveState = MoveState::FALLING_HARD;
 }
 
@@ -501,7 +505,8 @@ void Player::Land()
 		return;
 	}
 
-	if (velocity.y > 600.0f) // Falling down very fast, do a superhero landing
+	// Falling down at great distance, do a superhero landing
+	if (position.y + GetFrameRect().Height() - lastPlatformHeight >= LARGE_HEIGHT)
 	{
 		SetMoveState(MoveState::LANDING_HARD);
 		velocity = Vector2::Zero();

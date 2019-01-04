@@ -480,7 +480,7 @@
   </object>
  </objectgroup>
  <objectgroup color="#ff0000" id="5" name="Locations">
-  <object id="9" name="Entrypoint1" type="Position" gid="185" x="64" y="320" width="60" height="66">
+  <object id="9" name="Entrypoint" type="Position" gid="185" x="64" y="320" width="60" height="66">
    <properties>
     <property name="Facing" value="Right"/>
    </properties>
@@ -495,7 +495,7 @@
     <property name="Facing" value="Left"/>
    </properties>
   </object>
-  <object id="120" name="Entrypoint" type="Position" gid="185" x="5050" y="310.83" width="60" height="66">
+  <object id="120" name="Entrypoint2" type="Position" gid="185" x="5050" y="310.83" width="60" height="66">
    <properties>
     <property name="Facing" value="Right"/>
    </properties>
@@ -510,7 +510,7 @@
     <property name="Facing" value="Right"/>
    </properties>
   </object>
-  <object id="125" name="Entrypoint2" type="Position" gid="185" x="2285" y="314" width="60" height="66">
+  <object id="125" name="Entrypoint1" type="Position" gid="185" x="4220" y="124" width="60" height="66">
    <properties>
     <property name="Facing" value="Right"/>
    </properties>

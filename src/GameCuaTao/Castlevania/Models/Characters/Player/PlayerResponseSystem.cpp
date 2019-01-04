@@ -151,9 +151,9 @@ Direction PlayerResponseSystem::GetPlayerHitDirection(GameObject &object, Direct
 		case Direction::Top:
 		case Direction::Bottom:
 			if (parent.GetOriginPosition().x <= object.GetOriginPosition().x)
-				hitDirection = Direction::Left;
-			else
 				hitDirection = Direction::Right;
+			else
+				hitDirection = Direction::Left;
 			break;
 	}
 
@@ -197,7 +197,7 @@ void PlayerResponseSystem::OnCollideWithBoundary(CollisionResult &result, Respon
 					{
 						ClampDistance_Y(collisionData);
 						parent.Land();
-						
+
 						if (parent.data.health.Value() <= 0)
 							parent.Die();
 					}
