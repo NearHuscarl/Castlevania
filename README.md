@@ -2,6 +2,10 @@
 
 A remake of Castlevania NES (Block 01) written in C++ and directx 9
 
+## Download
+
+[Castlevania x86 executable zip file](https://github.com/NearHuscarl/Castlevania/releases)
+
 ## Controls
 
 | Key                         | Command              |
