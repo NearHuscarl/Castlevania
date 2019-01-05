@@ -365,7 +365,12 @@ void DevTool::SpawnObject()
 		object = objectFactory.CreateEnemy(type);
 
 		if (object->GetId() == ObjectId::GiantBat)
-			dynamic_cast<GiantBat*>(object.get())->SetActive();
+		{
+			auto giantBat = dynamic_cast<GiantBat*>(object.get());
+			giantBat->SetPosition(objectPosition);
+			giantBat->SetMoveArea((Rect)camera.GetBounds());
+			giantBat->SetActive();
+		}
 	}
 	else if (currentCategory == POWERUP)
 	{

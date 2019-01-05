@@ -79,7 +79,7 @@ void GoToCastleCutscene::Update(UpdateData &updateData)
 	switch (currentState)
 	{
 		case State::WALKING_TO_CASTLE_GATE:
-			if (player->GetBoundingBox().right <= entranceTrigger->GetBoundingBox().right - 5.0f)
+			if (player->GetBoundingBox().right <= entranceTrigger->GetBoundingBox().right)
 			{
 				if (player->GetFacing() == Facing::Left)
 					player->WalkRight();

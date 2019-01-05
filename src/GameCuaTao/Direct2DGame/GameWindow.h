@@ -10,11 +10,14 @@ class GameWindow
 {
 public:
 	GameWindow(Game &game);
-	void Create();
 
 	HWND GetHandle();
 	Rect GetClientBound();
 	Rect GetWindowBound();
+	void SetTitle(std::string title);
+	void SetIcon(std::string iconPath);
+
+	void Create();
 
 private:
 	Game &game;
@@ -26,8 +29,9 @@ private:
 	int height;
 	Rect windowBound;
 
-	LPCWSTR windowClassName;
-	LPCWSTR windowTitle;
+	std::string windowClassName;
+	std::string windowTitle;
+	std::string icon;
 
 	static LRESULT CALLBACK WinProc(HWND handle, UINT message, WPARAM wParam, LPARAM lParam);
 };

@@ -19,7 +19,7 @@
 
 namespace Castlevania
 {
-	constexpr auto ITEM_FALL_SPEED = 225.0f;
+	constexpr auto ITEM_FALL_SPEED = 150.0f;
 
 	class ObjectFactory
 	{

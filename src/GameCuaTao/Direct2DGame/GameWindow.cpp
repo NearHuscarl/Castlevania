@@ -1,6 +1,7 @@
 #include "GameWindow.h"
 #include "Game.h"
 #include "Utilities/FileLogger.h"
+#include "Utilities/WinHelper.h"
 
 HINSTANCE GameWindow::instance = HINSTANCE{ nullptr };
 
@@ -11,9 +12,9 @@ GameWindow::GameWindow(Game &game) : game{ game }
 	width = GraphicsDeviceManager::DefaultBackbufferWidth;
 	height = GraphicsDeviceManager::DefaultBackbufferHeight;
 
-	// TODO: refactor
-	windowClassName = L"SampleWindow";
-	windowTitle = L"02 - Sprite animation";
+	windowClassName = "Direct2DGame";
+	windowTitle = "Direct2D Game";
+	icon = "Icon.ico";
 }
 
 Rect GameWindow::GetClientBound()
@@ -34,6 +35,17 @@ HWND GameWindow::GetHandle()
 	return handle;
 }
 
+void GameWindow::SetTitle(std::string title)
+{
+	windowTitle = title;
+	windowClassName = windowTitle;
+}
+
+void GameWindow::SetIcon(std::string iconPath)
+{
+	icon = iconPath;
+}
+
 void GameWindow::Create()
 {
 	width = game.GetGraphicsDeviceManager().GetBackBufferWidth();
@@ -47,6 +59,10 @@ void GameWindow::Create()
 	AdjustWindowRectEx(&windowBound, WS_OVERLAPPEDWINDOW, false, 0);
 
 	auto windowClassEx = WNDCLASSEX{};
+	auto className = WinHelper::s2ws(windowClassName);
+	auto title = WinHelper::s2ws(windowTitle);
+	auto iconPath = WinHelper::s2ws(icon);
+
 	windowClassEx.cbSize = sizeof(WNDCLASSEX);
 
 	windowClassEx.style = CS_HREDRAW | CS_VREDRAW;
@@ -55,18 +71,27 @@ void GameWindow::Create()
 	windowClassEx.lpfnWndProc = (WNDPROC)WinProc;
 	windowClassEx.cbClsExtra = 0;
 	windowClassEx.cbWndExtra = 0;
-	windowClassEx.hIcon = nullptr;
+	windowClassEx.hIcon = (HICON)LoadImage( // returns a HANDLE so we have to cast to HICON
+		NULL,             // hInstance must be NULL when loading from a file
+		iconPath.c_str(), // the icon file name
+		IMAGE_ICON,       // specifies that the file is an icon
+		0,                // width of the image (we'll specify default later on)
+		0,                // height of the image
+		LR_LOADFROMFILE | // we want to load a file (as opposed to a resource)
+		LR_DEFAULTSIZE |  // default metrics based on the type (IMAGE_ICON, 32x32)
+		LR_SHARED         // let the system release the handle when it's no longer used
+	);
 	windowClassEx.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	windowClassEx.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
 	windowClassEx.lpszMenuName = nullptr;
-	windowClassEx.lpszClassName = windowClassName;
+	windowClassEx.lpszClassName = className.c_str();
 	windowClassEx.hIconSm = nullptr;
 
 	RegisterClassEx(&windowClassEx);
 
 	handle = CreateWindow(
-		windowClassName,
-		windowTitle,
+		className.c_str(),
+		title.c_str(),
 		WS_OVERLAPPEDWINDOW, // WS_EX_TOPMOST | WS_VISIBLE | WS_POPUP,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,

@@ -12,6 +12,8 @@ CastlevaniaGame::CastlevaniaGame()
 
 	graphics->SetBackBufferWidth(512);
 	graphics->SetBackBufferHeight(448);
+
+	window->SetTitle("Castlevania NES");
 }
 
 void CastlevaniaGame::Initialize()

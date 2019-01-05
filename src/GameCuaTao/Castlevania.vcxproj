@@ -103,6 +103,7 @@
     </Link>
     <PostBuildEvent>
       <Command>XCOPY "$(ProjectDir)library\freetype\lib\freetype.dll" "$(TargetDir)" /D /K /Y
+XCOPY "$(ProjectDir)Icon.ico" "$(TargetDir)" /D /K /Y
 XCOPY "$(ProjectDir)Castlevania\Content" "$(TargetDir)Castlevania\Content" /D /E /I /K /Y</Command>
     </PostBuildEvent>
     <PostBuildEvent>

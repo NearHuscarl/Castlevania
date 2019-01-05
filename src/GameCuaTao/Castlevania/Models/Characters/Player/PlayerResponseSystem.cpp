@@ -299,7 +299,7 @@ void PlayerResponseSystem::OnCollideWithWaterArea(CollisionResult &result, Objec
 	if (waterArea.GetBoundingBox().top <= parent.GetBoundingBox().top)
 	{
 		waterArea.GetBody().Enabled(false);
-		parent.SetVelocity(Vector2::Zero());
+		parent.Die();
 		parent.Notify(PLAYER_DIE);
 	}
 }
