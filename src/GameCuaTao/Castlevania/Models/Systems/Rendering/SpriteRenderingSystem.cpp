@@ -38,6 +38,6 @@ void SpriteRenderingSystem::LoadContent(ContentManager &content)
 
 void SpriteRenderingSystem::Draw(SpriteExtensions &spriteBatch)
 {
-	RenderingSystem::Draw(spriteBatch);
 	spriteBatch.Draw(*sprite, parent.GetPosition());
+	RenderingSystem::Draw(spriteBatch);
 }

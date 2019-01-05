@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Spritesheet TexturePath="Dagger.png">
+    <Sprite ID="dagger">
+      <SpriteFrame Left="0" Top="0" Width="32" Height="18" />
+      <SpriteBoundary Left="12" Top="0" Width="8" Height="18" />
+    </Sprite>
+  </Spritesheet>
+
+</GameContent>

@@ -4,16 +4,16 @@ A remake of Castlevania NES (Block 01) written in C++ and directx 9
 
 ## Controls
 
-| Key            | Command              |
-|----------------|----------------------|
-| <kbd>←</kbd>   | Walk left            |
-| <kbd>→</kbd>   | Walk right           |
-| <kbd>↑</kbd>   | Go upstairs          |
-| <kbd>↓</kbd>   | Go downstairs / Duck |
-| <kbd>z</kbd>   | Attack               |
-| <kbd>x</kbd>   | Jump                 |
-| <kbd>c</kbd>   | Use subweapon        |
-| <kbd>Esc</kbd> | Toggle devtool       |
+| Key                         | Command              |
+|-----------------------------|----------------------|
+| <kbd>←</kbd>                | Walk left            |
+| <kbd>→</kbd>                | Walk right           |
+| <kbd>↑</kbd>                | Go upstairs          |
+| <kbd>↓</kbd>                | Go downstairs / Duck |
+| <kbd>a</kbd>                | Attack               |
+| <kbd>s</kbd>                | Jump                 |
+| <kbd>↑</kbd> + <kbd>a</kbd> | Use subweapon        |
+| <kbd>Esc</kbd>              | Toggle devtool       |
 
 ### Devtool Control
 

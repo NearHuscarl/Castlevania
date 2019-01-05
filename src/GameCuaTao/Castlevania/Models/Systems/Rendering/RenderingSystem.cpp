@@ -27,6 +27,7 @@ void RenderingSystem::Receive(int message)
 		case STATE_CHANGED:
 			OnStateChanged();
 			break;
+
 		case TAKING_DAMAGE:
 			OnTakingDamage();
 			break;

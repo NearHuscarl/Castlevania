@@ -5,14 +5,17 @@
   <Spritesheet TexturePath="Money_Bag.png">
     <Sprite ID="money_bag_red">
       <SpriteFrame Left="0" Top="0" Width="30" Height="30" />
+      <SpriteBoundary Left="8" Top="8" Width="12" Height="22" />
     </Sprite>
 
     <Sprite ID="money_bag_blue">
       <SpriteFrame Left="31" Top="0" Width="30" Height="30" />
+      <SpriteBoundary Left="39" Top="8" Width="12" Height="22" />
     </Sprite>
 
     <Sprite ID="money_bag_white">
       <SpriteFrame Left="62" Top="0" Width="30" Height="30" />
+      <SpriteBoundary Left="70" Top="8" Width="12" Height="22" />
     </Sprite>
   </Spritesheet>
 

@@ -370,7 +370,7 @@ void Player::Stoptime()
 	if (isStopwatchActive)
 		return;
 
-	data.hearts -= 5;
+	data.hearts = MathHelper::Max(data.hearts - 5, 0);
 	Notify(STOPWATCH_POWERUP_ACTIVATED);
 
 	if (data.hearts == 0)

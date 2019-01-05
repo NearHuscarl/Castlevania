@@ -277,7 +277,7 @@ void Stage::UpdateGameObjects(UpdateData &updateData)
 	updateData.collisionObjects = &collisionObjects;
 	player->Update(updateData);
 
-	if (data->timeLeft.GetCounter() < 0)
+	if (data->timeLeft.GetCounter() < 0 || grid->IsOutOfRange(cellCol, cellRow))
 		player->Die();
 
 	for (auto const &object : objectCollection->staticObjects)

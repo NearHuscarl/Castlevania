@@ -25,6 +25,9 @@ GoToCastleCutscene::GoToCastleCutscene(Stage &stage, ObjectCollection &objectCol
 
 			auto trigger = dynamic_cast<Trigger*>(object.get());
 
+			if (trigger->GetTriggerType() == TriggerType::MONEY_BAG_EASTER_EGG)
+				trigger->GetBody().Enabled(false);
+
 			if (trigger->GetTriggerType() == TriggerType::CASTLE_ENTRANCE)
 				entranceTrigger = trigger;
 

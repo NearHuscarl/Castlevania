@@ -85,7 +85,7 @@
     <property name="Facing" value="Right"/>
    </properties>
   </object>
-  <object id="47" name="Entrypoint1" type="Position" gid="4" x="1021" y="288" width="60" height="66">
+  <object id="47" name="Entrypoint1" type="Position" gid="4" x="1281" y="288" width="60" height="66">
    <properties>
     <property name="Facing" value="Right"/>
    </properties>

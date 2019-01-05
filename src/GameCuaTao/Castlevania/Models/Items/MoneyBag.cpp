@@ -10,6 +10,7 @@ MoneyBag::MoneyBag(int money, ObjectId type) : Powerup{ type }
 int MoneyBag::GetMoney()
 {
 	SetState(ObjectState::DYING);
+	Detach<IMovementSystem>();
 	body.Enabled(false);
 
 	return money;

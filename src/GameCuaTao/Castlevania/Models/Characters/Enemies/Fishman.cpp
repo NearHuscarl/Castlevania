@@ -85,7 +85,7 @@ void Fishman::Shoot(std::unique_ptr<RangedWeapon> fireball)
 void Fishman::Freeze()
 {
 	velocity = Vector2::Zero();
-	SetDistance(Vector2::Zero());
+	SetDistance_Y(0);
 	SetFishmanState(FishmanState::FALLING);
 }
 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Spritesheet TexturePath="Cross.png">
+    <Sprite ID="cross">
+      <SpriteFrame Left="0" Top="0" Width="32" Height="32" />
+      <SpriteBoundary Left="6" Top="6" Width="20" Height="26" />
+    </Sprite>
+  </Spritesheet>
+
+</GameContent>

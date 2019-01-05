@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Spritesheet TexturePath="Holy_Water.png">
+    <Sprite ID="holy_water">
+      <SpriteFrame Left="0" Top="0" Width="32" Height="32" />
+      <SpriteBoundary Left="8" Top="6" Width="12" Height="26" />
+    </Sprite>
+  </Spritesheet>
+
+</GameContent>

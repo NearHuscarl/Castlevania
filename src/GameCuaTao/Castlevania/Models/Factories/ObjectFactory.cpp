@@ -50,6 +50,8 @@
 
 using namespace Castlevania;
 
+constexpr auto POWERUP_WEIGHT = 1000.0f;
+
 ObjectFactory::ObjectFactory(ContentManager &content) : content{ content }
 {
 	effectFactory = std::make_unique<EffectFactory>(content);
@@ -654,7 +656,7 @@ std::unique_ptr<MoneyBag> ObjectFactory::CreateMoneyBag(ObjectId type, Vector2 p
 
 	auto object = std::make_unique<MoneyBag>(money, type);
 
-	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
+	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, POWERUP_WEIGHT);
 	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
 
@@ -694,7 +696,7 @@ std::unique_ptr<MoneyBag> ObjectFactory::CreateFlashingMoneyBag(Vector2 position
 {
 	auto object = std::make_unique<MoneyBag>(1000, ObjectId::FlashingMoneyBag);
 
-	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
+	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, POWERUP_WEIGHT);
 	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
 
@@ -717,10 +719,13 @@ std::unique_ptr<Powerup> ObjectFactory::CreateAxeItem(Vector2 position)
 {
 	auto object = std::make_unique<Powerup>(ObjectId::AxeItem);
 
-	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
+	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, POWERUP_WEIGHT);
 	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
-	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Axe.png");
+
+	auto spritesheet = content.Load<Spritesheet>("Items/Axe.atlas.xml");
+	auto textureRegion = spritesheet->begin()->second;
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, textureRegion);
 
 	object->SetPosition(position);
 	object->Attach(std::move(movementSystem));
@@ -738,10 +743,13 @@ std::unique_ptr<Powerup> ObjectFactory::CreateCross(Vector2 position)
 {
 	auto object = std::make_unique<Powerup>(ObjectId::Cross, 100000);
 
-	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
+	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, POWERUP_WEIGHT);
 	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
-	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Cross.png");
+
+	auto spritesheet = content.Load<Spritesheet>("Items/Cross.atlas.xml");
+	auto textureRegion = spritesheet->begin()->second;
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, textureRegion);
 
 	object->SetPosition(position);
 	object->Attach(std::move(movementSystem));
@@ -759,10 +767,13 @@ std::unique_ptr<Powerup> ObjectFactory::CreateDaggerItem(Vector2 position)
 {
 	auto object = std::make_unique<Powerup>(ObjectId::DaggerItem);
 
-	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
+	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, POWERUP_WEIGHT);
 	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
-	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Dagger.png");
+
+	auto spritesheet = content.Load<Spritesheet>("Items/Dagger.atlas.xml");
+	auto textureRegion = spritesheet->begin()->second;
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, textureRegion);
 
 	object->SetPosition(position);
 	object->Attach(std::move(movementSystem));
@@ -780,10 +791,13 @@ std::unique_ptr<Powerup> ObjectFactory::CreateHolyWaterItem(Vector2 position)
 {
 	auto object = std::make_unique<Powerup>(ObjectId::HolyWaterItem);
 
-	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
+	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, POWERUP_WEIGHT);
 	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
-	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Holy_Water.png");
+
+	auto spritesheet = content.Load<Spritesheet>("Items/Holy_Water.atlas.xml");
+	auto textureRegion = spritesheet->begin()->second;
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, textureRegion);
 
 	object->SetPosition(position);
 	object->Attach(std::move(movementSystem));
@@ -801,10 +815,13 @@ std::unique_ptr<Powerup> ObjectFactory::CreateLargeHeart(Vector2 position)
 {
 	auto object = std::make_unique<Powerup>(ObjectId::LargeHeart);
 
-	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
+	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, POWERUP_WEIGHT);
 	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
-	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Large_Heart.png");
+
+	auto spritesheet = content.Load<Spritesheet>("Items/Large_Heart.atlas.xml");
+	auto textureRegion = spritesheet->begin()->second;
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, textureRegion);
 	
 	object->SetPosition(position);
 	object->Attach(std::move(movementSystem));
@@ -843,10 +860,13 @@ std::unique_ptr<Powerup> ObjectFactory::CreateInvisibleJar(Vector2 position)
 {
 	auto object = std::make_unique<Powerup>(ObjectId::InvisibleJar);
 
-	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
+	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, POWERUP_WEIGHT);
 	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
-	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Invisible_Jar.png");
+
+	auto spritesheet = content.Load<Spritesheet>("Items/Invisible_Jar.atlas.xml");
+	auto textureRegion = spritesheet->begin()->second;
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, textureRegion);
 
 	object->SetPosition(position);
 	object->Attach(std::move(movementSystem));
@@ -864,13 +884,13 @@ std::unique_ptr<Powerup> ObjectFactory::CreatePorkChop(Vector2 position)
 {
 	auto object = std::make_unique<Powerup>(ObjectId::PorkChop);
 
-	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
+	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, POWERUP_WEIGHT);
 	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
 	
-	auto porkChopAtlas = content.Load<Spritesheet>("Items/Pork_Chop.atlas.xml");
-	auto porkTextureRegion = porkChopAtlas->begin()->second;
-	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, porkTextureRegion);
+	auto spritesheet = content.Load<Spritesheet>("Items/Pork_Chop.atlas.xml");
+	auto textureRegion = spritesheet->begin()->second;
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, textureRegion);
 
 	object->SetPosition(position);
 	object->Attach(std::move(movementSystem));
@@ -888,10 +908,13 @@ std::unique_ptr<Powerup> ObjectFactory::CreateStopwatch(Vector2 position)
 {
 	auto object = std::make_unique<Powerup>(ObjectId::Stopwatch);
 
-	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
+	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, POWERUP_WEIGHT);
 	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
-	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Stopwatch.png");
+
+	auto spritesheet = content.Load<Spritesheet>("Items/Stopwatch.atlas.xml");
+	auto textureRegion = spritesheet->begin()->second;
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, textureRegion);
 
 	object->SetPosition(position);
 	object->Attach(std::move(movementSystem));
@@ -909,10 +932,13 @@ std::unique_ptr<Powerup> ObjectFactory::CreateWhipPowerup(Vector2 position)
 {
 	auto object = std::make_unique<Powerup>(ObjectId::WhipPowerup);
 
-	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
+	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, POWERUP_WEIGHT);
 	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
-	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Whip_Powerup.png");
+
+	auto spritesheet = content.Load<Spritesheet>("Items/Whip_Powerup.atlas.xml");
+	auto textureRegion = spritesheet->begin()->second;
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, textureRegion);
 
 	object->SetPosition(position);
 	object->Attach(std::move(movementSystem));
@@ -930,10 +956,13 @@ std::unique_ptr<Powerup> ObjectFactory::CreateDoubleShot(Vector2 position)
 {
 	auto object = std::make_unique<Powerup>(ObjectId::DoubleShot);
 
-	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
+	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, POWERUP_WEIGHT);
 	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
-	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Items/Double_Shot.png");
+
+	auto spritesheet = content.Load<Spritesheet>("Items/Double_Shot.atlas.xml");
+	auto textureRegion = spritesheet->begin()->second;
+	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, textureRegion);
 
 	object->SetPosition(position);
 	object->Attach(std::move(movementSystem));
@@ -951,7 +980,7 @@ std::unique_ptr<Powerup> ObjectFactory::CreateCrystalBall(Vector2 position)
 {
 	auto object = std::make_unique<Powerup>(ObjectId::CrystalBall, 100000);
 
-	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
+	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, POWERUP_WEIGHT);
 	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
 	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*object, "Items/Crystal_Ball.ani.xml");

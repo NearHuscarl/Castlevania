@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Spritesheet TexturePath="Invisible_Jar.png">
+    <Sprite ID="invisible_jar">
+      <SpriteFrame Left="0" Top="0" Width="29" Height="36" />
+      <SpriteBoundary Left="7" Top="9" Width="11" Height="27" />
+    </Sprite>
+  </Spritesheet>
+
+</GameContent>

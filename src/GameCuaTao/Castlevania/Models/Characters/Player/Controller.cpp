@@ -28,41 +28,41 @@ void Controller::OnKeyDown(int keyCode)
 		case MoveState::IDLE:
 			if (keyCode == Button::Jump)
 				player.Jump();
+			else if (PressSubweaponKeys(keyCode))
+				UseSubweapon();
 			else if (keyCode == Button::Attack)
 				player.Attack();
-			else if (keyCode == Button::Throw)
-				UseSubweapon();
 			break;
 
 		case MoveState::WALKING:
 			if (IsHoldingLeftAndRight())
 				player.Idle();
+			else if (PressSubweaponKeys(keyCode))
+				UseSubweapon();
 			else if (keyCode == Button::Jump)
 				player.Jump();
 			else if (keyCode == Button::Duck)
 				player.Duck();
 			else if (keyCode == Button::Attack)
 				player.Attack();
-			else if (keyCode == Button::Throw)
-				UseSubweapon();
 			break;
 
 		case MoveState::IDLE_UPSTAIRS:
 		case MoveState::IDLE_DOWNSTAIRS:
-			if (keyCode == Button::Attack)
-				player.Attack();
-			else if (keyCode == Button::Throw)
+			if (PressSubweaponKeys(keyCode))
 				UseSubweapon();
+			else if (keyCode == Button::Attack)
+				player.Attack();
 			break;
 
 		case MoveState::JUMPING:
 		case MoveState::HOVERING:
 		case MoveState::FALLING:
 		case MoveState::LANDING:
-			if (keyCode == Button::Attack)
-				player.Attack();
-			else if (keyCode == Button::Throw)
+			if (PressSubweaponKeys(keyCode))
 				UseSubweapon();
+			else if (keyCode == Button::Attack)
+				player.Attack();
 			break;
 
 		case MoveState::DUCKING:
@@ -70,10 +70,10 @@ void Controller::OnKeyDown(int keyCode)
 				player.SetFacing(Facing::Left);
 			else if (keyCode == Button::WalkRight)
 				player.SetFacing(Facing::Right);
+			else if (PressSubweaponKeys(keyCode))
+				UseSubweapon();
 			else if (keyCode == Button::Attack)
 				player.Attack();
-			else if (keyCode == Button::Throw)
-				UseSubweapon();
 			break;
 	}
 }
@@ -146,6 +146,16 @@ bool Controller::IsHoldingLeftAndRight()
 bool Controller::IsHoldingUpAndDown()
 {
 	return keyboardState.IsKeyDown(Button::Duck) && keyboardState.IsKeyDown(Button::GoUpstair);
+}
+
+bool Controller::PressSubweaponKeys(int keyCode)
+{
+	if (keyCode == Button::Attack)
+	{
+		if (keyboardState.IsKeyDown(Button::GoUpstair))
+			return true;
+	}
+	return false;
 }
 
 void Controller::UseSubweapon()

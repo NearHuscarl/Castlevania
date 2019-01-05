@@ -94,9 +94,9 @@ Vector2 GameObject::GetOriginPosition()
 
 void GameObject::SetOriginPosition(Vector2 value)
 {
-	position = Vector2{
+	SetPosition(Vector2{
 		value.x - GetFrameRect().Width() / 2,
-		value.y - GetFrameRect().Height() / 2 };
+		value.y - GetFrameRect().Height() / 2 });
 }
 
 Vector2 GameObject::GetVelocity()

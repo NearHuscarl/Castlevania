@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Spritesheet TexturePath="Large_Heart.png">
+    <Sprite ID="large_heart">
+      <SpriteFrame Left="0" Top="0" Width="24" Height="20" />
+      <SpriteBoundary Left="7" Top="0" Width="10" Height="20" />
+    </Sprite>
+  </Spritesheet>
+
+</GameContent>

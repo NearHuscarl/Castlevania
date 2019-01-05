@@ -79,9 +79,9 @@ void MenuScene::Draw(GameTime gameTime)
 
 	spriteBatch.Begin(D3DXSPRITE_ALPHABLEND);
 
-	spriteBatch.Draw(*background, Vector2::Zero(), Color::White());
-	spriteBatch.DrawString(*menuFont, copyrightText, copyrightTextPosition, Color::White());
-	spriteBatch.Draw(*menuBatSprite, menuBatPosition);
+	spriteBatch.Draw(*background, Vector2::Zero(), Color::White(), false);
+	spriteBatch.DrawString(*menuFont, copyrightText, copyrightTextPosition, Color::White(), false);
+	spriteBatch.Draw(*menuBatSprite, menuBatPosition, false);
 
 	switch (currentState)
 	{

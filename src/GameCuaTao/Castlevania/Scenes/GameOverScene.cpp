@@ -63,10 +63,10 @@ void GameOverScene::Draw(GameTime gameTime)
 
 	spriteBatch.Begin(D3DXSPRITE_ALPHABLEND);
 
-	spriteBatch.Draw(*heartTexture, GetHeartPosition(), Color::White());
-	spriteBatch.DrawString(*font, GAME_OVER_TEXT, gameOverTextPosition, Color::White());
-	spriteBatch.DrawString(*font, CONTINUE_TEXT, continueTextPosition, Color::White());
-	spriteBatch.DrawString(*font, END_TEXT, endTextPosition, Color::White());
+	spriteBatch.Draw(*heartTexture, GetHeartPosition(), Color::White(), false);
+	spriteBatch.DrawString(*font, GAME_OVER_TEXT, gameOverTextPosition, Color::White(), false);
+	spriteBatch.DrawString(*font, CONTINUE_TEXT, continueTextPosition, Color::White(), false);
+	spriteBatch.DrawString(*font, END_TEXT, endTextPosition, Color::White(), false);
 
 	spriteBatch.End();
 }

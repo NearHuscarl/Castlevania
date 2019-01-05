@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Spritesheet TexturePath="Double_Shot.png">
+    <Sprite ID="double_shot">
+      <SpriteFrame Left="0" Top="0" Width="28" Height="28" />
+      <SpriteBoundary Left="6" Top="4" Width="16" Height="24" />
+    </Sprite>
+  </Spritesheet>
+
+</GameContent>

@@ -102,7 +102,7 @@ void WhipRenderingSystem::UpdatePositionRelativeToPlayer()
 				newPosition = Vector2{ playerBbox.left - whipBbox.Width(), playerBbox.top + 9 };
 				break;
 			case 2:
-				newPosition = Vector2{ playerBbox.right - 3, playerBbox.top + 26 - whipBbox.Height() };
+				newPosition = Vector2{ playerBbox.right + 8, playerBbox.top + 26 - whipBbox.Height() };
 				break;
 			default:
 				newPosition = Vector2::Zero();
@@ -120,7 +120,7 @@ void WhipRenderingSystem::UpdatePositionRelativeToPlayer()
 				newPosition = Vector2{ playerBbox.right, playerBbox.top + 9 };
 				break;
 			case 2:
-				newPosition = Vector2{ playerBbox.left - whipBbox.Width() + 3, playerBbox.top + 26 - whipBbox.Height() };
+				newPosition = Vector2{ playerBbox.left - whipBbox.Width() - 8, playerBbox.top + 26 - whipBbox.Height() };
 				break;
 			default:
 				newPosition = Vector2::Zero();

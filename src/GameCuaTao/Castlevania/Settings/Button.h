@@ -7,7 +7,6 @@ namespace Castlevania
 	struct Button
 	{
 		static int Attack;
-		static int Throw;
 		static int Jump;
 		static int WalkLeft;
 		static int WalkRight;

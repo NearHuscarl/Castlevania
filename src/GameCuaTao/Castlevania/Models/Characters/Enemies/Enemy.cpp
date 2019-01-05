@@ -72,6 +72,9 @@ void Enemy::TakeDamage(int damage)
 
 void Enemy::Die()
 {
+	if (state == ObjectState::DYING)
+		return;
+
 	SetState(ObjectState::DYING);
 	body.Enabled(false);
 	Detach<IMovementSystem>();
