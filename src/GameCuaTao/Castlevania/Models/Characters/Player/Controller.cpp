@@ -39,12 +39,12 @@ void Controller::OnKeyDown(int keyCode)
 				player.Idle();
 			else if (PressSubweaponKeys(keyCode))
 				UseSubweapon();
+			else if (keyCode == Button::Attack)
+				player.Attack();
 			else if (keyCode == Button::Jump)
 				player.Jump();
 			else if (keyCode == Button::Duck)
 				player.Duck();
-			else if (keyCode == Button::Attack)
-				player.Attack();
 			break;
 
 		case MoveState::IDLE_UPSTAIRS:

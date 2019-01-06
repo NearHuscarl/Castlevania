@@ -3,6 +3,16 @@
 
 using namespace Castlevania;
 
+void MovementSystem::Enabled(bool value)
+{
+	enabled = value;
+}
+
+bool MovementSystem::Enabled()
+{
+	return enabled;
+}
+
 Vector2 MovementSystem::GetDistance()
 {
 	return distance;
@@ -11,4 +21,10 @@ Vector2 MovementSystem::GetDistance()
 void MovementSystem::SetDistance(Vector2 distance)
 {
 	this->distance = distance;
+}
+
+void MovementSystem::Update(GameTime gameTime)
+{
+	if (enabled)
+		UpdateMovement(gameTime);
 }

@@ -63,3 +63,7 @@ LNK4042: object specified more than once; extras ignored
 -  Go to `Configuration Properties` -> `C/C++` -> `Output Files` -> `Object File Name` -> `$(IntDir)/%(RelativeDir)/`
 
 With the default configuration, Visual will toss all object files into one big folder, leading to name conflict if there are source files with the same name in different folders, replace to `$(IntDir)/%(RelativeDir)/` will put those object files in a mirror source tree, solving name conflicts
+
+# How-to guide
+
+* [Add icon to your C++ program](https://stackoverflow.com/a/26130514/9449426)

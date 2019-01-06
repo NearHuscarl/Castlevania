@@ -2,8 +2,6 @@
 
 #include "Characters/Player/Player.h"
 #include "Factories/ObjectCollection.h"
-#include "../Scenes/Stages/StageObject.h"
-#include "../Utilities/CollisionObject.h"
 
 namespace Castlevania
 {

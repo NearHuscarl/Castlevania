@@ -18,7 +18,7 @@ void WaveMovementSystem::SetMoveAxis(Axis axis)
 	moveAxis = axis;
 }
 
-void WaveMovementSystem::Update(GameTime gameTime)
+void WaveMovementSystem::UpdateMovement(GameTime gameTime)
 {
 	auto linearVelocity = float{};
 

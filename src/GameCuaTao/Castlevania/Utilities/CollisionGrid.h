@@ -3,9 +3,7 @@
 #include <functional>
 #include <vector>
 #include <map>
-//#include "../IColliable.h"
 #include "CollisionCell.h"
-#include "CollisionObject.h"
 #include "../Models/Factories/ObjectCollection.h"
 #include "../Models/UpdateData.h"
 

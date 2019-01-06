@@ -3,7 +3,6 @@
 #include "../Items/BreakableWall.h"
 #include "../Items/Container.h"
 #include "../Characters/Enemies/Enemy.h"
-#include "../Characters/Player/Player.h"
 #include "../Settings.h"
 #include "../IAttackable.h"
 

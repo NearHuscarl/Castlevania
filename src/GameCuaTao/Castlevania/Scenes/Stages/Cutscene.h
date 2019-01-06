@@ -1,7 +1,10 @@
 #pragma once
 
 #include "Direct2DGame/Extensions/Sprites/IDrawable.h"
+#include "StageObject.h"
 #include "../../Models/UpdateData.h"
+#include "../../Models/Factories/ObjectFactory.h"
+#include "../../Utilities/CollisionGrid.h"
 
 namespace Castlevania
 {

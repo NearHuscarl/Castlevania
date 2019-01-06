@@ -1,12 +1,7 @@
 #pragma once
 
-#include "Direct2DGame/Base/Vector2.h"
-#include "Direct2DGame/Extensions/RectF.h"
-
 namespace Castlevania
 {
-	struct ObjectCollection;
-
 	enum class SpawnState
 	{
 		ACTIVE,

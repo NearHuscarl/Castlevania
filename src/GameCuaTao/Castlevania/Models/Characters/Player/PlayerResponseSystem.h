@@ -2,11 +2,12 @@
 
 #include "../../Systems/CollisionResponse/ResponseSystem.h"
 #include "../../../Models/Factories/ObjectFactory.h"
-#include "../../../Scenes/Stages/StageObject.h"
 #include "Player.h"
 
 namespace Castlevania
 {
+	struct ObjectCollection;
+
 	class PlayerResponseSystem : public ResponseSystem
 	{
 	public:

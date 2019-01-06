@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Direct2DGame/GameTime.h"
 #include "Direct2DGame/Utilities/Stopwatch.h"
 #include "ISpawner.h"
 #include "../GameObject.h"

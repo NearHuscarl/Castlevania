@@ -9,6 +9,9 @@ namespace Castlevania
 	class IMovementSystem : public IReceiver
 	{
 	public:
+		virtual void Enabled(bool value) = 0;
+		virtual bool Enabled() = 0;
+
 		virtual Vector2 GetDistance() = 0;
 		virtual void SetDistance(Vector2 distance) = 0;
 

@@ -38,7 +38,7 @@ LevelCompletedCutscene::LevelCompletedCutscene(
 	auto crystalBall = objectFactory.CreateCrystalBall(crystalBallPosition);
 	
 	this->crystalBall = crystalBall.get();
-	this->crystalBall->SetVelocity(Vector2::Zero());
+	this->crystalBall->EnableMovement(false);
 	
 	grid.Add(std::move(crystalBall), CollisionObjectType::Entity);
 	transitionTimer.Start();
@@ -54,7 +54,7 @@ void LevelCompletedCutscene::Update(UpdateData &updateData)
 			if (transitionTimer.ElapsedMilliseconds() >= CRYSTAL_BALL_HOVERING_TRANSITION_TIME)
 			{
 				transitionTimer.Reset();
-				crystalBall->SetVelocity_Y(ITEM_FALL_SPEED);
+				crystalBall->EnableMovement(true);
 				currentState = State::CRYSTAL_BALL_ON_GROUND;
 			}
 			break;

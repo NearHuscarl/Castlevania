@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../Models/Spawners/SpawnArea.h"
+#include "../../Models/GameObject.h"
 #include "../../Models/Checkpoint.h"
 
 namespace Castlevania

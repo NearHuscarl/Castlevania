@@ -2,7 +2,6 @@
 
 #include "IEffect.h"
 #include "Direct2DGame/Extensions/Animations/AnimatedSprite.h"
-#include "Direct2DGame/Utilities/Stopwatch.h"
 
 namespace Castlevania
 {

@@ -9,9 +9,10 @@ namespace Castlevania
 	{
 	public:
 		SimpleMovementSystem(GameObject &parent);
-		void Update(GameTime gameTime) override;
 
 	private:
 		GameObject &parent;
+
+		void UpdateMovement(GameTime gameTime) override;
 	};
 }

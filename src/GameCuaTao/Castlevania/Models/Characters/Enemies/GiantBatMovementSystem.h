@@ -12,7 +12,6 @@ namespace Castlevania
 		GiantBatMovementSystem(GiantBat &parent);
 
 		void Receive(int message) override;
-		void Update(GameTime gameTime) override;
 
 	private:
 		GiantBat &parent;
@@ -23,6 +22,7 @@ namespace Castlevania
 
 		void OnMoveStateChanged();
 
+		void UpdateMovement(GameTime gameTime) override;
 		void UpdateLinearMovement(float deltaTime);
 		void UpdateParabolicMovement(float deltaTime);
 	};

@@ -2,7 +2,6 @@
 
 #include "Direct2DGame/Utilities/Stopwatch.h"
 #include "Cutscene.h"
-#include "../../Models/Factories/ObjectFactory.h"
 #include "../../Models/IBoss.h"
 
 namespace Castlevania

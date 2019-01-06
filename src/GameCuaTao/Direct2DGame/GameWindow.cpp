@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "Utilities/FileLogger.h"
 #include "Utilities/WinHelper.h"
+#include"../resource.h"
 
 HINSTANCE GameWindow::instance = HINSTANCE{ nullptr };
 
@@ -14,7 +15,6 @@ GameWindow::GameWindow(Game &game) : game{ game }
 
 	windowClassName = "Direct2DGame";
 	windowTitle = "Direct2D Game";
-	icon = "Icon.ico";
 }
 
 Rect GameWindow::GetClientBound()
@@ -71,16 +71,7 @@ void GameWindow::Create()
 	windowClassEx.lpfnWndProc = (WNDPROC)WinProc;
 	windowClassEx.cbClsExtra = 0;
 	windowClassEx.cbWndExtra = 0;
-	windowClassEx.hIcon = (HICON)LoadImage( // returns a HANDLE so we have to cast to HICON
-		NULL,             // hInstance must be NULL when loading from a file
-		iconPath.c_str(), // the icon file name
-		IMAGE_ICON,       // specifies that the file is an icon
-		0,                // width of the image (we'll specify default later on)
-		0,                // height of the image
-		LR_LOADFROMFILE | // we want to load a file (as opposed to a resource)
-		LR_DEFAULTSIZE |  // default metrics based on the type (IMAGE_ICON, 32x32)
-		LR_SHARED         // let the system release the handle when it's no longer used
-	);
+	windowClassEx.hIcon = LoadIcon(this->instance, MAKEINTRESOURCE(IDI_ICON1));
 	windowClassEx.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	windowClassEx.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
 	windowClassEx.lpszMenuName = nullptr;

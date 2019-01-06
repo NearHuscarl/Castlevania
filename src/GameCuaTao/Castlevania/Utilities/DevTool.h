@@ -5,7 +5,6 @@
 #include "Direct2DGame/Extensions/Sprites/Sprite.h"
 #include "Direct2DGame/Extensions/Camera.h"
 #include "../Models/Factories/ObjectFactory.h"
-#include "../Utilities/CollisionGrid.h"
 #include "../Utilities/MapSettings.h"
 
 namespace Castlevania

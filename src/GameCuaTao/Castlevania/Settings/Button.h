@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Direct2DGame/Input/DirectInput.h"
-
 namespace Castlevania
 {
 	struct Button

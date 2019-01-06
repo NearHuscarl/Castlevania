@@ -10,7 +10,7 @@ EntityMovementSystem::EntityMovementSystem(GameObject &parent, float weight) : p
 	this->weight = weight;
 }
 
-void EntityMovementSystem::Update(GameTime gameTime)
+void EntityMovementSystem::UpdateMovement(GameTime gameTime)
 {
 	auto velocity = parent.GetVelocity();
 	auto deltaTime = (float)gameTime.ElapsedGameTime.Seconds();

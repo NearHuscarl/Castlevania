@@ -16,7 +16,7 @@ HiddenMoneyBagCutscene::HiddenMoneyBagCutscene(
 	auto moneyBag = objectFactory.CreateFlashingMoneyBag(spawnPoint);
 
 	hiddenMoneyBag = moneyBag.get();
-	hiddenMoneyBag->SetVelocity_Y(0);
+	hiddenMoneyBag->Detach<IMovementSystem>();
 
 	moneyBagPosition = spawnPoint;
 	emergeEndPoint = Vector2{ spawnPoint.x, spawnPoint.y - moneyBag->GetFrameRect().Height() };

@@ -27,22 +27,6 @@ void GiantBatMovementSystem::Receive(int message)
 	}
 }
 
-void GiantBatMovementSystem::Update(GameTime gameTime)
-{
-	auto deltaTime = (float)gameTime.ElapsedGameTime.Seconds();
-
-	switch (parent.GetGiantBatState())
-	{
-		case GiantBatState::DIVING:
-			UpdateParabolicMovement(deltaTime);
-			break;
-
-		default:
-			UpdateLinearMovement(deltaTime);
-			break;
-	}
-}
-
 void GiantBatMovementSystem::OnMoveStateChanged()
 {
 	switch (parent.GetGiantBatState())
@@ -83,6 +67,22 @@ void GiantBatMovementSystem::OnMoveStateChanged()
 			auto speed = parent.GetDiveSpeed();
 
 			speed_x = speed * std::cos(angle);
+			break;
+	}
+}
+
+void GiantBatMovementSystem::UpdateMovement(GameTime gameTime)
+{
+	auto deltaTime = (float)gameTime.ElapsedGameTime.Seconds();
+
+	switch (parent.GetGiantBatState())
+	{
+		case GiantBatState::DIVING:
+			UpdateParabolicMovement(deltaTime);
+			break;
+
+		default:
+			UpdateLinearMovement(deltaTime);
 			break;
 	}
 }

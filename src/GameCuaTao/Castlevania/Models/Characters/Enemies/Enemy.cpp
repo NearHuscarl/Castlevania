@@ -77,7 +77,7 @@ void Enemy::Die()
 
 	SetState(ObjectState::DYING);
 	body.Enabled(false);
-	Detach<IMovementSystem>();
+	movementSystem->Enabled(false);
 	SpawnItem();
 }
 

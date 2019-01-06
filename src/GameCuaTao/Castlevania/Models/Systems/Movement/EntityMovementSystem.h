@@ -9,10 +9,11 @@ namespace Castlevania
 	{
 	public:
 		EntityMovementSystem(GameObject &parent, float weight);
-		void Update(GameTime gameTime) override;
 
 	private:
 		GameObject &parent;
 		float weight;
+
+		void UpdateMovement(GameTime gameTime) override;
 	};
 }

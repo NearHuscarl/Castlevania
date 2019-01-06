@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Direct2DGame/GameTime.h"
 #include "Direct2DGame/Content/ContentManager.h"
 #include "Direct2DGame/Extensions/Collisions/Body/Body.h"
 #include "Direct2DGame/Extensions/Sprites/SpriteExtensions.h"
@@ -73,6 +72,7 @@ namespace Castlevania
 		void Destroy();
 
 		void EnableControl(bool value);
+		void EnableMovement(bool value);
 		void Move(Vector2 distance);
 		void SwitchFacing();
 

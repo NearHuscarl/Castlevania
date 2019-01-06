@@ -19,7 +19,6 @@ namespace Castlevania
 		WaveMovementSystem(GameObject &parent, float angularVelocity, float amplitude, Axis axis);
 
 		void SetMoveAxis(Axis axis);
-		void Update(GameTime gameTime) override;
 
 	private:
 		GameObject &parent;
@@ -27,5 +26,7 @@ namespace Castlevania
 		float angularRotation;
 		float amplitude;
 		Axis moveAxis;
+
+		void UpdateMovement(GameTime gameTime) override;
 	};
 }

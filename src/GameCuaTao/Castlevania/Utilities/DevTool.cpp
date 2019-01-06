@@ -6,6 +6,7 @@
 #include "../Scenes/SceneManager.h"
 #include "../Scenes/GameplayScene.h"
 #include "../Models/Systems/Rendering/RenderingSystem.h"
+#include "../Utilities/CollisionGrid.h"
 
 using namespace Castlevania;
 

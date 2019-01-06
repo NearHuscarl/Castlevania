@@ -103,7 +103,6 @@
     </Link>
     <PostBuildEvent>
       <Command>XCOPY "$(ProjectDir)library\freetype\lib\freetype.dll" "$(TargetDir)" /D /K /Y
-XCOPY "$(ProjectDir)Icon.ico" "$(TargetDir)" /D /K /Y
 XCOPY "$(ProjectDir)Castlevania\Content" "$(TargetDir)Castlevania\Content" /D /E /I /K /Y</Command>
     </PostBuildEvent>
     <PostBuildEvent>
@@ -556,9 +555,16 @@ XCOPY "$(ProjectDir)Castlevania\Content" "$(TargetDir)Castlevania\Content" /D /E
     <ClInclude Include="Direct2DGame\Utilities\WinHelper.h" />
     <ClInclude Include="Library\pugixml\pugiconfig.hpp" />
     <ClInclude Include="Library\pugixml\pugixml.hpp" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GameCuaTao.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Icon.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

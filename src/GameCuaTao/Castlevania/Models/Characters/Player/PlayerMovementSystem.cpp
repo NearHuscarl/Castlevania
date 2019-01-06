@@ -12,7 +12,7 @@ PlayerMovementSystem::PlayerMovementSystem(Player &parent) : parent{ parent }
 {
 }
 
-void PlayerMovementSystem::Update(GameTime gameTime)
+void PlayerMovementSystem::UpdateMovement(GameTime gameTime)
 {
 	auto velocity = parent.GetVelocity();
 	auto deltaTime = (float)gameTime.ElapsedGameTime.Seconds();

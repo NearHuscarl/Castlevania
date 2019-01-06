@@ -1,3 +1,4 @@
+#include "Direct2DGame/Input/DirectInput.h"
 #include "Button.h"
 
 using namespace Castlevania;

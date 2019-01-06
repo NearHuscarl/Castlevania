@@ -7,7 +7,7 @@ SimpleMovementSystem::SimpleMovementSystem(GameObject &parent) : parent{ parent 
 {
 }
 
-void SimpleMovementSystem::Update(GameTime gameTime)
+void SimpleMovementSystem::UpdateMovement(GameTime gameTime)
 {
 	auto velocity = parent.GetVelocity();
 	auto deltaTime = (float)gameTime.ElapsedGameTime.Seconds();

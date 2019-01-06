@@ -3,8 +3,7 @@
 #include <memory>
 #include <string>
 #include "Direct2DGame/Graphics/SpriteFont.h"
-#include "Direct2DGame/Extensions/Animations/AnimatedSprite.h"
-#include "Direct2DGame/Utilities/Stopwatch.h"
+#include "Direct2DGame/Graphics/Texture.h"
 #include "AbstractScene.h"
 
 namespace Castlevania

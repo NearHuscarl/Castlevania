@@ -211,6 +211,11 @@ void GameObject::EnableControl(bool value)
 		controlSystem->Enabled(value);
 }
 
+void GameObject::EnableMovement(bool value)
+{
+	movementSystem->Enabled(value);
+}
+
 void GameObject::Move(Vector2 distance)
 {
 	if (distance == Vector2::Zero())

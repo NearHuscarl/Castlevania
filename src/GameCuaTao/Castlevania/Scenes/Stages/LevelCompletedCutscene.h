@@ -2,7 +2,7 @@
 
 #include "Cutscene.h"
 #include "../GameplayData.h"
-#include "../../Models/Items/Powerup.h"
+#include "../../Models/Factories/ObjectFactory.h"
 
 namespace Castlevania
 {

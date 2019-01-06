@@ -696,8 +696,7 @@ std::unique_ptr<MoneyBag> ObjectFactory::CreateFlashingMoneyBag(Vector2 position
 {
 	auto object = std::make_unique<MoneyBag>(1000, ObjectId::FlashingMoneyBag);
 
-	// Should be EntityMovementSystem, but it will create a bug in underground map when triggering money bag easter egg
-	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
+	auto movementSystem = std::make_unique<EntityMovementSystem>(*object, POWERUP_WEIGHT);
 	auto collisionSystem = std::make_unique<StandardCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<PowerupResponseSystem>(*object);
 
