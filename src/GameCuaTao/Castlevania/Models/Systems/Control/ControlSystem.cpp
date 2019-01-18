@@ -2,6 +2,11 @@
 
 using namespace Castlevania;
 
+ControlSystem::ControlSystem()
+{
+	enabled = true;
+}
+
 void ControlSystem::Enabled(bool value)
 {
 	enabled = value;

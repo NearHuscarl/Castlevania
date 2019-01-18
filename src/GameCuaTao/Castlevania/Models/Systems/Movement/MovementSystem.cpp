@@ -3,6 +3,11 @@
 
 using namespace Castlevania;
 
+MovementSystem::MovementSystem()
+{
+	enabled = true;
+}
+
 void MovementSystem::Enabled(bool value)
 {
 	enabled = value;

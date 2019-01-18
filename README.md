@@ -1,4 +1,5 @@
-# Castlevania
+
+![Castlevania Logo](images/Logo.png)
 
 A remake of Castlevania NES (Block 01) written in C++ and directx 9
 

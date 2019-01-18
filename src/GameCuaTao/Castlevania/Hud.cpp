@@ -37,7 +37,7 @@ Hud::Hud(GraphicsDevice &graphicsDevice)
 	enemyTextPosition = Vector2{ 2, 49 };
 	enemyHealthPosition = Vector2{ 105, 49 };
 	borderTexturePosition = Vector2{ 260, 32 };
-	heartTexturePosition = Vector2{ 340, 32 };
+	heartTexturePosition = Vector2{ 339, 32 };
 	heartTextPosition = Vector2{ 355, 32 };
 	liveTextPosition = Vector2{ 340, 49 };
 	powerupPosition = Vector2{ 432, 48 };

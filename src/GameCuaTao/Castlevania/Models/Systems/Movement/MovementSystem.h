@@ -10,6 +10,8 @@ namespace Castlevania
 	class MovementSystem : public IMovementSystem
 	{
 	public:
+		MovementSystem();
+
 		void Enabled(bool value) override;
 		bool Enabled() override;
 

@@ -14,6 +14,7 @@ Health::Health(int value)
 {
 	currentHealth = value;
 	maxHealth = value;
+	addedHealth = 0;
 }
 
 int Health::Value() const

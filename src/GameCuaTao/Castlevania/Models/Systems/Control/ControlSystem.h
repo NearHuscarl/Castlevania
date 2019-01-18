@@ -7,6 +7,8 @@ namespace Castlevania
 	class ControlSystem : public IControlSystem
 	{
 	public:
+		ControlSystem();
+
 		void Enabled(bool value) override;
 		bool Enabled() override;
 
