@@ -110,6 +110,68 @@ RectF RectF::Merge(RectF value1, RectF value2)
 	return RectF{ left, top, right - left, bottom - top };
 }
 
+std::vector<RectF> RectF::Split(RectF origin, float childWidth, float childHeight)
+{
+	if (childWidth > origin.Width())
+		childWidth = origin.Width();
+
+	if (childHeight > origin.Height())
+		childHeight = origin.Height();
+
+	auto columns = (int)(origin.Width() / childWidth);
+	auto rows = (int)(origin.Height() / childHeight);
+	auto results = std::vector<RectF>{};
+
+	for (auto x = 0; x < columns; x++)
+	{
+		for (auto y = 0; y < rows; y++)
+		{
+			results.push_back(RectF{
+				origin.left + (childWidth * x),
+				origin.top + (childHeight * y),
+				childWidth,
+				childHeight });
+		}
+	}
+
+	auto leftoverWidth = origin.Width() - (childWidth * columns);
+
+	if (leftoverWidth > 0)
+	{
+		for (auto y = 0; y < rows; y++)
+		{
+			results.push_back(RectF{
+				origin.right - leftoverWidth,
+				origin.top + (childHeight * y),
+				leftoverWidth,
+				childHeight });
+		}
+	}
+
+	auto leftoverHeight = origin.Height() - (childHeight * rows);
+
+	if (leftoverHeight > 0)
+	{
+		for (auto x = 0; x < columns; x++)
+		{
+			results.push_back(RectF{
+				origin.left + (childWidth * x),
+				origin.bottom - leftoverHeight,
+				childWidth,
+				leftoverHeight });
+		}
+	}
+
+	if (leftoverWidth > 0 && leftoverHeight > 0)
+		results.push_back(RectF{
+			origin.right - leftoverWidth,
+			origin.bottom - leftoverHeight,
+			leftoverWidth,
+			leftoverHeight });
+
+	return results;
+}
+
 RectF::operator Rect()
 {
 	return Rect{ (int)left, (int)top, (int)Width(), (int)Height() };

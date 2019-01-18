@@ -14,6 +14,7 @@ namespace Castlevania
 		GameObject &GetParent() override;
 
 		void LoadContent(ContentManager &content) override;
+		void Draw(SpriteExtensions &spriteBatch) override;
 
 	protected:
 		GameObject &parent;

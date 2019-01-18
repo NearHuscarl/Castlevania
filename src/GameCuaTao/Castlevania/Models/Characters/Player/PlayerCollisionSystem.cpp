@@ -15,6 +15,7 @@ IGameObject &PlayerCollisionSystem::GetParent()
 
 void PlayerCollisionSystem::Update(UpdateData &updateData)
 {
+	// TODO: move those checks in base class
 	auto &body = parent.GetBody();
 	body.ClearCollisionData();
 
@@ -36,6 +37,5 @@ void PlayerCollisionSystem::Update(UpdateData &updateData)
 			CalculateCollision(*object, results);
 	}
 
-	// TODO: do we need to sort?
 	body.SetCollisionData(FilterCollisionResults(results));
 }

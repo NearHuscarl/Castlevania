@@ -13,9 +13,9 @@ namespace Castlevania
 
 		RectF GetBoundingBox();
 		CollisionObject &GetObjects();
-		UGameObjects &GetEntites();
+		GameObjects &GetStaticObjects();
+		GameObjects &GetEntites();
 
-		void AddBlock(std::shared_ptr<GameObject> object);
 		void AddEntity(std::unique_ptr<GameObject> object);
 		void AddStaticObject(std::unique_ptr<GameObject> object);
 
@@ -23,7 +23,6 @@ namespace Castlevania
 		CollisionObject collisionObject;
 		RectF boundingBox;
 
-		void AddObject(UGameObjects &objects, std::unique_ptr<GameObject> newObject);
-		void AddSharedObject(SGameObjects &objects, std::shared_ptr<GameObject> newObject);
+		void AddObject(GameObjects &objects, std::unique_ptr<GameObject> newObject);
 	};
 }

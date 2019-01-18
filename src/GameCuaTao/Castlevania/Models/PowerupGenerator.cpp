@@ -8,7 +8,7 @@ using namespace Castlevania;
 constexpr auto COMMON_POWERUP = "COMMON_POWERUP";
 constexpr auto UNCOMMON_POWERUP = "UNCOMMON_POWERUP";
 constexpr auto RARE_POWERUP = "RARE_POWERUP";
-constexpr auto ALTERNATE_POWERUP_CHANCE = 25;
+constexpr auto ALTERNATIVE_POWERUP_CHANCE = 25;
 constexpr auto ENEMY_POWERUP_SPAWN_CHANCE = 20;
 
 // powerup rarity - spawn chance (%)
@@ -85,7 +85,7 @@ std::unique_ptr<Powerup> PowerupGenerator::Generate()
 
 std::unique_ptr<Powerup> PowerupGenerator::Generate(ObjectId powerupId)
 {
-	if (GetGroup(powerupId) == COMMON_POWERUP && MathHelper::RandomPercent(ALTERNATE_POWERUP_CHANCE))
+	if (GetGroup(powerupId) == COMMON_POWERUP && MathHelper::RandomPercent(ALTERNATIVE_POWERUP_CHANCE))
 	{
 		return objectFactory.CreatePowerup(GetRandomPowerupType(COMMON_POWERUP));
 	}

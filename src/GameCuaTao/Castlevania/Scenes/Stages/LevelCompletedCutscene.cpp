@@ -63,7 +63,7 @@ void LevelCompletedCutscene::Update(UpdateData &updateData)
 			stage.UpdateGameplay(updateData);
 
 			// check if crystalBall not point to garbage. kinda hacky but works
-			if (crystalBall->GetId() == ObjectId::CrystalBall)
+			if (crystalBall->GetId() == ObjectId::CrystalBall && crystalBall->GetState() != ObjectState::DEAD)
 				break;
 
 			if (player.GetData().health.Value() == MAX_HEALTH && !transitionTimer.IsRunning())

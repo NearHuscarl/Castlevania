@@ -31,6 +31,7 @@ struct RectF
 	bool TouchesOrIntersects(RectF value);
 
 	static RectF Merge(RectF value1, RectF value2);
+	static std::vector<RectF> Split(RectF origin, float childWidth, float childHeight);
 
 	explicit operator Rect();
 };

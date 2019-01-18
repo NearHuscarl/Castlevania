@@ -111,6 +111,68 @@ Rect Rect::Merge(Rect value1, Rect value2)
 	return Rect{ left, top, right - left, bottom - top };
 }
 
+std::vector<Rect> Rect::Split(Rect origin, int childWidth, int childHeight)
+{
+	if (childWidth > origin.Width())
+		childWidth = origin.Width();
+
+	if (childHeight > origin.Height())
+		childHeight = origin.Height();
+
+	auto columns = origin.Width() / childWidth;
+	auto rows = origin.Height() / childHeight;
+	auto results = std::vector<Rect>{};
+
+	for (auto x = 0; x < columns; x++)
+	{
+		for (auto y = 0; y < rows; y++)
+		{
+			results.push_back(Rect{
+				origin.left + (childWidth * x),
+				origin.top + (childHeight * y),
+				childWidth,
+				childHeight });
+		}
+	}
+
+	auto leftoverWidth = origin.Width() % childWidth;
+
+	if (leftoverWidth > 0)
+	{
+		for (auto y = 1; y <= rows; y++)
+		{
+			results.push_back(Rect{
+				origin.right - leftoverWidth,
+				origin.top + (childHeight * y),
+				leftoverWidth,
+				childHeight });
+		}
+	}
+
+	auto leftoverHeight = origin.Height() % childHeight;
+
+	if (leftoverHeight > 0)
+	{
+		for (auto x = 1; x <= columns; x++)
+		{
+			results.push_back(Rect{
+				origin.left + (childWidth * x),
+				origin.bottom - leftoverHeight,
+				childWidth,
+				leftoverHeight });
+		}
+	}
+
+	if (leftoverWidth > 0 && leftoverHeight > 0)
+		results.push_back(Rect{
+			origin.right - leftoverWidth,
+			origin.bottom - leftoverHeight,
+			leftoverWidth,
+			leftoverHeight });
+
+	return results;
+}
+
 Rect::operator RectF()
 {
 	return RectF{ (float)left, (float)top, (float)Width(), (float)Height() };

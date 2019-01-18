@@ -7,10 +7,15 @@
 class SpriteFont
 {
 public:
-	SpriteFont(IFont_ font);
+	SpriteFont(IFont_ font) noexcept;
 
-	IFont_ Get();
+	SpriteFont(SpriteFont &&rhs) noexcept;
+	SpriteFont &operator=(SpriteFont &&rhs) noexcept;
+
+	IFont_ Get() const noexcept;
 	Vector2 MessureString(const std::string &text);
+
+	~SpriteFont() noexcept;
 
 private:
 	IFont_ font;

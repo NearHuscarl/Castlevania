@@ -105,6 +105,9 @@ void Stage::ClearObjectsWithin(Rect area, std::set<GameObject*> exceptionList)
 			auto obj = (*it).get();
 			auto objBbox = (Rect)obj->GetBoundingBox();
 
+			if (obj->GetId() == ObjectId::Boundary)
+				continue;
+
 			if (exceptionList.find(obj) == exceptionList.end() && activeArea.Contains(objBbox))
 				it = staticObjects.erase(it);
 		}
@@ -300,32 +303,9 @@ void Stage::DrawGameplay(SpriteExtensions &spriteBatch)
 	map->Draw(spriteBatch);
 	hud->Draw(spriteBatch);
 
-	auto existedBlocks = std::vector<GameObject*>{};
-
-	// TODO: divide big block into smaller blocks so each cell can consume it
 	grid->GetCellsFromBoundingBox(camera->GetBounds(), [&](CollisionCell &cell, int col, int row)
 	{
 		auto &collisionObject = cell.GetObjects();
-
-		for (auto &block : collisionObject.blocks)
-		{
-			auto existed = false;
-
-			for (auto existedBlock : existedBlocks)
-			{
-				if (block.get() == existedBlock)
-				{
-					existed = true;
-					break;
-				}
-			}
-
-			if (!existed)
-			{
-				existedBlocks.push_back(block.get());
-				block->Draw(spriteBatch);
-			}
-		}
 
 		for (auto const &staticObject : collisionObject.staticObjects)
 			staticObject->Draw(spriteBatch);

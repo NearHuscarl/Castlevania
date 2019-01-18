@@ -30,7 +30,6 @@ void PantherCollisionSystem::Update(UpdateData &updateData)
 		CalculateCollision(*staticObject, results);
 	}
 
-	// TODO: do we need to sort?
 	body.SetCollisionData(FilterCollisionResults(results));
 
 	// Check if player is inside active zone

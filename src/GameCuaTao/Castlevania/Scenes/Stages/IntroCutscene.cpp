@@ -36,7 +36,9 @@ IntroCutscene::IntroCutscene(Stage &stage, CollisionGrid &grid, Player &player) 
 	player.EnableControl(false);
 	player.WalkLeft();
 
-	gatePosition = Vector2{ stage.GetCamera()->GetBounds().Width() / 2, player.GetPosition().y };
+	gatePosition = Vector2{
+		stage.GetCamera()->GetBounds().Width() / 2 + 3,
+		player.GetPosition().y };
 	currentState = State::GOING_TO_THE_GATE;
 }
 
@@ -65,21 +67,6 @@ void IntroCutscene::Update(UpdateData &updateData)
 				player.SetFacing(Facing::Right);
 				nextMapTrigger->GetBody().Enabled(true);
 			}
-			break;
-	}
-}
-
-void IntroCutscene::Draw(SpriteExtensions &spriteBatch)
-{
-	switch (currentState)
-	{
-		case State::GOING_TO_THE_GATE:
-			Cutscene::Draw(spriteBatch);
-			break;
-
-		case State::LOOKING_AT_THE_CASTLE:
-			if (transitionTimer.ElapsedMilliseconds() <= WAITING_TIME)
-				Cutscene::Draw(spriteBatch);
 			break;
 	}
 }

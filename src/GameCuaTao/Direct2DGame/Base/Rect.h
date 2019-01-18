@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include <windows.h>
 #include "Point.h"
 #include "Vector2.h"
@@ -27,6 +28,7 @@ struct Rect : public RECT
 	bool TouchesOrIntersects(Rect value);
 
 	static Rect Merge(Rect value1, Rect value2);
+	static std::vector<Rect> Split(Rect origin, int childWidth, int childHeight);
 
 	operator RectF(); // Implicit conversion
 };

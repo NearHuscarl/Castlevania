@@ -300,19 +300,18 @@ void DevTool::DrawCollisionGridInfo(SpriteExtensions &spriteBatch)
 
 		// another O(n) from grid.GetCollisionObjects(), but it's debugging code so...
 		gridInfoText
-			<< "B:" << objects.blocks.size() << "\n"
 			<< "S:" << objects.staticObjects.size() << "\n"
 			<< "E:" << objects.entities.size() << "\n"
 			<< "CoObjs:" << grid.GetCollisionObjects(col, row).size();
 
 		auto cellBbox = cell.GetBoundingBox();
 		auto gridInfoTextPosition = Vector2{
-			cellBbox.X() + cellBbox.Width() / 2 - 10,
-			cellBbox.Y() + cellBbox.Height() / 2 - 20 };
+			cellBbox.X() + cellBbox.Width() / 2 - 25,
+			cellBbox.Y() + cellBbox.Height() / 2 - 25 };
 
 		auto rightLine = RectF{ cellBbox.right, cellBbox.top, 1, cellBbox.Height() };
 		auto bottomLine = RectF{ cellBbox.left, cellBbox.bottom, cellBbox.Width(), 1 };
-		auto textBackground = RectF{ gridInfoTextPosition.x - 5, gridInfoTextPosition.y - 2, 70, 60 };
+		auto textBackground = RectF{ gridInfoTextPosition.x - 5, gridInfoTextPosition.y - 2, 70, 47 };
 
 		RenderingSystem::DrawBoundingBox(spriteBatch, rightLine, Color::DimGray());
 		RenderingSystem::DrawBoundingBox(spriteBatch, bottomLine, Color::DimGray());

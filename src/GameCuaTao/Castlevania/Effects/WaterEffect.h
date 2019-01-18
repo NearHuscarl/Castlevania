@@ -20,13 +20,13 @@ namespace Castlevania
 	private:
 		bool isFinished;
 
-		Vector2 waterLeftVelocity;
-		Vector2 waterTopVelocity;
-		Vector2 waterRightVelocity;
+		Vector2 dropletLeftVelocity;
+		Vector2 dropletTopVelocity;
+		Vector2 dropletRightVelocity;
 
-		Vector2 waterLeftPosition;
-		Vector2 waterTopPosition;
-		Vector2 waterRightPosition;
+		Vector2 dropletLeftPosition;
+		Vector2 dropletTopPosition;
+		Vector2 dropletRightPosition;
 
 		std::unique_ptr<Sprite> water;
 		Stopwatch lifespanTimer;

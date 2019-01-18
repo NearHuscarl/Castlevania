@@ -22,6 +22,8 @@ namespace Castlevania
 		virtual void Update(GameTime gameTime) override;
 		virtual void Draw(SpriteExtensions &spriteBatch) override;
 
+		bool DrawDebug();
+
 	protected:
 		static std::shared_ptr<Texture> bboxTexture;
 

@@ -12,7 +12,6 @@ namespace Castlevania
 		IntroCutscene(Stage &stage, CollisionGrid &grid, Player &player);
 
 		void Update(UpdateData &updateData) override;
-		void Draw(SpriteExtensions &spriteBatch) override;
 
 	private:
 		enum class State;

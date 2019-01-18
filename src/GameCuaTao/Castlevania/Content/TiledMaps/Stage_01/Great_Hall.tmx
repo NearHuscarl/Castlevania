@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="88" height="6" tilewidth="64" tileheight="64" infinite="0" nextlayerid="11" nextobjectid="135">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="88" height="6" tilewidth="64" tileheight="64" infinite="0" nextlayerid="11" nextobjectid="136">
  <tileset firstgid="1" name="GreatHall" tilewidth="64" tileheight="64" tilecount="110" columns="10">
   <image source="Great_Hall.bmp" width="640" height="704"/>
  </tileset>
@@ -58,7 +58,7 @@
   </object>
  </objectgroup>
  <objectgroup color="#00557f" id="3" name="Bounds">
-  <object id="1" name="Platform" type="Boundary" x="0" y="320" width="3648" height="32"/>
+  <object id="1" name="Platform" type="Boundary" x="0" y="320" width="3072" height="32"/>
   <object id="2" name="Platform" type="Boundary" x="1376" y="192" width="96" height="32"/>
   <object id="3" name="Platform" type="Boundary" x="1504" y="128" width="320" height="32"/>
   <object id="4" name="Platform" type="Boundary" x="1856" y="192" width="160" height="32"/>
@@ -79,6 +79,7 @@
   <object id="81" name="Wall" type="Boundary" x="5616" y="0" width="16" height="320"/>
   <object id="131" name="Platform" type="Boundary" x="3712" y="160" width="64" height="32"/>
   <object id="133" name="Block" type="Boundary" x="3584" y="160" width="32" height="96"/>
+  <object id="135" name="Platform" type="Boundary" x="3072" y="320" width="576" height="32"/>
  </objectgroup>
  <objectgroup color="#ffaa00" id="4" name="Entities">
   <object id="124" name="Boss" type="SpawnPoint" gid="188" x="5293" y="60" width="98" height="46">
@@ -510,7 +511,7 @@
     <property name="Facing" value="Right"/>
    </properties>
   </object>
-  <object id="125" name="Entrypoint1" type="Position" gid="185" x="4220" y="124" width="60" height="66">
+  <object id="125" name="Entrypoint1" type="Position" gid="185" x="3969" y="124" width="60" height="66">
    <properties>
     <property name="Facing" value="Right"/>
    </properties>

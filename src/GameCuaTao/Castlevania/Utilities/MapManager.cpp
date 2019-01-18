@@ -262,15 +262,21 @@ void MapManager::GetEntities(std::vector<std::unique_ptr<GameObject>> &objects, 
 
 void MapManager::GetBounds(std::vector<std::unique_ptr<GameObject>> &objects, TiledMapObjectGroups &objectGroups, RectF area)
 {
+	auto maxBlockWidth = 192.0f; // collisionCell.width * 0.75, collisionCell.width = viewport.width / 2
+	auto maxBlockHeight = 168.0f;
+
 	for (auto properties : objectGroups[BOUND])
 	{
 		auto boundingBox = GetMapObjectBoundingBox(properties, MapObjectType::Rectangle);
-		if (!area.TouchesOrIntersects(boundingBox) && area != RectF::Empty())
-			continue;
+		auto allBoundingboxes = RectF::Split(boundingBox, maxBlockWidth, maxBlockHeight);
 
-		auto object = objectFactory.CreateBoundary(boundingBox);
+		for (auto bBox : allBoundingboxes)
+		{
+			if (!area.Contains(bBox.GetPosition()) && area != RectF::Empty())
+				continue;
 
-		objects.push_back(std::move(object));
+			objects.push_back(objectFactory.CreateBoundary(bBox));
+		}
 	}
 }
 

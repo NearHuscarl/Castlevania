@@ -53,13 +53,21 @@ void RenderingSystem::Update(GameTime gameTime)
 
 void RenderingSystem::Draw(SpriteExtensions &spriteBatch)
 {
-	if (DevTool::IsDebugging && GetParent().GetSprite()->IsVisible())
+	if (DrawDebug())
 	{
 		auto boundingBox = GetSprite().GetBoundingRectangle(GetParent().GetPosition());
 		auto color = GetBoundingBoxColor();
 
 		DrawBoundingBox(spriteBatch, boundingBox, color);
 	}
+}
+
+bool RenderingSystem::DrawDebug()
+{
+	if (DevTool::IsDebugging && GetParent().GetSprite()->IsVisible())
+		return true;
+	else
+		return false;
 }
 
 void RenderingSystem::OnMoveStateChanged()

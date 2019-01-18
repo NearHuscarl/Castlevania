@@ -118,31 +118,29 @@ void CollisionGrid::Add(std::unique_ptr<GameObject> object, CollisionObjectType 
 
 	auto bBox = object->GetBoundingBox();
 	auto position = Vector2{ bBox.left, bBox.top };
-
+	
 	switch (type)
 	{
 		case CollisionObjectType::Block:
 		{
-			auto sharedObject = std::shared_ptr<GameObject>(std::move(object));
-			auto boundingBox = sharedObject->GetBoundingBox();
+			auto &cell = GetCellAtPosition(position);
+			auto &existedObjects = cell.GetStaticObjects();
+			auto existed = false;
 
-			GetCellsFromBoundingBox(boundingBox, [&](CollisionCell &cell, int col, int row)
+			for (auto &existedObject : existedObjects)
 			{
-				auto existedBlocks = cell.GetObjects().blocks;
-				auto existed = false;
+				if (existedObject->GetId() != ObjectId::Boundary)
+					continue;
 
-				for (auto &existedBlock : existedBlocks)
+				if (existedObject->GetBoundingBox() == object->GetBoundingBox())
 				{
-					if (existedBlock->GetBoundingBox() == sharedObject->GetBoundingBox())
-					{
-						existed = true;
-						break;
-					}
+					existed = true;
+					break;
 				}
-				
-				if (!existed)
-					cell.AddBlock(sharedObject);
-			});
+			}
+
+			if (!existed)
+				cell.AddStaticObject(std::move(object));
 			break;
 		}
 
@@ -274,26 +272,8 @@ void CollisionGrid::GetObjectsFromCell(std::vector<GameObject*> &collisionObject
 		return;
 
 	auto &cellObjects = cells.at(col).at(row)->GetObjects();
-	auto &blocks = cellObjects.blocks;
 	auto &entities = cellObjects.entities;
 	auto &staticObjects = cellObjects.staticObjects;
-
-	for (auto &block : blocks) // TODO: divide big block into smaller blocks so each cell can consume it
-	{
-		auto existed = false;
-
-		for (auto existedBlock : collisionObjects)
-		{
-			if (block.get() == existedBlock)
-			{
-				existed = true;
-				break;
-			}
-		}
-
-		if (!existed)
-			collisionObjects.push_back(block.get());
-	}
 
 	for (auto &entity : entities)
 		collisionObjects.push_back(entity.get());

@@ -7,14 +7,14 @@ class Texture
 {
 public:
 	Texture() noexcept;
-	Texture(ITexture_ texture, ImageInfo info);
+	Texture(ITexture_ texture, ImageInfo info) noexcept;
 
 	// This adds a "move constructor" and a "move assignment", which will move the content
-	// from one Texture to another, so that only one points to a given IDirect3DTexture9 at
+	// from one Texture to another to make sure only one IDirect3DTexture9 instace exists at
 	// a time. The compiler should detect these two, and stop generating the implicit copy
 	// constructor and copy assignment, so the Texture can no longer be copied, which is
 	// exactly what we wanted.
-	// Source: https://stackoverflow.com/questions/18449770/c-storing-resources-whose-copy-operation-is-unreasonable-or-impossible#18450030
+	// https://stackoverflow.com/questions/18449770/c-storing-resources-whose-copy-operation-is-unreasonable-or-impossible#18450030
 	Texture(Texture &&rhs) noexcept;
 	Texture &operator=(Texture &&rhs) noexcept;
 

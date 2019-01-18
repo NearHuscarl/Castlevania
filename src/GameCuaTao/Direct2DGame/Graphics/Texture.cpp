@@ -5,7 +5,7 @@ Texture::Texture() noexcept
 	this->texture = nullptr;
 }
 
-Texture::Texture(ITexture_ texture, ImageInfo info)
+Texture::Texture(ITexture_ texture, ImageInfo info) noexcept
 {
 	this->texture = texture;
 	this->info = info;

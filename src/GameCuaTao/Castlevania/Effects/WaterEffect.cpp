@@ -9,9 +9,9 @@ WaterEffect::WaterEffect(std::shared_ptr<Texture> waterTexture)
 {
 	water = std::make_unique<Sprite>(waterTexture);
 
-	waterLeftVelocity = Vector2{ -50, -200 };
-	waterTopVelocity = Vector2{ 25, -400 };
-	waterRightVelocity = Vector2{ 50, -200 };
+	dropletLeftVelocity = Vector2{ -50, -200 };
+	dropletTopVelocity = Vector2{ 25, -400 };
+	dropletRightVelocity = Vector2{ 50, -200 };
 
 	isFinished = true;
 }
@@ -23,9 +23,9 @@ void WaterEffect::Show(Vector2 position)
 		position.x - waterRect.Width() / 2,
 		position.y - waterRect.Height() / 2 };
 
-	waterLeftPosition = waterPosition;
-	waterTopPosition = waterPosition;
-	waterRightPosition = waterPosition;
+	dropletLeftPosition = waterPosition;
+	dropletTopPosition = waterPosition;
+	dropletRightPosition = waterPosition;
 
 	isFinished = false;
 	lifespanTimer.Start();
@@ -43,13 +43,13 @@ void WaterEffect::Update(GameTime gameTime)
 
 	auto deltaTime = (float)gameTime.ElapsedGameTime.Seconds();
 
-	waterLeftVelocity.y += GRAVITY;
-	waterTopVelocity.y += GRAVITY;
-	waterRightVelocity.y += GRAVITY;
+	dropletLeftVelocity.y += GRAVITY;
+	dropletTopVelocity.y += GRAVITY;
+	dropletRightVelocity.y += GRAVITY;
 
-	waterLeftPosition += waterLeftVelocity * deltaTime;
-	waterTopPosition += waterTopVelocity * deltaTime;
-	waterRightPosition += waterRightVelocity * deltaTime;
+	dropletLeftPosition += dropletLeftVelocity * deltaTime;
+	dropletTopPosition += dropletTopVelocity * deltaTime;
+	dropletRightPosition += dropletRightVelocity * deltaTime;
 
 	if (lifespanTimer.ElapsedMilliseconds() >= WATER_EFFECT_LIFESPAN)
 		isFinished = true;
@@ -57,7 +57,7 @@ void WaterEffect::Update(GameTime gameTime)
 
 void WaterEffect::Draw(SpriteExtensions &spriteBatch)
 {
-	spriteBatch.Draw(*water, waterLeftPosition);
-	spriteBatch.Draw(*water, waterTopPosition);
-	spriteBatch.Draw(*water, waterRightPosition);
+	spriteBatch.Draw(*water, dropletLeftPosition);
+	spriteBatch.Draw(*water, dropletTopPosition);
+	spriteBatch.Draw(*water, dropletRightPosition);
 }
