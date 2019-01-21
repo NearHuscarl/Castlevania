@@ -1,6 +1,7 @@
 #include "ResetCutscene.h"
 #include "Stage.h"
 #include "StageEvent.h"
+#include "../../Utilities/AudioManager.h"
 
 using namespace Castlevania;
 
@@ -20,6 +21,7 @@ ResetCutscene::ResetCutscene(Stage &stage, ContentManager &content) : Cutscene{ 
 	currentState = State::BEFORE_PLAYING_CUTSCENE;
 
 	stage.GetHud()->Unregister<int>(); // unregister boss health if in boss scene
+	AudioManager::Stop(M_BLOCK_01);
 	transitionTimer.Start();
 }
 
@@ -56,7 +58,10 @@ void ResetCutscene::Draw(SpriteExtensions &spriteBatch)
 			spriteBatch.Draw(*cutsceneBackground, Vector2::Zero(), false);
 
 			if (isComplete)
+			{
+				AudioManager::PlaySong(M_BLOCK_01);
 				stage.OnNotify(Subject::Empty(), RESET_STAGE_CUTSCENE_ENDED);
+			}
 			break;
 	}
 }

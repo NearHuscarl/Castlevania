@@ -521,6 +521,22 @@ HRESULT CSound::Stop()
 }
 
 
+//-----------------------------------------------------------------------------
+// Name: CSound::Reset()
+// Desc: Reset all of the sound buffers
+//-----------------------------------------------------------------------------
+HRESULT CSound::Resume()
+{
+	if (m_apDSBuffer == NULL)
+		return CO_E_NOTINITIALIZED;
+
+	HRESULT hr = 0;
+
+	for (DWORD i = 0; i < m_dwNumBuffers; i++)
+		hr |= m_apDSBuffer[i]->Play(0, 0, DSBPLAY_LOOPING);
+
+	return hr;
+}
 
 
 //-----------------------------------------------------------------------------

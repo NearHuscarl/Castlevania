@@ -1,6 +1,7 @@
 #include "Fishman.h"
 #include "../../UpdateData.h"
 #include "../../Settings.h"
+#include "../../../Utilities/AudioManager.h"
 #include "../../../Utilities/CollisionGrid.h"
 
 using namespace Castlevania;
@@ -54,6 +55,7 @@ void Fishman::Update(UpdateData &updateData)
 void Fishman::Launch()
 {
 	velocity.y = -launchSpeed;
+	AudioManager::Play(SE_FISHMAN_LAUNCHING);
 	SetFishmanState(FishmanState::LAUNCHING);
 }
 

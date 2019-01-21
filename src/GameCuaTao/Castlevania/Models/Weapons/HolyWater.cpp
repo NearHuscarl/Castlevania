@@ -1,5 +1,6 @@
 #include "HolyWater.h"
 #include "../Settings.h"
+#include "../../Utilities/AudioManager.h"
 
 using namespace Castlevania;
 
@@ -14,6 +15,7 @@ void HolyWater::StartFlaming()
 	Detach<IMovementSystem>();
 	isFlaming = true;
 	SendMessageToSystems(MOVE_STATE_CHANGED);
+	AudioManager::Play(SE_HOLY_WATER_TOUCHING_GROUND);
 	flamingTimer.Start();
 }
 

@@ -1,5 +1,6 @@
 #include "GoToCastleCutScene.h"
 #include "Stage.h"
+#include "../../Utilities/AudioManager.h"
 
 using namespace Castlevania;
 
@@ -70,6 +71,7 @@ void GoToCastleCutscene::SetupCutscene()
 	nextMapTrigger->GetBody().Enabled(true);
 
 	currentState = State::WALKING_TO_CASTLE_GATE;
+	AudioManager::Play(SE_GOING_TO_CASTLE);
 }
 
 void GoToCastleCutscene::Update(UpdateData &updateData)

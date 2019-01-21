@@ -2,11 +2,11 @@
 #include "LevelCompletedCutscene.h"
 #include "Stage.h"
 #include "StageEvent.h"
+#include "../../Utilities/AudioManager.h"
 
 using namespace Castlevania;
 
 constexpr auto CRYSTAL_BALL_HOVERING_TRANSITION_TIME = 1000;
-constexpr auto CRYSTAL_BALL_ON_GROUND_TRANSITION_TIME = 2500;
 constexpr auto CONVERTING_TIME_REMAINING_TO_EXP_TRANSITION_TIME = 500;
 constexpr auto CONVERTING_HEART_TO_EXP_TRANSITION_TIME = 1000;
 constexpr auto TIME_TO_EXP_UPDATE_TIME = 20;
@@ -66,10 +66,14 @@ void LevelCompletedCutscene::Update(UpdateData &updateData)
 			if (crystalBall->GetId() == ObjectId::CrystalBall && crystalBall->GetState() != ObjectState::DEAD)
 				break;
 
-			if (player.GetData().health.Value() == MAX_HEALTH && !transitionTimer.IsRunning())
+			if (!transitionTimer.IsRunning())
+			{
+				AudioManager::Stop(M_BOSS_BATTLE);
+				AudioManager::Play(SE_STAGE_CLEAR);
 				transitionTimer.Start();
+			}
 
-			if (transitionTimer.ElapsedMilliseconds() >= CRYSTAL_BALL_ON_GROUND_TRANSITION_TIME)
+			if (!AudioManager::IsPlaying(SE_STAGE_CLEAR) && player.GetData().health.Value() == MAX_HEALTH)
 			{
 				currentState = State::CONVERTING_TIME_REMAINING_TO_EXP;
 				transitionTimer.Reset();
@@ -85,6 +89,8 @@ void LevelCompletedCutscene::Update(UpdateData &updateData)
 					player.AddExp(20);
 					auto counter = MathHelper::Max(gameplayData.timeLeft.GetCounter() - 2, 0);
 					gameplayData.timeLeft.SetCounter(counter);
+					//AudioManager::Reset(SE_GETTING_TIME_BONUS);
+					AudioManager::Play(SE_GETTING_TIME_BONUS);
 					scoreUpdateTimer.Restart();
 				}
 			}
@@ -109,6 +115,8 @@ void LevelCompletedCutscene::Update(UpdateData &updateData)
 				{
 					player.AddExp(100);
 					player.AddHeart(-1);
+					AudioManager::Reset(SE_GETTING_HEART_BONUS);
+					AudioManager::Play(SE_GETTING_HEART_BONUS);
 					scoreUpdateTimer.Restart();
 				}
 			}

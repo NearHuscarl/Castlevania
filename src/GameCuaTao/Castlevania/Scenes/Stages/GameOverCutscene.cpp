@@ -24,14 +24,11 @@ GameOverCutscene::GameOverCutscene(Stage &stage, ContentManager &content, Gamepl
 	cutsceneBackground = std::make_unique<Sprite>(cutsceneTexture);
 	currentState = State::BEFORE_PLAYING_CUTSCENE;
 
-	stage.GetHud()->Unregister<int>(); // unregister boss health if in boss scene
 	transitionTimer.Start();
 }
 
 void GameOverCutscene::Update(UpdateData &updateData)
 {
-	stage.UpdateGameplay(updateData);
-
 	switch (currentState)
 	{
 		case State::BEFORE_PLAYING_CUTSCENE:

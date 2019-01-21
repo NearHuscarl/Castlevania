@@ -4,6 +4,7 @@
 #include "../../Settings.h"
 #include "../../UpdateData.h"
 #include "../../../Scenes/Stages/StageEvent.h"
+#include "../../../Utilities/AudioManager.h"
 
 using namespace Castlevania;
 
@@ -345,6 +346,7 @@ void PlayerResponseSystem::OnCollideWithMoneyBag(CollisionResult &result)
 	moneyBag.SetPosition(effectPosition);
 
 	parent.AddExp(moneyBag.GetMoney());
+	AudioManager::Play(SE_GETTING_MONEY_BAG);
 }
 
 void PlayerResponseSystem::OnCollideWithSubWeaponItem(CollisionResult &result)
@@ -354,6 +356,7 @@ void PlayerResponseSystem::OnCollideWithSubWeaponItem(CollisionResult &result)
 
 	subWeaponItem.Destroy();
 	parent.SetSubWeapon(itemId);
+	AudioManager::Play(SE_GETTING_POWERUP);
 }
 
 void PlayerResponseSystem::OnCollideWithCross(CollisionResult &result)
@@ -362,6 +365,7 @@ void PlayerResponseSystem::OnCollideWithCross(CollisionResult &result)
 
 	parent.Notify(CROSS_POWERUP_ACTIVATED);
 	cross.Destroy();
+	AudioManager::Play(SE_GETTING_HOLY_CROSS);
 }
 
 void PlayerResponseSystem::OnCollideWithHeart(CollisionResult &result)
@@ -370,6 +374,7 @@ void PlayerResponseSystem::OnCollideWithHeart(CollisionResult &result)
 
 	parent.AddHeart(5);
 	largeHeart.Destroy();
+	AudioManager::Play(SE_GETTING_HEART);
 }
 
 void PlayerResponseSystem::OnCollideWithSmallHeart(CollisionResult &result)
@@ -378,6 +383,7 @@ void PlayerResponseSystem::OnCollideWithSmallHeart(CollisionResult &result)
 
 	parent.AddHeart(1);
 	smallHeart.Destroy();
+	AudioManager::Play(SE_GETTING_HEART);
 }
 
 void PlayerResponseSystem::OnCollideWithInvisibleJar(CollisionResult &result)
@@ -394,6 +400,7 @@ void PlayerResponseSystem::OnCollideWithPorkChop(CollisionResult &result)
 
 	parent.data.health.Add(6);
 	porkChop.Destroy();
+	AudioManager::Play(SE_GETTING_POWERUP);
 }
 
 void PlayerResponseSystem::OnCollideWithWhipPowerup(CollisionResult &result)
@@ -420,6 +427,7 @@ void PlayerResponseSystem::OnCollideWithWhipPowerup(CollisionResult &result)
 	}
 
 	whipPowerup.Destroy();
+	AudioManager::Play(SE_GETTING_POWERUP);
 }
 
 void PlayerResponseSystem::OnCollideWithDoubleShot(CollisionResult &result)
@@ -428,6 +436,7 @@ void PlayerResponseSystem::OnCollideWithDoubleShot(CollisionResult &result)
 
 	parent.data.powerup = ObjectId::DoubleShot;
 	doubleShot.Destroy();
+	AudioManager::Play(SE_GETTING_POWERUP);
 }
 
 void PlayerResponseSystem::OnCollideWithCrystalBall(CollisionResult &result)

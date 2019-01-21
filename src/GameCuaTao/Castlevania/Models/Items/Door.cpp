@@ -1,5 +1,6 @@
 #include "Door.h"
 #include "../Settings.h"
+#include "../../Utilities/AudioManager.h"
 
 using namespace Castlevania;
 
@@ -21,11 +22,13 @@ void Door::Idle()
 void Door::Open()
 {
 	doorState = DoorState::OPENING;
+	AudioManager::Play(SE_USING_DOOR);
 	SendMessageToSystems(MOVE_STATE_CHANGED);
 }
 
 void Door::Close()
 {
 	doorState = DoorState::CLOSING;
+	AudioManager::Play(SE_USING_DOOR);
 	SendMessageToSystems(MOVE_STATE_CHANGED);
 }

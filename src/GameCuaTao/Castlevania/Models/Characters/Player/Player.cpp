@@ -5,6 +5,7 @@
 #include "../../Settings.h"
 #include "../../UpdateData.h"
 #include "../../../Scenes/Stages/StageEvent.h"
+#include "../../../Utilities/AudioManager.h"
 #include "../../../Utilities/CollisionGrid.h"
 
 using namespace Castlevania;
@@ -194,6 +195,7 @@ void Player::UpdateStates()
 
 	if (invisibleTimer.ElapsedMilliseconds() > INVISIBLE_TIME)
 	{
+		AudioManager::Play(SE_INVISIBLE_END);
 		invisibleTimer.Reset();
 		SendMessageToSystems(INVISIBLE_ENDED);
 	}
@@ -368,7 +370,7 @@ void Player::Attack()
 
 void Player::Stoptime()
 {
-	if (isStopwatchActive)
+	if (isStopwatchActive || data.hearts < 5)
 		return;
 
 	data.hearts = MathHelper::Max(data.hearts - 5, 0);
@@ -384,8 +386,7 @@ void Player::Throw(std::unique_ptr<RangedWeapon> weapon)
 	{
 		if (throwingCooldownTimer.ElapsedMilliseconds() < THROWING_COOLDOWN_TIME)
 			return;
-
-		if (throwingCooldownTimer.ElapsedMilliseconds() >= THROWING_COOLDOWN_TIME)
+		else
 		{
 			if (data.powerup == ObjectId::DoubleShot)
 				subWeaponCount = 2;
@@ -511,6 +512,7 @@ void Player::Land()
 	{
 		SetMoveState(MoveState::LANDING_HARD);
 		velocity = Vector2::Zero();
+		AudioManager::Play(SE_LANDING);
 		landingTimer.Start();
 	}
 	else
@@ -529,6 +531,7 @@ void Player::Flash()
 
 void Player::BecomeInvisible()
 {
+	AudioManager::Play(SE_INVISIBLE_START);
 	invisibleTimer.Start();
 	SendMessageToSystems(INVISIBLE_STARTED);
 }
@@ -545,6 +548,7 @@ void Player::TakeDamage(int damage, Direction direction)
 
 	data.health.Add(-damage);
 	untouchableTimer.Start();
+	AudioManager::Play(SE_BEING_HIT);
 	SendMessageToSystems(UNTOUCHABLE_STARTED);
 }
 
@@ -583,6 +587,7 @@ void Player::Die()
 
 	velocity.x = 0.0f;
 	controlSystem->Enabled(false);
+	AudioManager::Play(SE_LIVE_LOST);
 	SetState(ObjectState::DYING);
 }
 

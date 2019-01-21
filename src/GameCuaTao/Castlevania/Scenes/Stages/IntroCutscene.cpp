@@ -1,6 +1,7 @@
 #include "IntroCutscene.h"
 #include "Stage.h"
 #include "StageEvent.h"
+#include "../../Utilities/AudioManager.h"
 
 using namespace Castlevania;
 
@@ -40,6 +41,8 @@ IntroCutscene::IntroCutscene(Stage &stage, CollisionGrid &grid, Player &player) 
 		stage.GetCamera()->GetBounds().Width() / 2 + 3,
 		player.GetPosition().y };
 	currentState = State::GOING_TO_THE_GATE;
+
+	AudioManager::Play(M_INTRO_SCENE);
 }
 
 void IntroCutscene::Update(UpdateData &updateData)

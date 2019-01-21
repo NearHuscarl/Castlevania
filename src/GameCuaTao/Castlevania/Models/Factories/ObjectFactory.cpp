@@ -2,6 +2,7 @@
 #include "Direct2DGame/Utilities/CppExtensions.h"
 #include "ObjectFactory.h"
 #include "../../Utilities/TypeConverter.h"
+#include "../../Settings/Audios.h"
 #include "../Systems/Movement/SimpleMovementSystem.h"
 #include "../Systems/Movement/EntityMovementSystem.h"
 #include "../Systems/Movement/WaveMovementSystem.h"
@@ -495,6 +496,7 @@ std::unique_ptr<RangedWeapon> ObjectFactory::CreateAxe(Vector2 position)
 	auto renderingSystem = std::make_unique<AnimationRenderingSystem>(*object, "Weapons/Axe.ani.xml");
 
 	object->SetPosition(position);
+	object->SetThrowSoundEffect(SE_USING_WEAPON);
 	object->Attach(std::move(movementSystem));
 	object->Attach(std::move(collisionSystem));
 	object->Attach(std::move(responseSystem));
@@ -518,6 +520,7 @@ std::unique_ptr<RangedWeapon> ObjectFactory::CreateDagger(Vector2 position)
 	auto renderingSystem = std::make_unique<SpriteRenderingSystem>(*object, "Weapons/Dagger.png");
 
 	object->SetPosition(position);
+	object->SetThrowSoundEffect(SE_THROWING_DAGGER);
 	object->Attach(std::move(movementSystem));
 	object->Attach(std::move(collisionSystem));
 	object->Attach(std::move(responseSystem));

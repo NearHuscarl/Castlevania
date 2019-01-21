@@ -1,6 +1,7 @@
 #include "HiddenMoneyBagCutscene.h"
 #include "Stage.h"
 #include "StageEvent.h"
+#include "../../Utilities/AudioManager.h"
 
 using namespace Castlevania;
 
@@ -22,6 +23,7 @@ HiddenMoneyBagCutscene::HiddenMoneyBagCutscene(
 	emergeEndPoint = Vector2{ spawnPoint.x, spawnPoint.y - moneyBag->GetFrameRect().Height() };
 
 	grid.Add(std::move(moneyBag), CollisionObjectType::Entity);
+	AudioManager::Play(SE_HIDDEN_MONEY_BAG_FOUND);
 }
 
 void HiddenMoneyBagCutscene::Update(UpdateData &updateData)

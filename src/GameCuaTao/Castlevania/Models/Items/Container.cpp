@@ -2,6 +2,7 @@
 #include "Powerup.h"
 #include "../Settings.h"
 #include "../../Models/UpdateData.h"
+#include "../../Utilities/AudioManager.h"
 #include "../../Utilities/CollisionGrid.h"
 
 using namespace Castlevania;
@@ -30,6 +31,11 @@ void Container::OnBeingHit()
 		SpawnItem();
 	}
 	
+	if (objectId == ObjectId::BreakableBlock)
+		AudioManager::PlayOneInstance(SE_HITTING_BREAKABLE_BLOCK);
+	else
+		AudioManager::PlayOneInstance(SE_HITTING_SOMETHING);
+
 	SetState(ObjectState::DYING);
 	body.Enabled(false);
 }

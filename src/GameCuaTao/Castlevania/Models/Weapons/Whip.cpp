@@ -2,6 +2,7 @@
 #include "Whip.h"
 #include "../Settings.h"
 #include "WhipFlashingRenderingSystem.h"
+#include "../../Utilities/AudioManager.h"
 
 using namespace Castlevania;
 
@@ -63,6 +64,7 @@ void Whip::Unleash()
 	// Collision detection will be turn on when whip is on the attack frame
 	// body.Enabled(true);
 	SendMessageToSystems(WHIP_UNLEASHED);
+	AudioManager::Play(SE_USING_WEAPON);
 }
 
 void Whip::Withdraw()

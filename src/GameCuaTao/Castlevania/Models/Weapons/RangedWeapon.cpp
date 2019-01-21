@@ -1,11 +1,17 @@
 #include "RangedWeapon.h"
 #include "../UpdateData.h"
+#include "../../Utilities/AudioManager.h"
 
 using namespace Castlevania;
 
 RangedWeapon::RangedWeapon(ObjectId type) : GameObject{ type }
 {
 	this->throwVelocity = Vector2{ 500, 0 };
+}
+
+void RangedWeapon::SetThrowSoundEffect(std::string soundEffect)
+{
+	throwSoundEffect = soundEffect;
 }
 
 Vector2 RangedWeapon::GetThrowVelocity()
@@ -54,4 +60,6 @@ void RangedWeapon::Throw(Vector2 position)
 		velocity.x = std::abs(velocity.x);
 	else
 		velocity.x = -std::abs(velocity.x);
+
+	AudioManager::Play(throwSoundEffect);
 }

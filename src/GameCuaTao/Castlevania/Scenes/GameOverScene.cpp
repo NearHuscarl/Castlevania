@@ -3,6 +3,7 @@
 #include "GameOverScene.h"
 #include "SceneManager.h"
 #include "GameplayScene.h"
+#include "../Utilities/AudioManager.h"
 
 using namespace Castlevania;
 
@@ -33,6 +34,8 @@ void GameOverScene::LoadContent()
 
 	endTextPosition.x = gameOverTextPosition.x + 12;
 	endTextPosition.y = gameOverTextPosition.y + 130;
+
+	AudioManager::Play(M_GAME_OVER);
 }
 
 void GameOverScene::Update(GameTime gameTime)

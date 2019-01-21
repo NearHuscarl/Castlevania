@@ -3,10 +3,11 @@
 #include "Direct2DGame/Utilities/CppExtensions.h"
 #include "DevTool.h"
 #include "TypeConverter.h"
+#include "AudioManager.h"
+#include "CollisionGrid.h"
 #include "../Scenes/SceneManager.h"
 #include "../Scenes/GameplayScene.h"
 #include "../Models/Systems/Rendering/RenderingSystem.h"
-#include "../Utilities/CollisionGrid.h"
 
 using namespace Castlevania;
 
@@ -151,14 +152,21 @@ void DevTool::LoadContent(ContentManager &content)
 void DevTool::Update(SceneManager &sceneManager)
 {
 	if (InputHelper::IsKeyDown(DIK_NUMPAD1))
+	{
+		AudioManager::StopAll();
 		sceneManager.SetNextScene(Scene::MENU);
+	}
 	else if (InputHelper::IsKeyDown(DIK_NUMPAD2))
 	{
+		AudioManager::StopAll();
 		auto &scene = sceneManager.SetNextScene(Scene::GAMEPLAY);
 		dynamic_cast<GameplayScene&>(scene).NextStage(Map::COURTYARD);
 	}
 	else if (InputHelper::IsKeyDown(DIK_NUMPAD3))
+	{
+		AudioManager::StopAll();
 		sceneManager.SetNextScene(Scene::GAMEOVER);
+	}
 }
 
 void DevTool::Update(UpdateData &updatData)

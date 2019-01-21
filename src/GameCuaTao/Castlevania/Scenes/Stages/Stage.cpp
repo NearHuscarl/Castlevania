@@ -16,6 +16,7 @@
 #include "../GameplayScene.h"
 #include "../SceneManager.h"
 #include "../../Models/UpdateData.h"
+#include "../../Utilities/AudioManager.h"
 #include "../../Utilities/TypeConverter.h"
 
 using namespace Castlevania;
@@ -244,6 +245,8 @@ void Stage::LoadMap()
 
 	if (currentMap == Map::INTRO)
 		SetCurrentCutscene(GameState::INTRO_CUTSCENE);
+	else if (currentMap == Map::COURTYARD)
+		AudioManager::PlaySong(M_BLOCK_01);
 }
 
 void Stage::Reset()
@@ -297,7 +300,13 @@ void Stage::UpdateGameplay(UpdateData &updateData)
 	UpdateGameObjects(updateData);
 
 	if (!updateData.isStopwatchActive)
-		data->timeLeft.CountDown();
+	{
+		auto &timeLeft = data->timeLeft;
+
+		if (timeLeft.CountDown() &&
+			timeLeft.GetCounter() >= 0 && timeLeft.GetCounter() < 30)
+			AudioManager::Play(SE_TIMEOUT_WARNING);
+	}
 }
 
 void Stage::DrawGameplay(SpriteExtensions &spriteBatch)

@@ -30,11 +30,14 @@ int Timer::GetCounter() const
 	return counter;
 }
 
-void Timer::CountDown()
+bool Timer::CountDown()
 {
 	if (stopwatch.ElapsedMilliseconds() > 1000)
 	{
 		counter--;
 		stopwatch.Restart();
+		return true;
 	}
+	else
+		return false;
 }

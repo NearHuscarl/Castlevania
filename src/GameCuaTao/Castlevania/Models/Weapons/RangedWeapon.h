@@ -11,6 +11,7 @@ namespace Castlevania
 	public:
 		RangedWeapon(ObjectId type);
 
+		void SetThrowSoundEffect(std::string soundEffect);
 		Vector2 GetThrowVelocity();
 		void SetThrowVelocity(Vector2 velocity);
 		int GetAttack() override;
@@ -22,5 +23,6 @@ namespace Castlevania
 	private:
 		Vector2 throwVelocity;
 		int attack;
+		std::string throwSoundEffect;
 	};
 }

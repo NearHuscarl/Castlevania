@@ -5,6 +5,7 @@
 #include "../Characters/Enemies/Enemy.h"
 #include "../Settings.h"
 #include "../IAttackable.h"
+#include "../../Utilities/AudioManager.h"
 
 using namespace Castlevania;
 
@@ -105,6 +106,7 @@ void WeaponResponseSystem::OnCollideWithEnemy(CollisionResult &result, Player &p
 
 	hitObjects.push_back(&enemy);
 	enemy.TakeDamage(weapon->GetAttack());
+	AudioManager::PlayOneInstance(SE_HITTING_SOMETHING);
 
 	if (enemy.GetState() == ObjectState::DYING)
 		player.AddExp(enemy.GetExp());
@@ -119,6 +121,7 @@ void WeaponResponseSystem::OnCollideWithFireball(CollisionResult &result)
 
 	fireball.GetBody().Enabled(false);
 	fireball.SetState(ObjectState::DYING);
+	AudioManager::PlayOneInstance(SE_HITTING_SOMETHING);
 
 	if (destroyOnHit)
 		parent.Destroy();

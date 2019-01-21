@@ -1,6 +1,7 @@
 #include "BossFightCutscene.h"
 #include "Stage.h"
 #include "StageEvent.h"
+#include "../../Utilities/AudioManager.h"
 
 using namespace Castlevania;
 
@@ -57,6 +58,8 @@ void BossFightCutscene::Update(UpdateData &updateData)
 		boss->SetActive();
 	
 		stage.OnNotify(Subject::Empty(), CUTSCENE_ENDED);
+		AudioManager::Stop(M_BLOCK_01);
+		AudioManager::PlaySong(M_BOSS_BATTLE);
 		isComplete = true;
 	}
 }

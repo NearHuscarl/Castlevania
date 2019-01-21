@@ -15,7 +15,7 @@ namespace Castlevania
 		void ResetLastSecond();
 		int GetCounter() const;
 
-		void CountDown();
+		bool CountDown();
 
 	private:
 		int counter;

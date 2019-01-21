@@ -1,7 +1,6 @@
 #include "Direct2DGame/Input/InputHelper.h"
 #include "CastlevaniaGame.h"
 #include "Utilities/AudioManager.h"
-#include "Settings/Audios.h"
 
 using namespace Castlevania;
 
@@ -25,7 +24,7 @@ void CastlevaniaGame::Initialize()
 
 void CastlevaniaGame::LoadContent()
 {
-	AudioManager::LoadContent(*content, GAME_AUDIO);
+	AudioManager::LoadContent(*content);
 }
 
 void CastlevaniaGame::Update(GameTime gameTime)
