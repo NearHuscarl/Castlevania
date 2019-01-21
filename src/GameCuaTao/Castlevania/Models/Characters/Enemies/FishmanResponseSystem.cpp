@@ -25,7 +25,7 @@ void FishmanResponseSystem::Update(UpdateData &updateData)
 
 		switch (objectId)
 		{
-			case ObjectId::Boundary:
+			case ObjectId::Block:
 			{
 				if (result.direction == Direction::Top)
 				{

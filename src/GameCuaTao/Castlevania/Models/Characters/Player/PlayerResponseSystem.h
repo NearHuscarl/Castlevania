@@ -28,7 +28,7 @@ namespace Castlevania
 
 		void OnFalling() override;
 
-		void OnCollideWithBoundary(CollisionResult &result, ResponseResult &responseResult);
+		void OnCollideWithBlock(CollisionResult &result, ResponseResult &responseResult);
 		void OnCollideWithTrigger(CollisionResult &result, ResponseResult &responseResult);
 		void OnCollideWithBossFightArea(CollisionResult &result, Rect viewport);
 		void OnCollideWithWaterArea(CollisionResult &result, ObjectCollection &objectCollection);

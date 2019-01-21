@@ -275,7 +275,7 @@ void MapManager::GetBounds(std::vector<std::unique_ptr<GameObject>> &objects, Ti
 			if (!area.Contains(bBox.GetPosition()) && area != RectF::Empty())
 				continue;
 
-			objects.push_back(objectFactory.CreateBoundary(bBox));
+			objects.push_back(objectFactory.CreateBlock(bBox));
 		}
 	}
 }

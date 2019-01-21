@@ -85,8 +85,8 @@ void WhipRenderingSystem::OnWhipWithdrawn()
 
 void WhipRenderingSystem::UpdatePositionRelativeToPlayer()
 {
-	auto &player = parent.GetOwner();
-	auto playerBbox = player.GetBoundingBox();
+	auto player = parent.GetOwner();
+	auto playerBbox = player->GetBoundingBox();
 	auto whipBbox = parent.GetBoundingBox();
 	auto currentFrameIndex = GetSprite().GetCurrentAnimation().GetCurrentFrameIndex();
 	auto newPosition = Vector2{};

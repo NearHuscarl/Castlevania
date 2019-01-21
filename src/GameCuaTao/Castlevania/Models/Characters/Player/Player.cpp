@@ -105,6 +105,7 @@ void Player::AddHeart(int amount)
 void Player::SetWhip(std::unique_ptr<Whip> whip)
 {
 	this->whip = std::move(whip);
+	this->whip->SetOwner(this);
 }
 
 ObjectId Player::GetSubWeapon()
@@ -583,12 +584,15 @@ void Player::Die()
 	velocity.x = 0.0f;
 	controlSystem->Enabled(false);
 	SetState(ObjectState::DYING);
-	data.lives--;
 }
 
 void Player::Revive()
 {
 	data.health = Health{ MAX_HEALTH };
+	data.hearts = DEFAULT_HEART_COUNT;
+	data.subWeapon = ObjectId::Unknown;
+	data.lives--;
+
 	Idle();
 	EnableControl(true);
 	SetState(ObjectState::NORMAL);

@@ -7,6 +7,7 @@
 namespace Castlevania
 {
 	constexpr auto MAX_HEALTH = 16;
+	constexpr auto DEFAULT_HEART_COUNT = 5;
 
 	struct PlayerData
 	{
@@ -17,7 +18,7 @@ namespace Castlevania
 			health = Health{ MAX_HEALTH };
 			subWeapon = ObjectId::Unknown;
 			powerup = ObjectId::Unknown;
-			hearts = 5;
+			hearts = DEFAULT_HEART_COUNT;
 			lives = 3;
 		}
 

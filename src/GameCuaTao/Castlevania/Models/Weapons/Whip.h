@@ -11,13 +11,14 @@ namespace Castlevania
 	class Whip : public GameObject, public IAttackable
 	{
 	public:
-		Whip(GameObject &owner);
+		Whip();
 
 		int GetLevel();
 		void SetLevel(int level);
 		int GetAttack() override;
 		void SetAttack(int attack) override;
-		GameObject &GetOwner();
+		GameObject *GetOwner();
+		void SetOwner(GameObject *owner);
 		void SetFacing(Facing facing) override;
 
 		void LoadContent(ContentManager &content) override;
@@ -27,7 +28,7 @@ namespace Castlevania
 		void Upgrade();
 
 	private:
-		GameObject &owner;
+		GameObject *owner;
 		int level; // lvl 1-3
 	};
 }

@@ -129,7 +129,7 @@ void CollisionGrid::Add(std::unique_ptr<GameObject> object, CollisionObjectType 
 
 			for (auto &existedObject : existedObjects)
 			{
-				if (existedObject->GetId() != ObjectId::Boundary)
+				if (existedObject->GetId() != ObjectId::Block)
 					continue;
 
 				if (existedObject->GetBoundingBox() == object->GetBoundingBox())

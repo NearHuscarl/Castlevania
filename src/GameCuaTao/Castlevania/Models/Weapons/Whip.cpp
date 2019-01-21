@@ -12,9 +12,7 @@ const auto HITPOINTS = std::map<int, int>
 	{ 3, 2 },
 };
 
-Whip::Whip(GameObject &owner) :
-	GameObject{ ObjectId::Whip },
-	owner{ owner }
+Whip::Whip() : GameObject{ ObjectId::Whip }
 {
 	level = 1;
 }
@@ -38,9 +36,14 @@ void Whip::SetAttack(int attack)
 {
 }
 
-GameObject &Whip::GetOwner()
+GameObject *Whip::GetOwner()
 {
 	return owner;
+}
+
+void Whip::SetOwner(GameObject *owner)
+{
+	this->owner = owner;
 }
 
 void Whip::SetFacing(Facing facing)

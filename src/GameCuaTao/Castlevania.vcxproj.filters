@@ -510,6 +510,9 @@
     <ClCompile Include="Castlevania\Models\PowerupGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Castlevania\Scenes\Stages\GameOverCutscene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\pugixml.hpp">
@@ -1167,6 +1170,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Castlevania\Scenes\Stages\GameOverCutscene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,7 +4,7 @@ namespace Castlevania
 {
 	enum class ObjectId
 	{
-		Boundary,
+		Block,
 		Position,
 		Trigger,
 		Player,

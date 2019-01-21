@@ -89,7 +89,7 @@ Color RenderingSystem::GetBoundingBoxColor()
 
 	switch (objectId)
 	{
-		case ObjectId::Boundary:
+		case ObjectId::Block:
 			return Color::DimGray() * bboxColorScale;
 
 		case ObjectId::SpawnArea:

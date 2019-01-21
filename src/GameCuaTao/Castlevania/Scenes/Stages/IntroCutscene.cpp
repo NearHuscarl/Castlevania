@@ -66,7 +66,17 @@ void IntroCutscene::Update(UpdateData &updateData)
 				player.Idle();
 				player.SetFacing(Facing::Right);
 				nextMapTrigger->GetBody().Enabled(true);
+				isFinished = true;
 			}
 			break;
+	}
+}
+
+void IntroCutscene::Draw(SpriteExtensions &spriteBatch)
+{
+	// Dont draw the one frame right before changing cutscene where simon is in IDLE animation
+	if (!isFinished)
+	{
+		Cutscene::Draw(spriteBatch);
 	}
 }

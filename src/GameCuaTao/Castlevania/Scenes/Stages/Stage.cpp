@@ -8,6 +8,7 @@
 #include "NextMapCutscene.h"
 #include "NextRoomCutscene.h"
 #include "LevelCompletedCutscene.h"
+#include "GameOverCutscene.h"
 #include "ResetCutscene.h"
 #include "GoToCastleCutScene.h"
 #include "CrossCutScene.h"
@@ -105,7 +106,7 @@ void Stage::ClearObjectsWithin(Rect area, std::set<GameObject*> exceptionList)
 			auto obj = (*it).get();
 			auto objBbox = (Rect)obj->GetBoundingBox();
 
-			if (obj->GetId() == ObjectId::Boundary)
+			if (obj->GetId() == ObjectId::Block)
 				continue;
 
 			if (exceptionList.find(obj) == exceptionList.end() && activeArea.Contains(objBbox))
@@ -264,6 +265,7 @@ void Stage::Reset()
 		}
 	}
 
+	player->SetWhip(objectFactory.CreateWhip()); // reset whip to level 1
 	player->Revive();
 	data->timeLeft.SetCounter(STAGE_TIME);
 	currentState = GameState::PLAYING;
@@ -383,8 +385,7 @@ void Stage::ProcessMessage(int message)
 
 		case GAME_OVER:
 		case LEVEL_COMPLETED:
-			camera->SetPosition(Vector2::Zero());
-			gameplayScene.GetSceneManager().SetNextScene(Scene::GAMEOVER);
+			SetCurrentCutscene(GameState::GAMEOVER_CUTSCENE);
 			break;
 
 		case RESET_STAGE_CUTSCENE_ENDED:
@@ -429,6 +430,9 @@ std::unique_ptr<Cutscene> Stage::ConstructCutscene(GameState gameState)
 
 		case GameState::LEVEL_COMPLETED_CUTSCENE:
 			return std::make_unique<LevelCompletedCutscene>(*this, *grid, objectFactory, *player, *data);
+		
+		case GameState::GAMEOVER_CUTSCENE:
+			return std::make_unique<GameOverCutscene>(*this, content, gameplayScene);
 
 		case GameState::RESET_STAGE_CUTSCENE:
 			return std::make_unique<ResetCutscene>(*this, content);

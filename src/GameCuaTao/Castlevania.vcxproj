@@ -251,6 +251,7 @@ XCOPY "$(ProjectDir)Castlevania\Content" "$(TargetDir)Castlevania\Content" /D /E
     <ClCompile Include="Castlevania\Scenes\Stages\BossFightCutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\CrossCutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\Cutscene.cpp" />
+    <ClCompile Include="Castlevania\Scenes\Stages\GameOverCutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\GoToCastleCutScene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\HiddenMoneyBagCutscene.cpp" />
     <ClCompile Include="Castlevania\Scenes\Stages\IntroCutscene.cpp" />
@@ -432,6 +433,7 @@ XCOPY "$(ProjectDir)Castlevania\Content" "$(TargetDir)Castlevania\Content" /D /E
     <ClInclude Include="Castlevania\Scenes\GameplayData.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\BossFightCutscene.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\CrossCutscene.h" />
+    <ClInclude Include="Castlevania\Scenes\Stages\GameOverCutscene.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\GoToCastleCutScene.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\Cutscene.h" />
     <ClInclude Include="Castlevania\Scenes\Stages\HiddenMoneyBagCutscene.h" />

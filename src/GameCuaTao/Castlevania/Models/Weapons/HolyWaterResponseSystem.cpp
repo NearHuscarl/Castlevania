@@ -27,17 +27,17 @@ void HolyWaterResponseSystem::Update(UpdateData &updateData)
 
 		switch (objectId)
 		{
-			case ObjectId::Boundary:
+			case ObjectId::Block:
 			{
 				if (parent.IsFlaming())
 					break;
 
-				auto &boundary = dynamic_cast<GameObject&>(result.collidedObject);
+				auto &block = dynamic_cast<GameObject&>(result.collidedObject);
 				auto position = parent.GetPosition();
 
 				if (result.direction == Direction::Top)
 				{
-					position.y = boundary.GetPosition().y - parent.GetFrameRect().Height();
+					position.y = block.GetPosition().y - parent.GetFrameRect().Height();
 					parent.SetPosition(position);
 				}
 

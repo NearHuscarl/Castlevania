@@ -27,7 +27,7 @@ namespace Castlevania
 		ObjectFactory(ContentManager &content);
 
 		std::unique_ptr<GameObject> CreateRectangleObject(ObjectId type, RectF rect);
-		std::unique_ptr<GameObject> CreateBoundary(RectF rect);
+		std::unique_ptr<GameObject> CreateBlock(RectF rect);
 		std::unique_ptr<WaterArea> CreateWaterArea(RectF rect);
 		std::unique_ptr<SpawnPoint> CreateSpawnPoint(ObjectId type, RectF rect);
 		std::unique_ptr<SpawnArea> CreateSpawnArea(ObjectId type, RectF rect);
@@ -49,8 +49,8 @@ namespace Castlevania
 		std::unique_ptr<VampireBat> CreateVampireBat(Vector2 position = Vector2::Zero());
 		std::unique_ptr<GiantBat> CreateGiantBat(Vector2 position = Vector2::Zero());
 
-		std::unique_ptr<Whip> CreateWhip(GameObject &gameObject);
-		std::unique_ptr<Whip> CreateFlashingWhip(GameObject &gameObject);
+		std::unique_ptr<Whip> CreateWhip(Vector2 position = Vector2::Zero());
+		std::unique_ptr<Whip> CreateFlashingWhip(Vector2 position = Vector2::Zero());
 		std::unique_ptr<RangedWeapon> CreateSubWeapon(ObjectId type, Vector2 position = Vector2::Zero());
 		std::unique_ptr<RangedWeapon> CreateAxe(Vector2 position = Vector2::Zero());
 		std::unique_ptr<RangedWeapon> CreateDagger(Vector2 position = Vector2::Zero());

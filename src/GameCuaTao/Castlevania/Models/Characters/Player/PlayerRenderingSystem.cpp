@@ -82,7 +82,7 @@ void PlayerRenderingSystem::Update(GameTime gameTime)
 			{
 				parent.state = ObjectState::DEAD;
 
-				if (parent.data.lives >= 0)
+				if (parent.data.lives > 0)
 					parent.Notify(PLAYER_DIE);
 				else
 					parent.Notify(GAME_OVER);

@@ -1,6 +1,5 @@
 #include "Direct2DGame/Input/InputHelper.h"
 #include "CastlevaniaGame.h"
-#include "Scenes/MenuScene.h"
 #include "Utilities/AudioManager.h"
 #include "Settings/Audios.h"
 

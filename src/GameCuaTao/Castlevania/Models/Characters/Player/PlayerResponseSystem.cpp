@@ -36,10 +36,10 @@ void PlayerResponseSystem::Update(UpdateData &updateData)
 
 		switch (objectId)
 		{
-			case ObjectId::Boundary:
+			case ObjectId::Block:
 			case ObjectId::BreakableBlock:
 			case ObjectId::BreakableWall:
-				OnCollideWithBoundary(result, responseResult);
+				OnCollideWithBlock(result, responseResult);
 				break;
 
 			case ObjectId::Trigger:
@@ -168,7 +168,7 @@ void PlayerResponseSystem::OnFalling()
 		parent.Fall();
 }
 
-void PlayerResponseSystem::OnCollideWithBoundary(CollisionResult &result, ResponseResult &responseResult)
+void PlayerResponseSystem::OnCollideWithBlock(CollisionResult &result, ResponseResult &responseResult)
 {
 	auto distance = parent.GetDistance();
 	auto collisionData = parent.GetBody().GetCollisionData();
@@ -412,9 +412,11 @@ void PlayerResponseSystem::OnCollideWithWhipPowerup(CollisionResult &result)
 
 	if (whip->GetLevel() == WHIP_MAX_LEVEL)
 	{
-		whip = objectFactory.CreateFlashingWhip(parent);
-		whip->SetFacing(parent.facing);
-		whip->SetLevel(WHIP_MAX_LEVEL);
+		auto flashingWhip = objectFactory.CreateFlashingWhip();
+		
+		flashingWhip->SetFacing(parent.facing);
+		flashingWhip->SetLevel(WHIP_MAX_LEVEL);
+		parent.SetWhip(std::move(flashingWhip));
 	}
 
 	whipPowerup.Destroy();

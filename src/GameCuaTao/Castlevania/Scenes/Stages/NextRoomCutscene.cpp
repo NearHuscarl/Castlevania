@@ -60,7 +60,7 @@ void NextRoomCutscene::SetupCutscene()
 
 void NextRoomCutscene::OnComplete()
 {
-	auto wall = objectFactory.CreateBoundary(door.GetBoundingBox());
+	auto wall = objectFactory.CreateBlock(door.GetBoundingBox());
 
 	grid.Add(std::move(wall), CollisionObjectType::Static);
 	door.Destroy();

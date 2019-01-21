@@ -70,9 +70,9 @@ std::unique_ptr<GameObject> ObjectFactory::CreateRectangleObject(ObjectId type, 
 	return object;
 }
 
-std::unique_ptr<GameObject> ObjectFactory::CreateBoundary(RectF rect)
+std::unique_ptr<GameObject> ObjectFactory::CreateBlock(RectF rect)
 {
-	return CreateRectangleObject(ObjectId::Boundary, rect);
+	return CreateRectangleObject(ObjectId::Block, rect);
 }
 
 std::unique_ptr<WaterArea> ObjectFactory::CreateWaterArea(RectF rect)
@@ -178,9 +178,7 @@ std::unique_ptr<Player> ObjectFactory::CreatePlayer(Vector2 position)
 	object->Attach(std::move(responseSystem));
 	object->Attach(std::move(renderingSystem));
 
-	auto whip = CreateWhip(*object);
-	
-	object->SetWhip(std::move(whip));
+	object->SetWhip(CreateWhip());
 	object->LoadContent(content);
 
 	return object;
@@ -426,9 +424,9 @@ std::unique_ptr<GiantBat> ObjectFactory::CreateGiantBat(Vector2 position)
 	return object;
 }
 
-std::unique_ptr<Whip> ObjectFactory::CreateWhip(GameObject &gameObject)
+std::unique_ptr<Whip> ObjectFactory::CreateWhip(Vector2 position)
 {
-	auto object = std::make_unique<Whip>(gameObject);
+	auto object = std::make_unique<Whip>();
 
 	auto collisionSystem = std::make_unique<WeaponCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<WeaponResponseSystem>(*object, false);
@@ -443,9 +441,9 @@ std::unique_ptr<Whip> ObjectFactory::CreateWhip(GameObject &gameObject)
 	return object;
 }
 
-std::unique_ptr<Whip> ObjectFactory::CreateFlashingWhip(GameObject &gameObject)
+std::unique_ptr<Whip> ObjectFactory::CreateFlashingWhip(Vector2 position)
 {
-	auto object = std::make_unique<Whip>(gameObject);
+	auto object = std::make_unique<Whip>();
 
 	auto collisionSystem = std::make_unique<WeaponCollisionSystem>(*object);
 	auto responseSystem = std::make_unique<WeaponResponseSystem>(*object, false);

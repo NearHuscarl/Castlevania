@@ -6,7 +6,7 @@ namespace Castlevania
 {
 	class GameObject;
 
-	// Check for collision with game object (simon, bat, weapon...) and boundary (wall, floor, ...)
+	// Check for collision with game objects (simon, bat, weapon...) and blocks (wall, floor, ...)
 	class StandardCollisionSystem : public CollisionSystem
 	{
 	public:

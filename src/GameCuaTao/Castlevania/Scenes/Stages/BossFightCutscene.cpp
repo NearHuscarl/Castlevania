@@ -38,7 +38,7 @@ BossFightCutscene::BossFightCutscene(Stage &stage, CollisionGrid &grid, ObjectFa
 		cameraBound.top,
 		boundWidth,
 		cameraBound.Height() };
-	auto wall = objectFactory.CreateBoundary(leftBound);
+	auto wall = objectFactory.CreateBlock(leftBound);
 
 	grid.Add(std::move(wall), CollisionObjectType::Static);
 	bossWakeupTimer.Start();
