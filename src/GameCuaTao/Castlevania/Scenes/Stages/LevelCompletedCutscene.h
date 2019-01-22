@@ -25,6 +25,7 @@ namespace Castlevania
 		GameplayData &gameplayData;
 		State currentState;
 		GameObject *crystalBall;
+		Stopwatch soundEffectTimer;
 		Stopwatch transitionTimer;
 		Stopwatch scoreUpdateTimer;
 	};

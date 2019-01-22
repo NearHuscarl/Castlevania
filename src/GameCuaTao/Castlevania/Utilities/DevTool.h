@@ -60,6 +60,7 @@ namespace Castlevania
 		void SpawnObject();
 		void SpawnEffect();
 
+		void OnChangingMap();
 		void NextMap();
 		void PreviousMap();
 	};

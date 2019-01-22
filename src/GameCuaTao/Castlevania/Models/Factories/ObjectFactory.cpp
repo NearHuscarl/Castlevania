@@ -558,11 +558,13 @@ std::unique_ptr<RangedWeapon> ObjectFactory::CreateFireball(Vector2 position)
 {
 	auto object = std::make_unique<RangedWeapon>(ObjectId::Fireball);
 	auto stats = content.Load<Dictionary>("GameStats/Weapons/Fireball.xml");
-
 	ReadSubWeaponConfig(*object.get(), *stats);
 
 	auto movementSystem = std::make_unique<SimpleMovementSystem>(*object);
-	auto renderingSystem = std::make_unique<ItemRenderingSystem>(*object, "Weapons/Fireball.png",
+
+	auto spritesheet = content.Load<Spritesheet>("Weapons/Fireball.atlas.xml");
+	auto textureRegion = spritesheet->begin()->second;
+	auto renderingSystem = std::make_unique<ItemRenderingSystem>(*object, textureRegion,
 		effectFactory->CreateFlameEffect(),
 		effectFactory->CreateSparkEffect());
 

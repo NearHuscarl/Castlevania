@@ -98,6 +98,9 @@ GiantBatState GiantBat::GetGiantBatState()
 void GiantBat::Update(UpdateData &updateData)
 {
 	Enemy::Update(updateData);
+	
+	if (updateData.isStopwatchActive)
+		return;
 
 	switch (giantBatState)
 	{

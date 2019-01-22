@@ -153,7 +153,7 @@ namespace Castlevania
 		Stopwatch throwingCooldownTimer;
 		Stopwatch invisibleTimer;
 
-		// Component-related flags
+		// Component-related members
 		NearbyObjects nearbyObjects;
 
 		// Need a reference to the height of the platform the player was standing before jumping

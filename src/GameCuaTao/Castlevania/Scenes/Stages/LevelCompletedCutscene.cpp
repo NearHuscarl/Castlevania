@@ -8,9 +8,10 @@ using namespace Castlevania;
 
 constexpr auto CRYSTAL_BALL_HOVERING_TRANSITION_TIME = 1000;
 constexpr auto CONVERTING_TIME_REMAINING_TO_EXP_TRANSITION_TIME = 500;
+constexpr auto CONVERTING_TIME_REMAINING_TO_EXP_SOUND_EFFECT_UPDATE_TIME = 130;
 constexpr auto CONVERTING_HEART_TO_EXP_TRANSITION_TIME = 1000;
 constexpr auto TIME_TO_EXP_UPDATE_TIME = 20;
-constexpr auto HEART_TO_EXP_UPDATE_TIME = 100;
+constexpr auto HEART_TO_EXP_UPDATE_TIME = 130;
 
 enum class LevelCompletedCutscene::State
 {
@@ -60,25 +61,30 @@ void LevelCompletedCutscene::Update(UpdateData &updateData)
 			break;
 
 		case State::CRYSTAL_BALL_ON_GROUND:
-			stage.UpdateGameplay(updateData);
-
 			// check if crystalBall not point to garbage. kinda hacky but works
 			if (crystalBall->GetId() == ObjectId::CrystalBall && crystalBall->GetState() != ObjectState::DEAD)
-				break;
-
-			if (!transitionTimer.IsRunning())
+				stage.UpdateGameplay(updateData);
+			else
 			{
-				AudioManager::Stop(M_BOSS_BATTLE);
-				AudioManager::Play(SE_STAGE_CLEAR);
-				transitionTimer.Start();
+				updateData.isStopwatchActive = true;
+				stage.UpdateGameplay(updateData);
+
+				if (!transitionTimer.IsRunning())
+				{
+					AudioManager::Stop(M_BOSS_BATTLE);
+					AudioManager::Play(SE_STAGE_CLEAR);
+					transitionTimer.Start();
+				}
+
+				if (!AudioManager::IsPlaying(SE_STAGE_CLEAR) && player.GetData().health.Value() == MAX_HEALTH)
+				{
+					currentState = State::CONVERTING_TIME_REMAINING_TO_EXP;
+					transitionTimer.Reset();
+					scoreUpdateTimer.Start();
+					soundEffectTimer.Start();
+				}
 			}
 
-			if (!AudioManager::IsPlaying(SE_STAGE_CLEAR) && player.GetData().health.Value() == MAX_HEALTH)
-			{
-				currentState = State::CONVERTING_TIME_REMAINING_TO_EXP;
-				transitionTimer.Reset();
-				scoreUpdateTimer.Start();
-			}
 			break;
 
 		case State::CONVERTING_TIME_REMAINING_TO_EXP:
@@ -89,9 +95,13 @@ void LevelCompletedCutscene::Update(UpdateData &updateData)
 					player.AddExp(20);
 					auto counter = MathHelper::Max(gameplayData.timeLeft.GetCounter() - 2, 0);
 					gameplayData.timeLeft.SetCounter(counter);
-					//AudioManager::Reset(SE_GETTING_TIME_BONUS);
-					AudioManager::Play(SE_GETTING_TIME_BONUS);
 					scoreUpdateTimer.Restart();
+				}
+
+				if (soundEffectTimer.ElapsedMilliseconds() >= CONVERTING_TIME_REMAINING_TO_EXP_SOUND_EFFECT_UPDATE_TIME)
+				{
+					AudioManager::Play(SE_GETTING_TIME_BONUS);
+					soundEffectTimer.Restart();
 				}
 			}
 			else // gameplayData.timeLeft.GetCounter() == 0
@@ -115,7 +125,6 @@ void LevelCompletedCutscene::Update(UpdateData &updateData)
 				{
 					player.AddExp(100);
 					player.AddHeart(-1);
-					AudioManager::Reset(SE_GETTING_HEART_BONUS);
 					AudioManager::Play(SE_GETTING_HEART_BONUS);
 					scoreUpdateTimer.Restart();
 				}

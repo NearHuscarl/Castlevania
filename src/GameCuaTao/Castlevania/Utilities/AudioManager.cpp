@@ -7,7 +7,7 @@ float AudioManager::volume;
 
 void AudioManager::LoadContent(ContentManager &content)
 {
-	for (auto const [audioName, path] : GAME_AUDIO)
+	for (auto const &[audioName, path] : GAME_AUDIO)
 	{
 		soundDict[audioName] = content.Load<Sound>(path);
 	}
@@ -47,7 +47,6 @@ void AudioManager::PlayLoop(std::string name)
 	auto sound = soundDict[name];
 	if (sound != nullptr)
 	{
-		sound->Reset();
 		sound->Play(0, DSBPLAY_LOOPING);
 	}
 }

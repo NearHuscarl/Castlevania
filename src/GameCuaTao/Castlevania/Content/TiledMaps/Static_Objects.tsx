@@ -31,6 +31,6 @@
    <image source="../Misc/Cloud.png" width="64" height="28"/>
   </tile>
   <tile id="10">
-   <image source="Stage_01/Water_Area.png" width="192" height="73"/>
+   <image source="Stage_01/Water_Area.png" width="192" height="43"/>
   </tile>
 </tileset>

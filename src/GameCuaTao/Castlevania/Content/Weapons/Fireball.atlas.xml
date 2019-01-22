@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<GameContent>
+
+  <Spritesheet TexturePath="Fireball.png">
+    <Sprite ID="fire_ball">
+      <SpriteFrame Left="0" Top="0" Width="15" Height="11" />
+      <SpriteBoundary Left="0" Top="10" Width="15" Height="1" />
+    </Sprite>
+  </Spritesheet>
+
+</GameContent>

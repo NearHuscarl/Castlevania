@@ -296,7 +296,12 @@ void Stage::UpdateGameObjects(UpdateData &updateData)
 
 void Stage::UpdateGameplay(UpdateData &updateData)
 {
-	camera->LookAt(player->GetOriginPosition(), Scrolling::Horizontally);
+	// Dont follow if the player is dying because the dying sprite (player laying dead)
+	// is wider than other sprites which make the camera glitching when getting
+	// position from GetOriginPosition()
+	if (player->GetState() == ObjectState::NORMAL)
+		camera->LookAt(player->GetOriginPosition(), Scrolling::Horizontally);
+
 	UpdateGameObjects(updateData);
 
 	if (!updateData.isStopwatchActive)

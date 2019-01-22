@@ -508,8 +508,13 @@ void PlayerResponseSystem::OnCollideWithStairDownTrigger(Trigger &trigger)
 
 void PlayerResponseSystem::OnCollideWithNextMapTrigger(Trigger &trigger)
 {
-	parent.Notify(NEXT_MAP_CUTSCENE_STARTED);
-	trigger.GetBody().Enabled(false);
+	// Fix an edge case where player just jumps and collides with the next map trigger in
+	// underground map (should trigger when walking up/down stairs and on ground only)
+	if (!parent.IsOnTheAir())
+	{
+		parent.Notify(NEXT_MAP_CUTSCENE_STARTED);
+		trigger.GetBody().Enabled(false);
+	}
 }
 
 void PlayerResponseSystem::OnCollideWithMoneyBagTrigger(Trigger &trigger)

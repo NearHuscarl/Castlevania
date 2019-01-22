@@ -439,14 +439,30 @@ void DevTool::SpawnEffect()
 	activeEffects.push_back(std::move(effect));
 }
 
-void DevTool::NextMap()
+void DevTool::OnChangingMap()
 {
+	if (maps[currentMapIndex] != stage.currentMap)
+	{
+		for (int i = 0; i < maps.size() - 1; i++)
+			if (maps[i] == stage.currentMap)
+			{
+				currentMapIndex = i;
+				break;
+			}
+	}
+
 	if (maps[currentMapIndex] == Map::INTRO)
 	{
 		player.EnableControl(true);
 		player.SetSpeed(125);
 		player.Idle();
+		AudioManager::StopAll();
 	}
+}
+
+void DevTool::NextMap()
+{
+	OnChangingMap();
 
 	if (++currentMapIndex > (int)maps.size() - 1)
 		currentMapIndex = 0;
@@ -456,12 +472,7 @@ void DevTool::NextMap()
 
 void DevTool::PreviousMap()
 {
-	if (maps[currentMapIndex] == Map::INTRO)
-	{
-		player.EnableControl(true);
-		player.SetSpeed(125);
-		player.Idle();
-	}
+	OnChangingMap();
 
 	if (--currentMapIndex < 0)
 		currentMapIndex = maps.size() - 1;
