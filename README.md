@@ -1,7 +1,10 @@
+<p align="center">
+   <img src ="images/Logo.png" />
+</p>
 
-![Castlevania Logo](images/Logo.png)
-
+<p align="center">
 A remake of Castlevania NES (Block 01) written in C++ and directx 9
+</p>
 
 ## Download
 
