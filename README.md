@@ -73,8 +73,9 @@ A remake of Castlevania NES (Block 01) written in C++ and directx 9
 
 -  [DirectX 9 SDK]
 -  [pugixml] - Light-weight, simple and fast XML parser for C++
--  [freetype] - A freely available software library to render fonts
--  [fmt] - A modern formatting library
+-  [freetype] - Font rendering library
+-  [fmt] - Modern formatting library
+-  [mappy] - Used to create tiledset from the complete map ([Instruction](TUTORIALS.md))
 
 [sample project]: https://github.com/dungdna2000/gamedev-intro-tutorials/
 
@@ -118,5 +119,6 @@ A remake of Castlevania NES (Block 01) written in C++ and directx 9
 [pugixml]: https://github.com/zeux/pugixml/
 [freetype]: https://github.com/ubawurinna/freetype-windows-binaries
 [fmt]: https://github.com/fmtlib/fmt
+[mappy]: http://www.tilemap.co.uk/mappy.php
 [create smart pointer from raw pointer]: https://stackoverflow.com/questions/4665266/creating-shared-ptr-from-raw-pointer
 [seperate animation and physical bounding box]: http://community.monogame.net/t/examples-of-good-adaptive-code-for-animated-sprites/9569
