@@ -56,7 +56,7 @@ Each number in the matrix is a tile id at a given position in the map. Here is t
 
 ![Matrix_](images/Matrix_.png)
 
-## Coding tiled map
+## Code sample
 
 Here is a sample implementation of tiled map in Typescript. The game will only draw tiles that are within the viewport
 
