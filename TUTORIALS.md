@@ -20,13 +20,13 @@ In this tutorial, I will use Courtyard map as an example. [Link to image](src/Ga
 
 ![Courtyard](src/GameCuaTao/Castlevania/Content/TiledMaps/Stage_01/Courtyard.png)
 
-To create Courtyard tileset in Mappy. We need to determinte the width and height in pixel of a tile. Zoom in a bit and have a closer look we will see some duplicated regions in your map. After fiddling around, you will notice that each tile is exactly 64x64 pixel
+To create Courtyard tileset in Mappy. We need to determine the width and height in pixel of a tile. Zoom in a bit and have a closer look we will see some duplicated regions in your map. After fiddling around, you will notice that each tile is exactly 64x64 pixel
 
 ![Courtyard_Region](images/Courtyard_Region.png)
 
 The map size is 1536x384, so each row can hold 1536/64 = 24 tiles. Similarly, each column hold 384/64 = 6 tiles
 
-Open Mappy `File` > `New Map...` > fill in the size of each tile and how much tiles the map can hold
+Open Mappy `File` > `New Map...` > fill in the size of each tile and how many tiles the map can hold
 
 ![Mappy_NewMap](images/Mappy_NewMap.png)
 
@@ -130,15 +130,15 @@ class Game {
     draw(viewport: Viewport) {
         // draw tiles within the viewport only
         var rowStart = viewport.top / Tile.height;
-	    var rowEnd = viewport.bottom / Tile.height;
-	    var columnStart = viewport.left / Tile.width;
-	    var columnEnd = viewport.right / Tile.width;
+        var rowEnd = viewport.bottom / Tile.height;
+        var columnStart = viewport.left / Tile.width;
+        var columnEnd = viewport.right / Tile.width;
 
         // make sure you dont draw outside of tiled map
         rowStart = clamp(rowStart, 0, TiledMap.width - 1);
-	    rowEnd = clamp(rowEnd, 0, TiledMap.width - 1);
-	    columnStart = clamp(columnStart, 0, TiledMap.height - 1);
-	    columnEnd = clamp(columnEnd, 0, TiledMap.height - 1);
+        rowEnd = clamp(rowEnd, 0, TiledMap.width - 1);
+        columnStart = clamp(columnStart, 0, TiledMap.height - 1);
+        columnEnd = clamp(columnEnd, 0, TiledMap.height - 1);
 
         for (var row = rowStart; row <= rowEnd; row++)
         {
