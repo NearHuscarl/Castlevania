@@ -68,20 +68,17 @@ class Viewport {
     right: number;
 }
 
-class Rect {
-    Rect(
+class Tile {
+    static width = 64;
+    static height = 64;
+
+    Tile(
+        public image: Bitmap,
         public left: number,
         public top: number,
         public width: number,
         public height: number
     ) {}
-}
-
-class Tile {
-    static width = 64;
-    static height = 64;
-
-    Tile(public image: Bitmap, public rect: Rect) {}
 }
 
 class TiledMap {
@@ -97,13 +94,14 @@ class TiledMap {
 
         tiles.push(new Array<Tile>());
         tileSetData.forEach((tileId) => {
-            var rect = new Rect(
+            var tile = new Tile(
+                tileSetImage,
                 Tile.width * (tileId % tilesPerRow),
                 Tile.height * (tileId / tilesPerRow),
                 Tile.width,
                 Tile.height,
             );
-            tiles[row].push(new Tile(tileSetImage, rect));
+            tiles[row].push(tile);
             column = ++column % width;
 
             if (column == 0) {
